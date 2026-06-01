@@ -32,8 +32,6 @@ footer_content: "WTH AI Hackathon — Built with ❤️ for students and coaches
 aux_links:
   "🚀 Open in Codespaces":
     - "https://codespaces.new/olivomarco/ai-hackathon?quickstart=1"
-  "💬 Discussion":
-    - "https://github.com/olivomarco/ai-hackathon/discussions"
 
 # Plugins
 plugins:

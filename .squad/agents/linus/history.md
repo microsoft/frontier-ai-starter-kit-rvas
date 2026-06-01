@@ -26,3 +26,10 @@
 ## Current state
 ### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
 PLAN-V3 is now **implemented** (staged, not committed). My piece: root `README.md` reframed to three tiers (trimmed ASCII tree, dual-time Advanced table, Tier 3 Capstone section, Extras re-slot, repo-tree); `docs/challenges/capstone-multi-agent.md` (+ `-coach`) created, `index.md` updated to three-tier, `docs/challenges/cleanup.md` wrap-up added (no nav_order collisions). Alongside: Capstone live (Danny + Basher), Advanced de-guided (Rusty), cleanup + lab-generator (Livingston). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
+
+## Learnings
+### 2026-06-01 — HOME page was stale two-tier
+- `docs/index.md` (Jekyll Home, title: Home, nav_order: 1) was still **two-tier**: frontmatter description, "What is this?" prose, the "Two tiers, two paths" quick-card, and the "## Two tiers" heading all omitted Tier 3 Capstone. The Foundations Step table rows were **plain text with NO links**.
+- Fixed to **three-tier**: description + prose + quick-card + heading now say three tiers; added a Tier 3 Capstone blurb + table + "Start the Capstone →" button linking `challenges/capstone-multi-agent`.
+- Linked all 4 Foundations steps to their verified heading anchors using the home-page prefix `challenges/foundations#...` (home page links use the `challenges/` prefix, unlike `challenges/index.md` which uses bare `foundations#...`).
+- **Canonical source of truth = `docs/challenges/index.md`** (already correct three-tier). The Home page is a summary mirror of it — keep them aligned, do not let Home drift.

@@ -106,10 +106,6 @@ nav_order: 4
 
 <div class="quick-grid">
   <div class="quick-card">
-    <h3><a href="https://github.com/olivomarco/ai-hackathon/discussions">GitHub Discussions</a></h3>
-    <p>Ask questions, share wins, and compare patterns with other participants and coaches.</p>
-  </div>
-  <div class="quick-card">
     <h3><a href="https://microsoft.github.io/WhatTheHack/">What The Hack community</a></h3>
     <p>Explore the broader WTH format, community guidance, and related event resources.</p>
   </div>
