@@ -41,3 +41,12 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: root `README.m
 
 ### 2026-06-01 — Cross-agent note (Scribe merge batch)
 - Basher completed a markdown QA audit for the docs UI/formatting pass and flagged no blocking regressions; completion arrived as silent execution, so the Scribe batch recorded it via orchestration log evidence.
+
+### 2026-06-01 — ASCII follow-up: explicit fan-out + wrap-safe architecture lines
+- In `docs/challenges/extra-magentic-workflows.md`, ambiguous fan-out labels were replaced with a branch-per-target layout ending in four labeled boxes (`Triage`, `Knowledge`, `Action`, `Escalation`) so mapping is explicit at a glance.
+- In `docs/challenges/extra-build-ui.md`, the long architecture line was split into shorter lines (`BFF / proxy`, credential hop, endpoint path, runtime branch, knowledge/action branch) to reduce markdown line-wrap risk without changing semantics.
+- Verification pattern: re-read only touched diagram blocks after patch and check for connector continuity (`|`, `v`, `+-->`, `-->`) to avoid introducing malformed ASCII links while doing targeted doc fixes.
+
+### 2026-06-01 — Cross-agent note (diagram-fix batch closed)
+- Basher QA audit and follow-up review criteria were satisfied for the two remaining ASCII defects.
+- Scribe merged related decision records and logged the batch under orchestration + session logs.

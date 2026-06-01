@@ -20,3 +20,8 @@ Initial setup complete.
 - Logged two orchestration outcomes (Linus completed, Basher silent completion verified) and wrote a concise session log for traceability.
 - Cross-agent notes were appended directly into owner histories to preserve context continuity without touching non-`.squad` files.
 
+### 2026-06-01 — ASCII diagram fix batch (Rusty/Basher/Linus)
+- Merged three inbox decision records into `.squad/decisions.md` (Rusty broad ASCII convention, Basher QA baseline, Linus targeted follow-up fixes).
+- Wrote orchestration logs for Rusty, Basher, and Linus; wrote one concise session log for the batch.
+- Appended cross-agent history notes to Rusty, Basher, and Linus; cleared processed inbox files.
+

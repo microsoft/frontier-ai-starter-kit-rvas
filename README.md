@@ -111,18 +111,18 @@ ordered steps (everyone does it). **Tier 2 Advanced** challenges are modular and
 design brief that composes everything into a multi-agent system.
 
 ```text
-  TIER 1  FOUNDATIONS (guided · linear · everyone)
-          Step1 ─▶ Step2 ─▶ Step3 ─▶ Step4   ◀── Foundations END-STATE
-                                  │
-                                  ▼
-  TIER 2  ADVANCED (modular · pick ANY order)
-          Action Tools · Evaluation+RedTeam · Tracing · Deploy
-          deepeners: Fabric IQ · Voice Live · Build a UI · Copilot-Assisted
-                                  │
-                                  ▼
-  TIER 3  CAPSTONE (open-ended · design brief)
-          Northfield IQ — Multi-Agent: a MAF triage/router that fans out
-          to specialist agents (knowledge, actions) and converges.
+  TIER 1  FOUNDATIONS (guided, linear, everyone)
+    Step1 --> Step2 --> Step3 --> Step4  <-- Foundations end-state
+           |
+           v
+  TIER 2  ADVANCED (modular, pick any order)
+    Action Tools | Evaluation+RedTeam | Tracing | Deploy
+    deepeners: Fabric IQ | Voice Live | Build a UI | Copilot-Assisted
+           |
+           v
+  TIER 3  CAPSTONE (open-ended design brief)
+    Northfield IQ multi-agent: triage/router fans out to specialists
+    (knowledge, actions), then converges.
 ```
 
 ### Tier 1 — Foundations (`challenges/foundations/`)

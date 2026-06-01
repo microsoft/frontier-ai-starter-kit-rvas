@@ -624,3 +624,34 @@ Step 4's heading has two spaces before `*(` and a stripped `*(←`, producing th
 
 **Why:** Requested UI modernization and markdown rendering stability improvements without changing challenge structure or breaking GitHub Pages compatibility.
 
+---
+
+## Inbox Merge - 2026-06-01 ASCII Diagram Batch
+
+### ASCII Diagram Formatting Convention for Docs Challenges - Rusty
+**Author:** Rusty (Curriculum Designer)
+**Date:** 2026-06-01
+**Status:** Implemented (merged from inbox)
+
+**Decision:** For challenge and curriculum flow diagrams in markdown code fences, prefer compact ASCII-only structures and consistent `-->` arrow semantics. Keep line width conservative so diagrams do not wrap or misalign in GitHub Pages/Just-the-Docs.
+
+**Why:** A repo-wide scan found malformed and over-wide diagram blocks that were hard to read or visually broken in current layout. Standardizing lightweight ASCII improves render stability across pages and viewports.
+
+### Docs ASCII Diagram Safety Baseline - Basher
+**Author:** Marco Olivo (via Basher)
+**Date:** 2026-06-01
+**Status:** Implemented (merged from inbox)
+
+**Decision:** For `docs/**/*.md` ASCII diagrams in fenced `text` blocks, enforce a readability baseline: keep line width <= 90 chars when possible, use explicit branch connectors (one clear down-path per branch), and avoid mixed compressed arrow rows that hide routing semantics.
+
+**Why:** QA audit found a malformed branch row in `docs/challenges/extra-magentic-workflows.md` and a high-width flow line in `docs/challenges/extra-build-ui.md`; both reduce clarity on GitHub Pages/Just-the-Docs, especially on narrow viewports.
+
+### ASCII Follow-up Fixes (Targeted) - Linus
+**Author:** Linus
+**Date:** 2026-06-01
+**Status:** Implemented (merged from inbox)
+
+**Decision:** Applied two scoped documentation-only diagram fixes per QA follow-up: (1) explicit four-branch fan-out mapping in `docs/challenges/extra-magentic-workflows.md`; (2) wrap-safe line splitting in the architecture diagram in `docs/challenges/extra-build-ui.md` with unchanged semantics.
+
+**Why:** Reviewer gate requested elimination of remaining ASCII ambiguity and line-wrap fragility without broad content edits.
+

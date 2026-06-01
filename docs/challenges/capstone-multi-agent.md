@@ -68,24 +68,18 @@ a real help desk — that is what makes "multi-agent orchestration" click. Each 
 artifact you already built**; the triage and escalation agents are new, small, **tool-less reasoners**.
 
 ```text
-                         ┌──────────────────────────┐
-            student ────▶│   TRIAGE / ROUTER agent   │   "what kind of request is this?"
-            question     │   (classifier, no tools)  │   → routes to 1..N specialists
-                         └─────────────┬─────────────┘
-                       ┌───────────────┼────────────────┐
-                       ▼               ▼                ▼
-            ┌────────────────┐ ┌────────────────┐ ┌────────────────────┐
-            │ KNOWLEDGE agent │ │  ACTION agent   │ │  ESCALATION agent  │
-            │ (AI Search /    │ │ (MCP tools +    │ │ (human-handoff;    │
-            │  Foundry IQ KB) │ │  approval loop) │ │  out-of-scope)     │
-            │  [Foundations]  │ │ [Action Tools]  │ │                    │
-            └───────┬────────┘ └───────┬────────┘ └─────────┬──────────┘
-                    └──────────────────┼────────────────────┘
-                                       ▼
-                         ┌──────────────────────────┐
-                         │   SYNTHESIZER  (fan-in)   │  merges specialist outputs into
-                         │                           │  one cited, governed answer
-                         └──────────────────────────┘
+  student question
+    |
+    v
+  TRIAGE / ROUTER (classifier, no tools)
+    |
+    +--> KNOWLEDGE (AI Search / Foundry IQ KB) [Foundations]
+    +--> ACTION (MCP tools + approval loop) [Action Tools]
+    +--> ESCALATION (human handoff, out-of-scope)
+       \__________________________
+              \
+               +--> SYNTHESIZER (fan-in)
+                one cited, governed answer
 
 ```
 

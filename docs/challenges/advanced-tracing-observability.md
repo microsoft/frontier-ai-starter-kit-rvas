@@ -30,18 +30,17 @@ you can watch it run.
 
 ```text
   student question
-        │
-        ▼
-  ┌───────────── one request (operation_Id) ─────────────┐
-  │  agent span                                          │
-  │   ├─ model span        gen_ai.usage.*  (tokens)      │
-  │   ├─ retrieval span    knowledge-base query          │
-  │   └─ tool span         (if Action Tools attached)    │
-  └──────────────────────────────────────────────────────┘
-        │                                   │
-        ▼                                   ▼
-  Foundry portal  ◀──── App Insights ────▶  KQL (dependencies / traces / requests)
-   Tracing tab           (OTel exporter)
+     |
+     v
+  one request (operation_Id)
+     |
+     +--> agent span
+        +--> model span (gen_ai.usage.* tokens)
+        +--> retrieval span (knowledge-base query)
+        +--> tool span (if Action Tools attached)
+
+  Foundry portal (Tracing tab) <-- App Insights (OTel exporter) --> KQL
+  (dependencies / traces / requests)
 
 ```
 

@@ -14,18 +14,18 @@ Capstone assume the **Foundations end-state**: a deployed, grounded Northfield U
 that answers from the FAQ corpus **with citations**.
 
 ```text
-  TIER 1  FOUNDATIONS (guided · linear · everyone)
-          Step1 ─▶ Step2 ─▶ Step3 ─▶ Step4   ◀── Foundations END-STATE
-                                  │
-                                  ▼
-  TIER 2  ADVANCED (modular · pick ANY order)
-          Action Tools · Evaluation+RedTeam · Tracing · Deploy
-          deepeners: Fabric IQ · Voice Live · Build a UI · Copilot-Assisted
-                                  │
-                                  ▼
-  TIER 3  CAPSTONE (open-ended · design brief)
-          Northfield IQ — Multi-Agent: a MAF triage/router that fans out
-          to specialist agents (knowledge, actions) and converges.
+  TIER 1  FOUNDATIONS (guided, linear, everyone)
+    Step1 --> Step2 --> Step3 --> Step4  <-- Foundations end-state
+           |
+           v
+  TIER 2  ADVANCED (modular, pick any order)
+    Action Tools | Evaluation+RedTeam | Tracing | Deploy
+    deepeners: Fabric IQ | Voice Live | Build a UI | Copilot-Assisted
+           |
+           v
+  TIER 3  CAPSTONE (open-ended design brief)
+    Northfield IQ multi-agent: triage/router fans out to specialists
+    (knowledge, actions), then converges.
 
 ```
 
@@ -111,21 +111,24 @@ modular Advanced tier.
   straight to the Advanced tier. You skip the guided *learning*, not the prerequisites.
 
 ```text
-                ┌──────────────────────────────────────────────┐
-  PATH A        │  FOUNDATIONS  (guided · linear · everyone)    │
-  Beginner ───▶ │  Step1 ─▶ Step2 ─▶ Step3 ─▶ Step4             │
-                │  Setup    Model    Agent    Knowledge Base    │
-                └───────────────────────┬──────────────────────┘
-                                         │
-  PATH B                                 │  ◀── Foundations END-STATE
-  Advanced ──▶  [ bootstrap: azd up                (deployed, grounded
-  skip          + setup-foundations ]  ────────────▶  Northfield IQ Assistant)
-  (~15 min, 1 checkpoint)                │
-                                         ▼
-        ┌───────────────── ADVANCED (modular · pick ANY order) ─────────────────┐
-        │  Action Tools   Evaluation+RedTeam   Tracing   Deploy as Hosted Agent  │
-        │  Extras:  Fabric IQ · Voice Live · Magentic · Hosted MAF · UI · Copilot │
-        └────────────────────────────────────────────────────────────────────────┘
+  PATH A (Beginner)
+  +---------------------------------------------------+
+  | FOUNDATIONS (guided, linear, everyone)            |
+  | Step1 --> Step2 --> Step3 --> Step4               |
+  | Setup    Model    Agent    Knowledge Base         |
+  +---------------------------+-----------------------+
+                              |
+                              v  Foundations end-state:
+                                 deployed, grounded Northfield IQ Assistant
+
+  PATH B (Advanced skip)
+  [bootstrap: azd up + setup-foundations] --> same end-state
+  (~15 min, 1 checkpoint)
+                              |
+                              v
+  ADVANCED (modular, pick any order)
+  Action Tools | Evaluation+RedTeam | Tracing | Deploy
+  Extras: Fabric IQ | Voice Live | Magentic | Hosted MAF | UI | Copilot
 
 ```
 

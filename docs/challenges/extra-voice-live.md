@@ -31,8 +31,8 @@ WebSocket. No stitching together separate speech-to-text, agent, and text-to-spe
 orchestrates the full duplex loop for you.
 
 ```text
-   🎤 mic ──▶ Voice Live (STT) ──▶ Northfield IQ Assistant ──▶ Voice Live (TTS) ──▶ 🔊 speaker
-              └────────────────── one low-latency streaming session ──────────────────┘
+   mic --> Voice Live (STT) --> Northfield IQ Assistant --> Voice Live (TTS) --> speaker
+          \---------------------- one low-latency streaming session -------------------/
 
 ```
 

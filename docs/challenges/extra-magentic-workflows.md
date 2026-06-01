@@ -39,12 +39,18 @@ You'll build four specialists and let the manager coordinate them:
 | **Escalation** | Draft a human-handoff when confidence is low | model + instructions |
 
 ```text
-             ┌────────────────────┐
-  request ──▶ │  Magentic manager   │  plans + routes per task (live)
-             └──┬────┬────┬────┘
-          ┌───┘    │    └───┐
-      ▼──────┐ ▼───────▼───────┐
-     Triage  Knowledge  Action  Escalation
+   request
+      |
+      v
+   +------------------------+
+   | Magentic manager       |
+   | plans + routes (live)  |
+   +-----+-----+-----+-----+
+         |     |     |     |
+         v     v     v     v
+   +--------+ +-----------+ +--------+ +------------+
+   | Triage | | Knowledge | | Action | | Escalation |
+   +--------+ +-----------+ +--------+ +------------+
 
 ```
 

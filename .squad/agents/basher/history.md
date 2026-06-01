@@ -26,3 +26,14 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/ca
 
 ### 2026-06-01 — Cross-agent note (Scribe merge batch)
 - Completed markdown QA audit for Linus's docs UI refresh and markdown normalization pass. No blocking regressions identified in scope; completion was silent, recorded through orchestration + session logs.
+
+### 2026-06-01 — ASCII diagram QA audit (docs markdown)
+- Scope: read-only audit of ASCII diagrams in `docs/**/*.md` text fences for GitHub Pages + Just-the-Docs readability/render safety.
+- Findings: one structural defect remains in the Magentic manager diagram (`docs/challenges/extra-magentic-workflows.md`) where branch connectors are malformed (`▼──────┐ ▼───────▼───────┐`) and can mislead fan-out interpretation.
+- Findings: one high line-width portability risk remains in the BFF flow diagram (`docs/challenges/extra-build-ui.md`) with a 101-character line that is hard to scan on narrow mobile screens.
+- Rusty verification: no Rusty-authored or Rusty-attributed diagram fixes detected in git history/worktree; latest edits touching those files added spacing/readability text but did not correct the malformed branch row.
+- Practice update: keep diagram rows under ~90 chars and prefer explicit per-branch down connectors over compressed mixed-arrow rows.
+
+### 2026-06-01 — Cross-agent note (diagram-fix closure)
+- Linus addressed both QA findings with targeted doc-only edits and preserved semantics.
+- Reviewer gate for this follow-up pass is closed; outcomes recorded via orchestration + session logs.

@@ -28,15 +28,13 @@ now running as its own service.
 
 ```text
    agent.yaml + Dockerfile + app code
-                │
-                ▼  azd ai agent create/deploy
-   ┌──────────────────────────────────────────────┐
-   │  container image ──▶ ACR ──▶ hosted agent     │
-   │                        (per-agent identity)   │
-   └───────────────────────┬──────────────────────┘
-                           │  /protocols/openai/responses
-                           ▼
-                 invoke ──▶ run history + traces (App Insights)
+                |
+                v  azd ai agent create/deploy
+   container image --> ACR --> hosted agent (per-agent identity)
+                                        |
+                                        | /protocols/openai/responses
+                                        v
+                          invoke --> run history + traces (App Insights)
 
 ```
 

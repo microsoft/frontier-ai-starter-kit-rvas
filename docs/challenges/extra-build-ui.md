@@ -35,11 +35,17 @@ you deploy the whole thing — static front-end + BFF — to Azure and wire **CO
 
 ```text
    browser (chat UI)
-        │  fetch /api/chat        (same-origin, no secrets in JS)
-        ▼
-   BFF / proxy  ── DefaultAzureCredential ──▶  hosted agent  /protocols/openai/responses
-   (Container Apps                                  │
-    or SWA + Functions)                             └──▶ knowledge base (citations) + MCP action tool
+      |
+      | fetch /api/chat (same-origin; no secrets in JS)
+      v
+   BFF / proxy
+      |-- DefaultAzureCredential --> hosted agent
+      |                              (/protocols/openai/responses)
+      |
+      +--> runs in Container Apps or SWA+Functions
+                                     |
+                                     +--> knowledge base + MCP action tool
+                                         (citations + actions)
 
 ```
 

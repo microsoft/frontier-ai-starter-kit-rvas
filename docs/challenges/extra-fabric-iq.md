@@ -36,10 +36,12 @@ right-now question → Fabric IQ*.
 
 ```text
    student question
-        │
-        ▼
-   Northfield IQ Assistant ──┬──▶ AI Search knowledge base   (static: policy, deadlines)
-                             └──▶ Fabric IQ tool  ──▶ OneLake (LIVE: seats, capacity, ETAs)
+      |
+      v
+   Northfield IQ Assistant
+      |
+      +--> AI Search knowledge base (static: policy, deadlines)
+      +--> Fabric IQ tool --> OneLake (live: seats, capacity, ETAs)
 
 ```
 

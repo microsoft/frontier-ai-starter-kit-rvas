@@ -25,3 +25,12 @@ Action Tools ~45 min / ~1.5 hr ⭐⭐⭐ · Eval & Red Teaming ~1.25 hr / ~2 hr 
 ## Current state
 ### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
 PLAN-V3 is now **implemented** (staged, not committed). My piece: all 4 Advanced READMEs de-guided to the 3-rung ladder with ⏱/🛠/⭐ banner, "why now" hooks, output anchors; same `validate.py` grades every rung. Alongside: Tier 3 Capstone live (Danny + Basher validator), `scripts/cleanup.sh` + lab-generator (Livingston), three-tier README/docs (Linus, mirroring my labels). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
+
+### 2026-06-01 — ASCII diagram repair pass (docs + README)
+- Ran a repo-wide scan of text-fenced markdown blocks and patched only malformed/over-wide flow and architecture diagrams.
+- Normalized diagram arrows to `-->` in edited blocks and replaced fragile unicode/emoji-heavy rails with compact ASCII lines.
+- Kept changes constrained to diagram fences (no challenge logic rewrites) and re-checked text-fence width so diagrams remain readable in Just-the-Docs/GitHub Pages layouts.
+
+### 2026-06-01 — Cross-agent note (diagram-fix batch)
+- Basher QA found two residual issues after the broad ASCII pass: malformed branch fan-out in Magentic workflows docs and one over-wide architecture line in Build UI docs.
+- Linus completed the targeted follow-up fixes; batch was closed through Scribe merge and orchestration logging.
