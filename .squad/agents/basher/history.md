@@ -42,3 +42,9 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/ca
 - Confirmed two stale Learn paths now return 404 in Foundry docs context: `/agents/how-to/tools/mcp` and `/agents/concepts/agent-protocols`; canonical replacements are `/agents/how-to/tools/model-context-protocol` and hosted-agents key-concepts protocol section.
 - Verified challenge/docs mirrors can contain hard GitHub blob links to learner-created files (for example `challenges/foundations/app/step*.py`) that 404 by design at repo HEAD; treat as QA finding unless curriculum owners want those links removed or reframed.
 - Identified content drift: Capstone README/coach/docs still say `validate.py` is forthcoming even though `challenges/capstone-multi-agent/validate.py` exists and supports `--step`/`--all`.
+
+### 2026-06-01 — Executable validator sweep (pass/fail/blocked matrix)
+- Full sweep executed across all `validate*.py` in-scope targets with reproducible logs saved under `/tmp/qa-validate-20260601-venv/*.log`.
+- No repo venv was present; temp venv at `/tmp/aihack-qa-venv` + `pip install -r requirements.txt` removed dependency noise and exposed true blockers.
+- Result: 1 PASS (`advanced-evaluation-redteam`), 6 BLOCKED, 0 FAIL, 0 N/A.
+- Recurrent blocker pattern is prerequisite absence, not harness defects: missing `.env`/Azure provisioning, localhost action backend offline, and learner-authored files not yet created for tracing/deploy/capstone.

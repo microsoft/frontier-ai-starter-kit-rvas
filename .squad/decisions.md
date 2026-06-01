@@ -1,10 +1,23 @@
 # Squad Decisions
 
-**Last Updated:** 2026-06-01 (merged inbox: +4 entries — Rusty terminology audit, Livingston dependency fix, Basher QA URL sweep, Danny capstone/foundations consolidation)
+**Last Updated:** 2026-06-01 (merged inbox: +5 entries — Rusty terminology audit, Livingston dependency fix, Basher QA URL sweep, Danny capstone/foundations consolidation, Basher validation-matrix classification)
 
 ---
 
 ## Inbox Merge — 2026-06-01 (Scribe Batch)
+
+### Validation Matrix Classification Policy (PASS/BLOCKED/FAIL)
+**Author:** Basher (QA & Coach Enablement)
+**Date:** 2026-06-01
+**Status:** Merged from inbox
+
+**Decision:** For repository-level executable validation sweeps, classify unmet cloud/runtime/learner prerequisites as **BLOCKED** (not FAIL), and reserve **FAIL** for harness defects or incorrect validator behavior under satisfied prerequisites.
+
+**Evidence:** Sweep artifact in `docs/qa-validation-matrix.md`; observed run outcome was 1 PASS (`advanced-evaluation-redteam`), 6 BLOCKED, 0 FAIL.
+
+**Rationale:** Most non-passing checks came from missing provisioning/auth, local service prerequisites, or expected learner-produced files. These are readiness gates, not validator regressions.
+
+---
 
 ### Foundry Terminology + Learn Path Normalization
 **Author:** Rusty (Curriculum Designer)  
