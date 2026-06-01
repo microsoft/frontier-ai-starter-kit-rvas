@@ -1,6 +1,25 @@
 # Squad Decisions
 
-**Last Updated:** 2026-06-01 (merged inbox: +5 entries — Rusty terminology audit, Livingston dependency fix, Basher QA URL sweep, Danny capstone/foundations consolidation, Basher validation-matrix classification)
+**Last Updated:** 2026-06-01 (merged inbox: +1 entry — Livingston Pages baseurl fix via workflow)
+
+---
+
+## Inbox Merge — 2026-06-01 (Scribe Batch — Pages baseurl)
+
+### Fix GitHub Pages Asset 404s via Workflow-Derived baseurl (not `_config.yml`)
+**Author:** Livingston (DevOps & GitHub Engineer), requested by Marco Olivo
+**Date:** 2026-06-01
+**Status:** Merged from inbox
+
+**Decision:** Modified `.github/workflows/deploy-pages.yml` so the Jekyll build derives its `baseurl` from the live GitHub Pages configuration instead of the hardcoded value in `docs/_config.yml`:
+1. Added `id: pages` to the "Configure Pages" step (`actions/configure-pages@v6`) so its `base_path` output is referenceable.
+2. Changed the "Build site" step to `bundle exec jekyll build --source docs --destination _site --baseurl "${{ steps.pages.outputs.base_path }}"`.
+
+**Why:** Private Pages sites are served from a randomized subdomain at the ROOT with no `/ai-hackathon` path, but `_config.yml`'s hardcoded `baseurl: "/ai-hackathon"` makes just-the-docs emit asset links under `/ai-hackathon/assets/...`, which 404 on a root-served site. `actions/configure-pages` reports `base_path` as `""` for a private root-served site and `/ai-hackathon` for Public, so passing it via `--baseurl` fixes both cases automatically.
+
+**Why `_config.yml` left untouched:** Editing the committed `baseurl` would break local development (`jekyll serve`) and the public production URL. Deriving at build time keeps source config correct for local/public use while CI adapts to the actual deployment context. Proven fix from sibling `frontier-ghaw-hackathon` repo.
+
+**Files:** `.github/workflows/deploy-pages.yml` (modified); `docs/_config.yml` (intentionally unchanged).
 
 ---
 

@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v6
         with:
           enablement: true
@@ -46,7 +47,7 @@ jobs:
       - name: Build site
         env:
           BUNDLE_GEMFILE: docs/Gemfile
-        run: bundle exec jekyll build --source docs --destination _site
+        run: bundle exec jekyll build --source docs --destination _site --baseurl "${{ steps.pages.outputs.base_path }}"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

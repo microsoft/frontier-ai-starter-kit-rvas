@@ -1,5 +1,12 @@
 ## Learnings
 
+### GitHub Pages baseurl / private-site root-serving gotcha — 2026-06-01
+
+- **Symptom:** Pages site 404s on every CSS/JS asset (e.g. `/ai-hackathon/assets/css/...`).
+- **Root cause:** When a Pages site's visibility is **Private**, GitHub serves it from a randomized subdomain at the ROOT (e.g. `random-name-xxxx.pages.github.io/`) with NO project-name path segment. But `docs/_config.yml` hardcodes `baseurl: "/ai-hackathon"`, and just-the-docs prepends that baseurl to every `relative_url` asset link — so assets resolve to `/ai-hackathon/assets/...`, which doesn't exist on a root-served site → 404.
+- **Fix pattern (do NOT touch `_config.yml`):** In `.github/workflows/deploy-pages.yml`, give the `actions/configure-pages@v6` step an `id: pages`, then pass its live output to the build: `jekyll build ... --baseurl "${{ steps.pages.outputs.base_path }}"`. `base_path` is `""` for a private root-served site and `/ai-hackathon` if flipped to Public — so the workflow self-corrects for BOTH visibilities. Keeping `_config.yml` untouched preserves local dev (`bundle exec jekyll serve`) and the public URL.
+- A sibling repo (`frontier-ghaw-hackathon`) hit and proved this exact fix.
+
 ### Cleanup + Lab-Generator batch — 2026-06-01
 
 - **`scripts/cleanup.sh` (backlog #7, [FWH §4.10]) — safety design:** safe-by-default. A
