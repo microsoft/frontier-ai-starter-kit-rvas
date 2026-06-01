@@ -44,6 +44,7 @@ python mcp_server.py                            # terminal 2
 # agent side
 az login                                        # keyless DefaultAzureCredential
 # .env: AZURE_AI_PROJECT_ENDPOINT, AZURE_AI_MODEL_DEPLOYMENT_NAME, ACTION_MCP_URL
+
 ```
 
 ## Per-step facilitation
@@ -58,7 +59,9 @@ az login                                        # keyless DefaultAzureCredential
   advisor's calendar. All three warrant approval. The registration hold is the one to dwell on.
 
 ### Step 2 — attach the McpTool
+
 Reference completion of `build_action_tool()`:
+
 ```python
 from azure.ai.agents.models import McpTool, RequiredMcpToolCall, SubmitToolApprovalAction, ToolApproval
 
@@ -68,14 +71,18 @@ def build_action_tool():
         server_url=os.environ["ACTION_MCP_URL"],
         # require_approval defaults to "always" — leave it on for action tools
     )
+
 ```
+
 - **Pitfall:** `server_label` must be `northfield_actions` or `validate.py --step 2` fails and the model
   may not find the tools. **Pitfall:** Agent Service only accepts **remote** MCP endpoints — `localhost`
   works from the SDK in-loop here, but for a hosted/public demo they must tunnel it (Container Apps /
   dev tunnel) and reset `ACTION_MCP_URL`.
 
 ### Step 3 — the approval loop (the heart of it)
+
 Reference completion of `run_with_approval()`:
+
 ```python
 def run_with_approval(agent_id, thread_id):
     run = agents.runs.create(thread_id=thread_id, agent_id=agent_id)
@@ -95,20 +102,25 @@ def run_with_approval(agent_id, thread_id):
             )
         run = agents.runs.get(thread_id=thread_id, run_id=run.id)
     return run
+
 ```
+
 - **Teaching points:** (1) the run **pauses** at `requires_action` — nothing executes until approval is
   submitted; (2) showing `call.name` + `call.arguments` to the human is the governance moment — don't
   let teams skip the print; (3) `approve=False` cleanly ends the run with no side effect.
+
 - **Pitfall:** SDK shape drift. Depending on `azure-ai-agents` version the approvals kwarg may be
   `tool_approvals=` (shown) or folded into `submit_tool_outputs`. If their installed version differs,
   send them to `references/sdk/foundry-sdk-py.md` and the MCP tool how-to. `validate.py --step 3` only
   checks the symbols are present and placeholders are gone — it does not pin the exact call shape.
+
 - **Pitfall:** forgetting to re-`get` the run inside the loop → infinite `requires_action`.
 
 ### Step 4 — end-to-end
 - `validate.py --step 4` does its **own** REST round-trip (create IT ticket → list → confirm) against
   the backend, independent of the agent, so you can verify the backend is wired even if a team's agent
   code is mid-flight.
+
 - The real proof for the team is: NL prompt → approve → agent reports a `ticket_id` → `curl
   /it-tickets` shows it. Then the **denial** path: deny → nothing created. Make every team run the
   denial — it's where the governance lesson lands.
@@ -118,8 +130,10 @@ def run_with_approval(agent_id, thread_id):
 - **Model never calls the tool** → wrong `server_label`/`server_url`, or MCP server down.
 - **Agent stalls after approval** → missing the re-`get`/poll, or (Responses API) missing
   `previous_response_id`.
+
 - **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.
+
 - **Team wants to auto-approve everything** → push back; the whole challenge is the approval gate.
 
 ## Timing (75 min)
@@ -135,7 +149,9 @@ def run_with_approval(agent_id, thread_id):
 - "How does an action tool change your threat model vs. a knowledge tool?" (bridge to Red Teaming)
 
 ## Checkpoint answer key
+
 With the backend running and `agent_with_actions.py` completed:
+
 ```text
 python validate.py --all
 # ✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080
@@ -143,6 +159,7 @@ python validate.py --all
 # ✅ Step 3 PASS — human tool-approval loop implemented
 # ✅ Step 4 PASS — action round-tripped through the backend (ticket ...)
 # ✅ ALL CHECKPOINTS PASS
+
 ```
 Steps 1 & 4 require the provided backend running; Steps 2 & 3 are static checks on the wiring file.
 Before completion, Steps 2/3 correctly FAIL on the unfilled `< PLACEHOLDER >` markers.

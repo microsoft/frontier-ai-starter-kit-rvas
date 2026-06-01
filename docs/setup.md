@@ -66,12 +66,14 @@ Choose this only if you cannot use containers.
 
 ```bash
 az login
+
 ```
 
 4. If your event uses a provided subscription, switch to it after sign-in:
 
 ```bash
 az account set --subscription "<your-subscription-name-or-id>"
+
 ```
 
 5. Confirm you can open Microsoft Foundry in the browser and reach the correct tenant.
@@ -91,6 +93,7 @@ After your environment is open and Azure sign-in succeeds, run the validation sc
 
 ```bash
 python resources/scripts/validate-environment.py
+
 ```
 
 A successful run should confirm your local tooling, Python environment, and Azure connectivity are ready for Challenge 00.

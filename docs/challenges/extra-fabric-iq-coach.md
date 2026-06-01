@@ -23,11 +23,14 @@ question. The demo lands when the seat count changes between two asks with **no 
 
 1. **Fabric capacity** — an **F-SKU** (F2 is enough) or a **Fabric trial** capacity assigned to a
    workspace. This is the gate; without it the Extra is impossible.
+
 2. **OneLake lakehouse** (e.g. `northfield_ops`) with a **`course_seats`** table:
    `course_code, section, capacity, enrolled, seats_open, updated_at`. Seed a handful of rows incl.
    **CS101** with a small `seats_open` (so you can drive it to 0 live for the demo).
+
 3. A **Fabric data-agent / Fabric IQ connection** the Foundry project can reach, plus the
    connection string / endpoint to hand teams in Step 2.
+
 4. Confirm the Foundry project's **managed identity** (keyless) or the supplied connection has read access
    to the lakehouse.
 
@@ -50,6 +53,7 @@ day. That's the doctrine the whole curriculum teaches; this Extra is where it bi
 ### Step 2 — attach the tool
 - **Pitfall:** teams drop the AI Search tool when adding Fabric. They must keep **both** — the routing
   rule only works if both sources are attached.
+
 - **Pitfall:** vague system instructions. The routing rule must name the trigger words
   ("seats / capacity / right now / wait time" → Fabric). Without it the model guesses and sometimes
   answers seat questions from stale FAQ text.
@@ -58,6 +62,7 @@ day. That's the doctrine the whole curriculum teaches; this Extra is where it bi
 - Drive the demo yourself: open Fabric, run
   `UPDATE course_seats SET seats_open = 0 WHERE course_code='CS101'`, then have the team re-ask. The
   answer flips to "no seats" with no re-index. That contrast *is* the learning outcome.
+
 - Verify the policy question still cites the **FAQ corpus** — if it routes to Fabric, the instructions
   need tightening.
 

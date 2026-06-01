@@ -42,12 +42,15 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 - **Protocol + port are load-bearing.** Hosted agents must listen on `0.0.0.0:8088` and declare the
   `responses` protocol (v `1.0.0`) in `agent.yaml`. A container that binds `127.0.0.1` or a different
   port will deploy but never become healthy.
+
 - **Reuse the Foundations persona.** The `instructions:` block should be the same grounded,
   cite-your-sources persona from Foundations Step 3 — don't let teams rewrite it here.
+
 - **The MAF server host** (`AzureAIAgentServerHost` or the equivalent in the current `agent-framework`
   release) implements the Responses contract for them. Teams that try to hand-roll a Flask `/responses`
   route can do it, but it's a time sink — steer them to the framework host. Verified reference:
   `foundry-samples/samples/python/hosted-agents/agent-framework/responses/`.
+
 - **Local smoke test** before any cloud work:
   `docker build --platform linux/amd64 -t niq:test hosted/ && docker run -p 8088:8088 niq:test`, then
   `curl -X POST http://localhost:8088/responses -d '{"input":"Where is the registrar?"}'`. If this
@@ -58,11 +61,14 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 - **Cloud build is the default** — most devcontainers don't have a working Docker daemon. The
   `--source-acr-auth-id "[caller]"` flag is **mandatory**; omitting it is the #1 `az acr build` failure
   (auth context missing). Verified command is in the README.
+
 - **Unique image tag every build.** Reusing `latest`/`v1` serves a stale layer and changes won't roll
   out. The README uses `$(date +%Y%m%d%H%M)`.
+
 - **ACR pull permission:** the Foundry project managed identity needs repository-scoped pull on the ACR
   (Foundry hosted agents use ABAC mode — `Container Registry Repository Reader`, **not** registry-level
   `AcrPull`). `azd ai agent` usually wires this; if the version fails to pull, this is why.
+
 - **`active` is the gate.** `az ai agent show --query "version,status"`; provisioning can take a couple
   of minutes. Don't let teams move to Step 3 on a `provisioning` version — invokes will return
   `424 FailedDependency` / `session_not_ready`.
@@ -73,10 +79,13 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
   bearer token) authenticates *into* the endpoint; (2) the **per-agent managed identity** is what the
   *agent* uses to reach the model and knowledge base. The teaching point is that the agent no longer
   rides on the student's credentials.
+
 - **Required role:** the caller needs `Azure AI User` on the project to invoke. A `403` on an
   authenticated call is almost always a missing role assignment, not bad code.
+
 - **Auth-enforced check:** an anonymous call (no `Authorization` header) must return `401`/`403`. If it
   returns `200`, something is misconfigured — escalate, don't ship.
+
 - **Responses route:** `{endpoint}/agents/{agentName}/endpoint/protocols/openai/responses`. Teams often
   fat-finger this path; have them print `base_url` before debugging deeper.
 
@@ -85,6 +94,7 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 - Hosted agents inherit the **project's** App Insights, so the spans land in the **same** tables the
   team queried in the Tracing challenge. The only new dimension is `cloud_RoleName`, which carries the
   agent/container name — that's how they scope KQL to hosted runs.
+
 - If a team skipped the Tracing challenge, they can still pass Step 4 via the portal **Run history** +
   **Tracing** tab; the `correlate.kql` reuse is the richer path but not required.
 
@@ -102,11 +112,13 @@ portal walkthrough.
 
 - **"`azd ai agent deploy` succeeded but invoke returns 424."** → version still provisioning. Wait for
   `status == active`.
+
 - **"`az acr build` fails with an auth error."** → missing `--source-acr-auth-id "[caller]"`.
 - **"My code change didn't take effect."** → reused image tag; rebuild with a fresh timestamp tag.
 - **"403 on an authenticated call."** → caller missing `Azure AI User` role on the project.
 - **"Where's the Flask app / managed endpoint from the old challenge?"** → removed. This is a hosted
   agent now; a UI is the separate *Build a UI* extra.
+
 - **"Container deploys but never goes healthy."** → not listening on `0.0.0.0:8088`, or wrong protocol
   in `agent.yaml`.
 

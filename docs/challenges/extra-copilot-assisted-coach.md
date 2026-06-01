@@ -23,10 +23,13 @@ you can prove it side-by-side.
 
 **None.** But verify the **enablement layer Livingston shipped** is present and wired in the student
 Codespace/devcontainer:
+
 - [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json) — 3 servers: `azure` (stdio `@azure/mcp`), `foundry-mcp`
   (http `https://mcp.ai.azure.com`), `microsoft-docs` (http `https://learn.microsoft.com/api/mcp`).
+
 - [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md) — the Search-Before-Implement
   rule + skills/MCP map.
+
 - [`.github/skills/`](https://github.com/olivomarco/ai-hackathon/tree/main/.github/skills) — the 7 Foundry skill **stubs** (progressive disclosure;
   installed on demand via `npx skills add`, **not** vendored — avoids context rot).
 
@@ -39,15 +42,18 @@ Codespace/devcontainer:
 ### Step 1 — enablement live
 - The common blocker is MCP servers **not connecting** (proxy/firewall). If `microsoft-docs` won't
   connect, the whole Extra is moot — fix networking first.
+
 - **Selective loading is mandatory:** they install only the skill matching their target challenge, not all
   of them. Loading everything causes context rot — the exact anti-pattern the curriculum warns about.
 
 ### Step 2 — rebuild assisted
 - Best targets: **Foundations Step 3** (agent create) or **Action Tools** (attach MCP tool) — small,
   self-contained, and API-churny enough that grounding visibly helps.
+
 - **Watch for:** the chat should show a `microsoft-docs`/`foundry-mcp` tool call *before* code. If Copilot
   just emits code from memory, the prompt didn't invoke the doctrine — have them explicitly say "check
   microsoft-docs for the current API first."
+
 - Enforce the **authoritative env names** (`AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`,
   `AZURE_FOUNDRY_AGENT_NAME`, `ACTION_MCP_URL`, etc.) so the generated code runs against the real project.
 
@@ -55,6 +61,7 @@ Codespace/devcontainer:
 - The money moment: same task, grounded vs under-specified. The grounded build uses a **current**
   signature; the guess often uses a renamed class, an old API version, or a removed parameter. Have them
   name the specific diff — that concrete artifact is the whole point.
+
 - Great place to reinforce the **coach inversion**: coaches load the *full* skill set to validate student
   solutions fast; students load selectively.
 

@@ -21,6 +21,7 @@ that a long-running agent **decouples** the caller's session from the work, and 
 ## Infra to pre-provision
 
 All already created by `azd up` (Foundations/Deploy), but **verify**:
+
 1. **ACR** exists and the team can push (or use ACR **cloud build** — no local Docker needed).
 2. **Hosted-agent endpoints** enabled on the project (`azd ai agent` works — same as Deploy challenge).
 3. **App Insights** wired: `APPLICATIONINSIGHTS_CONNECTION_STRING` present so background runs trace.
@@ -42,17 +43,20 @@ Two preview surfaces here: `azd ai agent` / `agent.yaml` (via `foundry-hosted-ag
 - This is the Deploy challenge applied to the *workflow* instead of the single agent. If they did Deploy,
   it's mostly reuse. **Pitfall:** forgetting to include `agent-framework` in the container
   `requirements.txt` → the workflow won't start in the image.
+
 - **Pitfall:** `ACTION_MCP_URL` still pointing at localhost → Action specialist fails remotely. Fix the URL.
 
 ### Step 2 — background run
 - The teaching beat: the submit call must **return immediately**. If they're blocking on completion, they
   haven't actually used the background path — they've just deployed a slow synchronous agent.
+
 - A good batch task: loop the Action sub-agent over a list of enrollment requests. Keep the list small for
   the demo (3–5) so it completes within the session but is visibly "a batch."
 
 ### Step 3 — poll + trace
 - The "close the tab, come back" demo: have them submit in one terminal, kill it, then **poll from a fresh
   process** with only the run id. Retrieving the result proves durability.
+
 - App Insights closes the loop: the background run's span tree (manager → specialists → actions) is the
   evidence. Reuse the Tracing challenge's KQL muscle — list spans by duration.
 

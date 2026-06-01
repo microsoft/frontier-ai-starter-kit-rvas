@@ -23,3 +23,6 @@
 ## Current state
 ### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
 PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/capstone-multi-agent/validate.py` (stdlib-only, 3 gating checks; advisory non-gating; compiles clean, self-tested green/red). Alongside: Capstone README+solution (Danny), 4 Advanced READMEs de-guided (Rusty), `scripts/cleanup.sh` + lab-generator (Livingston), three-tier README/docs (Linus). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
+
+### 2026-06-01 — Cross-agent note (Scribe merge batch)
+- Completed markdown QA audit for Linus's docs UI refresh and markdown normalization pass. No blocking regressions identified in scope; completion was silent, recorded through orchestration + session logs.

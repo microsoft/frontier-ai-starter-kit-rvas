@@ -26,6 +26,7 @@ that answers from the FAQ corpus **with citations**.
   TIER 3  CAPSTONE (open-ended · design brief)
           Northfield IQ — Multi-Agent: a MAF triage/router that fans out
           to specialist agents (knowledge, actions) and converges.
+
 ```
 
 ## Tier 1 · Foundations
@@ -104,6 +105,7 @@ modular Advanced tier.
 
 - **Path A — Beginner (default, recommended).** Complete **Foundations** as one guided, linear challenge
   (4 ordered steps), then **pick Advanced challenges in any order**.
+
 - **Path B — Advanced-skip (for teams who already know Foundry basics).** Run **one bootstrap**
   (~10–15 min) that materializes the Foundations end-state, verify a **single checkpoint**, then jump
   straight to the Advanced tier. You skip the guided *learning*, not the prerequisites.
@@ -124,6 +126,7 @@ modular Advanced tier.
         │  Action Tools   Evaluation+RedTeam   Tracing   Deploy as Hosted Agent  │
         │  Extras:  Fabric IQ · Voice Live · Magentic · Hosted MAF · UI · Copilot │
         └────────────────────────────────────────────────────────────────────────┘
+
 ```
 
 **The bootstrap checkpoint (single gate for Path B):**
@@ -132,6 +135,7 @@ modular Advanced tier.
 azd up                                    # provision Foundry + AI Search + App Insights (+ ACR for deploy)
 ./scripts/setup-foundations.sh            # deploy model, create agent, index corpus, build IQ knowledge base
 python scripts/validate-foundations.py    # ✅ asserts the Foundations end-state exists
+
 ```
 
 `validate-foundations.py` must pass **green** before a Path-B team starts any Advanced challenge. Every

@@ -49,16 +49,20 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/olivomarco/a
 **Goal:** Your editor has the instructions, the 3 MCP servers, and the Foundry skills available.
 
 **Tasks:**
+
 1. Open [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json) and start/verify the three servers (`azure`,
    `foundry-mcp`, `microsoft-docs`) are connected in your editor's MCP panel.
+
 2. Open [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md) and read the
    **"Search Before Implement"** golden rule — this is the behavior you're about to exploit.
+
 3. List the available skills under [`.github/skills/`](https://github.com/olivomarco/ai-hackathon/tree/main/.github/skills) (e.g.
    `foundry-projects-resources`, `foundry-models`, `foundry-iq-knowledge-bases`, `foundry-toolboxes`,
    `foundry-observability`, `foundry-hosted-agents`, `foundry-workflows`). Install the one matching your
    target challenge on demand: `npx skills add microsoft/skills --skill <name>`.
 
 **Success Criteria:**
+
 - [ ] All three MCP servers show **connected** in the editor.
 - [ ] You can name the skill that maps to the challenge you'll rebuild.
 
@@ -71,16 +75,20 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/olivomarco/a
 **Goal:** Re-create one challenge's core artifact by prompting Copilot, not by hand.
 
 **Tasks:**
+
 1. Choose **one** challenge you already did manually (good picks: **Foundations Step 3** — create an
    agent; or **Action Tools** — attach an MCP tool).
+
 2. Prompt Copilot to build it, **explicitly asking it to search first**, e.g.:
    *"Using the `foundry-projects-resources` skill, and after checking `microsoft-docs` for the current
    `azure-ai-projects` agent-create API, write code to create the Northfield IQ agent against
    `AZURE_AI_PROJECT_ENDPOINT` with deployment `AZURE_AI_MODEL_DEPLOYMENT_NAME`."*
+
 3. Watch Copilot **call `microsoft-docs` / `foundry-mcp` first**, then generate. Run the result against
    your live `.env`.
 
 **Success Criteria:**
+
 - [ ] Copilot performs a doc/MCP lookup **before** writing the SDK code (visible in the chat).
 - [ ] The generated code runs against your real Foundry project (uses the authoritative env names).
 
@@ -94,13 +102,17 @@ before code generation, and the generated script runs green against your project
 **Goal:** Make the value of MCP-grounding undeniable.
 
 **Tasks:**
+
 1. Ask Copilot the *same* task **with MCP context** vs. a deliberately under-specified prompt that
    invites it to guess. Compare the two outputs.
+
 2. Identify at least one place the grounded answer used a **current** signature the un-grounded one got
    wrong or stale (e.g. a renamed class, a changed parameter, a new API version).
+
 3. Capture the contrast for your readout — this is the teaching artifact.
 
 **Success Criteria:**
+
 - [ ] You can point to a concrete API detail the grounded build got right and the guess got wrong.
 - [ ] Your write-up states *why* MCP grounding reduces hallucinated SDK calls.
 

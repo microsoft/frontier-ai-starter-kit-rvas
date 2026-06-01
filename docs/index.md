@@ -12,6 +12,7 @@ description: Kick off the What The Hack experience and navigate the three-tier M
     <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Get Started</a>
     <a class="btn btn-outline" href="{{ '/coach-hub' | relative_url }}">Coaches: Start here</a>
   </div>
+
 </div>
 
 ## What is this?
@@ -25,14 +26,17 @@ This edition focuses on Microsoft Foundry. It runs in **three tiers**. **Tier 1 
     <h3>Three tiers, two paths</h3>
     <p>Start with the guided Foundations challenge, branch into modular Advanced challenges in any order — or bootstrap straight to the Advanced tier — then compose it all into a multi-agent Capstone.</p>
   </div>
+
   <div class="quick-card">
     <h3>Built for event day</h3>
     <p>Time-boxed modules, mobile-friendly docs, and strong navigation for students and coaches moving fast.</p>
   </div>
+
   <div class="quick-card">
     <h3>Coach-guided discovery</h3>
     <p>Coaches help unblock, question, and steer without taking the keyboard away from participants.</p>
   </div>
+
 </div>
 
 ## Three tiers

@@ -33,3 +33,11 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: root `README.m
 - Fixed to **three-tier**: description + prose + quick-card + heading now say three tiers; added a Tier 3 Capstone blurb + table + "Start the Capstone →" button linking `challenges/capstone-multi-agent`.
 - Linked all 4 Foundations steps to their verified heading anchors using the home-page prefix `challenges/foundations#...` (home page links use the `challenges/` prefix, unlike `challenges/index.md` which uses bare `foundations#...`).
 - **Canonical source of truth = `docs/challenges/index.md`** (already correct three-tier). The Home page is a summary mirror of it — keep them aligned, do not let Home drift.
+
+### 2026-06-01 — Docs visual refresh + markdown spacing normalization
+- A maintainable Just-the-Docs redesign can stay inside `docs/_sass/custom/custom.scss` + `docs/_sass/color_schemes/default.scss` without changing layouts/plugins: typography, tokenized colors, nav polish, hero treatment, card/table surfaces, and button hierarchy all updated in theme-safe CSS only.
+- For this repo, broad markdown rendering defects were primarily spacing-separation issues (heading/list/code block adjacency). A conservative normalization pass that inserts blank lines around headings, list blocks, and checkpoint code fences fixed defects without changing wording/content architecture.
+- `bundle exec jekyll build` is still the right sanity check, but in this environment it fails until `bundle install` is run in `docs/` (missing gem set). When gems are absent, diff review + structural spacing checks are the practical fallback.
+
+### 2026-06-01 — Cross-agent note (Scribe merge batch)
+- Basher completed a markdown QA audit for the docs UI/formatting pass and flagged no blocking regressions; completion arrived as silent execution, so the Scribe batch recorded it via orchestration log evidence.

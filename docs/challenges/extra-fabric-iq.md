@@ -40,6 +40,7 @@ right-now question → Fabric IQ*.
         ▼
    Northfield IQ Assistant ──┬──▶ AI Search knowledge base   (static: policy, deadlines)
                              └──▶ Fabric IQ tool  ──▶ OneLake (LIVE: seats, capacity, ETAs)
+
 ```
 
 ---
@@ -49,13 +50,16 @@ right-now question → Fabric IQ*.
 **Goal:** You can see a live operational table in OneLake that the agent will query.
 
 **Tasks:**
+
 1. Open the Fabric workspace your coach provisioned and find the lakehouse (e.g. `northfield_ops`).
 2. Locate the live table — for this Extra, `course_seats` with columns
    `course_code, section, capacity, enrolled, seats_open, updated_at`.
+
 3. Run a quick SQL/Spark preview in Fabric: `SELECT course_code, seats_open FROM course_seats WHERE course_code = 'CS101'`.
    Note the value — you'll prove the agent returns the **same** number.
 
 **Success Criteria:**
+
 - [ ] You can read at least one row of live data and record its current `seats_open` value.
 - [ ] You know the lakehouse + table name your agent will be pointed at.
 
@@ -70,16 +74,20 @@ right-now question → Fabric IQ*.
 **Goal:** Attach Fabric IQ to the Northfield IQ Assistant as a second grounding tool.
 
 **Tasks:**
+
 1. In your Foundry project, create a **Fabric** connection pointing at the workspace/lakehouse (your
    coach provides the connection string / Fabric data-agent endpoint).
+
 2. Using the **`foundry-toolboxes`** skill pattern, attach the **Fabric IQ tool** to your existing agent
    (`AZURE_FOUNDRY_AGENT_NAME`) alongside the AI Search knowledge-base tool from Foundations Step 4.
    **Search before you implement:** query `foundry-mcp` and `microsoft-docs` for the current Fabric tool
    class + constructor — this surface is preview and moves.
+
 3. Update the agent's system instructions with a **routing rule**: *"For real-time availability
    (seats, capacity, wait times) use the Fabric tool; for policies and procedures use the knowledge base."*
 
 **Success Criteria:**
+
 - [ ] The agent lists **two** grounding tools: the AI Search knowledge base **and** the Fabric IQ tool.
 - [ ] The system instructions contain an explicit source-routing rule.
 
@@ -93,14 +101,17 @@ tool attached; a Playground test run invokes the Fabric tool for a "right now" q
 **Goal:** Show the agent answering a real-time question with a number that matches OneLake.
 
 **Tasks:**
+
 1. In the Playground (or via the Responses API), ask: **"Are there any seats left in CS101 right now?"**
 2. Confirm the answer's number matches the `seats_open` you read in Step 1.
 3. **Mutate the data** (have your coach update `course_seats`, or run an UPDATE in Fabric), then ask
    again — the agent's answer should change **without re-indexing anything**.
+
 4. Ask a **policy** question ("What's the add/drop deadline?") and confirm it still routes to the FAQ
    knowledge base, not Fabric.
 
 **Success Criteria:**
+
 - [ ] The seat answer matches live OneLake data on the first ask.
 - [ ] After mutating the table, a re-ask returns the **new** number with no re-index step.
 - [ ] A policy question still cites the FAQ knowledge base (correct source routing).

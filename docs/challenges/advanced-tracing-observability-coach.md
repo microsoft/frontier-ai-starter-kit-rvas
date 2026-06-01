@@ -45,11 +45,13 @@ Tell-tale signs and the fix:
   `.env`. If a team is on the bootstrap path and it's missing, the SDK call
   `project.telemetry.get_application_insights_connection_string()` resolves it (shown in the README).
   Portal path: project → **Monitoring → Application analytics** → copy connection string.
+
 - **SDK import note:** the verified instrumentor import in the current stack is
   `from azure.ai.projects.telemetry import AIProjectInstrumentor` then `.instrument()`. Some teams may
   see tutorials using `project.telemetry.enable()` — that's the convenience wrapper around the same
   instrumentor and is equally acceptable. Either passes the checkpoint as long as message-content
   capture is on.
+
 - If a team hits an `ImportError` on `azure.ai.projects.telemetry`, they're on an old pinned version —
   have them reinstall `requirements.txt` (`azure-ai-projects>=2.1.0`).
 
@@ -59,8 +61,10 @@ Tell-tale signs and the fix:
   bare model call. If a team's question doesn't trigger the knowledge base, the span tree is thin —
   steer them to a question that's clearly answerable only from the FAQ corpus (financial aid docs,
   housing deadlines, registration holds).
+
 - **Latency expectation:** spans take 1–3 min to land. Teams will re-run thinking it failed and create
   duplicate traces. Tell them to wait, then refresh. The `response.id` is the anchor for finding it.
+
 - Auth errors here are almost always `DefaultAzureCredential` (not logged in / wrong subscription),
   not tracing. Have them run `az account show` first.
 
@@ -68,8 +72,10 @@ Tell-tale signs and the fix:
 
 - The span hierarchy: a parent **agent/response** span, with child **model** (`gen_ai` attributes) and
   **retrieval** spans; a **tool** span appears only if they attached the Action Tools MCP tool.
+
 - Token attributes to point at: `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`,
   `gen_ai.usage.total_tokens`. Latency = the span `duration`.
+
 - This step's checkpoint is portal-state; `validate.py --step 3` confirms via App Insights that a
   multi-span trace exists for a recent run (it can't read the portal UI directly).
 
@@ -97,6 +103,7 @@ spans
             total_latency_ms = sum(duration),
             span_count = count()
 | extend est_cost_usd = round(total_tokens / 1000.0 * price_per_1k, 6)
+
 ```
 
 Coaching notes:
@@ -104,9 +111,11 @@ Coaching notes:
 - **`dependencies` vs `traces` vs `requests`:** OTel spans map to `dependencies` (outbound calls like
   model/retrieval) and `requests` (the inbound agent invocation); `traces` holds log events. The
   `union` is what gives the full picture — teams that query only `dependencies` miss the parent request.
+
 - **`customDimensions` keys vary slightly** by SDK version. If `gen_ai.usage.total_tokens` is null,
   have them run `dependencies | where operation_Id == opId | project customDimensions` and read the
   actual key names — don't let them assume.
+
 - **Cost is a calculation, not a lookup.** Any sane per-1K rate passes; the learning objective is
   deriving cost from token telemetry, not knowing the exact price.
 
@@ -125,6 +134,7 @@ the full cost rollup.
 - **"Why are my prompt/answer fields empty?"** → set-env-before-import. Walk the file top-down.
 - **"Nothing shows in App Insights."** → wait 1–3 min; verify the conn string; verify
   `configure_azure_monitor` ran. Check they didn't point at a different App Insights resource.
+
 - **"Which table has the tokens?"** → `dependencies`, in `customDimensions["gen_ai.usage.*"]`.
 - **"Do I need the tool span?"** → no; it only exists if they did Action Tools. The challenge is
   complete with model + retrieval spans.

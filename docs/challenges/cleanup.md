@@ -25,6 +25,7 @@ A bare run **only prints** what it would tear down. Nothing destructive happens 
 ./scripts/cleanup.sh --yes           # actually tear down (azd down + local procs)
 ./scripts/cleanup.sh --local-only    # only stop local Action Tools processes
 ./scripts/cleanup.sh --yes --purge   # also --purge soft-deletable resources (Foundry / AI)
+
 ```
 
 ## What to clean up
@@ -32,8 +33,10 @@ A bare run **only prints** what it would tear down. Nothing destructive happens 
 - **Azure resources** — `azd down` removes the resource group provisioned by `azd up` (Foundry + AI
   Search + App Insights + ACR). Add `--purge` to clear soft-deleted Foundry/AI resources so their
   names are immediately reusable.
+
 - **Local processes** — the Action Tools REST API and FastMCP server you started locally. Use
   `--local-only` to stop just those without touching the cloud.
+
 - **Costs to watch** — AI Search and any provisioned-throughput model deployments are the usual spend
   drivers; the dry-run prints them so you can confirm before deleting.
 

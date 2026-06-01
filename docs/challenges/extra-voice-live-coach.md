@@ -23,9 +23,11 @@ session.
 
 1. **Voice Live API access** on an Azure AI Speech / Foundry resource in a **supported region** —
    confirm availability for your event subscription/region *weeks ahead*; it's newer and not everywhere.
+
 2. **Keyless RBAC** for the project identity (or a key as workshop fallback) on the Speech/Voice resource.
 3. **Client hardware:** each team needs a laptop with a **working mic + speakers** (headset is better —
    avoids feedback/echo in a noisy room). This is the #1 silent failure.
+
 4. Confirm `azure-ai-voicelive` installs cleanly in the devcontainer/Codespace (it's in the extras pins).
 
 > **Flag for the coordinator:** if the venue is loud, headsets or a quiet breakout corner make or break
@@ -42,16 +44,19 @@ for the current connect call and event names before coding. The event names in S
 ### Step 1 — connect
 - **Pitfall:** binding to a bare model instead of the agent → spoken answers lose persona/grounding.
   They must pass `AZURE_FOUNDRY_AGENT_NAME` so turns run through the Northfield agent.
+
 - Auth errors here are usually region/access, not code. Check the resource supports Voice Live.
 
 ### Step 2 — duplex loop
 - **Pitfall:** buffering the entire response before playback → kills the latency demo. Play audio deltas
   as they stream. If it sounds laggy, this is why.
+
 - Mic permissions on macOS/Linux trip people up — confirm the OS granted the terminal/IDE mic access.
 
 ### Step 3 — natural conversation
 - VAD/turn-detection and barge-in are the "feels real" features. If a team is short on time, VAD is the
   priority; barge-in is the flourish.
+
 - On the **Step 4 grounded** agent, confirm the spoken answer is actually grounded (cite-worthy content),
   proving the voice path didn't bypass the knowledge base.
 

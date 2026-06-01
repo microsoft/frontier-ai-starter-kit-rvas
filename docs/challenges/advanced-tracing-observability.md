@@ -42,6 +42,7 @@ you can watch it run.
         ▼                                   ▼
   Foundry portal  ◀──── App Insights ────▶  KQL (dependencies / traces / requests)
    Tracing tab           (OTel exporter)
+
 ```
 
 ## What you will need
@@ -53,6 +54,7 @@ you can watch it run.
 - An **Application Insights** resource linked to your Foundry project. Foundations provisions one;
   its connection string lands in `.env` as `APPLICATIONINSIGHTS_CONNECTION_STRING`. If that variable
   is missing, see Step 1 — you will fetch it from the project.
+
 - Packages from `requirements.txt` (already installed in the devcontainer):
   `azure-ai-projects`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
 
@@ -70,9 +72,11 @@ you can watch it run.
 1. Confirm your project has an App Insights connection. If `APPLICATIONINSIGHTS_CONNECTION_STRING` is
    not already in `.env`, fetch it from the project and add it (the portal shows it under
    **Monitoring → Application analytics**, or read it via the SDK as shown below).
+
 2. Create `challenges/advanced-tracing-observability/trace_setup.py` that wires tracing **in the exact
    order below**. The two `os.environ[...]` lines MUST run **before** any `azure.ai.*` import — this is
    the single most common mistake in this challenge (see the gotcha box).
+
 3. Run the file. It should print that instrumentation is enabled and the App Insights connection was
    resolved, without emitting spans yet.
 
@@ -117,6 +121,7 @@ def enable_tracing() -> AIProjectClient:
 
 if __name__ == "__main__":
     enable_tracing()
+
 ```
 
 > ⚠️ **The "set env before import" gotcha.** If you put the two `os.environ[...]` assignments *after*
@@ -135,6 +140,7 @@ if __name__ == "__main__":
 ```bash
 python validate.py --step 1
 # expected: "✅ Step 1 PASS — instrumentation wired, App Insights connection resolved"
+
 ```
 
 > _Coach note: see solution.md._
@@ -151,8 +157,10 @@ plus a tool span if Action Tools is attached).
 1. Create `challenges/advanced-tracing-observability/traced_run.py`. Import and call
    `enable_tracing()` from Step 1 **first**, then ask the Northfield IQ Assistant a grounded question
    that forces a knowledge-base lookup — e.g. *"What documents do I need for financial aid?"*
+
 2. Drive the agent through the Responses API against your `AZURE_FOUNDRY_AGENT_NAME`. Print the answer and
    the trace/operation id so you can find the run later.
+
 3. Run it. Then **wait 1–3 minutes** for the spans to land in App Insights.
 
 ```python
@@ -178,6 +186,7 @@ response = client.responses.create(
 print("Q:", QUESTION)
 print("A:", response.output_text)
 print("response id:", response.id)   # use this to locate the trace
+
 ```
 
 **Success Criteria:**
@@ -193,6 +202,7 @@ print("response id:", response.id)   # use this to locate the trace
 python challenges/advanced-tracing-observability/traced_run.py
 python validate.py --step 2
 # expected: "✅ Step 2 PASS — agent run emitted >=1 GenAI span to App Insights"
+
 ```
 
 > _Coach note: see solution.md._
@@ -208,6 +218,7 @@ model, retrieval, and (if present) tool spans.
 
 1. In the Foundry portal, open your project → **Tracing** (under Observability / Monitoring). Find the
    trace for the run you just made (sort by most recent; match the timestamp).
+
 2. Expand the trace into its **span tree**. Identify and note:
    - the **model** span — look for the `gen_ai.usage.*` token attributes,
    - the **retrieval** span — the knowledge-base / AI Search query and the documents returned,
@@ -228,6 +239,7 @@ model span exposing `gen_ai.usage.total_tokens`. Capture the trace's **operation
 ```bash
 python validate.py --step 3
 # expected: "✅ Step 3 PASS — span tree present with model + retrieval spans"
+
 ```
 
 > _Coach note: see solution.md._
@@ -252,6 +264,7 @@ question and surfaces token, latency, and cost signals.
    | project timestamp, operation_Id, name, duration_ms = duration,
              total_tokens = toint(customDimensions["gen_ai.usage.total_tokens"])
    | order by timestamp desc
+
    ```
 
 2. Pivot to a **single end-to-end correlation** — replace the placeholder with your `operation_Id`
@@ -267,6 +280,7 @@ question and surfaces token, latency, and cost signals.
              output_tokens = toint(customDimensions["gen_ai.usage.output_tokens"]),
              total_tokens  = toint(customDimensions["gen_ai.usage.total_tokens"])
    | order by timestamp asc
+
    ```
 
 3. Extend the correlation query to **surface token, latency, and cost** in one summary row. Compute
@@ -282,6 +296,7 @@ question and surfaces token, latency, and cost signals.
                total_latency_ms = sum(duration),
                span_count       = count()
    | extend est_cost_usd = round(total_tokens / 1000.0 * price_per_1k, 6)
+
    ```
 
 **Success Criteria:**
@@ -289,6 +304,7 @@ question and surfaces token, latency, and cost signals.
 - [ ] The starter query returns ≥1 row for your run.
 - [ ] The correlation query returns **all** spans for one `operation_Id` in timestamp order (you can
       see model and retrieval, plus tool if attached).
+
 - [ ] The summary query outputs `total_tokens`, `total_latency_ms`, and an `est_cost_usd` for the run.
 - [ ] You save your final correlation query to
       `challenges/advanced-tracing-observability/correlate.kql`.
@@ -298,6 +314,7 @@ question and surfaces token, latency, and cost signals.
 ```bash
 python validate.py --step 4
 # expected: "✅ Step 4 PASS — correlate.kql present and returns end-to-end spans for one run"
+
 ```
 
 > _Coach note: see solution.md._

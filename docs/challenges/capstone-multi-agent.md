@@ -44,14 +44,18 @@ By the end, your team can:
 
 1. **Decompose** a monolithic agent into specialist roles with explicit, non-overlapping
    responsibilities (the *role-as-agent* pattern).
+
 2. Use MAF **primitives** — Executors, Edges, Workflows, Events — and the `WorkflowBuilder` to wire a
    graph of agents.
+
 3. Build a **sequential** workflow first, then evolve it to **parallel fan-out** with a **fan-in** join.
 4. Add a **triage/router** that *decides* which specialist(s) to invoke — the step beyond a static
    fan-out.
+
 5. Pass **typed (Pydantic) data contracts** between agents instead of regex-parsing prose.
 6. **Visualize first in DevUI** (green = done / purple = running / black = pending), **then instrument**
    with the OTel tracing you already learned — and confirm a **multi-agent span tree**.
+
 7. *(Deploy variant)* Host the workflow as a **long-running / background** agent that keeps working
    after the tab is closed.
 
@@ -82,6 +86,7 @@ artifact you already built**; the triage and escalation agents are new, small, *
                          │   SYNTHESIZER  (fan-in)   │  merges specialist outputs into
                          │                           │  one cited, governed answer
                          └──────────────────────────┘
+
 ```
 
 **Reuse, don't rebuild:**
@@ -113,6 +118,7 @@ WorkflowBuilder()
   .add_edge(triage_executor, knowledge_executor)
   .add_edge(knowledge_executor, synthesizer_executor)
   .build()
+
 ```
 
 ### Pass 2 — parallel fan-out + fan-in
@@ -128,6 +134,7 @@ WorkflowBuilder()
   .add_edge(knowledge_executor, synthesizer_executor)  # fan-in
   .add_edge(action_executor,    synthesizer_executor)  # fan-in
   .build()
+
 ```
 
 **Typed contracts, end-to-end.** Executors pass **typed Pydantic messages** (e.g.
@@ -147,6 +154,7 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 1. **DevUI first.** Launch the workflow in MAF's **DevUI** and *watch* the graph light up as a question
    flows through (green = done, purple = running, black = pending). Build intuition before rigor — you
    should be able to *see* the fan-out happen and the fan-in wait for both branches.
+
 2. **Then instrument.** Turn on the **OTel GenAI tracing** from the Tracing & Observability challenge
    (set the env flags **above** all `azure.ai.*` imports). Re-run one question and confirm you now get a
    **multi-span tree across agents** — triage → fan-out → fan-in — correlated by `operation_Id`. The
@@ -193,12 +201,15 @@ Your submission **passes** if **all** of these are demonstrably true. You show i
 
 - [ ] **≥ 3 agents** with distinct roles, at least one **router/triage** that *decides* routing and at
       least two **specialists**.
+
 - [ ] The workflow runs **both** a sequential **and** a **parallel fan-out** topology (show both graphs).
 - [ ] **Typed Pydantic contracts** flow between agents — no free-text regex parsing between hops.
 - [ ] At least one specialist reuses the **Foundations KB** (grounded, cited) and one reuses the
       **Action Tools approval loop** (governed).
+
 - [ ] The run is **visualized in DevUI** **and** **traced** end-to-end (a multi-agent span tree by
       `operation_Id`).
+
 - [ ] A **2-minute demo** narrates one question's journey through the team.
 - [ ] *(Stretch / deploy variant)* the workflow is **hosted** with a **background / long-running** run
       that completes after the tab is closed.
@@ -216,6 +227,7 @@ The non-structural criteria (DevUI visual, the 2-minute demo, the hosted backgro
 # forthcoming — the structural subset of the acceptance criteria
 python validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
+
 ```
 
 ---
@@ -232,14 +244,19 @@ python validate.py --all
 ## Tips
 - **Design before you wire.** Sketch the org-chart and the Pydantic contracts on paper first. The graph
   is easy once the roles and the message types are clear.
+
 - **Sequential before parallel, always.** Get one question through Triage → Knowledge → Synthesizer
   before you add the Action branch and the fan-in. Concurrency hides bugs.
+
 - **Typed contracts beat regex.** If you find yourself parsing the previous agent's prose with a regex,
   stop — define a Pydantic model and pass it. This is graded *and* it's the thing that makes the system
   maintainable.
+
 - **DevUI is your debugger.** If a branch never lights up, your triage didn't route to it. If the
   synthesizer fires before both branches finish, your fan-in edges are wrong.
+
 - **Set the trace env flags before importing the SDK** — same gotcha as the Tracing challenge. Flags set
   after the first `azure.ai.*` import are silently ignored.
+
 - **Reuse means reuse.** The Knowledge and Action agents already work. Wrap them as executors — don't
   reimplement grounding or the approval loop.

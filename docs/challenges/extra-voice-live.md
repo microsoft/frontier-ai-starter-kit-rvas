@@ -33,6 +33,7 @@ orchestrates the full duplex loop for you.
 ```text
    🎤 mic ──▶ Voice Live (STT) ──▶ Northfield IQ Assistant ──▶ Voice Live (TTS) ──▶ 🔊 speaker
               └────────────────── one low-latency streaming session ──────────────────┘
+
 ```
 
 ---
@@ -42,11 +43,14 @@ orchestrates the full duplex loop for you.
 **Goal:** Open a Voice Live session bound to your Northfield agent and confirm the handshake.
 
 **Tasks:**
+
 1. Install the client SDK (`pip install azure-ai-voicelive`) and confirm mic + speaker access on your
    machine.
+
 2. Using the **`azure-ai`** speech skill pattern, open a Voice Live session against your Foundry
    endpoint. **Search before you implement:** query `microsoft-docs` for the *current* `azure-ai-voicelive`
    connect signature — this API is new and moves.
+
 3. Bind the session to your existing agent (`AZURE_FOUNDRY_AGENT_NAME`) so spoken turns run *through your
    grounded agent*, not a generic model. Configure a voice (e.g. a neural voice) and the audio formats.
 
@@ -54,6 +58,7 @@ orchestrates the full duplex loop for you.
 `AZURE_AI_MODEL_DEPLOYMENT_NAME`.
 
 **Success Criteria:**
+
 - [ ] The client establishes a Voice Live session without auth errors.
 - [ ] The session is bound to your Northfield agent (not a bare model).
 
@@ -66,13 +71,17 @@ orchestrates the full duplex loop for you.
 **Goal:** Ask a question out loud and hear the assistant answer.
 
 **Tasks:**
+
 1. Stream microphone audio into the session and handle the streamed audio response, playing it back on
    your speakers.
+
 2. Handle the core session events: input audio started/stopped, response audio deltas, and
    response-done. Play audio deltas as they arrive (don't wait for the full response — that's the latency win).
+
 3. Ask: **"When does fall registration open?"** and listen to the spoken answer.
 
 **Success Criteria:**
+
 - [ ] Speaking a question produces an **audible** spoken answer.
 - [ ] Audio plays back incrementally (you hear it start before the full answer is computed).
 
@@ -86,13 +95,16 @@ short screen+audio recording for the readout.
 **Goal:** Make it feel like a conversation, not a walkie-talkie.
 
 **Tasks:**
+
 1. Enable **server-side voice activity detection (VAD)** / turn detection so you don't push-to-talk —
    the assistant detects when you've stopped speaking.
+
 2. Enable **barge-in** (interrupt): if you start talking while it's answering, it stops and listens.
 3. (If on the Step 4 grounded agent) Ask a corpus question ("What's the tuition refund policy?") and
    confirm the **spoken** answer reflects grounded content — the voice path still uses your knowledge base.
 
 **Success Criteria:**
+
 - [ ] Turn-taking works without manual push-to-talk.
 - [ ] You can interrupt (barge-in) mid-answer and it yields.
 - [ ] (Grounded agent) a spoken answer reflects FAQ-corpus content.

@@ -1,6 +1,6 @@
 # Squad Decisions
 
-**Last Updated:** 2026-06-01 (merged inbox: +1 entry — Livingston archived 7 internal planning docs to `.squad/planning/`)
+**Last Updated:** 2026-06-01 (merged inbox: +1 entry — Linus docs UI refresh + markdown normalization policy)
 
 ---
 
@@ -610,4 +610,17 @@ Step 4's heading has two spaces before `*(` and a stripped `*(←`, producing th
 - Document architectural decisions here
 - Keep history focused on work, decisions focused on direction
 - Decision merges occur at end of agent batch cycles
+
+---
+
+## Inbox Merge — 2026-06-01 Batch
+
+### Docs UI Refresh + Markdown Normalization Policy — Linus
+**Author:** Linus (Frontend Dev)  
+**Date:** 2026-06-01  
+**Status:** Implemented (merged from inbox)
+
+**Decision:** Adopt a token-based Just-the-Docs visual system in `docs/_sass/custom/custom.scss` and `docs/_sass/color_schemes/default.scss`, while preserving existing content architecture and Jekyll pipeline constraints. Standardize markdown spacing separation around headings, lists, and checkpoint fences across `docs/` to prevent run-on rendering defects.
+
+**Why:** Requested UI modernization and markdown rendering stability improvements without changing challenge structure or breaking GitHub Pages compatibility.
 

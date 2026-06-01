@@ -21,6 +21,7 @@ a planner**: small, sharp specialists beat one do-everything agent, and the mana
 ## Infra to pre-provision
 
 None beyond Foundations. Confirm:
+
 - `agent-framework` installs in the devcontainer (extras pin).
 - **DevUI** launches locally.
 - The **Action Tools backend** is running (`ACTION_MCP_URL` reachable) — the Action sub-agent needs it.
@@ -35,6 +36,7 @@ re-query rather than guess.
 ## Reference shape (for your eyes — adapt to the live API)
 
 Four specialists, then a Magentic manager composing them:
+
 ```python
 # Illustrative ONLY — confirm current names via microsoft-docs before using.
 from agent_framework import ChatAgent  # name/path may differ in current SDK
@@ -46,6 +48,7 @@ escalation = ChatAgent(name="Escalation", instructions="Draft a human handoff wh
 
 # Magentic manager plans which specialist to call per task.
 workflow = MagenticBuilder().participants(triage, knowledge, action, escalation).build()
+
 ```
 The point is the **shape** (4 specialists + planner), not these exact symbols.
 
@@ -54,18 +57,22 @@ The point is the **shape** (4 specialists + planner), not these exact symbols.
 ### Step 1 — four specialists
 - **Pitfall:** instructions too broad → agents overlap and the manager can't route cleanly. Push for
   *one job each*. Knowledge must be grounded; Action must hold the MCP tool.
+
 - `validate.py --step 1` checks the four agents are defined with distinct roles.
 
 ### Step 2 — Magentic manager
 - The composite prompt ("can't log in **and** drop CS101") is designed to force ≥2 specialists. If the
   manager only calls one, the manager instructions aren't decomposing the request — tighten them.
+
 - **Critical:** the Action path must still honor the **approval loop** from Action Tools. Composing
   agents does not remove human-in-the-loop on writes.
+
 - `validate.py --step 2` asserts ≥2 specialists fire on the composite request.
 
 ### Step 3 — DevUI
 - This is the demo. Green/purple nodes make the *live planning* visible — that's the "aha." Have them
   screenshot a mid-run graph.
+
 - The out-of-scope prompt ("change my final grade") must route to **Escalation**, proving the manager
   refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.
 

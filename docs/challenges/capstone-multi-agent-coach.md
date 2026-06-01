@@ -41,15 +41,19 @@ ships a *fixed* fan-out, FWH a *fixed* portal DAG. The open-endedness is the poi
               └───────────┼───────────┘
                           ▼
                      SYNTHESIZER (fan-in → one cited, governed answer)
+
 ```
 
 - **Triage / Router** — new, tool-less. Classifies the request and emits a **typed** routing decision
   (which specialists, why). This is the "decides routing" criterion — a hard-coded `if` is *not* a
   router; the classification must come from the model.
+
 - **Knowledge specialist** — **reuse the Foundations KB agent** verbatim, wrapped as an executor. It
   already grounds + cites. Do not let teams reimplement RAG.
+
 - **Action specialist** — **reuse the Action Tools agent + approval loop** verbatim, wrapped as an
   executor. The human-approval gate must survive the wrap.
+
 - **Escalation** — new, tool-less. Produces a clean human-handoff for out-of-scope requests.
 - **Synthesizer** — new, fan-in. Merges specialist outputs into one cited, governed answer.
 
@@ -67,6 +71,7 @@ WorkflowBuilder() \
   .add_edge(triage_executor, knowledge_executor) \
   .add_edge(knowledge_executor, synthesizer_executor) \
   .build()
+
 ```
 
 **Pass 2 — fan-out + fan-in** (illustrative):
@@ -79,6 +84,7 @@ WorkflowBuilder() \
   .add_edge(knowledge_executor, synthesizer_executor) \
   .add_edge(action_executor,    synthesizer_executor) \
   .build()
+
 ```
 
 ## Typed Pydantic contracts (the criterion teams most often skip)
@@ -105,6 +111,7 @@ class FinalAnswer(BaseModel):
     answer: str
     citations: list[str]
     actions_taken: list[str] = []
+
 ```
 
 Executors `await ctx.send_message(typed_obj)` to pass these along; the terminal Synthesizer
@@ -121,6 +128,7 @@ black?"* — the answer (it's waiting on both fan-in branches) is the concurrenc
 ```bash
 # illustrative — confirm current launcher entrypoint via the foundry-workflows skill / MCP
 python devui_launcher.py        # serves the workflow graph in the browser
+
 ```
 
 ## The trace check (where Tracing pays off)
@@ -129,9 +137,11 @@ After DevUI, turn on the OTel GenAI tracing from the Tracing challenge and re-ru
 
 - **Env flags must be set above all `azure.ai.*` imports** — same gotcha as the Tracing challenge.
   Flags set after the first import are silently ignored and they'll see *zero* spans.
+
 - Success = a **multi-span tree across agents**: triage → fan-out (knowledge + action in parallel) →
   fan-in (synthesizer), all sharing one `operation_Id`. Contrast with the single-agent run from the
   Tracing challenge — the capstone is ~N spans per question, not one.
+
 - Good debrief question: *"In the trace, can you see the two fan-out branches running concurrently?
   How do you know?"*
 
@@ -173,12 +183,16 @@ This is a long, open challenge. Don't let teams disappear for 2.5 hr. Set explic
 1. **~20 min in — design review (whole room).** Each team shows their org-chart sketch + Pydantic
    contracts on paper *before* coding. Catch over-engineering (5+ agents) and under-specified contracts
    here — it's cheap to fix on paper.
+
 2. **~60 min — sequential working.** Every team should have Triage → Knowledge → Synthesizer passing one
    question end-to-end. If a team is still fighting agent-wrapping, pair them with one that's through.
+
 3. **~90 min — fan-out + DevUI.** Teams show the graph lighting up with the parallel branches. This is
    the "aha" moment — make it visible to the room.
+
 4. **~120 min — trace + 2-min demo dry-run.** Confirm the multi-span tree, then each team rehearses the
    2-minute narration of one question's journey.
+
 5. **Stretch reconvene (optional).** Magentic and/or hosted variant — only for teams who cleared the
    core with time to spare.
 
@@ -202,6 +216,7 @@ This is a long, open challenge. Don't let teams disappear for 2.5 hr. Set explic
 - "Which agent is the router, and how does it *decide* — not branch — where to route?"
 - "If you reskinned this to insurance claims, what changes and what stays identical?" (the
   graph-shape-is-portable insight)
+
 - "Where would a hosted long-running run help a real student-services desk?" (bridge to deploy variant)
 
 ## Checkpoint / validate.py contract
@@ -216,6 +231,7 @@ subset** of the §3.7 acceptance criteria — the headless-checkable ones:
 ```text
 python validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
+
 ```
 
 The **non-structural** criteria are confirmed **live with you**: the DevUI visual, the end-to-end

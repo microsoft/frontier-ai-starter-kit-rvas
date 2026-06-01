@@ -37,6 +37,7 @@ now running as its own service.
                            │  /protocols/openai/responses
                            ▼
                  invoke ──▶ run history + traces (App Insights)
+
 ```
 
 > ⚠️ **No Prompt Flow here.** Earlier drafts of this challenge deployed a Prompt Flow to a managed
@@ -52,6 +53,7 @@ now running as its own service.
   - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
 - CLI tooling (in the devcontainer): `az`, **`azd`** (Azure Developer CLI), and `docker`. You can build
   the image **without local Docker** using ACR cloud build (shown in Step 2).
+
 - Logged in: `az login` and `azd auth login`, with the subscription set to your event subscription.
 
 > 💡 Recommended order: do **Tracing & Observability** before this challenge. Step 4 here assumes you
@@ -69,8 +71,10 @@ that serves the Responses protocol, and a Dockerfile.
 1. Create the folder `challenges/advanced-deploy-hosted-agent/hosted/` and add an **`agent.yaml`**
    that declares the agent name, the model deployment, the system instructions (reuse your Foundations
    persona/guardrails), and the **`responses`** protocol on port `8088`.
+
 2. Add `main.py` that hosts the agent and serves `POST /responses` on `8088`. The simplest path is the
    Microsoft Agent Framework hosted-agent server, which speaks the Responses protocol for you.
+
 3. Add a `Dockerfile` (slim Python base, `linux/amd64`, expose `8088`) and a `requirements.txt` for the
    container (`agent-framework`, `azure-ai-projects`, `azure-identity`).
 
@@ -89,6 +93,7 @@ protocols:
   - type: responses
     version: 1.0.0
     port: 8088
+
 ```
 
 ```python
@@ -107,6 +112,7 @@ host = AzureAIAgentServerHost(
 if __name__ == "__main__":
     # Hosted agents must listen on 0.0.0.0:8088 for the Responses protocol.
     host.run(host_address="0.0.0.0", port=8088)
+
 ```
 
 ```dockerfile
@@ -118,6 +124,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 EXPOSE 8088
 CMD ["python", "main.py"]
+
 ```
 
 **Success Criteria:**
@@ -133,6 +140,7 @@ CMD ["python", "main.py"]
 ```bash
 python validate.py --step 1
 # expected: "✅ Step 1 PASS — agent.yaml + responses entrypoint + Dockerfile present and valid"
+
 ```
 
 > _Coach note: see solution.md._
@@ -156,6 +164,7 @@ own version and a per-agent managed identity.
      --platform linux/amd64 \
      --source-acr-auth-id "[caller]" \
      --file Dockerfile .
+
    ```
 
 2. Deploy the hosted agent. `azd ai agent` reads `agent.yaml`, wires the image, creates the agent
@@ -164,6 +173,7 @@ own version and a per-agent managed identity.
    ```bash
    azd ai agent create   # first time: registers the agent from agent.yaml
    azd ai agent deploy    # builds/pushes (if needed) and rolls out the hosted version
+
    ```
 
 3. Confirm the deployed version is **`active`** before invoking — a hosted version provisions
@@ -171,6 +181,7 @@ own version and a per-agent managed identity.
 
    ```bash
    az ai agent show --name northfield-iq-assistant --query "version,status"
+
    ```
 
 > ⚠️ **Use a unique image tag every build** (e.g. a timestamp). Reusing `latest` or `v1` causes ACR to
@@ -187,6 +198,7 @@ own version and a per-agent managed identity.
 ```bash
 python validate.py --step 2
 # expected: "✅ Step 2 PASS — hosted agent deployed, version active in the project"
+
 ```
 
 > _Coach note: see solution.md._
@@ -223,11 +235,13 @@ its **own Entra identity**, not your user credentials.
 
    resp = client.responses.create(input="How do I place a registration hold?")
    print(resp.output_text)
+
    ```
 
 2. Verify **authorization is enforced**: confirm an unauthenticated call (no bearer token) is rejected
    with `401`/`403`. The endpoint requires the `Azure AI User` role — the agent's **per-agent managed
    identity** is what it uses to reach the model and knowledge base, not your token.
+
 3. Inspect the agent's identity in the portal (agent → **Identity**) and note its principal id. This is
    the identity you'd grant data-plane roles to in production.
 
@@ -243,6 +257,7 @@ its **own Entra identity**, not your user credentials.
 python challenges/advanced-deploy-hosted-agent/invoke_hosted.py
 python validate.py --step 3
 # expected: "✅ Step 3 PASS — live endpoint answers authenticated calls, rejects anonymous"
+
 ```
 
 > _Coach note: see solution.md._
@@ -258,9 +273,11 @@ the same OTel traces you learned to read in the Tracing challenge.
 
 1. Open the agent in the portal → **Runs / Run history**. Confirm your Step 3 invocation appears with
    status, latency, and token usage.
+
 2. Open the **Tracing** tab and find the trace for the hosted run. Confirm it has the same span shape
    you saw locally (model + retrieval spans). The hosted agent inherits the project's App Insights, so
    the spans land in the **same** `dependencies`/`requests`/`traces` tables.
+
 3. Run your `correlate.kql` from the Tracing challenge (or the starter query below) against a **hosted**
    run's `operation_Id` to prove the production endpoint is fully traced:
 
@@ -271,6 +288,7 @@ the same OTel traces you learned to read in the Tracing challenge.
    | project timestamp, operation_Id, name, duration,
              total_tokens = toint(customDimensions["gen_ai.usage.total_tokens"])
    | order by timestamp desc
+
    ```
 
 **Success Criteria:**
@@ -284,6 +302,7 @@ the same OTel traces you learned to read in the Tracing challenge.
 ```bash
 python validate.py --step 4
 # expected: "✅ Step 4 PASS — hosted run visible in run history and App Insights traces"
+
 ```
 
 > _Coach note: see solution.md._
@@ -294,6 +313,7 @@ python validate.py --step 4
 
 - The Northfield IQ Assistant runs as a **hosted Foundry agent** with its own endpoint, version, and
   **per-agent managed identity**.
+
 - It's invocable over the production Responses protocol, enforces auth, and every run is observable in
   run history and App Insights.
 
@@ -305,6 +325,7 @@ target this live endpoint.
 - Add a second **`invocations`** protocol to the same container for a custom request schema.
 - Wire a **CI step** (GitHub Actions) that rebuilds the image with a fresh tag and runs
   `azd ai agent deploy` on push.
+
 - Grant the per-agent identity **least-privilege** data-plane roles and remove any local-auth fallback.
 
 ## Cleanup
@@ -315,6 +336,7 @@ After the event, delete the hosted agent and its image to stop incurring cost:
 azd down            # tears down azd-provisioned resources
 # or, agent-only:
 az ai agent delete --name northfield-iq-assistant
+
 ```
 
 ## Learning resources
