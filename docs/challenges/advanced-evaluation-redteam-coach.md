@@ -99,7 +99,7 @@ this challenge fills it. Push teams to connect a low score back to a *design cho
 
 ## Common issues & fast unblocks
 - **Quota / 429s on the judge model** → subset the dataset, or run `--custom-only` to keep momentum.
-- **`DefaultAzureCredential` fails** → `az login` + confirm the user has **Azure AI User** on the project.
+- **`DefaultAzureCredential` fails** → `az login` + confirm the user has **`Foundry User` (formerly `Azure AI User`)** on the project.
 - **Groundedness scores all low** → context column not mapped / not passed; verify `context` reaches
   the evaluator.
 

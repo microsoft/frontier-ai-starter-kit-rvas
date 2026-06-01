@@ -80,7 +80,7 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
   *agent* uses to reach the model and knowledge base. The teaching point is that the agent no longer
   rides on the student's credentials.
 
-- **Required role:** the caller needs `Azure AI User` on the project to invoke. A `403` on an
+- **Required role:** the caller needs `Foundry User` (formerly `Azure AI User`) on the project to invoke. A `403` on an
   authenticated call is almost always a missing role assignment, not bad code.
 
 - **Auth-enforced check:** an anonymous call (no `Authorization` header) must return `401`/`403`. If it
@@ -115,7 +115,7 @@ portal walkthrough.
 
 - **"`az acr build` fails with an auth error."** → missing `--source-acr-auth-id "[caller]"`.
 - **"My code change didn't take effect."** → reused image tag; rebuild with a fresh timestamp tag.
-- **"403 on an authenticated call."** → caller missing `Azure AI User` role on the project.
+- **"403 on an authenticated call."** → caller missing `Foundry User` (formerly `Azure AI User`) role on the project.
 - **"Where's the Flask app / managed endpoint from the old challenge?"** → removed. This is a hosted
   agent now; a UI is the separate *Build a UI* extra.
 

@@ -1,9 +1,13 @@
 ---
-updated_at: 2026-05-28T15:07:48.985Z
-focus_area: Initial setup
+updated_at: 2026-06-01T00:00:00Z
+focus_area: Docs/dependency reality-check completed
 active_issues: []
 ---
 
 # What We're Focused On
 
-Getting started. Updated by coordinator at session start.
+Docs/dependency reality-check completed for this batch (terminology, dependency floor, URL QA, and capstone/foundations consolidation captured in decisions).
+
+Current posture: keep .squad records synchronized with executed audits and maintain low-drift documentation state.
+
+Updated by Scribe.

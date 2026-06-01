@@ -149,9 +149,9 @@ python validate.py --step 1
 
 4. Iterate on the **system instruction** until the smaller model behaves well: define audience, tone,
    how to handle missing information, and what is out of scope. Save your best version to
-   [foundations/assets/system-instructions.txt](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/foundations/assets/system-instructions.txt).
+    `challenges/foundations/assets/system-instructions.txt`.
 
-5. Reproduce the Playground behavior **in code**. Create [foundations/app/step2_chat.py](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/foundations/app/step2_chat.py)
+5. Reproduce the Playground behavior **in code**. Create `challenges/foundations/app/step2_chat.py`
    and call your chosen deployment through the project's OpenAI client:
 
    ```python
@@ -217,7 +217,7 @@ python validate.py --step 2
    Test it on a few questions in the agent Playground surface.
 
 3. Create the same agent **in code** as a versioned resource. Create
-   [foundations/app/step3_agent.py](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/foundations/app/step3_agent.py):
+    `challenges/foundations/app/step3_agent.py`:
 
    ```python
    import os
@@ -296,7 +296,7 @@ python validate.py --step 3
    it covers tells you what the assistant should and should not be able to answer.
 
 2. **Index it into Azure AI Search.** Create a **vector/hybrid** index over the FAQ files. Use the
-   helper [foundations/app/step4_index.py](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/foundations/app/step4_index.py) (outline below) to chunk, embed, and upload:
+    helper `challenges/foundations/app/step4_index.py` (outline below) to chunk, embed, and upload:
 
    ```python
    import os, glob
@@ -325,7 +325,7 @@ python validate.py --step 3
    reranking — the recommended default).
 
 5. **Attach the knowledge base to the agent** and require citations. Create
-   [foundations/app/step4_ground.py](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/foundations/app/step4_ground.py) — add the Azure AI Search tool to a **new
+    `challenges/foundations/app/step4_ground.py` — add the Azure AI Search tool to a **new
    version** of `northfield-iq-assistant` and update the instructions to demand sources:
 
    ```python

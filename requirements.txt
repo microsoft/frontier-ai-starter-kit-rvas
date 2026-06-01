@@ -16,7 +16,9 @@ openai>=2.0.0
 python-dotenv>=1.2.0
 requests>=2.34.0
 # Foundry Agent Service + tracing stack (replaces deprecated Prompt Flow)
-azure-ai-agents>=2.0.0
+# NOTE: azure-ai-agents current GA line is 1.x. A >=2.0.0 floor is unsatisfiable
+# and breaks fresh environment installs.
+azure-ai-agents>=1.1.0
 azure-monitor-opentelemetry>=1.6.0
 azure-core-tracing-opentelemetry>=1.0.0b12
 jupyter>=1.1.0

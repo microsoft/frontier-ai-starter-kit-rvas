@@ -183,7 +183,7 @@ add new env vars by hand.** If the hosted long-running variant needs anything ne
 ## Acceptance criteria (graded — no step-by-step)
 
 Your submission **passes** if **all** of these are demonstrably true. You show it; a light `validate.py`
-(forthcoming — authored by the QA harness) checks the structural ones headlessly.
+(authored by the QA harness) checks the structural ones headlessly.
 
 - [ ] **≥ 3 agents** with distinct roles, at least one **router/triage** that *decides* routing and at
       least two **specialists**.
@@ -201,13 +201,13 @@ Your submission **passes** if **all** of these are demonstrably true. You show i
 > snippets, the acceptance criteria, and pointers to the skills + MCP — **not** a placeholder file. The
 > learning *is* the design and wiring. This is the autonomy payoff of the curriculum tree.
 
-**Checkpoint:** a forthcoming `validate.py` (authored separately) asserts the **structural subset** of
+**Checkpoint:** `validate.py` (in-repo at `challenges/capstone-multi-agent/validate.py`) asserts the **structural subset** of
 the criteria above — ≥ 3 agents defined, a fan-out edge present, and typed (Pydantic) contracts in use.
 The non-structural criteria (DevUI visual, the 2-minute demo, the hosted background run) are confirmed
 **live with your coach**.
 
 ```text
-# forthcoming — the structural subset of the acceptance criteria
+# structural subset of the acceptance criteria
 python validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
 ```
@@ -215,7 +215,7 @@ python validate.py --all
 ---
 
 ## Learning Resources
-- [Microsoft Agent Framework (MAF) overview](https://learn.microsoft.com/azure/ai-foundry/agents/)
+- [Microsoft Agent Framework (MAF) overview](https://learn.microsoft.com/azure/foundry/agents/)
 - [`foundry-workflows` skill](../../.github/skills/foundry-workflows/SKILL.md) — Magentic + workflow patterns
 - [Advanced · Action Tools](../advanced-action-tools/README.md) — the approval loop you reuse
 - [Advanced · Tracing & Observability](../advanced-tracing-observability/README.md) — the OTel setup for Step 5

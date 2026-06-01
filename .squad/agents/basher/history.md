@@ -37,3 +37,8 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/ca
 ### 2026-06-01 — Cross-agent note (diagram-fix closure)
 - Linus addressed both QA findings with targeted doc-only edits and preserved semantics.
 - Reviewer gate for this follow-up pass is closed; outcomes recorded via orchestration + session logs.
+
+### 2026-06-01 — URL + claims QA sweep (docs/challenges)
+- Confirmed two stale Learn paths now return 404 in Foundry docs context: `/agents/how-to/tools/mcp` and `/agents/concepts/agent-protocols`; canonical replacements are `/agents/how-to/tools/model-context-protocol` and hosted-agents key-concepts protocol section.
+- Verified challenge/docs mirrors can contain hard GitHub blob links to learner-created files (for example `challenges/foundations/app/step*.py`) that 404 by design at repo HEAD; treat as QA finding unless curriculum owners want those links removed or reframed.
+- Identified content drift: Capstone README/coach/docs still say `validate.py` is forthcoming even though `challenges/capstone-multi-agent/validate.py` exists and supports `--step`/`--all`.

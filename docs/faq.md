@@ -7,7 +7,7 @@ nav_order: 6
 
 ## Do I need Azure experience?
 
-No. This hackathon assumes curiosity, basic Python comfort, and a willingness to learn by doing. Azure AI Foundry experience is not required.
+No. This hackathon assumes curiosity, basic Python comfort, and a willingness to learn by doing. Microsoft Foundry experience is not required.
 
 ## What does a “devcontainer” mean?
 
@@ -35,7 +35,7 @@ Save changes in your Codespace or your local clone of the repository. Commit ear
 
 ## What happens after the hackathon?
 
-You leave with a working project foundation, a clearer understanding of Azure AI Foundry, and a repo you can keep extending. Many teams continue by improving the app UX, expanding data sources, or productionizing deployment.
+You leave with a working project foundation, a clearer understanding of Microsoft Foundry, and a repo you can keep extending. Many teams continue by improving the app UX, expanding data sources, or productionizing deployment.
 
 ## Coach: How do I get the solution guides?
 

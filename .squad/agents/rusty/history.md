@@ -34,3 +34,8 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: all 4 Advanced
 ### 2026-06-01 — Cross-agent note (diagram-fix batch)
 - Basher QA found two residual issues after the broad ASCII pass: malformed branch fan-out in Magentic workflows docs and one over-wide architecture line in Build UI docs.
 - Linus completed the targeted follow-up fixes; batch was closed through Scribe merge and orchestration logging.
+
+### 2026-06-01 — Participant/coach markdown terminology audit (Foundry + setup)
+- Revalidated curriculum wording against current Microsoft Learn pages (`what-is-foundry`, `navigate-from-classic`, hosted-agent quickstart/deploy pages, Azure AI Search RBAC, Fabric tool docs).
+- Applied minimal wording corrections in scoped markdown only: standardized product naming to **Microsoft Foundry**, clarified role naming as **Foundry User (formerly Azure AI User)** where access guidance appears, and updated outdated Learn URL base paths from `/azure/ai-foundry/...` to `/azure/foundry/...`.
+- Kept curriculum flow and challenge structure unchanged; no dependency pins or validation contracts were modified.

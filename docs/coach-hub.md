@@ -111,7 +111,7 @@ Coach solution guides are published as themed pages on this site (see the table 
 
 ## Emergency resources
 
-- Azure AI Foundry documentation: <https://learn.microsoft.com/azure/ai-foundry/>
+- Microsoft Foundry documentation: <https://learn.microsoft.com/azure/foundry/>
 - Azure status page: <https://azure.status.microsoft/en-us/status>
 - Portal sign-in/account issues: confirm tenant, subscription, and event instructions first
 - Event escalation: follow your organizer’s support route for Azure Pass, quota, or tenant problems

@@ -23,7 +23,7 @@ By the end, you'll have hands-on experience with the Microsoft Foundry platform,
 By the end of this hackathon, you will be able to:
 
 - Navigate Microsoft Foundry and provision an AI project with connected resources (`azd up`)
-- Deploy and compare models from the Azure AI model catalog
+- Deploy and compare models from the Microsoft Foundry model catalog
 - Build a named, versioned Foundry **agent** with a persona and guardrails
 - Ground the agent in your own data with an **Index + Foundry IQ knowledge base** (with citations)
 - Give the agent **action tools** via MCP that execute real operations
@@ -49,7 +49,7 @@ No prior Azure or AI experience needed. Just bring curiosity and a willingness t
 
 You're ready to coach if you:
 
-- Are familiar with Microsoft Foundry, Azure OpenAI Service, and prompt engineering
+- Are familiar with Microsoft Foundry model and agent concepts, and prompt engineering
 - Enjoy helping teams think through problems (instead of giving direct answers)
 - Can spend 6–8 hours supporting 2–3 teams
 - Have access to the [Coach Hub](docs/coach-hub.md) and solution materials in this repo
@@ -230,7 +230,7 @@ Clone or access this repo locally and navigate to the challenge solution you nee
 
 ## Resources
 
-- **[Microsoft Foundry Documentation](https://learn.microsoft.com/azure/ai-foundry/)**: Official docs and tutorials
+- **[Microsoft Foundry Documentation](https://learn.microsoft.com/azure/foundry/)**: Official docs and tutorials
 - **[Azure AI Learning Path](https://learn.microsoft.com/training/paths/develop-generative-ai-solutions-azure-ai-foundry/)**: Structured training modules
 - **[Microsoft AI Skills Navigator](https://microsoft.com/ai/skills)**: Browse AI and cloud certifications
 - **[What The Hack Format Guide](https://microsoft.github.io/WhatTheHack/)**: Learn about WTH events

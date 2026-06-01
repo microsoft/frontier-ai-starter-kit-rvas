@@ -156,18 +156,18 @@ via `submit_tool_outputs`, then resumes. Reuse the exact approval logic from the
 
 ### What good looks like
 Public URL answers, cites, and gates actions. The BFF runs under a **system-assigned managed identity**
-granted **`Azure AI User`** on the project (no creds in app settings). CORS allows **only** the front-end
+granted **`Foundry User` (formerly `Azure AI User`)** on the project (no creds in app settings). CORS allows **only** the front-end
 origin.
 
 ### Recommended path
 - **Container Apps** is the least-moving-parts option: one container serves both the static `web/` build
-  and the `/api/*` BFF, `az containerapp up`, enable system-assigned identity, assign `Azure AI User`.
+  and the `/api/*` BFF, `az containerapp up`, enable system-assigned identity, assign `Foundry User` (formerly `Azure AI User`).
 - **SWA + Functions** is cleaner separation (static front-end + linked Functions API, same-origin `/api`)
   but more wiring; pick it only if the team wants it.
 
 ### Common pitfalls
 - **`DefaultAzureCredential` works locally, 403s in the cloud.** That's the identity not having
-  `Azure AI User` on the project yet — assign the role to the app's managed identity, not to a user.
+  `Foundry User` (formerly `Azure AI User`) on the project yet — assign the role to the app's managed identity, not to a user.
 - **Wildcard CORS.** `allow_origins=["*"]` with credentials is both insecure and often rejected. Scope to
   the exact front-end origin.
 - **Secrets sneaking into app settings.** The whole arc is keyless — if they're pasting a key into

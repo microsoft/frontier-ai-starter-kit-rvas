@@ -1,6 +1,62 @@
 # Squad Decisions
 
-**Last Updated:** 2026-06-01 (merged inbox: +1 entry — Linus docs UI refresh + markdown normalization policy)
+**Last Updated:** 2026-06-01 (merged inbox: +4 entries — Rusty terminology audit, Livingston dependency fix, Basher QA URL sweep, Danny capstone/foundations consolidation)
+
+---
+
+## Inbox Merge — 2026-06-01 (Scribe Batch)
+
+### Foundry Terminology + Learn Path Normalization
+**Author:** Rusty (Curriculum Designer)  
+**Date:** 2026-06-01  
+**Status:** Merged from inbox
+
+**Decision:** Standardize curriculum-facing markdown on **Microsoft Foundry** terminology, prefer role phrasing **Foundry User (formerly Azure AI User)** when legacy naming context appears, and prefer equivalent Learn links under `/azure/foundry/...`.
+
+**Scope captured:** `README.md`, `challenges/**/*.md`, `docs/challenges/**/*.md`, `docs/*.md`.
+
+**Non-goals:** No sequencing rewrites, dependency changes, or validator behavior changes.
+
+---
+
+### Python Dependency Reality Fix (`azure-ai-agents`)
+**Author:** Livingston (DevOps & GitHub Engineer)  
+**Date:** 2026-06-01  
+**Status:** Merged from inbox
+
+**Decision:** Correct root dependency floor from `azure-ai-agents>=2.0.0` to `azure-ai-agents>=1.1.0` because the package is currently on a released 1.x line.
+
+**Rationale:** Prevent unsatisfiable installs/resolver failures while preserving the Foundry project-endpoint + `DefaultAzureCredential` flow.
+
+**Non-changes:** Other lower bounds remain as-is to avoid unnecessary churn.
+
+---
+
+### QA URL Canonicalization for Foundry Agent Docs
+**Author:** Basher (QA & Coach Enablement)  
+**Date:** 2026-06-01  
+**Status:** Merged from inbox
+
+**Decision:** Use canonical Learn URLs in participant-facing challenge pages where stale/deprecated links were found:
+- MCP tools: `https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol`
+- Hosted agent protocols anchor: `https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents#protocols-responses-and-invocations`
+- Modern Foundry quickstart: `https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code`
+
+**Rationale:** Low-risk mechanical swaps remove 404/deprecated paths and align with current docs.
+
+---
+
+### Consolidation Follow-Through (Capstone + Foundations + README Coherence)
+**Author:** Danny (Lead & Content Architect)  
+**Date:** 2026-06-01  
+**Status:** Merged from inbox
+
+**Decision:**
+1. Treat capstone `validate.py` as present in narrative (remove "forthcoming/authored separately" wording).
+2. Remove GitHub blob links in mirrored Foundations docs for learner-created files; use plain relative paths instead.
+3. Keep root README language Foundry-first for terminology coherence.
+
+**Validation note:** Grep checks confirmed capstone wording cleanup and removal of learner-path blob links in docs mirror.
 
 ---
 

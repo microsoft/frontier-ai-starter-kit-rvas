@@ -189,9 +189,9 @@ python validate.py --all
 ---
 
 ## Learning Resources
-- [MCP tool for agents](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/mcp)
+- [MCP tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
 - [Provided backend + MCP server](https://github.com/olivomarco/ai-hackathon/blob/main/scripts/action-backend/README.md)
-- [Agents SDK — tools & runs](https://learn.microsoft.com/azure/ai-foundry/agents/quickstart)
+- [Agents SDK — tools & runs](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ## Tips

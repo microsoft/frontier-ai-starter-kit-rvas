@@ -61,6 +61,6 @@ Agent Service only accepts **remote** MCP endpoints. To use a local server, depl
 
 ## References
 
-- [MCP tool documentation](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/mcp?view=foundry)
-- [Tool Catalog](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/tool-catalog?view=foundry)
+- [MCP tool documentation](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
+- [Tool Catalog](https://learn.microsoft.com/azure/foundry/agents/concepts/tool-catalog)
 - [Project Connections](../../../project/connections.md)

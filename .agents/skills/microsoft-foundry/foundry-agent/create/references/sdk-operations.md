@@ -42,6 +42,6 @@ client = AIProjectClient(endpoint=endpoint, credential=DefaultAzureCredential())
 
 ## References
 
-- [Agent quickstart](https://learn.microsoft.com/azure/ai-foundry/agents/quickstart?view=foundry)
-- [Create agents](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/create-agent?view=foundry)
-- [Tool Catalog](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/tool-catalog?view=foundry)
+- [Agent quickstart](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
+- [Create agents](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code#create-an-agent)
+- [Tool Catalog](https://learn.microsoft.com/azure/foundry/agents/concepts/tool-catalog)

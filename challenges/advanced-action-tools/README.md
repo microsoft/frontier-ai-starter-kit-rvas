@@ -190,7 +190,7 @@ python validate.py --all
 > **Acceptance:** no action runs without an approve; a denial creates nothing.
 
 You get the running backend (Step 0) and the env contract (the `ACTION_*` table above) — nothing
-else. Discover the SDK surface from the [MCP tool for agents](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/mcp)
+else. Discover the SDK surface from the [MCP tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
 docs, author the file, and run `python validate.py --all`.
 
 ## Rung (c) — Stretch goals
@@ -208,9 +208,9 @@ Genuinely open-ended — no single right answer:
 ---
 
 ## Learning Resources
-- [MCP tool for agents](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/mcp)
+- [MCP tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
 - [Provided backend + MCP server](../../scripts/action-backend/README.md)
-- [Agents SDK — tools & runs](https://learn.microsoft.com/azure/ai-foundry/agents/quickstart)
+- [Agents SDK — tools & runs](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ## Tips

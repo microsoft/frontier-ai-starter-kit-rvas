@@ -212,14 +212,14 @@ and CORS is scoped — not wildcarded.
    - **Static Web Apps + Functions** — deploy `web/` as the static front-end and the BFF as the linked
      **Functions API**, so the browser calls a same-origin `/api/*`.
 2. Replace `DefaultAzureCredential`'s local-dev login with a **system-assigned managed identity** on the
-   hosted BFF, and grant that identity the **`Azure AI User`** role on the project so it can invoke the
+   hosted BFF, and grant that identity the **`Foundry User` (formerly `Azure AI User`)** role on the project so it can invoke the
    hosted agent.
 3. Configure **CORS**: allow only your front-end origin (the SWA/Container Apps URL) on the BFF — never
    `*`. Confirm the deployed page loads, chats, cites, and gates actions exactly as it did locally.
 
 **Success Criteria:**
 - [ ] The app is reachable at a public Azure URL and answers a grounded question end-to-end.
-- [ ] The BFF uses a **managed identity** (no credentials in app settings) with `Azure AI User` on the
+- [ ] The BFF uses a **managed identity** (no credentials in app settings) with `Foundry User` (formerly `Azure AI User`) on the
       project.
 - [ ] CORS allows **only** the front-end origin; a request from an unlisted origin is rejected.
 
@@ -250,6 +250,6 @@ BFF's identity is a managed identity and CORS is origin-scoped.
 
 - [Azure Container Apps quickstart](https://learn.microsoft.com/azure/container-apps/get-started)
 - [Static Web Apps with an API](https://learn.microsoft.com/azure/static-web-apps/add-api)
-- [Responses & Invocations protocols](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-protocols)
+- [Responses & Invocations protocols](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents#protocols-responses-and-invocations)
 - [Managed identities for Azure resources](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview)
 - [Configure CORS in Azure Container Apps](https://learn.microsoft.com/azure/container-apps/cors)

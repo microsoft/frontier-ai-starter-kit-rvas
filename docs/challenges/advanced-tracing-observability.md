@@ -337,7 +337,7 @@ Hosted Agent (the same tracing follows the agent to its live endpoint).
 
 ## Learning resources
 
-- [Trace AI agents with OpenTelemetry (Foundry)](https://learn.microsoft.com/azure/ai-foundry/how-to/develop/trace-agents-sdk)
+- [Trace AI agents with OpenTelemetry (Foundry)](https://learn.microsoft.com/azure/foundry/how-to/develop/trace-agents-sdk)
 - [Azure Monitor OpenTelemetry for Python](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=python)
 - [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 - [Kusto Query Language (KQL) reference](https://learn.microsoft.com/azure/data-explorer/kusto/query/)

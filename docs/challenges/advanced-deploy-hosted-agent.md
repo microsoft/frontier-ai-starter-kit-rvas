@@ -237,7 +237,7 @@ its **own Entra identity**, not your user credentials.
    ```
 
 2. Verify **authorization is enforced**: confirm an unauthenticated call (no bearer token) is rejected
-   with `401`/`403`. The endpoint requires the `Azure AI User` role — the agent's **per-agent managed
+   with `401`/`403`. The endpoint requires the `Foundry User` (formerly `Azure AI User`) role — the agent's **per-agent managed
    identity** is what it uses to reach the model and knowledge base, not your token.
 
 3. Inspect the agent's identity in the portal (agent → **Identity**) and note its principal id. This is
@@ -339,8 +339,8 @@ az ai agent delete --name northfield-iq-assistant
 
 ## Learning resources
 
-- [Hosted agents in Microsoft Foundry](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents)
-- [Deploy agents with `azd ai agent`](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/deploy-hosted-agent)
+- [Hosted agents in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents)
+- [Deploy agents with `azd ai agent`](https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent)
 - [Hosted-agent samples (foundry-samples)](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents)
-- [Responses & Invocations protocols](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-protocols)
+- [Responses & Invocations protocols](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents#protocols-responses-and-invocations)
 - [ACR cloud build (`az acr build`)](https://learn.microsoft.com/azure/container-registry/container-registry-tutorial-quick-task)

@@ -23,3 +23,11 @@
 ## Current state
 ### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
 PLAN-V3 is now **implemented** to disk (staged, not committed): Tier 3 MAF Capstone **live** (README + solution + Basher `validate.py`); 4 Advanced READMEs **de-guided** to the 3-rung ladder (Rusty); `scripts/cleanup.sh` + lab-generator shipped (Livingston); root `README.md` + `docs/` migrated to **three-tier** (Linus). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
+
+### 2026-06-01 — Audit consolidation follow-through (QA closeout)
+- Capstone student + mirrored docs updated to reflect that `challenges/capstone-multi-agent/validate.py` exists now (removed "forthcoming" language).
+- Foundations mirrored docs no longer link to learner-created files as GitHub blob URLs; those references are now plain file paths to avoid 404s before learners create files.
+- Root README wording normalized to "Microsoft Foundry model catalog" and coach-facing role phrasing kept Foundry-first.
+
+### 2026-06-01 — Learning note (stale wording hygiene)
+- When a validator exists in-repo, checkpoint text must reference the real path (`challenges/capstone-multi-agent/validate.py`) and avoid future-tense wording (e.g., "authored separately" or "forthcoming").
