@@ -21,7 +21,7 @@ Coaches for this event should focus on facilitation, pacing, and unblock strateg
 
 ### During the event
 
-- Start every team at Challenge 00 and confirm their environment is actually usable
+- Start every team in **Foundations** (Step 1) and confirm their environment is actually usable
 - Watch for drift: teams often think they are blocked by code when they are really blocked by setup
 - Keep teams time-boxed and encourage strategic skipping if the event clock gets tight
 - Use questions first, direct fixes second
@@ -51,17 +51,25 @@ Healthy struggle looks like experimentation, note-taking, and narrowing hypothes
 
 Call out good debugging, clear prompt design, and smart teamwork. Teams gain energy when you recognize real progress between checkpoints.
 
-## Per-challenge timing guide
+## Per-step / per-challenge timing guide
 
-| Challenge | Expected Time | Warning Sign | Intervention |
-|-----------|---------------|--------------|--------------|
-| 00 Setup | 30 min | >45 min | Check Azure subscription issues, Codespaces readiness, and AI Foundry access. |
-| 01 First Model | 45 min | >1 hr | Verify endpoint, deployment, key, and SDK configuration. |
-| 02 Prompt Engineering | 1 hr | Teams keep changing everything at once | Help them test one prompt variable at a time. |
-| 03 Prompt Flow | 1.5 hr | Flow runs but outputs are inconsistent | Review node wiring, branching assumptions, and structured outputs. |
-| 04 RAG | 1.5 hr | Retrieval works poorly or answers hallucinate | Check indexing, grounding data quality, and citation expectations. |
-| 05 Evaluation | 1 hr | Teams ignore metrics they do not like | Reframe metrics as design feedback, not a pass/fail judgment. |
-| 06 Deploy & Integrate | 1 hr | Endpoint works in studio but not in app | Inspect auth, request payload shape, and integration error handling. |
+**Tier 1 · Foundations** (one guided challenge, four ordered steps):
+
+| Step | Expected Time | Warning Sign | Intervention |
+|------|---------------|--------------|--------------|
+| 1 Setup & Provisioning | 30 min | >45 min | Check Azure subscription, Codespaces readiness, `azd up`, and Foundry access. |
+| 2 Model & Playground | 45 min | >1 hr | Verify model deployment, endpoint, and keyless auth (`DefaultAzureCredential`). |
+| 3 Your First Agent | 1 hr | Agent answers out-of-scope/unsafe asks | Review persona, system instructions, and guardrails. |
+| 4 Knowledge Base (IQ) | 1.5 hr | Answers hallucinate or lack citations | Check indexing, grounding data quality, and IQ knowledge base wiring. |
+
+**Tier 2 · Advanced** (modular, any order — each assumes the Foundations end-state):
+
+| Advanced challenge | Expected Time | Warning Sign | Intervention |
+|--------------------|---------------|--------------|--------------|
+| Action Tools | 1–1.5 hr | Tool fires without approval, or never fires | Inspect the MCP `requires_action` loop and approval gate. |
+| Evaluation & Red Teaming | 1–1.5 hr | Teams ignore metrics they do not like | Reframe metrics as design feedback; check the CI score gate. |
+| Tracing & Observability | 1 hr | No spans land in App Insights | Confirm GenAI tracing env vars are set **before** SDK import. |
+| Deploy as a Hosted Agent | 1–1.5 hr | Image builds but endpoint 401/500s | Check ACR push, `agent.yaml`, and per-agent managed identity. |
 
 ## Common blockers across all challenges
 
@@ -69,7 +77,7 @@ Call out good debugging, clear prompt design, and smart teamwork. Teams gain ene
 |---------|------------------------|------------|
 | “Azure is broken” | Wrong tenant, missing subscription, or quota issue | Re-check account, subscription, and region before touching code. |
 | “The model is not responding” | Deployment mismatch or bad credentials | Confirm the exact deployment name, endpoint URL, and key source. |
-| “Prompt flow output is weird” | Inputs or assumptions changed between nodes | Trace one example end-to-end and inspect every intermediate value. |
+| “The agent answers anything” | Persona/guardrails not applied | Re-check system instructions and refusal behavior for out-of-scope asks. |
 | “RAG answers are off-topic” | Weak retrieval or poor chunk quality | Verify indexing, source data, and whether grounding is actually enabled. |
 | “Nothing works anymore” | Several changes landed at once | Roll back to the last known-good step and recover incrementally. |
 
@@ -81,13 +89,17 @@ Each challenge has a coach-only reference page with the expected solution path, 
 
 | Challenge | Coach view |
 | --- | --- |
-| 00 — Setup & Orientation | [Coach notes]({{ '/challenges/challenge-00-coach' | relative_url }}) |
-| 01 — First Model Deployment | [Coach notes]({{ '/challenges/challenge-01-coach' | relative_url }}) |
-| 02 — Prompt Engineering | [Coach notes]({{ '/challenges/challenge-02-coach' | relative_url }}) |
-| 03 — Prompt Flow | [Coach notes]({{ '/challenges/challenge-03-coach' | relative_url }}) |
-| 04 — RAG | [Coach notes]({{ '/challenges/challenge-04-coach' | relative_url }}) |
-| 05 — Evaluation | [Coach notes]({{ '/challenges/challenge-05-coach' | relative_url }}) |
-| 06 — Deploy & Integrate | [Coach notes]({{ '/challenges/challenge-06-coach' | relative_url }}) |
+| Foundations | [Coach notes]({{ '/challenges/foundations-coach' | relative_url }}) |
+| Advanced — Action Tools | [Coach notes]({{ '/challenges/advanced-action-tools-coach' | relative_url }}) |
+| Advanced — Evaluation & Red Teaming | [Coach notes]({{ '/challenges/advanced-evaluation-redteam-coach' | relative_url }}) |
+| Advanced — Tracing & Observability | [Coach notes]({{ '/challenges/advanced-tracing-observability-coach' | relative_url }}) |
+| Advanced — Deploy as a Hosted Agent | [Coach notes]({{ '/challenges/advanced-deploy-hosted-agent-coach' | relative_url }}) |
+| Extra — Fabric IQ | [Coach notes]({{ '/challenges/extra-fabric-iq-coach' | relative_url }}) |
+| Extra — Give It a Voice | [Coach notes]({{ '/challenges/extra-voice-live-coach' | relative_url }}) |
+| Extra — Magentic Workflows | [Coach notes]({{ '/challenges/extra-magentic-workflows-coach' | relative_url }}) |
+| Extra — Hosted Long-Running Agents | [Coach notes]({{ '/challenges/extra-hosted-longrunning-coach' | relative_url }}) |
+| Extra — Build a UI | [Coach notes]({{ '/challenges/extra-build-ui-coach' | relative_url }}) |
+| Extra — Copilot-Assisted Build | [Coach notes]({{ '/challenges/extra-copilot-assisted-coach' | relative_url }}) |
 
 </div>
 

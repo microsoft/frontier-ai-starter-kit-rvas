@@ -12,7 +12,6 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-toolsai.jupyter",
-        "ms-toolsai.promptflow",
         "ms-azuretools.vscode-azurefunctions",
         "ms-vscode.azure-account",
         "ms-azuretools.vscode-bicep",

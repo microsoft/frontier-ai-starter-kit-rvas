@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+#
+# azd project for the WTH AI Hackathon (Microsoft Foundry).
+# Golden path:  azd up   ->  provisions infra/ (Bicep)  ->  writes outputs into the azd env,
+# which scripts/*  read back as a .env contract (see .env.sample).
+#
+# This file intentionally has NO `services:` block. The hackathon does not deploy app code
+# through azd at provision time — `azd up` only stands up the shared Foundry footprint
+# (Foundry resource + project + model deployment + AI Search + App Insights + ACR).
+# The Foundations end-state (agent + index + IQ knowledge base) is materialized afterward by
+# scripts/setup-foundations.sh, and the hosted-agent Advanced challenge ships its own agent.yaml.
+name: wth-ai-hackathon-foundry
+metadata:
+  template: wth-ai-hackathon-foundry@2.0.0
+
+# Lifecycle hooks: after provisioning, remind the operator how to reach the Foundations end-state.
+hooks:
+  postprovision:
+    posix:
+      shell: sh
+      continueOnError: true
+      run: |
+        echo ""
+        echo "✅ Infrastructure provisioned. Outputs are in the azd environment."
+        echo "   Export them to a .env with:   azd env get-values > .env"
+        echo ""
+        echo "   Next (Path B bootstrap / Foundations end-state):"
+        echo "     ./scripts/setup-foundations.sh"
+        echo "     python scripts/validate-foundations.py"
+        echo ""

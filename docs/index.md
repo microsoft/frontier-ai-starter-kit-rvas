@@ -1,13 +1,13 @@
 ---
 title: Home
 nav_order: 1
-description: Kick off the What The Hack experience and navigate the seven Microsoft Foundry challenges.
+description: Kick off the What The Hack experience and navigate the two-tier Microsoft Foundry challenge set.
 ---
 
 <div class="hero-panel">
   <span class="hero-kicker">What The Hack • Microsoft Foundry</span>
   <h1>Build Intelligent Apps with Microsoft Foundry</h1>
-  <p class="hero-tagline">From prompt to production: seven challenges that take you through model deployment, orchestration, grounding, and evaluation in one day.</p>
+  <p class="hero-tagline">From prompt to production: a guided Foundations challenge plus a modular Advanced tier covering grounding, action tools, evaluation, tracing, and deployment.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Get Started</a>
     <a class="btn btn-outline" href="{{ '/coach-hub' | relative_url }}">Coaches: Start here</a>
@@ -18,12 +18,12 @@ description: Kick off the What The Hack experience and navigate the seven Micros
 
 What The Hack (WTH) is Microsoft’s hands-on, challenge-first format for learning by building. Instead of sitting through a lecture, teams move through a sequence of guided tasks, validate their work as they go, and lean on coaches for hints when they hit real friction.
 
-This edition focuses on Microsoft Foundry. Over seven linked challenges, you will provision an AI workspace, deploy a model, improve prompts, orchestrate flows, add RAG, evaluate output quality, and finally connect the result to a real application experience.
+This edition focuses on Microsoft Foundry. It runs in **two tiers**. **Foundations** is one guided, linear challenge — four ordered steps that take every team to a deployed, grounded Northfield University IQ Assistant that answers from a real FAQ corpus with citations. **Advanced** is a set of modular challenges you attempt in any order: action tools, evaluation & red teaming, tracing & observability, and deploying as a hosted agent — plus optional Extras.
 
 <div class="quick-grid">
   <div class="quick-card">
-    <h3>One clear path</h3>
-    <p>Seven challenges, ordered from setup to deployment, so teams always know what comes next.</p>
+    <h3>Two tiers, two paths</h3>
+    <p>Start with the guided Foundations challenge, then branch into modular Advanced challenges in any order — or bootstrap straight to the Advanced tier.</p>
   </div>
   <div class="quick-card">
     <h3>Built for event day</h3>
@@ -35,19 +35,29 @@ This edition focuses on Microsoft Foundry. Over seven linked challenges, you wil
   </div>
 </div>
 
-## Challenge progression
+## Two tiers
 
 <div class="challenge-card" markdown="1">
 
-| Challenge | Topic | Time | Level |
-|-----------|-------|------|-------|
-| [00 — Setup & Orientation](challenges/challenge-00) | Microsoft Foundry resource + Project | 30 min | <span class="difficulty-badge difficulty-1">⭐</span> |
-| [01 — First Model Deployment](challenges/challenge-01) | Model Catalog, AI Inference SDK | 45 min | <span class="difficulty-badge difficulty-1">⭐</span> |
-| [02 — Prompt Engineering](challenges/challenge-02) | System prompts, few-shot, CoT | 1 hr | <span class="difficulty-badge difficulty-2">⭐⭐</span> |
-| [03 — Prompt Flow](challenges/challenge-03) | Multi-step LLM orchestration | 1.5 hr | <span class="difficulty-badge difficulty-3">⭐⭐⭐</span> |
-| [04 — RAG](challenges/challenge-04) | Retrieval-Augmented Generation | 1.5 hr | <span class="difficulty-badge difficulty-4">⭐⭐⭐⭐</span> |
-| [05 — Evaluation](challenges/challenge-05) | Responsible AI, metrics | 1 hr | <span class="difficulty-badge difficulty-4">⭐⭐⭐⭐</span> |
-| [06 — Deploy & Integrate](challenges/challenge-06) | Managed endpoints, integration | 1 hr | <span class="difficulty-badge difficulty-5">⭐⭐⭐⭐⭐</span> |
+**Tier 1 · [Foundations](challenges/foundations)** — one guided, linear challenge (four ordered steps):
+
+| Step | Focus | Outcome |
+|------|-------|---------|
+| 1 — Setup & Provisioning | `azd up`, keyless auth | Infrastructure live |
+| 2 — Model & Playground | Deploy + compare models | Generic answers from your model |
+| 3 — Your First Agent | Persona + guardrails | An agent that refuses out-of-scope asks |
+| 4 — Knowledge Base (IQ) | Index the FAQ + Foundry IQ | **Grounded answers with citations — END-STATE** |
+
+**Tier 2 · Advanced (any order)** — each assumes the Foundations end-state:
+
+| Advanced | Extras |
+|----------|--------|
+| [Action Tools](challenges/advanced-action-tools) | [Fabric IQ](challenges/extra-fabric-iq) · [Give It a Voice](challenges/extra-voice-live) |
+| [Evaluation & Red Teaming](challenges/advanced-evaluation-redteam) | [Magentic Workflows](challenges/extra-magentic-workflows) · [Hosted Long-Running](challenges/extra-hosted-longrunning) |
+| [Tracing & Observability](challenges/advanced-tracing-observability) | [Build a UI](challenges/extra-build-ui) · [Copilot-Assisted Build](challenges/extra-copilot-assisted) |
+| [Deploy as a Hosted Agent](challenges/advanced-deploy-hosted-agent) | |
+
+See the [Challenges overview](challenges/) for the full Two-Paths run guide (Beginner vs. Advanced-skip bootstrap).
 
 </div>
 

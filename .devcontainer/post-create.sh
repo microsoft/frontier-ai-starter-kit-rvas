@@ -28,13 +28,13 @@ else
   warn "requirements.txt was not found; skipping pip install."
 fi
 
-if [[ ! -f .env && -f .env.example ]]; then
-  cp .env.example .env
-  success "Created .env from .env.example"
+if [[ ! -f .env && -f .env.sample ]]; then
+  cp .env.sample .env
+  success "Created .env from .env.sample (placeholder values — fill in after 'azd up')."
 elif [[ -f .env ]]; then
   warn ".env already exists; leaving it unchanged."
 else
-  warn ".env.example was not found; skipping environment bootstrap."
+  warn ".env.sample was not found; skipping environment bootstrap."
 fi
 
 printf "\n%b==============================================%b\n" "$GREEN" "$RESET"
@@ -42,15 +42,15 @@ printf "%b  Welcome to the WTH AI Foundry Hackathon!  %b\n" "$GREEN" "$RESET"
 printf "%b==============================================%b\n\n" "$GREEN" "$RESET"
 
 printf "%bChallenge quick links%b\n" "$CYAN" "$RESET"
-printf "  • Challenge 00: challenges/challenge-00-setup/\n"
-printf "  • Challenge 01: challenges/challenge-01-first-model/\n"
-printf "  • Challenge 02: challenges/challenge-02-prompt-engineering/\n"
-printf "  • Challenge 03: challenges/challenge-03-prompt-flow/\n"
-printf "  • Challenge 04: challenges/challenge-04-rag/\n"
-printf "  • Challenge 05: challenges/challenge-05-evaluation/\n"
-printf "  • Challenge 06: challenges/challenge-06-deploy/\n"
+printf "  • Foundations (Steps 1–4): challenges/foundations/\n"
+printf "  • Advanced — Action Tools: challenges/advanced-action-tools/\n"
+printf "  • Advanced — Evaluation & Red Teaming: challenges/advanced-evaluation-redteam/\n"
+printf "  • Advanced — Tracing & Observability: challenges/advanced-tracing-observability/\n"
+printf "  • Advanced — Deploy as a Hosted Agent: challenges/advanced-deploy-hosted-agent/\n"
+printf "  • Extras: challenges/extra-*/\n"
 printf "  • Docs site: docs/\n\n"
 
 warn "Next steps:"
 printf "  1. Run: az login\n"
-printf "  2. Run: python resources/scripts/validate-environment.py\n"
+printf "  2. Provision: azd up   (or ./scripts/deploy.sh)\n"
+printf "  3. Bootstrap end-state: ./scripts/setup-foundations.sh && python scripts/validate-foundations.py\n"

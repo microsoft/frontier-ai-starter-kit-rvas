@@ -1,0 +1,7 @@
+# Action Tools backend dependencies (separate from the root requirements.txt so the
+# REST API + MCP server can run standalone in their own venv if desired).
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+httpx>=0.27.0
+fastmcp>=2.0.0

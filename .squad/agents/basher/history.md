@@ -1,79 +1,25 @@
-## Learnings
+# Basher — History (tight summary)
 
-### Project Context
-- **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry format
-- **Repo:** ai-hackathon
-- **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
-- **Participants:** Students (new to AI) + Coaches (facilitators)
-- **Goal:** Create a complete, deliverable WTH hackathon format with a polished GitHub Pages site
-- **Requested by:** Marco Olivo
-- **Date:** 2026-05-28
+> Older detail archived to `history-archive.md` (2026-06-01, size gate). This file keeps the durable facts + current state.
 
-### 2026-05-28T16:23:27.374+01:00 — Full QA review learnings
-- The most common content-quality gaps were structural consistency issues, not major technical defects.
-- Challenge docs and site summaries drift fastest around naming, doc URLs, and narrative continuity; these need explicit QA checks together.
-- Infra validation should track direct snippet dependencies (`azure-core`, `flask`) and challenge-specific endpoint variables, not just platform packages.
-- Broken media links are better removed than left as placeholders when the repo does not actually ship the assets.
-- For event-day readiness, Challenges 03–06 are the main candidates for optional starter artifacts if the team wants less ambiguity for students and coaches.
+## Project Context
+- **Project:** WTH AI Hackathon — Microsoft Foundry format · **Repo:** ai-hackathon · **Requested by:** Marco Olivo.
+- Role: QA & Coach Enablement. Owns `validate.py` validators (challenges author *to* the contract; I implement it).
 
-### 2026-05-28T20:30:00.000+01:00 — Challenges 04–06 audit + repo-wide URL sweep
+## Durable learnings / gotchas
+- **Validator house style:** `--step N` / `--all` (mutually exclusive group) / `--dry-run`; every Azure call guarded (ImportError + Exception → clear FAIL, never a stack trace) so checkpoints pass offline without burning quota.
+- **Foundry rebrand:** "Azure AI Foundry" → "Microsoft Foundry" in prose/links only; literal SDK names + `learn.microsoft.com/azure/ai-foundry/` URLs preserved.
+- **Authoritative env contract** (matches `.env.sample` + backend): `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`, `AZURE_FOUNDRY_AGENT_NAME`, `AZURE_SEARCH_*`, `ACTION_API_URL=http://localhost:8080`, `ACTION_MCP_URL=http://localhost:8765/mcp`, `ACTION_API_KEY`, `APPLICATIONINSIGHTS_CONNECTION_STRING`. `scripts/setup-foundations.sh` locals are derived shell vars — do NOT "fix" them.
+- **Env-rename safety:** ordered perl substitution + negative lookbehind for names that are substrings of each other (`MODEL_DEPLOYMENT_NAME` ⊂ `FOUNDRY_…` ⊂ `AZURE_AI_…`); filter new names back out when verifying.
+- **SDK currency verified:** `azure-ai-evaluation>=1.16.9` evaluator class names unchanged; `azure-ai-projects` 2.x (no `from_connection_string`).
+- **Overwrite trick:** `create_file` refuses to overwrite — truncate (`: > file`, backup to /tmp) then author; or `rm` + recreate. Not hand-editing via terminal.
+- **Capstone validator heuristics:** scan every `*.py` under `--path` (open-ended brief, no fixed filenames); AST + text fallbacks; use **distinct destination sets** for fan-out degree (learners duplicate `add_edge`); aggregate evidence across all files (roles split across modules); `ast.unparse` to render edge-arg node names.
 
-**Rebrand pattern applied (Rusty-established):**
-- "Azure AI Foundry" product name → "Microsoft Foundry" everywhere in narrative, link text, and planning docs.
-- Exception: literal SDK names ("Azure AI Search", "azure-ai-evaluation", "Azure AI Inference SDK") are preserved unchanged.
-- Exception: `learn.microsoft.com/azure/ai-foundry/` URL paths are preserved — they are valid, not stale.
+## What I built (cumulative, staged — not committed)
+- Authored Advanced **Eval & Red Teaming** (README+solution+validate.py; `assets/northfield-eval.jsonl` 36 rows/13 topics; `adversarial-seed.jsonl` 10 attacks; `evaluate.py` with `--gate` CI exit + custom `NorthfieldDomainEvaluator`) and **Action Tools** validator.
+- ENV reconcile across `challenges/` (0 legacy tokens remain); authored 4 graceful validators (foundations, tracing, deploy, action-tools); Prompt Flow grep sign-off (challenges clean; flagged docs/ hits to Linus, QA-REPORT.md stale ref to coordinator).
+- Authored **Capstone `validate.py`** — stdlib-only AST structural validator, 3 gating checks (≥3 roles incl. ≥1 router + ≥2 specialists; fan-out edge; typed Pydantic + send/yield), KB/Action-reuse as non-gating advisory; PASS banner verbatim per Danny; py_compile PASS, self-tested green/red.
 
-**SDK verification outcomes:**
-- `azure-search-documents` 12.x — Challenge 04 uses the portal "Add your data" / Playground integration workflow with no direct SDK vector-query code; no code changes required. If future code samples are added, use `VectorizableTextQuery` or `VectorizedQuery` from `azure.search.documents.models`.
-- `azure-ai-evaluation` 1.16.9 — `GroundednessEvaluator`, `RelevanceEvaluator`, `CoherenceEvaluator`, `FluencyEvaluator` class names are unchanged; Challenge 05 skeleton is valid.
-- `azure-ai-projects` 2.x constructor — `from_connection_string` not found in ch 04–06 files; clean.
-- Flask 3.1.x — Challenge 06 scaffold pattern is valid; no breaking API changes.
-
-**Badge fix (Task C):**
-- README.md line 3: `pages.yml` → `deploy-pages.yml`; badge link target updated from repo root to workflow runs page.
-
-**URL sweep findings:**
-- `github.com/microsoft/ai-hackathon/discussions` → `github.com/olivomarco/ai-hackathon/discussions` (found in `docs/resources.md` Community section).
-- No `docs.microsoft.com/` or `ai-studio/` path refs found in ch 04–06 or any other in-scope file.
-- `learn.microsoft.com/en-us/` paths with redundant `/en-us/` were already correct (those URLs are valid).
-
-**Files with no changes needed:**
-- Challenge solution/coach guides for 04–06 contained only coaching language — no stale product names or SDK references.
-- `.github/ISSUE_TEMPLATE/` files were clean.
-
----
-
-## 2026-05-28 — Cross-page link fix (broken Pages links)
-
-**Task:** Fix 7 `../../challenges/.../README.md` relative links in `docs/challenges/challenge-XX.md` that resolved outside the Jekyll Pages tree and produced 404s on the live site.
-
-**Files changed:**
-- `docs/challenges/challenge-00.md`
-- `docs/challenges/challenge-01.md`
-- `docs/challenges/challenge-02.md`
-- `docs/challenges/challenge-03.md`
-- `docs/challenges/challenge-04.md`
-- `docs/challenges/challenge-05.md`
-- `docs/challenges/challenge-06.md`
-
-**URL pattern applied:** `https://github.com/olivomarco/ai-hackathon/tree/main/challenges/challenge-XX-name` (folder view, not blob/README, so participants see the full folder + solution.md).
-
-**Audit result:** Full grep of `docs/**/*.md` for `../../` patterns — no other escaping links found.
-
-**Decision doc:** `.squad/decisions/inbox/basher-cross-page-link-fix.md`
-
----
-
-## Team Update — 2026-05-28 Session Complete
-
-**Session:** Fact-check & CSS fix (multi-batch agent work)
-
-**Major Outcomes:**
-- **Microsoft Foundry rebrand applied** — All challenges verified & updated (Azure AI Foundry → Microsoft Foundry)
-- **CSS rendering restored** — GitHub Pages now displays with full just-the-docs theme
-- **Content verified against current docs** — All SDK versions, deployment patterns, and terminology current (no breaking changes)
-- **Humanizer pass complete** — 28 files cleaned of AI-generated patterns (emojis, em dashes, promotional vocab)
-- **Cross-page links fixed** — Challenge discovery pages now render without 404s
-- **Platform resilience discovered** — Serial agent dispatch works around 401 outages (parallel spawn causes race conditions)
-
-**Next:** Marco needs to `git push` to deploy CSS fix to live site; maintainers must run `cd docs && bundle install` to regenerate Gemfile.lock.
+## Current state
+### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
+PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/capstone-multi-agent/validate.py` (stdlib-only, 3 gating checks; advisory non-gating; compiles clean, self-tested green/red). Alongside: Capstone README+solution (Danny), 4 Advanced READMEs de-guided (Rusty), `scripts/cleanup.sh` + lab-generator (Livingston), three-tier README/docs (Linus). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.

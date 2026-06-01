@@ -1,5 +1,42 @@
 ## Learnings
 
+### Cleanup + Lab-Generator batch — 2026-06-01
+
+- **`scripts/cleanup.sh` (backlog #7, [FWH §4.10]) — safety design:** safe-by-default. A
+  bare run is a DRY-RUN that only prints teardown targets + a "what keeps costing money" list
+  and changes nothing. Destructive cloud teardown is gated behind an explicit `--yes`; the
+  resource group is shown first and NEVER deleted blindly. Flags: `--yes` (teardown via
+  `azd down --force`, RG-delete fallback), `--local-only` (explicit, safe — only stops the
+  Action Tools procs/containers), `--purge` (escalates to `azd down --force --purge` + purges
+  soft-deleted Cognitive Services/Foundry accounts). `set -Eeuo pipefail`; every destructive
+  command guarded.
+- **azd-hang gotcha:** `azd env get-values` (and `azd down`) can spawn a daemon that keeps the
+  pipe open, so plain command-substitution HANGS even with login present. Fix: a `guarded()`
+  helper wrapping `timeout -k 5 <secs> …` (escalates TERM→KILL) **plus** `</dev/null` on every
+  azd call to detach stdin and avoid the daemon-fd hang. Verified empirically — without `-k`
+  and stdin detach the dry-run never returned.
+- **docker branch gotcha:** when the daemon is unreachable (WSL2) `docker ps` prints a setup
+  hint to stdout, polluting the `RUNNING` capture and triggering a phantom "stopped" path.
+  Gate the whole block behind `docker info >/dev/null 2>&1` first.
+- **Env contract respected:** cleanup reads ONLY existing `.env.sample` variable names
+  (`AZURE_RESOURCE_GROUP`, `AZURE_SUBSCRIPTION_ID`, `AZURE_LOCATION`, `AZURE_ENV_NAME`,
+  `AZURE_*_ENDPOINT`, `AZURE_CONTAINER_REGISTRY_NAME`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`,
+  `ACTION_API_URL`, `ACTION_MCP_URL`). Local ports are *derived* from the ACTION_*_URL values
+  (no new names introduced). `.env` is read-only — never written.
+- **`.github/agents/lab-generator.agent.md` (backlog #4, [FWH §4.9/§6]) — frontmatter format:**
+  matched the house `squad.agent.md` style: YAML frontmatter with `name`, `description`, plus
+  `tools:` array and a `handoff:` list (to the scenario template). Body encodes the reskin
+  contract as hard invariants: tool-shape invariant (create-a-ticket / place-a-hold /
+  book-a-slot, mapped 1:1, never a 4th tool), the 4 swap surfaces, `.env` NAMES read-only
+  (new var ⇒ `TODO: Bicep-output (Livingston)`), do-not-touch backbone/`validate.py`, and
+  Search-Before-Implement via the microsoft-docs / foundry-mcp MCP servers.
+- **`.github/agents/scenario-template.md`** is the companion the lab-generator consumes — a
+  fill-in skeleton for the 4 swap surfaces with **NorthPeak Outfitters** (retail) as the worked
+  example: persona `northpeak-support-assistant`, corpus topics (returns/shipping/warranty/
+  sizing), the 3 tools mapped 1:1 (`open_support_case` / `place_order_hold` / `schedule_callback`),
+  and eval+adversarial category notes (jailbreak/harmful/injection — injection-via-review-text
+  is the richest red-team material).
+
 ### Project Context
 - **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry format
 - **Repo:** ai-hackathon
@@ -44,3 +81,53 @@
 - **Platform resilience discovered** — Serial agent dispatch works around 401 outages (parallel spawn causes race conditions)
 
 **Next:** Marco needs to `git push` to deploy CSS fix to live site; maintainers must run `cd docs && bundle install` to regenerate Gemfile.lock.
+
+---
+
+### 2026-06-01 — Curriculum V2 direction (Scribe note)
+- `PLAN-V2.md` is the new curriculum direction (Proposed): agent-era rearchitecture, core spine 00–07, one-artifact-many-acts Northfield "IQ" Assistant narrative.
+- **Prompt Flow is CUT** per Marco's directive — old Challenge 03 removed; dependent RAG/eval steps re-expressed on Agents + AI Search + Foundry IQ + MCP + MAF; `promptflow*` deps leave the devcontainer.
+- See `.squad/decisions.md` and `.squad/log/2026-06-01-curriculum-v2-planning.md`.
+
+### 2026-06-01 — Two-tier restructure + Prompt Flow removal (executed)
+- Executed RESTRUCTURE-SPEC §2.1 `git mv`/`git rm` sequence (staged, not committed — Scribe commits later).
+- **Renames (history preserved):** `challenge-00-setup` → `foundations`; `challenge-05-evaluation` → `advanced-evaluation-redteam`; `challenge-06-deploy` → `advanced-deploy-hosted-agent`.
+- **Deleted:** `challenge-03-prompt-flow/` (entire folder, `git rm -r`); `docs/challenges/challenge-03.md` + `challenge-03-coach.md` (spec §5).
+- **Pending harvest (left in place per task + spec harvest-before-remove):** `challenge-01-first-model`, `challenge-02-prompt-engineering`, `challenge-04-rag` — Rusty must harvest into `foundations/` Steps 2–4 before these get `git rm`'d.
+- **Created placeholders** (`<!-- PLACEHOLDER: content authored in Wave 2 -->` README + solution): `advanced-action-tools`, `advanced-tracing-observability`, `extra-fabric-iq`, `extra-voice-live`, `extra-magentic-workflows`, `extra-hosted-longrunning`, `extra-build-ui`, `extra-copilot-assisted`.
+- **requirements.txt:** removed `promptflow`, `promptflow-tools`; added `azure-ai-agents`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
+- **devcontainer.json:** removed `ms-toolsai.promptflow` extension.
+- **Docs nav:** removed broken `challenge-03` rows from `docs/index.md`, `docs/challenges/index.md`, `docs/coach-hub.md`.
+- **GOTCHA:** git rename-detection cross-paired identical `.gitkeep` files between unrelated folders in `git status` output — cosmetic only; the real `README.md`/`solution.md` renames tracked correctly with history.
+- **Left for content authors (NOT edited — prose):** prompt-flow references remain in `README.md` (root), `challenges/challenge-04-rag/`, `challenges/advanced-deploy-hosted-agent/` (ex-06), `docs/challenges/challenge-04.md`, `challenge-06.md`, `challenge-02.md` pager, `docs/coach-hub.md` troubleshooting rows, `resources/QA-REPORT.md`. Full list in restructure decision doc.
+
+### 2026-06-01 — Infra + automation scaffolding (azd/Bicep, bootstrap, action tools, Copilot layer)
+- **azd golden path:** authored `azure.yaml` (no `services:` — infra-only `azd up`), `infra/main.bicep` (subscription scope, creates RG + module), `infra/resources.bicep` (Foundry AIServices `allowProjectManagement:true`, project, model deployment, AI Search basic, Log Analytics + App Insights, ACR, project connections to Search+AppInsights, keyless RBAC), `infra/main.parameters.json` (azd `${VAR=default}` substitution). `az bicep build` passes clean.
+- **Bash fallback** `scripts/deploy.sh`: mirrors Bicep via `az` + ARM REST (Foundry needs `allowProjectManagement`, not in `az cognitiveservices`); writes the full `.env` contract; graceful guards (login/az/quota) fail with clear messages, model-deploy failure is non-fatal.
+- **Bootstrap skip-path (Path B):** `scripts/setup-foundations.sh` (loads `.env` or `azd env get-values`; STEP 1 real AI Search index build + chunked corpus upload via `azure-search-documents`; STEP 2/3 Foundry IQ KB + agent + AI Search tool via `azure-ai-projects`, **guarded/degrades gracefully** since preview surface is volatile). `scripts/validate-foundations.py` = the single Path-B checkpoint (4 checks; agent-answer-with-citation, falls back to a grounded Search query if the preview agent surface is absent).
+- **Action Tools backend (provided; teams wire it):** `scripts/action-backend/app.py` (FastAPI, in-memory, 3 actions: IT ticket / course hold / advising slot, optional `x-api-key`), `mcp_server.py` (FastMCP wraps the REST API as MCP tools), `requirements.txt`, `README.md`.
+- **DECISION — action-tools env contract (AUTHORITATIVE):** no `basher-eval-action.md` existed in the inbox, so I DEFINED the names: `ACTION_API_URL=http://localhost:8080`, `ACTION_MCP_URL=http://localhost:8765/mcp`, `ACTION_API_KEY` (optional `x-api-key`). Basher/Rusty action-tools + eval content MUST match these. Documented in `.env.sample` + decision doc.
+- **Copilot enablement layer:** `.vscode/mcp.json` (3 servers: `azure` stdio `@azure/mcp`, `foundry-mcp` http `https://mcp.ai.azure.com`, `microsoft-docs` http `https://learn.microsoft.com/api/mcp`), `.github/copilot-instructions.md` (Search-Before-Implement), and 7 `.github/skills/*/SKILL.md` stubs (progressive-disclosure frontmatter + `npx skills add` pointer; NOT vendored).
+- **`.env.sample`** documents the whole `.env` variable contract (Foundry/Search/Obs/ACR/Azure/Action). Real `.env` never committed.
+- **Prompt Flow cleanup in files I own:** rewrote root `README.md` (intro, learning outcomes, getting-started, challenge table → two-tier, repo tree, footer) and `.devcontainer/post-create.sh` (challenge quick-links + `.env.example`→`.env.sample`). Root README now grep-clean of prompt-flow/challenge-0N.
+- **Validation:** `bash -n` (both shells), `py_compile` (3 py files), JSON parse (params + mcp.json), `az bicep build` — all pass.
+- **GOTCHA:** azd `.env` contract flows Bicep `output` → azd env → `azd env get-values > .env`. Output names in `main.bicep` are intentionally identical to `.env.sample` keys so the two stay in sync.
+- Nothing committed (Scribe owns commits).
+
+### 2026-06-01 — Curriculum V2 implemented (cross-agent note)
+Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-tier** — Tier 1 Foundations (4 ordered steps) + Tier 2 (4 Advanced challenges + 6 Extras). **Prompt Flow fully removed** (deps, devcontainer, challenges, docs). `docs/` mirrors `challenges/` 1:1 with coach siblings. Decision inbox merged into `.squad/decisions.md` (28 entries); session log: `.squad/log/2026-06-01T100000Z-curriculum-v2-build.md`.
+
+### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
+PLAN-V3 is now **implemented** (staged, not committed). My piece: `scripts/cleanup.sh`
+(confirmation-gated, DRY-RUN by default, `--yes`/`--local-only`/`--purge`), `.github/agents/lab-generator.agent.md`
+(reskin meta-agent), and `.github/agents/scenario-template.md` (NorthPeak retail worked example) —
+existing env var NAMES only, `.env.sample`/Bicep untouched. Alongside: Tier 3 Capstone live
+(Danny + Basher), 4 Advanced READMEs de-guided (Rusty), three-tier README/docs (Linus). Inbox merged
+into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log:
+`.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
+
+## Learnings
+
+- 2026-06-01 — Archived 7 internal build/planning docs out of the participant-facing tree into a new non-shipping folder `.squad/planning/` (moved, not deleted; git history preserved). Files: PLAN.md, PLAN-V2.md, PLAN-V3.md, RESTRUCTURE-SPEC.md, CURRICULUM-REASSESSMENT.md, decisions.md (root legacy log — NOT `.squad/decisions.md`), and resources/QA-REPORT.md (flattened to `.squad/planning/QA-REPORT.md`). Used `git mv` for tracked (PLAN.md, decisions.md, QA-REPORT.md), plain `mv` for untracked V2/V3/SPEC/REASSESSMENT.
+- Added `.squad/planning/README.md` index documenting V1→V2→V3 lineage, RESTRUCTURE-SPEC executed, CURRICULUM-REASSESSMENT consumed by V3, decisions.md superseded by `.squad/decisions.md`, QA-REPORT = QA pass record.
+- README repo-tree fix: removed the `└── PLAN-V2.md` line from the "Repository Structure" tree and re-pointed `.env.sample` to the closing `└──` branch. No other README content altered. docs/ and challenges/ had no stale root-relative links to the moved files (validate.py's "PLAN-V3 §3.7" is a section citation, not a link — left untouched).

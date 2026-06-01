@@ -1,27 +1,25 @@
-## Learnings
+# Danny — History (tight summary)
 
-### Project Context
-- **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry format
-- **Repo:** ai-hackathon
-- **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
-- **Participants:** Students (new to AI) + Coaches (facilitators)
-- **Goal:** Create a complete, deliverable WTH hackathon format with a polished GitHub Pages site
-- **Requested by:** Marco Olivo
-- **Date:** 2026-05-28
+> Older detail archived to `history-archive.md` (2026-06-01, size gate). This file keeps the durable facts + current state.
 
-### Content Architecture Decisions (2026-05-28)
-- Chose 7 challenges (00–06) with strict linear progression — simplifies logistics for 1-day events
-- Challenge 00 is setup-only: isolates environment issues from learning content
-- Evaluation (Ch 05) precedes Deployment (Ch 06) — teaches responsible AI before shipping
-- Coach solutions stay in-repo only, never on public Pages — keeps student experience clean
-- RAG challenge uses pre-provided sample data to remove data-sourcing as a blocker
-- `just-the-docs` Jekyll theme selected for search, sidebar nav, and minimal config
-- Devcontainer is the primary environment — eliminates "works on my machine" issues at scale
-- Challenge time estimates total ~7.25 hours — fits a full 1-day event with breaks
+## Project Context
+- **Project:** WTH AI Hackathon — Microsoft Foundry format · **Repo:** ai-hackathon · **Requested by:** Marco Olivo.
+- Stack: Microsoft Foundry AI, GitHub Pages (Jekyll/just-the-docs), Markdown, GitHub Actions. Audience: students (new to AI) + coaches. Role: Lead & Content Architect.
 
-### README.md Implementation (2026-05-28)
-- Wrote root README.md following full specification from task brief
-- Includes all sections: header with 3 badges, What is WTH (3 paragraphs), Learning Outcomes (6 points from PLAN.md), Who is this for (Students/Coaches subsections), Prerequisites (5 items), Getting Started (3 steps with Codespaces badge), Challenges table (all 7 with links and timings), Repository Structure (15-line annotated tree), For Coaches section with Coach Hub link and solution guide notes, Resources (4 key links), Contributing section, and MIT License
-- Chose accessible, welcoming tone appropriate for both students and coaches
-- Codespaces badge uses placeholder org path (microsoft/ai-hackathon) — adjust repo URL in actual GitHub org
-- All challenge links follow standard path pattern: `challenges/challenge-NN-slug/README.md`
+## Durable learnings / gotchas
+- **STEP template** (Goal → Tasks → Success Criteria → Checkpoint); Success Criteria must be observable; every step ends in `python validate.py --step N`. I author *to* the validator contract; Basher owns `validate.py`.
+- **Prompt Flow is CUT** entirely — re-express RAG/eval on Agents + AI Search + Foundry IQ + MCP + MAF.
+- **Hosted-agent gotchas:** `azd ai agent deploy` exit 0 ≠ done (gate on `status==active` or get `424`); `az acr build` needs `--source-acr-auth-id "[caller]"` + fresh tags; two-identity model (caller bearer vs per-agent MI — `403` ⇒ caller missing `Azure AI User`); bind `0.0.0.0:8088` + declare `responses` v1.0.0.
+- **Tracing:** GenAI instrumentation env flags must be set ABOVE all `azure.ai.*` imports or message content is dropped.
+- **Search-Before-Implement:** preview MAF/Foundry surfaces (WorkflowBuilder, ChatAgent/Magentic, voicelive, Fabric tool) are never hard-coded — confirm via microsoft-docs/foundry-mcp; reference snippets marked "illustrative."
+- **Env discipline:** keep `.env.sample` byte-for-byte; reuse existing vars only; new vars go through Livingston's Bicep outputs, never hand-edited.
+
+## What I built (cumulative, staged — not committed)
+- Authored Advanced **Tracing & Observability** + rewrote **Deploy as a Hosted Agent** (Prompt Flow removed).
+- Authored FIVE Extras (Fabric IQ, Voice Live, Magentic, Hosted Long-Running, Copilot-Assisted); build-ui left to Linus.
+- Authored **PLAN-V3.md** (3-tier tree: Foundations → Advanced → MAF Capstone; de-guided Advanced; 11-idea backlog).
+- Authored **Tier 3 Capstone** (`challenges/capstone-multi-agent/README.md` + `solution.md`) as a LOW-guidance design brief; reconciled `PLAN-V2.md` (superseded-in-part pointer). Validator PASS string handed to Basher: `✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use`.
+
+## Current state
+### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
+PLAN-V3 is now **implemented** to disk (staged, not committed): Tier 3 MAF Capstone **live** (README + solution + Basher `validate.py`); 4 Advanced READMEs **de-guided** to the 3-rung ladder (Rusty); `scripts/cleanup.sh` + lab-generator shipped (Livingston); root `README.md` + `docs/` migrated to **three-tier** (Linus). Inbox merged into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)"); session log: `.squad/log/2026-06-01T123500Z-plan-v3-implementation.md`.
