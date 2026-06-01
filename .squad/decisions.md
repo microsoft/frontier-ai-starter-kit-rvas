@@ -588,6 +588,22 @@ Step 4's heading has two spaces before `*(` and a stripped `*(←`, producing th
 
 ---
 
+### Home Page (docs/index.md) Reframed to Three-Tier + Foundations Steps Linked — Linus
+**Author:** Linus (Frontend Dev / Docs)  
+**Date:** 2026-06-01  
+**Requested by:** Marco Olivo  
+**Status:** Implemented (staged, not committed)
+
+**Problem:** The published GitHub Pages Home (`docs/index.md`) was stale — it framed the hackathon as **two tiers** (Foundations + Advanced), omitted **Tier 3 · Capstone**, and rendered the Foundations Step rows as plain text with no links. The rest of the site (canonical source `docs/challenges/index.md`) was already three-tier.
+
+**Change (ONLY `docs/index.md`):** (1) frontmatter `description:` "two-tier" → "three-tier"; (2) "What is this?" prose reframed two → three tiers (Foundations / Advanced / Capstone-MAF); (3) quick-card "Two tiers, two paths" → "Three tiers, two paths" and `## Two tiers` heading → `## Three tiers`; (4) Foundations Step rows now LINK to verified anchors — `challenges/foundations#step-1--setup--provisioning-foundry--ai-search`, `#step-2--model-selection--the-playground`, `#step-3--your-first-agent`, `#step-4--knowledge-base-index--foundry-iq---foundations-end-state`; (5) added **Tier 3 · Capstone** section (blurb + time/prereqs table + "Start the Capstone →" btn) linking `challenges/capstone-multi-agent`; (6) Advanced + Extras retained, framed as Tier 2 within the three-tier whole.
+
+**Validation:** grep for "two tier"/"two-tier"/"two tiers" in `docs/index.md` → **0 matches**; Capstone present + links to `challenges/capstone-multi-agent` (3 occurrences); all 4 Foundations steps are links with the exact anchor slugs; `challenges/...` link prefix matches existing working home-page links (no Pages 404).
+
+**Constraints honored:** Edited ONLY `docs/index.md` — did NOT touch `challenges/index.md`, README, or challenge pages. Preserved all HTML/Liquid (hero-panel, quick-grid, btn classes, `{{ '/setup' | relative_url }}`). No git commit. **Note:** canonical source of truth for tier framing = `docs/challenges/index.md`; keep Home as a summary mirror — do not let it drift again.
+
+---
+
 ## Governance
 
 - All meaningful changes require team consensus
