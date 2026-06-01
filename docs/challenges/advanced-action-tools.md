@@ -18,7 +18,7 @@ Because actions have consequences, you'll also implement a **human-approval loop
 before it acts*.
 
 You will **wire** a provided backend — you do **not** build it. The Action Tools REST API + MCP server
-ship in [`scripts/action-backend/`](https://github.com/olivomarco/ai-hackathon/blob/main/scripts/action-backend/README.md) and already expose three
+ship in [`scripts/action-backend/`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/scripts/action-backend/README.md) and already expose three
 MCP tools:
 
 | MCP tool | Does | Key arguments |
@@ -37,8 +37,8 @@ MCP tools:
 
 **Files in this challenge**
 
-- [`agent_with_actions.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py) — **starter** with `< PLACEHOLDER >` gaps you fill in.
-- [`validate.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-action-tools/validate.py) — the Checkpoints below.
+- [`agent_with_actions.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py) — **starter** with `< PLACEHOLDER >` gaps you fill in.
+- [`validate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/validate.py) — the Checkpoints below.
 
 ---
 
@@ -96,7 +96,7 @@ python validate.py --step 1
 
 **Tasks:**
 
-1. Open [`agent_with_actions.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py). Add the import:
+1. Open [`agent_with_actions.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py). Add the import:
    `from azure.ai.agents.models import McpTool, RequiredMcpToolCall, SubmitToolApprovalAction, ToolApproval`.
 
 2. Complete `build_action_tool()`: construct an `McpTool` with `server_label="northfield_actions"` and
@@ -190,7 +190,7 @@ python validate.py --all
 
 ## Learning Resources
 - [MCP tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
-- [Provided backend + MCP server](https://github.com/olivomarco/ai-hackathon/blob/main/scripts/action-backend/README.md)
+- [Provided backend + MCP server](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/scripts/action-backend/README.md)
 - [Agents SDK — tools & runs](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 

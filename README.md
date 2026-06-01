@@ -1,6 +1,6 @@
 # Build Intelligent Apps with Microsoft Foundry
 
-[![Deploy GitHub Pages](https://github.com/olivomarco/ai-hackathon/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/olivomarco/ai-hackathon/actions/workflows/deploy-pages.yml)
+[![Deploy GitHub Pages](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/olivomarco/ai-hackathon)
 

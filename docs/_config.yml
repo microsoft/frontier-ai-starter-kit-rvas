@@ -1,7 +1,7 @@
 title: "WTH: Build Intelligent Apps with Microsoft Foundry"
 description: "A What The Hack hackathon — from prompt to production"
 baseurl: "/ai-hackathon"
-url: "https://olivomarco.github.io"
+url: "https://microsoft.github.io"
 
 theme: just-the-docs
 
@@ -23,7 +23,7 @@ nav_external_links:
   - title: Azure AI Foundry Docs
     url: https://learn.microsoft.com/azure/ai-foundry/
   - title: GitHub Repo
-    url: https://github.com/olivomarco/ai-hackathon
+    url: https://github.com/microsoft/frontier-foundry-hackathon
 
 # Footer
 footer_content: "WTH AI Hackathon — Built with ❤️ for students and coaches"
@@ -31,7 +31,7 @@ footer_content: "WTH AI Hackathon — Built with ❤️ for students and coaches
 # Aux links
 aux_links:
   "🚀 Open in Codespaces":
-    - "https://codespaces.new/olivomarco/ai-hackathon?quickstart=1"
+    - "https://codespaces.new/microsoft/frontier-foundry-hackathon?quickstart=1"
 
 # Plugins
 plugins:

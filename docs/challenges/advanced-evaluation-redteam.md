@@ -28,14 +28,14 @@ finally wire a **score gate** so a bad build can fail CI.
 
 **Assets shipped with this challenge**
 
-- [`assets/northfield-eval.jsonl`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/northfield-eval.jsonl) — 36 grounded Q/A rows derived from the
+- [`assets/northfield-eval.jsonl`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/northfield-eval.jsonl) — 36 grounded Q/A rows derived from the
   university-FAQ corpus (factual, edge, and abstain cases). Use and extend it.
 
-- [`assets/adversarial-seed.jsonl`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/adversarial-seed.jsonl) — labeled attack objectives to seed
+- [`assets/adversarial-seed.jsonl`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/adversarial-seed.jsonl) — labeled attack objectives to seed
   the red-team step.
 
-- [`evaluate.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py) — the code-driven harness (built-in + custom evaluators + CI gate).
-- [`validate.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/validate.py) — the Checkpoints below.
+- [`evaluate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py) — the code-driven harness (built-in + custom evaluators + CI gate).
+- [`validate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/validate.py) — the Checkpoints below.
 
 ---
 
@@ -46,7 +46,7 @@ finally wire a **score gate** so a bad build can fail CI.
 **Tasks:**
 
 1. Open your project in the Foundry portal (`ai.azure.com`) → **Evaluations** → **Create evaluation**.
-2. Upload [`assets/northfield-eval.jsonl`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/northfield-eval.jsonl). Map `query` → query column and
+2. Upload [`assets/northfield-eval.jsonl`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/northfield-eval.jsonl). Map `query` → query column and
    `ground_truth` → ground-truth column; `context` is your grounding column.
 
 3. Select the **Groundedness, Relevance, Coherence, Fluency** evaluators and pick your deployed chat
@@ -78,7 +78,7 @@ python validate.py --step 1
 1. Confirm your `.env` has `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_OPENAI_ENDPOINT`,
    `AZURE_AI_MODEL_DEPLOYMENT_NAME`, and `AZURE_FOUNDRY_AGENT_NAME` (from Foundations). Run `az login`.
 
-2. Read [`evaluate.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py): it loads the JSONL, calls your grounded agent for each `query`,
+2. Read [`evaluate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py): it loads the JSONL, calls your grounded agent for each `query`,
    then scores Groundedness/Relevance/Coherence/Fluency with `azure-ai-evaluation`.
 
 3. Smoke-test offline first (no quota): `python evaluate.py --dry-run --custom-only`.
@@ -105,7 +105,7 @@ python validate.py --step 2
 
 **Tasks:**
 
-1. In [`evaluate.py`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py), study `NorthfieldDomainEvaluator`. It returns a 1–5 score and
+1. In [`evaluate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/evaluate.py), study `NorthfieldDomainEvaluator`. It returns a 1–5 score and
    rewards: (a) surfacing a real `*@northfield.edu` / `(555)` contact when the ground truth has one,
    and (b) **correctly abstaining** on `category: "abstain"` rows — while penalizing any
    hallucinated/foreign email.
@@ -137,7 +137,7 @@ python validate.py --step 3
 
 **Tasks:**
 
-1. Review [`assets/adversarial-seed.jsonl`](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/adversarial-seed.jsonl): each row has an
+1. Review [`assets/adversarial-seed.jsonl`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-evaluation-redteam/assets/adversarial-seed.jsonl): each row has an
    `attack_objective`, a `category` (jailbreak, harmful-content, indirect-prompt-injection,
    self-harm-adjacent), the attacker `query`, and the `expected_behavior` to grade against.
 

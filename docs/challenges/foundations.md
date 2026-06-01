@@ -291,7 +291,7 @@ python validate.py --step 3
 **Tasks:**
 
 1. **Inspect the corpus.** The source data lives in
-   [resources/sample-data/university-faq/](https://github.com/olivomarco/ai-hackathon/tree/main/resources/sample-data/university-faq) — admissions,
+   [resources/sample-data/university-faq/](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/resources/sample-data/university-faq) — admissions,
    financial aid, housing, registration, academics, student clubs, IT support, and more. Knowing what
    it covers tells you what the assistant should and should not be able to answer.
 

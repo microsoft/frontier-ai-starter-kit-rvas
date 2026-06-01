@@ -24,13 +24,13 @@ you can prove it side-by-side.
 **None.** But verify the **enablement layer Livingston shipped** is present and wired in the student
 Codespace/devcontainer:
 
-- [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json) — 3 servers: `azure` (stdio `@azure/mcp`), `foundry-mcp`
+- [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json) — 3 servers: `azure` (stdio `@azure/mcp`), `foundry-mcp`
   (http `https://mcp.ai.azure.com`), `microsoft-docs` (http `https://learn.microsoft.com/api/mcp`).
 
-- [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md) — the Search-Before-Implement
+- [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md) — the Search-Before-Implement
   rule + skills/MCP map.
 
-- [`.github/skills/`](https://github.com/olivomarco/ai-hackathon/tree/main/.github/skills) — the 7 Foundry skill **stubs** (progressive disclosure;
+- [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) — the 7 Foundry skill **stubs** (progressive disclosure;
   installed on demand via `npx skills add`, **not** vendored — avoids context rot).
 
 > **Flag for the coordinator:** confirm Copilot is licensed/enabled for every participant and that the

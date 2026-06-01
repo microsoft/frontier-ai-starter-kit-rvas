@@ -175,7 +175,7 @@ eval set. *"Here's our agent team for **our** domain"* is the single most demo-a
 
 ## Reuse the existing `.env` contract — invent nothing
 
-This challenge uses **only** variables already defined in [`.env.sample`](https://github.com/olivomarco/ai-hackathon/blob/main/.env.sample). **Do not
+This challenge uses **only** variables already defined in [`.env.sample`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.env.sample). **Do not
 add new env vars by hand.** If the hosted long-running variant needs anything new, it comes from
 **Livingston via Bicep outputs** — never hand-edited into `.env.sample`.
 
@@ -228,12 +228,12 @@ python validate.py --all
 
 ## Learning Resources
 - [Microsoft Agent Framework (MAF) overview](https://learn.microsoft.com/azure/foundry/agents/)
-- [`foundry-workflows` skill](https://github.com/olivomarco/ai-hackathon/blob/main/.github/skills/foundry-workflows/SKILL.md) — Magentic + workflow patterns
-- [Advanced · Action Tools](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-action-tools/README.md) — the approval loop you reuse
-- [Advanced · Tracing & Observability](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-tracing-observability/README.md) — the OTel setup for Step 5
-- [Advanced · Deploy as a Hosted Agent](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/advanced-deploy-hosted-agent/README.md) — the hosted variant
-- [Extra · Magentic Workflows](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/extra-magentic-workflows/README.md) — the Magentic manager stretch
-- [Extra · Hosted Long-Running](https://github.com/olivomarco/ai-hackathon/blob/main/challenges/extra-hosted-longrunning/README.md) — the background-run deploy variant
+- [`foundry-workflows` skill](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/foundry-workflows/SKILL.md) — Magentic + workflow patterns
+- [Advanced · Action Tools](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/README.md) — the approval loop you reuse
+- [Advanced · Tracing & Observability](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-tracing-observability/README.md) — the OTel setup for Step 5
+- [Advanced · Deploy as a Hosted Agent](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-deploy-hosted-agent/README.md) — the hosted variant
+- [Extra · Magentic Workflows](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/extra-magentic-workflows/README.md) — the Magentic manager stretch
+- [Extra · Hosted Long-Running](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/extra-hosted-longrunning/README.md) — the background-run deploy variant
 
 ## Tips
 - **Design before you wire.** Sketch the org-chart and the Pydantic contracts on paper first. The graph

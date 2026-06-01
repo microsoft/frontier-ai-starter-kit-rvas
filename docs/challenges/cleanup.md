@@ -11,7 +11,7 @@ nav_order: 40
 > is over, **tear it all down** so nobody leaks Azure spend after the event.
 
 Cleanup is driven by one idempotent, `.env`-aware script:
-[`scripts/cleanup.sh`](https://github.com/olivomarco/ai-hackathon/blob/main/scripts/cleanup.sh). It
+[`scripts/cleanup.sh`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/scripts/cleanup.sh). It
 reuses **only** the variable names from the `.env` contract — it never invents, renames, or persists
 new env vars.
 

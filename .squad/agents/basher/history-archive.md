@@ -62,7 +62,7 @@
 - `docs/challenges/challenge-05.md`
 - `docs/challenges/challenge-06.md`
 
-**URL pattern applied:** `https://github.com/olivomarco/ai-hackathon/tree/main/challenges/challenge-XX-name` (folder view, not blob/README, so participants see the full folder + solution.md).
+**URL pattern applied:** `https://github.com/microsoft/frontier-foundry-hackathon/tree/main/challenges/challenge-XX-name` (folder view, not blob/README, so participants see the full folder + solution.md).
 
 **Audit result:** Full grep of `docs/**/*.md` for `../../` patterns — no other escaping links found.
 

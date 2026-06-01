@@ -14,9 +14,9 @@ nav_order: 25
 > **Best done *after* you've felt the manual path** on at least one challenge — the contrast is the lesson.
 
 > ⚙️ **Infra prerequisite:** **no new Azure resources.** Everything you need ships in this repo:
-> [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md),
-> [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json) (the 3 MCP servers), and the
-> [`.github/skills/`](https://github.com/olivomarco/ai-hackathon/tree/main/.github/skills) Foundry skill stubs. You need GitHub Copilot enabled in your
+> [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md),
+> [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json) (the 3 MCP servers), and the
+> [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) Foundry skill stubs. You need GitHub Copilot enabled in your
 > editor and `npx` available.
 >
 > 🎤 **Demo wow-factor:** Copilot **one-shots** a working Foundry tool using **live** SDK syntax it just
@@ -30,11 +30,11 @@ SDK signatures (the #1 cause of broken Foundry code) and instead **fetches the c
 writes a line. You'll **re-build one challenge you already did manually** — and watch it go faster *and*
 more correctly.
 
-The doctrine, straight from this repo's [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md):
+The doctrine, straight from this repo's [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md):
 
 > **MCP = fresh information. Skills = proven patterns. Use both, in that order.**
 
-The three MCP servers (from [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json)):
+The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json)):
 
 | Server | Use it for |
 |---|---|
@@ -50,13 +50,13 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/olivomarco/a
 
 **Tasks:**
 
-1. Open [`.vscode/mcp.json`](https://github.com/olivomarco/ai-hackathon/blob/main/.vscode/mcp.json) and start/verify the three servers (`azure`,
+1. Open [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json) and start/verify the three servers (`azure`,
    `foundry-mcp`, `microsoft-docs`) are connected in your editor's MCP panel.
 
-2. Open [`.github/copilot-instructions.md`](https://github.com/olivomarco/ai-hackathon/blob/main/.github/copilot-instructions.md) and read the
+2. Open [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md) and read the
    **"Search Before Implement"** golden rule — this is the behavior you're about to exploit.
 
-3. List the available skills under [`.github/skills/`](https://github.com/olivomarco/ai-hackathon/tree/main/.github/skills) (e.g.
+3. List the available skills under [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) (e.g.
    `foundry-projects-resources`, `foundry-models`, `foundry-iq-knowledge-bases`, `foundry-toolboxes`,
    `foundry-observability`, `foundry-hosted-agents`, `foundry-workflows`). Install the one matching your
    target challenge on demand: `npx skills add microsoft/skills --skill <name>`.

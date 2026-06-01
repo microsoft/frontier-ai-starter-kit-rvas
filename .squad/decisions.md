@@ -452,7 +452,7 @@ Jekyll Pages site rooted at `docs/`; `../../` traversal exits published tree →
 
 **Solution:** Updated all seven links to GitHub repo URLs:
 ```
-https://github.com/olivomarco/ai-hackathon/tree/main/challenges/challenge-XX-name/README.md
+https://github.com/microsoft/frontier-foundry-hackathon/tree/main/challenges/challenge-XX-name/README.md
 ```
 Pages now render correctly; no 404s on challenge discovery layer.
 
