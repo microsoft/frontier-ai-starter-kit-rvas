@@ -216,7 +216,7 @@ The V2 curriculum was implemented to disk this batch (staged, NOT committed). Th
 **Date:** 2026-06-01  
 **Status:** Complete (staged on disk; NOT committed)
 
-**Decision:** The Jekyll site now mirrors final `challenges/` content 1:1. Created 24 mirror pages (`foundations` + 4 Advanced + 6 Extras, each + `-coach`); deleted 12 stale `challenge-00/01/02/04/05/06` pages; rewrote `docs/challenges/index.md` to Two-Tier + Two-Paths (Path A beginner linear; Path B advanced-skip bootstrap, PLAN-V2 §1.5 ASCII diagram), `docs/index.md` away from "seven challenges", and `docs/coach-hub.md` (PF removed, 11 coach links). A one-shot `scripts/_mirror_docs.py` (deleted after run) generated mirrors for true fidelity; link rewrites bake into the generator (`solution.md`→`-coach`, repo links→absolute GitHub blob/tree on `olivomarco/ai-hackathon@main`). nav_order: foundations 1, Advanced 10–13, Extras 20–25, coach = student+100 + `nav_exclude`. Verified: docs/ PF-clean (only deliberate notes), no stale `challenge-0N` links, 0 frontmatter problems. Caveat: full `jekyll build` runs in Pages CI (no local gems).
+**Decision:** The Jekyll site now mirrors final `challenges/` content 1:1. Created 24 mirror pages (`foundations` + 4 Advanced + 6 Extras, each + `-coach`); deleted 12 stale `challenge-00/01/02/04/05/06` pages; rewrote `docs/challenges/index.md` to Two-Tier + Two-Paths (Path A beginner linear; Path B advanced-skip bootstrap, PLAN-V2 §1.5 ASCII diagram), `docs/index.md` away from "seven challenges", and `docs/coach-hub.md` (PF removed, 11 coach links). A one-shot `scripts/_mirror_docs.py` (deleted after run) generated mirrors for true fidelity; link rewrites bake into the generator (`solution.md`→`-coach`, repo links→absolute GitHub blob/tree on `microsoft/frontier-foundry-hackathon@main`). nav_order: foundations 1, Advanced 10–13, Extras 20–25, coach = student+100 + `nav_exclude`. Verified: docs/ PF-clean (only deliberate notes), no stale `challenge-0N` links, 0 frontmatter problems. Caveat: full `jekyll build` runs in Pages CI (no local gems).
 **Author:** Danny (Lead & Content Architect)  
 **Date:** 2026-05-28T16:15:34.722+01:00  
 **Status:** Proposed
@@ -337,7 +337,7 @@ The V2 curriculum was implemented to disk this batch (staged, NOT committed). Th
 **Files Changed:**
 - Created: `docs/assets/css/just-the-docs-default.scss` (with empty front-matter)
 - Updated: `_config.yml` (added plugin, fixed URLs)
-- Fixed URLs: `microsoft/ai-hackathon` → `olivomarco/ai-hackathon`
+- Fixed URLs: `microsoft/ai-hackathon` → `microsoft/frontier-foundry-hackathon`
 
 **Impact:** CSS rendering restored; Pages site now displays with full theme. Marco must `git push` for deployment.
 

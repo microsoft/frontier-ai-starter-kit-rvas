@@ -39,7 +39,7 @@
 - README.md line 3: `pages.yml` → `deploy-pages.yml`; badge link target updated from repo root to workflow runs page.
 
 **URL sweep findings:**
-- `github.com/microsoft/ai-hackathon/discussions` → `github.com/olivomarco/ai-hackathon/discussions` (found in `docs/resources.md` Community section).
+- `github.com/microsoft/ai-hackathon/discussions` → `github.com/microsoft/frontier-foundry-hackathon/discussions` (found in `docs/resources.md` Community section).
 - No `docs.microsoft.com/` or `ai-studio/` path refs found in ch 04–06 or any other in-scope file.
 - `learn.microsoft.com/en-us/` paths with redundant `/en-us/` were already correct (those URLs are valid).
 

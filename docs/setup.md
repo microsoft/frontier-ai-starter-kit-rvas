@@ -26,7 +26,7 @@ Best for most participants. You get a ready-to-use cloud dev environment with th
 4. Open the integrated terminal when VS Code loads.
 5. Continue with Azure sign-in and Challenge 00.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/olivomarco/ai-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
 
 <div class="callout-tip" markdown="1">
 <strong>Tip:</strong> Codespaces is the safest event-day option because everyone works in the same environment, with fewer laptop-specific issues to debug.

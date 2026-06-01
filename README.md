@@ -2,7 +2,7 @@
 
 [![Deploy GitHub Pages](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/olivomarco/ai-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
 
 *A What The Hack hackathon: from prompt to production*
 
@@ -74,7 +74,7 @@ Before you start, make sure you have:
 
 Click the badge below to open a fully configured development environment:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/olivomarco/ai-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
 
 **Alternative**: Open locally with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) in VS Code.
 
