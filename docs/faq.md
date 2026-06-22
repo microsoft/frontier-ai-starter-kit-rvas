@@ -1,6 +1,6 @@
 ---
 title: FAQ
-nav_order: 6
+nav_order: 7
 ---
 
 # FAQ
@@ -36,6 +36,10 @@ Save changes in your Codespace or your local clone of the repository. Commit ear
 ## What happens after the hackathon?
 
 You leave with a working project foundation, a clearer understanding of Microsoft Foundry, and a repo you can keep extending. Many teams continue by improving the app UX, expanding data sources, or productionizing deployment.
+
+## Can we use this with a real customer scenario?
+
+Yes. Use the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) before the event to define the user, business outcome, safe knowledge sources, governed actions, eval prompts, and final demo story. If customer data is not ready, run the Northfield scenario first and use it as the reference architecture for follow-up work.
 
 ## Coach: How do I get the solution guides?
 

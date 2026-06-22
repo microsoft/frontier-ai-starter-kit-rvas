@@ -158,8 +158,9 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 
 ## Make it your own (scenario swap)
 
-The capstone is the **best place to reskin**. The agent graph shape is identical for almost any
-help-desk-shaped domain — only the **corpus**, the **specialist prompts**, and the **eval set** change:
+If you are running **Customer Build Mode**, this is where the event becomes a stakeholder demo. The
+agent graph shape is identical for almost any help-desk-shaped domain — only the **corpus**, the
+**specialist prompts**, the **action tools**, and the **eval set** change:
 
 | Domain | Triage decides | Knowledge specialist | Action specialist |
 |---|---|---|---|
@@ -170,6 +171,10 @@ help-desk-shaped domain — only the **corpus**, the **specialist prompts**, and
 
 Swap by hand, **or** use the Copilot **lab-generator** meta-agent to scaffold the new corpus + agents +
 eval set. *"Here's our agent team for **our** domain"* is the single most demo-able moment of the event.
+
+For customer teams, close with the deliverable from the
+[Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}): a 2-minute journey, a scorecard,
+known risks, and a next-step backlog for pilot or production hardening.
 
 ---
 

@@ -20,7 +20,15 @@ The curriculum has **two tiers**:
 **Completing Step 4 = the Foundations end-state.** It is the prerequisite for the entire Advanced
 tier. If you only do one thing today, finish all four steps below.
 
-### The scenario
+### Choose the scenario mode
+
+Use **Upskill Mode** if you want the known-good learning path: build the Northfield University IQ
+Assistant exactly as written. Use **Customer Build Mode** if your event is tied to an account or
+project: complete the [Customer Outcome Canvas](../../docs/customer-outcome.md), then use Northfield as
+the reference while replacing the corpus, persona, action candidates, eval prompts, and final demo story
+with customer-safe equivalents.
+
+### The default scenario
 
 You are building the **Northfield University IQ Assistant**, a student-services agent. It grows
 across the four steps:
@@ -31,6 +39,10 @@ across the four steps:
 | **2 · Model & Playground** | Answer generic questions with a model and system instructions you chose |
 | **3 · First Agent** | Run as a named, versioned agent with a persona and guardrails |
 | **4 · Knowledge Base** | Answer from Northfield's real FAQ corpus, **with citations** ← **end-state** |
+
+In Customer Build Mode, the Step 4 end-state should prove the same capability with customer-relevant
+questions: grounded answers, citations, and clear abstention when the trusted corpus is missing the
+answer.
 
 ### What you need before you start
 

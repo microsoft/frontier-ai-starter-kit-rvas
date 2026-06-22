@@ -12,7 +12,15 @@
 
 **What The Hack** (WTH) is Microsoft's hackathon-in-a-box format designed to teach cloud and AI technologies through hands-on challenge-based learning. This repository brings WTH to Microsoft Foundry, a unified platform for building, evaluating, and deploying intelligent applications.
 
-This hackathon, you and your team build **one evolving artifact** — the **Northfield University IQ Assistant** — across three tiers. First you complete a guided **Foundations** challenge (four ordered steps) to stand up a deployed, grounded agent; then you pick **Advanced** challenges in any order to make it act, prove it safe, observe it, and ship it; finally you converge on an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system. Coaches guide discovery and unblock issues, but the learning is yours to own.
+This hackathon, you and your team build **one evolving artifact** across three tiers. In **Upskill Mode**,
+that artifact is the default **Northfield University IQ Assistant**. In **Customer Build Mode**, it is a
+customer-specific agent prototype mapped from the same architecture. First you complete a guided
+**Foundations** challenge (four ordered steps) to stand up a deployed, grounded agent; then you pick
+**Advanced** challenges in any order to make it act, prove it safe, observe it, and ship it; finally you
+converge on an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than
+lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a
+knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system.
+Coaches guide discovery and unblock issues, but the learning is yours to own.
 
 By the end, you'll have hands-on experience with the Microsoft Foundry platform, practical skills in prompt engineering and RAG (Retrieval-Augmented Generation), and a deployment-ready AI application to show for your work.
 
@@ -29,6 +37,22 @@ By the end of this hackathon, you will be able to:
 - Give the agent **action tools** via MCP that execute real operations
 - Evaluate outputs for quality and safety, including **red teaming**
 - Trace every answer end-to-end, then **deploy a hosted agent**
+
+---
+
+## Two ways to run it: upskill or build with a customer
+
+This repo supports two event motions:
+
+| Mode | Best for | What teams build |
+|---|---|---|
+| **Upskill Mode** | Teams learning Microsoft Foundry for the first time | The default **Northfield University IQ Assistant**, using the fictional corpus and provided action tools |
+| **Customer Build Mode** | Customer engagements, account workshops, and project kickoff events | A grounded, evaluated, demo-ready agent prototype for a customer scenario, using safe customer-relevant data and one governed workflow |
+
+Northfield remains the known-good reference path. For customer engagements, start with the
+[Customer Outcome Canvas](docs/customer-outcome.md), then map the same tiered challenges to the
+customer's domain: data for grounding, actions for workflows, evals for trust, tracing for debugging,
+and UI/deploy for stakeholder demos.
 
 ---
 
@@ -53,6 +77,7 @@ You're ready to coach if you:
 - Enjoy helping teams think through problems (instead of giving direct answers)
 - Can spend 6–8 hours supporting 2–3 teams
 - Have access to the [Coach Hub](docs/coach-hub.md) and solution materials in this repo
+- Can help teams translate a business scenario into data, tools, evals, and a demoable outcome
 
 ---
 
@@ -88,11 +113,13 @@ az login
 
 Follow the prompts to sign in with your Azure account. This connects your workspace to your Azure subscription so you can provision Microsoft Foundry resources.
 
-### 3. Start with Foundations (or bootstrap)
+### 3. Choose your event mode
 
-**Path A (beginner, recommended):** Read [Foundations](challenges/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant.
+**Upskill Mode:** Read [Foundations](challenges/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant.
 
-**Path B (advanced skip):** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
+**Customer Build Mode:** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first, then use Northfield as the reference while swapping in customer-safe corpus, prompts, actions, evals, and demo criteria.
+
+**Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 
 ```bash
 azd up                                   # provision Foundry + AI Search + App Insights + ACR
@@ -109,6 +136,16 @@ then converge on an open summit. **Tier 1 Foundations** is one guided, linear ch
 ordered steps (everyone does it). **Tier 2 Advanced** challenges are modular and can be attempted in
 **any order** — they all assume the Foundations end-state. **Tier 3 Capstone** is an open-ended
 design brief that composes everything into a multi-agent system.
+
+For customer engagements, treat every tier as an outcome checkpoint:
+
+| Tier | Technical checkpoint | Customer-outcome checkpoint |
+|---|---|---|
+| Foundations | Grounded agent with citations | Answers real scenario questions from trusted data |
+| Action Tools | Governed MCP action loop | Completes one valuable workflow with human approval |
+| Evaluation | Quality + safety tests | Produces a trust scorecard the customer can review |
+| Tracing / Deploy / UI | Observable, hosted app | Stakeholders can try it and inspect failures |
+| Capstone | Multi-agent orchestration | A realistic business journey handled by specialists |
 
 ```text
   TIER 1  FOUNDATIONS (guided, linear, everyone)

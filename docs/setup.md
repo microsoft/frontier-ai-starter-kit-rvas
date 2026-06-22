@@ -16,6 +16,9 @@ Use this page to get your environment ready before Challenge 00. The fastest rou
 
 ## Choose your setup path
 
+Your setup is the same in both event modes. **Upskill Mode** uses the Northfield University reference
+scenario. **Customer Build Mode** starts from the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) after your environment is ready, then maps the same challenges to a customer scenario.
+
 ### 1. GitHub Codespaces (recommended)
 
 Best for most participants. You get a ready-to-use cloud dev environment with the right tools preinstalled.
@@ -77,7 +80,8 @@ az account set --subscription "<your-subscription-name-or-id>"
 ```
 
 5. Confirm you can open Microsoft Foundry in the browser and reach the correct tenant.
-6. Move to Challenge 00 to provision the Foundry resource and project.
+6. Choose your event mode: Northfield for upskilling, or the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) for a customer engagement.
+7. Move to Foundations to provision the Foundry resource and project.
 
 ## Azure subscription options
 

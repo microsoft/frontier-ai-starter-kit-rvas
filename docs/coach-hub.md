@@ -1,6 +1,6 @@
 ---
 title: Coach Hub
-nav_order: 5
+nav_order: 6
 has_children: false
 ---
 
@@ -18,6 +18,7 @@ Coaches for this event should focus on facilitation, pacing, and unblock strateg
 - Confirm you can access the repo locally, including `solution.md` files in each challenge folder
 - Skim the challenge sequence so you know where setup ends and AI work begins
 - Check the event’s escalation path for Azure subscription or portal issues
+- For Customer Build Mode, confirm each team has a completed [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) and a safe data source to use
 
 ### During the event
 
@@ -25,12 +26,14 @@ Coaches for this event should focus on facilitation, pacing, and unblock strateg
 - Watch for drift: teams often think they are blocked by code when they are really blocked by setup
 - Keep teams time-boxed and encourage strategic skipping if the event clock gets tight
 - Use questions first, direct fixes second
+- Keep customer teams focused on the outcome: cited answers, one governed action, a trust scorecard, and a 2-minute demo
 
 ### Post-event
 
 - Help teams capture what they built and what they learned
 - Encourage cleanup of unused Azure resources if the event requires it
 - Share next-step learning resources for teams that want to keep building
+- For customer teams, capture the pilot backlog, risks, missing data, permissions, and production-readiness gaps
 
 ## Facilitation Principles
 
@@ -50,6 +53,16 @@ Healthy struggle looks like experimentation, note-taking, and narrowing hypothes
 ### Celebrate progress, not just completion
 
 Call out good debugging, clear prompt design, and smart teamwork. Teams gain energy when you recognize real progress between checkpoints.
+
+### Anchor customer work in outcomes
+
+In Customer Build Mode, keep the team from building a generic chatbot. Useful coaching questions:
+
+- “What business workflow or decision improves if this works?”
+- “Which source of truth should the agent cite before the customer trusts it?”
+- “Which action is valuable enough to automate, but risky enough to require approval?”
+- “What evidence will you show in the final two-minute demo?”
+- “What risk would block a pilot if you do not address it?”
 
 ## Per-step / per-challenge timing guide
 

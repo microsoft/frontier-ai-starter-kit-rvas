@@ -7,9 +7,10 @@ description: Kick off the What The Hack experience and navigate the three-tier M
 <div class="hero-panel">
   <span class="hero-kicker">What The Hack • Microsoft Foundry</span>
   <h1>Build Intelligent Apps with Microsoft Foundry</h1>
-  <p class="hero-tagline">From prompt to production: a guided Foundations challenge plus a modular Advanced tier covering grounding, action tools, evaluation, tracing, and deployment.</p>
+  <p class="hero-tagline">From prompt to production: learn with the Northfield reference scenario or bring a customer outcome and build a grounded, evaluated, demo-ready agent prototype.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Get Started</a>
+    <a class="btn btn-outline" href="{{ '/customer-outcome' | relative_url }}">Build with a customer</a>
     <a class="btn btn-outline" href="{{ '/coach-hub' | relative_url }}">Coaches: Start here</a>
   </div>
 
@@ -19,27 +20,29 @@ description: Kick off the What The Hack experience and navigate the three-tier M
 
 What The Hack (WTH) is Microsoft’s hands-on, challenge-first format for learning by building. Instead of sitting through a lecture, teams move through a sequence of guided tasks, validate their work as they go, and lean on coaches for hints when they hit real friction.
 
-This edition focuses on Microsoft Foundry. It runs in **three tiers**. **Tier 1 · Foundations** is one guided, linear challenge — four ordered steps that take every team to a deployed, grounded Northfield University IQ Assistant that answers from a real FAQ corpus with citations. **Tier 2 · Advanced** is a set of modular challenges you attempt in any order: action tools, evaluation & red teaming, tracing & observability, and deploying as a hosted agent — plus optional Extras. **Tier 3 · Capstone** is an open-ended design brief that composes everything into a multi-agent system built with the Microsoft Agent Framework (MAF).
+This edition focuses on Microsoft Foundry. It supports two event motions: **Upskill Mode**, where teams learn through the Northfield University reference scenario, and **Customer Build Mode**, where teams bring a real customer scenario and leave with a grounded, evaluated prototype. Both motions use the same three-tier path. **Tier 1 · Foundations** is one guided, linear challenge — four ordered steps that take every team to a deployed, grounded assistant with citations. **Tier 2 · Advanced** is a set of modular challenges you attempt in any order: action tools, evaluation & red teaming, tracing & observability, and deploying as a hosted agent — plus optional Extras. **Tier 3 · Capstone** is an open-ended design brief that composes everything into a multi-agent system built with the Microsoft Agent Framework (MAF).
 
 <div class="quick-grid">
   <div class="quick-card">
-    <h3>Three tiers, two paths</h3>
-    <p>Start with the guided Foundations challenge, branch into modular Advanced challenges in any order — or bootstrap straight to the Advanced tier — then compose it all into a multi-agent Capstone.</p>
+    <h3>Two modes</h3>
+    <p>Use Northfield for upskilling, or complete the Customer Outcome Canvas and map the same challenges to a customer scenario.</p>
   </div>
 
   <div class="quick-card">
-    <h3>Built for event day</h3>
-    <p>Time-boxed modules, mobile-friendly docs, and strong navigation for students and coaches moving fast.</p>
+    <h3>Outcome checkpoints</h3>
+    <p>Each tier produces customer-facing evidence: cited answers, governed actions, eval scorecards, traces, deployment, and demo story.</p>
   </div>
 
   <div class="quick-card">
     <h3>Coach-guided discovery</h3>
-    <p>Coaches help unblock, question, and steer without taking the keyboard away from participants.</p>
+    <p>Coaches help teams translate a scenario into data, tools, evals, risks, and a stakeholder-ready demo.</p>
   </div>
 
 </div>
 
 ## Three tiers
+
+Before starting a customer engagement, complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) so the team has a clear user, data source, workflow, safety boundary, and final demo story.
 
 <div class="challenge-card" markdown="1">
 

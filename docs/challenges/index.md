@@ -1,6 +1,6 @@
 ---
 title: Challenges
-nav_order: 3
+nav_order: 4
 has_children: true
 ---
 
@@ -12,6 +12,17 @@ challenges (plus Extras) you can attempt **in any order**. **Tier 3 · Capstone*
 design brief that composes everything into a multi-agent system. Every Advanced challenge and the
 Capstone assume the **Foundations end-state**: a deployed, grounded Northfield University IQ Assistant
 that answers from the FAQ corpus **with citations**.
+
+Run the tree in one of two modes:
+
+| Mode | Use it for | Starting point |
+|---|---|---|
+| **Upskill Mode** | Learning Microsoft Foundry with a known-good fictional scenario | Start Foundations with Northfield |
+| **Customer Build Mode** | Driving a customer workshop or project kickoff toward a prototype | Complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) first, then swap in customer-safe data and workflows |
+
+In Customer Build Mode, Northfield is the reference implementation. Keep the same architecture and
+validators where possible, but replace the corpus, persona, action tools, eval prompts, and final demo
+with the customer's scenario.
 
 ```text
   TIER 1  FOUNDATIONS (guided, linear, everyone)
@@ -34,6 +45,9 @@ that answers from the FAQ corpus **with citations**.
 One guided challenge, four ordered steps. Each step ends in a Checkpoint (`python validate.py --step N`)
 that is the prerequisite for the next. **Completing Step 4 is the Foundations end-state** — the gate to
 the entire Advanced tier.
+
+For customer engagements, the Foundations outcome is not just "the validator passed"; it is "the agent
+answers customer-relevant questions from trusted sources and cites them."
 
 <div class="challenge-card" markdown="1">
 
@@ -78,6 +92,10 @@ Each Advanced challenge offers a **Guided** path (revised, honest time) and a lo
 
 </div>
 
+For Customer Build Mode, prioritize **Action Tools**, **Evaluation & Red Teaming**, and **Build a UI**
+when time is short. Those three turn a grounded assistant into a stakeholder-visible prototype with a
+governed workflow and a trust scorecard.
+
 ## Tier 3 · Capstone
 
 The open-ended summit: break the single Northfield IQ Assistant into a **multi-agent team** — a
@@ -98,7 +116,7 @@ decide the org-chart and wire the graph.
 
 </div>
 
-## How to run this hackathon (Two Paths)
+## How to run this hackathon (two technical paths)
 
 There are **two ways in**. Both converge on the same **Foundations end-state**, then fan out into the
 modular Advanced tier.
