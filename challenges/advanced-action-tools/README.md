@@ -18,23 +18,33 @@ ticket opened — but the moment it can *act*, a wrong move has real consequence
 hold blocks a student's registration). This is where your agent earns the right to touch the real
 world, and where you build the guardrail that makes that safe.
 
-You will **wire** a provided backend — you do **not** build it. The Action Tools REST API + MCP server
-ship in [`scripts/action-backend/`](../../scripts/action-backend/README.md) and already expose three
-MCP tools:
+You will **wire** a provided backend — you do **not** build it. The Action Tools REST API ships in
+[`scripts/action-backend/`](../../scripts/action-backend/README.md) and exposes three action
+endpoints your `FunctionTool` callables hit directly:
 
-| MCP tool | Does | Key arguments |
+| Action function | Does | Key arguments |
 |---|---|---|
 | `create_it_ticket` | Opens an IT support ticket | `student_id, summary, category, priority` |
 | `place_course_hold` | Places a registration hold | `student_id, course_code, reason` |
 | `book_advising_slot` | Books an advising appointment | `student_id, advisor, iso_datetime, topic` |
+
+> **Note:** The backend also ships an optional FastMCP server (`mcp_server.py`) on `:8765/mcp`. That
+> server is a **preview/stretch asset** — it is not part of this guided path. See Rung (c) stretch
+> goals if you want to explore the server-side of MCP.
 
 **Env contract (authoritative — matches `.env.sample` and the backend):**
 
 | Variable | Default | You set it to |
 |---|---|---|
 | `ACTION_API_URL` | `http://localhost:8080` | base URL of the provided FastAPI backend |
-| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | **the MCP endpoint you attach as `McpTool`** |
+| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint (optional — preview/stretch only; not needed for this guided path) |
 | `ACTION_API_KEY` | *(empty)* | optional `x-api-key` shared secret (leave empty for the workshop) |
+
+> **SDK note:** MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
+> `SubmitToolApprovalAction`, `ToolApproval`) are **not** in the current public
+> `azure-ai-agents` 1.x release. This challenge uses the standard
+> **`FunctionTool` + `RequiredFunctionToolCall` + `SubmitToolOutputsAction` + `ToolOutput`**
+> pattern instead — same governance objective, fully supported in 1.x.
 
 **Files in this challenge**
 - [`agent_with_actions.py`](agent_with_actions.py) — **starter** with `< PLACEHOLDER >` gaps you fill in.
@@ -53,17 +63,18 @@ walks you through a starter file · **(b) Build-from-scratch path** hands you on
 
 ## Step 0 — Start the provided backend
 
-**Goal:** Have the Action Tools REST API + MCP server running locally before you wire anything.
+**Goal:** Have the Action Tools REST API running locally before you wire anything.
 
 **Tasks:**
 1. In a terminal: `cd scripts/action-backend && pip install -r requirements.txt`.
 2. Start the REST API: `uvicorn app:app --host 0.0.0.0 --port 8080`.
-3. In a second terminal: `python mcp_server.py` (serves `ACTION_MCP_URL` at `:8765/mcp`).
-4. Confirm both are up — `curl http://localhost:8080/health` and the MCP server's startup banner.
+3. Confirm it's up: `curl http://localhost:8080/health`.
+
+> **Optional (stretch / preview):** The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`).
+> You do **not** need it for this guided path — start it only if you are doing Rung (c) stretch goal 1.
 
 **Success Criteria:**
 - [ ] `GET /health` returns 200.
-- [ ] The MCP server prints `Action Tools MCP server -> http://...:8765/mcp`.
 
 **Checkpoint:** The provided backend answers over REST.
 ```text
@@ -91,41 +102,47 @@ python validate.py --step 1
 
 ---
 
-## Step 2 — Attach the MCP action tool
+## Step 2 — Define the action tools
 
-**Goal:** Give the agent the three actions by attaching the provided MCP server as an `McpTool`.
+**Goal:** Give the agent the three actions by wrapping the provided backend functions in a `FunctionTool`.
 
 **Tasks:**
-1. Open [`agent_with_actions.py`](agent_with_actions.py). Add the import:
-   `from azure.ai.agents.models import McpTool, RequiredMcpToolCall, SubmitToolApprovalAction, ToolApproval`.
-2. Complete `build_action_tool()`: construct an `McpTool` with `server_label="northfield_actions"` and
-   `server_url=os.environ["ACTION_MCP_URL"]`. Keep approval **on**.
-3. Add the tool to the agent's `tools` when you create it. (Hint: an `McpTool` exposes its wire
-   format on an attribute — discover which one rather than guessing.)
+1. Open [`agent_with_actions.py`](agent_with_actions.py). The imports are already present:
+   `from azure.ai.agents.models import FunctionTool, RequiredFunctionToolCall, SubmitToolOutputsAction, ToolOutput`.
+2. Complete the three stub functions (`create_it_ticket`, `place_course_hold`, `book_advising_slot`)
+   so each calls the appropriate `POST` endpoint on `ACTION_API_URL` and returns the response as a string.
+   (Hint: `httpx.post(f"{API_URL}/it-tickets", json={...}, headers=_headers()).text`)
+3. Complete `build_action_tools()`: return `FunctionTool(functions={create_it_ticket, place_course_hold, book_advising_slot})`.
+   `FunctionTool` builds the tool schemas from the function signatures and docstrings automatically.
 
 **Success Criteria:**
-- [ ] The agent is created with the `northfield_actions` MCP tool attached.
-- [ ] No `< PLACEHOLDER >` remains in the tool-attach section.
+- [ ] The three action functions call the backend and return JSON strings.
+- [ ] `build_action_tools()` returns a `FunctionTool`; no `< PLACEHOLDER >` remains before `run_with_approval`.
 
-**Checkpoint:** The wiring file attaches the action tool correctly.
+**Checkpoint:** The wiring file defines the action tools correctly.
 ```text
 python validate.py --step 2
-# expected: "✅ Step 2 PASS — MCP action tool attached (northfield_actions @ ACTION_MCP_URL)"
+# expected: "✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)"
 ```
 
 ---
 
 ## Step 3 — Implement the tool-approval loop
 
-**Goal:** Make the agent *pause and ask* before any action runs, then resume on approval.
+**Goal:** Make the agent *pause and ask* before any action runs, then resume on approval or denial.
 
 **Tasks:**
-1. Complete `run_with_approval()`. When `run.status == "requires_action"`, the run is paused on one or
-   more `RequiredMcpToolCall` items in `run.required_action.submit_tool_approval.tool_calls`.
-2. For each tool call: **show the human the tool name + arguments**, ask to approve, and build a
-   `ToolApproval(tool_call_id=<id>, approve=<True/False>)`.
-3. Submit the decisions with `SubmitToolApprovalAction` via `agents.runs.submit_tool_outputs(...)`, then
-   keep polling until the run leaves `requires_action`. This **closes the function-call loop**.
+1. Complete `run_with_approval()`. When `run.status == "requires_action"`, check that
+   `run.required_action` is a `SubmitToolOutputsAction`. The pending calls are in
+   `run.required_action.submit_tool_outputs.tool_calls` — each is a `RequiredFunctionToolCall` with
+   `call.function.name` and `call.function.arguments` (a JSON string).
+2. For each call: **show the human the tool name + arguments**, ask to approve, and:
+   - If **approved**: parse the arguments and call the matching backend function (e.g.
+     `create_it_ticket(**json.loads(call.function.arguments))`), capture the result string.
+   - If **denied**: set the result to `json.dumps({"denied": "Human operator declined."})`.
+3. Build `ToolOutput(tool_call_id=call.id, output=result)` for each call and submit the list via
+   `agents.runs.submit_tool_outputs(thread_id, run_id, tool_outputs=[...])`, then keep polling until
+   the run leaves `requires_action`. This **closes the function-call loop**.
 
 **Success Criteria:**
 - [ ] An action never executes without an explicit approve decision.
@@ -185,13 +202,15 @@ python validate.py --all
 > grades this path, so the acceptance criteria are identical.
 
 **Your contract:**
-> Attach the `northfield_actions` MCP server as a tool; implement a human-approval loop using
-> `McpTool` / `RequiredMcpToolCall` / `SubmitToolApprovalAction` / `ToolApproval`.
+> Define the three backend action functions (`create_it_ticket`, `place_course_hold`,
+> `book_advising_slot`) calling `ACTION_API_URL`; wrap them in a `FunctionTool`; implement a
+> human-approval loop using `RequiredFunctionToolCall` / `SubmitToolOutputsAction` / `ToolOutput`.
 > **Acceptance:** no action runs without an approve; a denial creates nothing.
 
 You get the running backend (Step 0) and the env contract (the `ACTION_*` table above) — nothing
-else. Discover the SDK surface from the [MCP tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol)
-docs, author the file, and run `python validate.py --all`.
+else. Discover the SDK surface from the [Agents SDK quickstart](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
+and the [FunctionTool reference](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/function-calling),
+author the file, and run `python validate.py --all`.
 
 ## Rung (c) — Stretch goals
 
@@ -220,4 +239,4 @@ Genuinely open-ended — no single right answer:
   agent is exactly how prompt-injection turns into real damage (see the Evaluation & Red Teaming
   challenge).
 - The backend is in-memory and resets on restart — fine for a workshop, but say so in your demo.
-- If the agent never calls the tool, check `server_label`, `server_url`, and that the MCP server is up.
+- If the agent never calls the tool, check that `FunctionTool` was passed to `tools=` and that the function docstrings include `:param` lines.

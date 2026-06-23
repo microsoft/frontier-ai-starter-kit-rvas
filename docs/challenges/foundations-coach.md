@@ -320,6 +320,15 @@ print(resp.output_text)
 - **Query type**: `VECTOR_SEMANTIC_HYBRID` (vector + keyword + semantic rerank) is the recommended
   default and what the knowledge base should use.
 
+### Customer corpus guidance (for Customer Build Mode teams)
+
+If a team is swapping in their own data:
+- **Minimum useful size:** 5–20 well-structured documents (FAQs, policies, SOPs). Too few = "I don't know" on valid questions; too many untested = noisy retrieval.
+- **Safe data only:** no PII, unredacted customer data, or legal/financial content not pre-cleared. Guide teams toward public-facing or pre-approved summaries.
+- **Formats:** `step4_index.py` handles `.txt` and `.md` natively. PDFs need text extraction first (suggest `pypdf` for quick hackathon use, or Azure Document Intelligence for production quality).
+- **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** ingests PDFs and SharePoint pages directly — point portal-path teams here first.
+- **Northfield as fallback:** if customer data is not ready or not cleared, run Foundations with the Northfield corpus and log the corpus swap as a follow-up. The architecture is identical.
+
 ### Common pitfalls
 - **401/403 querying the index** — the Foundry project managed identity is missing
   **Search Index Data Contributor** and **Search Service Contributor** on the AI Search resource.

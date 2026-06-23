@@ -20,8 +20,8 @@ search:
 # Navigation
 nav_sort: case_insensitive
 nav_external_links:
-  - title: Azure AI Foundry Docs
-    url: https://learn.microsoft.com/azure/ai-foundry/
+  - title: Microsoft Foundry Docs
+    url: https://learn.microsoft.com/azure/foundry/
   - title: GitHub Repo
     url: https://github.com/microsoft/frontier-foundry-hackathon
 

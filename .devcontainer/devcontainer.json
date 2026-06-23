@@ -30,12 +30,12 @@
   },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteEnv": {
-    "AZURE_AI_ENDPOINT": "${localEnv:AZURE_AI_ENDPOINT}",
-    "AZURE_AI_KEY": "${localEnv:AZURE_AI_KEY}",
+    "AZURE_AI_PROJECT_ENDPOINT": "${localEnv:AZURE_AI_PROJECT_ENDPOINT}",
+    "AZURE_AI_MODEL_DEPLOYMENT_NAME": "${localEnv:AZURE_AI_MODEL_DEPLOYMENT_NAME}",
     "AZURE_SUBSCRIPTION_ID": "${localEnv:AZURE_SUBSCRIPTION_ID}",
     "AZURE_RESOURCE_GROUP": "${localEnv:AZURE_RESOURCE_GROUP}"
   },
-  "forwardPorts": [8080],
+  "forwardPorts": [8080, 8765],
   "mounts": [],
   "shutdownAction": "stopContainer"
 }

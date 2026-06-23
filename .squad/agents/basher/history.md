@@ -66,3 +66,54 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/ca
 **Fix applied:** 5 broken relative skill links → absolute GitHub URLs (docs/index.md ×2, docs/customer-outcome.md ×1, docs/coach-hub.md ×2).
 
 **Verdict: PASS with one trivial fix applied and two minor flags for Rusty.**
+
+### 2026-06-23 — Action Tools SDK remediation (approved branch)
+
+**SDK finding (authoritative):** `azure-ai-agents==1.1.0` (current public release) does NOT contain
+`McpTool`, `RequiredMcpToolCall`, `SubmitToolApprovalAction`, or `ToolApproval`. Confirmed via
+`python3 -c "import azure.ai.agents.models as m; hasattr(m, 'McpTool')"` → `False`.
+
+**Pattern adopted:** Standard `FunctionTool` + `RequiredFunctionToolCall` + `SubmitToolOutputsAction`
++ `ToolOutput` — all confirmed present in 1.1.0. Same governance objective: run pauses at
+`requires_action`, human approves/denies, `submit_tool_outputs` resumes. MCP-native classes named in
+honest SDK-note blocks only (not as golden-path requirements).
+
+**Files changed:**
+- `challenges/advanced-action-tools/agent_with_actions.py` — full rewrite: 3 function stubs + `build_action_tools()` using `FunctionTool`; approval loop uses `RequiredFunctionToolCall`/`SubmitToolOutputsAction`/`ToolOutput`; SDK note in module docstring
+- `challenges/advanced-action-tools/validate.py` — Step 2: checks `FunctionTool`+fn-names+`ACTION_API_URL`; Step 3: checks `RequiredFunctionToolCall`+`submit_tool_outputs`+`ToolOutput`
+- `challenges/advanced-action-tools/README.md` — SDK note added; Step 2/3 rewritten; Rung (b) contract updated
+- `challenges/advanced-action-tools/solution.md` — reference code rewritten; pitfalls updated; timing adjusted
+- `docs/challenges/advanced-action-tools.md` — mirrors README changes
+- `docs/challenges/advanced-action-tools-coach.md` — mirrors solution.md changes
+- `challenges/extra-build-ui/README.md` — `RequiredMcpToolCall`→`RequiredFunctionToolCall`, `ToolApproval`→`ToolOutput`
+- `challenges/extra-build-ui/solution.md` — same two replacements
+- `docs/challenges/extra-build-ui.md` — same two replacements
+- `docs/challenges/extra-build-ui-coach.md` — same two replacements
+- `challenges/capstone-multi-agent/validate.py` — APPROVAL_RE broadened to include both old+new class names; advisory message updated
+
+**Checks run (no live Azure required):**
+- `py_compile` on agent_with_actions.py, validate.py, capstone validate.py → all OK
+- `validate.py --all --dry-run` on starter → Step 1 PASS (dry-run), Step 2 FAIL (placeholder intact ✓)
+- `validate.py --step 3` on starter → FAIL (placeholder intact ✓)
+- Simulated completed-file check → all 4 signal checks pass ✓
+- Capstone `validate.py --list` → runs cleanly ✓
+
+**Remaining live-Azure blocker:** Step 4 (and the actual agent run) requires `AZURE_AI_PROJECT_ENDPOINT` + running backend. No change to that gating — Step 4 was always a live-service check.
+
+### 2026-06-23 — Action Tools golden-path disambiguation (follow-up)
+
+**Scope:** Follow-up review found remaining contradictions where prose still implied the guided path attaches/uses the MCP server. Addressed all required items.
+
+**Changes made:**
+- `challenges/advanced-action-tools/validate.py` — (1) docstring line 5: "attaches the MCP action tool" → "wires the provided REST backend as a FunctionTool"; (2) startup instruction: removed `python mcp_server.py &`; (3) `check_step2()`: replaced `any(fn in src ...)` with **require all three** function names (strict); (4) `check_step4()` dry-run: checks `app.py` not `mcp_server.py`, updated pass message.
+- `challenges/advanced-action-tools/agent_with_actions.py` — `ACTION_MCP_URL` env entry labelled "optional — future/preview path only"; prereqs section no longer mentions `mcp_server.py`.
+- `challenges/advanced-action-tools/README.md` — intro rewritten: "REST API + MCP server … expose three MCP tools" → "REST API … exposes three action endpoints"; table header "MCP tool" → "Action function"; `ACTION_MCP_URL` row marked optional/preview; Step 0 rewritten to require only REST backend (mcp_server.py marked optional stretch); last tip fixed.
+- `challenges/advanced-action-tools/solution.md` (coach) — env table `ACTION_MCP_URL` marked optional; setup block: `python mcp_server.py` → optional comment; `.env` comment updated from `ACTION_MCP_URL` → `ACTION_API_URL`.
+- `docs/challenges/advanced-action-tools.md` — mirrors README changes above.
+- `docs/challenges/advanced-action-tools-coach.md` — mirrors solution.md changes above.
+- `challenges/extra-build-ui/README.md` + `solution.md`, `docs/challenges/extra-build-ui.md` + `extra-build-ui-coach.md` — all `ACTION_MCP_URL` prereq references updated to `ACTION_API_URL`.
+
+**Checks run:**
+- `py_compile` on validate.py, agent_with_actions.py, capstone validate.py → all OK
+- `validate.py --all --dry-run` on starter → Step 1 ✅ (dry-run), Step 2 ❌ (placeholder intact ✓), Step 4 ✅ (dry-run)
+- `grep -rn "attach.*MCP|McpTool|ACTION_MCP_URL"` on all Action Tools files → all remaining hits are SDK notes or "optional/preview" labels ✓

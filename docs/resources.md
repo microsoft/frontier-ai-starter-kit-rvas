@@ -34,7 +34,36 @@ nav_order: 5
 
 </div>
 
-## Azure AI Inference SDK
+## Azure AI Projects & Foundry SDK *(primary)*
+
+The SDK used throughout this hackathon. `azure-ai-projects` is the Foundry project client; `azure-ai-agents` drives agent creation, versioning, and tool attachment.
+
+<div class="quick-grid">
+  <div class="quick-card">
+    <h3><a href="https://learn.microsoft.com/python/api/overview/azure/ai-projects-readme">Azure AI Projects SDK for Python</a></h3>
+    <p>Package overview, <code>AIProjectClient</code> setup, connections, agents, and OpenAI client integration.</p>
+  </div>
+
+  <div class="quick-card">
+    <h3><a href="https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code">Get started with the Foundry SDK (Python)</a></h3>
+    <p>Quickstart: create a project client, run a chat call, and connect to Azure AI Search.</p>
+  </div>
+
+  <div class="quick-card">
+    <h3><a href="https://learn.microsoft.com/azure/foundry/agents/quickstart">Agents quickstart</a></h3>
+    <p>Create, version, and run a Foundry agent end-to-end with <code>PromptAgentDefinition</code>.</p>
+  </div>
+
+  <div class="quick-card">
+    <h3><a href="https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-projects/samples">azure-ai-projects samples</a></h3>
+    <p>Official SDK samples for agents, connections, evals, and search tool configuration.</p>
+  </div>
+
+</div>
+
+## Azure AI Inference SDK *(secondary — direct model calls without the project client)*
+
+Use this when calling a model endpoint directly, without a Foundry project. The challenges in this hackathon use `azure-ai-projects` + `get_openai_client()` by default; Azure AI Inference is an alternative for standalone model inference.
 
 <div class="quick-grid">
   <div class="quick-card">

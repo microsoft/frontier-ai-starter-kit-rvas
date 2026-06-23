@@ -2,7 +2,7 @@
 """Checkpoints for Advanced · Action Tools.
 
     python validate.py --step 1   # provided backend reachable (REST health)
-    python validate.py --step 2   # agent wiring file attaches the MCP action tool
+    python validate.py --step 2   # agent wiring file wires the provided REST backend as a FunctionTool
     python validate.py --step 3   # tool-approval loop implemented (no placeholders left)
     python validate.py --step 4   # end-to-end: an action round-trips through the backend
     python validate.py --all
@@ -10,9 +10,9 @@
 
 Steps 1 & 4 exercise the PROVIDED backend over REST (no Azure calls), so a coach can
 verify wiring without burning model quota. `--dry-run` skips the REST round-trips and
-falls back to a structural check of the provided backend source. Set ACTION_API_URL /
-ACTION_MCP_URL in your environment (defaults match .env.sample). Start the backend first:
-    cd ../../scripts/action-backend && uvicorn app:app --port 8080 & python mcp_server.py &
+falls back to a structural check of the provided backend source. Set ACTION_API_URL in
+your environment (default matches .env.sample). Start the backend first:
+    cd ../../scripts/action-backend && uvicorn app:app --port 8080
 """
 from __future__ import annotations
 
@@ -64,15 +64,16 @@ def check_step2() -> bool:
     if not WIRING.exists():
         return _fail("2", f"missing wiring file {WIRING.name}")
     src = WIRING.read_text(encoding="utf-8")
-    if "McpTool" not in src:
-        return _fail("2", "no McpTool — attach the provided MCP server as an action tool")
-    if "northfield_actions" not in src:
-        return _fail("2", 'server_label should be "northfield_actions" (matches the backend)')
-    if "ACTION_MCP_URL" not in src:
-        return _fail("2", "wire server_url to os.environ['ACTION_MCP_URL']")
+    if "FunctionTool" not in src:
+        return _fail("2", "no FunctionTool — wrap the three action callables as a FunctionTool")
+    missing = [fn for fn in ("create_it_ticket", "place_course_hold", "book_advising_slot") if fn not in src]
+    if missing:
+        return _fail("2", f"define all three action functions; missing: {', '.join(missing)}")
+    if "ACTION_API_URL" not in src:
+        return _fail("2", "wire tool execution to ACTION_API_URL (the provided REST backend)")
     if PLACEHOLDER.search(src.split("def run_with_approval")[0]):
-        return _fail("2", "tool-attach section still has a < PLACEHOLDER > — finish build_action_tool")
-    print("✅ Step 2 PASS — MCP action tool attached (northfield_actions @ ACTION_MCP_URL)")
+        return _fail("2", "tool-definition section still has a < PLACEHOLDER > — finish build_action_tools")
+    print("✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)")
     return True
 
 
@@ -80,12 +81,12 @@ def check_step3() -> bool:
     if not WIRING.exists():
         return _fail("3", f"missing wiring file {WIRING.name}")
     src = WIRING.read_text(encoding="utf-8")
-    if "RequiredMcpToolCall" not in src:
-        return _fail("3", "approval loop must inspect RequiredMcpToolCall items")
-    if not ("SubmitToolApprovalAction" in src or "submit_tool_outputs" in src):
-        return _fail("3", "approval loop must submit decisions (SubmitToolApprovalAction / submit_tool_outputs)")
-    if "ToolApproval" not in src:
-        return _fail("3", "build ToolApproval(approve=...) for each tool call")
+    if "RequiredFunctionToolCall" not in src:
+        return _fail("3", "approval loop must inspect RequiredFunctionToolCall items")
+    if "submit_tool_outputs" not in src:
+        return _fail("3", "approval loop must submit decisions via submit_tool_outputs")
+    if "ToolOutput" not in src:
+        return _fail("3", "build ToolOutput(tool_call_id=..., output=...) for each decision")
     if PLACEHOLDER.search(src):
         return _fail("3", "a < PLACEHOLDER > remains — complete the approval loop")
     print("✅ Step 3 PASS — human tool-approval loop implemented")
@@ -94,9 +95,9 @@ def check_step3() -> bool:
 
 def check_step4() -> bool:
     if DRY_RUN:
-        if not (BACKEND / "mcp_server.py").exists():
-            return _fail("4", f"provided MCP server not found at {BACKEND} (expected mcp_server.py)")
-        print("✅ Step 4 PASS (dry-run) — backend + MCP server source present (round-trip skipped)")
+        if not (BACKEND / "app.py").exists():
+            return _fail("4", f"provided REST backend not found at {BACKEND} (expected app.py)")
+        print("✅ Step 4 PASS (dry-run) — provided REST backend source present (round-trip skipped)")
         return True
     try:
         import httpx

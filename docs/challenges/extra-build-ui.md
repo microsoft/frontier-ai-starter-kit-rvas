@@ -13,7 +13,7 @@ nav_order: 24
 >
 > **Specific prereq:** the **Advanced · Deploy as a Hosted Agent** challenge — this Extra puts a
 > browser front-end on the **live Responses endpoint** you shipped there. For the action-approval
-> panel (Step 4), also complete **Advanced · Action Tools** (`ACTION_MCP_URL`).
+> panel (Step 4), also complete **Advanced · Action Tools** (`ACTION_API_URL`).
 
 > 🎤 **Demo wow-factor:** a student types *"What's the FAFSA deadline?"* into a real chat window and
 > watches the answer stream in **with a citations panel** beside it — then asks the agent to *open an
@@ -55,7 +55,7 @@ you deploy the whole thing — static front-end + BFF — to Azure and wire **CO
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
   - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
-  - `ACTION_MCP_URL` — the MCP action endpoint (only if you did Action Tools, for Step 4)
+  - `ACTION_API_URL` — the Action Tools REST backend base URL (only if you did Action Tools, for Step 4)
 - The **hosted agent endpoint** from the Deploy challenge (the agent answers authenticated Responses
   calls).
 
@@ -207,13 +207,13 @@ or deny — the Action Tools governance loop, now with a button.
 
 **Tasks:**
 
-1. When the run comes back as `requires_action` (a `RequiredMcpToolCall` from `ACTION_MCP_URL`), have
+1. When the run comes back as `requires_action` (a `RequiredFunctionToolCall` from the action backend), have
    the BFF return the **pending tool call** — tool name + arguments — instead of an answer.
 
 2. In the page, render an **approval card**: show the tool (`create_it_ticket`), its arguments
    (`student_id`, `summary`, …), and **Approve** / **Deny** buttons. Nothing runs until the user clicks.
 
-3. On the click, `POST /api/chat/approve` with the decision; the BFF submits the `ToolApproval` and
+3. On the click, `POST /api/chat/approve` with the decision; the BFF submits the `ToolOutput` and
    resumes the run, then streams the final result (the new `ticket_id`, or a clean "no action taken"
    on deny).
 

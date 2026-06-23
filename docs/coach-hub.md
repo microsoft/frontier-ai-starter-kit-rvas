@@ -81,6 +81,12 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful co
 
 ## Per-step / per-challenge timing guide
 
+**Pre-event / opening session (~30 min):**
+
+| Activity | Expected Time | Note |
+|---|---|---|
+| Customer Outcome Canvas review | 20–30 min | Every team should have their canvas draft before touching Step 1. Use this window to review, challenge vague "knowledge sources", and help teams without a scenario run Customer Challenge-Forge. Teams that skip the canvas tend to drift during Advanced challenges. |
+
 **Tier 1 · Foundations** (one guided challenge, four ordered steps):
 
 | Step | Expected Time | Warning Sign | Intervention |
@@ -98,6 +104,25 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful co
 | Evaluation & Red Teaming | 1–1.5 hr | Teams ignore metrics they do not like | Reframe metrics as design feedback; check the CI score gate. |
 | Tracing & Observability | 1 hr | No spans land in App Insights | Confirm GenAI tracing env vars are set **before** SDK import. |
 | Deploy as a Hosted Agent | 1–1.5 hr | Image builds but endpoint 401/500s | Check ACR push, `agent.yaml`, and per-agent managed identity. |
+| Extras (Fabric IQ, Voice Live, Magentic Workflows, Build a UI, …) | 45–90 min each | Teams lose 30+ min on unrelated concepts | Anchor each Extra to the outcome: *"what does this add to the prototype for your customer?"* |
+
+**Tier 3 · Capstone** *(optional — only attempt if Foundations + ≥1 Advanced are complete)*:
+
+| Activity | Expected Time | When to recommend | When to skip |
+|---|---|---|---|
+| Capstone (multi-agent router + specialists) | 1.5–2 hr | Team finished Foundations + 2+ Advanced with 2+ hr remaining | Team still on Step 4 or has only one Advanced complete — don't split attention. |
+
+**Event-level pacing heuristic:** If a team is on Step 3 or later at the 3-hour mark and has a customer scenario, encourage them to start thinking about which Advanced challenge maps most directly to their customer outcome. Not every team needs every Advanced challenge — depth on one is often more valuable than breadth on three.
+
+**Extras choice guide:** Steer teams toward the Extra that connects to their canvas:
+
+| Canvas signal | Suggested Extra |
+|---|---|
+| Customer wants live data or BI integration | Fabric IQ |
+| Customer uses voice / contact center | Voice Live |
+| Multi-department workflow, handoffs | Magentic Workflows |
+| Customer wants a stakeholder-facing UI | Build a UI |
+| Team wants to build faster with AI | Copilot-Assisted Build |
 
 ## Common blockers across all challenges
 

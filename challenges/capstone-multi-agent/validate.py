@@ -42,8 +42,9 @@ KB_RE = re.compile(
     re.IGNORECASE,
 )
 APPROVAL_RE = re.compile(
-    r"RequiredMcpToolCall|ToolApproval|SubmitToolApprovalAction|submit_tool_outputs|"
-    r"ACTION_MCP_URL|northfield_actions|McpTool|approval",
+    r"RequiredFunctionToolCall|RequiredMcpToolCall|ToolOutput|SubmitToolOutputsAction|"
+    r"SubmitToolApprovalAction|submit_tool_outputs|"
+    r"ACTION_MCP_URL|ACTION_API_URL|northfield_actions|McpTool|FunctionTool|approval",
     re.IGNORECASE,
 )
 PYDANTIC_RE = re.compile(r"BaseModel|pydantic", re.IGNORECASE)
@@ -285,7 +286,7 @@ def advise_reuse(scan: Scan) -> None:
     ap_mark = "✅" if approval else "➖"
     print("\n— advisory (coach-confirmed live, not gating) —")
     print(f"  {kb_mark} Knowledge specialist reuses Foundations KB (AI Search / Foundry IQ)")
-    print(f"  {ap_mark} Action specialist reuses Action Tools approval loop (MCP + approval)")
+    print(f"  {ap_mark} Action specialist reuses Action Tools approval loop (FunctionTool + approval)")
     if not (kb and approval):
         print("    note: reuse is graded LIVE with your coach — these are hints, not failures")
 
@@ -304,7 +305,6 @@ AUTO-GRADED (structural, headless — this script):
 
 ADVISORY (printed, NOT gating — README marks these coach-confirmed):
   +  ≥1 specialist reuses the Foundations KB; ≥1 reuses the Action Tools approval loop
-
 COACH-JUDGED / MANUAL (live with your coach — never asserted here):
   manual  Both sequential AND parallel topologies shown
   manual  Run visualized in DevUI (green/purple/black state)

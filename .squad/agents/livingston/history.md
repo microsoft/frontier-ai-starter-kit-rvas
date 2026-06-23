@@ -139,3 +139,61 @@ into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)
 - Added `.squad/planning/README.md` index documenting V1→V2→V3 lineage, RESTRUCTURE-SPEC executed, CURRICULUM-REASSESSMENT consumed by V3, decisions.md superseded by `.squad/decisions.md`, QA-REPORT = QA pass record.
 - README repo-tree fix: removed the `└── PLAN-V2.md` line from the "Repository Structure" tree and re-pointed `.env.sample` to the closing `└──` branch. No other README content altered. docs/ and challenges/ had no stale root-relative links to the moved files (validate.py's "PLAN-V3 §3.7" is a section citation, not a link — left untouched).
 - 2026-06-01 — Dependency audit found one install blocker: `azure-ai-agents>=2.0.0` in root `requirements.txt` was unsatisfiable (latest GA is 1.1.0). Updated floor to `>=1.1.0` after confirming Foundry docs still recommend `azure-ai-projects>=2.x` + `DefaultAzureCredential` endpoint auth, and after checking release streams on PyPI. Left other lower bounds unchanged to avoid forcing avoidable beta/major jumps.
+
+### 2026-06-23 — setup-resources.sh key-based logic removal (follow-up)
+
+`resources/scripts/setup-resources.sh` still contained key-based legacy logic after the env-contract pass:
+`get_project_key()` called `az ml workspace show-keys` / `list-keys`; collected `OPENAI_KEY` via
+`az cognitiveservices account keys list`; collected `SEARCH_KEY` via `az search admin-key show`;
+and wrote `AZURE_OPENAI_API_KEY` and referenced `AZURE_AI_KEY` in a warn message.
+
+**Fix:** Replaced the entire 227-line script with a ~50-line compatibility wrapper that:
+- Emits a clear `DEPRECATED` banner naming both golden paths (`azd up`, `scripts/deploy.sh`)
+- Resolves `scripts/deploy.sh` relative to the script's own directory (`../../scripts/deploy.sh`)
+- `exec`s into `scripts/deploy.sh "$@"` when found and executable
+- Exits 1 with instructions when the delegate is missing
+
+**Validation:**
+- `bash -n resources/scripts/setup-resources.sh` → OK
+- `grep -En 'AZURE_AI_KEY|AZURE_OPENAI_API_KEY|show-keys|admin-key|SEARCH_KEY'` → no matches
+- Executable bit preserved (`-rwxr-xr-x`)
+
+### 2026-06-23 — Env/dependency/repo-contract remediation
+
+Executed the approved remediation plan across 9 files (10 changed; 2 files pre-changed by others before my pass):
+
+**Changes made:**
+- `.env.example` — replaced stale variable block with a single pointer comment directing users to `.env.sample`; eliminates conflicting legacy names (`FOUNDRY_PROJECT_ENDPOINT`, `AZURE_AI_KEY`, `UNIVERSITY_QA_ENDPOINT`, etc.)
+- `.devcontainer/devcontainer.json` — replaced legacy `remoteEnv` keys (`AZURE_AI_ENDPOINT`, `AZURE_AI_KEY`) with authoritative names (`AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`); added port 8765 to `forwardPorts` for Action Tools MCP server
+- `resources/scripts/validate-environment.py` — aligned `REQUIRED_VARS` and `OPTIONAL_VARS` to `.env.sample` contract; removed `promptflow` / `promptflow-tools` from `PACKAGE_CHECKS`; removed key-based auth logic from endpoint check (keyless-first)
+- `resources/scripts/setup-resources.sh` — updated the `.env` write block to emit `.env.sample`-canonical names (replaced `AZURE_AI_ENDPOINT` + `AZURE_AI_KEY` with `AZURE_AI_PROJECT_ENDPOINT` + `AZURE_AI_MODEL_DEPLOYMENT_NAME`; removed `AZURE_SEARCH_KEY`)
+- `requirements.txt` — added `httpx>=0.27.0` and `PyYAML>=6.0` (not already present; `azure-monitor-query` skipped — no imports found in validators)
+- `.github/PULL_REQUEST_TEMPLATE.md` — replaced Challenge 00–06 checklist with Foundations / Advanced / Extras / Capstone / Cross-cutting structure
+- `.github/workflows/deploy-pages.yml` — bumped `actions/checkout@v6` → `@v7` (latest stable; configure-pages@v6, upload-pages-artifact@v5, deploy-pages@v5 were already correct)
+- `docs/_config.yml` — updated nav external link from `azure/ai-foundry/` → `azure/foundry/` (canonical Microsoft Foundry docs URL); updated title from "Azure AI Foundry Docs" → "Microsoft Foundry Docs"
+- `docs/setup.md` — replaced `.env.example` → `.env.sample`; replaced 4× "Challenge 00" references with "Foundations"/"the Foundations challenge"
+
+**Validation:**
+- `python3 -m json.tool .devcontainer/devcontainer.json` → OK
+- `python3 -m py_compile resources/scripts/validate-environment.py` → OK
+- `bash -n resources/scripts/setup-resources.sh` → OK
+- requirements.txt parsed 18 deps cleanly
+- `grep -c promptflow resources/scripts/validate-environment.py` → 0
+
+**Constraints honored:** Did not touch Action Tools challenge files (Basher's ownership). Did not edit broad curriculum prose beyond the specific stale env/challenge-number references. No commit made (Scribe owns commits).
+
+**GOTCHA:** `git diff --stat HEAD` showed `challenges/foundations/README.md` and `docs/challenges/foundations.md` as already modified before my pass — those are not in my ownership and I did not touch them; they appeared in the diff because an earlier agent staged changes before this session started.
+
+---
+
+## Pass 3 — 2026-06-23 · Missing `azure-monitor-query` root dependency
+
+**Trigger:** Follow-up scan by Squad found two validators importing `azure.monitor.query` while `requirements.txt` lacked the package.
+
+**Files changed:**
+- `requirements.txt` — added `azure-monitor-query>=1.4.0` immediately after `azure-monitor-opentelemetry>=1.6.0` in the tracing/observability block.
+
+**Checks run:**
+- `grep azure-monitor-query requirements.txt` → confirmed present
+- `python3 -m py_compile challenges/advanced-tracing-observability/validate.py` → OK
+- `python3 -m py_compile challenges/advanced-deploy-hosted-agent/validate.py` → OK

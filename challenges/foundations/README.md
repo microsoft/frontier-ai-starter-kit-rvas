@@ -7,7 +7,7 @@
 
 ## How this hackathon is structured (read first)
 
-The curriculum has **two tiers**:
+The curriculum has **three tiers**:
 
 - **Tier 1 · Foundations (this challenge)** — a single guided path, broken into **four ordered
   steps**. Everyone does it. Each step ends in a **Checkpoint** you can verify before moving on.
@@ -16,6 +16,9 @@ The curriculum has **two tiers**:
   (Action Tools, Evaluation & Red Teaming, Tracing & Observability, Deploy as a Hosted Agent, plus
   Extras). **Every Advanced challenge assumes the Foundations end-state** — the grounded assistant
   you build here.
+- **Tier 3 · Capstone** *(optional end-of-day)* — splits the assistant into a router and specialist
+  agents. Requires the Foundations end-state plus at least one Advanced challenge completed.
+  You do not need to reach it to succeed today — think of it as the stretch goal if time allows.
 
 **Completing Step 4 = the Foundations end-state.** It is the prerequisite for the entire Advanced
 tier. If you only do one thing today, finish all four steps below.
@@ -84,12 +87,23 @@ answer.
    > If `azd up` is blocked by quota or region limits, use the Bash fallback `./scripts/deploy.sh`
    > and pick a supported region when prompted.
 4. Confirm the generated **`.env`** exists and holds your resource contract (do **not** commit it).
+
+   > **What is the `.env` contract?** `azd up` writes a `.env` file containing your resource
+   > endpoints, deployment names, and connection strings. Every script in this repo loads it
+   > automatically via `python-dotenv` (`load_dotenv()`). It is git-ignored — never commit it.
+
    At minimum it contains the project endpoint, the model deployment name, and the search endpoint:
    ```bash
    grep -E "AZURE_AI_PROJECT_ENDPOINT|AZURE_AI_MODEL_DEPLOYMENT_NAME|AZURE_SEARCH_ENDPOINT" .env
    ```
 5. Verify **keyless** authentication works (no API keys — `DefaultAzureCredential` reuses your
-   `az login` session). Open the [Microsoft Foundry portal](https://ai.azure.com/), confirm your new
+   `az login` session).
+
+   > **Why keyless auth?** `DefaultAzureCredential` (from `azure-identity`) checks your `az login`
+   > session and requests a short-lived token from Entra. Access is governed by your Azure RBAC
+   > roles — no secrets to rotate or accidentally commit.
+
+   Open the [Microsoft Foundry portal](https://ai.azure.com/), confirm your new
    project is listed, and browse **Discover → Models** to see the catalog.
 
 **Success Criteria:**
@@ -134,7 +148,13 @@ python validate.py --step 1
    how to handle missing information, and what is out of scope. Save your best version to
    [foundations/assets/system-instructions.txt](assets/system-instructions.txt).
 5. Reproduce the Playground behavior **in code**. Create [foundations/app/step2_chat.py](app/step2_chat.py)
-   and call your chosen deployment through the project's OpenAI client:
+   and call your chosen deployment through the project's OpenAI client.
+
+   > **Responses API** — the stateless OpenAI-compatible endpoint used throughout this hackathon.
+   > `openai.responses.create(model=..., instructions=..., input=...)` sends a single prompt and
+   > returns a reply. In later steps you'll pass an `agent_reference` in `extra_body` to route the
+   > call through your named agent instead.
+
    ```python
    import os
    from azure.ai.projects import AIProjectClient
@@ -259,6 +279,20 @@ python validate.py --step 3
    [resources/sample-data/university-faq/](../../resources/sample-data/university-faq/) — admissions,
    financial aid, housing, registration, academics, student clubs, IT support, and more. Knowing what
    it covers tells you what the assistant should and should not be able to answer.
+
+   > **Customer Build Mode — preparing your own corpus:** if you are swapping in customer data,
+   > follow these guidelines before indexing:
+   > - **Minimum useful size:** 5–20 well-structured documents (FAQs, policy pages, SOPs) is enough
+   >   for a convincing demo. Sparse corpora produce "I don't know" answers even for valid questions.
+   > - **Safe data only:** no PII, unredacted customer data, confidential pricing, or legal content
+   >   not cleared for use. When in doubt, use public-facing or pre-approved summaries.
+   > - **Supported formats:** the `step4_index.py` script ingests plain text (`.txt`) and Markdown
+   >   (`.md`) directly. For PDFs, extract text first (e.g., `pypdf` or Azure Document Intelligence).
+   > - **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** flow can ingest
+   >   PDFs and SharePoint pages directly — no code required for the portal path.
+   > - **Northfield as fallback:** if customer data is not cleared or not ready, complete Foundations
+   >   with the Northfield corpus and mark the corpus swap as a follow-up task. The architecture
+   >   (indexing, grounding, citations) is identical regardless of the corpus.
 2. **Index it into Azure AI Search.** Create a **vector/hybrid** index over the FAQ files. Use the
    helper [foundations/app/step4_index.py](app/step4_index.py) (outline below) to chunk, embed, and upload:
    ```python
@@ -281,8 +315,12 @@ python validate.py --step 3
    query later returns 401/403, assign them in the portal (AI Search → Access control (IAM)).
 4. **Build a Foundry IQ knowledge base** over the index (agentic retrieval: query decomposition →
    parallel search → rerank). In the portal: **Build → Knowledge bases → New**, point it at your AI
-   Search index, and choose the **`VECTOR_SEMANTIC_HYBRID`** query type (vector + keyword + semantic
-   reranking — the recommended default).
+   Search index, and choose the **`VECTOR_SEMANTIC_HYBRID`** query type.
+
+   > **`VECTOR_SEMANTIC_HYBRID`** — Azure AI Search query type that combines vector similarity
+   > (semantic meaning), BM25 keyword matching (exact terms), and semantic reranking in one call.
+   > It typically outperforms pure vector search on factual FAQ-style content and is the recommended
+   > default for grounded agents.
 5. **Attach the knowledge base to the agent** and require citations. Create
    [foundations/app/step4_ground.py](app/step4_ground.py) — add the Azure AI Search tool to a **new
    version** of `northfield-iq-assistant` and update the instructions to demand sources:

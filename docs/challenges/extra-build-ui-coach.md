@@ -25,7 +25,7 @@ Azure deploy (Container Apps **or** SWA + Functions) with managed identity + sco
 **Hard prerequisite:** the Deploy challenge's live endpoint must answer authenticated Responses calls.
 If a team hasn't done Deploy, they can point the BFF at the **prompt-agent** Responses route instead
 (same `agent_reference` call they used in Foundations) — the UI work is identical; only the backend URL
-changes. Step 4 (approval) additionally needs the Action Tools backend running (`ACTION_MCP_URL`).
+changes. Step 4 (approval) additionally needs the Action Tools backend running (`ACTION_API_URL`).
 
 Total time: about **1.5–2 hours** if Deploy is done; longer if they also build a polished front-end.
 
@@ -161,8 +161,8 @@ is the Action Tools `requires_action` loop surfaced in the browser.
 
 ### The shape
 
-The BFF detects `run.status == "requires_action"`, returns the pending `RequiredMcpToolCall`(s) to the
-page (don't auto-approve!), and on the user's click submits a `ToolApproval(tool_call_id, approve=...)`
+The BFF detects `run.status == "requires_action"`, returns the pending `RequiredFunctionToolCall`(s) to the
+page (don't auto-approve!), and on the user's click submits a `ToolOutput(tool_call_id, output=...)`
 via `submit_tool_outputs`, then resumes. Reuse the exact approval logic from the Action Tools
 `solution.md` — this Extra just moves the human decision from the terminal to a button.
 

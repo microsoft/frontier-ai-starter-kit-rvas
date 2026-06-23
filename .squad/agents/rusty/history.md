@@ -42,7 +42,20 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: all 4 Advanced
 
 ## Learnings
 
-### 2026-06-23 — Outcome-first reframe (Customer Build primary, Northfield secondary)
+### 2026-06-23 — Foundations + instructional coherence remediation
+
+**Files changed:**
+- `challenges/foundations/README.md` — three-tier language fix; `.env` contract, `DefaultAzureCredential`, Responses API, and `VECTOR_SEMANTIC_HYBRID` concept primers added inline; customer corpus preparation guidance added to Step 4 Task 1.
+- `docs/challenges/foundations.md` — mirror of all README changes (same content, JTD formatting preserved).
+- `challenges/foundations/solution.md` — customer corpus guidance section added to Step 4 indexing guidance (coach-facing).
+- `docs/challenges/foundations-coach.md` — mirror of solution.md Step 4 corpus guidance.
+- `docs/customer-outcome.md` — corpus preparation sub-section added under Pre-work canvas table (min useful size, safe data, formats, PDFs/SharePoint, Northfield fallback).
+- `docs/faq.md` — Foundry-specific troubleshooting section added: citations/grounding, 403/RBAC, resource vs. project, validator failures, quota/region, tracing delays.
+- `docs/resources.md` — Azure AI Inference SDK demoted to secondary; new Azure AI Projects & Foundry SDK section added as primary with `azure-ai-projects` readme, Foundry get-started, agents quickstart, and samples links.
+- `docs/coach-hub.md` — pre-event Customer Outcome Canvas timing row added (20–30 min); Extras timing row added to Advanced table; Tier 3 Capstone pacing table added; Extras-to-canvas choice guide added.
+
+**Pattern learned:** Concept primers (`.env`, `DefaultAzureCredential`, Responses API, `VECTOR_SEMANTIC_HYBRID`) work best as `>` blockquote callouts placed immediately before the first task that relies on the concept — not as a glossary section or footnote. This keeps them discoverable in reading order without inflating the step length.
+
 
 **Decision approved by Marco Olivo.** Repositioned the hackathon from co-equal modes to outcome-first: Customer Build / Bring-Your-Own-Outcome is now the **primary motion**; Northfield University Upskill path is the **secondary / fallback**.
 

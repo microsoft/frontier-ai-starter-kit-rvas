@@ -15,13 +15,10 @@ Describe the change and why it is needed.
 - [ ] Verified in GitHub Actions
 
 ## Challenge affected
-- [ ] Challenge 00
-- [ ] Challenge 01
-- [ ] Challenge 02
-- [ ] Challenge 03
-- [ ] Challenge 04
-- [ ] Challenge 05
-- [ ] Challenge 06
+- [ ] Foundations (setup / provisioning / first agent / knowledge base)
+- [ ] Advanced (action tools / tracing / evaluation / hosted agent)
+- [ ] Extras (Fabric IQ / voice / Magentic workflows / build UI / etc.)
+- [ ] Capstone (multi-agent orchestration)
 - [ ] Cross-cutting / repo-wide
 
 ## Notes for reviewers

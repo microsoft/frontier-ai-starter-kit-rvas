@@ -26,24 +26,26 @@ except ImportError:  # pragma: no cover - graceful fallback when rich is missing
 ROOT = Path.cwd()
 ENV_PATH = ROOT / ".env"
 REQUIRED_VARS = [
-    "FOUNDRY_PROJECT_ENDPOINT",
+    "AZURE_AI_PROJECT_ENDPOINT",
     "AZURE_SUBSCRIPTION_ID",
     "AZURE_RESOURCE_GROUP",
 ]
 OPTIONAL_VARS = [
-    "FOUNDRY_MODEL_NAME",
-    "AZURE_AI_KEY",  # key-based auth alternative to DefaultAzureCredential
+    "AZURE_AI_MODEL_DEPLOYMENT_NAME",
     "AZURE_OPENAI_ENDPOINT",
     "AZURE_OPENAI_API_KEY",
     "AZURE_OPENAI_DEPLOYMENT_NAME",
     "AZURE_SEARCH_ENDPOINT",
-    "AZURE_SEARCH_KEY",
     "AZURE_SEARCH_INDEX_NAME",
-    "UNIVERSITY_QA_ENDPOINT",
-    "UNIVERSITY_QA_KEY",
+    "AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME",
+    "AZURE_FOUNDRY_AGENT_NAME",
+    "APPLICATIONINSIGHTS_CONNECTION_STRING",
+    "ACTION_API_URL",
+    "ACTION_MCP_URL",
 ]
 PACKAGE_CHECKS = [
     ("azure-ai-projects", "azure.ai.projects"),
+    ("azure-ai-agents", "azure.ai.agents"),
     ("azure-ai-inference", "azure.ai.inference"),
     ("azure-ai-evaluation", "azure.ai.evaluation"),
     ("azure-core", "azure.core"),
@@ -53,8 +55,6 @@ PACKAGE_CHECKS = [
     ("openai", "openai"),
     ("python-dotenv", "dotenv"),
     ("requests", "requests"),
-    ("promptflow", "promptflow"),
-    ("promptflow-tools", "promptflow.tools"),
     ("jupyter", "jupyter_core"),
     ("ipykernel", "ipykernel"),
     ("rich", "rich"),
@@ -195,11 +195,10 @@ def main() -> int:
             critical=True,
         )
 
-    endpoint = merged_env.get("FOUNDRY_PROJECT_ENDPOINT")
-    api_key = merged_env.get("AZURE_AI_KEY")
-    if endpoint and api_key and requests is not None:
+    endpoint = merged_env.get("AZURE_AI_PROJECT_ENDPOINT")
+    if endpoint and requests is not None:
         try:
-            response = requests.get(endpoint, headers={"api-key": api_key}, timeout=10)
+            response = requests.get(endpoint, timeout=10)
             status = "PASS" if response.status_code < 500 else "FAIL"
             reporter.add(
                 "Foundry project endpoint",
@@ -214,12 +213,6 @@ def main() -> int:
                 f"Connectivity test failed for {endpoint}: {exc}",
                 critical=True,
             )
-    elif endpoint and not api_key and requests is not None:
-        reporter.add(
-            "Foundry project endpoint",
-            "WARN",
-            f"FOUNDRY_PROJECT_ENDPOINT is set but AZURE_AI_KEY is not. Using DefaultAzureCredential (az login) — no key test performed.",
-        )
     elif endpoint and requests is None:
         reporter.add(
             "Foundry project endpoint",
@@ -231,7 +224,7 @@ def main() -> int:
         reporter.add(
             "Foundry project endpoint",
             "WARN",
-            "Skipped because FOUNDRY_PROJECT_ENDPOINT is not configured.",
+            "Skipped because AZURE_AI_PROJECT_ENDPOINT is not configured.",
         )
 
     az_path = shutil.which("az")

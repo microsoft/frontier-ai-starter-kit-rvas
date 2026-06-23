@@ -48,11 +48,32 @@ Once the canvas is complete, treat this page as your north star throughout the h
 | Target users | Who will use the assistant: employees, support agents, sellers, operators, students, citizens? |
 | Business outcome | What should be faster, safer, cheaper, or more reliable after the prototype works? |
 | Top user tasks | What are the top 3 questions or workflows users need help with? |
-| Knowledge sources | Which safe documents, FAQs, policies, manuals, tickets, or pages can ground answers? |
+| Knowledge sources | Which safe documents, FAQs, policies, manuals, tickets, or pages can ground answers? *(see corpus prep guidance below)* |
 | Action candidates | What should the agent be allowed to do, and which actions require approval? |
 | Safety boundaries | What should the agent refuse, escalate, redact, or avoid automating? |
 | Success measures | What metrics or demo evidence would make stakeholders trust the prototype? |
 | Final demo story | What 2-minute journey will show the outcome clearly? |
+
+### Preparing your corpus for Foundations Step 4
+
+When filling in **Knowledge sources**, use these guidelines to avoid the most common corpus problems:
+
+- **Minimum useful size:** 5–20 well-structured documents (FAQs, policy pages, SOPs, product guides)
+  is enough for a compelling hackathon demo. A sparse corpus produces "I don't know" answers even on
+  questions the assistant should handle.
+- **Safe data only:** no PII, unredacted customer data, confidential pricing, or legal content that
+  has not been cleared for use in a demo environment. When in doubt, use public-facing or
+  pre-approved summaries.
+- **Supported formats:** the indexing script (`step4_index.py`) handles plain text (`.txt`) and
+  Markdown (`.md`) natively. For PDFs, extract text first — `pypdf` is fast enough for hackathon
+  use; Azure Document Intelligence gives higher quality for complex layouts.
+- **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** flow can ingest PDFs
+  and SharePoint pages without writing code — a good option if the team is comfortable with portal
+  navigation and wants to move quickly.
+- **Northfield as fallback:** if customer data is not cleared or not ready by event day, complete
+  Foundations with the Northfield University corpus and capture the corpus swap as a follow-up task.
+  The indexing architecture, agent wiring, and grounding pattern are identical regardless of which
+  corpus you use — Northfield is the reference, not a ceiling.
 
 ## Map the hackathon tiers to the customer outcome
 
