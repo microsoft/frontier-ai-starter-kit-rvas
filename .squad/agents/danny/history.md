@@ -31,3 +31,11 @@ PLAN-V3 is now **implemented** to disk (staged, not committed): Tier 3 MAF Capst
 
 ### 2026-06-01 — Learning note (stale wording hygiene)
 - When a validator exists in-repo, checkpoint text must reference the real path (`challenges/capstone-multi-agent/validate.py`) and avoid future-tense wording (e.g., "authored separately" or "forthcoming").
+
+### 2026-06-23 — customer-challenge-forge skill authored
+- **New skill:** `.github/skills/customer-challenge-forge/SKILL.md` — a FULL working skill (not a stub). Purpose: outcome-first idea generation for hackathon participants who have a customer name + industry but no idea what to build.
+- **Effort-tag vocabulary (canonical):** `Starter` (Foundations only, ~2 hr), `Core` (Foundations + one Advanced, sweet spot, ~6–8 hr day), `Stretch` (3+ tiers or Capstone/MAF).
+- **Sweet-spot rule encoded in skill:** "grounded agent + one governed action" = Core. Anything below that bar is trivial; anything requiring multi-system data engineering is over-complex.
+- **Tier/tech names used in skill (match these everywhere):** Foundations · Action Tools · Evaluation & Red Teaming · Tracing & Observability · Deploy as Hosted Agent · Capstone · Extra — Fabric IQ · Extra — Voice Live · Extra — Magentic Workflows · Extra — Build a UI. These are the exact labels from `docs/index.md` and `challenges/` folder names.
+- **skills-lock.json:** confirmed no entry needed. That file tracks remote github-sourced skills (with `computedHash`). Local `.github/skills/*` skills are not registered there; the skill is live immediately.
+- **Canvas linkage:** skill Part E pre-fills the Customer Outcome Canvas Pre-work table (`docs/customer-outcome.md`) for the top idea so the participant carries it straight into the Foundations challenge.

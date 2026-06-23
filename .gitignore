@@ -21,6 +21,10 @@ _site/
 .jekyll-cache/
 .jekyll-metadata/
 docs/Gemfile.lock
+# Local Bundler install (gems vendored during local builds)
+docs/vendor/
+docs/.bundle/
+vendor/bundle/
 
 # Azure
 .azure/

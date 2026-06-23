@@ -18,15 +18,20 @@ Coaches for this event should focus on facilitation, pacing, and unblock strateg
 - Confirm you can access the repo locally, including `solution.md` files in each challenge folder
 - Skim the challenge sequence so you know where setup ends and AI work begins
 - Check the event’s escalation path for Azure subscription or portal issues
-- For Customer Build Mode, confirm each team has a completed [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) and a safe data source to use
+- **For all teams:** confirm whether each team has a customer scenario or business outcome in mind
+  - If yes → have them complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) before the event starts
+  - If no → run the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill with them: provide a customer name (or target industry) and it generates ~10 right-sized, buildable Foundry AI application ideas with industry rationale and tier mapping; use the output to fill in the canvas
+  - If the team has no scenario and wants pure upskilling → confirm they will follow the Northfield University reference path
 
 ### During the event
 
+- **Start every team from their outcome, not from the tutorial.** Briefly review their Customer Outcome Canvas (or their chosen idea from Customer Challenge-Forge) before touching Foundations Step 1
 - Start every team in **Foundations** (Step 1) and confirm their environment is actually usable
 - Watch for drift: teams often think they are blocked by code when they are really blocked by setup
 - Keep teams time-boxed and encourage strategic skipping if the event clock gets tight
 - Use questions first, direct fixes second
 - Keep customer teams focused on the outcome: cited answers, one governed action, a trust scorecard, and a 2-minute demo
+- For Upskill (Northfield) teams, apply the same outcome mindset to the fictional scenario — treat every checkpoint as if Northfield were a real customer
 
 ### Post-event
 
@@ -55,6 +60,16 @@ Healthy struggle looks like experimentation, note-taking, and narrowing hypothes
 Call out good debugging, clear prompt design, and smart teamwork. Teams gain energy when you recognize real progress between checkpoints.
 
 ### Anchor customer work in outcomes
+
+Every team — whether they have a real customer or are following the Northfield path — should work toward a defined outcome. The default for teams with a scenario is **Customer Build Mode**; Northfield is the **safe fallback** for pure upskilling.
+
+**Running Customer Challenge-Forge with a team that has no idea:**
+
+1. Open the [Customer Challenge-Forge](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill.
+2. Provide a customer name (or a target industry if no specific customer is named).
+3. The skill researches public documentation and generates ~10 right-sized Foundry AI application ideas, each with a business rationale and a tier mapping.
+4. Have the team pick the idea that fits best and immediately fill in the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}).
+5. From that point on, treat the event as Customer Build Mode — same tiers, same checkpoints, real outcome.
 
 In Customer Build Mode, keep the team from building a generic chatbot. Useful coaching questions:
 

@@ -5,20 +5,40 @@ nav_order: 3
 
 # Customer Outcome Canvas
 
-Use this page when the event goal is more than upskilling: a team wants to start a real customer
-application and leave with a concrete agent prototype. Northfield University remains the safe default
-scenario; this canvas helps you swap in a customer domain without losing the structure, checkpoints, or
-coachability of the hackathon.
+This is the **default starting point** for this hackathon. Bring a customer name, a business area, or
+even just an industry — and use this canvas to define the user, data source, workflow, safety boundary,
+and demo story your team will build toward. Every tier checkpoint answers both a technical question and
+a business question, so you leave with a prototype your customer can evaluate, not just a demo of
+Foundry features.
+
+If your team is new to Microsoft Foundry and has no customer scenario ready, the Northfield University
+reference scenario is the guided fallback path — see [Upskill Mode](#choose-your-mode) below.
 
 ## Choose your mode
 
 | Mode | Use when | Default artifact |
 |---|---|---|
-| **Upskill Mode** | Participants need a guided Foundry learning path | Northfield University IQ Assistant |
-| **Customer Build Mode** | A customer or account team wants to explore a real business outcome | Customer-specific grounded agent prototype |
+| **Customer Build Mode** *(primary)* | You have a customer, account team, or business outcome to build against | Customer-specific grounded agent prototype |
+| **Upskill Mode** *(fallback)* | Participants need a guided Foundry learning path and have no customer scenario | Northfield University IQ Assistant |
 
-Customer Build Mode should still follow the same tiers. The difference is that every checkpoint answers
-a business question, not only a technical one.
+Customer Build Mode follows the same tiers as Upskill Mode. The difference is that every checkpoint
+answers a business question, not only a technical one.
+
+## Don't have a customer or idea yet?
+
+Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill as your
+on-ramp. Give it a customer name and industry and it researches public documentation — company site,
+investor relations, annual reports, and industry trends — to generate **~10 right-sized, buildable
+Microsoft Foundry AI application ideas**, each with an industry rationale and a suggested tier mapping.
+
+Pick the idea that resonates, then fill in the Pre-work canvas table below using the Challenge-Forge
+output as your starting point:
+
+- The **business outcome** and **top user tasks** fields map directly from the idea's rationale.
+- The **knowledge sources** field maps from the data sources the idea suggests.
+- The **action candidates** and **safety boundaries** fields map from the tier guidance the skill provides.
+
+Once the canvas is complete, treat this page as your north star throughout the hackathon.
 
 ## Pre-work: fill this in before the event
 

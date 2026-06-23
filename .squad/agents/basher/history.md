@@ -48,3 +48,21 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: `challenges/ca
 - No repo venv was present; temp venv at `/tmp/aihack-qa-venv` + `pip install -r requirements.txt` removed dependency noise and exposed true blockers.
 - Result: 1 PASS (`advanced-evaluation-redteam`), 6 BLOCKED, 0 FAIL, 0 N/A.
 - Recurrent blocker pattern is prerequisite absence, not harness defects: missing `.env`/Azure provisioning, localhost action backend offline, and learner-authored files not yet created for tracing/deploy/capstone.
+
+### 2026-06-23 — Customer Challenge-Forge skill + Outcome-First messaging QA
+
+**Scope:** Two new deliverables: `.github/skills/customer-challenge-forge/SKILL.md` and outcome-first messaging reframe across `README.md`, `docs/index.md`, `docs/customer-outcome.md`, `docs/coach-hub.md`.
+
+**QA results:**
+
+1. **BUILD:** Jekyll build succeeded (`bundle install` + `bundle exec jekyll build` from `docs/`). Ruby 3.3.8 / Bundler 4.0.12 available; gems installed to `docs/vendor/bundle` (local path needed due to `/var/lib/gems` permission). No build errors. Sass `@import` deprecation warnings present (pre-existing; not introduced by this change). Site output: `docs/_site/`.
+
+2. **LINKS/NAV — FIXED:** All 5 occurrences of `.github/skills/customer-challenge-forge/` in docs pages were **broken relative links** on the GitHub Pages build — `.github/` is not served by Pages. Fixed all 5 to the absolute GitHub URL `https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md`, matching the established pattern in `docs/challenges/capstone-multi-agent.md` (which uses absolute github.com URLs for all `.github/` skill refs). All anchor slugs for Foundations steps in docs/index.md were verified correct against the built `_site/challenges/foundations.html` `id=""` values. README.md's relative `.github/skills/customer-challenge-forge/` links are fine (repo-root context on GitHub UI). Minor: docs/index.md line 86 says "the full Two-Paths run guide" — this refers to the Beginner/Advanced-skip execution paths in `challenges/index.md` (unchanged), not the two event modes. Slightly confusing post-reframe but not a broken link; flagged for Rusty.
+
+3. **MESSAGING CONSISTENCY:** Customer Build Mode is clearly marked *(primary)* in both mode tables (docs/index.md, docs/customer-outcome.md, coach-hub.md pre-event checklist); Northfield is clearly marked *(fallback)*. No residual "co-equal modes" language found. Hero tagline, "What is this?" prose, and Getting Started step 3 all lead with Customer Build. Challenge-Forge skill is referenced as the on-ramp for no-idea teams in all three required docs. Path labels "(primary)" and "(fallback)" are consistent across all pages. README's "two ways to run it" section mirrors the same primary/fallback framing.
+
+4. **SKILL REVIEW — PASS:** SKILL.md (a) asks for `customer_name` (required) + `industry` (required) + two optional inputs ✓; (b) instructs public-source-only research, cites every claim with URL, flags unverifiable facts with ⚠️, anti-patterns table explicitly forbids fabrication ✓; (c) all 8 idea fields present (title/description/target user/business outcome/tier-tech/effort tag/industry fit/knowledge sources) ✓; (d) Step 4 states the "sweet spot" guardrails with a table of 5 guardrails including Not-too-trivial/Not-over-common/Not-over-complex/event-window-fit/data-ready-check ✓; (e) Part E in Step 5 maps the top idea onto all 9 Customer Outcome Canvas pre-work fields ✓. Tier/challenge label cross-check: all 10 labels in SKILL.md match `challenges/` folder names exactly. Two extras (`extra-copilot-assisted`, `extra-hosted-longrunning`) are absent from the label table — by design, they're omitted from idea-generation scope; not a defect. One observation for Danny: the SKILL.md `view` tool is listed to read `docs/customer-outcome.md` before generating — this works in repo context but will silently fail outside the repo without error (graceful; not a blocking issue).
+
+**Fix applied:** 5 broken relative skill links → absolute GitHub URLs (docs/index.md ×2, docs/customer-outcome.md ×1, docs/coach-hub.md ×2).
+
+**Verdict: PASS with one trivial fix applied and two minor flags for Rusty.**

@@ -39,3 +39,17 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: all 4 Advanced
 - Revalidated curriculum wording against current Microsoft Learn pages (`what-is-foundry`, `navigate-from-classic`, hosted-agent quickstart/deploy pages, Azure AI Search RBAC, Fabric tool docs).
 - Applied minimal wording corrections in scoped markdown only: standardized product naming to **Microsoft Foundry**, clarified role naming as **Foundry User (formerly Azure AI User)** where access guidance appears, and updated outdated Learn URL base paths from `/azure/ai-foundry/...` to `/azure/foundry/...`.
 - Kept curriculum flow and challenge structure unchanged; no dependency pins or validation contracts were modified.
+
+## Learnings
+
+### 2026-06-23 — Outcome-first reframe (Customer Build primary, Northfield secondary)
+
+**Decision approved by Marco Olivo.** Repositioned the hackathon from co-equal modes to outcome-first: Customer Build / Bring-Your-Own-Outcome is now the **primary motion**; Northfield University Upskill path is the **secondary / fallback**.
+
+**Files changed:**
+- `docs/index.md` — Hero tagline, "What is this?" paragraph, quick-grid cards, and mode table reordered (Customer Build first); added "Which path is right for you?" mode comparison table; added Customer Challenge-Forge callout and pointer; final CTA button row updated.
+- `docs/customer-outcome.md` — Intro rewritten as the DEFAULT starting point (not "more than upskilling"); mode table reordered (Customer Build primary); added "Don't have a customer or idea yet?" section pointing to `.github/skills/customer-challenge-forge/` with explanation of how its output maps to the pre-work canvas fields.
+- `README.md` — "What is What The Hack?" rewritten so the evolving artifact defaults to the participant's own application; Northfield framed as guided fallback; section heading renamed to "Two ways to run it: Customer Build or Upskill"; mode table reordered; Customer Challenge-Forge on-ramp added; Getting Started step 3 reordered (Customer Build first) with Challenge-Forge pointer.
+- `docs/coach-hub.md` — Pre-event checklist expanded with three-branch decision tree (has scenario → canvas; no scenario → run Challenge-Forge → canvas; no scenario + pure upskill → Northfield); "During the event" bullet updated to start from team outcome; "Anchor customer work in outcomes" subsection expanded with a step-by-step Customer Challenge-Forge facilitation guide; Northfield retained as safe fallback.
+
+**Skill referenced:** Customer Challenge-Forge at `.github/skills/customer-challenge-forge/` — on-ramp for "I want to build something real but don't have an idea yet."

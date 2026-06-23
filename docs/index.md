@@ -7,10 +7,10 @@ description: Kick off the What The Hack experience and navigate the three-tier M
 <div class="hero-panel">
   <span class="hero-kicker">What The Hack • Microsoft Foundry</span>
   <h1>Build Intelligent Apps with Microsoft Foundry</h1>
-  <p class="hero-tagline">From prompt to production: learn with the Northfield reference scenario or bring a customer outcome and build a grounded, evaluated, demo-ready agent prototype.</p>
+  <p class="hero-tagline">Bring your outcome and build a real application — a grounded, evaluated, demo-ready agent prototype your customer or team can use. New to Foundry? The Northfield University reference scenario gives you a guided path to the same end-state.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Get Started</a>
-    <a class="btn btn-outline" href="{{ '/customer-outcome' | relative_url }}">Build with a customer</a>
+    <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Bring your outcome</a>
+    <a class="btn btn-outline" href="{{ '/setup' | relative_url }}">Get Started</a>
     <a class="btn btn-outline" href="{{ '/coach-hub' | relative_url }}">Coaches: Start here</a>
   </div>
 
@@ -20,12 +20,14 @@ description: Kick off the What The Hack experience and navigate the three-tier M
 
 What The Hack (WTH) is Microsoft’s hands-on, challenge-first format for learning by building. Instead of sitting through a lecture, teams move through a sequence of guided tasks, validate their work as they go, and lean on coaches for hints when they hit real friction.
 
-This edition focuses on Microsoft Foundry. It supports two event motions: **Upskill Mode**, where teams learn through the Northfield University reference scenario, and **Customer Build Mode**, where teams bring a real customer scenario and leave with a grounded, evaluated prototype. Both motions use the same three-tier path. **Tier 1 · Foundations** is one guided, linear challenge — four ordered steps that take every team to a deployed, grounded assistant with citations. **Tier 2 · Advanced** is a set of modular challenges you attempt in any order: action tools, evaluation & red teaming, tracing & observability, and deploying as a hosted agent — plus optional Extras. **Tier 3 · Capstone** is an open-ended design brief that composes everything into a multi-agent system built with the Microsoft Agent Framework (MAF).
+This edition focuses on Microsoft Foundry. The **primary motion is Customer Build Mode**: bring a real customer scenario and leave with a grounded, evaluated prototype. If your team is new to Foundry and needs a guided learning path, **Upskill Mode** uses the Northfield University reference scenario as a safe fallback. Both motions use the same three-tier path. **Tier 1 · Foundations** is one guided, linear challenge — four ordered steps that take every team to a deployed, grounded assistant with citations. **Tier 2 · Advanced** is a set of modular challenges you attempt in any order: action tools, evaluation & red teaming, tracing & observability, and deploying as a hosted agent — plus optional Extras. **Tier 3 · Capstone** is an open-ended design brief that composes everything into a multi-agent system built with the Microsoft Agent Framework (MAF).
+
+> **No idea yet?** Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill: give it a customer name and industry and it researches public documentation to generate ~10 right-sized, buildable Microsoft Foundry AI application ideas — your ready-made on-ramp to Customer Build Mode.
 
 <div class="quick-grid">
   <div class="quick-card">
-    <h3>Two modes</h3>
-    <p>Use Northfield for upskilling, or complete the Customer Outcome Canvas and map the same challenges to a customer scenario.</p>
+    <h3>Build something real</h3>
+    <p>Start from your own customer or business outcome. Complete the Customer Outcome Canvas and map the same challenges to your domain — data, actions, evals, and a 2-minute demo story.</p>
   </div>
 
   <div class="quick-card">
@@ -35,14 +37,23 @@ This edition focuses on Microsoft Foundry. It supports two event motions: **Upsk
 
   <div class="quick-card">
     <h3>Coach-guided discovery</h3>
-    <p>Coaches help teams translate a scenario into data, tools, evals, risks, and a stakeholder-ready demo.</p>
+    <p>Coaches help teams translate a scenario into data, tools, evals, risks, and a stakeholder-ready demo. No idea yet? Coaches can run Customer Challenge-Forge with you.</p>
   </div>
 
 </div>
 
+## Which path is right for you?
+
+| Mode | Use when | Default artifact |
+|------|----------|-----------------|
+| **Customer Build Mode** *(primary)* | You have a customer, account, or business scenario to build against | Your own grounded, evaluated, demo-ready agent prototype |
+| **Upskill Mode** *(fallback)* | Your team is learning Foundry for the first time or has no customer scenario | The Northfield University IQ Assistant (guided reference corpus) |
+
+Start with the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) to lock in your user, data source, workflow, safety boundary, and demo story before the first line of code. If you don't have a customer or idea yet, the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill generates ~10 tailored ideas from a customer name and industry — pick one and fill in the canvas.
+
 ## Three tiers
 
-Before starting a customer engagement, complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) so the team has a clear user, data source, workflow, safety boundary, and final demo story.
+Both modes use the same three-tier path. The canvas sets the outcome; the tiers deliver it.
 
 <div class="challenge-card" markdown="1">
 
@@ -72,7 +83,7 @@ Before starting a customer engagement, complete the [Customer Outcome Canvas]({{
 
 <a class="btn btn-primary" href="challenges/capstone-multi-agent">Start the Capstone →</a>
 
-See the [Challenges overview](challenges/) for the full Two-Paths run guide (Beginner vs. Advanced-skip bootstrap).
+See the [Challenges overview](challenges/) for the full run options (Guided path vs. Advanced-skip bootstrap).
 
 </div>
 
@@ -86,7 +97,8 @@ You are in the right place if you know basic Python, want hands-on experience wi
 
 This site is built to help you pace teams, spot common blockers early, and keep the day moving. Use the Coach Hub for timing, facilitation prompts, and escalation guidance while keeping solution walkthroughs inside the repo.
 
-## Start with the right path
+## Start here
 
-<a class="btn btn-primary btn-lg" href="{{ '/setup' | relative_url }}">Get Started</a>
+<a class="btn btn-primary btn-lg" href="{{ '/customer-outcome' | relative_url }}">Bring your outcome</a>
+<a class="btn btn-outline btn-lg" href="{{ '/setup' | relative_url }}">Get Started (setup)</a>
 <a class="btn btn-outline btn-lg" href="{{ '/coach-hub' | relative_url }}">Coaches: Start here</a>
