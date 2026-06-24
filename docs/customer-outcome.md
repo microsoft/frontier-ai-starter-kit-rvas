@@ -1,6 +1,6 @@
 ---
 title: Customer Outcome Canvas
-nav_order: 3
+nav_order: 2
 ---
 
 # Customer Outcome Canvas
