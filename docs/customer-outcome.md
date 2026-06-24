@@ -5,40 +5,24 @@ nav_order: 2
 
 # Customer Outcome Canvas
 
-This is the **default starting point** for this hackathon. Bring a customer name, a business area, or
-even just an industry — and use this canvas to define the user, data source, workflow, safety boundary,
-and demo story your team will build toward. Every tier checkpoint answers both a technical question and
-a business question, so you leave with a prototype your customer can evaluate, not just a demo of
-Foundry features.
+**This canvas is the working artifact for your hackathon.** Fill it out once — and use it as your north star from Tier 1 through Capstone.
 
-If your team is new to Microsoft Foundry and has no customer scenario ready, the Northfield University
-reference scenario is the guided fallback path — see [Upskill Mode](#choose-your-mode) below.
+Pick your path:
 
-## Choose your mode
+### You have a customer or business idea ready
+{: .text-delta }
 
-| Mode | Use when | Default artifact |
-|---|---|---|
-| **Customer Build Mode** *(primary)* | You have a customer, account team, or business outcome to build against | Customer-specific grounded agent prototype |
-| **Upskill Mode** *(fallback)* | Participants need a guided Foundry learning path and have no customer scenario | Northfield University IQ Assistant |
+Fill in the **Pre-work** canvas table below to lock in your outcome, users, data sources, actions, and demo story. Then start [Foundations](/ai-hackathon/challenges#tier-1--foundations) with your own data.
 
-Customer Build Mode follows the same tiers as Upskill Mode. The difference is that every checkpoint
-answers a business question, not only a technical one.
+### You need an idea
+{: .text-delta }
 
-## Don't have a customer or idea yet?
+Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill to generate ~10 right-sized, buildable Microsoft Foundry AI ideas from a customer name and industry. Pick the one that resonates, and use its output to fill in the canvas below — business outcome, users, data sources, and tier guidance map directly. Then proceed to [Foundations](/ai-hackathon/challenges#tier-1--foundations).
 
-Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill as your
-on-ramp. Give it a customer name and industry and it researches public documentation — company site,
-investor relations, annual reports, and industry trends — to generate **~10 right-sized, buildable
-Microsoft Foundry AI application ideas**, each with an industry rationale and a suggested tier mapping.
+### You're here to upskill with no customer scenario
+{: .text-delta }
 
-Pick the idea that resonates, then fill in the Pre-work canvas table below using the Challenge-Forge
-output as your starting point:
-
-- The **business outcome** and **top user tasks** fields map directly from the idea's rationale.
-- The **knowledge sources** field maps from the data sources the idea suggests.
-- The **action candidates** and **safety boundaries** fields map from the tier guidance the skill provides.
-
-Once the canvas is complete, treat this page as your north star throughout the hackathon.
+Start with [Getting Started](/ai-hackathon/setup) to configure your environment, then begin [Foundations](/ai-hackathon/challenges#tier-1--foundations) using **Northfield University** as your reference scenario. The architecture, tiers, and checkpoint structure are identical to Customer Build Mode — Northfield is the shape, not a ceiling. After this event, you can swap in a customer scenario using the [Scenario swap guide](#scenario-swap-guide) below.
 
 ## Pre-work: fill this in before the event
 
