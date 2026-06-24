@@ -5,7 +5,9 @@ nav_order: 3
 
 # Getting Started
 
-Use this page to get your environment ready before the Foundations challenge. The fastest route is GitHub Codespaces, but you have two fallback paths if your event or device needs them.
+Before you set up your environment, you should have **already chosen your path**—either the Upskill scenario (Northfield University) or the Customer Build route (your own customer challenge). Setup is the practical enabler that comes *after* that choice.
+
+This page guides you through three environment options to get ready for the Foundations challenge. The fastest route is GitHub Codespaces, but you have two fallback paths if your event or device needs them.
 
 ## Prerequisites
 
@@ -16,8 +18,9 @@ Use this page to get your environment ready before the Foundations challenge. Th
 
 ## Choose your setup path
 
-Your setup is the same in both event modes. **Upskill Mode** uses the Northfield University reference
-scenario. **Customer Build Mode** starts from the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) after your environment is ready, then maps the same challenges to a customer scenario.
+Your setup is the same in both event modes. **Upskill Mode** uses the Northfield University reference scenario. **Customer Build Mode** starts from the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) after your environment is ready, then maps the same challenges to a customer scenario.
+
+**A quick note for Customer Build teams:** Before you start Foundations, make sure you have completed the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) or selected a Challenge-Forge idea that aligns with your customer scenario. Your canvas (or selected idea) is the foundation for mapping the challenges—setup just provides the tools.
 
 ### 1. GitHub Codespaces (recommended)
 
