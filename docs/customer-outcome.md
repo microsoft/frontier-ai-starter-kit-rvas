@@ -12,17 +12,17 @@ Pick your path:
 ### You have a customer or business idea ready
 {: .text-delta }
 
-Fill in the **Pre-work** canvas table below to lock in your outcome, users, data sources, actions, and demo story. Then start [Foundations](/ai-hackathon/challenges#tier-1--foundations) with your own data.
+Fill in the **Pre-work** canvas table below to lock in your outcome, users, data sources, actions, and demo story. Then start [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations) with your own data.
 
 ### You need an idea
 {: .text-delta }
 
-Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill to generate ~10 right-sized, buildable Microsoft Foundry AI ideas from a customer name and industry. Pick the one that resonates, and use its output to fill in the canvas below — business outcome, users, data sources, and tier guidance map directly. Then proceed to [Foundations](/ai-hackathon/challenges#tier-1--foundations).
+Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill to generate ~10 right-sized, buildable Microsoft Foundry AI ideas from a customer name and industry. Pick the one that resonates, and use its output to fill in the canvas below — business outcome, users, data sources, and tier guidance map directly. Then proceed to [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations).
 
 ### You're here to upskill with no customer scenario
 {: .text-delta }
 
-Start with [Getting Started](/ai-hackathon/setup) to configure your environment, then begin [Foundations](/ai-hackathon/challenges#tier-1--foundations) using **Northfield University** as your reference scenario. The architecture, tiers, and checkpoint structure are identical to Customer Build Mode — Northfield is the shape, not a ceiling. After this event, you can swap in a customer scenario using the [Scenario swap guide](#scenario-swap-guide) below.
+Start with [Getting Started]({{ '/setup' | relative_url }}) to configure your environment, then begin [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations) using **Northfield University** as your reference scenario. The architecture, tiers, and checkpoint structure are identical to Customer Build Mode — Northfield is the shape, not a ceiling. After this event, you can swap in a customer scenario using the [Scenario swap guide](#scenario-swap-guide) below.
 
 ## Pre-work: fill this in before the event
 
