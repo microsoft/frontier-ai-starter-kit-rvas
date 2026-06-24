@@ -1,9 +1,7 @@
 ---
 name: customer-challenge-forge
 description: "Given a customer name and industry, research public sources and generate ~10 ranked AI-application ideas grounded in that company's real challenges — each mapped to hackathon tiers, tagged for effort, and wired to the Customer Outcome Canvas Pre-work fields so a participant can pick an idea and build immediately."
-argument-hint: Company name and industry are required. Optional: region/segment and known pain points.
-disable-model-invocation: true
-user-invocable: true
+argument-hint: "Company name and industry are required. Optional: region/segment and known pain points."
 ---
 
 ## Context
