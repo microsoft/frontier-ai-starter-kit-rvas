@@ -13,16 +13,18 @@ design brief that composes everything into a multi-agent system. Every Advanced 
 Capstone assume the **Foundations end-state**: a deployed, grounded Northfield University IQ Assistant
 that answers from the FAQ corpus **with citations**.
 
-Run the tree in one of two modes:
+Run the tree in one of three modes:
 
 | Mode | Use it for | Starting point |
 |---|---|---|
-| **Upskill Mode** | Learning Microsoft Foundry with a known-good fictional scenario | Start Foundations with Northfield |
 | **Customer Build Mode** | Driving a customer workshop or project kickoff toward a prototype | Complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) first, then swap in customer-safe data and workflows |
+| **Customer Challenge-Forge** | You have a customer scenario but no specific idea yet | Use the [Customer Challenge-Forge skill](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) to generate ~10 right-sized AI app ideas, pick one, fill the canvas, then start building |
+| **Upskill Mode** | Learning Microsoft Foundry with a known-good fictional scenario | Start Foundations with Northfield |
 
-In Customer Build Mode, Northfield is the reference implementation. Keep the same architecture and
+In **Customer Build Mode**, Northfield is the reference implementation. Keep the same architecture and
 validators where possible, but replace the corpus, persona, action tools, eval prompts, and final demo
-with the customer's scenario.
+with the customer's scenario. All validators remain at `python validate.py --step N`; only your data and
+context change.
 
 ```text
   TIER 1  FOUNDATIONS (guided, linear, everyone)
