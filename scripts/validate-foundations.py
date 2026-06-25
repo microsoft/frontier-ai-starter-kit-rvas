@@ -5,10 +5,10 @@ Asserts that the Foundations end-state exists and works:
 
   CHECK 1  .env contract is present and populated.
   CHECK 2  Azure AI Search index exists and has documents.
-  CHECK 3  The grounded agent exists (or the index is queryable as a fallback).
-  CHECK 4  The agent answers a Northfield question with at least one citation
-           (degrades to a direct grounded Search query if the preview agent
-           surface is unavailable, so the checkpoint still proves grounding).
+  CHECK 3  The Foundry IQ knowledge base (project Index resource) AND the grounded
+           agent both exist.
+  CHECK 4  The agent answers a Northfield question with at least one citation,
+           via the Foundry Responses/Conversations protocol.
 
 Exit code 0 = green (Path B teams may start Advanced challenges).
 Exit code 1 = not ready.
@@ -126,69 +126,72 @@ def main() -> int:
         bad(f"Could not query Search ({e}). Check RBAC + 'az login'.")
         return 1
 
-    # ----- CHECK 3 + 4: grounded answer with a citation ----------------------
-    info("\nCHECK 3/4 — grounded answer with a citation")
+    # ----- CHECK 3: Foundry IQ knowledge base + agent exist -------------------
+    info("\nCHECK 3 — Foundry IQ knowledge base and grounded agent exist")
+    kb_name = env.get("AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME", "northfield-faq-kb")
     agent_name = env.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
     project_endpoint = env["AZURE_AI_PROJECT_ENDPOINT"]
-    answered_by_agent = False
 
     try:
         from azure.ai.projects import AIProjectClient
+    except ImportError as e:
+        bad(f"Missing SDK ({e}). Run: pip install -r requirements.txt")
+        return 1
 
-        project = AIProjectClient(endpoint=project_endpoint, credential=cred)
-        # Confirm the agent exists.
-        agent = None
-        try:
-            for a in project.agents.list_agents():
-                if getattr(a, "name", None) == agent_name:
-                    agent = a
-                    break
-        except Exception:  # noqa: BLE001
-            agent = None
+    project = AIProjectClient(endpoint=project_endpoint, credential=cred)
 
-        if agent is not None:
-            ok(f"Agent '{agent_name}' exists (id={getattr(agent, 'id', '?')}).")
-            try:
-                thread = project.agents.threads.create()
-                project.agents.messages.create(thread_id=thread.id, role="user", content=args.question)
-                run = project.agents.runs.create_and_process(thread_id=thread.id, agent_id=agent.id)
-                msgs = list(project.agents.messages.list(thread_id=thread.id))
-                text = " ".join(
-                    getattr(c, "text", {}).get("value", "")
-                    for m in msgs
-                    for c in getattr(m, "content", [])
-                    if getattr(m, "role", "") == "assistant"
-                )
-                has_citation = bool(text) and (
-                    "[" in text or "source" in text.lower() or ".md" in text.lower()
-                )
-                if text:
-                    answered_by_agent = True
-                    if has_citation:
-                        ok("Agent returned a grounded answer WITH a citation.")
-                    else:
-                        warn("Agent answered but no citation detected — review grounding config.")
-                        failures += 1
-            except Exception as e:  # noqa: BLE001
-                warn(f"Agent exists but invocation surface unavailable ({e}); using Search fallback.")
-        else:
-            warn(f"Agent '{agent_name}' not found; using Search-grounding fallback for the checkpoint.")
+    # KB (Index resource) must exist.
+    try:
+        kb = project.indexes.get(name=kb_name, version="1")
+        ok(f"Foundry IQ knowledge base '{kb_name}' (v1) exists "
+           f"(asset_id={getattr(kb, 'id', '?')}).")
     except Exception as e:  # noqa: BLE001
-        warn(f"azure-ai-projects agent surface unavailable ({e}); using Search-grounding fallback.")
+        bad(f"Foundry IQ knowledge base '{kb_name}' not found ({e}). "
+            f"Run ./scripts/setup-foundations.sh")
+        return 1
 
-    # Fallback proof of grounding: the index returns a relevant, citable result.
-    if not answered_by_agent:
-        try:
-            results = list(search_client.search(search_text=args.question, top=3))
-            if results and any(r.get("source") for r in results):
-                top = results[0]
-                ok(f"Search grounding works — top hit cites source '{top.get('source')}'.")
-            else:
-                bad("Search returned no citable result for the question.")
-                failures += 1
-        except Exception as e:  # noqa: BLE001
-            bad(f"Search fallback query failed ({e}).")
+    # Agent must exist.
+    agent_found = False
+    try:
+        for a in project.agents.list():
+            if getattr(a, "name", None) == agent_name:
+                agent_found = True
+                break
+    except Exception as e:  # noqa: BLE001
+        bad(f"Could not list agents ({e}). Check RBAC + 'az login'.")
+        return 1
+    if not agent_found:
+        bad(f"Agent '{agent_name}' not found. Run ./scripts/setup-foundations.sh")
+        return 1
+    ok(f"Agent '{agent_name}' exists.")
+
+    # ----- CHECK 4: agent answers the question with a citation ---------------
+    info("\nCHECK 4 — grounded answer with a citation")
+    try:
+        oai = project.get_openai_client()
+        conv = oai.conversations.create(
+            items=[{"type": "message", "role": "user", "content": args.question}]
+        )
+        resp = oai.responses.create(
+            conversation=conv.id,
+            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+        )
+        text = getattr(resp, "output_text", "") or ""
+        has_citation = bool(text) and (
+            "[" in text or "source" in text.lower() or ".md" in text.lower()
+        )
+        if not text:
+            bad("Agent returned an empty answer — check grounding + model deployment.")
             failures += 1
+        elif has_citation:
+            ok("Agent returned a grounded answer WITH a citation.")
+        else:
+            bad("Agent answered but no citation detected — review KB grounding config.")
+            failures += 1
+    except Exception as e:  # noqa: BLE001
+        bad(f"Agent invocation failed ({e}). Verify the agent + KB were created "
+            f"and the model deployment is reachable.")
+        failures += 1
 
     # ----- verdict -----------------------------------------------------------
     print()
