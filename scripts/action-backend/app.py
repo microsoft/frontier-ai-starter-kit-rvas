@@ -6,6 +6,7 @@ can perform. State is in-memory (resets on restart) — that is intentional for 
 Endpoints:
     GET  /health
     POST /it-tickets            create an IT support ticket
+    GET  /it-tickets            list all created IT tickets
     GET  /it-tickets/{id}
     POST /course-holds          place a registration hold on a course
     GET  /course-holds/{id}
@@ -103,6 +104,11 @@ def get_it_ticket(ticket_id: str) -> dict:
     if ticket_id not in _it_tickets:
         raise HTTPException(status_code=404, detail="Ticket not found.")
     return _it_tickets[ticket_id]
+
+
+@app.get("/it-tickets")
+def list_it_tickets() -> dict:
+    return {"items": list(_it_tickets.values())}
 
 
 @app.post("/course-holds", status_code=201)
