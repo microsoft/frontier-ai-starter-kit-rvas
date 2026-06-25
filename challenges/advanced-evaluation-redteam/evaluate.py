@@ -31,6 +31,13 @@ from __future__ import annotations
 import argparse
 import json
 import os
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:  # python-dotenv optional; .env may already be exported in the shell
+    pass
 import re
 import statistics
 import sys

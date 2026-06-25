@@ -34,6 +34,13 @@ from __future__ import annotations
 import json
 import os
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:  # python-dotenv optional; .env may already be exported in the shell
+    pass
+
 import httpx
 from azure.ai.projects import AIProjectClient
 from azure.ai.agents.models import (
