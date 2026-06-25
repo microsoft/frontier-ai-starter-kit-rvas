@@ -77,13 +77,7 @@ You'll build four specialists and let the manager coordinate them:
 - [ ] Four distinct agents instantiate, each with single-responsibility instructions.
 - [ ] Knowledge is grounded in the FAQ corpus; Action holds the MCP tool.
 
-**Checkpoint:**
-
-```text
-python validate.py --step 1
-# expected: "✅ Step 1 PASS — 4 specialist agents defined (Triage, Knowledge, Action, Escalation)"
-
-```
+**Checkpoint:** *Self-check* — four distinct agents instantiate (Triage, Knowledge, Action, Escalation), each with single-responsibility instructions; Knowledge is grounded in the FAQ corpus and Action holds the MCP tool.
 
 ---
 
@@ -106,13 +100,7 @@ python validate.py --step 1
 - [ ] The manager invokes **more than one** specialist for a composite request.
 - [ ] The Action path still respects the **human-approval** loop from Action Tools.
 
-**Checkpoint:**
-
-```text
-python validate.py --step 2
-# expected: "✅ Step 2 PASS — Magentic workflow routes to ≥2 specialists on a composite request"
-
-```
+**Checkpoint:** *Self-check* — on the composite request the manager invokes **more than one** specialist, and the Action path still respects the human-approval loop.
 
 ---
 
@@ -135,7 +123,9 @@ python validate.py --step 2
 - [ ] An out-of-scope request is routed to Escalation, not actioned.
 
 **Checkpoint:** *DevUI state* — screenshot the plan graph mid-run (a running + a completed node) and the
-Escalation route. (`python validate.py --all` re-runs Steps 1–2 headless.)
+Escalation route.
+
+> _No `validate.py` ships here — Steps 1–2 are observable from the run output and Step 3 is a DevUI visual. solution.md lists what a headless checker would assert if your team wants to script Steps 1–2._
 
 ---
 

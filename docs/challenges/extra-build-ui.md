@@ -121,13 +121,7 @@ credential ever reaches the browser.
 
 - [ ] The BFF authenticates with `DefaultAzureCredential` — no API key is pasted.
 
-**Checkpoint:**
-
-```bash
-python validate.py --step 1
-# expected: "✅ Step 1 PASS — UI calls the hosted agent through a secret-free BFF"
-
-```
+**Checkpoint:** *Live demo* — type a question in the page and get the agent's answer back; in DevTools → Sources/Network confirm **no** bearer token, key, or `AZURE_*` secret is delivered to the browser.
 
 > _Coach note: see solution.md._
 
@@ -153,13 +147,7 @@ python validate.py --step 1
 - [ ] The answer renders progressively (visible deltas), not in a single late dump.
 - [ ] The send button is disabled while a response is streaming and re-enabled when it completes.
 
-**Checkpoint:**
-
-```bash
-python validate.py --step 2
-# expected: "✅ Step 2 PASS — answers stream into the chat window via SSE"
-
-```
+**Checkpoint:** *Live demo* — the answer renders progressively (visible deltas), not in one late dump; the send button disables mid-stream and re-enables when the stream closes.
 
 > _Coach note: see solution.md._
 
@@ -188,13 +176,7 @@ python validate.py --step 2
 - [ ] An answer with no grounding (or an abstention) shows an empty/"no sources" panel — it never
       fabricates a citation.
 
-**Checkpoint:**
-
-```bash
-python validate.py --step 3
-# expected: "✅ Step 3 PASS — citations panel renders real knowledge-base sources"
-
-```
+**Checkpoint:** *Live demo* — ask *"What is Northfield's FAFSA priority deadline and school code?"* and the citations panel lists the real financial-aid source; an ungrounded answer shows an empty panel and never fabricates a citation.
 
 > _Coach note: see solution.md._
 
@@ -224,21 +206,9 @@ or deny — the Action Tools governance loop, now with a button.
 
 - [ ] **Approve** creates the record (visible via the Action Tools backend); **Deny** creates nothing.
 
-**Checkpoint:**
+**Checkpoint:** *Live demo* — ask to *"open a high-priority WiFi ticket"*; the UI shows an approval card with the tool name and arguments **before** anything runs. **Approve** creates the record (visible in the Action Tools backend); **Deny** creates nothing.
 
-```bash
-python validate.py --step 4
-# expected: "✅ Step 4 PASS — UI approval gates the action; approve creates, deny cancels"
-
-```
-
-**Full run:**
-
-```text
-python validate.py --all
-# expected: "✅ ALL CHECKPOINTS PASS"
-
-```
+> _No `validate.py` ships here — the deliverable is a running UI, so each checkpoint is a browser/DevTools self-check. solution.md lists the same checks as a spec if your team wants to script them._
 
 > _Coach note: see solution.md._
 
