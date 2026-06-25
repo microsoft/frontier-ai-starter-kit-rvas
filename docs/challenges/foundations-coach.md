@@ -136,7 +136,9 @@ and point the student to the right office rather than guessing.
 
 ### Expected questions
 - *"Which model should we pick?"* — Push them to justify from observed cost/latency/quality, not
-  reputation. `gpt-4.1-mini` is a fine default for the rest of Foundations.
+  reputation. `gpt-4o` (the model `azd up` provisions) is the carried-forward default — it's what
+  `AZURE_AI_MODEL_DEPLOYMENT_NAME` points at. If a team prefers a different model, update that env
+  var to its deployment name.
 
 - *"MaaS vs MaaP?"* — MaaS is the fast managed route used here; MaaP gives more platform control in
   other scenarios. Don't rabbit-hole.

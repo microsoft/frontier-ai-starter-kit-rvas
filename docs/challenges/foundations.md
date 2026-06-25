@@ -149,14 +149,13 @@ python validate.py --step 1
 
 **Tasks:**
 
-1. In the Foundry portal, go to **Discover → Models** and **deploy two contrasting models** — a fast,
-   low-cost model and a higher-capability one. Recommended pairing for hackathons:
+1. `azd up` already deployed **`gpt-4o`** (deployment name `gpt-4o`) — this is the model your `.env`
+   `AZURE_AI_MODEL_DEPLOYMENT_NAME` points at and the one you carry forward through Foundations. In
+   the Foundry portal, go to **Discover → Models** and deploy **one contrasting model** to compare it
+   against — a faster, lower-cost option such as `gpt-4.1-mini`, or a different family such as `phi-4`.
+   Wait until the new deployment status reads **Succeeded** / **Ready**.
 
-   - `gpt-4.1-mini` — fast, inexpensive (give it the deployment name `gpt-4-1-mini-chat`).
-   - `gpt-4.1` (or `phi-4`) — higher quality / different family for comparison.
-   Wait until each deployment status reads **Succeeded** / **Ready**.
-
-2. Open the **Chat Playground**, select your `gpt-4.1-mini` deployment, and set a starting **system
+2. Open the **Chat Playground**, select your `gpt-4o` deployment, and set a starting **system
    instruction** for the assistant:
 
    ```text
@@ -245,7 +244,7 @@ python validate.py --step 2
    - **Refusals** — declines off-topic, harmful, or academic-integrity-violating requests, and redirects to the right office.
    - **Format** — concise, student-friendly; offers a next action or contact when relevant.
 2. Create the agent **in the portal**: open **Build → Agents → New agent**, name it
-   `northfield-iq-assistant`, select your `gpt-4.1-mini` deployment, paste your instructions, and save.
+   `northfield-iq-assistant`, select your `gpt-4o` deployment, paste your instructions, and save.
    Test it on a few questions in the agent Playground surface.
 
 3. Create the same agent **in code** as a versioned resource. Create
