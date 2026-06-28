@@ -153,7 +153,7 @@ def main() -> int:
     # Agent must exist.
     agent_found = False
     try:
-        for a in project.agents.list():
+        for a in project.agents.list_agents():
             if getattr(a, "name", None) == agent_name:
                 agent_found = True
                 break
@@ -174,7 +174,7 @@ def main() -> int:
         )
         resp = oai.responses.create(
             conversation=conv.id,
-            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+            extra_body={"agent": {"name": agent_name, "type": "agent_reference"}},
         )
         text = getattr(resp, "output_text", "") or ""
         has_citation = bool(text) and (

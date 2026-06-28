@@ -380,9 +380,9 @@ python validate.py --step 3
    ```python
    import os
    from azure.ai.projects import AIProjectClient
-   from azure.ai.projects.models import PromptAgentDefinition
-   from azure.ai.agents.models import (
-       AzureAISearchToolDefinition, AzureAISearchToolResource,
+   from azure.ai.projects.models import (
+       PromptAgentDefinition,
+       AzureAISearchTool, AzureAISearchToolResource,
        AISearchIndexResource, AzureAISearchQueryType,
    )
    from azure.identity import DefaultAzureCredential
@@ -393,7 +393,9 @@ python validate.py --step 3
        endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
        credential=DefaultAzureCredential(),
    )
-   conn = project.connections.get(os.environ["AZURE_SEARCH_CONNECTION_NAME"])
+   kb = project.indexes.get(
+       name=os.environ["AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME"], version="1",
+   )
 
    instructions = (
        "You are Northfield University's student services assistant. Answer ONLY from the "
@@ -406,12 +408,12 @@ python validate.py --step 3
        definition=PromptAgentDefinition(
            model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
            instructions=instructions,
-           tools=[AzureAISearchToolDefinition(
+           tools=[AzureAISearchTool(
                azure_ai_search=AzureAISearchToolResource(indexes=[
                    AISearchIndexResource(
-                       index_connection_id=conn.id,
-                       index_name=os.environ["AZURE_SEARCH_INDEX_NAME"],
+                       index_asset_id=kb.id,
                        query_type=AzureAISearchQueryType.VECTOR_SEMANTIC_HYBRID,
+                       top_k=5,
                    ),
                ])
            )],

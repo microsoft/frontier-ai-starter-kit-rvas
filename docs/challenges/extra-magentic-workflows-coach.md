@@ -22,7 +22,7 @@ a planner**: small, sharp specialists beat one do-everything agent, and the mana
 
 None beyond Foundations. Confirm:
 
-- `agent-framework` installs in the devcontainer (extras pin).
+- `agent-framework` installs on demand via `pip install agent-framework` (not pre-pinned).
 - **DevUI** launches locally.
 - The **Action Tools backend** is running (`ACTION_MCP_URL` reachable) — the Action sub-agent needs it.
 

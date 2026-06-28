@@ -14,7 +14,7 @@ nav_order: 22
 > **Specific prereq:** the **Advanced · Action Tools** challenge — your Action sub-agent reuses the MCP
 > action tool (`ACTION_MCP_URL`) you wired there.
 
-> ⚙️ **Infra prerequisite:** the **`agent-framework`** SDK (in the extras pins) and **DevUI** for
+> ⚙️ **Infra prerequisite:** the **`agent-framework`** SDK (install on demand — not pre-pinned) and **DevUI** for
 > visualization — both run **locally**, no extra Azure provisioning. You only need your Foundations
 > `.env` + the Action Tools backend running.
 >
@@ -62,7 +62,7 @@ You'll build four specialists and let the manager coordinate them:
 
 **Tasks:**
 
-1. `pip install agent-framework` (extras pin). **Search before you implement:** query `microsoft-docs`
+1. `pip install agent-framework` (install on demand; not pre-pinned). **Search before you implement:** query `microsoft-docs`
    and `foundry-mcp` (the **`foundry-workflows`** skill) for the *current* MAF `ChatAgent` /
    Magentic builder API — MAF is fast-moving.
 
