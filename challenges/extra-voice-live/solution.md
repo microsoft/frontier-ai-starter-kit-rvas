@@ -19,7 +19,7 @@ session.
 2. **Keyless RBAC** for the project identity (or a key as workshop fallback) on the Speech/Voice resource.
 3. **Client hardware:** each team needs a laptop with a **working mic + speakers** (headset is better —
    avoids feedback/echo in a noisy room). This is the #1 silent failure.
-4. Confirm `azure-ai-voicelive` installs cleanly in the devcontainer/Codespace (it's in the extras pins).
+4. Confirm `azure-ai-voicelive` installs cleanly via `pip install azure-ai-voicelive` (install on demand; not pre-pinned).
 
 > **Flag for the coordinator:** if the venue is loud, headsets or a quiet breakout corner make or break
 > the demo. Echo cancellation only goes so far.

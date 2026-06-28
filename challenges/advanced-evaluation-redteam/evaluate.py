@@ -188,7 +188,9 @@ def main() -> int:
         return 2
 
     project_client = None
-    agent_id = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "")
+    # AZURE_FOUNDRY_AGENT_NAME is a NAME; runs.create_and_process needs the agent id.
+    agent_name = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "")
+    agent_id = ""
     if not args.dry_run:
         try:
             from azure.ai.projects import AIProjectClient
@@ -198,6 +200,14 @@ def main() -> int:
                 endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
                 credential=DefaultAzureCredential(),
             )
+            # Resolve the agent name to its id (same name->id idiom as foundations/validate.py).
+            for a in project_client.agents.list_agents():
+                if getattr(a, "name", None) == agent_name:
+                    agent_id = getattr(a, "id", "") or ""
+                    break
+            if not agent_id:
+                print(f"⚠ agent '{agent_name}' not found in project; falling back to --dry-run")
+                args.dry_run = True
         except Exception as exc:
             print(f"⚠ could not init project client ({exc}); falling back to --dry-run")
             args.dry_run = True

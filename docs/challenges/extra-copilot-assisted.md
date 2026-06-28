@@ -19,7 +19,7 @@ nav_order: 25
 > [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) Foundry skill stubs. You need GitHub Copilot enabled in your
 > editor and `npx` available.
 >
-> 🎤 **Demo wow-factor:** Copilot **one-shots** a working Foundry tool using **live** SDK syntax it just
+> 🎤 **Demo wow-factor:** Copilot **can one-shot** a working Foundry tool using **live** SDK syntax it just
 > fetched from `microsoft-docs` — and the team sees *why* grounded generation beats hallucinated API calls.
 
 ## Why this challenge
@@ -84,16 +84,18 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
    `azure-ai-projects` agent-create API, write code to create the Northfield IQ agent against
    `AZURE_AI_PROJECT_ENDPOINT` with deployment `AZURE_AI_MODEL_DEPLOYMENT_NAME`."*
 
-3. Watch Copilot **call `microsoft-docs` / `foundry-mcp` first**, then generate. Run the result against
-   your live `.env`.
+3. When prompted this way, Copilot will **typically call `microsoft-docs` / `foundry-mcp` first**, then
+   generate. Whether the tool call is shown depends on your editor/agent mode — if Copilot skips the
+   lookup, tell it to *search the docs first*. Run the result against your live `.env`.
 
 **Success Criteria:**
 
-- [ ] Copilot performs a doc/MCP lookup **before** writing the SDK code (visible in the chat).
+- [ ] You prompted Copilot to search first, and it performed a doc/MCP lookup before writing the SDK
+      code (when your editor surfaces tool calls, you can watch it happen in the chat).
 - [ ] The generated code runs against your real Foundry project (uses the authoritative env names).
 
-**Checkpoint:** *Editor + run state* — the chat transcript shows a `microsoft-docs`/`foundry-mcp` call
-before code generation, and the generated script runs green against your project.
+**Checkpoint:** *Editor + run state* — ideally the chat transcript shows a `microsoft-docs`/`foundry-mcp` call
+before code generation; either way, the generated script runs green against your project.
 
 ---
 

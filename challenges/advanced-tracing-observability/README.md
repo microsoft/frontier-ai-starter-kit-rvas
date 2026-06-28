@@ -172,7 +172,7 @@ QUESTION = "What documents do I need to apply for financial aid at Northfield?"
 response = client.responses.create(
     input=QUESTION,
     extra_body={
-        "agent_reference": {
+        "agent": {
             "name": os.environ["AZURE_FOUNDRY_AGENT_NAME"],
             "type": "agent_reference",
         }

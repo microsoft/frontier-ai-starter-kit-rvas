@@ -1,4 +1,4 @@
-# Pinned to current stable versions as of 2026-05-28 (see .squad/decisions/inbox/livingston-version-audit.md)
+# Pinned to current stable versions as of 2026-05-28 (see .squad/decisions.md — Livingston version audit).
 # azure-ai-projects 2.x is a MAJOR version bump from 1.0.0b4 — import path unchanged but
 # constructor now requires endpoint= kwarg (not connection string). Code samples must be verified.
 azure-ai-projects>=2.1.0
