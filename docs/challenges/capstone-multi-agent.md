@@ -1,12 +1,14 @@
 ---
-title: "Capstone: Northfield IQ, the Team"
-parent: Challenge Library
+title: "Orchestrate: Multi-Agent Capstone"
+parent: Build Modules
 nav_order: 30
 ---
 
 # Capstone · Northfield IQ, the Team — Multi-Agent Orchestration with MAF
 
-{% include journey-status.html tone="shared" path="Challenge Library &rarr; Capstone" artifact="A router plus specialist agents that handle a realistic journey as a team." next="Start from the monolithic assistant, define the agent org chart, then wire the MAF workflow." %}
+{% include journey-status.html tone="shared" path="Build Modules &rarr; Orchestrate" artifact="A router plus specialist agents that handle a realistic journey as a team." next="Start from the monolithic assistant, define the agent org chart, then wire the MAF workflow." %}
+
+{% include module-lens.html customer="Split the customer journey into a router and domain specialists that match real handoffs in the process." upskill="Turn Northfield into a student-services team with knowledge, action, and escalation specialists." %}
 
 > **Tier 3 · Capstone.** ⏱ **Core 2–2.5 hr** (sequential + fan-out + DevUI + trace) ·
 > **+1 hr** Magentic manager stretch · **+1.5 hr** hosted long-running deploy variant.

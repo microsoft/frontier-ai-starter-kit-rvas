@@ -1,6 +1,6 @@
 ---
 title: "Extra: Give It a Voice · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 121
 nav_exclude: true
 ---

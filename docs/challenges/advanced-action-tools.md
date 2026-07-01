@@ -1,12 +1,14 @@
 ---
-title: "Advanced: Action Tools"
-parent: Challenge Library
+title: "Act: Action Tools"
+parent: Build Modules
 nav_order: 10
 ---
 
 # Advanced · Action Tools — Make the Agent Do Work
 
-{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Action Tools" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
+{% include journey-status.html tone="shared" path="Build Modules &rarr; Act" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
+
+{% include module-lens.html customer="Use the pattern to add one customer workflow that is valuable enough to demo and risky enough to approval-gate." upskill="Use the provided Northfield ticket, course-hold, and advising actions to practice the approval loop." %}
 
 {% include challenge-prereq.html %}
 

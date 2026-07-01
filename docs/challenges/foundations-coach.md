@@ -1,6 +1,6 @@
 ---
 title: "Foundations · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 101
 nav_exclude: true
 ---

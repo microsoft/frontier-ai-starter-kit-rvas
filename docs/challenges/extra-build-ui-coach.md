@@ -1,6 +1,6 @@
 ---
 title: "Extra: Build a UI · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 124
 nav_exclude: true
 ---

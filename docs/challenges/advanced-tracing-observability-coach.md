@@ -1,6 +1,6 @@
 ---
 title: "Advanced: Tracing & Observability · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 112
 nav_exclude: true
 ---

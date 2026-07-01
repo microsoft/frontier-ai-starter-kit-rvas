@@ -1,6 +1,6 @@
 ---
 title: "Advanced: Evaluation & Red Teaming · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 111
 nav_exclude: true
 ---

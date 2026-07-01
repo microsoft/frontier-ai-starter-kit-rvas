@@ -1,6 +1,6 @@
 ---
-title: "Extra: Hosted Long-Running Agents"
-parent: Challenge Library
+title: "Deploy: Long-Running Agents"
+parent: Build Modules
 nav_order: 23
 ---
 

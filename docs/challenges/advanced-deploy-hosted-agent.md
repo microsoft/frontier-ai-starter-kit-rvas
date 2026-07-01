@@ -1,12 +1,14 @@
 ---
-title: "Advanced: Deploy as a Hosted Agent"
-parent: Challenge Library
+title: "Deploy: Hosted Agent"
+parent: Build Modules
 nav_order: 13
 ---
 
 # Advanced — Deploy as a Hosted Agent
 
-{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Deploy" artifact="A containerized hosted agent with its own endpoint, identity, and run history." next="Author agent.yaml and the container entrypoint, then deploy with azd ai agent." %}
+{% include journey-status.html tone="shared" path="Build Modules &rarr; Deploy" artifact="A containerized hosted agent with its own endpoint, identity, and run history." next="Author agent.yaml and the container entrypoint, then deploy with azd ai agent." %}
+
+{% include module-lens.html customer="Ship the customer prototype as an endpoint a stakeholder app or integration can call." upskill="Host the Northfield assistant to learn the deployment, identity, and invocation pattern." %}
 
 {% include challenge-prereq.html %}
 

@@ -1,6 +1,6 @@
 ---
-title: "Extra: Fabric IQ"
-parent: Challenge Library
+title: "Deepen: Fabric IQ"
+parent: Build Modules
 nav_order: 20
 ---
 

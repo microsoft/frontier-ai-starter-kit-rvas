@@ -1,12 +1,14 @@
 ---
-title: "Foundations"
-parent: Challenge Library
+title: "Ground: Foundations"
+parent: Build Modules
 nav_order: 1
 ---
 
 # Foundations — Build the Northfield University IQ Assistant
 
-{% include journey-status.html tone="shared" path="Challenge Library &rarr; Foundations" artifact="A deployed, grounded assistant with citations. Upskill teams use Northfield; Customer Build teams swap in their own corpus and persona." next="Complete Steps 1-4 in order, then choose Advanced modules from the library." %}
+{% include journey-status.html tone="shared" path="Build Modules &rarr; Ground" artifact="A deployed, grounded assistant with citations. Upskill teams use Northfield; Customer Build teams swap in their own corpus and persona." next="Complete Steps 1-4 in order, then choose the next capability module." %}
+
+{% include module-lens.html customer="Use Step 0 to replace Northfield's corpus, persona, safety boundaries, and demo questions with your customer-safe scenario." upskill="Use the Northfield University FAQ corpus and prompts exactly as written to learn the grounding pattern." %}
 
 Foundations is the required first build module. Complete the four steps in order; Step 4 is the
 end-state every Advanced challenge assumes. Upskill teams build Northfield exactly as written.
@@ -432,6 +434,6 @@ base (Step 4). When this passes green, every Advanced challenge is unblocked.
 
 ## What's next — the Advanced tier
 
-Return to the [Challenge Library]({{ '/challenges' | relative_url }}) and choose the Advanced module
+Return to [Build Modules]({{ '/challenges' | relative_url }}) and choose the next capability module
 that best matches your route: Action Tools for workflow value, Evaluation for trust, Tracing for
 debugging, Deploy/UI for stakeholder access, or Capstone for multi-agent orchestration.

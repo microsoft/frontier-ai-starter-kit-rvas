@@ -1,12 +1,14 @@
 ---
-title: "Advanced: Tracing & Observability"
-parent: Challenge Library
+title: "Debug: Tracing & Observability"
+parent: Build Modules
 nav_order: 12
 ---
 
 # Advanced — Tracing & Observability
 
-{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Tracing" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
+{% include journey-status.html tone="shared" path="Build Modules &rarr; Debug" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
+
+{% include module-lens.html customer="Use traces to explain customer prototype failures: retrieval misses, slow runs, tool errors, and unsafe paths." upskill="Trace Northfield runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
 
 {% include challenge-prereq.html %}
 

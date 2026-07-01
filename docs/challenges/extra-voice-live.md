@@ -1,6 +1,6 @@
 ---
-title: "Extra: Give It a Voice"
-parent: Challenge Library
+title: "Interface: Voice Live"
+parent: Build Modules
 nav_order: 21
 ---
 

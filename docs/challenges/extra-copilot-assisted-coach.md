@@ -1,6 +1,6 @@
 ---
 title: "Extra: Copilot-Assisted Build · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 125
 nav_exclude: true
 ---

@@ -61,8 +61,8 @@ Each journey page now starts with **You are here**, **Current output**, and **Ne
   </div>
 
   <div class="quick-card">
-    <h3>The Challenge Library is reusable</h3>
-    <p>Foundations, Action Tools, Evaluation, Tracing, Deploy, UI, and Capstone are shared modules used by both tracks.</p>
+    <h3>Build Modules are reusable</h3>
+    <p>Ground, Act, Prove, Debug, Deploy, Demo UI, and Orchestrate are shared capabilities used by both tracks.</p>
   </div>
 
   <div class="quick-card">

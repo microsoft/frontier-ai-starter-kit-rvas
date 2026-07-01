@@ -1,6 +1,6 @@
 ---
 title: "Wrap-Up: Cleanup & Cost Hygiene"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 40
 ---
 

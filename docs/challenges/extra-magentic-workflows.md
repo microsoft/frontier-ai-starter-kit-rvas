@@ -1,6 +1,6 @@
 ---
-title: "Extra: Magentic Workflows"
-parent: Challenge Library
+title: "Orchestrate: Magentic Workflows"
+parent: Build Modules
 nav_order: 22
 ---
 

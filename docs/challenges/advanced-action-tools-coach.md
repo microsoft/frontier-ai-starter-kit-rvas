@@ -1,6 +1,6 @@
 ---
 title: "Advanced: Action Tools · Coach"
-parent: Challenge Library
+parent: Build Modules
 nav_order: 110
 nav_exclude: true
 ---
