@@ -1,28 +1,16 @@
 ---
-title: Customer Outcome Canvas
-nav_order: 2
+title: Outcome Canvas
+parent: Customer Build Track
+nav_order: 1
 ---
 
 # Customer Outcome Canvas
 
-**This canvas is the working artifact for your hackathon.** Fill it out once — and use it as your north star from Tier 1 through Capstone.
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Outcome Canvas" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use the canvas to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
 
-Pick your path:
+**This canvas is the working artifact for the Customer Build Track.** Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
 
-### You have a customer or business idea ready
-{: .text-delta }
-
-Fill in the **Pre-work** canvas table below to lock in your outcome, users, data sources, actions, and demo story. Then start [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations) with your own data.
-
-### You need an idea
-{: .text-delta }
-
-Use the [**Customer Challenge-Forge**](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) skill to generate ~10 right-sized, buildable Microsoft Foundry AI ideas from a customer name and industry. Pick the one that resonates, and use its output to fill in the canvas below — business outcome, users, data sources, and tier guidance map directly. Then proceed to [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations).
-
-### You're here to upskill with no customer scenario
-{: .text-delta }
-
-Start with [Getting Started]({{ '/setup' | relative_url }}) to configure your environment, then begin [Foundations]({{ '/challenges' | relative_url }}#tier-1--foundations) using **Northfield University** as your reference scenario. The architecture, tiers, and checkpoint structure are identical to Customer Build Mode — Northfield is the shape, not a ceiling. After this event, you can swap in a customer scenario using the [Scenario swap guide](#scenario-swap-guide) below.
+If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer the selected idea's business outcome, users, data sources, tier guidance, and risk notes into the table below.
 
 ## Pre-work: fill this in before the event
 
@@ -103,3 +91,8 @@ Each Customer Build team should leave with:
 - Which action is valuable enough to automate but risky enough to require approval?
 - What would make the customer say, "Yes, this is worth piloting"?
 - What will you show in two minutes that proves the outcome, not just the technology?
+
+<div class="next-panel">
+  <strong>Next:</strong>
+  <a class="btn btn-primary" href="{{ '/challenges/foundations' | relative_url }}">Start Foundations with your scenario</a>
+</div>

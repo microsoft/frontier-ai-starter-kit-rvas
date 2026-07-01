@@ -1,0 +1,74 @@
+---
+title: Customer Build Track
+nav_order: 2
+has_children: true
+description: Bring a customer outcome and build a grounded, evaluated Foundry agent prototype.
+---
+
+<div class="hero-panel track-hero track-hero--customer">
+  <span class="hero-kicker">Track 1 • Customer Build</span>
+  <h1>Turn a real outcome into a working agent prototype.</h1>
+  <p class="hero-tagline">Use Northfield as the reference shape, but swap in your customer-safe corpus, persona, workflow, trust tests, and final demo story.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Open the Outcome Canvas</a>
+    <a class="btn btn-outline" href="{{ '/challenges/foundations' | relative_url }}">Start Foundations</a>
+  </div>
+</div>
+
+{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A customer-safe scenario pack plus one evolving Foundry agent prototype." next="Fill the Outcome Canvas, then run Foundations with your own data and Northfield as the reference." %}
+
+## The customer route
+
+<ol class="journey-map">
+  <li><span>0</span><strong>Frame</strong><small>Outcome, users, corpus, action, safety</small></li>
+  <li><span>1</span><strong>Ground</strong><small>Foundations with customer-safe data</small></li>
+  <li><span>2</span><strong>Activate</strong><small>One approval-gated workflow</small></li>
+  <li><span>3</span><strong>Trust</strong><small>Eval, red-team, tracing</small></li>
+  <li><span>4</span><strong>Demo</strong><small>Hosted/UI artifact plus pilot backlog</small></li>
+</ol>
+
+## What to swap from Northfield
+
+<div class="challenge-card" markdown="1">
+
+| Universal challenge | Northfield reference | Customer Build replacement |
+|---|---|---|
+| **Outcome Canvas** | Student-services problem framing | Customer process, users, decision, and success measure |
+| **Foundations** | Northfield FAQ corpus and assistant persona | Customer-safe docs, policies, SOPs, FAQs, or product content |
+| **Action Tools** | IT ticket, course hold, advising booking | One real workflow action, usually approval-gated |
+| **Evaluation** | Northfield question/eval set | Scenario-specific quality, refusal, and groundedness tests |
+| **Tracing / Deploy / UI** | Student-facing demo | Stakeholder-facing prototype and failure/debug view |
+| **Capstone** | Student-services specialist team | Customer-domain router and specialist agents |
+
+</div>
+
+## Build order for a one-day event
+
+<div class="quick-grid">
+  <div class="quick-card">
+    <span class="track-badge">Must do</span>
+    <h3>Outcome Canvas + Foundations</h3>
+    <p>Leave with a grounded assistant that answers customer-relevant questions with citations from trusted data.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">High value</span>
+    <h3>Action + Evaluation</h3>
+    <p>Add one governed workflow and a scorecard that shows accuracy, safety, and abstention behavior.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">Demo polish</span>
+    <h3>Deploy or UI</h3>
+    <p>Give stakeholders a real endpoint, web face, citations panel, or approval card they can understand quickly.</p>
+  </div>
+</div>
+
+## Your first move
+
+Open the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) and complete the pre-work table before starting Foundations. If you do not have an app idea yet, go through [Idea Forge]({{ '/idea-forge' | relative_url }}) first; it feeds directly into the same canvas.
+
+<div class="next-panel">
+  <strong>Next:</strong>
+  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Complete the Outcome Canvas</a>
+</div>

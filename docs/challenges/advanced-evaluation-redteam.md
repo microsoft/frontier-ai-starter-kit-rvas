@@ -1,10 +1,12 @@
 ---
 title: "Advanced: Evaluation & Red Teaming"
-parent: Challenges
+parent: Challenge Library
 nav_order: 11
 ---
 
 # Advanced · Evaluation & Red Teaming
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Evaluation" artifact="A trust scorecard that measures quality, groundedness, refusal behavior, and adversarial safety." next="Run the Northfield eval set or replace it with scenario-specific customer prompts." %}
 
 > **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
 > challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ

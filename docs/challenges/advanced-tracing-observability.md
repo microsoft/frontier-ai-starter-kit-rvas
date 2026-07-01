@@ -1,10 +1,12 @@
 ---
 title: "Advanced: Tracing & Observability"
-parent: Challenges
+parent: Challenge Library
 nav_order: 12
 ---
 
 # Advanced — Tracing & Observability
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Tracing" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
 
 > **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
 > challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ

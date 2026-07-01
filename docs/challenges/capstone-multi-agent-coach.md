@@ -1,6 +1,6 @@
 ---
 title: "Capstone: Northfield IQ, the Team · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 130
 nav_exclude: true
 ---

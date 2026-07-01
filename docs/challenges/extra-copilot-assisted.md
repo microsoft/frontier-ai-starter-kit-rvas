@@ -1,6 +1,6 @@
 ---
 title: "Extra: Copilot-Assisted Build"
-parent: Challenges
+parent: Challenge Library
 nav_order: 25
 ---
 

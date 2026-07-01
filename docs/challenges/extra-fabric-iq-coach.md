@@ -1,6 +1,6 @@
 ---
 title: "Extra: Fabric IQ · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 120
 nav_exclude: true
 ---

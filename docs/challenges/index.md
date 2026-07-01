@@ -1,19 +1,44 @@
 ---
-title: Challenges
-nav_order: 4
+title: Challenge Library
+nav_order: 6
 has_children: true
 ---
 
-# Challenges
+# Challenge Library
 
-This hackathon is a **tree of three tiers**. **Tier 1 · Foundations** is one guided, linear challenge
-— four ordered steps everyone completes. **Tier 2 · Advanced** is a set of modular, self-contained
-challenges (plus Extras) you can attempt **in any order**. **Tier 3 · Capstone** is an open-ended
-design brief that composes everything into a multi-agent system. Every Advanced challenge and the
-Capstone assume the **Foundations end-state**: a deployed, grounded Northfield University IQ Assistant
-that answers from the FAQ corpus **with citations**.
+{% include journey-status.html tone="shared" path="Challenge Library" artifact="Reusable modules for both Customer Build and Upskill tracks." next="If you are starting from scratch, go through your track page first; use this library once you know the module you need." %}
 
-Run the tree in one of three modes:
+This is the reusable challenge shelf. The **Customer Build Track** and **Upskill Track** tell you what to do next; this page holds the shared modules they point to.
+
+Every route uses the same three-tier architecture:
+
+- **Tier 1 · Foundations** is one guided, linear challenge with four ordered steps.
+- **Tier 2 · Advanced** is modular: Action Tools, Evaluation, Tracing, Deploy, and Extras.
+- **Tier 3 · Capstone** composes the work into a multi-agent system.
+
+## Start from a track, not from a random page
+
+<div class="quick-grid">
+  <div class="quick-card">
+    <span class="track-badge">Customer Build</span>
+    <h3><a href="{{ '/customer-build' | relative_url }}">Bring your own outcome</a></h3>
+    <p>Use the canvas first, then run these challenge modules with your customer-safe data and workflow.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">Idea intake</span>
+    <h3><a href="{{ '/idea-forge' | relative_url }}">Need an idea?</a></h3>
+    <p>Generate and pick a buildable idea, then continue into Customer Build.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">Upskill</span>
+    <h3><a href="{{ '/upskill' | relative_url }}">Learn with Northfield</a></h3>
+    <p>Follow the known-good reference scenario through Foundations and beyond.</p>
+  </div>
+</div>
+
+## Mode mapping
 
 | Mode | Use it for | Starting point |
 |---|---|---|
@@ -165,5 +190,4 @@ python scripts/validate-foundations.py    # ✅ asserts the Foundations end-stat
 Advanced challenge assumes the **same** end-state, so you materialize it once, verify it once, and the
 whole Advanced tier is unblocked.
 
-Need to set up your environment first? Start at [Getting Started]({{ '/setup' | relative_url }}) and
-return here once your toolchain is ready.
+Need to set up your environment first? Start at [Getting Started]({{ '/setup' | relative_url }}) and return here once your toolchain is ready.

@@ -1,13 +1,15 @@
 ---
 title: Getting Started
-nav_order: 3
+nav_order: 5
 ---
 
 # Getting Started
 
-Before you set up your environment, you should have **already chosen your path**—either the Upskill scenario (Northfield University) or the Customer Build route (your own customer challenge). Setup is the practical enabler that comes *after* that choice.
+{% include journey-status.html tone="shared" path="Shared setup &rarr; Foundations" artifact="A working Codespace or dev container, Azure sign-in, and local tooling ready for the challenge validators." next="After setup, Customer Build teams go to the Outcome Canvas; Upskill teams go directly to Foundations." %}
 
-This page guides you through three environment options to get ready for the Foundations challenge. The fastest route is GitHub Codespaces, but you have two fallback paths if your event or device needs them.
+Before you set up your environment, choose your route: [Customer Build]({{ '/customer-build' | relative_url }}) if you have a scenario, [Idea Forge]({{ '/idea-forge' | relative_url }}) if you need one, or [Upskill]({{ '/upskill' | relative_url }}) if you are following Northfield. Setup is the shared practical step after that choice.
+
+This page gives you three environment options. The fastest route is GitHub Codespaces, with local dev container and manual setup as fallbacks.
 
 ## Prerequisites
 

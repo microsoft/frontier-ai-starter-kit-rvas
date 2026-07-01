@@ -1,6 +1,6 @@
 ---
 title: "Extra: Hosted Long-Running Agents"
-parent: Challenges
+parent: Challenge Library
 nav_order: 23
 ---
 

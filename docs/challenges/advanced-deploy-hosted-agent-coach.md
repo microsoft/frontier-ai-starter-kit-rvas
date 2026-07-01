@@ -1,6 +1,6 @@
 ---
 title: "Advanced: Deploy as a Hosted Agent · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 113
 nav_exclude: true
 ---

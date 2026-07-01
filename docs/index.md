@@ -1,75 +1,81 @@
 ---
-title: Home
+title: Start Here
 nav_order: 1
-description: Bring your idea. Build it with Foundry. A hands-on hackathon for shipping real AI prototypes with Microsoft Foundry.
+description: Choose your route, then build a grounded Microsoft Foundry agent prototype.
 ---
 
-<div class="hero-panel">
+<div class="hero-panel home-hero">
   <span class="hero-kicker">What The Hack • Microsoft Foundry</span>
   <h1>Bring your idea. Build it with Foundry.</h1>
-  <p class="hero-tagline">Ship a real, grounded, evaluated agent prototype in a day. Whether you have a customer scenario, need an idea, or want to upskill on Foundry — find your path below.</p>
+  <p class="hero-tagline">Choose a route, then follow one shared build spine: define the outcome, ground the agent, add useful action, prove trust, and demo the result.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Bring your outcome</a>
-    <a class="btn btn-outline" href="https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md">Need an idea? Generate one</a>
-    <a class="btn btn-outline" href="{{ '/setup' | relative_url }}">Here to upskill? Start setup</a>
+    <a class="btn btn-primary" href="{{ '/customer-build' | relative_url }}">Bring your outcome</a>
+    <a class="btn btn-outline" href="{{ '/idea-forge' | relative_url }}">Need an idea?</a>
+    <a class="btn btn-outline" href="{{ '/upskill' | relative_url }}">Here to upskill</a>
   </div>
-
 </div>
 
-## Choose your path
+## Choose your starting point
 
-Pick the outcome that matches where you are right now. All paths converge on the same three-tier challenge architecture and leave you with a demo-ready, evaluated prototype.
-
-<div class="quick-grid">
-  <div class="quick-card">
+<div class="quick-grid path-chooser">
+  <div class="quick-card track-card track-card--customer">
+    <span class="track-badge">Customer Build</span>
     <h3>Bring your own outcome</h3>
-    <p><strong>You have a customer, account, or business scenario.</strong></p>
-    <p>Complete the <a href="{{ '/customer-outcome' | relative_url }}">Customer Outcome Canvas</a> to lock in your user, data source, workflow, safety boundary, and demo story. Then jump straight to <a href="{{ '/challenges' | relative_url }}#tier-1--foundations">Foundations</a> with your own data.</p>
+    <p>You have a customer, account, process, or business problem. Start by turning it into a scenario pack, then build the prototype with your own safe data.</p>
+    <a class="track-link" href="{{ '/customer-build' | relative_url }}">Start the track &rarr;</a>
   </div>
 
-  <div class="quick-card">
-    <h3>Generate an idea with Customer Challenge-Forge</h3>
-    <p><strong>You're here but don't have an idea yet.</strong></p>
-    <p>Use the <a href="https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md">Customer Challenge-Forge skill</a> to generate ~10 right-sized, buildable AI application ideas from a customer name and industry. Pick one, fill in the canvas, and start building.</p>
+  <div class="quick-card track-card track-card--idea">
+    <span class="track-badge">Idea intake</span>
+    <h3>Generate an idea first</h3>
+    <p>You know the customer or industry, but not the app. Use Customer Challenge-Forge to pick a buildable idea, then continue into Customer Build.</p>
+    <a class="track-link" href="{{ '/idea-forge' | relative_url }}">Forge an idea &rarr;</a>
   </div>
 
-  <div class="quick-card">
-    <h3>Follow the upskilling track</h3>
-    <p><strong>You're learning Foundry for the first time with no customer scenario.</strong></p>
-    <p>Use the <a href="{{ '/setup' | relative_url }}">Getting Started guide</a> to set up your environment, then start <a href="{{ '/challenges' | relative_url }}#tier-1--foundations">Foundations</a> with the Northfield University reference scenario — a guided, safe learning path that teaches you the same architecture as Customer Build Mode.</p>
+  <div class="quick-card track-card track-card--upskill">
+    <span class="track-badge">Upskill</span>
+    <h3>Learn with Northfield</h3>
+    <p>You want the guided reference path. Build the Northfield University IQ Assistant, then reuse the same architecture for customer work later.</p>
+    <a class="track-link" href="{{ '/upskill' | relative_url }}">Start learning &rarr;</a>
   </div>
-
 </div>
 
-## What you will leave with
+## One build spine, two real tracks
 
-Regardless of path, completing this hackathon delivers:
-
-- **A grounded, cited assistant** that answers real questions from a trusted knowledge base
-- **A governed workflow** (optional) where the agent can take actions — open tickets, place holds, book advising — with human approval
-- **An eval scorecard** showing accuracy and safety across your scenario
-- **A 2-minute demo story** and stakeholder-ready artifact
-- **A risk register and backlog** for post-hackathon investment
-
-## How the build unfolds
-
-What The Hack uses a three-tier challenge architecture. Both paths (Customer Build Mode and Upskill Mode) run the same tiers. **Tier 1 · Foundations** is one guided, linear challenge — everyone moves through four ordered steps to a deployed, grounded assistant with citations. **Tier 2 · Advanced** is a set of modular challenges (action tools, evaluation & red teaming, tracing & observability, deployment as a hosted agent, plus optional deepeners) you can attempt in any order. **Tier 3 · Capstone** is an open-ended design brief where you break the single assistant into a multi-agent team orchestrated with the Microsoft Agent Framework (MAF).
-
-For the full tier details, challenge descriptions, timing, and the Advanced-skip bootstrap path, see [**Challenges overview →**]({{ '/challenges' | relative_url }})
+<ol class="journey-map">
+  <li><span>0</span><strong>Define</strong><small>Outcome, users, data, safety, demo</small></li>
+  <li><span>1</span><strong>Foundations</strong><small>Provision, model, agent, knowledge</small></li>
+  <li><span>2</span><strong>Act</strong><small>Attach one governed workflow</small></li>
+  <li><span>3</span><strong>Prove</strong><small>Evaluate, red-team, trace</small></li>
+  <li><span>4</span><strong>Demo</strong><small>Host, UI, scorecard, backlog</small></li>
+</ol>
 
 <div class="challenge-card" markdown="1">
 
-**New to this format?** What The Hack (WTH) is Microsoft's hands-on, challenge-first format for learning by building. Instead of lectures, teams move through guided tasks, validate their work as they go, and lean on coaches for hints when they hit friction. This edition focuses on Microsoft Foundry and ships real prototypes.
+| Route | What changes | What stays the same |
+|---|---|---|
+| **Customer Build Track** | Corpus, persona, workflows, eval prompts, and final demo use your customer-safe scenario. | The same Foundry architecture, challenge sequence, and validators. |
+| **Upskill Track** | Northfield University provides the corpus, persona, workflows, and eval prompts. | The same skills you need for customer prototypes. |
 
 </div>
 
-## Who is this for?
+## Use the site like a cockpit
 
-### Students
+Each journey page now starts with **You are here**, **Current output**, and **Next move**. If you feel lost, go back to your track page rather than browsing the challenge list directly.
 
-You are in the right place if you know basic Python, want hands-on experience with modern AI tooling, and prefer learning by shipping instead of watching demos. No prior Microsoft Foundry experience is required.
+<div class="quick-grid">
+  <div class="quick-card">
+    <h3>Track pages guide the day</h3>
+    <p>Use Customer Build or Upskill as your primary route. They tell you what artifact you are producing at each stage.</p>
+  </div>
 
-### Coaches
+  <div class="quick-card">
+    <h3>The Challenge Library is reusable</h3>
+    <p>Foundations, Action Tools, Evaluation, Tracing, Deploy, UI, and Capstone are shared modules used by both tracks.</p>
+  </div>
 
-This site is built to help you pace teams, spot common blockers early, and keep the day moving. Use the Coach Hub for timing, facilitation prompts, and escalation guidance while keeping solution walkthroughs inside the repo.
-
+  <div class="quick-card">
+    <h3>Coaches anchor on outcomes</h3>
+    <p>The right question is not "which page am I on?" It is "what should my team have produced before moving on?"</p>
+  </div>
+</div>

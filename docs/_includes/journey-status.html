@@ -1,0 +1,16 @@
+<aside class="journey-status journey-status--{{ include.tone | default: 'shared' }}">
+  <div>
+    <span class="journey-status__eyebrow">You are here</span>
+    <strong class="journey-status__path">{{ include.path }}</strong>
+  </div>
+  <div class="journey-status__grid">
+    <div>
+      <span>Current output</span>
+      <p>{{ include.artifact }}</p>
+    </div>
+    <div>
+      <span>Next move</span>
+      <p>{{ include.next }}</p>
+    </div>
+  </div>
+</aside>

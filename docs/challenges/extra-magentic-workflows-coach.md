@@ -1,6 +1,6 @@
 ---
 title: "Extra: Magentic Workflows · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 122
 nav_exclude: true
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Extra: Give It a Voice"
-parent: Challenges
+parent: Challenge Library
 nav_order: 21
 ---
 

@@ -1,10 +1,12 @@
 ---
 title: "Advanced: Action Tools"
-parent: Challenges
+parent: Challenge Library
 nav_order: 10
 ---
 
 # Advanced · Action Tools — Make the Agent Do Work
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Action Tools" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
 
 > **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
 > challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ

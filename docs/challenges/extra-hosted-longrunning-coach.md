@@ -1,6 +1,6 @@
 ---
 title: "Extra: Hosted Long-Running Agents · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 123
 nav_exclude: true
 ---

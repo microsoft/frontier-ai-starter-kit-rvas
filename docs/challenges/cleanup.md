@@ -1,6 +1,6 @@
 ---
 title: "Wrap-Up: Cleanup & Cost Hygiene"
-parent: Challenges
+parent: Challenge Library
 nav_order: 40
 ---
 

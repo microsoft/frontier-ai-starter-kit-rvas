@@ -1,6 +1,6 @@
 ---
 title: "Advanced: Evaluation & Red Teaming · Coach"
-parent: Challenges
+parent: Challenge Library
 nav_order: 111
 nav_exclude: true
 ---

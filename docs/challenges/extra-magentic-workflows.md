@@ -1,6 +1,6 @@
 ---
 title: "Extra: Magentic Workflows"
-parent: Challenges
+parent: Challenge Library
 nav_order: 22
 ---
 

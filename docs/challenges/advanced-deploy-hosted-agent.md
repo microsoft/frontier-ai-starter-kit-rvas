@@ -1,10 +1,12 @@
 ---
 title: "Advanced: Deploy as a Hosted Agent"
-parent: Challenges
+parent: Challenge Library
 nav_order: 13
 ---
 
 # Advanced — Deploy as a Hosted Agent
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Deploy" artifact="A containerized hosted agent with its own endpoint, identity, and run history." next="Author agent.yaml and the container entrypoint, then deploy with azd ai agent." %}
 
 > **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
 > challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ

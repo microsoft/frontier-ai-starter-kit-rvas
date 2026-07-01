@@ -1,6 +1,6 @@
 ---
 title: "Extra: Fabric IQ"
-parent: Challenges
+parent: Challenge Library
 nav_order: 20
 ---
 

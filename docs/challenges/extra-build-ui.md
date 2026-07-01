@@ -1,10 +1,12 @@
 ---
 title: "Extra: Build a UI"
-parent: Challenges
+parent: Challenge Library
 nav_order: 24
 ---
 
 # Extra · Build a UI — Wrap the Assistant in a Web App
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Extra &rarr; Build a UI" artifact="A stakeholder-facing chat UI with streaming answers, citations, and optional approval cards." next="Scaffold a secret-free browser plus backend-for-frontend that calls the hosted agent." %}
 
 > **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
 > **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).

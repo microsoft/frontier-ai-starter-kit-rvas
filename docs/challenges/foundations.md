@@ -1,10 +1,12 @@
 ---
 title: "Foundations"
-parent: Challenges
+parent: Challenge Library
 nav_order: 1
 ---
 
 # Foundations — Build the Northfield University IQ Assistant
+
+{% include journey-status.html tone="shared" path="Challenge Library &rarr; Foundations" artifact="A deployed, grounded assistant with citations. Upskill teams use Northfield; Customer Build teams swap in their own corpus and persona." next="Complete Steps 1-4 in order, then choose Advanced modules from the library." %}
 
 > **Tier 1 · Foundations — the guided, linear challenge everyone completes.**
 > One evolving artifact, four ordered steps. By the end you will have a **deployed, grounded
