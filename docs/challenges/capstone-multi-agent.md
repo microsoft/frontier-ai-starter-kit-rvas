@@ -169,7 +169,7 @@ Swap by hand, **or** use the Copilot **lab-generator** meta-agent to scaffold th
 eval set. *"Here's our agent team for **our** domain"* is the single most demo-able moment of the event.
 
 For customer teams, close with the deliverable from the
-[Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}): a 2-minute journey, a scorecard,
+[Customer Build Step 0]({{ '/customer-outcome' | relative_url }}): a 2-minute journey, a scorecard,
 known risks, and a next-step backlog for pilot or production hardening.
 
 ---

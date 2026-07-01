@@ -1,18 +1,18 @@
 ---
-title: Outcome Canvas
+title: "Step 0: Define Outcome"
 parent: Customer Build Track
 nav_order: 1
 ---
 
-# Customer Outcome Canvas
+# Customer Build · Step 0 — Define your outcome
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Outcome Canvas" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use the canvas to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Step 0" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use this scenario pack to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
 
-**This canvas is the working artifact for the Customer Build Track.** Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
+**This is the first task in the Customer Build Track.** Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
 
 If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer the selected idea's business outcome, users, data sources, tier guidance, and risk notes into the table below.
 
-## Pre-work: fill this in before the event
+## Scenario pack
 
 | Field | Prompt |
 |---|---|

@@ -14,7 +14,7 @@ description: Generate a buildable customer AI application idea, then continue in
   </div>
 </div>
 
-{% include journey-status.html tone="idea" path="Idea Forge &rarr; Customer Build Track" artifact="One selected AI application idea with outcome, users, data sources, and tier guidance." next="Paste the chosen idea into the Outcome Canvas, then start the Customer Build Track." %}
+{% include journey-status.html tone="idea" path="Idea Forge &rarr; Customer Build Track" artifact="One selected AI application idea with outcome, users, data sources, and tier guidance." next="Paste the chosen idea into Customer Build Step 0, then continue the track." %}
 
 ## Five-minute idea funnel
 
@@ -22,7 +22,7 @@ description: Generate a buildable customer AI application idea, then continue in
   <li><strong>Name the context.</strong> Provide a customer name, business area, or target industry.</li>
   <li><strong>Run Customer Challenge-Forge.</strong> Generate roughly 10 ranked, right-sized ideas grounded in public context.</li>
   <li><strong>Pick one idea.</strong> Prefer the idea with clear users, safe data, one useful action, and a believable demo.</li>
-  <li><strong>Fill the Outcome Canvas.</strong> Transfer the idea's outcome, users, sources, action candidates, and risk notes.</li>
+  <li><strong>Complete Customer Build Step 0.</strong> Transfer the idea's outcome, users, sources, action candidates, and risk notes.</li>
   <li><strong>Continue as Customer Build.</strong> From this point on, you are no longer in an idea flow; you are building the prototype.</li>
 </ol>
 
@@ -47,5 +47,5 @@ description: Generate a buildable customer AI application idea, then continue in
 
 <div class="next-panel">
   <strong>Next:</strong>
-  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Fill the Outcome Canvas</a>
+  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Complete Step 0</a>
 </div>

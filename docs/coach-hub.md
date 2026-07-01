@@ -40,7 +40,7 @@ Coaches for this event should focus on facilitation, pacing, and unblock strateg
 
 | Team state | Coach action |
 |---|---|
-| Has a customer scenario or business outcome | Send them to the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) before Foundations. |
+| Has a customer scenario or business outcome | Send them to [Customer Build Step 0]({{ '/customer-outcome' | relative_url }}) before Foundations. |
 | Has a customer or industry, but no idea | Run [Customer Challenge-Forge](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md), pick one idea, then fill the canvas. |
 | Wants pure upskilling | Send them through the [Upskill Track]({{ '/upskill' | relative_url }}) with Northfield. |
 
@@ -81,7 +81,7 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful co
 
 | Activity | Expected Time | Note |
 |---|---|---|
-| Customer Outcome Canvas review | 20–30 min | Every team should have their canvas draft before touching Step 1. Use this window to review, challenge vague "knowledge sources", and help teams without a scenario run Customer Challenge-Forge. Teams that skip the canvas tend to drift during Advanced challenges. |
+| Customer Build Step 0 review | 20–30 min | Every customer team should have its scenario pack before touching Step 1. Use this window to challenge vague "knowledge sources" and help teams without a scenario run Customer Challenge-Forge. Teams that skip Step 0 tend to drift during Advanced challenges. |
 
 **Tier 1 · Foundations** (one guided challenge, four ordered steps):
 

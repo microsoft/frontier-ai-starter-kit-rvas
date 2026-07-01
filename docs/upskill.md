@@ -47,7 +47,7 @@ description: Learn Microsoft Foundry with the guided Northfield University refer
 
 ## Convert later to Customer Build
 
-When you are ready to reuse the architecture for a real scenario, start with the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) and its [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide). That page is the single source of truth for replacing Northfield artifacts.
+When you are ready to reuse the architecture for a real scenario, start with [Customer Build Step 0]({{ '/customer-outcome' | relative_url }}) and its [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide). That page is the single source of truth for replacing Northfield artifacts.
 
 <div class="next-panel">
   <strong>Next:</strong>
