@@ -19,16 +19,15 @@ nav_order: 25
 > [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) Foundry skill stubs. You need GitHub Copilot enabled in your
 > editor and `npx` available.
 >
-> 🎤 **Demo wow-factor:** Copilot **can one-shot** a working Foundry tool using **live** SDK syntax it just
-> fetched from `microsoft-docs` — and the team sees *why* grounded generation beats hallucinated API calls.
+> 🎤 **Demo wow-factor:** Copilot builds a Foundry tool **after** fetching current SDK syntax from
+> `microsoft-docs` — and the team can compare that grounded result with an ungrounded draft.
 
 ## Why this challenge
 
 Every other challenge taught you to **search before you implement** by hand. This one makes **Copilot**
-do it. With the three MCP servers and the Foundry skills loaded, GitHub Copilot stops guessing at
-SDK signatures (the #1 cause of broken Foundry code) and instead **fetches the current API** before it
-writes a line. You'll **re-build one challenge you already did manually** — and watch it go faster *and*
-more correctly.
+do it. With the three MCP servers and the Foundry skills loaded, GitHub Copilot has a required path
+for checking current SDK signatures before it writes code. You'll **re-build one challenge you already
+did manually**, then compare the grounded output with an ungrounded draft so the difference is visible.
 
 The doctrine, straight from this repo's [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md):
 
@@ -101,7 +100,7 @@ before code generation; either way, the generated script runs green against your
 
 ## Step 3 — Prove grounding beats guessing
 
-**Goal:** Make the value of MCP-grounding undeniable.
+**Goal:** Measure whether MCP-grounding prevented stale or guessed SDK calls.
 
 **Tasks:**
 
@@ -125,6 +124,5 @@ detail, shared with your coach.
 
 ## What you built
 
-Not a new feature — a new **way of building**. You turned GitHub Copilot into an expert Foundry
-pair-programmer that fetches **current** APIs before it codes, and you proved, concretely, why
-*Search-Before-Implement* beats hallucinated SDK calls.
+Not a new feature — a new **way of building**. You configured Copilot to fetch **current** APIs before
+it codes, then documented the concrete API detail that grounding corrected.

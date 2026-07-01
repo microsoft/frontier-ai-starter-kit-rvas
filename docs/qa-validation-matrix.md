@@ -1,26 +1,26 @@
-# QA Validation Matrix
+# Historical QA Validation Snapshot
 
-Date: 2026-06-01
-Requested by: Marco Olivo
-Executor: Basher (QA & Coach Enablement)
-Team root: /home/marco/ai-hackathon
+This page records one local QA pass from 2026-06-01. It is **not** a live status page and should not
+be used as current release evidence. For current validation, run the relevant `validate.py` command
+from a freshly provisioned environment.
 
 ## Execution setup
-- Preferred env rule applied: no repo venv detected (`.venv`/`venv` absent), so a temporary venv was created at `/tmp/aihack-qa-venv`.
-- Dependencies installed only after first pass showed missing modules (`httpx`, `azure-*`): `pip install -r requirements.txt`.
-- Final matrix below is based on the second pass executed from `/tmp/aihack-qa-venv/bin/python`.
+- The pass used a temporary local virtual environment.
+- Dependencies were installed after the first pass showed missing modules (`httpx`, `azure-*`):
+  `pip install -r requirements.txt`.
+- Results below reflect that single local run only.
 
 ## Status matrix
 
 | Target | Command | Exit | Status | Evidence (key output) |
 |---|---|---:|---|---|
-| scripts/validate-foundations.py | `/tmp/aihack-qa-venv/bin/python scripts/validate-foundations.py` | 1 | BLOCKED | Missing required `.env` vars: `AZURE_SEARCH_ENDPOINT`, `AZURE_SEARCH_INDEX_NAME`, `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`. Log: `/tmp/qa-validate-20260601-venv/scripts_validate_foundations.log` |
-| challenges/foundations/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/foundations/validate.py --all` | 1 | BLOCKED | `.env` placeholders/missing values; project endpoint unreachable (`AZURE_AI_PROJECT_ENDPOINT`); requires `azd up` + `az login` + env export. Log: `/tmp/qa-validate-20260601-venv/foundations_validate_all.log` |
-| challenges/advanced-action-tools/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/advanced-action-tools/validate.py --all` | 1 | BLOCKED | Step 1 cannot reach backend at `http://localhost:8080` (`Connection refused`); backend prerequisite not running. Log: `/tmp/qa-validate-20260601-venv/advanced_action_tools_validate_all.log` |
-| challenges/advanced-evaluation-redteam/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/advanced-evaluation-redteam/validate.py --all` | 0 | PASS | All 4 steps passed: eval dataset shape, `evaluate.py` run, custom evaluator discrimination, adversarial seed coverage. Log: `/tmp/qa-validate-20260601-venv/advanced_evaluation_redteam_validate_all.log` |
-| challenges/advanced-tracing-observability/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/advanced-tracing-observability/validate.py --all` | 1 | BLOCKED | Required learner artifacts absent: `trace_setup.py`, `traced_run.py`, `correlate.kql`. Log: `/tmp/qa-validate-20260601-venv/advanced_tracing_observability_validate_all.log` |
-| challenges/advanced-deploy-hosted-agent/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/advanced-deploy-hosted-agent/validate.py --all` | 1 | BLOCKED | Missing `hosted/agent.yaml`; `.env` missing `AZURE_AI_PROJECT_ENDPOINT`; hosted deployment prerequisites not satisfied. Log: `/tmp/qa-validate-20260601-venv/advanced_deploy_hosted_agent_validate_all.log` |
-| challenges/capstone-multi-agent/validate.py | `/tmp/aihack-qa-venv/bin/python challenges/capstone-multi-agent/validate.py --all` | 1 | BLOCKED | No learner `*.py` files found under default `--path` (`challenges/capstone-multi-agent`); structural checks cannot execute without capstone implementation files. Log: `/tmp/qa-validate-20260601-venv/capstone_multi_agent_validate_all.log` |
+| scripts/validate-foundations.py | `python scripts/validate-foundations.py` | 1 | BLOCKED | Missing required `.env` vars: `AZURE_SEARCH_ENDPOINT`, `AZURE_SEARCH_INDEX_NAME`, `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`. |
+| challenges/foundations/validate.py | `python challenges/foundations/validate.py --all` | 1 | BLOCKED | `.env` placeholders/missing values; project endpoint unreachable (`AZURE_AI_PROJECT_ENDPOINT`); requires `azd up` + `az login` + env export. |
+| challenges/advanced-action-tools/validate.py | `python challenges/advanced-action-tools/validate.py --all` | 1 | BLOCKED | Step 1 cannot reach backend at `http://localhost:8080` (`Connection refused`); backend prerequisite not running. |
+| challenges/advanced-evaluation-redteam/validate.py | `python challenges/advanced-evaluation-redteam/validate.py --all` | 0 | PASS | All 4 steps passed: eval dataset shape, `evaluate.py` run, custom evaluator discrimination, adversarial seed coverage. |
+| challenges/advanced-tracing-observability/validate.py | `python challenges/advanced-tracing-observability/validate.py --all` | 1 | BLOCKED | Required learner artifacts absent: `trace_setup.py`, `traced_run.py`, `correlate.kql`. |
+| challenges/advanced-deploy-hosted-agent/validate.py | `python challenges/advanced-deploy-hosted-agent/validate.py --all` | 1 | BLOCKED | Missing `hosted/agent.yaml`; `.env` missing `AZURE_AI_PROJECT_ENDPOINT`; hosted deployment prerequisites not satisfied. |
+| challenges/capstone-multi-agent/validate.py | `python challenges/capstone-multi-agent/validate.py --all` | 1 | BLOCKED | No learner `*.py` files found under default `--path` (`challenges/capstone-multi-agent`); structural checks cannot execute without capstone implementation files. |
 
 ## Summary counts
 - PASS: 1

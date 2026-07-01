@@ -7,8 +7,8 @@
 Two processes:
 
 1. **`app.py`** — a FastAPI REST API with an in-memory store (resets on restart).
-2. **`mcp_server.py`** — a FastMCP server that wraps the REST API and exposes the three
-   actions as **MCP tools** an agent attaches via `McpTool`.
+2. **`mcp_server.py`** — an optional FastMCP server that wraps the REST API for stretch work.
+   The guided Action Tools challenge uses supported `FunctionTool` wrappers against the REST API.
 
 ---
 
@@ -17,7 +17,7 @@ Two processes:
 | Variable | Default | Used by | Meaning |
 |---|---|---|---|
 | `ACTION_API_URL` | `http://localhost:8080` | MCP server, challenge | Base URL of the FastAPI backend |
-| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | agent, challenge | MCP endpoint students attach as `McpTool` |
+| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP server, stretch | Optional FastMCP endpoint for Rung (c) / preview explorations |
 | `ACTION_API_KEY` | *(empty)* | backend, MCP server | Optional `x-api-key` shared secret; empty = open/no-auth |
 
 > If you change a name here, change it in `.env.sample` and the challenge content too.
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 # 2. start the REST backend  -> ACTION_API_URL (http://localhost:8080)
 uvicorn app:app --host 0.0.0.0 --port 8080
 
-# 3. in a second terminal, start the MCP server -> ACTION_MCP_URL (http://localhost:8765/mcp)
+# 3. optional stretch: in a second terminal, start the MCP server -> ACTION_MCP_URL
 python mcp_server.py
 ```
 
@@ -74,22 +74,21 @@ Interactive API docs: <http://localhost:8080/docs>.
 
 ---
 
-## Attaching to a Foundry agent (what teams build)
+## Wiring this backend into a Foundry agent
 
-```python
-import os
-from azure.ai.agents.models import McpTool
+The supported guided path is:
 
-actions = McpTool(
-    server_label="northfield_actions",
-    server_url=os.environ["ACTION_MCP_URL"],   # http://localhost:8765/mcp
-)
-# add `actions.definitions` to the agent's tools and implement the
-# RequiredMcpToolCall -> SubmitToolApprovalAction human-approval loop.
-```
+1. Start `app.py`.
+2. Implement Python functions that call `ACTION_API_URL` (`/it-tickets`, `/course-holds`,
+   `/advising-slots`).
+3. Wrap those functions in `FunctionTool`.
+4. Govern each `RequiredFunctionToolCall` with the `SubmitToolOutputsAction` approval loop.
 
-The challenge teaches the **tool-approval loop** (the agent asks before acting) and the
-knowledge-vs-action tool distinction. See `challenges/advanced-action-tools/`.
+The FastMCP server is a stretch asset for teams that want to explore the server side of MCP. Before
+attaching it directly to an agent, verify the current MCP tool and approval APIs in Microsoft Learn;
+the guided challenge intentionally avoids preview-only client-side approval classes.
+
+See `challenges/advanced-action-tools/` for the supported workshop implementation.
 
 ---
 

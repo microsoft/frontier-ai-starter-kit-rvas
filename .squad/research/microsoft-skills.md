@@ -55,8 +55,8 @@ Source: `.github/plugins/microsoft-foundry/skills/` and `.github/plugins/azure-s
 | `foundry-projects-resources` | Provision Foundry resources & projects; connections (key / OAuth / managed identity / agent identity); standard vs private-network infra. | Ch00 Setup |
 | `foundry-models` | Discover/deploy/manage models; preset vs customized deploy; capacity discovery across regions; quota; PTU vs PAYG; RAI policy. | Ch01 First Model |
 | `foundry-hosted-agents` | Build/deploy/manage **hosted (containerized) agents** — Responses + Invocations protocols, `agent.yaml`, `azd ai agent`, per-agent Entra identity, dedicated endpoints. | Ch06 Deploy |
-| `foundry-toolboxes` | Curate intent-based **Toolboxes (preview)** — one MCP-compatible endpoint bundling **9 tool types: MCP, Web Search, Azure AI Search, Code Interpreter, File Search, OpenAPI, A2A, Browser Automation, Computer Use**. Build once, consume everywhere. | Ch03/Ch04/Extras |
-| `foundry-workflows` | Multi-agent orchestration — declarative workflow vs A2A tool call vs **Connected Agents** pattern; Microsoft Agent Framework patterns. | Ch03 Prompt Flow / Extras |
+| `foundry-toolboxes` | Curate intent-based **Toolboxes (preview)** — one MCP-compatible endpoint bundling **9 tool types: MCP, Web Search, Azure AI Search, Code Interpreter, File Search, OpenAPI, A2A, Browser Automation, Computer Use**. Build once, consume everywhere. | Action Tools / Knowledge Base / Extras |
+| `foundry-workflows` | Multi-agent orchestration — declarative workflow vs A2A tool call vs **Connected Agents** pattern; Microsoft Agent Framework patterns. | Capstone / Magentic Workflows |
 | `foundry-iq-knowledge-bases` | **Foundry IQ knowledge bases (preview)** — multi-source, permission-aware grounding. Connect Blob/SharePoint/OneLake/web; **agentic retrieval pipeline (query decomposition + parallel search + reranking)**; expose via MCP to agents. | **Ch04 RAG** |
 | `foundry-managed-skills` | `SKILL.md` as a **Foundry-side resource (preview)** — author behavioral guidelines once, store via Skills REST API, load into hosted-agent containers as session instructions. Decouples policy from code. | Extras / governance |
 | `foundry-memory` | Long-term **managed memory (preview)** — user-profile vs chat-summary memory, memory-search tool vs store APIs, scoping, prompt-injection/memory-corruption risks. | Extras |
@@ -98,7 +98,8 @@ Source: `.github/plugins/azure-skills/skills/microsoft-foundry/foundry-agent/cre
 
 ### 2e. Custom agents & AGENTS.md
 - `.github/agents/`: `backend.agent.md`, `frontend.agent.md`, `infrastructure.agent.md`, `planner.agent.md`, `presenter.agent.md`, `scaffolder.agent.md`. Personas declare expertise + which skills to load (e.g., backend → FastAPI/Pydantic/Cosmos; infra → Bicep/Azure CLI/Container Apps).
-- `AGENTS.md` (repo root) — template for configuring agent behavior in *your* project. (Linked from README; raw fetch 404'd on `main` at research time — treat as WIP; the repo is explicitly flagged "Work in Progress".)
+- `AGENTS.md` (repo root) — template for configuring agent behavior in *your* project. Verify the
+  current upstream filename before vendoring because this area changes with the skills repo.
 - `.github/copilot-instructions.md` — the workspace-level instruction file Copilot reads to know which skills exist.
 
 ---
@@ -112,7 +113,7 @@ Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→c
 | **00 Setup** | Provision Foundry resource/project | `foundry-projects-resources`, router `project/create` + `resource/create` | `azure`, `foundry-mcp` |
 | **01 First Model** | Deploy from model catalog | `foundry-models` (`models/deploy-model`: preset/customize/capacity) | `foundry-mcp`, `microsoft-docs` |
 | **02 Prompt Engineering** | Prompt design | `azure-ai-projects-*`, prompt templates | `microsoft-docs` |
-| **03 Prompt Flow** | Orchestration | `foundry-workflows` (Connected Agents), `foundry-toolboxes` | `foundry-mcp` |
+| **Capstone / Magentic Workflows** | Agent orchestration | `foundry-workflows` (Connected Agents), `foundry-toolboxes` | `foundry-mcp` |
 | **04 RAG** | Grounded retrieval | **`foundry-iq-knowledge-bases`** + `azure-search-documents-py` + `tool-azure-ai-search.md` | `foundry-mcp`, `azure` |
 | **05 Evaluation** | Quality/safety/RAI | **`foundry-observability`** + `azure-ai-contentsafety-py` | `azure`, `microsoft-docs` |
 | **06 Deploy** | Endpoint + app integration | **`foundry-hosted-agents`** + router `deploy`/`invoke` (`azd ai agent`) | `azure`, `foundry-mcp` |
@@ -120,7 +121,7 @@ Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→c
 **The "plop Copilot on top" model:** participants keep solving challenges *the manual way* (which is the learning objective — coaches "never give answers directly"), but Copilot becomes the **always-available expert pair-programmer**:
 1. Add the relevant `SKILL.md` files + `.vscode/mcp.json` + `.github/copilot-instructions.md` to the student Codespace.
 2. Copilot, when asked, queries `microsoft-docs`/`foundry-mcp` for *current* Foundry API surface (avoids the #1 student failure mode: hallucinated/stale SDK calls).
-3. The `microsoft-foundry` router enforces a *workflow* (read sub-skill → discovery step → implement → validate), which keeps Copilot from one-shotting wrong answers and instead walks the same path the challenge teaches.
+3. The `microsoft-foundry` router enforces a *workflow* (read sub-skill → discovery step → implement → validate), which keeps Copilot from jumping straight to unverified code and instead walks the same path the challenge teaches.
 4. This is **inversely useful for coaches**: a coach can run the full lifecycle with these skills to validate student solutions and unblock fast.
 
 ---

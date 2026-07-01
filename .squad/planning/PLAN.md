@@ -1,5 +1,9 @@
 # WTH AI Hackathon: Content Architecture Plan
 
+> **Archived V1 plan. Do not use for current curriculum.** This file preserves the original
+> Prompt Flow-era design for history only. The active curriculum is the agent-era three-tier plan in
+> [PLAN-V3.md](PLAN-V3.md); current workspace rules explicitly remove Prompt Flow from the workshop.
+
 > **"Build Intelligent Apps with Microsoft Foundry"**
 >
 > A What The Hack hackathon-in-a-box that takes participants from zero to deploying an AI-powered application using Microsoft Foundry.
@@ -295,8 +299,7 @@ azure-identity>=1.15.0
 openai>=1.12.0
 python-dotenv>=1.0.0
 requests>=2.31.0
-promptflow>=1.10.0
-promptflow-tools>=1.4.0
+# Deprecated orchestration packages from the V1 design were removed in the active V3 curriculum.
 jupyter>=1.0.0
 ipykernel>=6.29.0
 ```
@@ -314,8 +317,7 @@ ipykernel>=6.29.0
     "ms-azuretools.vscode-bicep",
     "github.copilot",
     "github.copilot-chat",
-    "redhat.vscode-yaml",
-    "ms-toolsai.promptflow"
+    "redhat.vscode-yaml"
   ]
 }
 ```

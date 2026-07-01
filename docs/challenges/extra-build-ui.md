@@ -91,7 +91,7 @@ credential ever reaches the browser.
    from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
    app = FastAPI()
-   _token = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
+   _token_provider = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
    _base = os.environ["AZURE_AI_PROJECT_ENDPOINT"].rstrip("/")
    _agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
 
@@ -102,8 +102,7 @@ credential ever reaches the browser.
    def chat(body: ChatIn):
        client = OpenAI(
            base_url=f"{_base}/agents/{_agent}/endpoint/protocols/openai",
-           api_key="placeholder",
-           default_headers={"Authorization": f"Bearer {_token()}"},
+           api_key=_token_provider(),
        )
        resp = client.responses.create(input=body.message)
        return {"answer": resp.output_text, "raw": resp.model_dump()}

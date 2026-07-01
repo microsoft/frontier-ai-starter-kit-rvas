@@ -219,7 +219,7 @@ its **own Entra identity**, not your user credentials.
    from openai import OpenAI
    from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-   token = get_bearer_token_provider(
+   token_provider = get_bearer_token_provider(
        DefaultAzureCredential(), "https://ai.azure.com/.default"
    )
    agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
@@ -227,8 +227,7 @@ its **own Entra identity**, not your user credentials.
 
    client = OpenAI(
        base_url=f"{base}/agents/{agent}/endpoint/protocols/openai",
-       api_key="placeholder",                       # replaced by the bearer token below
-       default_headers={"Authorization": f"Bearer {token()}"},
+       api_key=token_provider(),
    )
 
    resp = client.responses.create(input="How do I place a registration hold?")
