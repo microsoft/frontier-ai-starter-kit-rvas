@@ -6,10 +6,7 @@ nav_order: 20
 
 # Extra · Fabric IQ — Real-Time Data Grounding
 
-> **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
-> **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).
-> Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 >
 > **Specific prereq:** **Foundations Step 4** (the AI Search knowledge base) — this Extra adds a
 > *second*, live source alongside it.

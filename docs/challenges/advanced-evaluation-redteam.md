@@ -8,10 +8,7 @@ nav_order: 11
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Evaluation" artifact="A trust scorecard that measures quality, groundedness, refusal behavior, and adversarial safety." next="Run the Northfield eval set or replace it with scenario-specific customer prompts." %}
 
-> **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
-> challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ
-> Assistant). Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 
 Shipping an assistant that *sounds* good is not the same as shipping one that is **accurate** and
 **safe**. In this challenge you prove both: you measure answer quality with NLP/LLM-judge metrics,

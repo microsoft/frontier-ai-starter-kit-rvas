@@ -8,10 +8,7 @@ nav_order: 13
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Deploy" artifact="A containerized hosted agent with its own endpoint, identity, and run history." next="Author agent.yaml and the container entrypoint, then deploy with azd ai agent." %}
 
-> **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
-> challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ
-> Assistant). Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 
 ## Why this challenge
 

@@ -8,10 +8,7 @@ nav_order: 12
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Tracing" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
 
-> **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
-> challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ
-> Assistant). Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 
 ## Why this challenge
 

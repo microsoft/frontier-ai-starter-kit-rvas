@@ -8,43 +8,10 @@ nav_order: 1
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Foundations" artifact="A deployed, grounded assistant with citations. Upskill teams use Northfield; Customer Build teams swap in their own corpus and persona." next="Complete Steps 1-4 in order, then choose Advanced modules from the library." %}
 
-> **Tier 1 · Foundations — the guided, linear challenge everyone completes.**
-> One evolving artifact, four ordered steps. By the end you will have a **deployed, grounded
-> Northfield University "IQ" Assistant** — an agent that answers student-services questions from
-> Northfield's own FAQ corpus, **with citations**.
-
-## How this hackathon is structured (read first)
-
-The curriculum has **three tiers**:
-
-- **Tier 1 · Foundations (this challenge)** — a single guided path, broken into **four ordered
-  steps**. Everyone does it. Each step ends in a **Checkpoint** you can verify before moving on.
-  Step N's Checkpoint is the prerequisite for Step N+1.
-
-- **Tier 2 · Advanced** — modular, self-contained challenges you can attempt **in any order**
-  (Action Tools, Evaluation & Red Teaming, Tracing & Observability, Deploy as a Hosted Agent, plus
-  Extras). **Every Advanced challenge assumes the Foundations end-state** — the grounded assistant
-  you build here.
-
-- **Tier 3 · Capstone** *(optional end-of-day)* — splits the assistant into a router and specialist
-  agents. Requires the Foundations end-state plus at least one Advanced challenge completed.
-  You do not need to reach it to succeed today — think of it as the stretch goal if time allows.
-
-**Completing Step 4 = the Foundations end-state.** It is the prerequisite for the entire Advanced
-tier. If you only do one thing today, finish all four steps below.
-
-### Choose the scenario mode
-
-Use **Upskill Mode** if you want the known-good learning path: build the Northfield University IQ
-Assistant exactly as written. Use **Customer Build Mode** if your event is tied to an account or
-project: complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}), then use
-Northfield as the reference while replacing the corpus, persona, action candidates, eval prompts, and
-final demo story with customer-safe equivalents.
-
-### The default scenario
-
-You are building the **Northfield University IQ Assistant**, a student-services agent. It grows
-across the four steps:
+Foundations is the required first build module. Complete the four steps in order; Step 4 is the
+end-state every Advanced challenge assumes. Upskill teams build Northfield exactly as written.
+Customer Build teams use the same steps and validators, but substitute their scenario using the
+[Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide).
 
 | Step | What the assistant can do afterward |
 |---|---|
@@ -53,20 +20,8 @@ across the four steps:
 | [**3 · First Agent**](#step-3--your-first-agent) | Run as a named, versioned agent with a persona and guardrails |
 | [**4 · Knowledge Base**](#step-4--knowledge-base-index--foundry-iq---foundations-end-state) | Answer from Northfield's real FAQ corpus, **with citations** ← **end-state** |
 
-In Customer Build Mode, the Step 4 end-state should prove the same capability with customer-relevant
-questions: grounded answers, citations, and clear abstention when the trusted corpus is missing the
-answer.
-
-### What you need before you start
-
-- The repo open in **GitHub Codespaces** or a local **Dev Container** (Python + Azure CLI + `azd`).
-- An Azure subscription where you can create AI resources.
-- About **3–3.5 hours** for the full guided path.
-
-> **Checkpoints are machine-checkable.** Each step ends with `python validate.py --step N`. The
-> validator (provided in this folder) inspects your live Azure resources and prints
-> `✅ Step N PASS` or a specific failure. The final `python validate.py --all` asserts the complete
-> end-state.
+Each step ends with `python validate.py --step N`; `python validate.py --all` asserts the full
+Foundations end-state.
 
 ---
 
@@ -477,17 +432,6 @@ base (Step 4). When this passes green, every Advanced challenge is unblocked.
 
 ## What's next — the Advanced tier
 
-Pick **any** of these, in **any order**. Each one extends the same assistant and assumes the
-Foundations end-state you just built (or the bootstrap skip-path:
-`azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`).
-
-| Advanced challenge | What it adds to your assistant |
-|---|---|
-| **Action Tools — Make the Agent Do Work** | Hands: create an IT ticket / place a registration hold / book advising via an MCP tool, with a human-approval loop |
-| **Evaluation & Red Teaming** | Proof it's accurate **and** safe — groundedness metrics plus adversarial / jailbreak results on record |
-| **Tracing & Observability** | Every answer observable end-to-end in Application Insights (model, retrieval, and tool spans) |
-| **Deploy as a Hosted Agent** | Ship it as a containerized hosted agent with its own endpoint and identity |
-| **Extras** (Fabric IQ · Voice Live · Magentic Workflows · Hosted Long-Running · Build a UI · Copilot-Assisted) | Live data, a voice, multi-agent workflows, a polished UI, and more |
-
-> See the **`challenges/advanced-*`** folders for each modular challenge. Coaches: the facilitation
-> guide for these four steps lives in [solution.md](foundations-coach).
+Return to the [Challenge Library]({{ '/challenges' | relative_url }}) and choose the Advanced module
+that best matches your route: Action Tools for workflow value, Evaluation for trust, Tracing for
+debugging, Deploy/UI for stakeholder access, or Capstone for multi-agent orchestration.

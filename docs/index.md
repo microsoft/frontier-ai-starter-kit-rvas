@@ -35,7 +35,7 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
   <div class="quick-card track-card track-card--upskill">
     <span class="track-badge">Upskill</span>
     <h3>Learn with Northfield</h3>
-    <p>You want the guided reference path. Build the Northfield University IQ Assistant, then reuse the same architecture for customer work later.</p>
+    <p>You want the guided reference path. Build the Northfield University IQ Assistant, then reuse the pattern for customer work later.</p>
     <a class="track-link" href="{{ '/upskill' | relative_url }}">Start learning &rarr;</a>
   </div>
 </div>
@@ -49,15 +49,6 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
   <li><span>3</span><strong>Prove</strong><small>Evaluate, red-team, trace</small></li>
   <li><span>4</span><strong>Demo</strong><small>Host, UI, scorecard, backlog</small></li>
 </ol>
-
-<div class="challenge-card" markdown="1">
-
-| Route | What changes | What stays the same |
-|---|---|---|
-| **Customer Build Track** | Corpus, persona, workflows, eval prompts, and final demo use your customer-safe scenario. | The same Foundry architecture, challenge sequence, and validators. |
-| **Upskill Track** | Northfield University provides the corpus, persona, workflows, and eval prompts. | The same skills you need for customer prototypes. |
-
-</div>
 
 ## Use the site like a cockpit
 

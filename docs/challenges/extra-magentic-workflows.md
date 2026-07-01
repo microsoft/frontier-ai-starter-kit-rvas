@@ -6,10 +6,7 @@ nav_order: 22
 
 # Extra · Magentic Workflows (Microsoft Agent Framework)
 
-> **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
-> **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).
-> Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 >
 > **Specific prereq:** the **Advanced · Action Tools** challenge — your Action sub-agent reuses the MCP
 > action tool (`ACTION_MCP_URL`) you wired there.

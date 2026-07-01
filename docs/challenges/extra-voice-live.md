@@ -6,10 +6,7 @@ nav_order: 21
 
 # Extra · Give It a Voice — Voice Live API
 
-> **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
-> **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).
-> Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 >
 > **Specific prereq:** **Foundations Step 3** (a working agent). It works on the Step 3 agent; it's
 > *better* on the Step 4 grounded agent (spoken answers gain citations).

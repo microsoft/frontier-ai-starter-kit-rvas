@@ -454,6 +454,30 @@ body,
   line-height: 1.48;
 }
 
+.challenge-prereq {
+  display: grid;
+  gap: 0.28rem;
+  margin: 1rem 0 1.45rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(15, 94, 216, 0.16);
+  border-left: 0.32rem solid var(--brand-700);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+  box-shadow: var(--shadow-soft);
+}
+
+.challenge-prereq strong {
+  color: var(--brand-900);
+}
+
+.challenge-prereq span {
+  color: var(--ink-700);
+}
+
+.challenge-prereq__skip {
+  font-size: 0.9rem;
+}
+
 .journey-map {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

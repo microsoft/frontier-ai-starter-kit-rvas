@@ -5,9 +5,7 @@ nav_order: 5
 
 # Getting Started
 
-{% include journey-status.html tone="shared" path="Shared setup &rarr; Foundations" artifact="A working Codespace or dev container, Azure sign-in, and local tooling ready for the challenge validators." next="After setup, Customer Build teams go to the Outcome Canvas; Upskill teams go directly to Foundations." %}
-
-Before you set up your environment, choose your route: [Customer Build]({{ '/customer-build' | relative_url }}) if you have a scenario, [Idea Forge]({{ '/idea-forge' | relative_url }}) if you need one, or [Upskill]({{ '/upskill' | relative_url }}) if you are following Northfield. Setup is the shared practical step after that choice.
+{% include journey-status.html tone="shared" path="Shared setup" artifact="A working Codespace or dev container, Azure sign-in, and local tooling ready for the challenge validators." next="Run environment validation, then return to your selected track." %}
 
 This page gives you three environment options. The fastest route is GitHub Codespaces, with local dev container and manual setup as fallbacks.
 
@@ -20,9 +18,7 @@ This page gives you three environment options. The fastest route is GitHub Codes
 
 ## Choose your setup path
 
-Your setup is the same in both event modes. **Upskill Mode** uses the Northfield University reference scenario. **Customer Build Mode** starts from the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) after your environment is ready, then maps the same challenges to a customer scenario.
-
-**A quick note for Customer Build teams:** Before you start Foundations, make sure you have completed the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) or selected a Challenge-Forge idea that aligns with your customer scenario. Your canvas (or selected idea) is the foundation for mapping the challenges—setup just provides the tools.
+The setup flow is identical for Customer Build and Upskill teams.
 
 ### 1. GitHub Codespaces (recommended)
 
@@ -85,8 +81,8 @@ az account set --subscription "<your-subscription-name-or-id>"
 ```
 
 5. Confirm you can open Microsoft Foundry in the browser and reach the correct tenant.
-6. Choose your event mode: Northfield for upskilling, or the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) for a customer engagement.
-7. Move to Foundations to provision the Foundry resource and project.
+6. Run the post-setup verification below.
+7. Return to your selected track page for the next build step.
 
 ## Azure subscription options
 

@@ -8,7 +8,7 @@ has_children: true
 
 {% include journey-status.html tone="shared" path="Challenge Library" artifact="Reusable modules for both Customer Build and Upskill tracks." next="If you are starting from scratch, go through your track page first; use this library once you know the module you need." %}
 
-This is the reusable challenge shelf. The **Customer Build Track** and **Upskill Track** tell you what to do next; this page holds the shared modules they point to.
+This page lists the shared modules used by both the **Customer Build Track** and **Upskill Track**.
 
 Every route uses the same three-tier architecture:
 
@@ -37,35 +37,6 @@ Every route uses the same three-tier architecture:
     <p>Follow the known-good reference scenario through Foundations and beyond.</p>
   </div>
 </div>
-
-## Mode mapping
-
-| Mode | Use it for | Starting point |
-|---|---|---|
-| **Customer Build Mode** | Driving a customer workshop or project kickoff toward a prototype | Complete the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) first, then swap in customer-safe data and workflows |
-| **Customer Challenge-Forge** | You have a customer scenario but no specific idea yet | Use the [Customer Challenge-Forge skill](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/skills/customer-challenge-forge/SKILL.md) to generate ~10 right-sized AI app ideas, pick one, fill the canvas, then start building |
-| **Upskill Mode** | Learning Microsoft Foundry with a known-good fictional scenario | Start Foundations with Northfield |
-
-In **Customer Build Mode**, Northfield is the reference implementation. Keep the same architecture and
-validators where possible, but replace the corpus, persona, action tools, eval prompts, and final demo
-with the customer's scenario. All validators remain at `python validate.py --step N`; only your data and
-context change.
-
-```text
-  TIER 1  FOUNDATIONS (guided, linear, everyone)
-    Step1 --> Step2 --> Step3 --> Step4  <-- Foundations end-state
-           |
-           v
-  TIER 2  ADVANCED (modular, pick any order)
-    Action Tools | Evaluation+RedTeam | Tracing | Deploy
-    deepeners: Fabric IQ | Voice Live | Build a UI | Copilot-Assisted
-           |
-           v
-  TIER 3  CAPSTONE (open-ended design brief)
-    Northfield IQ multi-agent: triage/router fans out to specialists
-    (knowledge, actions), then converges.
-
-```
 
 ## Tier 1 · Foundations
 
@@ -119,16 +90,10 @@ Each Advanced challenge offers a **Guided** path (revised, honest time) and a lo
 
 </div>
 
-For Customer Build Mode, prioritize **Action Tools**, **Evaluation & Red Teaming**, and **Build a UI**
-when time is short. Those three turn a grounded assistant into a stakeholder-visible prototype with a
-governed workflow and a trust scorecard.
-
 ## Tier 3 · Capstone
 
-The open-ended summit: break the single Northfield IQ Assistant into a **multi-agent team** — a
-triage/router that fans out to specialist agents (knowledge, actions) and converges — orchestrated
-with the **Microsoft Agent Framework (MAF)**. It's a **design brief, not a placeholder-fill**: you
-decide the org-chart and wire the graph.
+Break the single Northfield IQ Assistant into a **multi-agent team** — a triage/router that fans out
+to specialist agents and converges — orchestrated with the **Microsoft Agent Framework (MAF)**.
 
 <div class="challenge-card" markdown="1">
 
@@ -138,56 +103,4 @@ decide the org-chart and wire the graph.
 
 [Start the Capstone →](capstone-multi-agent){: .btn .btn-primary }
 
-**Make it your own:** the capstone is the best place to reskin — swap Northfield for your domain
-(insurance, factory ops, retail) and demo *your* agent team.
-
 </div>
-
-## How to run this hackathon (two technical paths)
-
-There are **two ways in**. Both converge on the same **Foundations end-state**, then fan out into the
-modular Advanced tier.
-
-- **Path A — Beginner (default, recommended).** Complete **Foundations** as one guided, linear challenge
-  (4 ordered steps), then **pick Advanced challenges in any order**.
-
-- **Path B — Advanced-skip (for teams who already know Foundry basics).** Run **one bootstrap**
-  (~10–15 min) that materializes the Foundations end-state, verify a **single checkpoint**, then jump
-  straight to the Advanced tier. You skip the guided *learning*, not the prerequisites.
-
-```text
-  PATH A (Beginner)
-  +---------------------------------------------------+
-  | FOUNDATIONS (guided, linear, everyone)            |
-  | Step1 --> Step2 --> Step3 --> Step4               |
-  | Setup    Model    Agent    Knowledge Base         |
-  +---------------------------+-----------------------+
-                              |
-                              v  Foundations end-state:
-                                 deployed, grounded Northfield IQ Assistant
-
-  PATH B (Advanced skip)
-  [bootstrap: azd up + setup-foundations] --> same end-state
-  (~15 min, 1 checkpoint)
-                              |
-                              v
-  ADVANCED (modular, pick any order)
-  Action Tools | Evaluation+RedTeam | Tracing | Deploy
-  Extras: Fabric IQ | Voice Live | Magentic | Hosted MAF | UI | Copilot
-
-```
-
-**The bootstrap checkpoint (single gate for Path B):**
-
-```bash
-azd up                                    # provision Foundry + AI Search + App Insights (+ ACR for deploy)
-./scripts/setup-foundations.sh            # deploy model, create agent, index corpus, build IQ knowledge base
-python scripts/validate-foundations.py    # ✅ asserts the Foundations end-state exists
-
-```
-
-`validate-foundations.py` must pass **green** before a Path-B team starts any Advanced challenge. Every
-Advanced challenge assumes the **same** end-state, so you materialize it once, verify it once, and the
-whole Advanced tier is unblocked.
-
-Need to set up your environment first? Start at [Getting Started]({{ '/setup' | relative_url }}) and return here once your toolchain is ready.

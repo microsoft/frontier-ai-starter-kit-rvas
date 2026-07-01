@@ -6,10 +6,7 @@ nav_order: 23
 
 # Extra · MAF + Hosted Long-Running Agents
 
-> **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
-> **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).
-> Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 >
 > **Specific prereqs (two):** the **Advanced · Deploy as a Hosted Agent** challenge (you reuse
 > `azd ai agent` + ACR) **and** **Extra C · Magentic Workflows** (you deploy *that* workflow).

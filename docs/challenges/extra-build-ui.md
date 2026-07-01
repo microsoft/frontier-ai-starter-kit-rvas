@@ -8,14 +8,7 @@ nav_order: 24
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Extra &rarr; Build a UI" artifact="A stakeholder-facing chat UI with streaming answers, citations, and optional approval cards." next="Scaffold a secret-free browser plus backend-for-frontend that calls the hosted agent." %}
 
-> **Tier 2 · Extra — modular.** You can attempt this in any order with the other Extras.
-> **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ Assistant).
-> Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
->
-> **Specific prereq:** the **Advanced · Deploy as a Hosted Agent** challenge — this Extra puts a
-> browser front-end on the **live Responses endpoint** you shipped there. For the action-approval
-> panel (Step 4), also complete **Advanced · Action Tools** (`ACTION_API_URL`).
+{% include challenge-prereq.html text="Foundations end-state plus Advanced · Deploy as a Hosted Agent. For the approval panel, also complete Advanced · Action Tools." skip_path="false" %}
 
 > 🎤 **Demo wow-factor:** a student types *"What's the FAFSA deadline?"* into a real chat window and
 > watches the answer stream in **with a citations panel** beside it — then asks the agent to *open an

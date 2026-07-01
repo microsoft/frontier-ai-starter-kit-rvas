@@ -29,18 +29,7 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
 
 ## What to swap from Northfield
 
-<div class="challenge-card" markdown="1">
-
-| Universal challenge | Northfield reference | Customer Build replacement |
-|---|---|---|
-| **Outcome Canvas** | Student-services problem framing | Customer process, users, decision, and success measure |
-| **Foundations** | Northfield FAQ corpus and assistant persona | Customer-safe docs, policies, SOPs, FAQs, or product content |
-| **Action Tools** | IT ticket, course hold, advising booking | One real workflow action, usually approval-gated |
-| **Evaluation** | Northfield question/eval set | Scenario-specific quality, refusal, and groundedness tests |
-| **Tracing / Deploy / UI** | Student-facing demo | Stakeholder-facing prototype and failure/debug view |
-| **Capstone** | Student-services specialist team | Customer-domain router and specialist agents |
-
-</div>
+Use the [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide) as the canonical mapping. Do not maintain a second copy here; the canvas owns the customer-specific corpus, persona, workflow, safety boundaries, eval prompts, and demo story.
 
 ## Build order for a one-day event
 

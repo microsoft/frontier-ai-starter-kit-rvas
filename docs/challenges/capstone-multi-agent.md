@@ -8,15 +8,11 @@ nav_order: 30
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Capstone" artifact="A router plus specialist agents that handle a realistic journey as a team." next="Start from the monolithic assistant, define the agent org chart, then wire the MAF workflow." %}
 
-> **Tier 3 · Capstone — the summit.** ⏱ **Core 2–2.5 hr** (sequential + fan-out + DevUI + trace) ·
+> **Tier 3 · Capstone.** ⏱ **Core 2–2.5 hr** (sequential + fan-out + DevUI + trace) ·
 > **+1 hr** Magentic manager stretch · **+1.5 hr** hosted long-running deploy variant.
-> ⭐⭐⭐⭐⭐ · **Open-ended design brief — not a placeholder-fill.**
->
-> **Prerequisites:** the **Foundations end-state** (a deployed, grounded Northfield IQ Assistant)
-> **and** the **Advanced · Action Tools** challenge (you reuse its approval loop). **Tracing &
-> Observability strongly recommended** — Step 5 leans on it. **Deploy as a Hosted Agent** is required
-> only for the hosted variant. Bootstrap skip-path if you skipped Foundations:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> ⭐⭐⭐⭐⭐ · **Open-ended multi-agent design challenge.**
+
+{% include challenge-prereq.html text="Foundations end-state plus Advanced · Action Tools. Tracing & Observability is strongly recommended; Deploy as a Hosted Agent is required only for the hosted variant." skip_path="false" %}
 
 You have built **one** Northfield IQ Assistant: it knows things (Foundations KB), it does things
 (Action Tools), you can prove it safe (Eval), watch it (Tracing), and ship it (Deploy). This capstone
@@ -27,10 +23,8 @@ You will **break the monolith into a team** — a **triage/router** that decides
 cited, governed answer. You orchestrate them with the **Microsoft Agent Framework (MAF)** — the Oct-2025
 SDK that merges Semantic Kernel + AutoGen into a code-first graph of agents.
 
-**This challenge is deliberately less guided.** There is no starter file with `< PLACEHOLDER >` gaps to
-fill. You get the org-chart sketch, two illustrative `WorkflowBuilder` snippets, the acceptance
-criteria, and pointers to the skills + MCP. **The design *is* the learning.** You decide the org-chart;
-you wire the graph.
+This challenge is less guided than the earlier modules. There is no starter file with placeholder
+gaps; you choose the org chart and wire the workflow.
 
 > 🔎 **Search-Before-Implement.** Every MAF/SDK snippet below is **illustrative**. MAF is fast-moving
 > and much of it is preview. **Confirm the current class names, builder methods, and call shapes via

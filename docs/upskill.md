@@ -7,7 +7,7 @@ description: Learn Microsoft Foundry with the guided Northfield University refer
 <div class="hero-panel track-hero track-hero--upskill">
   <span class="hero-kicker">Track 2 • Upskill</span>
   <h1>Learn the full Foundry path with Northfield.</h1>
-  <p class="hero-tagline">Use the fictional Northfield University IQ Assistant as a safe, known-good scenario. You build the same architecture customer teams use, without needing real customer data.</p>
+  <p class="hero-tagline">Use the fictional Northfield University IQ Assistant as a safe, known-good scenario. You still practice provisioning, model choice, agents, grounding, actions, evals, tracing, deploy, and orchestration.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Start setup</a>
     <a class="btn btn-outline" href="{{ '/challenges/foundations' | relative_url }}">Open Foundations</a>
@@ -47,17 +47,7 @@ description: Learn Microsoft Foundry with the guided Northfield University refer
 
 ## Convert later to Customer Build
 
-<div class="challenge-card" markdown="1">
-
-| Northfield artifact | Future customer replacement |
-|---|---|
-| University FAQ corpus | Customer-safe documents, SOPs, manuals, FAQs, or product content |
-| Student-services persona | Target-user assistant persona |
-| Student workflow tools | One approval-gated customer workflow |
-| Northfield eval prompts | Customer scenario eval and red-team prompts |
-| Student demo story | Stakeholder outcome demo |
-
-</div>
+When you are ready to reuse the architecture for a real scenario, start with the [Customer Outcome Canvas]({{ '/customer-outcome' | relative_url }}) and its [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide). That page is the single source of truth for replacing Northfield artifacts.
 
 <div class="next-panel">
   <strong>Next:</strong>

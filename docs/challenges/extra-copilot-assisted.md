@@ -6,10 +6,7 @@ nav_order: 25
 
 # Extra · Copilot-Assisted Build (microsoft/skills)
 
-> **Tier 2 · Extra — modular & cross-cutting.** You can attempt this in any order.
-> **Prerequisite: the Foundations end-state** is recommended, but the hard minimum is **Foundations
-> Step 1** (infra + `.env` live). Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html text="Recommended: Foundations end-state. Hard minimum: Foundations Step 1 with infrastructure and `.env` live." %}
 >
 > **Best done *after* you've felt the manual path** on at least one challenge — the contrast is the lesson.
 

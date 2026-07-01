@@ -8,10 +8,7 @@ nav_order: 10
 
 {% include journey-status.html tone="shared" path="Challenge Library &rarr; Advanced &rarr; Action Tools" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
 
-> **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
-> challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ
-> Assistant). Complete Foundations, **or** run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+{% include challenge-prereq.html %}
 
 So far your assistant **knows** things — it retrieves from the knowledge base and answers. In this
 challenge it learns to **do** things: open an IT ticket, place a course-registration hold, or book an
