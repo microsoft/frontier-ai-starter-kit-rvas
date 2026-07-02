@@ -8,7 +8,7 @@ nav_order: 12
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Debug" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
 
-{% include module-lens.html customer="Use traces to explain customer prototype failures: retrieval misses, slow runs, tool errors, and unsafe paths." upskill="Trace Northfield runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
+{% include module-lens.html upskill="Trace Northfield runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
 
 {% include challenge-prereq.html %}
 

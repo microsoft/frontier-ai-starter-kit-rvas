@@ -8,7 +8,7 @@ nav_order: 11
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Prove" artifact="A trust scorecard that measures quality, groundedness, refusal behavior, and adversarial safety." next="Run the Northfield eval set or replace it with scenario-specific customer prompts." %}
 
-{% include module-lens.html customer="Turn Step 0 success measures and safety boundaries into scenario-specific eval and red-team prompts." upskill="Use the Northfield eval and adversarial seed sets to learn the evaluation workflow." %}
+{% include module-lens.html upskill="Use the Northfield eval and adversarial seed sets to learn the evaluation workflow." %}
 
 {% include challenge-prereq.html %}
 

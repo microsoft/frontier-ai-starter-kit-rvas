@@ -189,14 +189,23 @@ def _has_citation(text: str) -> bool:
     return bool(text) and ("[" in text or "source" in t or ".md" in t)
 
 
-def check_step4(env: dict, dry_run: bool, question: str) -> bool:
+def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill") -> bool:
+    # Customer Build teams ground their OWN corpus, so the grounded answer must be checked
+    # against a scenario question they supply — the Northfield default won't match their data.
+    if track == "customer" and question == DEFAULT_QUESTION:
+        warn("--track customer: pass your own scenario question with --question "
+             '"<your question>" — the Northfield default will not match your corpus')
+
     if dry_run:
         missing = _present(env, ["AZURE_SEARCH_INDEX_NAME", "AZURE_SEARCH_CONNECTION_NAME"])
         if missing:
             return _fail("4", f".env missing/placeholder vars: {', '.join(missing)}")
-        if not CORPUS_DIR.is_dir() or not any(CORPUS_DIR.glob("*.md")):
+        # Only the upskill track ships a fixed Northfield corpus on disk; Customer Build teams
+        # bring their own (possibly indexed straight from the portal), so skip the corpus check.
+        if track == "upskill" and (not CORPUS_DIR.is_dir() or not any(CORPUS_DIR.glob("*.md"))):
             return _fail("4", f"FAQ corpus not found at {CORPUS_DIR}")
-        ok("✅ Step 4 PASS (dry-run) — corpus + search/agent grounding contract present")
+        ok("✅ Step 4 PASS (dry-run) — search/agent grounding contract present"
+           + ("" if track == "customer" else " + Northfield corpus"))
         return True
 
     if _present(env, ["AZURE_AI_PROJECT_ENDPOINT", "AZURE_SEARCH_ENDPOINT", "AZURE_SEARCH_INDEX_NAME"]):
@@ -259,6 +268,9 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no Azure calls, no quota).")
+    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
+                        help="upskill = Northfield reference; customer = your own scenario "
+                             "(relaxes the Northfield corpus assumption, expects --question).")
     parser.add_argument("--question", default=DEFAULT_QUESTION,
                         help="Grounded question used for the Step 4 citation check.")
     args = parser.parse_args()
@@ -266,12 +278,14 @@ def main() -> int:
     env = load_env()
     if args.dry_run:
         info("(dry-run: offline structural checks only — no Azure calls)\n")
+    if args.track == "customer":
+        info("(track: customer — validating YOUR scenario, not Northfield)\n")
 
     checks = {
         1: lambda: check_step1(env, args.dry_run),
         2: lambda: check_step2(env, args.dry_run),
         3: lambda: check_step3(env, args.dry_run),
-        4: lambda: check_step4(env, args.dry_run, args.question),
+        4: lambda: check_step4(env, args.dry_run, args.question, args.track),
     }
 
     if args.all:

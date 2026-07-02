@@ -70,14 +70,17 @@ def load_env() -> dict:
     return env
 
 
-def _agent_name(env: dict) -> str:
-    return (env.get("AZURE_FOUNDRY_AGENT_NAME") or "northfield-iq-assistant").strip()
+def _agent_name(env: dict, track: str) -> str:
+    name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "northfield-iq-assistant").strip()
+    if track == "customer" and name == "northfield-iq-assistant":
+        warn("--track customer: AZURE_FOUNDRY_AGENT_NAME is not set, so the Northfield default is being used.")
+    return name
 
 
 # --------------------------------------------------------------------------- #
 # Step 1 — agent.yaml + responses entrypoint + Dockerfile present and valid    #
 # --------------------------------------------------------------------------- #
-def check_step1(env: dict, dry_run: bool) -> bool:
+def check_step1(env: dict, dry_run: bool, track: str) -> bool:
     if not AGENT_YAML.exists():
         return _fail("1", f"missing {AGENT_YAML.relative_to(HERE)} — author the hosted-agent project (README Step 1)")
     raw = AGENT_YAML.read_text(encoding="utf-8")
@@ -117,6 +120,8 @@ def check_step1(env: dict, dry_run: bool) -> bool:
     if not re.search(rf"EXPOSE\s+{PORT}", dockerfile):
         return _fail("1", f"Dockerfile must EXPOSE {PORT}")
 
+    if track == "customer" and "northfield" in raw.lower():
+        warn("--track customer: hosted/agent.yaml still contains Northfield text; adapt name/instructions before demo.")
     ok("✅ Step 1 PASS — agent.yaml + responses entrypoint + Dockerfile present and valid")
     return True
 
@@ -124,8 +129,8 @@ def check_step1(env: dict, dry_run: bool) -> bool:
 # --------------------------------------------------------------------------- #
 # Step 2 — hosted agent deployed, version active                              #
 # --------------------------------------------------------------------------- #
-def check_step2(env: dict, dry_run: bool) -> bool:
-    agent_name = _agent_name(env)
+def check_step2(env: dict, dry_run: bool, track: str) -> bool:
+    agent_name = _agent_name(env, track)
     if dry_run:
         if not AGENT_YAML.exists():
             return _fail("2", "author hosted/agent.yaml first (Step 1)")
@@ -161,8 +166,8 @@ def check_step2(env: dict, dry_run: bool) -> bool:
 # --------------------------------------------------------------------------- #
 # Step 3 — live endpoint answers authed calls, rejects anonymous              #
 # --------------------------------------------------------------------------- #
-def check_step3(env: dict, dry_run: bool) -> bool:
-    agent_name = _agent_name(env)
+def check_step3(env: dict, dry_run: bool, track: str) -> bool:
+    agent_name = _agent_name(env, track)
     if dry_run:
         if not INVOKE.exists():
             warn(f"{INVOKE.name} not found — author it to invoke the live endpoint (README Step 3)")
@@ -190,7 +195,8 @@ def check_step3(env: dict, dry_run: bool) -> bool:
         from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
         token = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
-        authed = httpx.post(base, json={"input": "Where is the registrar?"},
+        prompt = "ping" if track == "customer" else "Where is the registrar?"
+        authed = httpx.post(base, json={"input": prompt},
                             headers={"Authorization": f"Bearer {token()}"}, timeout=30.0)
         if authed.status_code != 200:
             return _fail("3", f"authenticated call returned {authed.status_code}; check the per-agent identity + roles")
@@ -203,8 +209,8 @@ def check_step3(env: dict, dry_run: bool) -> bool:
 # --------------------------------------------------------------------------- #
 # Step 4 — hosted run observable (run history / App Insights)                 #
 # --------------------------------------------------------------------------- #
-def check_step4(env: dict, dry_run: bool) -> bool:
-    agent_name = _agent_name(env)
+def check_step4(env: dict, dry_run: bool, track: str) -> bool:
+    agent_name = _agent_name(env, track)
     if dry_run:
         ok("✅ Step 4 PASS (dry-run) — observability wiring assumed from Tracing challenge (live query skipped)")
         return True
@@ -245,17 +251,22 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no Azure calls).")
+    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
+                        help="upskill = Northfield reference; customer = your own scenario "
+                             "(relaxes the Northfield corpus assumption, expects --question).")
     args = parser.parse_args()
 
     env = load_env()
     if args.dry_run:
         info("(dry-run: offline structural checks only — no Azure calls)\n")
+    if args.track == "customer":
+        info("(track: customer — validating YOUR scenario, not Northfield)\n")
 
     checks = {
-        1: lambda: check_step1(env, args.dry_run),
-        2: lambda: check_step2(env, args.dry_run),
-        3: lambda: check_step3(env, args.dry_run),
-        4: lambda: check_step4(env, args.dry_run),
+        1: lambda: check_step1(env, args.dry_run, args.track),
+        2: lambda: check_step2(env, args.dry_run, args.track),
+        3: lambda: check_step3(env, args.dry_run, args.track),
+        4: lambda: check_step4(env, args.dry_run, args.track),
     }
 
     if args.all:

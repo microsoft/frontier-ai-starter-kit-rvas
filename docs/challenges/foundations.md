@@ -8,12 +8,12 @@ nav_order: 1
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Ground" artifact="A deployed, grounded assistant with citations. Upskill teams use Northfield; Customer Build teams swap in their own corpus and persona." next="Complete Steps 1-4 in order, then choose the next capability module." %}
 
-{% include module-lens.html customer="Use Step 0 to replace Northfield's corpus, persona, safety boundaries, and demo questions with your customer-safe scenario." upskill="Use the Northfield University FAQ corpus and prompts exactly as written to learn the grounding pattern." %}
+{% include module-lens.html upskill="Use the Northfield University FAQ corpus and prompts exactly as written to learn the grounding pattern." %}
 
 Foundations is the required first build module. Complete the four steps in order; Step 4 is the
-end-state every Advanced challenge assumes. Upskill teams build Northfield exactly as written.
-Customer Build teams use the same steps and validators, but substitute their scenario using the
-[Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide).
+end-state every Advanced challenge assumes. This is the Northfield reference path — building your own
+app? The [Customer Build Track]({{ '/customer-build' | relative_url }}) reframes each step below as
+decisions for your scenario and links back here for the mechanics.
 
 | Step | What the assistant can do afterward |
 |---|---|
@@ -284,20 +284,6 @@ python validate.py --step 3
    [resources/sample-data/university-faq/](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/resources/sample-data/university-faq) — admissions,
    financial aid, housing, registration, academics, student clubs, IT support, and more. Knowing what
    it covers tells you what the assistant should and should not be able to answer.
-
-   > **Customer Build Mode — preparing your own corpus:** if you are swapping in customer data,
-   > follow these guidelines before indexing:
-   > - **Minimum useful size:** 5–20 well-structured documents (FAQs, policy pages, SOPs) is enough
-   >   for a convincing demo. Sparse corpora produce "I don't know" answers even for valid questions.
-   > - **Safe data only:** no PII, unredacted customer data, confidential pricing, or legal content
-   >   not cleared for use. When in doubt, use public-facing or pre-approved summaries.
-   > - **Supported formats:** the `step4_index.py` script ingests plain text (`.txt`) and Markdown
-   >   (`.md`) directly. For PDFs, extract text first (e.g., `pypdf` or Azure Document Intelligence).
-   > - **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** flow can ingest
-   >   PDFs and SharePoint pages directly — no code required for the portal path.
-   > - **Northfield as fallback:** if customer data is not cleared or not ready, complete Foundations
-   >   with the Northfield corpus and mark the corpus swap as a follow-up task. The architecture
-   >   (indexing, grounding, citations) is identical regardless of the corpus.
 
 2. **Index it into Azure AI Search.** Create a **vector/hybrid** index over the FAQ files. Use the
     helper `challenges/foundations/app/step4_index.py` (outline below) to chunk, embed, and upload:

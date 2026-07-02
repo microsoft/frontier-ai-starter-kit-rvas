@@ -279,14 +279,20 @@ def check_typed_contracts(scan: Scan) -> bool:
 
 # --- advisory (NOT required for exit 0; README marks these coach-confirmed) ---
 
-def advise_reuse(scan: Scan) -> None:
+def advise_reuse(scan: Scan, track: str) -> None:
     kb = bool(KB_RE.search(scan.text))
     approval = bool(APPROVAL_RE.search(scan.text))
     kb_mark = "✅" if kb else "➖"
     ap_mark = "✅" if approval else "➖"
     print("\n— advisory (coach-confirmed live, not gating) —")
-    print(f"  {kb_mark} Knowledge specialist reuses Foundations KB (AI Search / Foundry IQ)")
-    print(f"  {ap_mark} Action specialist reuses Action Tools approval loop (FunctionTool + approval)")
+    if track == "customer":
+        print(f"  {kb_mark} Knowledge specialist reuses your grounded retrieval (AI Search / Foundry IQ)")
+        print(f"  {ap_mark} Action specialist reuses your governed action loop (FunctionTool/MCP + approval)")
+        if "northfield" in scan.text.lower() or "university-faq" in scan.text.lower():
+            print("  ⚠ --track customer: Northfield defaults still appear in source; adapt roles/corpus before demo")
+    else:
+        print(f"  {kb_mark} Knowledge specialist reuses Foundations KB (AI Search / Foundry IQ)")
+        print(f"  {ap_mark} Action specialist reuses Action Tools approval loop (FunctionTool + approval)")
     if not (kb and approval):
         print("    note: reuse is graded LIVE with your coach — these are hints, not failures")
 
@@ -327,11 +333,18 @@ def main() -> int:
         "--path", default=str(HERE),
         help="Path or dir of the learner's capstone source (default: this challenge dir).",
     )
+    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
+                        help="upskill = Northfield reference; customer = your own scenario "
+                             "(relaxes the Northfield corpus assumption, expects --question).")
     args = parser.parse_args()
 
     if args.list:
+        if args.track == "customer":
+            print("(track: customer — validating YOUR scenario, not Northfield)\n")
         print(LIST_TEXT)
         return 0
+    if args.track == "customer":
+        print("(track: customer — validating YOUR scenario, not Northfield)\n")
 
     path = Path(args.path).expanduser().resolve()
     if not path.exists():
@@ -346,7 +359,7 @@ def main() -> int:
 
     if args.all:
         ok = all(CHECKS[s](scan) for s in sorted(CHECKS))
-        advise_reuse(scan)
+        advise_reuse(scan, args.track)
         if ok:
             print("\n✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, "
                   "typed contracts in use")

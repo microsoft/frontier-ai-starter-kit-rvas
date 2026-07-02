@@ -8,7 +8,7 @@ nav_order: 10
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Act" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
 
-{% include module-lens.html customer="Use the pattern to add one customer workflow that is valuable enough to demo and risky enough to approval-gate." upskill="Use the provided Northfield ticket, course-hold, and advising actions to practice the approval loop." %}
+{% include module-lens.html upskill="Use the provided Northfield ticket, course-hold, and advising actions to practice the approval loop." %}
 
 {% include challenge-prereq.html %}
 

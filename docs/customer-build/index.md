@@ -11,7 +11,7 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
   <p class="hero-tagline">Use Northfield as the reference shape, but swap in your customer-safe corpus, persona, workflow, trust tests, and final demo story.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Start Step 0</a>
-    <a class="btn btn-outline" href="{{ '/challenges/foundations' | relative_url }}">Start Foundations</a>
+    <a class="btn btn-outline" href="{{ '/customer-build/foundations' | relative_url }}">Open Chapter 1</a>
   </div>
 </div>
 
@@ -30,6 +30,30 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
 ## What to swap from Northfield
 
 Use the [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide) as the canonical mapping. Do not maintain a second copy here; the canvas owns the customer-specific corpus, persona, workflow, safety boundaries, eval prompts, and demo story.
+
+## The chapters
+
+Each chapter is *mutuated* from a Northfield reference module: same objective and checkpoints,
+reframed as decisions you make on **your own app**, with an explicit "does this apply to you?" gate.
+Do the decisions here; each chapter links back to the reference for the exact commands.
+
+| # | Chapter | Reframes |
+|---|---|---|
+| 0 | [Define your outcome]({{ '/customer-outcome' | relative_url }}) | Scenario pack: user, corpus, action, safety, demo |
+| 1 | [Ground your app]({{ '/customer-build/foundations' | relative_url }}) | Foundations |
+| 2 | [Make it act]({{ '/customer-build/advanced-action-tools' | relative_url }}) | Action Tools |
+| 3 | [Prove it's safe]({{ '/customer-build/advanced-evaluation-redteam' | relative_url }}) | Evaluation & Red Teaming |
+| 4 | [See inside it]({{ '/customer-build/advanced-tracing-observability' | relative_url }}) | Tracing & Observability |
+| 5 | [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent |
+| 6 | [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone |
+
+**Optional deepeners** (do only if your scenario needs them):
+[Magentic Workflows]({{ '/customer-build/extra-magentic-workflows' | relative_url }}) ·
+[Long-Running Agents]({{ '/customer-build/extra-hosted-longrunning' | relative_url }}) ·
+[Build a UI]({{ '/customer-build/extra-build-ui' | relative_url }}) ·
+[Fabric IQ]({{ '/customer-build/extra-fabric-iq' | relative_url }}) ·
+[Give It a Voice]({{ '/customer-build/extra-voice-live' | relative_url }}) ·
+[Copilot-Assisted Build]({{ '/customer-build/extra-copilot-assisted' | relative_url }})
 
 ## Build order for a one-day event
 

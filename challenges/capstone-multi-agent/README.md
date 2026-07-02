@@ -150,23 +150,12 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 
 ## Make it your own (scenario swap)
 
-If you are running **Customer Build Mode**, this is where the event becomes a stakeholder demo. The
-agent graph shape is identical for almost any help-desk-shaped domain — only the **corpus**, the
-**specialist prompts**, the **action tools**, and the **eval set** change:
-
-| Domain | Triage decides | Knowledge specialist | Action specialist |
-|---|---|---|---|
-| **Northfield (default)** | FAQ vs. action vs. escalate | University FAQ KB | IT ticket / course hold / advising |
-| **Insurance** | claim type → decision path | policy + coverage corpus | open claim / request docs |
-| **Factory ops** | anomaly → diagnosis | equipment manuals KB | dispatch / work-order |
-| **Retail support** | intent → resolution | product + returns KB | refund / replacement |
-
-Swap by hand, **or** use the Copilot **lab-generator** meta-agent to scaffold the new corpus + agents +
-eval set. *"Here's our agent team for **our** domain"* is the single most demo-able moment of the event.
-
-For customer teams, close with the deliverable from the
-[Customer Outcome Canvas](../../docs/customer-outcome.md): a 2-minute journey, a scorecard, known risks,
-and a next-step backlog for pilot or production hardening.
+The agent-graph shape here is identical for almost any help-desk-shaped domain — only the **corpus**,
+the **specialist prompts**, the **action tools**, and the **eval set** change. Reskinning the capstone
+for your own domain (insurance, factory ops, retail, …) is exactly what the
+**[Customer Build Track — Grow It Into a Team](../../docs/customer-build/capstone-multi-agent.md)**
+chapter walks you through, decision by decision. Build the Northfield version below first; it is the
+known-good reference the customer chapter links back to.
 
 ---
 

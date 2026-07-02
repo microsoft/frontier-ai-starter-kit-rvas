@@ -8,7 +8,7 @@ nav_order: 24
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Demo UI" artifact="A stakeholder-facing chat UI with streaming answers, citations, and optional approval cards." next="Scaffold a secret-free browser plus backend-for-frontend that calls the hosted agent." %}
 
-{% include module-lens.html customer="Give stakeholders a browser demo for the scenario from Step 0: chat, citations, and approval cards." upskill="Build a student-facing Northfield chat UI to practice safe browser/BFF integration." %}
+{% include module-lens.html upskill="Build a student-facing Northfield chat UI to practice safe browser/BFF integration." %}
 
 {% include challenge-prereq.html text="Foundations end-state plus Advanced · Deploy as a Hosted Agent. For the approval panel, also complete Advanced · Action Tools." skip_path="false" %}
 

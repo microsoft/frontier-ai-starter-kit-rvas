@@ -36,6 +36,7 @@ WIRING = HERE / "agent_with_actions.py"
 API_URL = os.environ.get("ACTION_API_URL", "http://localhost:8080").rstrip("/")
 API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
 PLACEHOLDER = re.compile(r"<\s*PLACEHOLDER", re.IGNORECASE)
+TRACK = "upskill"
 
 
 def _fail(step: str, msg: str) -> bool:
@@ -73,14 +74,18 @@ def check_step2() -> bool:
     src = WIRING.read_text(encoding="utf-8")
     if "FunctionTool" not in src:
         return _fail("2", "no FunctionTool — wrap the three action callables as a FunctionTool")
-    missing = [fn for fn in ("create_it_ticket", "place_course_hold", "book_advising_slot") if fn not in src]
-    if missing:
+    northfield_actions = ("create_it_ticket", "place_course_hold", "book_advising_slot")
+    missing = [fn for fn in northfield_actions if fn not in src]
+    if TRACK == "upskill" and missing:
         return _fail("2", f"define all three action functions; missing: {', '.join(missing)}")
+    if TRACK == "customer" and not missing:
+        print("⚠  --track customer: default Northfield action names are still present; replace/adapt them for your workflow before demo.")
     if "ACTION_API_URL" not in src:
         return _fail("2", "wire tool execution to ACTION_API_URL (the provided REST backend)")
     if PLACEHOLDER.search(src.split("def run_with_approval")[0]):
         return _fail("2", "tool-definition section still has a < PLACEHOLDER > — finish build_action_tools")
-    print("✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)")
+    label = "northfield actions" if TRACK == "upskill" else "customer action tools"
+    print(f"✅ Step 2 PASS — action FunctionTool defined ({label} @ ACTION_API_URL)")
     return True
 
 
@@ -110,6 +115,16 @@ def check_step4() -> bool:
         import httpx
     except ImportError:
         return _fail("4", "httpx not installed")
+    if TRACK == "customer":
+        print("⚠  --track customer: custom action side effects are scenario-specific; validating backend reachability only.")
+        try:
+            r = httpx.get(f"{API_URL}/health", headers=_headers(), timeout=5.0)
+        except Exception as exc:
+            return _fail("4", f"backend not reachable at {API_URL} ({exc})")
+        if r.status_code != 200:
+            return _fail("4", f"health endpoint returned {r.status_code}")
+        print(f"✅ Step 4 PASS — customer action backend reachable at {API_URL} (manual side-effect proof required)")
+        return True
     payload = {"student_id": "validate_py", "summary": "checkpoint smoke ticket",
                "category": "other", "priority": "low"}
     try:
@@ -137,17 +152,23 @@ DRY_RUN = False
 
 
 def main() -> int:
-    global DRY_RUN
+    global DRY_RUN, TRACK
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--step", type=int, choices=sorted(CHECKS))
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no REST calls).")
+    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
+                        help="upskill = Northfield reference; customer = your own scenario "
+                             "(relaxes the Northfield corpus assumption, expects --question).")
     args = parser.parse_args()
     DRY_RUN = args.dry_run
+    TRACK = args.track
     if DRY_RUN:
         print("(dry-run: offline structural checks only — no REST calls)\n")
+    if TRACK == "customer":
+        print("(track: customer — validating YOUR scenario, not Northfield)\n")
 
     if args.all:
         ok = all(check() for check in (CHECKS[s] for s in sorted(CHECKS)))

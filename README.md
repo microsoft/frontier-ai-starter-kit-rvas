@@ -112,9 +112,9 @@ Follow the prompts to sign in with your Azure account. This connects your worksp
 
 ### 3. Choose your event mode
 
-**Customer Build Mode (primary):** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first. Define your user, data source, workflow, safety boundary, and demo story — then use Northfield as the reference shape while swapping in customer-safe corpus, prompts, actions, evals, and demo criteria. No idea yet? Run the [Customer Challenge-Forge](.github/skills/customer-challenge-forge/) skill to generate ~10 tailored ideas from a customer name and industry, then pick one and fill in the canvas.
+**Customer Build Mode (primary):** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first. Define your user, data source, workflow, safety boundary, and demo story — then follow the guided, chapter-based [Customer Build Track](docs/customer-build/index.md), which reframes each Northfield module as decisions for your own app (with "does this apply to you?" gates) and links back to the reference for the mechanics. No idea yet? Run the [Customer Challenge-Forge](.github/skills/customer-challenge-forge/) skill to generate ~10 tailored ideas from a customer name and industry, then pick one and fill in the canvas.
 
-**Upskill Mode (fallback):** Read [Foundations](challenges/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant.
+**Upskill Mode (fallback):** Read [Foundations](challenges/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant exactly as written.
 
 **Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 

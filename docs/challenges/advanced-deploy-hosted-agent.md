@@ -8,7 +8,7 @@ nav_order: 13
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Deploy" artifact="A containerized hosted agent with its own endpoint, identity, and run history." next="Author agent.yaml and the container entrypoint, then deploy with azd ai agent." %}
 
-{% include module-lens.html customer="Ship the customer prototype as an endpoint a stakeholder app or integration can call." upskill="Host the Northfield assistant to learn the deployment, identity, and invocation pattern." %}
+{% include module-lens.html upskill="Host the Northfield assistant to learn the deployment, identity, and invocation pattern." %}
 
 {% include challenge-prereq.html %}
 
