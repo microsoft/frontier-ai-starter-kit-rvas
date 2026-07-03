@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 #
-# azd project for the WTH AI Hackathon (Microsoft Foundry).
+# azd project for the Build AI apps hackathon (Microsoft Foundry).
 # Golden path:  azd up   ->  provisions infra/ (Bicep)  ->  writes outputs into the azd env,
 # which scripts/*  read back as a .env contract (see .env.sample).
 #
@@ -9,7 +9,7 @@
 # (Foundry resource + project + model deployment + AI Search + App Insights + ACR).
 # The Foundations end-state (agent + index + IQ knowledge base) is materialized afterward by
 # scripts/setup-foundations.sh, and the hosted-agent Advanced challenge ships its own agent.yaml.
-name: wth-ai-hackathon-foundry
+name: build-ai-apps-foundry
 metadata:
   template: wth-ai-hackathon-foundry@2.0.0
 

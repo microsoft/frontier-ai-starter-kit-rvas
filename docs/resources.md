@@ -19,4 +19,4 @@ nav_order: 7
 | Model deployment | [Deploy models in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/deploy-models-openai) |
 | Knowledge/indexing | [Add data and build indexes in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/index-add) |
 | Evaluation | [Evaluate with Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/evaluate-generative-ai-app) |
-| WTH format | [What The Hack community](https://microsoft.github.io/WhatTheHack/) |
+| Challenge format | [Microsoft challenge community](https://microsoft.github.io/WhatTheHack/) |

@@ -11,11 +11,11 @@ description: Provision, choose a model, create your agent, and ground it in your
 
 This chapter is **mutuated from [Foundations](../challenges/foundations)** — same objective, same
 checkpoints — but every step points at *your* scenario from
-[Step 0: Define your outcome](../customer-outcome). Do the decisions here; when you need the exact
+[Chapter 0: Define your outcome](../customer-outcome). Do the decisions here; when you need the exact
 commands or code, follow the Northfield reference the step links to. **The mechanics are identical;
 only the corpus, persona, and questions are yours.**
 
-> **Before you start this chapter:** complete [Step 0](../customer-outcome). You need your target
+> **Before you start this chapter:** complete [Chapter 0](../customer-outcome). You need your target
 > user, business outcome, knowledge sources, and one safe scenario question written down. No idea
 > yet? Run [Idea Forge](../idea-forge) first.
 
@@ -70,7 +70,7 @@ depth) that your users will feel. Decide it deliberately against *your* task, no
 **Decisions to make:**
 - Which two contrasting models to compare (a capable default vs. a faster/cheaper or specialized one)?
 - What are *your* 3–5 representative prompts? Use real questions your target users would ask, from
-  your Step 0 *Top user tasks* — **not** the Northfield samples.
+  your Chapter 0 *Top user tasks* — **not** the Northfield samples.
 - Your first-draft **system instruction**: audience, tone, how to handle missing info, what's out of scope.
 
 **Apply it to your app:** run the Playground comparison and reproduce it in code, substituting your
@@ -94,7 +94,7 @@ guardrails.
 
 **Decisions to make:**
 - **Persona & scope** — who the assistant is, and the exact topics it does/doesn't handle for your users.
-- **Refusals** — what it must decline, escalate, or redirect. Pull these straight from your Step 0
+- **Refusals** — what it must decline, escalate, or redirect. Pull these straight from your Chapter 0
   *Safety boundaries* (e.g. no legal/medical advice, no unapproved commitments, escalate to a human for X).
 - **Uncertainty behaviour** — your wording when it doesn't know, tuned to your domain's tone.
 
@@ -103,7 +103,7 @@ instructions; test that your specific refusals actually hold. → [Foundations S
 
 **Prove you applied it:**
 - `python challenges/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
-- Checklist: ☐ an in-scope question is answered well ☐ each safety boundary from Step 0 is actually refused/escalated ☐ portal and code instructions match.
+- Checklist: ☐ an in-scope question is answered well ☐ each safety boundary from Chapter 0 is actually refused/escalated ☐ portal and code instructions match.
 
 **Stuck?** [Northfield Step 3](../challenges/foundations#step-3--your-first-agent).
 
@@ -122,7 +122,7 @@ trusted source of truth.
 - **Skip it** only if your app is pure action with no knowledge retrieval (rare — most demos need grounding).
 
 **Decisions to make:**
-- **Which corpus** from your Step 0 *Knowledge sources*? Is it cleared and safe (no PII/unredacted
+- **Which corpus** from your Chapter 0 *Knowledge sources*? Is it cleared and safe (no PII/unredacted
   data)? Aim for **5–20 well-structured documents** — sparse corpora produce "I don't know" answers.
 - **Chunking** vs. your document structure — keep policy details (deadlines, thresholds, steps) intact.
 - **Abstention wording** — what the agent says when *your* corpus lacks the answer.

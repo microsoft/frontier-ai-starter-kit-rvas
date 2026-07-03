@@ -1,0 +1,305 @@
+/* Microsoft Foundry — challenge detail page (?id=<challengeId>) */
+(function () {
+  'use strict';
+
+  // Home-repo slugs (this live consolidated repo); render as plain text without a hyperlink.
+  const SELF_SOURCE_REPOS = new Set([
+    'microsoft/frontier-agenticdevops-hackathon',
+    'microsoft/frontier-agentic-devops-hackathon',
+    'microsoft/frontier-foundry-hackathon',
+  ]);
+
+  let _route = null;
+
+  function cUrl(id) {
+    const q = new URLSearchParams();
+    q.set('id', id);
+    if (_route) q.set('outcome', _route);
+    return 'challenge.html?' + q.toString();
+  }
+
+  async function init() {
+    const challengeId = FP.qp('id');
+    if (!challengeId) { showError('No challenge ID specified.'); return; }
+
+    let data;
+    try { data = await FP.loadData(); }
+    catch (e) { showError(e.message); return; }
+
+    const challenge = (data.challenges || []).find((c) => c.id === challengeId);
+    if (!challenge) { showError('Challenge "' + challengeId + '" not found.'); return; }
+
+    const mod = (data.modules || []).find((m) => m.id === challenge.module);
+    const allChallenges = data.challenges || [];
+    _route = resolveRoute(challenge);
+
+    document.title = challenge.title + ' — Build AI apps';
+    applyModuleColor(challenge.module);
+    renderHero(challenge, mod);
+    renderFacts(challenge, mod, allChallenges, data.outcomes || []);
+    renderRelated(challenge, allChallenges);
+    initViewSwitch(challenge, allChallenges);
+    loadGuide('student', challenge, allChallenges);
+  }
+
+  function applyModuleColor(moduleId) {
+    const color = FP.moduleColor(moduleId);
+    document.documentElement.style.setProperty('--mod-color', color);
+    document.querySelectorAll('[data-mod-color]').forEach((el) => {
+      el.style.color = color;
+    });
+  }
+
+  function renderHero(c, mod) {
+    const color = FP.moduleColor(c.module);
+
+    // Breadcrumbs
+    const crumbs = document.getElementById('breadcrumbs');
+    if (crumbs) {
+      crumbs.innerHTML = `
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <a href="catalog.html">Catalog</a>
+        <span>›</span>
+        <span style="color:${color}">${FP.esc(c.track || c.module)}</span>
+        <span>›</span>
+        <span>${FP.esc(c.id)}</span>`;
+    }
+
+    _setText('challengeTitle', c.title);
+    _setText('challengeId', c.id);
+
+    const meta = document.getElementById('challengeMeta');
+    if (meta) {
+      meta.innerHTML = `
+        ${FP.diffBadge(c.difficulty)}
+        ${FP.durBadge(c.duration_minutes)}
+        ${FP.emuBadge(c.emu_compatible)}
+        ${c.tier && c.tier !== 'core' ? `<span class="badge badge-app">${FP.esc(c.tier)}</span>` : ''}
+        ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">▣ ${FP.esc(c.app_dependency)}</span>` : ''}
+        <span class="badge-tag badge" style="margin-left:auto;color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
+    }
+
+    // Attribution
+    const attr = document.getElementById('attribution');
+    if (attr && c.source_repo) {
+      if (SELF_SOURCE_REPOS.has(c.source_repo)) {
+        attr.innerHTML = `Source: ${FP.esc(c.source_repo)} · ${FP.esc(c.license || 'MIT')} License`;
+      } else {
+        attr.innerHTML = `Source: <a href="https://github.com/${FP.esc(c.source_repo)}" target="_blank" rel="noopener">${FP.esc(c.source_repo)}</a> · ${FP.esc(c.license || 'MIT')} License`;
+      }
+    }
+  }
+
+  function renderFacts(c, mod, allChallenges, outcomes) {
+    // Prerequisites
+    const prereqPanel = document.getElementById('prereqPanel');
+    const prereqList  = document.getElementById('prereqList');
+    if (prereqPanel && prereqList) {
+      if (!c.prerequisites || !c.prerequisites.length) {
+        prereqPanel.style.display = 'none';
+      } else {
+        prereqList.innerHTML = c.prerequisites.map((pid) => {
+          const prereq = allChallenges.find((x) => x.id === pid);
+          return `<li class="prereq-item">
+            ${prereq
+              ? `<a href="${cUrl(pid)}" style="color:${FP.moduleColor(prereq.module)}">${FP.esc(prereq.title)}</a>`
+              : `<span class="mono">${FP.esc(pid)}</span>`}
+          </li>`;
+        }).join('');
+      }
+    }
+
+    // Prerequisite capabilities
+    const capPanel = document.getElementById('capPanel');
+    const capList  = document.getElementById('capList');
+    if (capPanel && capList) {
+      if (!c.prerequisite_capabilities || !c.prerequisite_capabilities.length) {
+        capPanel.style.display = 'none';
+      } else {
+        capList.innerHTML = c.prerequisite_capabilities
+          .map((cap) => `<li class="cap-item">${FP.esc(cap)}</li>`)
+          .join('');
+      }
+    }
+
+    // Success criteria
+    const criteriaList = document.getElementById('criteriaList');
+    if (criteriaList) {
+      criteriaList.innerHTML = (c.success_criteria || [])
+        .map((s) => `<li class="criteria-item"><span>${FP.renderInlineMd(s)}</span></li>`)
+        .join('') || '<li class="cap-item">See the challenge guide.</li>';
+    }
+
+    // Fact rows
+    const factRows = document.getElementById('factRows');
+    if (factRows) {
+      const rows = [
+        ['Difficulty', FP.diffBadge(c.difficulty)],
+        ['Duration', FP.durBadge(c.duration_minutes) || '—'],
+        ['Outcomes', outcomeLinks(c, outcomes)],
+        ['Track', FP.esc(c.track || '—')],
+        ['Tier', FP.esc(c.tier || 'core')],
+        ['App', c.app_dependency && c.app_dependency !== 'none' ? FP.esc(c.app_dependency) : 'none'],
+        ['EMU', FP.emuBadge(c.emu_compatible) || '—'],
+      ];
+      factRows.innerHTML = rows.map(([k, v]) =>
+        `<div class="fact-row"><span class="fact-key">${k}</span><span class="fact-val">${v}</span></div>`
+      ).join('');
+    }
+
+    function outcomeLinks(c, outcomes) {
+      if (!c.outcomes || !c.outcomes.length) return '—';
+      return c.outcomes.map((id) =>
+        `<a href="${FP.catalogOutcomeUrl(id)}" class="badge badge-outcome">${FP.esc(FP.outcomeName(id, outcomes))}</a>`
+      ).join(' ');
+    }
+
+    // Tags
+    const tagsList = document.getElementById('tagsList');
+    if (tagsList) {
+      tagsList.innerHTML = (c.tags || [])
+        .map((t) => `<span class="badge badge-tag">${FP.esc(t)}</span>`)
+        .join('') || '<span class="text-dim" style="font-size:0.8rem">No tags</span>';
+    }
+
+    // References
+    const refPanel = document.getElementById('refPanel');
+    const refList  = document.getElementById('refList');
+    if (refPanel && refList) {
+      if (!c.references || !c.references.length) {
+        refPanel.style.display = 'none';
+      } else {
+        refList.innerHTML = c.references.map((r) =>
+          `<a href="${FP.esc(r)}" target="_blank" rel="noopener" class="attribution" style="display:block;margin-bottom:5px">${FP.esc(r.replace('https://', ''))}</a>`
+        ).join('');
+      }
+    }
+  }
+
+  function renderRelated(c, allChallenges) {
+    const relPanel = document.getElementById('relatedPanel');
+    const relGrid  = document.getElementById('relatedGrid');
+    if (!relPanel || !relGrid) return;
+
+    const myTags = new Set(c.tags || []);
+    const related = allChallenges
+      .filter((x) => x.id !== c.id && (x.tags || []).some((t) => myTags.has(t)))
+      .sort((a, b) => {
+        const aMatch = (a.tags || []).filter((t) => myTags.has(t)).length;
+        const bMatch = (b.tags || []).filter((t) => myTags.has(t)).length;
+        return bMatch - aMatch;
+      })
+      .slice(0, 5);
+
+    if (!related.length) { relPanel.style.display = 'none'; return; }
+
+    relGrid.innerHTML = related.map((r) => {
+      const color = FP.moduleColor(r.module);
+      return `
+        <a href="${cUrl(r.id)}" class="related-item">
+          <span class="related-dot" style="background:${color}"></span>
+          <span style="flex:1;min-width:0;font-size:0.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${FP.esc(r.title)}</span>
+          <span class="badge badge-tag" style="color:${color};flex-shrink:0">${FP.esc(r.module)}</span>
+        </a>`;
+    }).join('');
+  }
+
+  function initViewSwitch(c, allChallenges) {
+    const btns = document.querySelectorAll('.view-switch button');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+        document.body.setAttribute('data-view', view);
+        loadGuide(view, c, allChallenges);
+      });
+    });
+  }
+
+  async function loadGuide(view, c, allChallenges) {
+    const body = document.getElementById('guideBody');
+    if (!body) return;
+
+    const path = view === 'coach' ? c.coach_path : c.student_path;
+    if (!path) {
+      body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Guide not available for this view.</p>`;
+      return;
+    }
+
+    body.innerHTML = '<p class="text-dim" style="font-size:.875rem;font-family:var(--font-mono)">Loading guide…</p>';
+
+    try {
+      const res = await fetch(path, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const md = await res.text();
+      FP.renderMd(md, body);
+      body.querySelectorAll('.next-panel').forEach((el) => el.remove());
+      renderChallengePager(body, c, allChallenges);
+    } catch (e) {
+      body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Could not load guide: ${FP.esc(e.message)}</p>`;
+      renderChallengePager(body, c, allChallenges);
+    }
+  }
+
+  function renderChallengePager(container, current, allChallenges) {
+    if (!container || !Array.isArray(allChallenges) || !allChallenges.length) return;
+
+    const sequence = challengeSequence(allChallenges, current);
+    const index = sequence.findIndex((c) => c.id === current.id);
+    if (index === -1) return;
+
+    const prev = sequence[index - 1] || null;
+    const next = sequence[index + 1] || null;
+
+    const nav = document.createElement('nav');
+    nav.className = 'challenge-pager';
+    nav.setAttribute('aria-label', 'Challenge navigation');
+    nav.innerHTML = `
+      ${pagerItem(prev, 'prev', '← Previous')}
+      ${pagerItem(next, 'next', 'Next →')}
+    `;
+    container.appendChild(nav);
+  }
+
+  function challengeSequence(allChallenges, current) {
+    const route = _route || (current.outcomes || [])[0];
+    if (!route) return allChallenges;
+    return allChallenges.filter((c) => (c.outcomes || []).includes(route));
+  }
+
+  function resolveRoute(challenge) {
+    const routes = challenge.outcomes || [];
+    const requested = FP.qp('outcome');
+    if (requested && routes.includes(requested)) return requested;
+    return routes[0] || null;
+  }
+
+  function pagerItem(challenge, direction, label) {
+    if (!challenge) {
+      return `
+        <span class="challenge-pager-link ${direction} is-disabled" aria-disabled="true">
+          <span>${label}</span>
+          <strong>No ${direction === 'prev' ? 'previous' : 'next'} challenge</strong>
+        </span>`;
+    }
+
+    return `
+      <a class="challenge-pager-link ${direction}" href="${cUrl(challenge.id)}">
+        <span>${label}</span>
+        <strong>${FP.esc(challenge.title)}</strong>
+      </a>`;
+  }
+
+  function showError(msg) {
+    const main = document.getElementById('mainContent');
+    if (main) main.innerHTML = `<div class="wrap section"><div class="empty">${FP.esc(msg)}</div></div>`;
+  }
+
+  function _setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();

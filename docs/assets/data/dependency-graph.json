@@ -1,0 +1,228 @@
+{
+  "nodes": [
+    {
+      "id": "setup",
+      "title": "Getting Started",
+      "module": "foundry",
+      "track": "define",
+      "tier": "core"
+    },
+    {
+      "id": "idea-forge",
+      "title": "Idea Forge",
+      "module": "foundry",
+      "track": "define",
+      "tier": "core"
+    },
+    {
+      "id": "customer-outcome",
+      "title": "Chapter 0: Define your outcome",
+      "module": "foundry",
+      "track": "define",
+      "tier": "core"
+    },
+    {
+      "id": "customer-foundations",
+      "title": "Chapter 1: Ground your app",
+      "module": "foundry",
+      "track": "foundations",
+      "tier": "core"
+    },
+    {
+      "id": "customer-action-tools",
+      "title": "Chapter 2: Make it act",
+      "module": "foundry",
+      "track": "actions",
+      "tier": "core"
+    },
+    {
+      "id": "customer-evaluation-redteam",
+      "title": "Chapter 3: Prove it's safe",
+      "module": "foundry",
+      "track": "trust",
+      "tier": "core"
+    },
+    {
+      "id": "customer-tracing-observability",
+      "title": "Chapter 4: See inside it",
+      "module": "foundry",
+      "track": "trust",
+      "tier": "core"
+    },
+    {
+      "id": "customer-deploy-hosted-agent",
+      "title": "Chapter 5: Ship it",
+      "module": "foundry",
+      "track": "deploy",
+      "tier": "core"
+    },
+    {
+      "id": "customer-build-ui",
+      "title": "Demo UI: Build your app face",
+      "module": "foundry",
+      "track": "deploy",
+      "tier": "core"
+    },
+    {
+      "id": "customer-capstone-multi-agent",
+      "title": "Chapter 6: Grow it into a team",
+      "module": "foundry",
+      "track": "orchestrate",
+      "tier": "core"
+    },
+    {
+      "id": "foundations",
+      "title": "Ground: Foundations",
+      "module": "foundry",
+      "track": "foundations",
+      "tier": "core"
+    },
+    {
+      "id": "advanced-action-tools",
+      "title": "Act: Action Tools",
+      "module": "foundry",
+      "track": "actions",
+      "tier": "core"
+    },
+    {
+      "id": "advanced-evaluation-redteam",
+      "title": "Prove: Evaluation & Red Teaming",
+      "module": "foundry",
+      "track": "trust",
+      "tier": "core"
+    },
+    {
+      "id": "advanced-tracing-observability",
+      "title": "Debug: Tracing & Observability",
+      "module": "foundry",
+      "track": "trust",
+      "tier": "core"
+    },
+    {
+      "id": "advanced-deploy-hosted-agent",
+      "title": "Deploy: Hosted Agent",
+      "module": "foundry",
+      "track": "deploy",
+      "tier": "core"
+    },
+    {
+      "id": "extra-build-ui",
+      "title": "Demo UI: Build a UI",
+      "module": "foundry",
+      "track": "deploy",
+      "tier": "core"
+    },
+    {
+      "id": "extra-voice-live",
+      "title": "Interface: Voice Live",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-fabric-iq",
+      "title": "Deepen: Fabric IQ",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-copilot-assisted",
+      "title": "Accelerate: Copilot-Assisted Build",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-magentic-workflows",
+      "title": "Orchestrate: Magentic Workflows",
+      "module": "foundry",
+      "track": "orchestrate",
+      "tier": "core"
+    },
+    {
+      "id": "extra-hosted-longrunning",
+      "title": "Deploy: Long-Running Agents",
+      "module": "foundry",
+      "track": "deploy",
+      "tier": "core"
+    },
+    {
+      "id": "capstone-multi-agent",
+      "title": "Orchestrate: Multi-Agent Capstone",
+      "module": "foundry",
+      "track": "orchestrate",
+      "tier": "core"
+    }
+  ],
+  "edges": [
+    {
+      "from": "customer-outcome",
+      "to": "customer-foundations"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-action-tools"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-evaluation-redteam"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-tracing-observability"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-deploy-hosted-agent"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-build-ui"
+    },
+    {
+      "from": "customer-foundations",
+      "to": "customer-capstone-multi-agent"
+    },
+    {
+      "from": "foundations",
+      "to": "advanced-action-tools"
+    },
+    {
+      "from": "foundations",
+      "to": "advanced-evaluation-redteam"
+    },
+    {
+      "from": "foundations",
+      "to": "advanced-tracing-observability"
+    },
+    {
+      "from": "foundations",
+      "to": "advanced-deploy-hosted-agent"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-build-ui"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-voice-live"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-fabric-iq"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-magentic-workflows"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-hosted-longrunning"
+    },
+    {
+      "from": "foundations",
+      "to": "capstone-multi-agent"
+    }
+  ]
+}

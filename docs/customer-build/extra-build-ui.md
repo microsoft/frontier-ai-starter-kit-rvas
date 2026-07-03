@@ -9,7 +9,7 @@ description: Put your scenario agent behind a safe browser experience with strea
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Build a UI" artifact="A stakeholder-facing UI for YOUR scenario with no browser secrets, streamed answers, citations, and optional approval cards." next="Use the UI only if it improves your final demo story." %}
 
-This deepener is **mutuated from [Extra · Build a UI](../challenges/extra-build-ui)** — same browser/BFF pattern, but wrapped around your scenario from [Step 0](../customer-outcome). This is an **OPTIONAL deepener**. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
+This deepener is **mutuated from [Extra · Build a UI](../challenges/extra-build-ui)** — same browser/BFF pattern, but wrapped around your scenario from [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
 
 > **Before you start this deepener:** complete the agent you want to show. For approval cards, complete Action Tools. If a script, Playground run, or hosted endpoint already tells your story, skip this.
 
@@ -24,7 +24,7 @@ This deepener is **mutuated from [Extra · Build a UI](../challenges/extra-build
 - **Adapt it** if you only need one affordance: chat, citations, approval, or public URL.
 
 **Decisions to make:**
-- Which Step 0 **target user** is this UI for?
+- Which Chapter 0 **target user** is this UI for?
 - Which success measure must be visible: answer quality, citation trust, approval safety, or latency?
 - What is the smallest UI that supports your demo story?
 
@@ -116,7 +116,7 @@ This deepener is **mutuated from [Extra · Build a UI](../challenges/extra-build
 **Why it matters for your app:** human approval must be visible at the exact moment the agent wants to do something consequential.
 
 **Does this apply to you?** → **Skip it** if your app has no action tools or all actions are read-only.
-- **Build it** if your Step 0 **action candidates** change records, send messages, create tickets, spend money, or affect access.
+- **Build it** if your Chapter 0 **action candidates** change records, send messages, create tickets, spend money, or affect access.
 - **Adapt it** if approval happens outside the UI, such as email, Teams, or a case system.
 
 **Decisions to make:**

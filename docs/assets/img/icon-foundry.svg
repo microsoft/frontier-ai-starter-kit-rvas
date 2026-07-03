@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Microsoft Foundry icon">
+  <defs>
+    <linearGradient id="g" x1="10" y1="10" x2="54" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="48" height="48" rx="13" fill="#080c18" stroke="url(#g)" stroke-width="3"/>
+  <path d="M20 38V21h7l5 9 5-9h7v17h-6V28l-4 7h-4l-4-7v10z" fill="url(#g)"/>
+  <circle cx="47" cy="17" r="4" fill="#c084fc"/>
+</svg>

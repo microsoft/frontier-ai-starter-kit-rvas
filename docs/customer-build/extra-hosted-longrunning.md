@@ -9,7 +9,7 @@ description: Host a workflow and run scenario jobs asynchronously when work shou
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Long-Running Agents" artifact="A hosted background run for YOUR scenario that returns a handle, completes later, and is traceable." next="Use this only for jobs that should outlive a chat turn or browser session." %}
 
-This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../challenges/extra-hosted-longrunning)** — same hosted/background pattern, but applied to your scenario from [Step 0](../customer-outcome). This is an **OPTIONAL deepener**. Use it when your demo story includes durable async work, not for normal chat responses.
+This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../challenges/extra-hosted-longrunning)** — same hosted/background pattern, but applied to your scenario from [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. Use it when your demo story includes durable async work, not for normal chat responses.
 
 > **Before you start this deepener:** complete a hosted agent path, and complete Magentic Workflows if the thing you are hosting is a multi-agent workflow. If your action finishes inside one user turn, skip this.
 
@@ -44,7 +44,7 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 **Why it matters for your app:** long-running work should return a handle quickly and continue after the caller closes the tab or moves on.
 
 **Does this apply to you?** → **Skip it** if every action should complete synchronously in front of the user.
-- **Build it** if your Step 0 **action candidates** include batch processing, reconciliation, report generation, or multi-record review.
+- **Build it** if your Chapter 0 **action candidates** include batch processing, reconciliation, report generation, or multi-record review.
 - **Adapt it** if the background job is a scheduler-triggered process rather than user-submitted.
 
 **Decisions to make:**

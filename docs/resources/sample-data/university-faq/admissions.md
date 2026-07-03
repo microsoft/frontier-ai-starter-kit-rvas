@@ -1,0 +1,9 @@
+# Admissions at Northfield University
+
+Northfield University welcomes applications from curious, motivated students who want to study technology, engineering, design, and the responsible use of AI. We review applications holistically, which means we consider academic preparation, personal goals, extracurricular involvement, and evidence that an applicant is ready to thrive in a collaborative, project-based environment.
+
+For **undergraduate admissions**, first-year applicants should submit the online application, high school transcripts, one short personal statement, and one academic recommendation. Standardized test scores are optional for most programs, though applicants may choose to include them if they strengthen the overall application. The **priority deadline for fall entry is January 15**, with a regular decision deadline of **March 15**. Students applying for spring entry should submit all materials by **October 15**.
+
+For **graduate admissions**, requirements vary by program, but most applicants submit transcripts from previous institutions, a résumé, a statement of purpose, and two recommendations. Some programs in data science, computer science, and AI may also request a portfolio or evidence of programming experience. Graduate applicants for fall entry should aim for the **February 1 priority deadline**; international graduate applicants are strongly encouraged to apply by **January 10** to allow time for visa processing.
+
+After an application is complete, students can track their status through the applicant portal. Admission decisions are typically released within 3 to 5 weeks after all required materials are received. If you need help with deadlines, transfer credit questions, or application status, contact the Office of Admissions at **admissions@northfield.edu** or call **(555) 010-2400**. Walk-in advising is available Monday through Friday from **9:00 a.m. to 4:30 p.m.** in Innovation Hall, Suite 120.

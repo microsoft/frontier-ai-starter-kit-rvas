@@ -9,7 +9,7 @@ description: Add live operational data beside your static knowledge base when th
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Fabric IQ" artifact="A dual-grounded agent that routes YOUR policy questions to documents and YOUR right-now questions to live data." next="Use this only when live operational state is essential to your scenario." %}
 
-This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-iq)** — same live-data grounding pattern, but pointed at the operational data in your scenario from [Step 0](../customer-outcome). This is an **OPTIONAL deepener**. Without Fabric capacity and a meaningful live table, skip it.
+This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-iq)** — same live-data grounding pattern, but pointed at the operational data in your scenario from [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. Without Fabric capacity and a meaningful live table, skip it.
 
 > **Before you start this deepener:** confirm coach-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
 
@@ -19,12 +19,12 @@ This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric
 
 **Why it matters for your app:** static RAG answers policy; live data answers "right now." You need a trustworthy operational table before adding a live tool.
 
-**Does this apply to you?** → **Skip it** if your Step 0 corpus has no live operational component.
+**Does this apply to you?** → **Skip it** if your Chapter 0 corpus has no live operational component.
 - **Build it** if users ask about availability, capacity, status, inventory, SLA, queue position, or current metrics.
 - **Adapt it** if your live source is another governed data platform, but keep the same source-of-truth discipline.
 
 **Decisions to make:**
-- Which Step 0 **knowledge source** is live, not static?
+- Which Chapter 0 **knowledge source** is live, not static?
 - Which fields must the agent be allowed to query?
 - What current value can you record and later prove the agent matched?
 

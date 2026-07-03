@@ -9,7 +9,7 @@ description: Split your monolithic assistant into a router and specialists that 
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 6 &middot; Team" artifact="A router plus specialist agents that handle YOUR demo journey with typed contracts, fan-out, and traceable handoffs." next="Finish with a 2-minute stakeholder demo and a pilot backlog." %}
 
-This chapter is **mutuated from [Capstone · Multi-Agent](../challenges/capstone-multi-agent)** — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Step 0: Define your outcome](../customer-outcome).
+This chapter is **mutuated from [Capstone · Multi-Agent](../challenges/capstone-multi-agent)** — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Chapter 0: Define your outcome](../customer-outcome).
 
 > **Before you start this chapter:** finish [Chapter 1](foundations) and [Chapter 2](advanced-action-tools) if your team will include an action specialist. [Chapter 4](advanced-tracing-observability) makes the final demo much stronger.
 
@@ -25,7 +25,7 @@ This chapter is **mutuated from [Capstone · Multi-Agent](../challenges/capstone
 - **Skip it** if one grounded agent with one action already tells the best story.
 
 **Decisions to make:**
-- Which Step 0 user journey has real handoffs?
+- Which Chapter 0 user journey has real handoffs?
 - What work should be routed, retrieved, acted on, escalated, and synthesized?
 - Which responsibilities must not overlap?
 - What will the audience learn from seeing a team instead of one agent?

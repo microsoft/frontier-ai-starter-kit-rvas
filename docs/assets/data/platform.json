@@ -1,0 +1,918 @@
+{
+  "generated_at": "2026-07-03T07:57:55.572Z",
+  "modules": [
+    {
+      "id": "foundry",
+      "name": "Path chapters",
+      "description": "Guided capabilities for building, grounding, testing, deploying, and extending your AI app.",
+      "color": "#38bdf8",
+      "icon": "icon-foundry.svg",
+      "tracks": [
+        {
+          "id": "define",
+          "name": "Define",
+          "description": "Shape the outcome, users, corpus, safety boundaries, and demo story.",
+          "challenge_count": 3
+        },
+        {
+          "id": "foundations",
+          "name": "Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with knowledge.",
+          "challenge_count": 2
+        },
+        {
+          "id": "actions",
+          "name": "Action Tools",
+          "description": "Attach governed tools and approval-gated workflows.",
+          "challenge_count": 2
+        },
+        {
+          "id": "trust",
+          "name": "Trust",
+          "description": "Evaluate, red-team, trace, and debug agent behavior.",
+          "challenge_count": 4
+        },
+        {
+          "id": "deploy",
+          "name": "Deploy",
+          "description": "Host the agent and expose a stakeholder-ready experience.",
+          "challenge_count": 5
+        },
+        {
+          "id": "orchestrate",
+          "name": "Orchestrate",
+          "description": "Compose routers, specialists, and multi-agent workflows.",
+          "challenge_count": 3
+        },
+        {
+          "id": "extras",
+          "name": "Extras",
+          "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
+          "challenge_count": 3
+        }
+      ],
+      "challenge_count": 22
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "customer-build",
+      "name": "Bring your own customer outcome",
+      "tagline": "Turn a real customer-safe scenario into a grounded, evaluated Foundry agent prototype.",
+      "description": "Define the outcome, swap in your own corpus and persona, add one governed action, prove trust, and demo the result.",
+      "personas": [
+        "builder",
+        "solution-architect",
+        "account-team",
+        "customer-engineer"
+      ],
+      "adoption_stage": [
+        "define",
+        "build",
+        "prove",
+        "demo"
+      ],
+      "business_value": [
+        "accelerate-prototyping",
+        "de-risk-ai-adoption",
+        "prove-customer-value"
+      ],
+      "challenge_ids": [
+        "customer-outcome",
+        "customer-foundations",
+        "customer-action-tools",
+        "customer-evaluation-redteam",
+        "customer-tracing-observability",
+        "customer-deploy-hosted-agent",
+        "customer-build-ui",
+        "customer-capstone-multi-agent"
+      ],
+      "success_metrics": [
+        "The team can explain the target users, corpus, action, safety boundaries, and demo story.",
+        "The prototype answers with citations, acts only through governed tools, and has a trust scorecard."
+      ],
+      "challenge_count": 8,
+      "duration_minutes": 795
+    },
+    {
+      "id": "idea-forge",
+      "name": "Need an idea first",
+      "tagline": "Generate a ranked, buildable AI application idea before starting the customer build path.",
+      "description": "Use Challenge Forge to pick a right-sized idea with clear users, safe data, one action, and a believable demo.",
+      "personas": [
+        "builder",
+        "coach",
+        "account-team"
+      ],
+      "adoption_stage": [
+        "ideate",
+        "define"
+      ],
+      "business_value": [
+        "find-buildable-use-cases",
+        "reduce-scope-risk"
+      ],
+      "challenge_ids": [
+        "idea-forge",
+        "customer-outcome",
+        "customer-foundations"
+      ],
+      "success_metrics": [
+        "A selected idea has an outcome, users, data sources, tier guidance, and risk notes.",
+        "The chosen idea transfers cleanly into Customer Build Chapter 0."
+      ],
+      "challenge_count": 3,
+      "duration_minutes": 275
+    },
+    {
+      "id": "upskill",
+      "name": "Learn with Northfield",
+      "tagline": "Practice the full Foundry path with the known-good Northfield University reference scenario.",
+      "description": "Build the Northfield IQ Assistant, then reuse the same architecture for customer work later.",
+      "personas": [
+        "student",
+        "coach",
+        "developer"
+      ],
+      "adoption_stage": [
+        "learn",
+        "practice",
+        "extend"
+      ],
+      "business_value": [
+        "learn-foundry-patterns",
+        "create-repeatable-reference"
+      ],
+      "challenge_ids": [
+        "setup",
+        "foundations",
+        "advanced-action-tools",
+        "advanced-evaluation-redteam",
+        "advanced-tracing-observability",
+        "advanced-deploy-hosted-agent",
+        "extra-build-ui",
+        "extra-voice-live",
+        "extra-fabric-iq",
+        "extra-copilot-assisted",
+        "extra-magentic-workflows",
+        "extra-hosted-longrunning",
+        "capstone-multi-agent"
+      ],
+      "success_metrics": [
+        "The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.",
+        "Participants can identify what to swap when moving from Northfield to a customer scenario."
+      ],
+      "challenge_count": 13,
+      "duration_minutes": 1140
+    }
+  ],
+  "challenges": [
+    {
+      "id": "setup",
+      "title": "Getting Started",
+      "module": "foundry",
+      "track": "define",
+      "difficulty": "beginner",
+      "duration_minutes": 30,
+      "description": "Prepare Codespaces, Azure sign-in, and local tooling before running challenge validators.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "setup",
+        "codespaces",
+        "azure"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/setup.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/setup/README.md",
+      "coach_path": "assets/data/challenges/setup/COACH.md"
+    },
+    {
+      "id": "idea-forge",
+      "title": "Idea Forge",
+      "module": "foundry",
+      "track": "define",
+      "difficulty": "beginner",
+      "duration_minutes": 20,
+      "description": "Generate and select a buildable customer AI application idea before starting Customer Build.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "ideation",
+        "customer",
+        "scenario"
+      ],
+      "outcomes": [
+        "idea-forge"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/idea-forge.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/idea-forge/README.md",
+      "coach_path": "assets/data/challenges/idea-forge/COACH.md"
+    },
+    {
+      "id": "customer-outcome",
+      "title": "Chapter 0: Define your outcome",
+      "module": "foundry",
+      "track": "define",
+      "difficulty": "beginner",
+      "duration_minutes": 45,
+      "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "scenario",
+        "planning"
+      ],
+      "outcomes": [
+        "customer-build",
+        "idea-forge"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-outcome.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-outcome/README.md",
+      "coach_path": "assets/data/challenges/customer-outcome/COACH.md"
+    },
+    {
+      "id": "customer-foundations",
+      "title": "Chapter 1: Ground your app",
+      "module": "foundry",
+      "track": "foundations",
+      "difficulty": "beginner",
+      "duration_minutes": 210,
+      "description": "Provision, choose a model, create your agent, and ground it in your own customer-safe data.",
+      "prerequisites": [
+        "customer-outcome"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "grounding",
+        "knowledge",
+        "citations"
+      ],
+      "outcomes": [
+        "customer-build",
+        "idea-forge"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/foundations.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-foundations/README.md",
+      "coach_path": "assets/data/challenges/customer-foundations/COACH.md"
+    },
+    {
+      "id": "customer-action-tools",
+      "title": "Chapter 2: Make it act",
+      "module": "foundry",
+      "track": "actions",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Add one governed action from your own workflow, with approval before any side effect.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "tools",
+        "approval",
+        "workflow"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/advanced-action-tools.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-action-tools/README.md",
+      "coach_path": "assets/data/challenges/customer-action-tools/COACH.md"
+    },
+    {
+      "id": "customer-evaluation-redteam",
+      "title": "Chapter 3: Prove it's safe",
+      "module": "foundry",
+      "track": "trust",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Create customer-scenario evals and red-team prompts that prove quality, safety, and groundedness.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "evaluation",
+        "red-team",
+        "safety"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/advanced-evaluation-redteam.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-evaluation-redteam/README.md",
+      "coach_path": "assets/data/challenges/customer-evaluation-redteam/COACH.md"
+    },
+    {
+      "id": "customer-tracing-observability",
+      "title": "Chapter 4: See inside it",
+      "module": "foundry",
+      "track": "trust",
+      "difficulty": "intermediate",
+      "duration_minutes": 75,
+      "description": "Trace your customer scenario end-to-end so stakeholders can see retrieval, tools, latency, and failure paths.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "observability",
+        "tracing"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/advanced-tracing-observability.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-tracing-observability/README.md",
+      "coach_path": "assets/data/challenges/customer-tracing-observability/COACH.md"
+    },
+    {
+      "id": "customer-deploy-hosted-agent",
+      "title": "Chapter 5: Ship it",
+      "module": "foundry",
+      "track": "deploy",
+      "difficulty": "advanced",
+      "duration_minutes": 90,
+      "description": "Package and host your customer agent behind a real endpoint for stakeholder testing.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "deployment",
+        "hosted-agent"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/advanced-deploy-hosted-agent.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-deploy-hosted-agent/README.md",
+      "coach_path": "assets/data/challenges/customer-deploy-hosted-agent/COACH.md"
+    },
+    {
+      "id": "customer-build-ui",
+      "title": "Demo UI: Build your app face",
+      "module": "foundry",
+      "track": "deploy",
+      "difficulty": "intermediate",
+      "duration_minutes": 75,
+      "description": "Create a stakeholder-facing UI for your customer scenario, including citations or approval state.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "ui",
+        "demo"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/extra-build-ui.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-build-ui/README.md",
+      "coach_path": "assets/data/challenges/customer-build-ui/COACH.md"
+    },
+    {
+      "id": "customer-capstone-multi-agent",
+      "title": "Chapter 6: Grow it into a team",
+      "module": "foundry",
+      "track": "orchestrate",
+      "difficulty": "advanced",
+      "duration_minutes": 120,
+      "description": "Split your customer assistant into a router and specialist agents that match your demo journey.",
+      "prerequisites": [
+        "customer-foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "customer-build",
+        "multi-agent",
+        "capstone"
+      ],
+      "outcomes": [
+        "customer-build"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "docs/customer-build/capstone-multi-agent.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/customer-capstone-multi-agent/README.md",
+      "coach_path": "assets/data/challenges/customer-capstone-multi-agent/COACH.md"
+    },
+    {
+      "id": "foundations",
+      "title": "Ground: Foundations",
+      "module": "foundry",
+      "track": "foundations",
+      "difficulty": "beginner",
+      "duration_minutes": 210,
+      "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "foundations",
+        "agent",
+        "knowledge",
+        "citations"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/foundations/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/foundations/README.md",
+      "coach_path": "assets/data/challenges/foundations/COACH.md"
+    },
+    {
+      "id": "advanced-action-tools",
+      "title": "Act: Action Tools",
+      "module": "foundry",
+      "track": "actions",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Attach governed tools and approval-gated actions to your Foundry agent.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "tools",
+        "mcp",
+        "actions",
+        "approval"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/advanced-action-tools/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/advanced-action-tools/README.md",
+      "coach_path": "assets/data/challenges/advanced-action-tools/COACH.md"
+    },
+    {
+      "id": "advanced-evaluation-redteam",
+      "title": "Prove: Evaluation & Red Teaming",
+      "module": "foundry",
+      "track": "trust",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "evaluation",
+        "red-team",
+        "safety",
+        "quality"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/advanced-evaluation-redteam/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/advanced-evaluation-redteam/README.md",
+      "coach_path": "assets/data/challenges/advanced-evaluation-redteam/COACH.md"
+    },
+    {
+      "id": "advanced-tracing-observability",
+      "title": "Debug: Tracing & Observability",
+      "module": "foundry",
+      "track": "trust",
+      "difficulty": "intermediate",
+      "duration_minutes": 75,
+      "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "observability",
+        "tracing",
+        "app-insights",
+        "debugging"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/advanced-tracing-observability/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/advanced-tracing-observability/README.md",
+      "coach_path": "assets/data/challenges/advanced-tracing-observability/COACH.md"
+    },
+    {
+      "id": "advanced-deploy-hosted-agent",
+      "title": "Deploy: Hosted Agent",
+      "module": "foundry",
+      "track": "deploy",
+      "difficulty": "advanced",
+      "duration_minutes": 90,
+      "description": "Package and deploy your agent as a hosted endpoint with the agent.yaml contract.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "deployment",
+        "hosted-agent",
+        "container"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/advanced-deploy-hosted-agent/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/advanced-deploy-hosted-agent/README.md",
+      "coach_path": "assets/data/challenges/advanced-deploy-hosted-agent/COACH.md"
+    },
+    {
+      "id": "extra-build-ui",
+      "title": "Demo UI: Build a UI",
+      "module": "foundry",
+      "track": "deploy",
+      "difficulty": "intermediate",
+      "duration_minutes": 75,
+      "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "ui",
+        "demo",
+        "frontend"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-build-ui/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-build-ui/README.md",
+      "coach_path": "assets/data/challenges/extra-build-ui/COACH.md"
+    },
+    {
+      "id": "extra-voice-live",
+      "title": "Interface: Voice Live",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "advanced",
+      "duration_minutes": 75,
+      "description": "Add a spoken interaction path for contact-center, accessibility, or demo scenarios.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "voice",
+        "realtime",
+        "interface"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-voice-live/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-voice-live/README.md",
+      "coach_path": "assets/data/challenges/extra-voice-live/COACH.md"
+    },
+    {
+      "id": "extra-fabric-iq",
+      "title": "Deepen: Fabric IQ",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "advanced",
+      "duration_minutes": 75,
+      "description": "Ground answers in operational or analytical data when static documents are not enough.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "fabric",
+        "knowledge",
+        "data"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-fabric-iq/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-fabric-iq/README.md",
+      "coach_path": "assets/data/challenges/extra-fabric-iq/COACH.md"
+    },
+    {
+      "id": "extra-copilot-assisted",
+      "title": "Accelerate: Copilot-Assisted Build",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "intermediate",
+      "duration_minutes": 45,
+      "description": "Use skills and MCP deliberately instead of guessing fast-moving Foundry APIs.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "copilot",
+        "skills",
+        "mcp"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-copilot-assisted/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-copilot-assisted/README.md",
+      "coach_path": "assets/data/challenges/extra-copilot-assisted/COACH.md"
+    },
+    {
+      "id": "extra-magentic-workflows",
+      "title": "Orchestrate: Magentic Workflows",
+      "module": "foundry",
+      "track": "orchestrate",
+      "difficulty": "advanced",
+      "duration_minutes": 90,
+      "description": "Explore manager/planner orchestration with Microsoft Agent Framework patterns.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "multi-agent",
+        "orchestration",
+        "magentic"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-magentic-workflows/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-magentic-workflows/README.md",
+      "coach_path": "assets/data/challenges/extra-magentic-workflows/COACH.md"
+    },
+    {
+      "id": "extra-hosted-longrunning",
+      "title": "Deploy: Long-Running Agents",
+      "module": "foundry",
+      "track": "deploy",
+      "difficulty": "advanced",
+      "duration_minutes": 75,
+      "description": "Use background run patterns for workflows that outlive a browser session.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "hosted-agent",
+        "long-running",
+        "workflow"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/extra-hosted-longrunning/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/extra-hosted-longrunning/README.md",
+      "coach_path": "assets/data/challenges/extra-hosted-longrunning/COACH.md"
+    },
+    {
+      "id": "capstone-multi-agent",
+      "title": "Orchestrate: Multi-Agent Capstone",
+      "module": "foundry",
+      "track": "orchestrate",
+      "difficulty": "advanced",
+      "duration_minutes": 120,
+      "description": "Split the assistant into a router and specialist agents for a realistic customer journey.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "capstone",
+        "multi-agent",
+        "router"
+      ],
+      "outcomes": [
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "emu_compatible": true,
+      "tier": "core",
+      "references": [],
+      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_path": "challenges/capstone-multi-agent/README.md",
+      "license": "MIT",
+      "student_path": "assets/data/challenges/capstone-multi-agent/README.md",
+      "coach_path": "assets/data/challenges/capstone-multi-agent/COACH.md"
+    }
+  ]
+}

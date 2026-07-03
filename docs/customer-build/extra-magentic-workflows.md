@@ -9,7 +9,7 @@ description: Split your scenario assistant into specialist agents coordinated by
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Magentic Workflows" artifact="A multi-agent workflow where a manager routes YOUR composite user request across focused specialists." next="If the workflow proves valuable, consider the Long-Running Agents deepener to host it." %}
 
-This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/extra-magentic-workflows)** — same orchestration pattern, but applied only if your scenario from [Step 0](../customer-outcome) needs more than one specialist brain. This is an **OPTIONAL deepener**. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
+This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/extra-magentic-workflows)** — same orchestration pattern, but applied only if your scenario from [Chapter 0](../customer-outcome) needs more than one specialist brain. This is an **OPTIONAL deepener**. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
 
 > **Before you start this deepener:** complete Chapter 1 and Chapter 2 if your Action specialist will call a real tool. If one well-instructed agent already handles your demo cleanly, skip this.
 
@@ -24,7 +24,7 @@ This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/ext
 - **Adapt it** if you need different specialists than Northfield's four, such as Compliance, Pricing, Scheduler, or Case Summary.
 
 **Decisions to make:**
-- Which Step 0 **user tasks** need different skills or safety posture?
+- Which Chapter 0 **user tasks** need different skills or safety posture?
 - Which specialist owns your **corpus** questions, your **action candidates**, and your **safety boundaries**?
 - What is each specialist explicitly forbidden to do?
 
@@ -48,7 +48,7 @@ This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/ext
 - **Adapt it** if your manager should constrain order, require human approval before actions, or escalate early.
 
 **Decisions to make:**
-- What routing rules map your Step 0 **top tasks** to specialists?
+- What routing rules map your Chapter 0 **top tasks** to specialists?
 - Which requests must always start with triage or safety screening?
 - What success measure proves orchestration helped: fewer wrong tool calls, clearer handoffs, faster resolution?
 

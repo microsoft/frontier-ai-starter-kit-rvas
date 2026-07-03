@@ -4,13 +4,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
 
-*A What The Hack hackathon: from prompt to production*
+*A hands-on AI apps hackathon: from prompt to production*
 
 ---
 
-## What is What The Hack?
+## What is this hackathon?
 
-**What The Hack** (WTH) is Microsoft's hackathon-in-a-box format designed to teach cloud and AI technologies through hands-on challenge-based learning. This repository brings WTH to Microsoft Foundry, a unified platform for building, evaluating, and deploying intelligent applications.
+This repository is a hands-on hackathon for building intelligent applications with Microsoft Foundry, a unified platform for building, evaluating, and deploying AI applications.
 
 This hackathon, you and your team build **one evolving artifact** across three tiers — and that artifact defaults to **your own application**. Bring a customer scenario, a business outcome, or an idea from the [Customer Challenge-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill, and leave with a grounded, evaluated, demo-ready agent prototype. New to Foundry and have no customer scenario ready? The **Northfield University IQ Assistant** is the guided fallback: a fictional university corpus and provided action tools let you learn every Foundry concept without needing real customer data. Both paths follow the same three-tier structure: a guided **Foundations** challenge (four ordered steps) that stands up a deployed, grounded agent; **Advanced** challenges in any order that make it act, prove it safe, observe it, and ship it; and an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system. Coaches guide discovery and unblock issues, but the learning is yours to own.
 
@@ -244,7 +244,7 @@ Each challenge folder contains:
 
 ### Getting Started
 
-Visit the [Coach Hub](docs/coach-hub.md) for tips on facilitating WTH events and working with your teams.
+Visit the [Coach Hub](docs/coach-hub.md) for tips on facilitating the event and working with your teams.
 
 ### Solution Guides
 
@@ -267,7 +267,6 @@ Clone or access this repo locally and navigate to the challenge solution you nee
 - **[Microsoft Foundry Documentation](https://learn.microsoft.com/azure/foundry/)**: Official docs and tutorials
 - **[Azure AI Learning Path](https://learn.microsoft.com/training/paths/develop-generative-ai-solutions-azure-ai-foundry/)**: Structured training modules
 - **[Microsoft AI Skills Navigator](https://microsoft.com/ai/skills)**: Browse AI and cloud certifications
-- **[What The Hack Format Guide](https://microsoft.github.io/WhatTheHack/)**: Learn about WTH events
 
 ---
 

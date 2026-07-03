@@ -9,7 +9,7 @@ description: Instrument your agent so you can explain latency, retrieval, tool c
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 4 &middot; Observe" artifact="One traced scenario run with model, retrieval, and tool spans you can explain by operation id." next="Once you can see inside the run, move to Chapter 5 — Ship it." %}
 
-This chapter is **mutuated from [Advanced · Tracing & Observability](../challenges/advanced-tracing-observability)** — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Step 0: Define your outcome](../customer-outcome).
+This chapter is **mutuated from [Advanced · Tracing & Observability](../challenges/advanced-tracing-observability)** — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Chapter 0: Define your outcome](../customer-outcome).
 
 > **Before you start this chapter:** finish [Chapter 1](foundations). If [Chapter 2](advanced-action-tools) applies, include one approved or denied action in the traced path.
 
@@ -50,7 +50,7 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 - **Skip it** only if you skipped live agent execution entirely.
 
 **Decisions to make:**
-- Which Step 0 *demo story* question becomes the traced run?
+- Which Chapter 0 *demo story* question becomes the traced run?
 - Does it force retrieval, action, escalation, or all three?
 - What output proves the run belongs to your scenario?
 - What identifier will you copy into your notes: response id, operation id, timestamp?

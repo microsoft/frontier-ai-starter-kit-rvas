@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - docs/**
+      - challenges/**
+      - resources/**
+      - package.json
 
   workflow_dispatch:
 
@@ -25,34 +28,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Build static site data
+        run: npm run build
+
       - name: Configure Pages
-        id: pages
         uses: actions/configure-pages@v6
         with:
           enablement: true
-          generator_config_file: docs/_config.yml
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-
-      - name: Install Jekyll dependencies
-        env:
-          BUNDLE_GEMFILE: docs/Gemfile
-        run: |
-          bundle config set path vendor/bundle
-          bundle install
-
-      - name: Build site
-        env:
-          BUNDLE_GEMFILE: docs/Gemfile
-        run: bundle exec jekyll build --source docs --destination _site --baseurl "${{ steps.pages.outputs.base_path }}"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: _site
+          path: docs
 
   deploy:
     environment:

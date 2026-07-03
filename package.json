@@ -1,0 +1,12 @@
+{
+  "name": "frontier-foundry-hackathon",
+  "version": "1.0.0",
+  "description": "Microsoft Foundry hackathon static site builder",
+  "scripts": {
+    "build": "node docs/build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

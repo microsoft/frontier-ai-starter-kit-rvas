@@ -9,9 +9,9 @@ description: Add one governed action to your grounded agent — the Customer Bui
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 2 &middot; Act" artifact="One approval-gated action from YOUR workflow, proven end-to-end without unsafe auto-execution." next="Once your agent can act safely, move to Chapter 3 — Prove it's safe." %}
 
-This chapter is **mutuated from [Advanced · Action Tools](../challenges/advanced-action-tools)** — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Step 0: Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter is **mutuated from [Advanced · Action Tools](../challenges/advanced-action-tools)** — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Chapter 0: Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
-> **Before you start this chapter:** you need a grounded agent from [Chapter 1](foundations) and at least one action candidate from Step 0.
+> **Before you start this chapter:** you need a grounded agent from [Chapter 1](foundations) and at least one action candidate from Chapter 0.
 
 ---
 
@@ -25,7 +25,7 @@ This chapter is **mutuated from [Advanced · Action Tools](../challenges/advance
 - **Skip it** only if your app is knowledge-only; then move straight to [Chapter 3](advanced-evaluation-redteam).
 
 **Decisions to make:**
-- Which Step 0 *action candidate* is valuable enough to demo?
+- Which Chapter 0 *action candidate* is valuable enough to demo?
 - What is the safe backend for the hackathon: real dev API, mock service, provided Action Tools backend, or manual queue?
 - What non-secret auth/header contract will the agent use?
 
