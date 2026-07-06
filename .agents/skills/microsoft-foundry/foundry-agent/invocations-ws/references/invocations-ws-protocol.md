@@ -71,7 +71,7 @@ These are protocols developers build **on top of** the raw WebSocket. The platfo
 Look at the function decorated with `@app.ws_handler` on an `InvocationAgentServerHost` (the `azure-ai-agentserver-invocations` SDK). The handler determines:
 
 - Whether frames are binary, text, or mixed
-- The expected first frame (handshake, capabilities, auth challenge)
+- The expected first frame (handshake, capabilities, auth activity)
 - The control vocabulary (start, stop, mute, hangup, etc.)
 - The response cadence (turn-based vs free-running)
 

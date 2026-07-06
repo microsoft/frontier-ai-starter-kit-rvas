@@ -5,7 +5,7 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
 ---
 
 <div class="hero-panel home-hero">
-  <span class="hero-kicker">Build AI apps • Microsoft Foundry</span>
+  <span class="hero-kicker">AI Starter Kit RVAS • Microsoft Foundry</span>
   <h1>Bring your idea. Build it with Foundry.</h1>
   <p class="hero-tagline">Choose a route, then follow one shared build spine: define the outcome, ground the agent, add useful action, prove trust, and demo the result.</p>
   <div class="cta-row">
@@ -28,7 +28,7 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
   <div class="quick-card track-card track-card--idea">
     <span class="track-badge">Idea intake</span>
     <h3>Generate an idea first</h3>
-    <p>You know the customer or industry, but not the app. Use Customer Challenge-Forge to pick a buildable idea, then continue into Customer Build.</p>
+    <p>You know the customer or industry, but not the app. Use Customer Activity-Forge to pick a buildable idea, then continue into Customer Build.</p>
     <a class="track-link" href="{{ '/idea-forge' | relative_url }}">Forge an idea &rarr;</a>
   </div>
 
@@ -52,7 +52,7 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
 
 ## Use the site like a cockpit
 
-Each journey page now starts with **You are here**, **Current output**, and **Next move**. If you feel lost, go back to your track page rather than browsing the challenge list directly.
+Each journey page now starts with **You are here**, **Current output**, and **Next move**. If you feel lost, go back to your track page rather than browsing the activity list directly.
 
 <div class="quick-grid">
   <div class="quick-card">
@@ -66,7 +66,7 @@ Each journey page now starts with **You are here**, **Current output**, and **Ne
   </div>
 
   <div class="quick-card">
-    <h3>Coaches anchor on outcomes</h3>
+    <h3>Facilitators anchor on outcomes</h3>
     <p>The right question is not "which page am I on?" It is "what should my team have produced before moving on?"</p>
   </div>
 </div>

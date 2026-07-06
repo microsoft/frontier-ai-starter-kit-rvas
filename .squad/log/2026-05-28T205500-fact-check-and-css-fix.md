@@ -11,10 +11,10 @@
 
 ### What Marco Asked
 Marco requested the team to:
-1. **Verify all challenges against current Microsoft docs** — Ensure content reflects Azure AI Search 12.x, evaluation SDKs, and Microsoft Foundry branding (rebrand from Azure AI Foundry)
+1. **Verify all activities against current Microsoft docs** — Ensure content reflects Azure AI Search 12.x, evaluation SDKs, and Microsoft Foundry branding (rebrand from Azure AI Foundry)
 2. **Fix the broken GitHub Pages CSS** — Live site was rendering as raw HTML fragment with no theme
 3. **Fix broken README badge** — Badge pointed to `pages.yml` (old filename) instead of `deploy-pages.yml` (actual workflow)
-4. **Fix broken cross-page links** — Challenge discovery pages had Markdown links pointing outside published tree (→ 404s)
+4. **Fix broken cross-page links** — Activity discovery pages had Markdown links pointing outside published tree (→ 404s)
 5. **Apply humanizer editorial pass** — Reduce AI-generated patterns (emojis, em dashes, promotional vocab) across all content
 
 ### What Landed
@@ -24,10 +24,10 @@ Marco requested the team to:
 - ✅ **Package versions audited & bumped** (livingston-1) — Python deps, Node.js LTS, GitHub Actions, Jekyll, just-the-docs all current. Gemfile.lock refresh required by maintainer.
 
 #### Content Verification & Quality
-- ✅ **Challenges 00–03 audited** (rusty-3) — All claims verified against Microsoft Foundry docs. Microsoft rebrand applied. SDK 2.x references verified. No breaking changes detected.
-- ✅ **Challenges 04–06 audited** (basher-3) — Azure AI Search, evaluation SDK, deployment patterns all current. Microsoft rebrand applied.
+- ✅ **Activities 00–03 audited** (rusty-3) — All claims verified against Microsoft Foundry docs. Microsoft rebrand applied. SDK 2.x references verified. No breaking changes detected.
+- ✅ **Activities 04–06 audited** (basher-3) — Azure AI Search, evaluation SDK, deployment patterns all current. Microsoft rebrand applied.
 - ✅ **Full QA sweep** (basher via dashboard) — 14 issue groups identified; 11 fixed directly. Added missing Step-by-step sections, removed broken screenshots, aligned environment variables.
-- ✅ **Cross-page links fixed** (basher-4) — Seven challenge discovery pages updated with GitHub repo URLs. No more 404s on live site.
+- ✅ **Cross-page links fixed** (basher-4) — Seven activity discovery pages updated with GitHub repo URLs. No more 404s on live site.
 - ✅ **README badge fixed** — `pages.yml` → `deploy-pages.yml` (correct workflow filename)
 - ✅ **Humanizer editorial pass** (rusty-4) — 28 files cleaned: emojis removed, em dashes fixed, promotional vocab stripped, AI-generated patterns eliminated. Committed as `80b1f98`.
 
@@ -43,7 +43,7 @@ Marco requested the team to:
 
 **For Team:**
 1. Monitor Pages deployment — verify CSS renders on live site
-2. No further changes needed to challenges (all verified against current docs)
+2. No further changes needed to activities (all verified against current docs)
 3. Content is now aligned to Microsoft Foundry rebrand + current SDK versions
 
 ---

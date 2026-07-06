@@ -9,7 +9,7 @@ description: Split your scenario assistant into specialist agents coordinated by
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Magentic Workflows" artifact="A multi-agent workflow where a manager routes YOUR composite user request across focused specialists." next="If the workflow proves valuable, consider the Long-Running Agents deepener to host it." %}
 
-This deepener is mutuated from [Extra · Magentic Workflows](../challenges/extra-magentic-workflows) — same orchestration pattern, but applied only if your scenario from [Define your outcome](../customer-outcome) needs more than one specialist brain. This is an OPTIONAL deepener. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
+This deepener is mutuated from [Extra · Magentic Workflows](../activities/extra-magentic-workflows) — same orchestration pattern, but applied only if your scenario from [Define your outcome](../customer-outcome) needs more than one specialist brain. This is an OPTIONAL deepener. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
 
 > Before you start this deepener: complete Ground your app and Make it act if your Action specialist will call a real tool. If one well-instructed agent already handles your demo cleanly, skip this.
 
@@ -28,14 +28,14 @@ This deepener is mutuated from [Extra · Magentic Workflows](../challenges/extra
 - Which specialist owns your corpus questions, your action candidates, and your safety boundaries?
 - What is each specialist explicitly forbidden to do?
 
-**Apply it to your app:** define focused agents for your scenario; keep each one single-purpose and wire only the tools it needs. Use the spine for exact MAF mechanics. → [Extra · Magentic Workflows — Step 1](../challenges/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf)
+**Apply it to your app:** define focused agents for your scenario; keep each one single-purpose and wire only the tools it needs. Use the spine for exact MAF mechanics. → [Extra · Magentic Workflows — Step 1](../activities/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf)
 
 **Prove you applied it:**
 - □ Each specialist has a distinct name and one responsibility.
 - □ Knowledge specialists cite your corpus; action specialists use only approved tools.
 - □ At least one safety boundary is assigned to an escalation or refusal path.
 
-**Stuck?** [Northfield Step 1](../challenges/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf).
+**Stuck?** [Northfield Step 1](../activities/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf).
 
 ---
 
@@ -52,14 +52,14 @@ This deepener is mutuated from [Extra · Magentic Workflows](../challenges/extra
 - Which requests must always start with triage or safety screening?
 - What success measure proves orchestration helped: fewer wrong tool calls, clearer handoffs, faster resolution?
 
-**Apply it to your app:** register your specialists and write manager instructions that reflect your real routing rules. Test with a composite prompt from your demo story. → [Extra · Magentic Workflows — Step 2](../challenges/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager)
+**Apply it to your app:** register your specialists and write manager instructions that reflect your real routing rules. Test with a composite prompt from your demo story. → [Extra · Magentic Workflows — Step 2](../activities/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager)
 
 **Prove you applied it:**
 - □ One realistic composite prompt invokes more than one specialist.
 - □ The action path still preserves your approval or safety gate.
 - □ Out-of-scope or low-confidence requests do not reach the action specialist.
 
-**Stuck?** [Northfield Step 2](../challenges/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager).
+**Stuck?** [Northfield Step 2](../activities/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager).
 
 ---
 
@@ -76,14 +76,14 @@ This deepener is mutuated from [Extra · Magentic Workflows](../challenges/extra
 - Which node proves safety: escalation, refusal, or human approval?
 - What visual artifact will you include in your final readout?
 
-**Apply it to your app:** run the same composite prompt in DevUI and capture the live plan with your specialist names. → [Extra · Magentic Workflows — Step 3](../challenges/extra-magentic-workflows#step-3--visualize-the-plan-in-devui)
+**Apply it to your app:** run the same composite prompt in DevUI and capture the live plan with your specialist names. → [Extra · Magentic Workflows — Step 3](../activities/extra-magentic-workflows#step-3--visualize-the-plan-in-devui)
 
 **Prove you applied it:**
 - □ DevUI shows your manager and specialist nodes.
 - □ A screenshot captures at least one running and one completed node.
 - □ A low-confidence or unsafe request routes to escalation/refusal.
 
-**Stuck?** [Northfield Step 3](../challenges/extra-magentic-workflows#step-3--visualize-the-plan-in-devui).
+**Stuck?** [Northfield Step 3](../activities/extra-magentic-workflows#step-3--visualize-the-plan-in-devui).
 
 ---
 

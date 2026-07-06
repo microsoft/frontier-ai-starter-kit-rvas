@@ -9,9 +9,9 @@ description: Add live operational data beside your static knowledge base when th
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Fabric IQ" artifact="A dual-grounded agent that routes YOUR policy questions to documents and YOUR right-now questions to live data." next="Use this only when live operational state is essential to your scenario." %}
 
-This deepener is mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-iq) — same live-data grounding pattern, but pointed at the operational data in your scenario from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Without Fabric capacity and a meaningful live table, skip it.
+This deepener is mutuated from [Extra · Fabric IQ](../activities/extra-fabric-iq) — same live-data grounding pattern, but pointed at the operational data in your scenario from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Without Fabric capacity and a meaningful live table, skip it.
 
-> Before you start this deepener: confirm coach-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
+> Before you start this deepener: confirm facilitator-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
 
 ---
 
@@ -28,14 +28,14 @@ This deepener is mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-i
 - Which fields must the agent be allowed to query?
 - What current value can you record and later prove the agent matched?
 
-**Apply it to your app:** locate your lakehouse/table and record a current value that your assistant should answer from. → [Extra · Fabric IQ — Step 1](../challenges/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake)
+**Apply it to your app:** locate your lakehouse/table and record a current value that your assistant should answer from. → [Extra · Fabric IQ — Step 1](../activities/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake)
 
 **Prove you applied it:**
 - □ You can read at least one live row for your scenario.
 - □ You know the workspace, lakehouse, table, and key fields.
 - □ You recorded a current value for the demo comparison.
 
-**Stuck?** [Northfield Step 1](../challenges/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake).
+**Stuck?** [Northfield Step 1](../activities/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake).
 
 ---
 
@@ -52,14 +52,14 @@ This deepener is mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-i
 - What routing rule separates policy/corpus questions from live/current questions?
 - Which safety boundaries limit sensitive live data exposure?
 
-**Apply it to your app:** attach the Fabric IQ tool alongside your existing knowledge base and update instructions with your routing rule. → [Extra · Fabric IQ — Step 2](../challenges/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent)
+**Apply it to your app:** attach the Fabric IQ tool alongside your existing knowledge base and update instructions with your routing rule. → [Extra · Fabric IQ — Step 2](../activities/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent)
 
 **Prove you applied it:**
 - □ The agent lists both static knowledge and live data tools.
 - □ Instructions state when to use each source.
 - □ A test "right now" question invokes the live-data path.
 
-**Stuck?** [Northfield Step 2](../challenges/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent).
+**Stuck?** [Northfield Step 2](../activities/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent).
 
 ---
 
@@ -76,14 +76,14 @@ This deepener is mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-i
 - How will you change or observe the data safely?
 - Which policy question proves source routing still uses your corpus?
 
-**Apply it to your app:** ask a right-now question, compare with OneLake, change or observe the data, and ask again; then ask a policy question to prove routing. → [Extra · Fabric IQ — Step 3](../challenges/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag)
+**Apply it to your app:** ask a right-now question, compare with OneLake, change or observe the data, and ask again; then ask a policy question to prove routing. → [Extra · Fabric IQ — Step 3](../activities/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag)
 
 **Prove you applied it:**
 - □ The agent's first live answer matches the table value.
 - □ After the value changes, the answer changes without re-indexing.
 - □ A policy question still cites your static corpus.
 
-**Stuck?** [Northfield Step 3](../challenges/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag).
+**Stuck?** [Northfield Step 3](../activities/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag).
 
 ---
 

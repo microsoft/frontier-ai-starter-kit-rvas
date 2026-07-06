@@ -1,6 +1,6 @@
 # Squad Team
 
-> ai-hackathon
+> ai-starter-kit-rvas
 
 ## Coordinator
 
@@ -16,17 +16,17 @@
 | Linus | Frontend Dev | .squad/agents/linus/charter.md | 🟢 Active |
 | Livingston | DevOps & GitHub Engineer | .squad/agents/livingston/charter.md | 🟢 Active |
 | Rusty | Curriculum Designer | .squad/agents/rusty/charter.md | 🟢 Active |
-| Basher | QA & Coach Enablement | .squad/agents/basher/charter.md | 🟢 Active |
+| Basher | QA & Facilitator Enablement | .squad/agents/basher/charter.md | 🟢 Active |
 | Scribe | Session Logger | .squad/agents/scribe/charter.md | 📋 Silent |
 | Ralph | Work Monitor | .squad/agents/ralph/charter.md | 🔄 Monitor |
 
 ## Project Context
 
-- **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry
+- **Project:** AI Starter Kit RVAS — Microsoft Foundry
 - **Owner:** Marco Olivo
 - **Stack:** Microsoft Foundry AI, GitHub Pages, Jekyll/Markdown, GitHub Actions
-- **Audience:** Students (AI newcomers) + Coaches (facilitators)
-- **Goal:** Complete WTH hackathon format + polished GitHub Pages for participants
+- **Audience:** Students (AI newcomers) + Facilitators (facilitators)
+- **Goal:** Complete session format + polished GitHub Pages for participants
 - **Universe:** Ocean's Eleven
 - **Created:** 2026-05-28
 

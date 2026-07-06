@@ -1,4 +1,4 @@
-/* Build AI apps — path catalog: choose one route, then filter chapters. */
+/* AI Starter Kit RVAS — path catalog: choose one route, then filter chapters. */
 (function () {
   'use strict';
 
@@ -13,7 +13,7 @@
     try { data = await FP.loadData(); }
     catch (e) { FP.renderError('grid', e.message); return; }
 
-    _all = data.challenges || [];
+    _all = data.activities || [];
     _outcomes = data.outcomes || [];
 
     buildOutcomeChips();
@@ -166,23 +166,23 @@
 
     const items = filtered();
 
-    if (countEl) countEl.textContent = items.length + ' challenge' + (items.length === 1 ? '' : 's');
+    if (countEl) countEl.textContent = items.length + ' activity' + (items.length === 1 ? '' : 's');
 
     if (!items.length) {
-      grid.innerHTML = '<div class="no-results">No challenges match those filters. <button class="btn btn-ghost btn-sm" id="inlineClrBtn" type="button">Clear filters</button></div>';
+      grid.innerHTML = '<div class="no-results">No activities match those filters. <button class="btn btn-ghost btn-sm" id="inlineClrBtn" type="button">Clear filters</button></div>';
       const b = document.getElementById('inlineClrBtn');
       if (b) b.addEventListener('click', () => document.getElementById('clearBtn')?.click());
       return;
     }
 
-    grid.innerHTML = `<div class="challenge-grid">${items.map((c) => challengeCard(c)).join('')}</div>`;
+    grid.innerHTML = `<div class="activity-grid">${items.map((c) => activityCard(c)).join('')}</div>`;
     FP.initReveal();
   }
 
-  function challengeCard(c) {
+  function activityCard(c) {
     const color = FP.moduleColor(c.module);
     return `
-      <a href="${challengeUrl(c)}" class="ch-card mod-${FP.esc(c.module)} reveal"
+      <a href="${activityUrl(c)}" class="ch-card mod-${FP.esc(c.module)} reveal"
          style="--mod-color:${color}">
         <div class="ch-card-top">
           <span class="ch-mod-dot"></span>
@@ -198,11 +198,11 @@
       </a>`;
   }
 
-  function challengeUrl(c) {
+  function activityUrl(c) {
     const q = new URLSearchParams();
     q.set('id', c.id);
     q.set('outcome', _activeOutcome);
-    return 'challenge.html?' + q.toString();
+    return 'activity.html?' + q.toString();
   }
 
   document.addEventListener('DOMContentLoaded', init);

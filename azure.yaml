@@ -1,17 +1,17 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 #
-# azd project for the Build AI apps hackathon (Microsoft Foundry).
+# azd project for the AI Starter Kit RVAS session (Microsoft Foundry).
 # Golden path:  azd up   ->  provisions infra/ (Bicep)  ->  writes outputs into the azd env,
 # which scripts/*  read back as a .env contract (see .env.sample).
 #
-# This file intentionally has NO `services:` block. The hackathon does not deploy app code
+# This file intentionally has NO `services:` block. The session does not deploy app code
 # through azd at provision time — `azd up` only stands up the shared Foundry footprint
 # (Foundry resource + project + model deployment + AI Search + App Insights + ACR).
 # The Foundations end-state (agent + index + IQ knowledge base) is materialized afterward by
-# scripts/setup-foundations.sh, and the hosted-agent Advanced challenge ships its own agent.yaml.
-name: build-ai-apps-foundry
+# scripts/setup-foundations.sh, and the hosted-agent Advanced activity ships its own agent.yaml.
+name: ai-starter-kit-rvas
 metadata:
-  template: wth-ai-hackathon-foundry@2.0.0
+  template: ai-starter-kit-rvas-foundry@2.0.0
 
 # Lifecycle hooks: after provisioning, remind the operator how to reach the Foundations end-state.
 hooks:

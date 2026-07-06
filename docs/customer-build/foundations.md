@@ -9,14 +9,14 @@ description: Provision, choose a model, create your agent, and ground it in your
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ground" artifact="A deployed agent grounded in YOUR customer-safe corpus, answering a real scenario question with a citation." next="Once your agent cites your own data, move to Make it act." %}
 
-This chapter is mutuated from [Foundations](../challenges/foundations) — same objective, same
+This chapter is mutuated from [Foundations](../activities/foundations) — same objective, same
 checkpoints — but every step points at *your* scenario from
 [Define your outcome](../customer-outcome). Do the decisions here; when you need the exact
 commands or code, follow the Northfield reference the step links to. The mechanics are identical;
 only the corpus, persona, and questions are yours.
 
 > "Northfield" in one line: the reference scenario — a student-services assistant for the
-> fictional *Northfield University*. Its [Foundations steps](../challenges/foundations) are worked
+> fictional *Northfield University*. Its [Foundations steps](../activities/foundations) are worked
 > examples you copy commands from; you don't need to build the Northfield version first.
 
 > Before you start this chapter: complete [Define your outcome](../customer-outcome). You need your target
@@ -52,13 +52,13 @@ plumbing.
 - Naming prefix — use a scenario/customer prefix so resources are easy to find and clean up.
 
 **Apply it to your app:** run `azd up` exactly as the reference describes — nothing is
-scenario-specific yet. → [Foundations Step 1](../challenges/foundations#step-1--setup--provisioning-foundry--ai-search)
+scenario-specific yet. → [Foundations Step 1](../activities/foundations#step-1--setup--provisioning-foundry--ai-search)
 
 **Prove you applied it:**
-- `python challenges/foundations/validate.py --step 1` — infra + keyless auth are scenario-agnostic, so this reference check applies unchanged.
+- `python activities/foundations/validate.py --step 1` — infra + keyless auth are scenario-agnostic, so this reference check applies unchanged.
 - Checklist: □ `.env` has your project endpoint, model deployment, and search endpoint (no `<...>` placeholders) □ no API keys pasted anywhere.
 
-**Stuck?** [Northfield Step 1](../challenges/foundations#step-1--setup--provisioning-foundry--ai-search).
+**Stuck?** [Northfield Step 1](../activities/foundations#step-1--setup--provisioning-foundry--ai-search).
 
 ---
 
@@ -78,13 +78,13 @@ depth) that your users will feel. Decide it deliberately against *your* task, no
 - Your first-draft system instruction: audience, tone, how to handle missing info, what's out of scope.
 
 **Apply it to your app:** run the Playground comparison and reproduce it in code, substituting your
-prompts and instruction. → [Foundations Step 2](../challenges/foundations#step-2--model-selection--the-playground)
+prompts and instruction. → [Foundations Step 2](../activities/foundations#step-2--model-selection--the-playground)
 
 **Prove you applied it:**
-- `python challenges/foundations/validate.py --track customer --step 2` — confirms your chosen deployment answers via the SDK.
+- `python activities/foundations/validate.py --track customer --step 2` — confirms your chosen deployment answers via the SDK.
 - Checklist: □ you can state one concrete trade-off you observed on *your* prompts □ your tuned system instruction is saved □ the code call is on-tone for your users.
 
-**Stuck?** [Northfield Step 2](../challenges/foundations#step-2--model-selection--the-playground).
+**Stuck?** [Northfield Step 2](../activities/foundations#step-2--model-selection--the-playground).
 
 ---
 
@@ -103,13 +103,13 @@ guardrails.
 - Uncertainty behaviour — your wording when it doesn't know, tuned to your domain's tone.
 
 **Apply it to your app:** create the agent in the portal and in code, using *your* name and
-instructions; test that your specific refusals actually hold. → [Foundations Step 3](../challenges/foundations#step-3--your-first-agent)
+instructions; test that your specific refusals actually hold. → [Foundations Step 3](../activities/foundations#step-3--your-first-agent)
 
 **Prove you applied it:**
-- `python challenges/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
+- `python activities/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
 - Checklist: □ an in-scope question is answered well □ each safety boundary from your scenario pack is actually refused/escalated □ portal and code instructions match.
 
-**Stuck?** [Northfield Step 3](../challenges/foundations#step-3--your-first-agent).
+**Stuck?** [Northfield Step 3](../activities/foundations#step-3--your-first-agent).
 
 ---
 
@@ -134,16 +134,16 @@ trusted source of truth.
 **Apply it to your app:**
 1. Place your cleared docs where the indexer reads them; keep a `source` field so answers can cite.
 2. Follow the indexing → knowledge base → attach-tool mechanics, substituting your files and your
-   grounding instruction. → [Foundations Step 4](../challenges/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state)
+   grounding instruction. → [Foundations Step 4](../activities/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state)
 3. Not `.md`/`.txt`? Search Microsoft Docs (MCP) for your format, or use the portal
    Build → Indexes → Add data flow for PDFs/SharePoint.
 
 **Prove you applied it:**
-- `python challenges/foundations/validate.py --track customer --step 4 --question "<your real scenario question>"`
+- `python activities/foundations/validate.py --track customer --step 4 --question "<your real scenario question>"`
   — asserts *your* agent (or index) returns a cited answer to a question you provide, instead of Northfield's school code.
 - Checklist: □ a real scenario question returns a citation to *your* source □ an out-of-corpus question abstains in *your* wording □ grounded answer is more specific than the ungrounded Step 3 answer.
 
-**Stuck?** [Northfield Step 4](../challenges/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state).
+**Stuck?** [Northfield Step 4](../activities/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state).
 
 ---
 
@@ -153,7 +153,7 @@ You have a deployed agent grounded in your own customer-safe data, answering a r
 question with a citation and abstaining when the corpus is silent.
 
 ```bash
-python challenges/foundations/validate.py --track customer --all --question "<your real scenario question>"
+python activities/foundations/validate.py --track customer --all --question "<your real scenario question>"
 ```
 
 This is the prerequisite for every later chapter. Next: [Make your agent act](advanced-action-tools).

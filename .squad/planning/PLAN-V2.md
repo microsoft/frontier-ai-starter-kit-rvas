@@ -1,4 +1,4 @@
-# WTH AI Hackathon — Curriculum V2 (Agent-Era Rearchitecture)
+# AI Starter Kit RVAS — Curriculum V2 (Agent-Era Rearchitecture)
 
 > ➡️ **Superseded in part by [PLAN-V3.md](PLAN-V3.md).** V3 **extends** this doc and overrides it on
 > three things only: the **two-tier** framing below becomes a **three-tier tree** (V3 §1), the Advanced
@@ -23,12 +23,12 @@
 ### 1.1 The one-sentence vision
 
 > Participants build **one evolving artifact** — the **Northfield University "IQ" Assistant** — by first
-> completing a guided **Foundations** challenge (a deployed, grounded agent) and then **picking, in any
-> order**, a set of self-contained **Advanced** challenges that make it act, prove it safe, observe it,
+> completing a guided **Foundations** activity (a deployed, grounded agent) and then **picking, in any
+> order**, a set of self-contained **Advanced** activities that make it act, prove it safe, observe it,
 > ship it, and extend it.
 
 We adopt the **one-artifact, many-acts arc** that makes azure-trust-agents so effective **[ATA §1, §4.1]**:
-no throwaway work, every challenge visibly extends the same thing. We keep the Northfield University FAQ
+no throwaway work, every activity visibly extends the same thing. We keep the Northfield University FAQ
 corpus the squad already authored (`resources/sample-data/university-faq/`) so Wave-1/Wave-2 content
 investment is preserved.
 
@@ -41,15 +41,15 @@ investment is preserved.
 
 The curriculum is delivered in **two tiers**:
 
-1. **Tier 1 — Foundations** (the "Basic" challenge): **ONE guided, linear challenge** broken into **four
-   ordered STEPS**, not separate challenges. **Everyone completes it.** Its end-state is a **deployed,
+1. **Tier 1 — Foundations** (the "Basic" activity): **ONE guided, linear activity** broken into **four
+   ordered STEPS**, not separate activities. **Everyone completes it.** Its end-state is a **deployed,
    grounded Northfield IQ Assistant agent**.
    - **Step 1** — Setup & Provisioning (Foundry + AI Search)
    - **Step 2** — Model Selection & the Playground (system instructions)
    - **Step 3** — Your First Agent
    - **Step 4** — Knowledge Base — Index + Foundry IQ (grounded agent)
-2. **Tier 2 — Advanced challenges**: **modular, self-contained, pickable in ANY order**, each internally
-   broken into numbered STEPS with success criteria. **All advanced challenges assume the Foundations
+2. **Tier 2 — Advanced activities**: **modular, self-contained, pickable in ANY order**, each internally
+   broken into numbered STEPS with success criteria. **All advanced activities assume the Foundations
    end-state.** They are: **Action Tools**, **Evaluation & Red Teaming**, **Tracing & Observability**,
    **Deploy as a Hosted Agent**, and the modular **Extras** (Fabric IQ, Voice Live, Magentic Workflows,
    MAF + Hosted Long-Running Agents, Build a UI, Copilot-Assisted Build).
@@ -73,8 +73,8 @@ A **bootstrap skip-path** lets advanced teams materialize the Foundations end-st
 | **Advanced** Deploy | Shipped as a **hosted agent** with its own endpoint + identity |
 | **Extras** (any order) | Live data (Fabric IQ), a voice, multi-agent workflows, a UI, Copilot-assisted build |
 
-The four **Advanced** challenges and all **Extras** branch off the **Foundations end-state** and can be
-attempted **in any order** (subject to the light prereqs noted per challenge).
+The four **Advanced** activities and all **Extras** branch off the **Foundations end-state** and can be
+attempted **in any order** (subject to the light prereqs noted per activity).
 
 This mirrors azure-trust-agents' **role-as-agent** intuition **[ATA §4.2]** — the assistant plays a real
 student-services-desk role — without the regulated-finance complexity that would intimidate students.
@@ -88,7 +88,7 @@ student-services-desk role — without the regulated-finance complexity that wou
 | **RAG** | Hand-rolled vector index + "On Your Data" in a flow | **Foundry IQ knowledge base** (agentic retrieval) exposed to the agent via **MCP** **[SKILLS §2a]** |
 | **"Does work"** | Not covered | **Action tool / MCP** that executes a real operation **[ATA §3 Pattern 4]** |
 | **Evaluation** | Quality metrics only | NLP metrics **+ red teaming / adversarial safety** (the conspicuous gap in both reference repos) **[FWH §5, ATA §5]** |
-| **Observability** | "Monitoring" mentioned at deploy | **Dedicated tracing challenge** (OTel GenAI → App Insights → KQL) **[FWH §2 Ch2, ATA §3]** |
+| **Observability** | "Monitoring" mentioned at deploy | **Dedicated tracing activity** (OTel GenAI → App Insights → KQL) **[FWH §2 Ch2, ATA §3]** |
 | **Deploy** | Managed online endpoint for a flow | **Hosted (containerized) agent** via `azd ai agent` **[SKILLS §2a foundry-hosted-agents]** |
 | **Copilot** | Pre-installed but unused | **First-class enablement layer**: microsoft/skills + `.mcp.json` + `copilot-instructions.md` **[SKILLS §3]** |
 | **Provisioning** | `setup-resources.sh` (ad hoc) | **`azd up` + Bicep** as the golden path (Bash fallback) **[FWH §5 gap]** |
@@ -96,15 +96,15 @@ student-services-desk role — without the regulated-finance complexity that wou
 
 ---
 
-## 1.5 How to Run This Hackathon (Two Paths)
+## 1.5 How to Run This Session (Two Paths)
 
 There are **two ways in**. Both converge on the same **Foundations end-state** (a deployed, grounded
 Northfield IQ Assistant), then fan out into the modular Advanced tier.
 
 ### Path A — Beginner (default, recommended)
 
-Complete **Foundations** as one guided, linear challenge (4 ordered steps), then **pick Advanced
-challenges in any order**.
+Complete **Foundations** as one guided, linear activity (4 ordered steps), then **pick Advanced
+activities in any order**.
 
 ### Path B — Advanced-skip (for teams who already know Foundry basics)
 
@@ -130,8 +130,8 @@ Foundry basics** — you skip the guided learning, not the prerequisites.
         └────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Why one bootstrap checkpoint is enough:** every Advanced challenge assumes the **same** Foundations
-end-state. Materialize it once, verify it once, and all Advanced challenges are unblocked. The bootstrap
+**Why one bootstrap checkpoint is enough:** every Advanced activity assumes the **same** Foundations
+end-state. Materialize it once, verify it once, and all Advanced activities are unblocked. The bootstrap
 is a gate, not a shortcut around setup: `azd up` provisions infra and a `setup-foundations` script builds
 the model deployment, agent, index, and IQ knowledge base to match a manual Foundations run.
 
@@ -143,11 +143,11 @@ azd up                      # provision Foundry + AI Search + App Insights (+ AC
 python scripts/validate-foundations.py   # ✅ asserts the Foundations end-state exists
 ```
 
-`validate-foundations.py` must pass **green** before a Path-B team starts any Advanced challenge.
+`validate-foundations.py` must pass **green** before a Path-B team starts any Advanced activity.
 
-## 1.6 Standard STEP Template (every step & advanced challenge follows this)
+## 1.6 Standard STEP Template (every step & advanced activity follows this)
 
-Every **Foundations step** and every **Advanced challenge step** uses the **same four-part shape**:
+Every **Foundations step** and every **Advanced activity step** uses the **same four-part shape**:
 
 > **Goal** — one sentence: what this step makes true.
 > **Tasks** — numbered, do-this-then-that actions (portal and/or code).
@@ -164,7 +164,7 @@ Authors fill this skeleton for **every** unit. The copy-paste skeleton lives in
 
 ### 2.1 CUT (hard directive — Prompt Flow is deprecated)
 
-- **Challenge 03 (Prompt Flow Orchestration)** — removed entirely. The classification → routing →
+- **Activity 03 (Prompt Flow Orchestration)** — removed entirely. The classification → routing →
   formatting logic Rusty built (decisions.md, Wave 2) is **re-expressed as agent instructions + tools**,
   not a flow.
 - **Prompt Flow RAG nodes** in old Ch04 — replaced by Foundry IQ knowledge base + AI Search tool.
@@ -178,9 +178,9 @@ Authors fill this skeleton for **every** unit. The copy-paste skeleton lives in
 
 - Northfield University FAQ corpus (`resources/sample-data/university-faq/`) — now the **knowledge-base
   source** in Ch03 and the eval ground-truth source in Ch05.
-- Repo layout `challenges/challenge-NN-slug/` with paired `README.md` (student) + `solution.md` (coach).
+- Repo layout `activities/activity-NN-slug/` with paired `README.md` (student) + `solution.md` (facilitator).
 - `docs/` Jekyll `just-the-docs` site (Linus) — extend nav, don't rebuild.
-- `validate-environment.py` pattern — extend to a **per-challenge `validate.py`** (gap both repos have) **[ATA §5]**.
+- `validate-environment.py` pattern — extend to a **per-activity `validate.py`** (gap both repos have) **[ATA §5]**.
 - Ch00–02 content **substantially reusable** (setup, model deploy, prompt/system-instruction design)
   — they re-skin cleanly into **Foundations Steps 1–3**; old Ch04 RAG content seeds **Foundations Step 4**.
 
@@ -202,16 +202,16 @@ Authors fill this skeleton for **every** unit. The copy-paste skeleton lives in
 ## 3. Curriculum Structure — Two Tiers
 
 > ⚠️ **Superseded by [PLAN-V3.md](PLAN-V3.md) §1 (three-tier).** Add **Tier 3 — Capstone** (the MAF
-> multi-agent `challenges/capstone-multi-agent/`) on top of the two tiers described here. The two-tier
+> multi-agent `activities/capstone-multi-agent/`) on top of the two tiers described here. The two-tier
 > structure below remains correct for Foundations + Advanced.
 
-The curriculum is **two tiers**: **Tier 1 Foundations** (one guided, linear challenge, four steps,
+The curriculum is **two tiers**: **Tier 1 Foundations** (one guided, linear activity, four steps,
 everyone does it) and **Tier 2 Advanced** (modular, self-contained, any order, all assuming the
 Foundations end-state). Every unit follows the **Standard STEP Template** (§1.6).
 
-### 3.1 Tier 1 — Foundations (the "Basic" challenge · linear · stepped)
+### 3.1 Tier 1 — Foundations (the "Basic" activity · linear · stepped)
 
-**ONE challenge** (`challenges/foundations/`), four ordered steps. **End-state = a deployed, grounded
+**ONE activity** (`activities/foundations/`), four ordered steps. **End-state = a deployed, grounded
 Northfield IQ Assistant agent.** Everyone completes this before touching Tier 2 — or materializes it via
 the bootstrap skip-path (§1.5).
 
@@ -224,12 +224,12 @@ the bootstrap skip-path (§1.5).
 
 **Foundations total: ~3.25 hr.** Linear; Step N's Checkpoint gates Step N+1.
 
-### 3.2 Tier 2 — Advanced challenges (modular · any order · assume Foundations end-state)
+### 3.2 Tier 2 — Advanced activities (modular · any order · assume Foundations end-state)
 
 Each is a **self-contained folder** with its own numbered steps + success criteria. **Prereq for all =
 the Foundations end-state** (completed guided, or via bootstrap). Light extra prereqs noted per row.
 
-| Advanced challenge | Time | Difficulty | Extra prereq | Covers E2E bullet |
+| Advanced activity | Time | Difficulty | Extra prereq | Covers E2E bullet |
 |--------------------|------|------------|--------------|-------------------|
 | **Action Tools — Make the Agent Do Work** | 1.25 hr | ⭐⭐⭐ | — | **Add an MCP/tool that executes actions** |
 | **Evaluation & Red Teaming** | 1.25 hr | ⭐⭐⭐⭐ | — (richer with Action Tools) | **Evaluations: NLP metrics + red teaming** |
@@ -254,13 +254,13 @@ the Foundations end-state** (completed guided, or via bootstrap). Light extra pr
 
 ### 3.4 Per-unit detail blocks
 
-> **Foundations** units below are **Steps 1–4** of the single `challenges/foundations/` challenge.
-> **Advanced** units are standalone modular challenges. Each maps to the Standard STEP Template (§1.6).
+> **Foundations** units below are **Steps 1–4** of the single `activities/foundations/` activity.
+> **Advanced** units are standalone modular activities. Each maps to the Standard STEP Template (§1.6).
 
 #### Foundations · Step 1 — Setup & Provisioning (Foundry + AI Search)
 | Field | Detail |
 |---|---|
-| **Description** | Provision the full hackathon footprint with **one `azd up`**: a Foundry resource (project-management enabled), a Foundry project, a deployed chat model, an **Azure AI Search** service, Log Analytics + Application Insights, and an auto-generated `.env`. Verify Entra auth end-to-end. |
+| **Description** | Provision the full session footprint with **one `azd up`**: a Foundry resource (project-management enabled), a Foundry project, a deployed chat model, an **Azure AI Search** service, Log Analytics + Application Insights, and an auto-generated `.env`. Verify Entra auth end-to-end. |
 | **Time** | 30 min |
 | **Difficulty** | ⭐ Beginner |
 | **Dependencies** | None |
@@ -416,7 +416,7 @@ the Foundations end-state** (completed guided, or via bootstrap). Light extra pr
 #### Extra F — Copilot-Assisted Build (microsoft/skills)
 | Field | Detail |
 |---|---|
-| **Description** | Re-build one challenge **"the agent-assisted way"**: with microsoft/skills Foundry skills + MCP servers loaded, let GitHub Copilot act as an expert pair-programmer that fetches **current** Foundry APIs before generating code. |
+| **Description** | Re-build one activity **"the agent-assisted way"**: with microsoft/skills Foundry skills + MCP servers loaded, let GitHub Copilot act as an expert pair-programmer that fetches **current** Foundry APIs before generating code. |
 | **Prereq** | Foundations Step 1 (most valuable after a team has felt the manual path) |
 | **Infra needs** | See §5 — skills + `.mcp.json` + `copilot-instructions.md` in the Codespace |
 | **Time / Difficulty** | cross-cutting / ⭐⭐ |
@@ -427,14 +427,14 @@ the Foundations end-state** (completed guided, or via bootstrap). Light extra pr
 ## 4. The "Copilot + Foundry Skills" Enablement Layer
 
 This is a **cross-cutting layer** (not just Extra F): Copilot is available the whole event as an
-expert pair-programmer, while coaches still "never give answers directly." Source: **[SKILLS §3, §4]**.
+expert pair-programmer, while facilitators still "never give answers directly." Source: **[SKILLS §3, §4]**.
 
 ### 4.1 What to drop into the student Codespace
 
 ```
 .github/
   copilot-instructions.md          # tells Copilot which skills exist + the "Search-Before-Implement" rule
-  skills/                          # ONLY the per-challenge skills (selective loading — see 4.3)
+  skills/                          # ONLY the per-activity skills (selective loading — see 4.3)
     foundry-projects-resources/    # Ch00
     foundry-models/                # Ch01
     foundry-iq-knowledge-bases/    # Ch03
@@ -460,7 +460,7 @@ expert pair-programmer, while coaches still "never give answers directly." Sourc
   — loading everything causes "context rot" **[SKILLS §1, §4]**.
 - **"Search Before Implement" / "MCP = fresh info, Skills = proven patterns."** Copilot queries
   `microsoft-docs`/`foundry-mcp` *before* writing Azure SDK code **[SKILLS §2d, §6]**.
-- **Coach inversion:** coaches load the **full** skill set to validate student solutions and unblock fast **[SKILLS §3]**.
+- **Facilitator inversion:** facilitators load the **full** skill set to validate student solutions and unblock fast **[SKILLS §3]**.
 - **Install path:** `npx skills add microsoft/skills --skill microsoft-foundry` (targeted) or the Skill
   Explorer 1-click UI; **pin a commit** since the repo is WIP and several features are preview **[SKILLS §4]**.
 
@@ -478,7 +478,7 @@ both reference repos skipped (FWH used raw `az rest`; ATA used one-click ARM) **
 `scripts/setup-foundations.sh` that **materializes the Foundations end-state** (deploy model → create
 agent → index Northfield corpus → build IQ knowledge base → attach via MCP) and a
 `scripts/validate-foundations.py` that asserts it. This is the **single checkpoint** that unblocks every
-Advanced challenge for teams who skip guided Foundations. Gate it in docs: *"recommended only if your
+Advanced activity for teams who skip guided Foundations. Gate it in docs: *"recommended only if your
 team already knows Foundry basics."*
 
 ### 5.2 Azure resources across the full curriculum
@@ -519,7 +519,7 @@ team already knows Foundry basics."*
 
 ## 6. Timing & Format Options
 
-Reframed for the two-tier model: **Foundations** (Tier 1) is the shared base; **Advanced** challenges
+Reframed for the two-tier model: **Foundations** (Tier 1) is the shared base; **Advanced** activities
 (Tier 2) are picked à la carte. Strong teams use the **bootstrap skip-path** (§1.5) to compress Tier 1.
 
 | Format | Audience | Track |
@@ -529,7 +529,7 @@ Reframed for the two-tier model: **Foundations** (Tier 1) is the shared base; **
 | **1-day advanced-skip** (~6 hr) | Foundry-fluent teams | **Bootstrap (~15 min)** → all 4 Advanced + 1 Extra |
 | **2-day** | Deep dive | Day 1: Foundations + Action Tools + Eval+RedTeam; Day 2: Tracing + Deploy + Extras **C Magentic** + **E UI** |
 | **Demo-day / exec** | Showcase | Foundations → Action Tools + **Extra B Voice** + **Extra E UI** (maximize wow, minimize eval depth) |
-| **Coach / advanced** | Practitioners | Bootstrap → all Advanced + Extras C/D + Extra F enablement |
+| **Facilitator / advanced** | Practitioners | Bootstrap → all Advanced + Extras C/D + Extra F enablement |
 
 **Recommended default:** 2-day — **Foundations + all four Advanced** + Extras C (Magentic) and E (UI).
 Magentic + a live voice/UI demo are the highest-wow closers **[ATA §4.5, FWH §6]**.
@@ -545,7 +545,7 @@ Magentic + a live voice/UI demo are the highest-wow closers **[ATA §4.5, FWH §
 | **`azd ai agent` availability** | Hosted-agent CLI may not be in all Azure Pass/sandbox subs **[SKILLS §6]** | Confirm in sandbox; if absent, make Ch07 portal-based |
 | **Model/region/quota** | FWH pins `gpt-5.4`/`swedencentral`; quota friction likely **[FWH §5, ATA §5]** | Parameterize model+region; document 2 fallbacks; pre-request quota |
 | **Red-teaming tooling maturity** | AI Red Teaming Agent surface evolving | Lock the exact evaluator set + SDK version for Ch05 |
-| **Fabric capacity cost** | Extra A needs a Fabric F-SKU/trial | Decide trial vs shared capacity; gate Extra A behind coach availability |
+| **Fabric capacity cost** | Extra A needs a Fabric F-SKU/trial | Decide trial vs shared capacity; gate Extra A behind facilitator availability |
 | **Voice Live access** | API availability/region for Extra B | Confirm access + a known-good client sample |
 | **APIM "Expose as MCP" is preview** | Ch04 MCP path | Validate; keep a FastMCP server fallback we control |
 
@@ -554,25 +554,25 @@ Magentic + a live voice/UI demo are the highest-wow closers **[ATA §4.5, FWH §
 ## 8. Prioritized Build Backlog
 
 Ordered; tag = primary owner. (Danny = Lead/Content, Rusty = Curriculum, Linus = Frontend/Docs,
-Livingston = DevOps/Infra, Basher = DevRel/Coach.) Folder/page targets are specified in
+Livingston = DevOps/Infra, Basher = DevRel/Facilitator.) Folder/page targets are specified in
 [RESTRUCTURE-SPEC.md](RESTRUCTURE-SPEC.md).
 
 | # | Work item | Owner | Why first |
 |---|-----------|-------|-----------|
-| 1 | **Restructure folders** to two-tier layout (`challenges/foundations/` + `challenges/advanced-*` + `challenges/extra-*`); execute the `git mv` map; **delete** `challenge-03-prompt-flow` | **Danny + Livingston** | Locks the new skeleton everyone authors into; per [RESTRUCTURE-SPEC.md](RESTRUCTURE-SPEC.md) |
-| 2 | **`azd up` + Bicep provisioning** (Foundry + AI Search + App Insights + ACR) with auto-`.env` + Bash fallback | **Livingston** | Everything depends on reliable infra; unblocks all challenge authoring |
-| 3 | **Bootstrap skip-path:** `scripts/setup-foundations.sh` + `scripts/validate-foundations.py` (materialize + verify the Foundations end-state — the single Path-B checkpoint) | **Livingston** | Unblocks every Advanced challenge for advanced-skip teams |
-| 4 | **Strip Prompt Flow** everywhere (delete `challenge-03-prompt-flow`, `requirements.txt`, devcontainer ext, docs nav) + cut decision recorded | **Livingston + Danny** | Honor hard directive; prevents new content building on deprecated base |
-| 5 | **Author Foundations** as ONE stepped challenge (Steps 1–4, each Goal→Tasks→Success→Checkpoint) ending in the grounded IQ Assistant; Step 4 (Knowledge Base) is the headline new content | **Rusty + Danny** | Tier 1 is the shared base every team needs; gates all Advanced |
+| 1 | **Restructure folders** to two-tier layout (`activities/foundations/` + `activities/advanced-*` + `activities/extra-*`); execute the `git mv` map; **delete** `activity-03-prompt-flow` | **Danny + Livingston** | Locks the new skeleton everyone authors into; per [RESTRUCTURE-SPEC.md](RESTRUCTURE-SPEC.md) |
+| 2 | **`azd up` + Bicep provisioning** (Foundry + AI Search + App Insights + ACR) with auto-`.env` + Bash fallback | **Livingston** | Everything depends on reliable infra; unblocks all activity authoring |
+| 3 | **Bootstrap skip-path:** `scripts/setup-foundations.sh` + `scripts/validate-foundations.py` (materialize + verify the Foundations end-state — the single Path-B checkpoint) | **Livingston** | Unblocks every Advanced activity for advanced-skip teams |
+| 4 | **Strip Prompt Flow** everywhere (delete `activity-03-prompt-flow`, `requirements.txt`, devcontainer ext, docs nav) + cut decision recorded | **Livingston + Danny** | Honor hard directive; prevents new content building on deprecated base |
+| 5 | **Author Foundations** as ONE stepped activity (Steps 1–4, each Goal→Tasks→Success→Checkpoint) ending in the grounded IQ Assistant; Step 4 (Knowledge Base) is the headline new content | **Rusty + Danny** | Tier 1 is the shared base every team needs; gates all Advanced |
 | 6 | **Author Advanced: Action Tools** + ship the **pre-built action backend API + MCP server** (in-repo) | **Rusty + Livingston** | "Agent does work" is the core promise; backend must exist before content |
 | 7 | **Author Advanced: Evaluation + Red Teaming** with code-driven `evaluate.py` + expanded Northfield eval dataset | **Basher + Rusty** | Fills the #1 gap in both reference repos; needs a real dataset |
 | 8 | **Author Advanced: Tracing & Observability** + **Deploy as Hosted Agent** | Danny + Livingston | Completes the Advanced spine |
-| 9 | Per-step / per-challenge **`validate.py`** implementing every Checkpoint in the STEP template | Rusty + Basher | Makes Success Criteria machine-checkable (gap both repos have) |
+| 9 | Per-step / per-activity **`validate.py`** implementing every Checkpoint in the STEP template | Rusty + Basher | Makes Success Criteria machine-checkable (gap both repos have) |
 | 10 | Wire the **Copilot enablement layer** (skills subset + `.mcp.json` + `copilot-instructions.md`, pinned commit) | Livingston + Basher | Cross-cutting; validate `foundry-mcp` reachability |
 | 11 | Build **Extra E (UI)** + reuse `frontend-design`/`ui-designer` | Linus | Demo-day capstone |
 | 12 | Extras C (Magentic), D (hosted MAF), A (Fabric), B (Voice), F (Copilot) — author as bandwidth allows | Danny + Rusty | Optional tracks; sequence by demo value (C, E first) |
-| 13 | Update `docs/` Jekyll nav + pages to mirror the two-tier layout 1:1 (Foundations page + per-Advanced pages + coach pages + index) | Linus | Keep Pages site in sync; per [RESTRUCTURE-SPEC.md](RESTRUCTURE-SPEC.md) |
-| 14 | Author **facilitator guides** (coach `solution.md` per unit) + the Prompt-Flow removal verification pass | Basher | Coach enablement + QA the cut |
+| 13 | Update `docs/` Jekyll nav + pages to mirror the two-tier layout 1:1 (Foundations page + per-Advanced pages + facilitator pages + index) | Linus | Keep Pages site in sync; per [RESTRUCTURE-SPEC.md](RESTRUCTURE-SPEC.md) |
+| 14 | Author **facilitator guides** (facilitator `solution.md` per unit) + the Prompt-Flow removal verification pass | Basher | Facilitator enablement + QA the cut |
 
 ---
 

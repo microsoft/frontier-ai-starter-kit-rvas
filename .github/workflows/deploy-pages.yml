@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - docs/**
-      - challenges/**
+      - activities/**
       - resources/**
       - package.json
 

@@ -9,7 +9,7 @@ description: Turn your success measures and safety boundaries into evals, red-te
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Prove" artifact="A scenario-specific scorecard with quality rows, adversarial prompts, and a gate tied to YOUR safety boundaries." next="Once you can measure quality and safety, move to See inside it." %}
 
-This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challenges/advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../activities/advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: have at least one grounded answer from [Ground your app](foundations), and include your actions if they are in your demo path.
 
@@ -30,13 +30,13 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - Which rows should abstain because the corpus is silent or the request crosses a safety boundary?
 - What topics must be represented so the dataset is not a tiny happy path?
 
-**Apply it to your app:** use the Northfield JSONL shape, but replace it with your scenario rows and ground truth. → [Evaluation — Step 1](../challenges/advanced-evaluation-redteam#step-1--run-quality-metrics-in-the-portal)
+**Apply it to your app:** use the Northfield JSONL shape, but replace it with your scenario rows and ground truth. → [Evaluation — Step 1](../activities/advanced-evaluation-redteam#step-1--run-quality-metrics-in-the-portal)
 
 **Prove you applied it:**
-- `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 1 --dataset <your-eval.jsonl>`
+- `python activities/advanced-evaluation-redteam/validate.py --track customer --step 1 --dataset <your-eval.jsonl>`
 - Checklist: □ ≥25 scenario rows or a justified smaller pilot set □ ≥5 topics/tasks □ abstain/out-of-scope rows included □ ground truth comes from trusted sources, not model output.
 
-**Stuck?** [Northfield Step 1](../challenges/advanced-evaluation-redteam#step-1--run-quality-metrics-in-the-portal).
+**Stuck?** [Northfield Step 1](../activities/advanced-evaluation-redteam#step-1--run-quality-metrics-in-the-portal).
 
 ---
 
@@ -45,7 +45,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 **Why it matters for your app:** code-driven evals are repeatable. They let you compare prompt, model, corpus, and tool changes without relying on memory.
 
 **Does this apply to you?**
-- Build it if you plan to change prompts, data, tools, or models during the hackathon.
+- Build it if you plan to change prompts, data, tools, or models during the session.
 - Adapt it if live judging is too costly — run dry-run/custom-only first, then sample the expensive metrics.
 - Skip it only if your prototype will be judged manually and you clearly label that limitation.
 
@@ -54,13 +54,13 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - Which metric matters most for your outcome: groundedness, relevance, coherence, fluency, task success, refusal quality?
 - What row-level failures would block the demo?
 
-**Apply it to your app:** run the harness against your dataset and agent; use dry-run/custom-only before spending quota. → [Evaluation — Step 2](../challenges/advanced-evaluation-redteam#step-2--drive-evaluation-from-code-with-evaluatepy)
+**Apply it to your app:** run the harness against your dataset and agent; use dry-run/custom-only before spending quota. → [Evaluation — Step 2](../activities/advanced-evaluation-redteam#step-2--drive-evaluation-from-code-with-evaluatepy)
 
 **Prove you applied it:**
-- `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 2 --dataset <your-eval.jsonl>`
+- `python activities/advanced-evaluation-redteam/validate.py --track customer --step 2 --dataset <your-eval.jsonl>`
 - Checklist: □ aggregate scores are recorded □ weakest rows are reviewed manually □ failures map to one fix: prompt, corpus, retrieval, tool, or refusal.
 
-**Stuck?** [Northfield Step 2](../challenges/advanced-evaluation-redteam#step-2--drive-evaluation-from-code-with-evaluatepy).
+**Stuck?** [Northfield Step 2](../activities/advanced-evaluation-redteam#step-2--drive-evaluation-from-code-with-evaluatepy).
 
 ---
 
@@ -78,13 +78,13 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - What should be rewarded: correct citation, exact policy value, right office, valid next step, proper abstention?
 - What should be penalized: fabricated contact, forbidden advice, uncited commitment, unsafe tool call?
 
-**Apply it to your app:** adapt the custom evaluator pattern from Northfield to your domain signal. → [Evaluation — Step 3](../challenges/advanced-evaluation-redteam#step-3--build-a-custom-domain-evaluator)
+**Apply it to your app:** adapt the custom evaluator pattern from Northfield to your domain signal. → [Evaluation — Step 3](../activities/advanced-evaluation-redteam#step-3--build-a-custom-domain-evaluator)
 
 **Prove you applied it:**
-- `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 3`
+- `python activities/advanced-evaluation-redteam/validate.py --track customer --step 3`
 - Checklist: □ evaluator name/rules match your domain □ one good and one bad answer score differently □ rule is explainable to a stakeholder.
 
-**Stuck?** [Northfield Step 3](../challenges/advanced-evaluation-redteam#step-3--build-a-custom-domain-evaluator).
+**Stuck?** [Northfield Step 3](../activities/advanced-evaluation-redteam#step-3--build-a-custom-domain-evaluator).
 
 ---
 
@@ -103,13 +103,13 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - What action request should be refused, escalated, or require approval?
 - What mitigation will you add after the first failure?
 
-**Apply it to your app:** replace the Northfield adversarial seed with attacks against your corpus, users, and tools. → [Evaluation — Step 4](../challenges/advanced-evaluation-redteam#step-4--red-team-the-agent-adversarial-safety)
+**Apply it to your app:** replace the Northfield adversarial seed with attacks against your corpus, users, and tools. → [Evaluation — Step 4](../activities/advanced-evaluation-redteam#step-4--red-team-the-agent-adversarial-safety)
 
 **Prove you applied it:**
-- `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 4 --adversarial <your-adversarial.jsonl>`
+- `python activities/advanced-evaluation-redteam/validate.py --track customer --step 4 --adversarial <your-adversarial.jsonl>`
 - Checklist: □ ≥3 attack categories tested □ prompt-injection-via-document included □ actual vs. expected behavior recorded □ one mitigation applied and re-tested.
 
-**Stuck?** [Northfield Step 4](../challenges/advanced-evaluation-redteam#step-4--red-team-the-agent-adversarial-safety).
+**Stuck?** [Northfield Step 4](../activities/advanced-evaluation-redteam#step-4--red-team-the-agent-adversarial-safety).
 
 ---
 
@@ -128,13 +128,13 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - What manual review is required for sensitive rows?
 - What known risks remain in the pilot backlog?
 
-**Apply it to your app:** set a threshold, intentionally break one prompt or row to see the gate fail, then restore it. → [Evaluation — Step 5](../challenges/advanced-evaluation-redteam#step-5--gate-the-build-ci-concept)
+**Apply it to your app:** set a threshold, intentionally break one prompt or row to see the gate fail, then restore it. → [Evaluation — Step 5](../activities/advanced-evaluation-redteam#step-5--gate-the-build-ci-concept)
 
 **Prove you applied it:**
-- `python challenges/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>`
+- `python activities/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>`
 - Checklist: □ passing threshold recorded □ intentional regression fails □ scorecard is ready for the 2-minute demo □ risks/backlog are documented.
 
-**Stuck?** [Northfield Step 5](../challenges/advanced-evaluation-redteam#step-5--gate-the-build-ci-concept).
+**Stuck?** [Northfield Step 5](../activities/advanced-evaluation-redteam#step-5--gate-the-build-ci-concept).
 
 ---
 
@@ -143,7 +143,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 You have a scenario-specific trust scorecard: quality rows, red-team attacks, a domain evaluator, and a gate tied to your safety boundaries.
 
 ```bash
-python challenges/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>
+python activities/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>
 ```
 
 Next: [See inside it](advanced-tracing-observability).

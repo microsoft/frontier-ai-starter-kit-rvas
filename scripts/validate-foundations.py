@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""WTH AI Hackathon — Foundations END-STATE validator (the single Path-B checkpoint).
+"""AI Starter Kit RVAS — Foundations END-STATE validator (the single Path-B checkpoint).
 
 Asserts that the Foundations end-state exists and works:
 
@@ -10,7 +10,7 @@ Asserts that the Foundations end-state exists and works:
   CHECK 4  The agent answers a Northfield question with at least one citation,
            via the Foundry Responses/Conversations protocol.
 
-Exit code 0 = green (Path B teams may start Advanced challenges).
+Exit code 0 = green (Path B teams may start Advanced activities).
 Exit code 1 = not ready.
 
 Live Azure calls are GUARDED: missing creds/SDKs/resources produce a clear FAIL
@@ -196,7 +196,7 @@ def main() -> int:
     # ----- verdict -----------------------------------------------------------
     print()
     if failures == 0:
-        ok("FOUNDATIONS END-STATE: PASS — Path B teams may start Advanced challenges.")
+        ok("FOUNDATIONS END-STATE: PASS — Path B teams may start Advanced activities.")
         return 0
     bad(f"FOUNDATIONS END-STATE: NOT READY ({failures} issue(s)). See messages above.")
     return 1

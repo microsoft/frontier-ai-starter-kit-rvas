@@ -1,4 +1,4 @@
-# WTH AI Hackathon — Curriculum V3 (Tier Tree + De-Guided Advanced + MAF Capstone)
+# AI Starter Kit RVAS — Curriculum V3 (Tier Tree + De-Guided Advanced + MAF Capstone)
 
 > **"Build Intelligent Agents with Microsoft Foundry"**
 >
@@ -21,7 +21,7 @@
 | PLAN-V2 says… | V3 changes it to… | Why |
 |---|---|---|
 | **"Two tiers"** (Foundations → Advanced+Extras) | **Three tiers** (Foundations → Advanced → **Capstone**), plus a cross-cutting *make-it-your-own* branch | The Advanced tier currently terminates the journey at "ship one agent." A capstone gives the curriculum a *headline finale* and a reason to learn MAF. **[ATA §1]** |
-| Advanced challenges sized **1–1.25 hr each**, "guided" | Each Advanced challenge gets a **guided path** (revised, honest time) **and** a **build-from-scratch path** (longer, fewer placeholders) | The guided paths are over-scaffolded — see §2. Real authoring is where the learning is. **[ATA §4.4 critique]** |
+| Advanced activities sized **1–1.25 hr each**, "guided" | Each Advanced activity gets a **guided path** (revised, honest time) **and** a **build-from-scratch path** (longer, fewer placeholders) | The guided paths are over-scaffolded — see §2. Real authoring is where the learning is. **[ATA §4.4 critique]** |
 | Extras are a flat list under Tier 2 | Extras are **re-slotted** into the tree by role (deepeners vs. capstone-feeders vs. cross-cutting) | Makes the optional content legible — learners can see *why* each Extra exists and when to do it. |
 | Magentic (Extra C) + Hosted Long-Running (Extra D) are **Extras** | They are **promoted to feed the Tier 3 Capstone** (the capstone *is* the multi-agent build; D is its deploy variant) | The strongest content shouldn't be buried as "optional extra #3." |
 
@@ -103,18 +103,18 @@ agent org-chart" is the most memorable demo a team can give.
 
 **Verdict (building on the Coordinator's assessment):** the Advanced tier is **real, but
 over-scaffolded**, and its clock labels are **optimistic for what they actually ask**. The problem is
-**not** that the challenges are short — it's that the *guided paths spoon-feed the hard parts*. Three
+**not** that the activities are short — it's that the *guided paths spoon-feed the hard parts*. Three
 of the four lean on the ATA-style **"provide the API, fill one PLACEHOLDER"** pattern **[ATA §4.3,
 §4.4]**, which caps difficulty by design. The fix is **DEPTH, not clock-padding**: remove the
 placeholders that matter, offer a **build-from-scratch path**, and add genuine stretch goals.
 
-Below, each challenge gets: *(a)* the specific thin step, *(b)* PLACEHOLDERs to remove, *(c)* a
+Below, each activity gets: *(a)* the specific thin step, *(b)* PLACEHOLDERs to remove, *(c)* a
 build-from-scratch variant, *(d)* 1–2 stretch goals, and *(e)* an honest revised time split.
 
 ### 2.1 Action Tools — *the thinnest one*
 
 **Current thin spots.** The backend is fully provided (`scripts/action-backend/`), the agent file
-[challenges/advanced-action-tools/agent_with_actions.py](challenges/advanced-action-tools/agent_with_actions.py)
+[activities/advanced-action-tools/agent_with_actions.py](activities/advanced-action-tools/agent_with_actions.py)
 hands the learner three `# TODO`s, and **Step 1 ("knowledge vs. action tools") is a verbal,
 no-script conceptual step** — pure reading. The only real authoring is `build_action_tool()` (≈3
 lines) and the approval loop in `run_with_approval()` (≈10 lines). That is **~30–45 min of real work**
@@ -148,7 +148,7 @@ scratch path 1.5 hr.** With Stretch #1 (build the server): **+45 min**.
 
 ### 2.2 Evaluation & Red Teaming — *the genuinely meaty one*
 
-**Current state.** This is the deepest Advanced challenge as written: 5 steps, real `evaluate.py`, a
+**Current state.** This is the deepest Advanced activity as written: 5 steps, real `evaluate.py`, a
 custom `NorthfieldDomainEvaluator`, a 36-row dataset, a labeled adversarial seed set, and a CI gate.
 The Coordinator's "eval is genuinely meatier" call is correct. **It is the closest to right-sized.**
 Light touch only.
@@ -171,7 +171,7 @@ built-in evaluators + custom evaluator + `--gate`) from scratch. The current fil
 `solution.md` reference.
 
 **Stretch goals:**
-1. **Trace-to-eval correlation.** After the Tracing challenge, curate a *new* eval dataset **from
+1. **Trace-to-eval correlation.** After the Tracing activity, curate a *new* eval dataset **from
    production traces** (the App Insights rows) and re-run — closes the eval↔trace loop **[SKILLS §2a
    foundry-observability; FWH §5 "dataset curation from traces"]**.
 2. **Regression CI in GitHub Actions.** Wire `evaluate.py --gate` into a real workflow that fails a PR
@@ -244,7 +244,7 @@ from-scratch path 1.5 hr.** Stretch #1 (blue/green): **+30 min.**
 
 ### 2.5 Summary — revised Advanced time table
 
-| Advanced challenge | V2 label | **V3 guided** | **V3 build-from-scratch** | Top stretch (+time) |
+| Advanced activity | V2 label | **V3 guided** | **V3 build-from-scratch** | Top stretch (+time) |
 |---|---|---|---|---|
 | Action Tools | 1.25 hr | **45 min** | **1.5 hr** | Build the MCP server (+45 min) |
 | Evaluation & Red Teaming | 1.25 hr | **1.25 hr** (keep) | **2 hr** | Real CI gate (+30 min) |
@@ -261,7 +261,7 @@ supply. **We do not pad the clock; we deepen the work.**
 
 ## 3. Tier 3 — The Capstone (NEW — the headline addition)
 
-> **`challenges/capstone-multi-agent/`** — *"Northfield IQ, the Team."* Take the single grounded,
+> **`activities/capstone-multi-agent/`** — *"Northfield IQ, the Team."* Take the single grounded,
 > action-taking assistant you built and **break it into a coordinated team of agents** orchestrated
 > with the **Microsoft Agent Framework (MAF)**. Deliberately **less guided**: this is a **design brief
 > + acceptance criteria**, not a placeholder-fill. You decide the org-chart; you wire the graph.
@@ -365,7 +365,7 @@ reference repo ships **[ATA §5 "no Magentic"]**. This is exactly what Extra C a
 1. **DevUI first.** Launch the workflow in MAF's DevUI and *watch* the graph light up as a question
    flows through — build intuition before rigor **[ATA §4.5]**. Reuse ATA's directory-based
    `devui_launcher.py` pattern **[ATA §6]**.
-2. **Then instrument.** Turn on the OTel tracing from the Tracing challenge and confirm you now get a
+2. **Then instrument.** Turn on the OTel tracing from the Tracing activity and confirm you now get a
    **multi-span tree across agents** (triage → fan-out → fan-in), correlated by `operation_Id`. The
    capstone is where Tracing pays off: ~N spans per question across the team.
 
@@ -411,7 +411,7 @@ A capstone submission passes if **all** of these are demonstrably true (the team
 
 ---
 
-## 4. New Challenge Ideas Backlog (mined from both repos)
+## 4. New Activity Ideas Backlog (mined from both repos)
 
 Each idea lists **source**, **what it teaches**, **tier placement**, and **author effort** (S ≤ ½ day,
 M ≈ 1 day, L > 1 day of authoring).
@@ -428,19 +428,19 @@ M ≈ 1 day, L > 1 day of authoring).
 | 8 | **Connected Agents (declarative)** | [SKILLS §2a foundry-workflows] | The *declarative* multi-agent pattern (Connected Agents) as a **contrast** to MAF's code-first graph | Capstone **alternate orchestration** path | **M** |
 | 9 | **Toolbox assembly** | [SKILLS §5.2 foundry-toolboxes] | Bundle AI Search + Web Search + Code Interpreter into one MCP-compatible **Toolbox**, consume from a hosted agent — "build once, consume everywhere" | Advanced deepener (feeds Capstone Action/Knowledge agents) ⭐⭐⭐⭐ | **M** |
 | 10 | **Structured-output contracts lab** | [ATA §5 "brittle regex" critique] | Replace prose-parsing between agents with typed tool outputs / Pydantic — a focused 30-min drill | Folded into **Capstone** acceptance criteria (§3.7); optional standalone micro-lab | **S** |
-| 11 | **Facilitator guides** | [FWH §5 "missing facilitator guides"] | Per-challenge timing, reconvene points, common errors — the thing FWH *promises but never ships* | **Coach-track**, all tiers (our `solution.md` siblings already partly cover this) | **S–M** (formalize a template) |
+| 11 | **Facilitator guides** | [FWH §5 "missing facilitator guides"] | Per-activity timing, reconvene points, common errors — the thing FWH *promises but never ships* | **Facilitator-track**, all tiers (our `solution.md` siblings already partly cover this) | **S–M** (formalize a template) |
 
 **Backlog priorities (Danny's call):** ship **#3 re-slot** (free), **#4 lab-generator** and **#7
 cleanup** next (cross-cutting, high leverage, low risk), then **#2 RAG-deepening** and **#9 toolbox**
 as Advanced deepeners. **#5 APIM-as-MCP**, **#6 hybrid rules**, **#8 Connected Agents** are
-preview-dependent — gate on coach availability and `foundry-mcp`/APIM-preview reachability (same
+preview-dependent — gate on facilitator availability and `foundry-mcp`/APIM-preview reachability (same
 caveat PLAN-V2 §1 flagged).
 
 ---
 
 ## 5. Migration Notes
 
-> **Scope discipline:** this is a PLAN. No challenge content is edited in this batch. The notes below
+> **Scope discipline:** this is a PLAN. No activity content is edited in this batch. The notes below
 > are the *implied* downstream changes for the team to execute next, owner-tagged.
 
 ### 5.1 README.md tier tables (owner: Danny + Linus)
@@ -448,7 +448,7 @@ caveat PLAN-V2 §1 flagged).
 - The root [README.md](README.md) currently says **"two tiers"** (lines ~107–109) and lists the
   Advanced table with the **old time labels** (Action Tools 1.25 hr). Update to:
   - **"three tiers"** framing + a one-line Capstone mention with a link to
-    `challenges/capstone-multi-agent/`.
+    `activities/capstone-multi-agent/`.
   - Advanced table: **dual time columns** (guided / build-from-scratch) per §2.5, and **relabel Action
     Tools 1.25 hr → 45 min guided**.
   - Add a **Tier 3 — Capstone** row/section after the Advanced table.
@@ -460,10 +460,10 @@ caveat PLAN-V2 §1 flagged).
 
 ### 5.2 docs/ navigation (owner: Linus)
 
-- Add a **Tier 3 / Capstone** nav section mirroring `challenges/capstone-multi-agent/` (+ a `-coach`
+- Add a **Tier 3 / Capstone** nav section mirroring `activities/capstone-multi-agent/` (+ a `-facilitator`
   sibling), following the existing 1:1 mirror rule and `nav_order` scheme (Capstone = a new band,
-  e.g. `30`, coach = +100 + `nav_exclude`).
-- Update `docs/challenges/index.md` from **Two-Tier + Two-Paths** to **Three-Tier + Two-Paths**; reuse
+  e.g. `30`, facilitator = +100 + `nav_exclude`).
+- Update `docs/activities/index.md` from **Two-Tier + Two-Paths** to **Three-Tier + Two-Paths**; reuse
   the §1 ASCII tree here.
 - Re-slot the Extras pages under their tree roles (deepeners vs capstone-feeders) in the sidebar
   grouping; no page deletions required.
@@ -496,8 +496,8 @@ Bicep outputs**, never hand-edited into `.env.sample` — same rule PLAN-V2 esta
 
 | Path | Owner | Note |
 |---|---|---|
-| `challenges/capstone-multi-agent/README.md` + `solution.md` | Danny + Rusty | Design-brief style (§3); light `validate.py` (Basher) for the structural acceptance criteria |
-| `challenges/capstone-multi-agent/validate.py` | Basher | Asserts ≥3 agents, fan-out edge present, typed contracts — headless-checkable subset of §3.7 |
+| `activities/capstone-multi-agent/README.md` + `solution.md` | Danny + Rusty | Design-brief style (§3); light `validate.py` (Basher) for the structural acceptance criteria |
+| `activities/capstone-multi-agent/validate.py` | Basher | Asserts ≥3 agents, fan-out edge present, typed contracts — headless-checkable subset of §3.7 |
 | `.github/agents/lab-generator.agent.md` + a scenario template | Danny + Livingston | Backlog #4; port FWH's pattern **[FWH §6]** |
 | `scripts/cleanup.sh` + a wrap-up page | Livingston + Linus | Backlog #7 cost-hygiene **[FWH §4.10]** |
 | build-from-scratch variant notes per Advanced `solution.md` | Rusty + Basher | §2 dual-path; mostly additive "no-starter" sidebars |

@@ -6,7 +6,7 @@ Describe the change and why it is needed.
 - [ ] Content update
 - [ ] Documentation update
 - [ ] Infrastructure / automation
-- [ ] New challenge material
+- [ ] New activity material
 
 ## Testing done
 - [ ] Not run
@@ -14,7 +14,7 @@ Describe the change and why it is needed.
 - [ ] Verified in Codespaces/devcontainer
 - [ ] Verified in GitHub Actions
 
-## Challenge affected
+## Activity affected
 - [ ] Foundations (setup / provisioning / first agent / knowledge base)
 - [ ] Advanced (action tools / tracing / evaluation / hosted agent)
 - [ ] Extras (Fabric IQ / voice / Magentic workflows / build UI / etc.)

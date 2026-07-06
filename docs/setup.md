@@ -5,7 +5,7 @@ nav_order: 5
 
 # Getting Started
 
-{% include journey-status.html tone="shared" path="Shared setup" artifact="A working Codespace or dev container, Azure sign-in, and local tooling ready for the challenge validators." next="Run environment validation, then return to your selected track." %}
+{% include journey-status.html tone="shared" path="Shared setup" artifact="A working Codespace or dev container, Azure sign-in, and local tooling ready for the activity validators." next="Run environment validation, then return to your selected track." %}
 
 This page gives you three environment options. The fastest route is GitHub Codespaces, with local dev container and manual setup as fallbacks.
 
@@ -28,9 +28,9 @@ Best for most participants. You get a ready-to-use cloud dev environment with th
 2. Choose the default branch and create a new Codespace.
 3. Wait for the container to finish starting.
 4. Open the integrated terminal when VS Code loads.
-5. Continue with Azure sign-in and the Foundations challenge.
+5. Continue with Azure sign-in and the Foundations activity.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
 <div class="callout-tip" markdown="1">
 <strong>Tip:</strong> Codespaces is the safest event-day option because everyone works in the same environment, with fewer laptop-specific issues to debug.
@@ -56,10 +56,10 @@ Choose this only if you cannot use containers.
 3. Clone this repository.
 4. Create and activate a virtual environment.
 5. Install the project requirements from `requirements.txt`.
-6. Use the same challenge guides as container users after environment validation passes.
+6. Use the same activity guides as container users after environment validation passes.
 
 <div class="callout-warning" markdown="1">
-<strong>Warning:</strong> Manual setup is more sensitive to local machine differences. If you hit package or CLI issues, ask a coach early instead of losing time during Foundations.
+<strong>Warning:</strong> Manual setup is more sensitive to local machine differences. If you hit package or CLI issues, ask a facilitator early instead of losing time during Foundations.
 </div>
 
 ## Codespaces setup: step by step
@@ -101,7 +101,7 @@ python resources/scripts/validate-environment.py
 
 ```
 
-A successful run should confirm your local tooling, Python environment, and Azure connectivity are ready for the Foundations challenge.
+A successful run should confirm your local tooling, Python environment, and Azure connectivity are ready for the Foundations activity.
 
 <div class="callout-info" markdown="1">
 <strong>Heads up:</strong> If the validation script reports missing environment variables, copy `.env.sample` to `.env` and fill in the values provided for your event before retrying.
@@ -116,4 +116,4 @@ A successful run should confirm your local tooling, Python environment, and Azur
 | `az login` fails | Wrong tenant or blocked pop-up flow | Retry with the correct account; use device code login if needed. |
 | Azure subscription not visible | Azure Pass not redeemed or wrong directory | Confirm redemption, then check `az account list --output table`. |
 | Python command not found | Manual setup incomplete | Install Python 3.11+ and reopen the terminal before retrying. |
-| Validation script errors | Missing tools, auth, or branch setup | Fix the first reported error, rerun, and escalate to a coach if it repeats. |
+| Validation script errors | Missing tools, auth, or branch setup | Fix the first reported error, rerun, and escalate to a facilitator if it repeats. |

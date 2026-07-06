@@ -4,7 +4,7 @@ Documentation specialist maintaining history, decisions, and technical records.
 
 ## Project Context
 
-**Project:** ai-hackathon
+**Project:** ai-starter-kit-rvas
 
 
 ## Responsibilities

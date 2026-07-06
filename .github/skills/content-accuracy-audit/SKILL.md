@@ -1,14 +1,14 @@
 ---
 name: content-accuracy-audit
-description: 'Audit hackathon content (challenge guides, coach notes, READMEs, validate.py, solution.md, the rendered _site/, docs/, skills, infra, scripts) for correctness, currency, hallucinations, broken cross-references, and pacing. Cross-checks every Azure / Microsoft Foundry SDK signature, CLI command, env var, and API surface against official Microsoft Learn docs via the microsoft-docs MCP and the live web. USE WHEN: review content for errors, fact-check the docs, find hallucinations, check if the docs are up to date, verify API signatures, validate challenge instructions, spot outdated SDK calls, check pacing/difficulty, audit the site, find broken links or stale references. Produces a ranked findings report and applies safe fixes.'
-argument-hint: '[optional: path or area to audit, e.g. challenges/foundations or docs/]'
+description: 'Audit session content (activity guides, facilitator notes, READMEs, validate.py, solution.md, the rendered _site/, docs/, skills, infra, scripts) for correctness, currency, hallucinations, broken cross-references, and pacing. Cross-checks every Azure / Microsoft Foundry SDK signature, CLI command, env var, and API surface against official Microsoft Learn docs via the microsoft-docs MCP and the live web. USE WHEN: review content for errors, fact-check the docs, find hallucinations, check if the docs are up to date, verify API signatures, validate activity instructions, spot outdated SDK calls, check pacing/difficulty, audit the site, find broken links or stale references. Produces a ranked findings report and applies safe fixes.'
+argument-hint: '[optional: path or area to audit, e.g. activities/foundations or docs/]'
 disable-model-invocation: true
 user-invocable: true
 ---
 
 # Content Accuracy Audit
 
-Systematic review of this hackathon's learning content for **correctness, currency,
+Systematic review of this session's learning content for **correctness, currency,
 hallucinations, broken references, and pacing**. The golden rule of this repo applies:
 **Search Before Implement** — never trust a memorized API signature. Every Azure / Foundry
 SDK call, CLI command, env var, and preview-feature claim must be verified against the
@@ -18,14 +18,14 @@ SDK call, CLI command, env var, and preview-feature claim must be verified again
 
 - "Review/audit all our content for errors of any kind"
 - "Check the docs for hallucinations / outdated SDK calls / wrong API signatures"
-- "Are the challenge instructions still accurate and up to date?"
+- "Are the activity instructions still accurate and up to date?"
 - "Verify the env vars, CLI commands, and code snippets actually work"
-- "Check pacing and difficulty progression across challenges"
+- "Check pacing and difficulty progression across activities"
 - "Find broken cross-references / dead links / stale file paths"
 
 ## Inputs
 
-- **Scope** (optional argument): a path or area (e.g. `challenges/foundations`, `docs/`,
+- **Scope** (optional argument): a path or area (e.g. `activities/foundations`, `docs/`,
   `_site/`, `.github/skills/`). If omitted, audit the whole repo content surface (below).
 - The audit is **read-heavy**; fixes are applied only after findings are confirmed.
 
@@ -33,9 +33,9 @@ SDK call, CLI command, env var, and preview-feature claim must be verified again
 
 | Area | What to check |
 |---|---|
-| `docs/challenges/*.md` (+ `*-coach.md`) | Instructions, code snippets, env vars, pacing, learning objectives |
-| `challenges/*/README.md`, `solution.md` | Steps match the validator; solution actually satisfies `validate.py` |
-| `challenges/*/validate.py`, `*.py` | Imports/signatures exist; checks match the stated steps |
+| `docs/activities/*.md` (+ `*-facilitator.md`) | Instructions, code snippets, env vars, pacing, learning objectives |
+| `activities/*/README.md`, `solution.md` | Steps match the validator; solution actually satisfies `validate.py` |
+| `activities/*/validate.py`, `*.py` | Imports/signatures exist; checks match the stated steps |
 | `_site/` and `docs/_site/` | **Generated** — flag drift vs source `docs/`, do NOT hand-edit (see Pitfalls) |
 | `.github/skills/*/SKILL.md` | Stub install commands, env-var names, "gotcha" claims still valid |
 | `infra/*.bicep`, `azure.yaml`, `scripts/*.sh` | Resource/API versions, command flags, output→`.env` contract |
@@ -92,7 +92,7 @@ file+line link, category, severity, the verified source, and the proposed fix.
 **Present findings before mass-editing.**
 
 ### 6. Apply fixes (after confirmation)
-- Fix **source** files (`docs/`, `challenges/`, `.github/skills/`), never the generated
+- Fix **source** files (`docs/`, `activities/`, `.github/skills/`), never the generated
   `_site/` by hand.
 - Make minimal, targeted edits — correct the inaccuracy, don't rewrite surrounding prose.
 - When a fix changes an env var / path / version, update **every** occurrence repo-wide.

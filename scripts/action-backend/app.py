@@ -1,4 +1,4 @@
-"""WTH AI Hackathon — Action Tools backend (provided; teams WIRE it, not build it).
+"""AI Starter Kit RVAS — Action Tools backend (provided; teams WIRE it, not build it).
 
 A tiny FastAPI REST API exposing three *action* operations a student-services agent
 can perform. State is in-memory (resets on restart) — that is intentional for a workshop.
@@ -34,7 +34,7 @@ API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
 
 app = FastAPI(
     title="Northfield University — Action Tools API",
-    description="Provided backend for the Advanced: Action Tools challenge.",
+    description="Provided backend for the Advanced: Action Tools activity.",
     version="1.0.0",
 )
 

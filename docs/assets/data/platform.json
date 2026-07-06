@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T08:40:41.696Z",
+  "generated_at": "2026-07-06T13:20:54.660Z",
   "modules": [
     {
       "id": "foundry",
@@ -12,46 +12,46 @@
           "id": "define",
           "name": "Define",
           "description": "Shape the outcome, users, corpus, safety boundaries, and demo story.",
-          "challenge_count": 3
+          "activity_count": 3
         },
         {
           "id": "foundations",
           "name": "Foundations",
           "description": "Provision Foundry, choose a model, create an agent, and ground it with knowledge.",
-          "challenge_count": 2
+          "activity_count": 2
         },
         {
           "id": "actions",
           "name": "Action Tools",
           "description": "Attach governed tools and approval-gated workflows.",
-          "challenge_count": 2
+          "activity_count": 2
         },
         {
           "id": "trust",
           "name": "Trust",
           "description": "Evaluate, red-team, trace, and debug agent behavior.",
-          "challenge_count": 4
+          "activity_count": 4
         },
         {
           "id": "deploy",
           "name": "Deploy",
           "description": "Host the agent and expose a stakeholder-ready experience.",
-          "challenge_count": 5
+          "activity_count": 5
         },
         {
           "id": "orchestrate",
           "name": "Orchestrate",
           "description": "Compose routers, specialists, and multi-agent workflows.",
-          "challenge_count": 3
+          "activity_count": 3
         },
         {
           "id": "extras",
           "name": "Extras",
           "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
-          "challenge_count": 3
+          "activity_count": 3
         }
       ],
-      "challenge_count": 22
+      "activity_count": 22
     }
   ],
   "outcomes": [
@@ -77,7 +77,7 @@
         "de-risk-ai-adoption",
         "prove-customer-value"
       ],
-      "challenge_ids": [
+      "activity_ids": [
         "customer-outcome",
         "customer-foundations",
         "customer-action-tools",
@@ -91,17 +91,17 @@
         "The team can explain the target users, corpus, action, safety boundaries, and demo story.",
         "The prototype answers with citations, acts only through governed tools, and has a trust scorecard."
       ],
-      "challenge_count": 8,
+      "activity_count": 8,
       "duration_minutes": 795
     },
     {
       "id": "idea-forge",
       "name": "Need an idea first",
       "tagline": "Generate a ranked, buildable AI application idea before starting the customer build path.",
-      "description": "Use Challenge Forge to pick a right-sized idea with clear users, safe data, one action, and a believable demo.",
+      "description": "Use Activity Forge to pick a right-sized idea with clear users, safe data, one action, and a believable demo.",
       "personas": [
         "builder",
-        "coach",
+        "facilitator",
         "account-team"
       ],
       "adoption_stage": [
@@ -112,7 +112,7 @@
         "find-buildable-use-cases",
         "reduce-scope-risk"
       ],
-      "challenge_ids": [
+      "activity_ids": [
         "idea-forge",
         "customer-outcome"
       ],
@@ -120,7 +120,7 @@
         "A selected idea has an outcome, users, data sources, tier guidance, and risk notes.",
         "The chosen idea transfers cleanly into the Customer Build scenario pack."
       ],
-      "challenge_count": 2,
+      "activity_count": 2,
       "duration_minutes": 65
     },
     {
@@ -129,8 +129,8 @@
       "tagline": "Practice the full Foundry path with the known-good Northfield University reference scenario.",
       "description": "Build the Northfield IQ Assistant, then reuse the same architecture for customer work later.",
       "personas": [
-        "student",
-        "coach",
+        "participant",
+        "facilitator",
         "developer"
       ],
       "adoption_stage": [
@@ -142,7 +142,7 @@
         "learn-foundry-patterns",
         "create-repeatable-reference"
       ],
-      "challenge_ids": [
+      "activity_ids": [
         "setup",
         "foundations",
         "advanced-action-tools",
@@ -161,11 +161,11 @@
         "The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.",
         "Participants can identify what to swap when moving from Northfield to a customer scenario."
       ],
-      "challenge_count": 13,
+      "activity_count": 13,
       "duration_minutes": 1140
     }
   ],
-  "challenges": [
+  "activities": [
     {
       "id": "setup",
       "title": "Getting Started",
@@ -173,7 +173,7 @@
       "track": "define",
       "difficulty": "beginner",
       "duration_minutes": 30,
-      "description": "Prepare Codespaces, Azure sign-in, and local tooling before running challenge validators.",
+      "description": "Prepare Codespaces, Azure sign-in, and local tooling before running activity validators.",
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
@@ -192,11 +192,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/setup.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/setup/README.md",
-      "coach_path": "assets/data/challenges/setup/COACH.md"
+      "participant_path": "assets/data/activities/setup/README.md",
+      "facilitator_path": "assets/data/activities/setup/FACILITATOR.md"
     },
     {
       "id": "idea-forge",
@@ -224,11 +224,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/idea-forge.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/idea-forge/README.md",
-      "coach_path": "assets/data/challenges/idea-forge/COACH.md"
+      "participant_path": "assets/data/activities/idea-forge/README.md",
+      "facilitator_path": "assets/data/activities/idea-forge/FACILITATOR.md"
     },
     {
       "id": "customer-outcome",
@@ -257,11 +257,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-outcome.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-outcome/README.md",
-      "coach_path": "assets/data/challenges/customer-outcome/COACH.md"
+      "participant_path": "assets/data/activities/customer-outcome/README.md",
+      "facilitator_path": "assets/data/activities/customer-outcome/FACILITATOR.md"
     },
     {
       "id": "customer-foundations",
@@ -292,11 +292,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/foundations.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-foundations/README.md",
-      "coach_path": "assets/data/challenges/customer-foundations/COACH.md"
+      "participant_path": "assets/data/activities/customer-foundations/README.md",
+      "facilitator_path": "assets/data/activities/customer-foundations/FACILITATOR.md"
     },
     {
       "id": "customer-action-tools",
@@ -327,11 +327,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/advanced-action-tools.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-action-tools/README.md",
-      "coach_path": "assets/data/challenges/customer-action-tools/COACH.md"
+      "participant_path": "assets/data/activities/customer-action-tools/README.md",
+      "facilitator_path": "assets/data/activities/customer-action-tools/FACILITATOR.md"
     },
     {
       "id": "customer-evaluation-redteam",
@@ -362,11 +362,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/advanced-evaluation-redteam.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-evaluation-redteam/README.md",
-      "coach_path": "assets/data/challenges/customer-evaluation-redteam/COACH.md"
+      "participant_path": "assets/data/activities/customer-evaluation-redteam/README.md",
+      "facilitator_path": "assets/data/activities/customer-evaluation-redteam/FACILITATOR.md"
     },
     {
       "id": "customer-tracing-observability",
@@ -396,11 +396,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/advanced-tracing-observability.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-tracing-observability/README.md",
-      "coach_path": "assets/data/challenges/customer-tracing-observability/COACH.md"
+      "participant_path": "assets/data/activities/customer-tracing-observability/README.md",
+      "facilitator_path": "assets/data/activities/customer-tracing-observability/FACILITATOR.md"
     },
     {
       "id": "customer-deploy-hosted-agent",
@@ -430,11 +430,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/advanced-deploy-hosted-agent.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-deploy-hosted-agent/README.md",
-      "coach_path": "assets/data/challenges/customer-deploy-hosted-agent/COACH.md"
+      "participant_path": "assets/data/activities/customer-deploy-hosted-agent/README.md",
+      "facilitator_path": "assets/data/activities/customer-deploy-hosted-agent/FACILITATOR.md"
     },
     {
       "id": "customer-build-ui",
@@ -464,11 +464,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/extra-build-ui.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-build-ui/README.md",
-      "coach_path": "assets/data/challenges/customer-build-ui/COACH.md"
+      "participant_path": "assets/data/activities/customer-build-ui/README.md",
+      "facilitator_path": "assets/data/activities/customer-build-ui/FACILITATOR.md"
     },
     {
       "id": "customer-capstone-multi-agent",
@@ -498,11 +498,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
       "source_path": "docs/customer-build/capstone-multi-agent.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/customer-capstone-multi-agent/README.md",
-      "coach_path": "assets/data/challenges/customer-capstone-multi-agent/COACH.md"
+      "participant_path": "assets/data/activities/customer-capstone-multi-agent/README.md",
+      "facilitator_path": "assets/data/activities/customer-capstone-multi-agent/FACILITATOR.md"
     },
     {
       "id": "foundations",
@@ -531,11 +531,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/foundations/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/foundations/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/foundations/README.md",
-      "coach_path": "assets/data/challenges/foundations/COACH.md"
+      "participant_path": "assets/data/activities/foundations/README.md",
+      "facilitator_path": "assets/data/activities/foundations/FACILITATOR.md"
     },
     {
       "id": "advanced-action-tools",
@@ -566,11 +566,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/advanced-action-tools/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/advanced-action-tools/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/advanced-action-tools/README.md",
-      "coach_path": "assets/data/challenges/advanced-action-tools/COACH.md"
+      "participant_path": "assets/data/activities/advanced-action-tools/README.md",
+      "facilitator_path": "assets/data/activities/advanced-action-tools/FACILITATOR.md"
     },
     {
       "id": "advanced-evaluation-redteam",
@@ -601,11 +601,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/advanced-evaluation-redteam/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/advanced-evaluation-redteam/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/advanced-evaluation-redteam/README.md",
-      "coach_path": "assets/data/challenges/advanced-evaluation-redteam/COACH.md"
+      "participant_path": "assets/data/activities/advanced-evaluation-redteam/README.md",
+      "facilitator_path": "assets/data/activities/advanced-evaluation-redteam/FACILITATOR.md"
     },
     {
       "id": "advanced-tracing-observability",
@@ -636,11 +636,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/advanced-tracing-observability/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/advanced-tracing-observability/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/advanced-tracing-observability/README.md",
-      "coach_path": "assets/data/challenges/advanced-tracing-observability/COACH.md"
+      "participant_path": "assets/data/activities/advanced-tracing-observability/README.md",
+      "facilitator_path": "assets/data/activities/advanced-tracing-observability/FACILITATOR.md"
     },
     {
       "id": "advanced-deploy-hosted-agent",
@@ -670,11 +670,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/advanced-deploy-hosted-agent/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/advanced-deploy-hosted-agent/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/advanced-deploy-hosted-agent/README.md",
-      "coach_path": "assets/data/challenges/advanced-deploy-hosted-agent/COACH.md"
+      "participant_path": "assets/data/activities/advanced-deploy-hosted-agent/README.md",
+      "facilitator_path": "assets/data/activities/advanced-deploy-hosted-agent/FACILITATOR.md"
     },
     {
       "id": "extra-build-ui",
@@ -704,11 +704,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-build-ui/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-build-ui/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-build-ui/README.md",
-      "coach_path": "assets/data/challenges/extra-build-ui/COACH.md"
+      "participant_path": "assets/data/activities/extra-build-ui/README.md",
+      "facilitator_path": "assets/data/activities/extra-build-ui/FACILITATOR.md"
     },
     {
       "id": "extra-voice-live",
@@ -738,11 +738,11 @@
       "emu_compatible": true,
       "tier": "extra",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-voice-live/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-voice-live/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-voice-live/README.md",
-      "coach_path": "assets/data/challenges/extra-voice-live/COACH.md"
+      "participant_path": "assets/data/activities/extra-voice-live/README.md",
+      "facilitator_path": "assets/data/activities/extra-voice-live/FACILITATOR.md"
     },
     {
       "id": "extra-fabric-iq",
@@ -772,11 +772,11 @@
       "emu_compatible": true,
       "tier": "extra",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-fabric-iq/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-fabric-iq/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-fabric-iq/README.md",
-      "coach_path": "assets/data/challenges/extra-fabric-iq/COACH.md"
+      "participant_path": "assets/data/activities/extra-fabric-iq/README.md",
+      "facilitator_path": "assets/data/activities/extra-fabric-iq/FACILITATOR.md"
     },
     {
       "id": "extra-copilot-assisted",
@@ -804,11 +804,11 @@
       "emu_compatible": true,
       "tier": "extra",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-copilot-assisted/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-copilot-assisted/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-copilot-assisted/README.md",
-      "coach_path": "assets/data/challenges/extra-copilot-assisted/COACH.md"
+      "participant_path": "assets/data/activities/extra-copilot-assisted/README.md",
+      "facilitator_path": "assets/data/activities/extra-copilot-assisted/FACILITATOR.md"
     },
     {
       "id": "extra-magentic-workflows",
@@ -838,11 +838,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-magentic-workflows/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-magentic-workflows/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-magentic-workflows/README.md",
-      "coach_path": "assets/data/challenges/extra-magentic-workflows/COACH.md"
+      "participant_path": "assets/data/activities/extra-magentic-workflows/README.md",
+      "facilitator_path": "assets/data/activities/extra-magentic-workflows/FACILITATOR.md"
     },
     {
       "id": "extra-hosted-longrunning",
@@ -872,11 +872,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/extra-hosted-longrunning/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-hosted-longrunning/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/extra-hosted-longrunning/README.md",
-      "coach_path": "assets/data/challenges/extra-hosted-longrunning/COACH.md"
+      "participant_path": "assets/data/activities/extra-hosted-longrunning/README.md",
+      "facilitator_path": "assets/data/activities/extra-hosted-longrunning/FACILITATOR.md"
     },
     {
       "id": "capstone-multi-agent",
@@ -906,11 +906,11 @@
       "emu_compatible": true,
       "tier": "core",
       "references": [],
-      "source_repo": "microsoft/frontier-foundry-hackathon",
-      "source_path": "challenges/capstone-multi-agent/README.md",
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/capstone-multi-agent/README.md",
       "license": "MIT",
-      "student_path": "assets/data/challenges/capstone-multi-agent/README.md",
-      "coach_path": "assets/data/challenges/capstone-multi-agent/COACH.md"
+      "participant_path": "assets/data/activities/capstone-multi-agent/README.md",
+      "facilitator_path": "assets/data/activities/capstone-multi-agent/FACILITATOR.md"
     }
   ]
 }

@@ -18,7 +18,7 @@ info() {
   printf "%b%s%b\n" "$CYAN" "$1" "$RESET"
 }
 
-info "Setting up the WTH AI Foundry Hackathon workspace..."
+info "Setting up the AI Foundry Session workspace..."
 
 if [[ -f requirements.txt ]]; then
   info "Installing Python requirements from requirements.txt"
@@ -38,16 +38,16 @@ else
 fi
 
 printf "\n%b==============================================%b\n" "$GREEN" "$RESET"
-printf "%b  Welcome to the WTH AI Foundry Hackathon!  %b\n" "$GREEN" "$RESET"
+printf "%b  Welcome to the AI Foundry Session!  %b\n" "$GREEN" "$RESET"
 printf "%b==============================================%b\n\n" "$GREEN" "$RESET"
 
-printf "%bChallenge quick links%b\n" "$CYAN" "$RESET"
-printf "  • Foundations (Steps 1–4): challenges/foundations/\n"
-printf "  • Advanced — Action Tools: challenges/advanced-action-tools/\n"
-printf "  • Advanced — Evaluation & Red Teaming: challenges/advanced-evaluation-redteam/\n"
-printf "  • Advanced — Tracing & Observability: challenges/advanced-tracing-observability/\n"
-printf "  • Advanced — Deploy as a Hosted Agent: challenges/advanced-deploy-hosted-agent/\n"
-printf "  • Extras: challenges/extra-*/\n"
+printf "%bActivity quick links%b\n" "$CYAN" "$RESET"
+printf "  • Foundations (Steps 1–4): activities/foundations/\n"
+printf "  • Advanced — Action Tools: activities/advanced-action-tools/\n"
+printf "  • Advanced — Evaluation & Red Teaming: activities/advanced-evaluation-redteam/\n"
+printf "  • Advanced — Tracing & Observability: activities/advanced-tracing-observability/\n"
+printf "  • Advanced — Deploy as a Hosted Agent: activities/advanced-deploy-hosted-agent/\n"
+printf "  • Extras: activities/extra-*/\n"
 printf "  • Docs site: docs/\n\n"
 
 warn "Next steps:"

@@ -1,5 +1,5 @@
 // ============================================================================
-// WTH AI Hackathon — resource-group-scoped resources for the Foundry footprint.
+// AI Starter Kit RVAS — resource-group-scoped resources for the Foundry footprint.
 //
 // Provisions, keyless-by-default (managed identity + RBAC):
 //   • Microsoft Foundry resource (Cognitive Services kind=AIServices, project mgmt on)
@@ -80,7 +80,7 @@ resource search 'Microsoft.Search/searchServices@2024-06-01-preview' = {
     hostingMode: 'default'
     semanticSearch: 'standard'
     // Keyless-first: prefer RBAC, but keep key auth available as a fallback for the workshop.
-    authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerChallenge' } }
+    authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerActivity' } }
     disableLocalAuth: false
   }
 }
@@ -145,7 +145,7 @@ resource project 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-previ
   identity: { type: 'SystemAssigned' }
   properties: {
     displayName: 'Northfield IQ Assistant'
-    description: 'WTH AI Hackathon — Northfield University IQ Assistant project.'
+    description: 'AI Starter Kit RVAS — Northfield University IQ Assistant project.'
   }
 }
 

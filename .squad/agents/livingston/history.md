@@ -2,10 +2,10 @@
 
 ### GitHub Pages baseurl / private-site root-serving gotcha — 2026-06-01
 
-- **Symptom:** Pages site 404s on every CSS/JS asset (e.g. `/ai-hackathon/assets/css/...`).
-- **Root cause:** When a Pages site's visibility is **Private**, GitHub serves it from a randomized subdomain at the ROOT (e.g. `random-name-xxxx.pages.github.io/`) with NO project-name path segment. But `docs/_config.yml` hardcodes `baseurl: "/ai-hackathon"`, and just-the-docs prepends that baseurl to every `relative_url` asset link — so assets resolve to `/ai-hackathon/assets/...`, which doesn't exist on a root-served site → 404.
-- **Fix pattern (do NOT touch `_config.yml`):** In `.github/workflows/deploy-pages.yml`, give the `actions/configure-pages@v6` step an `id: pages`, then pass its live output to the build: `jekyll build ... --baseurl "${{ steps.pages.outputs.base_path }}"`. `base_path` is `""` for a private root-served site and `/ai-hackathon` if flipped to Public — so the workflow self-corrects for BOTH visibilities. Keeping `_config.yml` untouched preserves local dev (`bundle exec jekyll serve`) and the public URL.
-- A sibling repo (`frontier-ghaw-hackathon`) hit and proved this exact fix.
+- **Symptom:** Pages site 404s on every CSS/JS asset (e.g. `/ai-starter-kit-rvas/assets/css/...`).
+- **Root cause:** When a Pages site's visibility is **Private**, GitHub serves it from a randomized subdomain at the ROOT (e.g. `random-name-xxxx.pages.github.io/`) with NO project-name path segment. But `docs/_config.yml` hardcodes `baseurl: "/ai-starter-kit-rvas"`, and just-the-docs prepends that baseurl to every `relative_url` asset link — so assets resolve to `/ai-starter-kit-rvas/assets/...`, which doesn't exist on a root-served site → 404.
+- **Fix pattern (do NOT touch `_config.yml`):** In `.github/workflows/deploy-pages.yml`, give the `actions/configure-pages@v6` step an `id: pages`, then pass its live output to the build: `jekyll build ... --baseurl "${{ steps.pages.outputs.base_path }}"`. `base_path` is `""` for a private root-served site and `/ai-starter-kit-rvas` if flipped to Public — so the workflow self-corrects for BOTH visibilities. Keeping `_config.yml` untouched preserves local dev (`bundle exec jekyll serve`) and the public URL.
+- A sibling repo (`frontier-ghaw-session`) hit and proved this exact fix.
 
 ### Cleanup + Lab-Generator batch — 2026-06-01
 
@@ -45,19 +45,19 @@
   is the richest red-team material).
 
 ### Project Context
-- **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry format
-- **Repo:** ai-hackathon
+- **Project:** AI Starter Kit RVAS — Microsoft Foundry format
+- **Repo:** ai-starter-kit-rvas
 - **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
-- **Participants:** Students (new to AI) + Coaches (facilitators)
-- **Goal:** Create a complete, deliverable WTH hackathon format with a polished GitHub Pages site
+- **Participants:** Students (new to AI) + Facilitators (facilitators)
+- **Goal:** Create a complete, deliverable session format with a polished GitHub Pages site
 - **Requested by:** Marco Olivo
 - **Date:** 2026-05-28
 
 ### Version Audit — 2026-05-28
 
 - Verified all Python deps, devcontainer features, GitHub Actions, and Gemfile against current stable releases.
-- `azure-ai-projects` has gone GA at 2.x — import path unchanged but constructor requires `endpoint=` kwarg. Flag raised in decision doc for Rusty/Basher to audit challenge samples.
-- `azure-search-documents` bumped to 12.x (major) — flag raised for RAG challenge review.
+- `azure-ai-projects` has gone GA at 2.x — import path unchanged but constructor requires `endpoint=` kwarg. Flag raised in decision doc for Rusty/Basher to audit activity samples.
+- `azure-search-documents` bumped to 12.x (major) — flag raised for RAG activity review.
 - `openai` bumped to 2.x — `chat.completions` still works; `responses.create()` is new preferred API.
 - `azure-ai-inference` remains beta (1.0.0b9 unchanged); `promptflow` is sustained but not growing.
 - GitHub Actions: `checkout` → v6, `configure-pages` → v6, `upload-pages-artifact` → v5, `deploy-pages` → v5.
@@ -67,7 +67,7 @@
 - Decision doc written to `.squad/decisions/inbox/livingston-version-audit.md`.
 
 ### Repo Infrastructure Setup
-- Added the baseline WTH directory scaffold for challenges, docs, resources, and repo automation assets so content can land in stable locations.
+- Added the baseline directory scaffold for activities, docs, resources, and repo automation assets so content can land in stable locations.
 - Standardized the devcontainer on Python 3.11 with Azure CLI, Node.js 20, GitHub CLI, and a post-create bootstrap flow.
 - Captured a reusable GitHub Pages + Jekyll pattern with `docs/Gemfile`, a Pages deployment workflow, and contributor templates.
 - Provisioning scripts for AI Foundry should be written defensively because Azure CLI support for hub/project resources can vary between extension versions.
@@ -80,11 +80,11 @@
 **Session:** Fact-check & CSS fix (multi-batch agent work)
 
 **Major Outcomes:**
-- **Microsoft Foundry rebrand applied** — All challenges verified & updated (Azure AI Foundry → Microsoft Foundry)
+- **Microsoft Foundry rebrand applied** — All activities verified & updated (Azure AI Foundry → Microsoft Foundry)
 - **CSS rendering restored** — GitHub Pages now displays with full just-the-docs theme
 - **Content verified against current docs** — All SDK versions, deployment patterns, and terminology current (no breaking changes)
 - **Humanizer pass complete** — 28 files cleaned of AI-generated patterns (emojis, em dashes, promotional vocab)
-- **Cross-page links fixed** — Challenge discovery pages now render without 404s
+- **Cross-page links fixed** — Activity discovery pages now render without 404s
 - **Platform resilience discovered** — Serial agent dispatch works around 401 outages (parallel spawn causes race conditions)
 
 **Next:** Marco needs to `git push` to deploy CSS fix to live site; maintainers must run `cd docs && bundle install` to regenerate Gemfile.lock.
@@ -93,20 +93,20 @@
 
 ### 2026-06-01 — Curriculum V2 direction (Scribe note)
 - `PLAN-V2.md` is the new curriculum direction (Proposed): agent-era rearchitecture, core spine 00–07, one-artifact-many-acts Northfield "IQ" Assistant narrative.
-- **Prompt Flow is CUT** per Marco's directive — old Challenge 03 removed; dependent RAG/eval steps re-expressed on Agents + AI Search + Foundry IQ + MCP + MAF; `promptflow*` deps leave the devcontainer.
+- **Prompt Flow is CUT** per Marco's directive — old Activity 03 removed; dependent RAG/eval steps re-expressed on Agents + AI Search + Foundry IQ + MCP + MAF; `promptflow*` deps leave the devcontainer.
 - See `.squad/decisions.md` and `.squad/log/2026-06-01-curriculum-v2-planning.md`.
 
 ### 2026-06-01 — Two-tier restructure + Prompt Flow removal (executed)
 - Executed RESTRUCTURE-SPEC §2.1 `git mv`/`git rm` sequence (staged, not committed — Scribe commits later).
-- **Renames (history preserved):** `challenge-00-setup` → `foundations`; `challenge-05-evaluation` → `advanced-evaluation-redteam`; `challenge-06-deploy` → `advanced-deploy-hosted-agent`.
-- **Deleted:** `challenge-03-prompt-flow/` (entire folder, `git rm -r`); `docs/challenges/challenge-03.md` + `challenge-03-coach.md` (spec §5).
-- **Pending harvest (left in place per task + spec harvest-before-remove):** `challenge-01-first-model`, `challenge-02-prompt-engineering`, `challenge-04-rag` — Rusty must harvest into `foundations/` Steps 2–4 before these get `git rm`'d.
+- **Renames (history preserved):** `activity-00-setup` → `foundations`; `activity-05-evaluation` → `advanced-evaluation-redteam`; `activity-06-deploy` → `advanced-deploy-hosted-agent`.
+- **Deleted:** `activity-03-prompt-flow/` (entire folder, `git rm -r`); `docs/activities/activity-03.md` + `activity-03-facilitator.md` (spec §5).
+- **Pending harvest (left in place per task + spec harvest-before-remove):** `activity-01-first-model`, `activity-02-prompt-engineering`, `activity-04-rag` — Rusty must harvest into `foundations/` Steps 2–4 before these get `git rm`'d.
 - **Created placeholders** (`<!-- PLACEHOLDER: content authored in Wave 2 -->` README + solution): `advanced-action-tools`, `advanced-tracing-observability`, `extra-fabric-iq`, `extra-voice-live`, `extra-magentic-workflows`, `extra-hosted-longrunning`, `extra-build-ui`, `extra-copilot-assisted`.
 - **requirements.txt:** removed `promptflow`, `promptflow-tools`; added `azure-ai-agents`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
 - **devcontainer.json:** removed `ms-toolsai.promptflow` extension.
-- **Docs nav:** removed broken `challenge-03` rows from `docs/index.md`, `docs/challenges/index.md`, `docs/coach-hub.md`.
+- **Docs nav:** removed broken `activity-03` rows from `docs/index.md`, `docs/activities/index.md`, `docs/facilitator-hub.md`.
 - **GOTCHA:** git rename-detection cross-paired identical `.gitkeep` files between unrelated folders in `git status` output — cosmetic only; the real `README.md`/`solution.md` renames tracked correctly with history.
-- **Left for content authors (NOT edited — prose):** prompt-flow references remain in `README.md` (root), `challenges/challenge-04-rag/`, `challenges/advanced-deploy-hosted-agent/` (ex-06), `docs/challenges/challenge-04.md`, `challenge-06.md`, `challenge-02.md` pager, `docs/coach-hub.md` troubleshooting rows, `resources/QA-REPORT.md`. Full list in restructure decision doc.
+- **Left for content authors (NOT edited — prose):** prompt-flow references remain in `README.md` (root), `activities/activity-04-rag/`, `activities/advanced-deploy-hosted-agent/` (ex-06), `docs/activities/activity-04.md`, `activity-06.md`, `activity-02.md` pager, `docs/facilitator-hub.md` troubleshooting rows, `resources/QA-REPORT.md`. Full list in restructure decision doc.
 
 ### 2026-06-01 — Infra + automation scaffolding (azd/Bicep, bootstrap, action tools, Copilot layer)
 - **azd golden path:** authored `azure.yaml` (no `services:` — infra-only `azd up`), `infra/main.bicep` (subscription scope, creates RG + module), `infra/resources.bicep` (Foundry AIServices `allowProjectManagement:true`, project, model deployment, AI Search basic, Log Analytics + App Insights, ACR, project connections to Search+AppInsights, keyless RBAC), `infra/main.parameters.json` (azd `${VAR=default}` substitution). `az bicep build` passes clean.
@@ -116,13 +116,13 @@
 - **DECISION — action-tools env contract (AUTHORITATIVE):** no `basher-eval-action.md` existed in the inbox, so I DEFINED the names: `ACTION_API_URL=http://localhost:8080`, `ACTION_MCP_URL=http://localhost:8765/mcp`, `ACTION_API_KEY` (optional `x-api-key`). Basher/Rusty action-tools + eval content MUST match these. Documented in `.env.sample` + decision doc.
 - **Copilot enablement layer:** `.vscode/mcp.json` (3 servers: `azure` stdio `@azure/mcp`, `foundry-mcp` http `https://mcp.ai.azure.com`, `microsoft-docs` http `https://learn.microsoft.com/api/mcp`), `.github/copilot-instructions.md` (Search-Before-Implement), and 7 `.github/skills/*/SKILL.md` stubs (progressive-disclosure frontmatter + `npx skills add` pointer; NOT vendored).
 - **`.env.sample`** documents the whole `.env` variable contract (Foundry/Search/Obs/ACR/Azure/Action). Real `.env` never committed.
-- **Prompt Flow cleanup in files I own:** rewrote root `README.md` (intro, learning outcomes, getting-started, challenge table → two-tier, repo tree, footer) and `.devcontainer/post-create.sh` (challenge quick-links + `.env.example`→`.env.sample`). Root README now grep-clean of prompt-flow/challenge-0N.
+- **Prompt Flow cleanup in files I own:** rewrote root `README.md` (intro, learning outcomes, getting-started, activity table → two-tier, repo tree, footer) and `.devcontainer/post-create.sh` (activity quick-links + `.env.example`→`.env.sample`). Root README now grep-clean of prompt-flow/activity-0N.
 - **Validation:** `bash -n` (both shells), `py_compile` (3 py files), JSON parse (params + mcp.json), `az bicep build` — all pass.
 - **GOTCHA:** azd `.env` contract flows Bicep `output` → azd env → `azd env get-values > .env`. Output names in `main.bicep` are intentionally identical to `.env.sample` keys so the two stay in sync.
 - Nothing committed (Scribe owns commits).
 
 ### 2026-06-01 — Curriculum V2 implemented (cross-agent note)
-Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-tier** — Tier 1 Foundations (4 ordered steps) + Tier 2 (4 Advanced challenges + 6 Extras). **Prompt Flow fully removed** (deps, devcontainer, challenges, docs). `docs/` mirrors `challenges/` 1:1 with coach siblings. Decision inbox merged into `.squad/decisions.md` (28 entries); session log: `.squad/log/2026-06-01T100000Z-curriculum-v2-build.md`.
+Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-tier** — Tier 1 Foundations (4 ordered steps) + Tier 2 (4 Advanced activities + 6 Extras). **Prompt Flow fully removed** (deps, devcontainer, activities, docs). `docs/` mirrors `activities/` 1:1 with facilitator siblings. Decision inbox merged into `.squad/decisions.md` (28 entries); session log: `.squad/log/2026-06-01T100000Z-curriculum-v2-build.md`.
 
 ### 2026-06-01 — PLAN-V3 IMPLEMENTED (cross-agent note)
 PLAN-V3 is now **implemented** (staged, not committed). My piece: `scripts/cleanup.sh`
@@ -137,7 +137,7 @@ into `.squad/decisions.md` ("Curriculum V3 — Three-Tier IMPLEMENTATION (BUILT)
 
 - 2026-06-01 — Archived 7 internal build/planning docs out of the participant-facing tree into a new non-shipping folder `.squad/planning/` (moved, not deleted; git history preserved). Files: PLAN.md, PLAN-V2.md, PLAN-V3.md, RESTRUCTURE-SPEC.md, CURRICULUM-REASSESSMENT.md, decisions.md (root legacy log — NOT `.squad/decisions.md`), and resources/QA-REPORT.md (flattened to `.squad/planning/QA-REPORT.md`). Used `git mv` for tracked (PLAN.md, decisions.md, QA-REPORT.md), plain `mv` for untracked V2/V3/SPEC/REASSESSMENT.
 - Added `.squad/planning/README.md` index documenting V1→V2→V3 lineage, RESTRUCTURE-SPEC executed, CURRICULUM-REASSESSMENT consumed by V3, decisions.md superseded by `.squad/decisions.md`, QA-REPORT = QA pass record.
-- README repo-tree fix: removed the `└── PLAN-V2.md` line from the "Repository Structure" tree and re-pointed `.env.sample` to the closing `└──` branch. No other README content altered. docs/ and challenges/ had no stale root-relative links to the moved files (validate.py's "PLAN-V3 §3.7" is a section citation, not a link — left untouched).
+- README repo-tree fix: removed the `└── PLAN-V2.md` line from the "Repository Structure" tree and re-pointed `.env.sample` to the closing `└──` branch. No other README content altered. docs/ and activities/ had no stale root-relative links to the moved files (validate.py's "PLAN-V3 §3.7" is a section citation, not a link — left untouched).
 - 2026-06-01 — Dependency audit found one install blocker: `azure-ai-agents>=2.0.0` in root `requirements.txt` was unsatisfiable (latest GA is 1.1.0). Updated floor to `>=1.1.0` after confirming Foundry docs still recommend `azure-ai-projects>=2.x` + `DefaultAzureCredential` endpoint auth, and after checking release streams on PyPI. Left other lower bounds unchanged to avoid forcing avoidable beta/major jumps.
 
 ### 2026-06-23 — setup-resources.sh key-based logic removal (follow-up)
@@ -168,10 +168,10 @@ Executed the approved remediation plan across 9 files (10 changed; 2 files pre-c
 - `resources/scripts/validate-environment.py` — aligned `REQUIRED_VARS` and `OPTIONAL_VARS` to `.env.sample` contract; removed `promptflow` / `promptflow-tools` from `PACKAGE_CHECKS`; removed key-based auth logic from endpoint check (keyless-first)
 - `resources/scripts/setup-resources.sh` — updated the `.env` write block to emit `.env.sample`-canonical names (replaced `AZURE_AI_ENDPOINT` + `AZURE_AI_KEY` with `AZURE_AI_PROJECT_ENDPOINT` + `AZURE_AI_MODEL_DEPLOYMENT_NAME`; removed `AZURE_SEARCH_KEY`)
 - `requirements.txt` — added `httpx>=0.27.0` and `PyYAML>=6.0` (not already present; `azure-monitor-query` skipped — no imports found in validators)
-- `.github/PULL_REQUEST_TEMPLATE.md` — replaced Challenge 00–06 checklist with Foundations / Advanced / Extras / Capstone / Cross-cutting structure
+- `.github/PULL_REQUEST_TEMPLATE.md` — replaced Activity 00–06 checklist with Foundations / Advanced / Extras / Capstone / Cross-cutting structure
 - `.github/workflows/deploy-pages.yml` — bumped `actions/checkout@v6` → `@v7` (latest stable; configure-pages@v6, upload-pages-artifact@v5, deploy-pages@v5 were already correct)
 - `docs/_config.yml` — updated nav external link from `azure/ai-foundry/` → `azure/foundry/` (canonical Microsoft Foundry docs URL); updated title from "Azure AI Foundry Docs" → "Microsoft Foundry Docs"
-- `docs/setup.md` — replaced `.env.example` → `.env.sample`; replaced 4× "Challenge 00" references with "Foundations"/"the Foundations challenge"
+- `docs/setup.md` — replaced `.env.example` → `.env.sample`; replaced 4× "Activity 00" references with "Foundations"/"the Foundations activity"
 
 **Validation:**
 - `python3 -m json.tool .devcontainer/devcontainer.json` → OK
@@ -180,9 +180,9 @@ Executed the approved remediation plan across 9 files (10 changed; 2 files pre-c
 - requirements.txt parsed 18 deps cleanly
 - `grep -c promptflow resources/scripts/validate-environment.py` → 0
 
-**Constraints honored:** Did not touch Action Tools challenge files (Basher's ownership). Did not edit broad curriculum prose beyond the specific stale env/challenge-number references. No commit made (Scribe owns commits).
+**Constraints honored:** Did not touch Action Tools activity files (Basher's ownership). Did not edit broad curriculum prose beyond the specific stale env/activity-number references. No commit made (Scribe owns commits).
 
-**GOTCHA:** `git diff --stat HEAD` showed `challenges/foundations/README.md` and `docs/challenges/foundations.md` as already modified before my pass — those are not in my ownership and I did not touch them; they appeared in the diff because an earlier agent staged changes before this session started.
+**GOTCHA:** `git diff --stat HEAD` showed `activities/foundations/README.md` and `docs/activities/foundations.md` as already modified before my pass — those are not in my ownership and I did not touch them; they appeared in the diff because an earlier agent staged changes before this session started.
 
 ---
 
@@ -195,5 +195,5 @@ Executed the approved remediation plan across 9 files (10 changed; 2 files pre-c
 
 **Checks run:**
 - `grep azure-monitor-query requirements.txt` → confirmed present
-- `python3 -m py_compile challenges/advanced-tracing-observability/validate.py` → OK
-- `python3 -m py_compile challenges/advanced-deploy-hosted-agent/validate.py` → OK
+- `python3 -m py_compile activities/advanced-tracing-observability/validate.py` → OK
+- `python3 -m py_compile activities/advanced-deploy-hosted-agent/validate.py` → OK

@@ -244,7 +244,7 @@ body,
   display: none;
 }
 
-.challenge-card {
+.activity-card {
   display: block;
   width: 100%;
   overflow-x: auto;
@@ -256,18 +256,18 @@ body,
   box-shadow: var(--shadow-soft);
 }
 
-.challenge-card table {
+.activity-card table {
   min-width: 100%;
 }
 
-.challenge-card th {
+.activity-card th {
   background: linear-gradient(180deg, #edf5ff 0%, #e5f1ff 100%);
   color: var(--brand-900);
 }
 
-.challenge-card th,
-.challenge-card td {
-  vertical-align: middle;
+.activity-card th,
+.activity-card td {
+ vertical-align: middle;
 }
 
 .home-hero {
@@ -454,7 +454,7 @@ body,
   line-height: 1.48;
 }
 
-.challenge-prereq {
+.activity-prereq {
   display: grid;
   gap: 0.28rem;
   margin: 1rem 0 1.45rem;
@@ -466,15 +466,15 @@ body,
   box-shadow: var(--shadow-soft);
 }
 
-.challenge-prereq strong {
+.activity-prereq strong {
   color: var(--brand-900);
 }
 
-.challenge-prereq span {
+.activity-prereq span {
   color: var(--ink-700);
 }
 
-.challenge-prereq__skip {
+.activity-prereq__skip {
   font-size: 0.9rem;
 }
 
@@ -730,7 +730,7 @@ body,
   background: #ffffff;
 }
 
-.coach-note {
+.facilitator-note {
   font-size: 0.95rem;
   color: var(--ink-500);
 }
@@ -755,11 +755,11 @@ body,
   border-radius: 999px;
 }
 
-.challenge-hero {
+.activity-hero {
   margin-bottom: 2rem;
 }
 
-.challenge-hero h1 {
+.activity-hero h1 {
   margin-bottom: 0.5rem;
 }
 
@@ -789,7 +789,7 @@ body,
 
 .hero-panel,
 .quick-card,
-.challenge-card {
+.activity-card {
   animation: rise-in 360ms ease both;
 }
 
@@ -859,7 +859,7 @@ body,
   }
 
   .table-wrapper,
-  .challenge-card {
+  .activity-card {
     margin-left: -0.4rem;
     margin-right: -0.4rem;
     width: calc(100% + 0.8rem);

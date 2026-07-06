@@ -3,10 +3,10 @@ title: Resources
 nav_order: 7
 ---
 
-<div class="hero-panel challenge-hero">
+<div class="hero-panel activity-hero">
   <span class="hero-kicker">Reference shelf</span>
   <h1>Resources</h1>
-  <p class="hero-tagline">The few links participants and coaches are most likely to need during the hackathon.</p>
+  <p class="hero-tagline">The few links participants and facilitators are most likely to need during the session.</p>
 </div>
 
 ## Core references
@@ -19,4 +19,4 @@ nav_order: 7
 | Model deployment | [Deploy models in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/deploy-models-openai) |
 | Knowledge/indexing | [Add data and build indexes in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/index-add) |
 | Evaluation | [Evaluate with Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/evaluate-generative-ai-app) |
-| Challenge format | [Microsoft challenge community](https://microsoft.github.io/WhatTheHack/) |
+| Activity format | [Microsoft activity community](https://microsoft.github.io/WhatTheHack/) |

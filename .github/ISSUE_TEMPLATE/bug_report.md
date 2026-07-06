@@ -10,7 +10,7 @@ assignees: []
 Describe the broken instruction or behavior.
 
 ## Where did you hit it?
-- Challenge:
+- Activity:
 - File or page:
 - Step number:
 

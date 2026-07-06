@@ -9,7 +9,7 @@ description: Instrument your agent so you can explain latency, retrieval, tool c
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Observe" artifact="One traced scenario run with model, retrieval, and tool spans you can explain by operation id." next="Once you can see inside the run, move to Ship it." %}
 
-This chapter is mutuated from [Advanced · Tracing & Observability](../challenges/advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Tracing & Observability](../activities/advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](foundations). If [Make it act](advanced-action-tools) applies, include one approved or denied action in the traced path.
 
@@ -30,13 +30,13 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 - Is your corpus safe to appear in trace payloads?
 - What app name or run label helps you find your trace later?
 
-**Apply it to your app:** wire the tracing setup exactly as the reference shows; the import order is not optional. → [Tracing — Step 1](../challenges/advanced-tracing-observability#step-1--enable-genai-instrumentation)
+**Apply it to your app:** wire the tracing setup exactly as the reference shows; the import order is not optional. → [Tracing — Step 1](../activities/advanced-tracing-observability#step-1--enable-genai-instrumentation)
 
 **Prove you applied it:**
-- `python challenges/advanced-tracing-observability/validate.py --track customer --step 1 --dry-run`
+- `python activities/advanced-tracing-observability/validate.py --track customer --step 1 --dry-run`
 - Checklist: □ tracing flags are set before Azure SDK imports □ App Insights connection is resolved □ message capture is acceptable for your demo data □ no secrets or PII are logged.
 
-**Stuck?** [Northfield Step 1](../challenges/advanced-tracing-observability#step-1--enable-genai-instrumentation).
+**Stuck?** [Northfield Step 1](../activities/advanced-tracing-observability#step-1--enable-genai-instrumentation).
 
 ---
 
@@ -55,13 +55,13 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 - What output proves the run belongs to your scenario?
 - What identifier will you copy into your notes: response id, operation id, timestamp?
 
-**Apply it to your app:** run your agent through the traced wrapper and ask your real scenario question. → [Tracing — Step 2](../challenges/advanced-tracing-observability#step-2--run-the-agent-and-emit-spans)
+**Apply it to your app:** run your agent through the traced wrapper and ask your real scenario question. → [Tracing — Step 2](../activities/advanced-tracing-observability#step-2--run-the-agent-and-emit-spans)
 
 **Prove you applied it:**
-- `python challenges/advanced-tracing-observability/validate.py --track customer --step 2 --dry-run`
+- `python activities/advanced-tracing-observability/validate.py --track customer --step 2 --dry-run`
 - Checklist: □ traced run prints an answer □ run includes your scenario question □ operation/response id is captured □ wait time for span propagation is accounted for.
 
-**Stuck?** [Northfield Step 2](../challenges/advanced-tracing-observability#step-2--run-the-agent-and-emit-spans).
+**Stuck?** [Northfield Step 2](../activities/advanced-tracing-observability#step-2--run-the-agent-and-emit-spans).
 
 ---
 
@@ -70,7 +70,7 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 **Why it matters for your app:** the span tree tells you whether the answer came from the model alone, retrieval, a tool, or a failed branch.
 
 **Does this apply to you?**
-- Build it if you need to explain a success or failure to a coach or stakeholder.
+- Build it if you need to explain a success or failure to a facilitator or stakeholder.
 - Adapt it if you only have model spans today — record that retrieval/tool spans are absent and why.
 - Skip it only if you cannot access the portal during the event; keep the KQL step as backup.
 
@@ -79,13 +79,13 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 - What token, latency, and retrieval signals matter for your success measures?
 - What span would reveal a safety-boundary failure?
 
-**Apply it to your app:** find the trace in Foundry and identify model, retrieval, and tool spans as applicable. → [Tracing — Step 3](../challenges/advanced-tracing-observability#step-3--inspect-the-spans-portal-tracing-tab)
+**Apply it to your app:** find the trace in Foundry and identify model, retrieval, and tool spans as applicable. → [Tracing — Step 3](../activities/advanced-tracing-observability#step-3--inspect-the-spans-portal-tracing-tab)
 
 **Prove you applied it:**
-- `python challenges/advanced-tracing-observability/validate.py --track customer --step 3 --dry-run`
+- `python activities/advanced-tracing-observability/validate.py --track customer --step 3 --dry-run`
 - Checklist: □ parent span found □ model span identified □ retrieval/tool spans identified or explicitly absent □ token and latency notes recorded.
 
-**Stuck?** [Northfield Step 3](../challenges/advanced-tracing-observability#step-3--inspect-the-spans-portal-tracing-tab).
+**Stuck?** [Northfield Step 3](../activities/advanced-tracing-observability#step-3--inspect-the-spans-portal-tracing-tab).
 
 ---
 
@@ -103,13 +103,13 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 - What summary fields matter: total latency, token count, retrieval count, tool count, failure status?
 - What threshold would become an alert later?
 
-**Apply it to your app:** save a correlation query that reconstructs one of your scenario runs end-to-end. → [Tracing — Step 4](../challenges/advanced-tracing-observability#step-4--correlate-one-question-end-to-end-with-kql)
+**Apply it to your app:** save a correlation query that reconstructs one of your scenario runs end-to-end. → [Tracing — Step 4](../activities/advanced-tracing-observability#step-4--correlate-one-question-end-to-end-with-kql)
 
 **Prove you applied it:**
-- `python challenges/advanced-tracing-observability/validate.py --track customer --all --dry-run`
+- `python activities/advanced-tracing-observability/validate.py --track customer --all --dry-run`
 - Checklist: □ `correlate.kql` exists □ query filters one operation id □ output includes ordered spans □ one latency/token/cost observation is ready for the demo.
 
-**Stuck?** [Northfield Step 4](../challenges/advanced-tracing-observability#step-4--correlate-one-question-end-to-end-with-kql).
+**Stuck?** [Northfield Step 4](../activities/advanced-tracing-observability#step-4--correlate-one-question-end-to-end-with-kql).
 
 ---
 
@@ -118,7 +118,7 @@ This chapter is mutuated from [Advanced · Tracing & Observability](../challenge
 You have one end-to-end trace for your scenario, plus a KQL query that explains where time, tokens, retrieval, and tools went.
 
 ```bash
-python challenges/advanced-tracing-observability/validate.py --track customer --all --dry-run
+python activities/advanced-tracing-observability/validate.py --track customer --all --dry-run
 ```
 
 Next: [Ship it](advanced-deploy-hosted-agent).

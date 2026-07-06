@@ -1,4 +1,4 @@
-# WTH AI Hackathon: Content Architecture Plan
+# AI Starter Kit RVAS: Content Architecture Plan
 
 > **Archived V1 plan. Do not use for current curriculum.** This file preserves the original
 > Prompt Flow-era design for history only. The active curriculum is the agent-era three-tier plan in
@@ -6,19 +6,19 @@
 
 > **"Build Intelligent Apps with Microsoft Foundry"**
 >
-> A What The Hack hackathon-in-a-box that takes participants from zero to deploying an AI-powered application using Microsoft Foundry.
+> A AI Starter Kit RVAS session-in-a-box that takes participants from zero to deploying an AI-powered application using Microsoft Foundry.
 
 ---
 
-## 1. Hackathon Overview
+## 1. Session Overview
 
 | Field | Detail |
 |-------|--------|
 | **Title** | Build Intelligent Apps with Microsoft Foundry |
 | **Tagline** | From prompt to production: build, evaluate, and deploy AI solutions |
-| **Duration** | 1-day event (6–8 hours of challenge time) or 2-day event (relaxed pace with deeper exploration) |
+| **Duration** | 1-day event (6–8 hours of activity time) or 2-day event (relaxed pace with deeper exploration) |
 | **Team size** | 3–5 participants per team |
-| **Coach ratio** | 1 coach per 2–3 teams |
+| **Facilitator ratio** | 1 facilitator per 2–3 teams |
 
 ### Target Audience
 
@@ -27,7 +27,7 @@
 - Comfortable with Python basics and REST APIs
 - No prior Azure or Microsoft Foundry experience required
 
-**Coaches**
+**Facilitators**
 - Experienced Azure practitioners (AI Engineers, Cloud Solution Architects)
 - Familiar with Microsoft Foundry, Azure OpenAI Service, and prompt engineering
 - Role: facilitate discovery, unblock teams, never give answers directly
@@ -41,7 +41,7 @@
 
 ### High-Level Learning Outcomes
 
-By the end of this hackathon, participants will be able to:
+By the end of this session, participants will be able to:
 
 1. Navigate Microsoft Foundry and create an AI project with connected resources
 2. Deploy and interact with models from the Azure AI model catalog
@@ -52,9 +52,9 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-## 2. Challenge List
+## 2. Activity List
 
-### Challenge 00: Setup & Orientation
+### Activity 00: Setup & Orientation
 | Field | Detail |
 |-------|--------|
 | **Description** | Provision your Microsoft Foundry resource and project. Explore the portal interface, connect your Azure OpenAI resource, and verify your development environment works end-to-end. |
@@ -72,13 +72,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 01: Your First Model Deployment
+### Activity 01: Your First Model Deployment
 | Field | Detail |
 |-------|--------|
 | **Description** | Deploy a GPT model from the model catalog, interact with it via the playground, then call it programmatically using the Azure AI Inference SDK. Compare different model capabilities. |
 | **Time** | 45 minutes |
 | **Difficulty** | Beginner |
-| **Dependencies** | Challenge 00 |
+| **Dependencies** | Activity 00 |
 | **Microsoft Foundry features** | Model catalog, Model deployments (MaaS/MaaP), AI Inference SDK, Playground |
 
 **Learning Objectives:**
@@ -90,13 +90,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 02: Prompt Engineering & System Design
+### Activity 02: Prompt Engineering & System Design
 | Field | Detail |
 |-------|--------|
 | **Description** | Master prompt engineering techniques: persona setting, few-shot examples, chain-of-thought reasoning, and output formatting. Design a system prompt for a specific use case (e.g., a university Q&A assistant). |
 | **Time** | 1 hour |
 | **Difficulty** | Beginner–Intermediate |
-| **Dependencies** | Challenge 01 |
+| **Dependencies** | Activity 01 |
 | **Microsoft Foundry features** | Playground (Chat), Prompt management, Content filtering configuration |
 
 **Learning Objectives:**
@@ -108,13 +108,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 03: Prompt Flow Orchestration
+### Activity 03: Prompt Flow Orchestration
 | Field | Detail |
 |-------|--------|
 | **Description** | Build a multi-step prompt flow that chains LLM calls with Python code nodes. Implement input validation, conditional logic, and structured output parsing. Test and iterate on the flow within Microsoft Foundry. |
 | **Time** | 1.5 hours |
 | **Difficulty** | Intermediate |
-| **Dependencies** | Challenge 02 |
+| **Dependencies** | Activity 02 |
 | **Microsoft Foundry features** | Prompt flow (visual editor + code), Flow variants, Connections, Batch testing |
 
 **Learning Objectives:**
@@ -126,13 +126,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 04: RAG — Grounding with Your Data
+### Activity 04: RAG — Grounding with Your Data
 | Field | Detail |
 |-------|--------|
 | **Description** | Build a Retrieval-Augmented Generation pipeline. Index a document collection into Azure AI Search, connect it to your AI project, and create a grounded chat experience that answers questions from your own data. |
 | **Time** | 1.5 hours |
 | **Difficulty** | Intermediate–Advanced |
-| **Dependencies** | Challenge 03 |
+| **Dependencies** | Activity 03 |
 | **Microsoft Foundry features** | Azure AI Search integration, Vector indexes, Data connections, On Your Data, Prompt flow RAG nodes |
 
 **Learning Objectives:**
@@ -144,13 +144,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 05: Evaluation & Responsible AI
+### Activity 05: Evaluation & Responsible AI
 | Field | Detail |
 |-------|--------|
 | **Description** | Evaluate your RAG application using Microsoft Foundry's built-in evaluation framework. Measure groundedness, relevance, coherence, and safety. Identify failure modes and iterate on your solution. |
 | **Time** | 1 hour |
 | **Difficulty** | Intermediate–Advanced |
-| **Dependencies** | Challenge 04 |
+| **Dependencies** | Activity 04 |
 | **Microsoft Foundry features** | Evaluation framework, Built-in metrics (groundedness, relevance, coherence, fluency), Custom evaluators, Safety evaluations |
 
 **Learning Objectives:**
@@ -162,13 +162,13 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge 06: Deploy & Integrate
+### Activity 06: Deploy & Integrate
 | Field | Detail |
 |-------|--------|
 | **Description** | Deploy your evaluated prompt flow as a managed online endpoint. Build a minimal frontend that calls the endpoint, demonstrating a production-ready integration pattern. |
 | **Time** | 1 hour |
 | **Difficulty** | Advanced |
-| **Dependencies** | Challenge 05 |
+| **Dependencies** | Activity 05 |
 | **Microsoft Foundry features** | Managed online endpoints, Deployment configuration, API keys/auth, Monitoring |
 
 **Learning Objectives:**
@@ -180,22 +180,22 @@ By the end of this hackathon, participants will be able to:
 
 ---
 
-### Challenge Progression Summary
+### Activity Progression Summary
 
 ```
-Challenge 00 (Setup)          ─── Beginner ──────── 30 min
+Activity 00 (Setup)          ─── Beginner ──────── 30 min
     │
-Challenge 01 (Deploy Model)   ─── Beginner ──────── 45 min
+Activity 01 (Deploy Model)   ─── Beginner ──────── 45 min
     │
-Challenge 02 (Prompts)        ─── Beg/Inter ─────── 1 hr
+Activity 02 (Prompts)        ─── Beg/Inter ─────── 1 hr
     │
-Challenge 03 (Prompt Flow)    ─── Intermediate ──── 1.5 hr
+Activity 03 (Prompt Flow)    ─── Intermediate ──── 1.5 hr
     │
-Challenge 04 (RAG)            ─── Inter/Adv ─────── 1.5 hr
+Activity 04 (RAG)            ─── Inter/Adv ─────── 1.5 hr
     │
-Challenge 05 (Evaluation)     ─── Inter/Adv ─────── 1 hr
+Activity 05 (Evaluation)     ─── Inter/Adv ─────── 1 hr
     │
-Challenge 06 (Deploy)         ─── Advanced ──────── 1 hr
+Activity 06 (Deploy)         ─── Advanced ──────── 1 hr
                                               TOTAL: ~7.25 hr
 ```
 
@@ -206,7 +206,7 @@ Challenge 06 (Deploy)         ─── Advanced ──────── 1 hr
 ```
 /
 ├── PLAN.md                         ← This file (content architecture)
-├── README.md                       ← Entry point: overview, setup, challenge links
+├── README.md                       ← Entry point: overview, setup, activity links
 ├── LICENSE
 │
 ├── .devcontainer/
@@ -221,39 +221,39 @@ Challenge 06 (Deploy)         ─── Advanced ──────── 1 hr
 │   ├── _config.yml
 │   ├── index.md                    ← Home page
 │   ├── setup.md                    ← Setup & prerequisites guide
-│   ├── coach-hub.md                ← Coach guidance & facilitation tips
+│   ├── facilitator-hub.md                ← Facilitator guidance & facilitation tips
 │   ├── faq.md                      ← Frequently asked questions
-│   └── challenges/
-│       ├── challenge-00.md
-│       ├── challenge-01.md
+│   └── activities/
+│       ├── activity-00.md
+│       ├── activity-01.md
 │       ├── ...
-│       └── challenge-06.md
+│       └── activity-06.md
 │
-├── challenges/
-│   ├── challenge-00-setup/
-│   │   ├── README.md               ← Student-facing challenge guide
-│   │   └── solution.md            ← Coach-facing solution guide
-│   ├── challenge-01-first-model/
+├── activities/
+│   ├── activity-00-setup/
+│   │   ├── README.md               ← Student-facing activity guide
+│   │   └── solution.md            ← Facilitator-facing solution guide
+│   ├── activity-01-first-model/
 │   │   ├── README.md
 │   │   └── solution.md
-│   ├── challenge-02-prompt-engineering/
+│   ├── activity-02-prompt-engineering/
 │   │   ├── README.md
 │   │   └── solution.md
-│   ├── challenge-03-prompt-flow/
+│   ├── activity-03-prompt-flow/
 │   │   ├── README.md
 │   │   └── solution.md
-│   ├── challenge-04-rag/
+│   ├── activity-04-rag/
 │   │   ├── README.md
 │   │   └── solution.md
-│   ├── challenge-05-evaluation/
+│   ├── activity-05-evaluation/
 │   │   ├── README.md
 │   │   └── solution.md
-│   └── challenge-06-deploy/
+│   └── activity-06-deploy/
 │       ├── README.md
 │       └── solution.md
 │
 └── resources/
-    ├── sample-data/                ← Documents for RAG challenge (Challenge 04)
+    ├── sample-data/                ← Documents for RAG activity (Activity 04)
     │   └── university-faq/        ← Example: fictional university FAQ corpus
     ├── scripts/
     │   ├── validate-environment.py ← Checks Azure connection & tools
@@ -265,12 +265,12 @@ Challenge 06 (Deploy)         ─── Advanced ──────── 1 hr
 
 | Decision | Reasoning |
 |----------|-----------|
-| `challenges/` at root | Fast access for participants; each folder is self-contained |
-| `docs/` separate from `challenges/` | Pages site has its own layout/nav; challenges are the source of truth, docs pages can reference them |
-| `resources/sample-data/` | Shared data used across challenges (especially RAG); avoids duplication |
-| Challenge folders named `challenge-NN-slug/` | Sortable, descriptive, URL-friendly |
-| Coach solutions in same folder as student guide | Coaches need context; keeps student/coach content paired |
-| `.devcontainer/` | Ensures consistent environment; critical for hackathon reliability |
+| `activities/` at root | Fast access for participants; each folder is self-contained |
+| `docs/` separate from `activities/` | Pages site has its own layout/nav; activities are the source of truth, docs pages can reference them |
+| `resources/sample-data/` | Shared data used across activities (especially RAG); avoids duplication |
+| Activity folders named `activity-NN-slug/` | Sortable, descriptive, URL-friendly |
+| Facilitator solutions in same folder as student guide | Facilitators need context; keeps student/facilitator content paired |
+| `.devcontainer/` | Ensures consistent environment; critical for session reliability |
 
 ---
 
@@ -285,7 +285,7 @@ Challenge 06 (Deploy)         ─── Advanced ──────── 1 hr
 | Azure CLI (`az`) | Azure resource management |
 | Azure Developer CLI (`azd`) | Template-based provisioning |
 | Python 3.11+ | Primary development language |
-| Node.js 20 LTS | For any JS tooling / frontend in Challenge 06 |
+| Node.js 20 LTS | For any JS tooling / frontend in Activity 06 |
 | Git | Version control |
 | jq | JSON parsing in shell scripts |
 
@@ -338,7 +338,7 @@ ipykernel>=6.29.0
 1. Install Python requirements
 2. Login prompt for Azure CLI (`az login`)
 3. Run `validate-environment.py` to verify connectivity
-4. Print welcome message with challenge links
+4. Print welcome message with activity links
 
 ---
 
@@ -346,16 +346,16 @@ ipykernel>=6.29.0
 
 ```markdown
 # 🤖 Build Intelligent Apps with Microsoft Foundry
-> A What The Hack hackathon — from prompt to production
+> A AI Starter Kit RVAS session — from prompt to production
 
 ## What is this?
-[2-3 sentence overview of the hackathon and WTH format]
+[2-3 sentence overview of the session and format]
 
 ## 🎯 Learning Outcomes
 [Bullet list of what participants will achieve]
 
 ## 👥 Who is this for?
-[Audience: students, coaches]
+[Audience: students, facilitators]
 
 ## 📋 Prerequisites
 - Azure subscription
@@ -366,10 +366,10 @@ ipykernel>=6.29.0
 ## 🚀 Getting Started
 1. Open in Codespaces / Dev Container
 2. Authenticate with Azure
-3. Start Challenge 00
+3. Start Activity 00
 
-## 🏆 Challenges
-| # | Challenge | Duration | Difficulty |
+## 🏆 Activities
+| # | Activity | Duration | Difficulty |
 |---|-----------|----------|------------|
 | 00 | Setup & Orientation | 30 min | ⭐ |
 | 01 | Your First Model Deployment | 45 min | ⭐ |
@@ -379,8 +379,8 @@ ipykernel>=6.29.0
 | 05 | Evaluation & Responsible AI | 1 hr | ⭐⭐⭐⭐ |
 | 06 | Deploy & Integrate | 1 hr | ⭐⭐⭐⭐⭐ |
 
-## 🧑‍🏫 For Coaches
-[Link to coach hub with facilitation tips, common pitfalls, timing advice]
+## 🧑‍🏫 For Facilitators
+[Link to facilitator hub with facilitation tips, common pitfalls, timing advice]
 
 ## 🏗️ Repository Structure
 [Brief overview of folder layout]
@@ -407,7 +407,7 @@ Home (/)
 │   ├── Prerequisites
 │   ├── Environment Setup
 │   └── Azure Subscription Setup
-├── Challenges (/challenges)
+├── Activities (/activities)
 │   ├── 00 — Setup & Orientation
 │   ├── 01 — Your First Model Deployment
 │   ├── 02 — Prompt Engineering
@@ -415,10 +415,10 @@ Home (/)
 │   ├── 04 — RAG
 │   ├── 05 — Evaluation
 │   └── 06 — Deploy & Integrate
-├── Coach Hub (/coach-hub)
+├── Facilitator Hub (/facilitator-hub)
 │   ├── Facilitation Guide
 │   ├── Timing & Pacing
-│   ├── Common Pitfalls per Challenge
+│   ├── Common Pitfalls per Activity
 │   └── Solution Guides (gated/separate)
 └── FAQ (/faq)
 ```
@@ -430,42 +430,42 @@ Home (/)
 | **Jekyll theme** | `just-the-docs` — clean, searchable, sidebar navigation |
 | **Color scheme** | Azure-aligned blues with high contrast |
 | **Typography** | System font stack for speed; monospace for code blocks |
-| **Navigation** | Left sidebar with challenge progression + status indicators |
+| **Navigation** | Left sidebar with activity progression + status indicators |
 | **Mobile** | Responsive (participants may use tablets during event) |
 | **Search** | Enabled via just-the-docs built-in search |
 
 ### Page Content Strategy
-- **Challenge pages on the site** render the student-facing README.md from `challenges/` (single source of truth)
-- **Coach solutions** are NOT published to the public Pages site — they live in `challenges/*/solution.md` only (coaches clone the repo)
+- **Activity pages on the site** render the student-facing README.md from `activities/` (single source of truth)
+- **Facilitator solutions** are NOT published to the public Pages site — they live in `activities/*/solution.md` only (facilitators clone the repo)
 - **Home page** provides event overview and clear "Start Here" call-to-action
 
 ---
 
 ## 7. Work Breakdown
 
-### 🔴 Rusty — Challenge Content Writer
+### 🔴 Rusty — Activity Content Writer
 
 | Task ID | Task | Dependencies | Priority |
 |---------|------|--------------|----------|
-| R-01 | Write `challenges/challenge-00-setup/README.md` (student guide) | Devcontainer ready | P0 |
-| R-02 | Write `challenges/challenge-00-setup/solution.md` (coach guide) | R-01 | P0 |
-| R-03 | Write `challenges/challenge-01-first-model/README.md` | R-01 | P0 |
-| R-04 | Write `challenges/challenge-01-first-model/solution.md` | R-03 | P0 |
-| R-05 | Write `challenges/challenge-02-prompt-engineering/README.md` | R-03 | P1 |
-| R-06 | Write `challenges/challenge-02-prompt-engineering/solution.md` | R-05 | P1 |
-| R-07 | Write `challenges/challenge-03-prompt-flow/README.md` | R-05 | P1 |
-| R-08 | Write `challenges/challenge-03-prompt-flow/solution.md` | R-07 | P1 |
-| R-09 | Write `challenges/challenge-04-rag/README.md` | R-07 | P2 |
-| R-10 | Write `challenges/challenge-04-rag/solution.md` | R-09 | P2 |
-| R-11 | Write `challenges/challenge-05-evaluation/README.md` | R-09 | P2 |
-| R-12 | Write `challenges/challenge-05-evaluation/solution.md` | R-11 | P2 |
-| R-13 | Write `challenges/challenge-06-deploy/README.md` | R-11 | P3 |
-| R-14 | Write `challenges/challenge-06-deploy/solution.md` | R-13 | P3 |
+| R-01 | Write `activities/activity-00-setup/README.md` (student guide) | Devcontainer ready | P0 |
+| R-02 | Write `activities/activity-00-setup/solution.md` (facilitator guide) | R-01 | P0 |
+| R-03 | Write `activities/activity-01-first-model/README.md` | R-01 | P0 |
+| R-04 | Write `activities/activity-01-first-model/solution.md` | R-03 | P0 |
+| R-05 | Write `activities/activity-02-prompt-engineering/README.md` | R-03 | P1 |
+| R-06 | Write `activities/activity-02-prompt-engineering/solution.md` | R-05 | P1 |
+| R-07 | Write `activities/activity-03-prompt-flow/README.md` | R-05 | P1 |
+| R-08 | Write `activities/activity-03-prompt-flow/solution.md` | R-07 | P1 |
+| R-09 | Write `activities/activity-04-rag/README.md` | R-07 | P2 |
+| R-10 | Write `activities/activity-04-rag/solution.md` | R-09 | P2 |
+| R-11 | Write `activities/activity-05-evaluation/README.md` | R-09 | P2 |
+| R-12 | Write `activities/activity-05-evaluation/solution.md` | R-11 | P2 |
+| R-13 | Write `activities/activity-06-deploy/README.md` | R-11 | P3 |
+| R-14 | Write `activities/activity-06-deploy/solution.md` | R-13 | P3 |
 | R-15 | Create `resources/sample-data/university-faq/` corpus (10-15 docs) | None | P1 |
 
-**Content template for each challenge README.md:**
+**Content template for each activity README.md:**
 ```markdown
-# Challenge NN: [Title]
+# Activity NN: [Title]
 
 ## Introduction
 [Context and motivation — why this matters]
@@ -486,13 +486,13 @@ Home (/)
 - Hint 1 (vague — points in right direction)
 - Hint 2 (slightly more specific)
 
-## Advanced Challenges (Optional)
+## Advanced Activities (Optional)
 [Stretch goals for fast teams]
 ```
 
 **Content template for each solution.md:**
 ```markdown
-# Challenge NN: [Title] — Coach's Guide
+# Activity NN: [Title] — Facilitator's Guide
 
 ## Overview
 [What participants should accomplish and common approaches]
@@ -503,7 +503,7 @@ Home (/)
 ## Common Pitfalls
 [What teams typically get stuck on and how to unblock]
 
-## Coaching Tips
+## Facilitation Tips
 [How to guide without giving answers; what questions to ask]
 
 ## Timing
@@ -520,9 +520,9 @@ Home (/)
 | L-02 | Create `docs/_config.yml` with navigation structure | L-01 | P0 |
 | L-03 | Write `docs/index.md` (home page) | L-02 | P0 |
 | L-04 | Write `docs/setup.md` (getting started guide) | L-02 | P1 |
-| L-05 | Create challenge page template | L-02 | P1 |
-| L-06 | Write `docs/challenges/challenge-00.md` through `challenge-06.md` | R-01+ | P1 |
-| L-07 | Write `docs/coach-hub.md` | L-02 | P2 |
+| L-05 | Create activity page template | L-02 | P1 |
+| L-06 | Write `docs/activities/activity-00.md` through `activity-06.md` | R-01+ | P1 |
+| L-07 | Write `docs/facilitator-hub.md` | L-02 | P2 |
 | L-08 | Write `docs/faq.md` | L-02 | P3 |
 | L-09 | Style customization (colors, logo, branding) | L-01 | P2 |
 | L-10 | Test responsive layout and navigation | L-06 | P2 |
@@ -547,16 +547,16 @@ Home (/)
 
 | Task ID | Task | Dependencies | Priority |
 |---------|------|--------------|----------|
-| B-01 | Walk through Challenge 00 end-to-end in devcontainer | V-01, R-01 | P1 |
-| B-02 | Walk through Challenge 01 end-to-end | R-03, B-01 | P1 |
-| B-03 | Walk through Challenge 02 end-to-end | R-05, B-02 | P2 |
-| B-04 | Walk through Challenge 03 end-to-end | R-07, B-03 | P2 |
-| B-05 | Walk through Challenge 04 end-to-end | R-09, B-04 | P2 |
-| B-06 | Walk through Challenge 05 end-to-end | R-11, B-05 | P3 |
-| B-07 | Walk through Challenge 06 end-to-end | R-13, B-06 | P3 |
+| B-01 | Walk through Activity 00 end-to-end in devcontainer | V-01, R-01 | P1 |
+| B-02 | Walk through Activity 01 end-to-end | R-03, B-01 | P1 |
+| B-03 | Walk through Activity 02 end-to-end | R-05, B-02 | P2 |
+| B-04 | Walk through Activity 03 end-to-end | R-07, B-03 | P2 |
+| B-05 | Walk through Activity 04 end-to-end | R-09, B-04 | P2 |
+| B-06 | Walk through Activity 05 end-to-end | R-11, B-05 | P3 |
+| B-07 | Walk through Activity 06 end-to-end | R-13, B-06 | P3 |
 | B-08 | Validate all links, code snippets compile/run | All content | P2 |
-| B-09 | Time each challenge (verify estimates) | B-01 through B-07 | P2 |
-| B-10 | Review coach guides for completeness | R-02+ | P2 |
+| B-09 | Time each activity (verify estimates) | B-01 through B-07 | P2 |
+| B-10 | Review facilitator guides for completeness | R-02+ | P2 |
 
 ---
 
@@ -566,7 +566,7 @@ Home (/)
 |---------|------|--------------|----------|
 | D-01 | Write PLAN.md (this document) | None | P0 ✅ |
 | D-02 | Write root README.md | PLAN.md | P0 |
-| D-03 | Review all challenge content (Rusty's output) | R-* complete | P1 |
+| D-03 | Review all activity content (Rusty's output) | R-* complete | P1 |
 | D-04 | Review site pages (Linus's output) | L-* complete | P2 |
 | D-05 | Final walkthrough and sign-off | All tasks | P3 |
 
@@ -576,12 +576,12 @@ Home (/)
 
 | # | Decision | Rationale |
 |---|----------|-----------|
-| AD-01 | 7 challenges (00–06), linear dependency | Simpler logistics for 1-day events; no parallel tracks to manage |
-| AD-02 | Challenge 00 is setup-only (no AI content) | Eliminates environment issues blocking learning |
-| AD-03 | Coach solutions live in repo, not on Pages site | Coaches need full access; public site stays student-focused |
+| AD-01 | 7 activities (00–06), linear dependency | Simpler logistics for 1-day events; no parallel tracks to manage |
+| AD-02 | Activity 00 is setup-only (no AI content) | Eliminates environment issues blocking learning |
+| AD-03 | Facilitator solutions live in repo, not on Pages site | Facilitators need full access; public site stays student-focused |
 | AD-04 | `just-the-docs` Jekyll theme | Minimal config, great search, responsive, sidebar nav |
-| AD-05 | Devcontainer as primary environment | Eliminates "works on my machine"; critical for hackathon reliability |
-| AD-06 | RAG challenge uses provided sample data | Removes data-sourcing as a blocker; all teams work with same corpus |
+| AD-05 | Devcontainer as primary environment | Eliminates "works on my machine"; critical for session reliability |
+| AD-06 | RAG activity uses provided sample data | Removes data-sourcing as a blocker; all teams work with same corpus |
 | AD-07 | Evaluation before Deployment (Ch 05 before 06) | Teaches responsible AI practices before shipping to production |
 
 ---
@@ -594,15 +594,15 @@ Home (/)
 - Linus: Jekyll site scaffold
 
 **Phase 2 — Core Content (days 1–3)**
-- Rusty: Challenges 00–03 (student + coach guides)
-- Linus: Site pages for challenges 00–03
+- Rusty: Activities 00–03 (student + facilitator guides)
+- Linus: Site pages for activities 00–03
 - Livingston: Pages deploy workflow
-- Basher: Validate challenges 00–01
+- Basher: Validate activities 00–01
 
 **Phase 3 — Advanced Content (days 3–5)**
-- Rusty: Challenges 04–06
+- Rusty: Activities 04–06
 - Linus: Remaining site pages, styling
-- Basher: Validate challenges 02–06
+- Basher: Validate activities 02–06
 
 **Phase 4 — Polish (days 5–7)**
 - Danny: Full review pass

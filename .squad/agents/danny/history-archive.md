@@ -7,41 +7,41 @@
 ## Learnings
 
 ### Project Context
-- **Project:** WTH (What The Hack) AI Hackathon — Microsoft Foundry format
-- **Repo:** ai-hackathon
+- **Project:** AI Starter Kit RVAS — Microsoft Foundry format
+- **Repo:** ai-starter-kit-rvas
 - **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
-- **Participants:** Students (new to AI) + Coaches (facilitators)
-- **Goal:** Create a complete, deliverable WTH hackathon format with a polished GitHub Pages site
+- **Participants:** Students (new to AI) + Facilitators (facilitators)
+- **Goal:** Create a complete, deliverable session format with a polished GitHub Pages site
 - **Requested by:** Marco Olivo
 - **Date:** 2026-05-28
 
 ### Content Architecture Decisions (2026-05-28)
-- Chose 7 challenges (00–06) with strict linear progression — simplifies logistics for 1-day events
-- Challenge 00 is setup-only: isolates environment issues from learning content
+- Chose 7 activities (00–06) with strict linear progression — simplifies logistics for 1-day events
+- Activity 00 is setup-only: isolates environment issues from learning content
 - Evaluation (Ch 05) precedes Deployment (Ch 06) — teaches responsible AI before shipping
-- Coach solutions stay in-repo only, never on public Pages — keeps student experience clean
-- RAG challenge uses pre-provided sample data to remove data-sourcing as a blocker
+- Facilitator solutions stay in-repo only, never on public Pages — keeps student experience clean
+- RAG activity uses pre-provided sample data to remove data-sourcing as a blocker
 - `just-the-docs` Jekyll theme selected for search, sidebar nav, and minimal config
 - Devcontainer is the primary environment — eliminates "works on my machine" issues at scale
-- Challenge time estimates total ~7.25 hours — fits a full 1-day event with breaks
+- Activity time estimates total ~7.25 hours — fits a full 1-day event with breaks
 
 ### README.md Implementation (2026-05-28)
 - Wrote root README.md following full specification from task brief
-- Includes all sections: header with 3 badges, What is WTH (3 paragraphs), Learning Outcomes (6 points from PLAN.md), Who is this for (Students/Coaches subsections), Prerequisites (5 items), Getting Started (3 steps with Codespaces badge), Challenges table (all 7 with links and timings), Repository Structure (15-line annotated tree), For Coaches section with Coach Hub link and solution guide notes, Resources (4 key links), Contributing section, and MIT License
-- Chose accessible, welcoming tone appropriate for both students and coaches
-- Codespaces badge uses placeholder org path (microsoft/ai-hackathon) — adjust repo URL in actual GitHub org
-- All challenge links follow standard path pattern: `challenges/challenge-NN-slug/README.md`
+- Includes all sections: header with 3 badges, What is (3 paragraphs), Learning Outcomes (6 points from PLAN.md), Who is this for (Students/Facilitators subsections), Prerequisites (5 items), Getting Started (3 steps with Codespaces badge), Activities table (all 7 with links and timings), Repository Structure (15-line annotated tree), For Facilitators section with Facilitator Hub link and solution guide notes, Resources (4 key links), Contributing section, and MIT License
+- Chose accessible, welcoming tone appropriate for both students and facilitators
+- Codespaces badge uses placeholder org path (microsoft/ai-starter-kit-rvas) — adjust repo URL in actual GitHub org
+- All activity links follow standard path pattern: `activities/activity-NN-slug/README.md`
 
 ---
 
 ### 2026-06-01 — Curriculum V2 direction (Scribe note)
 - `PLAN-V2.md` is the new curriculum direction (Proposed): agent-era rearchitecture, core spine 00–07, one-artifact-many-acts Northfield "IQ" Assistant narrative.
-- **Prompt Flow is CUT** per Marco's directive — old Challenge 03 removed; dependent RAG/eval steps re-expressed on Agents + AI Search + Foundry IQ + MCP + MAF; `promptflow*` deps leave the devcontainer.
+- **Prompt Flow is CUT** per Marco's directive — old Activity 03 removed; dependent RAG/eval steps re-expressed on Agents + AI Search + Foundry IQ + MCP + MAF; `promptflow*` deps leave the devcontainer.
 - See `.squad/decisions.md` and `.squad/log/2026-06-01-curriculum-v2-planning.md`.
 
-### 2026-06-01 — Authored two Advanced challenges (Tracing + Deploy hosted agent)
+### 2026-06-01 — Authored two Advanced activities (Tracing + Deploy hosted agent)
 - Built `advanced-tracing-observability/` (README + solution) from scratch and **rewrote**
-  `advanced-deploy-hosted-agent/` (ex `challenge-06-deploy`, git mv'd) — both on the §3 STEP template
+  `advanced-deploy-hosted-agent/` (ex `activity-06-deploy`, git mv'd) — both on the §3 STEP template
   (Goal → Tasks → Success Criteria → Checkpoint) under the §3.2 Tier-2 banner + bootstrap skip-path line.
 - **Tracing (4 steps):** enable GenAI instrumentation (`AIProjectInstrumentor`, `configure_azure_monitor`,
   the *set-env-before-import* gotcha) → run agent to emit spans → portal Tracing-tab span tree
@@ -51,7 +51,7 @@
   Dockerfile → `az acr build` (mandatory `--source-acr-auth-id "[caller]"`, timestamp tag) +
   `azd ai agent create/deploy` (wait for version `active`) → invoke Responses endpoint + verify
   per-agent managed identity & auth enforcement (401/403 anon) → run history + App Insights traces back
-  to the Tracing challenge (`cloud_RoleName` scopes hosted runs).
+  to the Tracing activity (`cloud_RoleName` scopes hosted runs).
 - **Prompt Flow fully removed from ex-Ch06:** no managed-online-endpoint or Flask-deploy framing; the
   only remaining PF mentions are explicit "this was removed / steer teams off old printouts" callouts.
   Flask/Streamlit UI reframed as the separate *Build a UI* extra.
@@ -63,11 +63,11 @@
     agent uses to reach model/KB. `403` on authed call ⇒ caller missing `Azure AI User` role.
   - Hosted agents must bind `0.0.0.0:8088` + declare `responses` v1.0.0 or never go healthy.
   - Tracing: flags must be set above all `azure.ai.*` imports or message content is silently dropped.
-- Left `validate.py` to Basher per brief — challenges reference `python validate.py --step N` checkpoints
+- Left `validate.py` to Basher per brief — activities reference `python validate.py --step N` checkpoints
   with explicit expected PASS strings so the QA harness has a contract to implement against.
 - Decision logged: `.squad/decisions/inbox/danny-tracing-deploy.md`.
 
-### 2026-06-01 — Authored FIVE Extra challenges (Fabric IQ, Voice Live, Magentic, Hosted Long-Running, Copilot-Assisted)
+### 2026-06-01 — Authored FIVE Extra activities (Fabric IQ, Voice Live, Magentic, Hosted Long-Running, Copilot-Assisted)
 - Filled all 10 placeholder files (5 README + 5 solution) on the §3 STEP template under the §3.2 Tier-2
   banner; each opens with a per-Extra **specific prereq** line + an **infra-prerequisite** + **demo
   wow-factor** callout block. **extra-build-ui left untouched (Linus owns it).**
@@ -79,13 +79,13 @@
   four are **portal/live-state** checkpoints — their deliverables are live data, audio, deployed async
   runs, or a Copilot *behavior*, none statically assertable. Documented *why* in each solution.md.
 - **Prereq chain encoded:** Fabric→Step 4; Voice→Step 3; Magentic→Action Tools; Hosted-LR→Deploy + Magentic
-  (two prereqs — flagged as capstone-only); Copilot→Step 1 (best AFTER a manual challenge, contrast = lesson).
+  (two prereqs — flagged as capstone-only); Copilot→Step 1 (best AFTER a manual activity, contrast = lesson).
 - **Search-Before-Implement enforced** in every code-bearing Extra: preview surfaces (Fabric tool class,
   `azure-ai-voicelive`, MAF `ChatAgent`/Magentic, `azd ai agent`/background-run) are NEVER hard-coded;
   students sent to `microsoft-docs`/`foundry-mcp` via the matching skill. Reference snippets in solution.md
   are marked "illustrative — confirm current names."
-- **Infra flags for coaches (gating):** Fabric IQ needs F-SKU/trial capacity + OneLake live table
-  (`course_seats`) — gate behind coach availability, **pause capacity after** (bills while on). Voice Live
+- **Infra flags for facilitators (gating):** Fabric IQ needs F-SKU/trial capacity + OneLake live table
+  (`course_seats`) — gate behind facilitator availability, **pause capacity after** (bills while on). Voice Live
   needs regional API access + mic/headset client (silent failure if absent). Hosted-LR: localhost→container
   gap on `ACTION_MCP_URL` is the #1 deploy surprise (tunnel/deploy the backend). Copilot: corporate proxy can
   block the http MCP endpoints — test connectivity at setup.
@@ -94,7 +94,7 @@
 - Decision logged: `.squad/decisions/inbox/danny-extras.md`.
 
 ### 2026-06-01 — Curriculum V2 implemented (cross-agent note)
-Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-tier** — Tier 1 Foundations (4 ordered steps) + Tier 2 (4 Advanced challenges + 6 Extras). **Prompt Flow fully removed** (deps, devcontainer, challenges, docs). `docs/` mirrors `challenges/` 1:1 with coach siblings. Decision inbox merged into `.squad/decisions.md` (28 entries); session log: `.squad/log/2026-06-01T100000Z-curriculum-v2-build.md`.
+Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-tier** — Tier 1 Foundations (4 ordered steps) + Tier 2 (4 Advanced activities + 6 Extras). **Prompt Flow fully removed** (deps, devcontainer, activities, docs). `docs/` mirrors `activities/` 1:1 with facilitator siblings. Decision inbox merged into `.squad/decisions.md` (28 entries); session log: `.squad/log/2026-06-01T100000Z-curriculum-v2-build.md`.
 
 ### 2026-06-01 — Authored PLAN-V3.md (3-tier tree + de-guided Advanced + MAF Capstone)
 - New planning doc `PLAN-V3.md` at repo root — **extends** PLAN-V2, does not overwrite it. Supersedes only
@@ -103,7 +103,7 @@ Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-t
   (open-ended summit) + a cross-cutting **"make it your own"** scenario-swap branch. Progression logic =
   **guided → modular → autonomous** (guidance decreases, learner agency increases per tier).
 - **De-guiding verdict:** Advanced isn't *too short* — it's **over-guided**, and Action Tools is **mislabeled**
-  (1.25 hr → really ~45 min). Fix = **DEPTH not clock-padding**. For each of the 4 advanced challenges I specified:
+  (1.25 hr → really ~45 min). Fix = **DEPTH not clock-padding**. For each of the 4 advanced activities I specified:
   the thin step (cited), the load-bearing PLACEHOLDERs to remove, a **build-from-scratch path**, 1–2 real stretch
   goals, and **dual honest times** (guided vs scratch). Eval is the meaty one (keep 1.25 hr); the other three paste
   full code in the README (Tracing `trace_setup.py`, Deploy `agent.yaml`/`Dockerfile`) → convert copy-paste to author.
@@ -127,14 +127,14 @@ Curriculum V2 is now built to disk (staged, not committed). Final shape: **two-t
 - Decision logged: `.squad/decisions/inbox/danny-plan-v3.md`.
 
 ### 2026-06-01 — Curriculum V3 proposed (cross-agent note)
-V3 planning is **proposed, not implemented**. `PLAN-V3.md` (Danny) defines the 3-tier tree (Foundations → Advanced → MAF Capstone) and de-guides the Advanced tier (dual guided / build-from-scratch path, same `validate.py`); `CURRICULUM-REASSESSMENT.md` (Rusty) backs the timing verdict + 3-rung ladder. Linus's Foundations step deep-links are staged. No challenge folders or `.env.sample` changed; no commit. Decision inbox merged into `.squad/decisions.md` (new "Curriculum V3" section); session log: `.squad/log/2026-06-01T120000Z-curriculum-v3-assessment.md`.
+V3 planning is **proposed, not implemented**. `PLAN-V3.md` (Danny) defines the 3-tier tree (Foundations → Advanced → MAF Capstone) and de-guides the Advanced tier (dual guided / build-from-scratch path, same `validate.py`); `CURRICULUM-REASSESSMENT.md` (Rusty) backs the timing verdict + 3-rung ladder. Linus's Foundations step deep-links are staged. No activity folders or `.env.sample` changed; no commit. Decision inbox merged into `.squad/decisions.md` (new "Curriculum V3" section); session log: `.squad/log/2026-06-01T120000Z-curriculum-v3-assessment.md`.
 
-### 2026-06-01 — Authored the Tier 3 Capstone challenge (PLAN-V3 §3 IMPLEMENTED)
+### 2026-06-01 — Authored the Tier 3 Capstone activity (PLAN-V3 §3 IMPLEMENTED)
 - **Files shipped (staged, not committed):**
-  - `challenges/capstone-multi-agent/README.md` — design-brief style, intentionally LOW guidance (no starter
+  - `activities/capstone-multi-agent/README.md` — design-brief style, intentionally LOW guidance (no starter
     file, no PLACEHOLDERs). Mirrors the Advanced README house style (banner → objectives → org-chart ASCII →
     two-pass build → visual-first/traced → make-it-your-own → acceptance checklist → Learning Resources → Tips).
-  - `challenges/capstone-multi-agent/solution.md` — coaches-only guide (reference org-chart, sequential→fan-out
+  - `activities/capstone-multi-agent/solution.md` — facilitators-only guide (reference org-chart, sequential→fan-out
     evolution, typed Pydantic contracts, DevUI launch, trace check, Magentic + hosted-LR stretch variants,
     reconvene points, failure-mode table, timing, debrief, validate.py contract).
 - **Banner format I shipped (for consistency with Rusty's Advanced READMEs):**

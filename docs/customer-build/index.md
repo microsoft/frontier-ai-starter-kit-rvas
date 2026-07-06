@@ -30,7 +30,7 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
 ## What to swap from Northfield
 
 Northfield is the reference scenario — a student-services assistant for the fictional *Northfield
-University*, grounded in a public university-FAQ corpus. Its [Foundations track]({{ '/challenges/foundations' | relative_url }})
+University*, grounded in a public university-FAQ corpus. Its [Foundations track]({{ '/activities/foundations' | relative_url }})
 builds it step by step, so those steps are worked examples you copy commands from; you don't need
 to build the Northfield version first. Customer Build keeps its mechanics and swaps in your content.
 

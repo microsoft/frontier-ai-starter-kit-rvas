@@ -10,7 +10,7 @@ Package version audit + Microsoft Foundry rebrand flags + SDK breaking-change ve
 
 ## Output Artifacts
 - `.squad/decisions/inbox/livingston-version-audit.md` — Version audit report
-- **Files Edited:** `requirements.txt`, `.devcontainer/devcontainer.json`, `.env.example`, `.github/workflows/deploy-pages.yml`, challenge 00–06 content files
+- **Files Edited:** `requirements.txt`, `.devcontainer/devcontainer.json`, `.env.example`, `.github/workflows/deploy-pages.yml`, activity 00–06 content files
 
 ## Key Findings
 - Python deps bumped to current stable across `requirements.txt`

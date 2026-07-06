@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Microsoft Foundry hackathon static-site build.
+ * Microsoft Foundry session static-site build.
  *
- * This mirrors the frontier-agentic-devops-hackathon structure: source Markdown
+ * This mirrors the frontier-agentic-devops-session structure: source Markdown
  * stays in the repo, this script emits browser-consumable JSON plus copied
- * student/coach guides under docs/assets/data/.
+ * participant/facilitator guides under docs/assets/data/.
  */
 'use strict';
 
@@ -13,7 +13,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DATA_DIR = path.join(__dirname, 'assets', 'data');
-const OUT_GUIDES_DIR = path.join(OUT_DATA_DIR, 'challenges');
+const OUT_GUIDES_DIR = path.join(OUT_DATA_DIR, 'activities');
 const OUT_RESOURCES_DIR = path.join(__dirname, 'resources');
 
 const CUSTOMER_CHAPTER_IDS = {
@@ -54,7 +54,7 @@ const OUTCOMES = [
     personas: ['builder', 'solution-architect', 'account-team', 'customer-engineer'],
     adoption_stage: ['define', 'build', 'prove', 'demo'],
     business_value: ['accelerate-prototyping', 'de-risk-ai-adoption', 'prove-customer-value'],
-    challenge_ids: [
+    activity_ids: [
       'customer-outcome',
       'customer-foundations',
       'customer-action-tools',
@@ -73,11 +73,11 @@ const OUTCOMES = [
     id: 'idea-forge',
     name: 'Need an idea first',
     tagline: 'Generate a ranked, buildable AI application idea before starting the customer build path.',
-    description: 'Use Challenge Forge to pick a right-sized idea with clear users, safe data, one action, and a believable demo.',
-    personas: ['builder', 'coach', 'account-team'],
+    description: 'Use Activity Forge to pick a right-sized idea with clear users, safe data, one action, and a believable demo.',
+    personas: ['builder', 'facilitator', 'account-team'],
     adoption_stage: ['ideate', 'define'],
     business_value: ['find-buildable-use-cases', 'reduce-scope-risk'],
-    challenge_ids: ['idea-forge', 'customer-outcome'],
+    activity_ids: ['idea-forge', 'customer-outcome'],
     success_metrics: [
       'A selected idea has an outcome, users, data sources, tier guidance, and risk notes.',
       'The chosen idea transfers cleanly into the Customer Build scenario pack.',
@@ -88,10 +88,10 @@ const OUTCOMES = [
     name: 'Learn with Northfield',
     tagline: 'Practice the full Foundry path with the known-good Northfield University reference scenario.',
     description: 'Build the Northfield IQ Assistant, then reuse the same architecture for customer work later.',
-    personas: ['student', 'coach', 'developer'],
+    personas: ['participant', 'facilitator', 'developer'],
     adoption_stage: ['learn', 'practice', 'extend'],
     business_value: ['learn-foundry-patterns', 'create-repeatable-reference'],
-    challenge_ids: [
+    activity_ids: [
       'setup',
       'foundations',
       'advanced-action-tools',
@@ -113,17 +113,17 @@ const OUTCOMES = [
   },
 ];
 
-const CHALLENGES = [
+const ACTIVITIES = [
   {
     id: 'setup',
     title: 'Getting Started',
     track: 'define',
     difficulty: 'beginner',
     duration_minutes: 30,
-    description: 'Prepare Codespaces, Azure sign-in, and local tooling before running challenge validators.',
+    description: 'Prepare Codespaces, Azure sign-in, and local tooling before running activity validators.',
     tags: ['setup', 'codespaces', 'azure'],
     outcomes: ['upskill'],
-    student: 'docs/setup.md',
+    participant: 'docs/setup.md',
   },
   {
     id: 'idea-forge',
@@ -134,7 +134,7 @@ const CHALLENGES = [
     description: 'Generate and select a buildable customer AI application idea before starting Customer Build.',
     tags: ['ideation', 'customer', 'scenario'],
     outcomes: ['idea-forge'],
-    student: 'docs/idea-forge.md',
+    participant: 'docs/idea-forge.md',
   },
   {
     id: 'customer-outcome',
@@ -145,7 +145,7 @@ const CHALLENGES = [
     description: 'Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.',
     tags: ['customer-build', 'scenario', 'planning'],
     outcomes: ['customer-build', 'idea-forge'],
-    student: 'docs/customer-outcome.md',
+    participant: 'docs/customer-outcome.md',
   },
   {
     id: 'customer-foundations',
@@ -157,7 +157,7 @@ const CHALLENGES = [
     prerequisites: ['customer-outcome'],
     tags: ['customer-build', 'grounding', 'knowledge', 'citations'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/foundations.md',
+    participant: 'docs/customer-build/foundations.md',
   },
   {
     id: 'customer-action-tools',
@@ -169,7 +169,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'tools', 'approval', 'workflow'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/advanced-action-tools.md',
+    participant: 'docs/customer-build/advanced-action-tools.md',
   },
   {
     id: 'customer-evaluation-redteam',
@@ -181,7 +181,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'evaluation', 'red-team', 'safety'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/advanced-evaluation-redteam.md',
+    participant: 'docs/customer-build/advanced-evaluation-redteam.md',
   },
   {
     id: 'customer-tracing-observability',
@@ -193,7 +193,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'observability', 'tracing'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/advanced-tracing-observability.md',
+    participant: 'docs/customer-build/advanced-tracing-observability.md',
   },
   {
     id: 'customer-deploy-hosted-agent',
@@ -205,7 +205,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'deployment', 'hosted-agent'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/advanced-deploy-hosted-agent.md',
+    participant: 'docs/customer-build/advanced-deploy-hosted-agent.md',
   },
   {
     id: 'customer-build-ui',
@@ -217,7 +217,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'ui', 'demo'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/extra-build-ui.md',
+    participant: 'docs/customer-build/extra-build-ui.md',
   },
   {
     id: 'customer-capstone-multi-agent',
@@ -229,7 +229,7 @@ const CHALLENGES = [
     prerequisites: ['customer-foundations'],
     tags: ['customer-build', 'multi-agent', 'capstone'],
     outcomes: ['customer-build'],
-    student: 'docs/customer-build/capstone-multi-agent.md',
+    participant: 'docs/customer-build/capstone-multi-agent.md',
   },
   {
     id: 'foundations',
@@ -240,8 +240,8 @@ const CHALLENGES = [
     description: 'Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.',
     tags: ['foundations', 'agent', 'knowledge', 'citations'],
     outcomes: ['upskill'],
-    student: 'challenges/foundations/README.md',
-    coach: 'docs/challenges/foundations-coach.md',
+    participant: 'activities/foundations/README.md',
+    facilitator: 'docs/activities/foundations-facilitator.md',
   },
   {
     id: 'advanced-action-tools',
@@ -253,8 +253,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['tools', 'mcp', 'actions', 'approval'],
     outcomes: ['upskill'],
-    student: 'challenges/advanced-action-tools/README.md',
-    coach: 'docs/challenges/advanced-action-tools-coach.md',
+    participant: 'activities/advanced-action-tools/README.md',
+    facilitator: 'docs/activities/advanced-action-tools-facilitator.md',
   },
   {
     id: 'advanced-evaluation-redteam',
@@ -266,8 +266,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['evaluation', 'red-team', 'safety', 'quality'],
     outcomes: ['upskill'],
-    student: 'challenges/advanced-evaluation-redteam/README.md',
-    coach: 'docs/challenges/advanced-evaluation-redteam-coach.md',
+    participant: 'activities/advanced-evaluation-redteam/README.md',
+    facilitator: 'docs/activities/advanced-evaluation-redteam-facilitator.md',
   },
   {
     id: 'advanced-tracing-observability',
@@ -279,8 +279,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['observability', 'tracing', 'app-insights', 'debugging'],
     outcomes: ['upskill'],
-    student: 'challenges/advanced-tracing-observability/README.md',
-    coach: 'docs/challenges/advanced-tracing-observability-coach.md',
+    participant: 'activities/advanced-tracing-observability/README.md',
+    facilitator: 'docs/activities/advanced-tracing-observability-facilitator.md',
   },
   {
     id: 'advanced-deploy-hosted-agent',
@@ -292,8 +292,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['deployment', 'hosted-agent', 'container'],
     outcomes: ['upskill'],
-    student: 'challenges/advanced-deploy-hosted-agent/README.md',
-    coach: 'docs/challenges/advanced-deploy-hosted-agent-coach.md',
+    participant: 'activities/advanced-deploy-hosted-agent/README.md',
+    facilitator: 'docs/activities/advanced-deploy-hosted-agent-facilitator.md',
   },
   {
     id: 'extra-build-ui',
@@ -305,8 +305,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['ui', 'demo', 'frontend'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-build-ui/README.md',
-    coach: 'docs/challenges/extra-build-ui-coach.md',
+    participant: 'activities/extra-build-ui/README.md',
+    facilitator: 'docs/activities/extra-build-ui-facilitator.md',
   },
   {
     id: 'extra-voice-live',
@@ -318,8 +318,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['voice', 'realtime', 'interface'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-voice-live/README.md',
-    coach: 'docs/challenges/extra-voice-live-coach.md',
+    participant: 'activities/extra-voice-live/README.md',
+    facilitator: 'docs/activities/extra-voice-live-facilitator.md',
   },
   {
     id: 'extra-fabric-iq',
@@ -331,8 +331,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['fabric', 'knowledge', 'data'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-fabric-iq/README.md',
-    coach: 'docs/challenges/extra-fabric-iq-coach.md',
+    participant: 'activities/extra-fabric-iq/README.md',
+    facilitator: 'docs/activities/extra-fabric-iq-facilitator.md',
   },
   {
     id: 'extra-copilot-assisted',
@@ -343,8 +343,8 @@ const CHALLENGES = [
     description: 'Use skills and MCP deliberately instead of guessing fast-moving Foundry APIs.',
     tags: ['copilot', 'skills', 'mcp'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-copilot-assisted/README.md',
-    coach: 'docs/challenges/extra-copilot-assisted-coach.md',
+    participant: 'activities/extra-copilot-assisted/README.md',
+    facilitator: 'docs/activities/extra-copilot-assisted-facilitator.md',
   },
   {
     id: 'extra-magentic-workflows',
@@ -356,8 +356,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['multi-agent', 'orchestration', 'magentic'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-magentic-workflows/README.md',
-    coach: 'docs/challenges/extra-magentic-workflows-coach.md',
+    participant: 'activities/extra-magentic-workflows/README.md',
+    facilitator: 'docs/activities/extra-magentic-workflows-facilitator.md',
   },
   {
     id: 'extra-hosted-longrunning',
@@ -369,8 +369,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['hosted-agent', 'long-running', 'workflow'],
     outcomes: ['upskill'],
-    student: 'challenges/extra-hosted-longrunning/README.md',
-    coach: 'docs/challenges/extra-hosted-longrunning-coach.md',
+    participant: 'activities/extra-hosted-longrunning/README.md',
+    facilitator: 'docs/activities/extra-hosted-longrunning-facilitator.md',
   },
   {
     id: 'capstone-multi-agent',
@@ -382,8 +382,8 @@ const CHALLENGES = [
     prerequisites: ['foundations'],
     tags: ['capstone', 'multi-agent', 'router'],
     outcomes: ['upskill'],
-    student: 'challenges/capstone-multi-agent/README.md',
-    coach: 'docs/challenges/capstone-multi-agent-coach.md',
+    participant: 'activities/capstone-multi-agent/README.md',
+    facilitator: 'docs/activities/capstone-multi-agent-facilitator.md',
   },
 ];
 
@@ -396,26 +396,26 @@ function stripFrontMatter(markdown) {
   return markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
 }
 
-function sourceDirFor(challenge) {
-  if (!challenge.student) return '';
-  return path.posix.dirname(challenge.student.replace(/\\/g, '/'));
+function sourceDirFor(activity) {
+  if (!activity.participant) return '';
+  return path.posix.dirname(activity.participant.replace(/\\/g, '/'));
 }
 
 function repoBlob(pathPart) {
-  return `https://github.com/microsoft/frontier-foundry-hackathon/blob/main/${pathPart}`;
+  return `https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/${pathPart}`;
 }
 
 function customerChapterId(slug) {
   return CUSTOMER_CHAPTER_IDS[slug] || slug;
 }
 
-function challengeUrl(id, hash = '') {
-  return `challenge.html?id=${id}${hash || ''}`;
+function activityUrl(id, hash = '') {
+  return `activity.html?id=${id}${hash || ''}`;
 }
 
-function transformMarkdown(markdown, challenge) {
-  const challengeAssetBase = `assets/data/challenges/${challenge.id}/assets/`;
-  const sourceDir = sourceDirFor(challenge);
+function transformMarkdown(markdown, activity) {
+  const activityAssetBase = `assets/data/activities/${activity.id}/assets/`;
+  const sourceDir = sourceDirFor(activity);
   const isCustomerChapter = sourceDir === 'docs/customer-build';
 
   return stripFrontMatter(markdown)
@@ -423,26 +423,26 @@ function transformMarkdown(markdown, challenge) {
     .replace(/\{% include module-lens\.html[^%]*%\}/g, '')
     .replace(/\{%[^%]*%\}/g, '')
     .replace(/\{\{\s*'\/customer-build'\s*\|\s*relative_url\s*\}\}/g, 'catalog.html?outcome=customer-build')
-    .replace(/\{\{\s*'\/customer-outcome'\s*\|\s*relative_url\s*\}\}/g, 'challenge.html?id=customer-outcome')
-    .replace(/\{\{\s*'\/idea-forge'\s*\|\s*relative_url\s*\}\}/g, 'challenge.html?id=idea-forge')
+    .replace(/\{\{\s*'\/customer-outcome'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=customer-outcome')
+    .replace(/\{\{\s*'\/idea-forge'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=idea-forge')
     .replace(/\{\{\s*'\/upskill'\s*\|\s*relative_url\s*\}\}/g, 'catalog.html?outcome=upskill')
-    .replace(/\{\{\s*'\/setup'\s*\|\s*relative_url\s*\}\}/g, 'challenge.html?id=setup')
-    .replace(/\{\{\s*'\/challenges\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => challengeUrl(slug, hash))
-    .replace(/\{\{\s*'\/customer-build\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => challengeUrl(customerChapterId(slug), hash))
+    .replace(/\{\{\s*'\/setup'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=setup')
+    .replace(/\{\{\s*'\/activities\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => activityUrl(slug, hash))
+    .replace(/\{\{\s*'\/customer-build\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => activityUrl(customerChapterId(slug), hash))
     .replace(/\]\(\.\.\/\.\.\/docs\/customer-build\.md\)/g, '](catalog.html?outcome=customer-build)')
-    .replace(/\]\(\.\.\/\.\.\/docs\/customer-build\/([^).#]+)\.md(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${challengeUrl(customerChapterId(slug), hash)})`)
-    .replace(/\]\(\.\.\/\.\.\/docs\/customer-outcome\.md\)/g, '](challenge.html?id=customer-outcome)')
-    .replace(/\]\(\.\.\/challenges\/([^)#]+)(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${challengeUrl(slug, hash)})`)
-    .replace(/\]\(\.\.\/customer-outcome(#[^)]+)?\)/g, (_m, hash = '') => `](${challengeUrl('customer-outcome', hash)})`)
-    .replace(/\]\(\.\.\/idea-forge(#[^)]+)?\)/g, (_m, hash = '') => `](${challengeUrl('idea-forge', hash)})`)
+    .replace(/\]\(\.\.\/\.\.\/docs\/customer-build\/([^).#]+)\.md(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(customerChapterId(slug), hash)})`)
+    .replace(/\]\(\.\.\/\.\.\/docs\/customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
+    .replace(/\]\(\.\.\/activities\/([^)#]+)(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(slug, hash)})`)
+    .replace(/\]\(\.\.\/customer-outcome(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('customer-outcome', hash)})`)
+    .replace(/\]\(\.\.\/idea-forge(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('idea-forge', hash)})`)
     .replace(/\]\(\.\.\/\.\.\/resources\//g, '](resources/')
-    .replace(/\]\(\.\.\/\.\.\/docs\/challenges\/([^)]+)\.md\)/g, (_m, slug) => `](challenge.html?id=${slug})`)
+    .replace(/\]\(\.\.\/\.\.\/docs\/activities\/([^)]+)\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
     .replace(/\]\((?:\.\.\/)*customer-build\.md\)/g, '](catalog.html?outcome=customer-build)')
-    .replace(/\]\((?:\.\.\/)*customer-outcome\.md\)/g, '](challenge.html?id=customer-outcome)')
-    .replace(/\]\(\.\.\/([a-z0-9-]+)\/README\.md\)/g, (_m, slug) => `](challenge.html?id=${slug})`)
+    .replace(/\]\((?:\.\.\/)*customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
+    .replace(/\]\(\.\.\/([a-z0-9-]+)\/README\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
     .replace(/\]\((foundations|advanced-action-tools|advanced-evaluation-redteam|advanced-tracing-observability|advanced-deploy-hosted-agent|extra-build-ui|capstone-multi-agent)(#[^)]+)?\)/g,
-      (_m, slug, hash = '') => isCustomerChapter ? `](${challengeUrl(customerChapterId(slug), hash)})` : _m)
-    .replace(/\]\(assets\//g, `](${challengeAssetBase}`)
+      (_m, slug, hash = '') => isCustomerChapter ? `](${activityUrl(customerChapterId(slug), hash)})` : _m)
+    .replace(/\]\(assets\//g, `](${activityAssetBase}`)
     .replace(/\]\(solution\.md\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/solution.md`)})` : '](#)')
     .replace(/\]\(evaluate\.py\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/evaluate.py`)})` : '](#)')
     .replace(/\]\(validate\.py\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/validate.py`)})` : '](#)')
@@ -452,21 +452,21 @@ function transformMarkdown(markdown, challenge) {
     .replace(/\]\(\.\.\/\.\.\/docs\//g, `](${repoBlob('docs/')}`);
 }
 
-function writeGuide(challenge, kind) {
-  const guideDir = path.join(OUT_GUIDES_DIR, challenge.id);
+function writeGuide(activity, kind) {
+  const guideDir = path.join(OUT_GUIDES_DIR, activity.id);
   fs.mkdirSync(guideDir, { recursive: true });
 
-  const outName = kind === 'coach' ? 'COACH.md' : 'README.md';
-  const configured = kind === 'coach' ? challenge.coach : challenge.student;
-  const fallback = kind === 'coach'
-    ? `# Coach guide\n\nCoach-specific notes are not available for this item. Use the student guide and the success criteria in the sidebar.`
-    : `# ${challenge.title}\n\nGuide content is not available yet.`;
+  const outName = kind === 'facilitator' ? 'FACILITATOR.md' : 'README.md';
+  const configured = kind === 'facilitator' ? activity.facilitator : activity.participant;
+  const fallback = kind === 'facilitator'
+    ? `# Facilitator guide\n\nFacilitator-specific notes are not available for this item. Use the participant guide and the success criteria in the sidebar.`
+    : `# ${activity.title}\n\nGuide content is not available yet.`;
 
   const raw = configured ? readIfExists(configured) : null;
-  fs.writeFileSync(path.join(guideDir, outName), transformMarkdown(raw || fallback, challenge));
+  fs.writeFileSync(path.join(guideDir, outName), transformMarkdown(raw || fallback, activity));
 
-  if (kind === 'student' && challenge.student && challenge.student.startsWith('challenges/')) {
-    const srcDir = path.join(ROOT, path.dirname(challenge.student));
+  if (kind === 'participant' && activity.participant && activity.participant.startsWith('activities/')) {
+    const srcDir = path.join(ROOT, path.dirname(activity.participant));
     const srcAssets = path.join(srcDir, 'assets');
     if (fs.existsSync(srcAssets)) {
       fs.cpSync(srcAssets, path.join(guideDir, 'assets'), { recursive: true });
@@ -482,53 +482,53 @@ function copyResources() {
   }
 }
 
-function challengeOutput(challenge) {
+function activityOutput(activity) {
   return {
-    id: challenge.id,
-    title: challenge.title,
+    id: activity.id,
+    title: activity.title,
     module: 'foundry',
-    track: challenge.track,
-    difficulty: challenge.difficulty,
-    duration_minutes: challenge.duration_minutes,
-    description: challenge.description,
-    prerequisites: challenge.prerequisites || [],
-    prerequisite_capabilities: challenge.prerequisite_capabilities || [],
-    success_criteria: challenge.success_criteria || [],
-    tags: challenge.tags || [],
-    outcomes: challenge.outcomes || [],
-    personas: challenge.personas || [],
-    business_value: challenge.business_value || [],
-    adoption_stage: challenge.adoption_stage || '',
+    track: activity.track,
+    difficulty: activity.difficulty,
+    duration_minutes: activity.duration_minutes,
+    description: activity.description,
+    prerequisites: activity.prerequisites || [],
+    prerequisite_capabilities: activity.prerequisite_capabilities || [],
+    success_criteria: activity.success_criteria || [],
+    tags: activity.tags || [],
+    outcomes: activity.outcomes || [],
+    personas: activity.personas || [],
+    business_value: activity.business_value || [],
+    adoption_stage: activity.adoption_stage || '',
     app_dependency: 'none',
     emu_compatible: true,
-    tier: challenge.track === 'extras' ? 'extra' : 'core',
-    references: challenge.references || [],
-    source_repo: 'microsoft/frontier-foundry-hackathon',
-    source_path: challenge.student || '',
+    tier: activity.track === 'extras' ? 'extra' : 'core',
+    references: activity.references || [],
+    source_repo: 'microsoft/frontier-ai-starter-kit-rvas',
+    source_path: activity.participant || '',
     license: 'MIT',
-    student_path: `assets/data/challenges/${challenge.id}/README.md`,
-    coach_path: `assets/data/challenges/${challenge.id}/COACH.md`,
+    participant_path: `assets/data/activities/${activity.id}/README.md`,
+    facilitator_path: `assets/data/activities/${activity.id}/FACILITATOR.md`,
   };
 }
 
-function detectMissingReferences(challenges, outcomes) {
-  const ids = new Set(challenges.map((c) => c.id));
+function detectMissingReferences(activities, outcomes) {
+  const ids = new Set(activities.map((c) => c.id));
   const missing = [];
-  for (const challenge of challenges) {
-    for (const prereq of challenge.prerequisites || []) {
-      if (!ids.has(prereq)) missing.push(`${challenge.id} prerequisite ${prereq}`);
+  for (const activity of activities) {
+    for (const prereq of activity.prerequisites || []) {
+      if (!ids.has(prereq)) missing.push(`${activity.id} prerequisite ${prereq}`);
     }
   }
   for (const outcome of outcomes) {
-    for (const id of outcome.challenge_ids || []) {
-      if (!ids.has(id)) missing.push(`${outcome.id} outcome challenge ${id}`);
+    for (const id of outcome.activity_ids || []) {
+      if (!ids.has(id)) missing.push(`${outcome.id} outcome activity ${id}`);
     }
   }
   return missing;
 }
 
 function main() {
-  const missing = detectMissingReferences(CHALLENGES, OUTCOMES);
+  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES);
   if (missing.length) {
     console.error('Build failed: missing references');
     missing.forEach((m) => console.error(`  - ${m}`));
@@ -539,51 +539,51 @@ function main() {
   fs.mkdirSync(OUT_DATA_DIR, { recursive: true });
   copyResources();
 
-  for (const challenge of CHALLENGES) {
-    writeGuide(challenge, 'student');
-    writeGuide(challenge, 'coach');
+  for (const activity of ACTIVITIES) {
+    writeGuide(activity, 'participant');
+    writeGuide(activity, 'facilitator');
   }
 
-  const outputChallenges = CHALLENGES.map(challengeOutput);
-  const challengeById = new Map(outputChallenges.map((c) => [c.id, c]));
+  const outputActivities = ACTIVITIES.map(activityOutput);
+  const activityById = new Map(outputActivities.map((c) => [c.id, c]));
 
   const modules = MODULES.map((mod) => {
-    const moduleChallenges = outputChallenges.filter((c) => c.module === mod.id);
+    const moduleActivities = outputActivities.filter((c) => c.module === mod.id);
     const tracks = mod.tracks.map((track) => ({
       ...track,
-      challenge_count: moduleChallenges.filter((c) => c.track === track.id).length,
+      activity_count: moduleActivities.filter((c) => c.track === track.id).length,
     }));
     return {
       ...mod,
-      challenge_count: moduleChallenges.length,
+      activity_count: moduleActivities.length,
       tracks,
     };
   });
 
   const outcomes = OUTCOMES.map((outcome) => {
-    const duration = (outcome.challenge_ids || []).reduce((total, id) => {
-      const challenge = challengeById.get(id);
-      return total + (challenge ? challenge.duration_minutes || 0 : 0);
+    const duration = (outcome.activity_ids || []).reduce((total, id) => {
+      const activity = activityById.get(id);
+      return total + (activity ? activity.duration_minutes || 0 : 0);
     }, 0);
     return {
       ...outcome,
-      challenge_count: (outcome.challenge_ids || []).length,
+      activity_count: (outcome.activity_ids || []).length,
       duration_minutes: duration,
     };
   });
 
   const graph = {
-    nodes: outputChallenges.map((c) => ({ id: c.id, title: c.title, module: c.module, track: c.track, tier: c.tier })),
-    edges: outputChallenges.flatMap((c) => (c.prerequisites || []).map((from) => ({ from, to: c.id }))),
+    nodes: outputActivities.map((c) => ({ id: c.id, title: c.title, module: c.module, track: c.track, tier: c.tier })),
+    edges: outputActivities.flatMap((c) => (c.prerequisites || []).map((from) => ({ from, to: c.id }))),
   };
 
   fs.writeFileSync(
     path.join(OUT_DATA_DIR, 'platform.json'),
-    JSON.stringify({ generated_at: new Date().toISOString(), modules, outcomes, challenges: outputChallenges }, null, 2),
+    JSON.stringify({ generated_at: new Date().toISOString(), modules, outcomes, activities: outputActivities }, null, 2),
   );
   fs.writeFileSync(path.join(OUT_DATA_DIR, 'dependency-graph.json'), JSON.stringify(graph, null, 2));
 
-  console.log(`✓ built platform.json (modules: ${modules.length}, outcomes: ${outcomes.length}, challenges: ${outputChallenges.length})`);
+  console.log(`✓ built platform.json (modules: ${modules.length}, outcomes: ${outcomes.length}, activities: ${outputActivities.length})`);
   console.log(`✓ copied guides → ${path.relative(ROOT, OUT_GUIDES_DIR)}`);
 }
 

@@ -1,6 +1,6 @@
 # Project Context
 
-- **Project:** ai-hackathon
+- **Project:** ai-starter-kit-rvas
 - **Created:** 2026-05-28
 
 ## Core Context

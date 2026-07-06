@@ -1,7 +1,7 @@
 {
-  "name": "frontier-foundry-hackathon",
+  "name": "frontier-ai-starter-kit-rvas",
   "version": "1.0.0",
-  "description": "Microsoft Foundry hackathon static site builder",
+  "description": "Microsoft Foundry session static site builder",
   "scripts": {
     "build": "node docs/build.js"
   },

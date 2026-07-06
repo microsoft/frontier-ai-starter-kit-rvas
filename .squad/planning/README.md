@@ -1,6 +1,6 @@
 # Planning Archive
 
-Internal build history — not participant/coach content; not shipped.
+Internal build history — not participant/facilitator content; not shipped.
 
 Archived 2026-06-01. These docs were moved here (not deleted) from the repo root and `resources/`. Git history preserves their prior locations.
 

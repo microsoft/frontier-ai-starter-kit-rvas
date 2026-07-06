@@ -1,6 +1,6 @@
 # Northfield University FAQ Corpus
 
-This folder contains a fictional document corpus for **Northfield University**, a tech-focused university used throughout the hackathon. The files are designed for retrieval-augmented generation (RAG) practice in later challenges.
+This folder contains a fictional document corpus for **Northfield University**, a tech-focused university used throughout the session. The files are designed for retrieval-augmented generation (RAG) practice in later activities.
 
 ## What is in this corpus?
 The corpus includes 12 Markdown files covering common student support topics:

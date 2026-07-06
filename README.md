@@ -1,18 +1,18 @@
 # Build Intelligent Apps with Microsoft Foundry
 
-[![Deploy GitHub Pages](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-foundry-hackathon/actions/workflows/deploy-pages.yml)
+[![Deploy GitHub Pages](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
-*A hands-on AI apps hackathon: from prompt to production*
+*A hands-on AI apps session: from prompt to production*
 
 ---
 
-## What is this hackathon?
+## What is this session?
 
-This repository is a hands-on hackathon for building intelligent applications with Microsoft Foundry, a unified platform for building, evaluating, and deploying AI applications.
+This repository is a hands-on session for building intelligent applications with Microsoft Foundry, a unified platform for building, evaluating, and deploying AI applications.
 
-This hackathon, you and your team build **one evolving artifact** across three tiers — and that artifact defaults to **your own application**. Bring a customer scenario, a business outcome, or an idea from the [Customer Challenge-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill, and leave with a grounded, evaluated, demo-ready agent prototype. New to Foundry and have no customer scenario ready? The **Northfield University IQ Assistant** is the guided fallback: a fictional university corpus and provided action tools let you learn every Foundry concept without needing real customer data. Both paths follow the same three-tier structure: a guided **Foundations** challenge (four ordered steps) that stands up a deployed, grounded agent; **Advanced** challenges in any order that make it act, prove it safe, observe it, and ship it; and an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system. Coaches guide discovery and unblock issues, but the learning is yours to own.
+This session, you and your team build **one evolving artifact** across three tiers — and that artifact defaults to **your own application**. Bring a customer scenario, a business outcome, or an idea from the [Customer Activity-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill, and leave with a grounded, evaluated, demo-ready agent prototype. New to Foundry and have no customer scenario ready? The **Northfield University IQ Assistant** is the guided fallback: a fictional university corpus and provided action tools let you learn every Foundry concept without needing real customer data. Both paths follow the same three-tier structure: a guided **Foundations** activity (four ordered steps) that stands up a deployed, grounded agent; **Advanced** activities in any order that make it act, prove it safe, observe it, and ship it; and an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system. Facilitators guide discovery and unblock issues, but the learning is yours to own.
 
 By the end, you'll have hands-on experience with the Microsoft Foundry platform, practical skills in prompt engineering and RAG (Retrieval-Augmented Generation), and a deployment-ready AI application to show for your work.
 
@@ -20,7 +20,7 @@ By the end, you'll have hands-on experience with the Microsoft Foundry platform,
 
 ## Learning Outcomes
 
-By the end of this hackathon, you will be able to:
+By the end of this session, you will be able to:
 
 - Navigate Microsoft Foundry and provision an AI project with connected resources (`azd up`)
 - Deploy and compare models from the Microsoft Foundry model catalog
@@ -43,10 +43,10 @@ This repo supports two event motions:
 
 Start with the [Customer Outcome Canvas](docs/customer-outcome.md) to define your user, data source,
 workflow, safety boundary, and demo story before the first line of code. Then map the same tiered
-challenges to your domain: data for grounding, actions for workflows, evals for trust, tracing for
+activities to your domain: data for grounding, actions for workflows, evals for trust, tracing for
 debugging, and UI/deploy for stakeholder demos.
 
-**No idea yet?** Use the [**Customer Challenge-Forge**](.github/skills/customer-challenge-forge/) skill:
+**No idea yet?** Use the [**Customer Activity-Forge**](.github/skills/customer-activity-forge/) skill:
 give it a customer name and industry and it generates ~10 right-sized, buildable Microsoft Foundry AI
 application ideas with industry rationale and tier mapping. Pick one and fill in the canvas. If your
 team has no customer at all, Northfield remains the known-good reference path.
@@ -55,25 +55,25 @@ team has no customer at all, Northfield remains the known-good reference path.
 
 ## Who is this for?
 
-### Students
+### Participants
 
-You're a great fit for this hackathon if you:
+You're a great fit for this session if you:
 
 - Have some Python experience (variables, functions, pip) and understand REST APIs and JSON
 - Are curious about how AI models work and want to build with them
 - Have a GitHub account and access to Azure (via Azure Pass, Azure for Students, or a trial subscription)
-- Are ready to learn by solving real challenges, not watching tutorials
+- Are ready to learn by solving real activities, not watching tutorials
 
 No prior Azure or AI experience needed. Just bring curiosity and a willingness to debug.
 
-### Coaches
+### Facilitators
 
-You're ready to coach if you:
+You're ready to facilitate if you:
 
 - Are familiar with Microsoft Foundry model and agent concepts, and prompt engineering
 - Enjoy helping teams think through problems (instead of giving direct answers)
 - Can spend 6–8 hours supporting 2–3 teams
-- Have access to the [Coach Hub](docs/coach-hub.md) and solution materials in this repo
+- Have access to the [Facilitator Hub](docs/facilitator-hub.md) and solution materials in this repo
 - Can help teams translate a business scenario into data, tools, evals, and a demoable outcome
 
 ---
@@ -96,7 +96,7 @@ Before you start, make sure you have:
 
 Click the badge below to open a fully configured development environment:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-foundry-hackathon)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
 **Alternative**: Open locally with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) in VS Code.
 
@@ -112,9 +112,9 @@ Follow the prompts to sign in with your Azure account. This connects your worksp
 
 ### 3. Choose your event mode
 
-**Customer Build Mode (primary):** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first. Define your user, data source, workflow, safety boundary, and demo story — then follow the guided, chapter-based [Customer Build Track](docs/customer-build/index.md), which reframes each Northfield module as decisions for your own app (with "does this apply to you?" gates) and links back to the reference for the mechanics. No idea yet? Run the [Customer Challenge-Forge](.github/skills/customer-challenge-forge/) skill to generate ~10 tailored ideas from a customer name and industry, then pick one and fill in the canvas.
+**Customer Build Mode (primary):** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first. Define your user, data source, workflow, safety boundary, and demo story — then follow the guided, chapter-based [Customer Build Track](docs/customer-build/index.md), which reframes each Northfield module as decisions for your own app (with "does this apply to you?" gates) and links back to the reference for the mechanics. No idea yet? Run the [Customer Activity-Forge](.github/skills/customer-activity-forge/) skill to generate ~10 tailored ideas from a customer name and industry, then pick one and fill in the canvas.
 
-**Upskill Mode (fallback):** Read [Foundations](challenges/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant exactly as written.
+**Upskill Mode (fallback):** Read [Foundations](activities/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant exactly as written.
 
 **Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 
@@ -126,11 +126,11 @@ python scripts/validate-foundations.py   # ✅ asserts the Foundations end-state
 
 ---
 
-## Challenges
+## Activities
 
 The curriculum is a **tree of three tiers** — climb a guided trunk, fan out across modular branches,
-then converge on an open summit. **Tier 1 Foundations** is one guided, linear challenge with four
-ordered steps (everyone does it). **Tier 2 Advanced** challenges are modular and can be attempted in
+then converge on an open summit. **Tier 1 Foundations** is one guided, linear activity with four
+ordered steps (everyone does it). **Tier 2 Advanced** activities are modular and can be attempted in
 **any order** — they all assume the Foundations end-state. **Tier 3 Capstone** is an open-ended
 design brief that composes everything into a multi-agent system.
 
@@ -159,26 +159,26 @@ For customer engagements, treat every tier as an outcome checkpoint:
     (knowledge, actions), then converges.
 ```
 
-### Tier 1 — Foundations (`challenges/foundations/`)
+### Tier 1 — Foundations (`activities/foundations/`)
 
 | Step | Title | Duration | Difficulty | Builds toward end-state |
 |---|-----------|----------|------------|------------|
-| 1 | [Setup & Provisioning (Foundry + AI Search)](challenges/foundations/README.md#step-1--setup--provisioning-foundry--ai-search) | 30 min | ⭐ | Infra live; `.env` contract |
-| 2 | [Model Selection & the Playground](challenges/foundations/README.md#step-2--model-selection--the-playground) | 45 min | ⭐ | A chosen model + system instructions |
-| 3 | [Your First Agent](challenges/foundations/README.md#step-3--your-first-agent) | 45 min | ⭐⭐ | A named, versioned agent |
-| 4 | [Knowledge Base — Index + Foundry IQ](challenges/foundations/README.md#step-4--knowledge-base-index--foundry-iq---foundations-end-state) | 1.5 hr | ⭐⭐⭐ | **Grounded agent w/ citations (END-STATE)** |
+| 1 | [Setup & Provisioning (Foundry + AI Search)](activities/foundations/README.md#step-1--setup--provisioning-foundry--ai-search) | 30 min | ⭐ | Infra live; `.env` contract |
+| 2 | [Model Selection & the Playground](activities/foundations/README.md#step-2--model-selection--the-playground) | 45 min | ⭐ | A chosen model + system instructions |
+| 3 | [Your First Agent](activities/foundations/README.md#step-3--your-first-agent) | 45 min | ⭐⭐ | A named, versioned agent |
+| 4 | [Knowledge Base — Index + Foundry IQ](activities/foundations/README.md#step-4--knowledge-base-index--foundry-iq---foundations-end-state) | 1.5 hr | ⭐⭐⭐ | **Grounded agent w/ citations (END-STATE)** |
 
 ### Tier 2 — Advanced (modular · any order)
 
-Each Advanced challenge offers two paths: a **Guided** path (revised, honest time) and a longer
+Each Advanced activity offers two paths: a **Guided** path (revised, honest time) and a longer
 **Build-from-scratch** path with fewer placeholders. Both are graded by the same `validate.py`.
 
-| Challenge | Guided | Build-from-scratch | Difficulty | Key Skills |
+| Activity | Guided | Build-from-scratch | Difficulty | Key Skills |
 |-----------|--------|--------------------|------------|------------|
-| [Action Tools — Make the Agent Do Work](challenges/advanced-action-tools/README.md) | ~45 min | ~1.5 hr | ⭐⭐⭐ | MCP tool, tool-approval loop |
-| [Evaluation & Red Teaming](challenges/advanced-evaluation-redteam/README.md) | ~1.25 hr | ~2 hr | ⭐⭐⭐⭐ | NLP metrics + adversarial safety |
-| [Tracing & Observability](challenges/advanced-tracing-observability/README.md) | ~1 hr | ~1.5 hr | ⭐⭐⭐⭐ | OTel GenAI → App Insights → KQL |
-| [Deploy as a Hosted Agent](challenges/advanced-deploy-hosted-agent/README.md) | ~60–90 min | ~1.5 hr | ⭐⭐⭐⭐⭐ | `azd ai agent`, hosted endpoint |
+| [Action Tools — Make the Agent Do Work](activities/advanced-action-tools/README.md) | ~45 min | ~1.5 hr | ⭐⭐⭐ | MCP tool, tool-approval loop |
+| [Evaluation & Red Teaming](activities/advanced-evaluation-redteam/README.md) | ~1.25 hr | ~2 hr | ⭐⭐⭐⭐ | NLP metrics + adversarial safety |
+| [Tracing & Observability](activities/advanced-tracing-observability/README.md) | ~1 hr | ~1.5 hr | ⭐⭐⭐⭐ | OTel GenAI → App Insights → KQL |
+| [Deploy as a Hosted Agent](activities/advanced-deploy-hosted-agent/README.md) | ~60–90 min | ~1.5 hr | ⭐⭐⭐⭐⭐ | `azd ai agent`, hosted endpoint |
 
 **Extras** (optional, modular) — re-slotted by their role in the tree:
 - **Capstone-feeders**: Magentic Workflows, MAF + Hosted Long-Running Agents — the strongest content
@@ -186,24 +186,24 @@ Each Advanced challenge offers two paths: a **Guided** path (revised, honest tim
 - **Capstone companion**: Build a UI — a web front-end for your agent (or agent team).
 - **Deepeners**: Fabric IQ, Give It a Voice (Voice Live), Copilot-Assisted Build — extend one concept.
 
-See the `challenges/extra-*` folders.
+See the `activities/extra-*` folders.
 
-### Tier 3 — Capstone (`challenges/capstone-multi-agent/`)
+### Tier 3 — Capstone (`activities/capstone-multi-agent/`)
 
 The open-ended summit: break the single Northfield IQ Assistant into a **multi-agent team** — a
-[triage/router that fans out to specialist agents and converges](challenges/capstone-multi-agent/README.md#the-agent-org-chart-role-as-agent),
+[triage/router that fans out to specialist agents and converges](activities/capstone-multi-agent/README.md#the-agent-org-chart-role-as-agent),
 orchestrated with the **Microsoft Agent Framework (MAF)**. It's a **design brief, not a placeholder-fill** —
 you decide the org-chart and wire the graph.
 
 | Capstone | Time | Difficulty | Prereqs |
 |----------|------|------------|---------|
-| [Northfield IQ, the Team — Multi-Agent Orchestration](challenges/capstone-multi-agent/README.md) | 2–2.5 hr core (+1 hr Magentic stretch, +1.5 hr hosted variant) | ⭐⭐⭐⭐⭐ | Foundations end-state **+** Action Tools |
+| [Northfield IQ, the Team — Multi-Agent Orchestration](activities/capstone-multi-agent/README.md) | 2–2.5 hr core (+1 hr Magentic stretch, +1.5 hr hosted variant) | ⭐⭐⭐⭐⭐ | Foundations end-state **+** Action Tools |
 
 **Make it your own:** the capstone is the best place to reskin — swap Northfield for your domain
 (insurance, factory ops, retail) and demo *your* agent team.
 
 **Total guided path (Foundations + all four Advanced): ~7.25 hours** + **~2.5 hr Capstone** — a clean
-multi-day story. For a **1-day event**, run Foundations + 2–3 Advanced challenges and save the Capstone
+multi-day story. For a **1-day event**, run Foundations + 2–3 Advanced activities and save the Capstone
 for a second day or a follow-up sprint.
 
 ---
@@ -211,13 +211,13 @@ for a second day or a follow-up sprint.
 ## Repository Structure
 
 ```
-ai-hackathon/
+ai-starter-kit-rvas/
 ├── README.md                          # ← You are here
 ├── azure.yaml                         # azd project (golden-path provisioning)
 ├── infra/                             # Bicep — Foundry + AI Search + App Insights + ACR
 ├── scripts/                           # deploy.sh, setup-foundations.sh, validate-foundations.py, cleanup.sh
 │   └── action-backend/                # Action Tools REST API + FastMCP server (provided)
-├── challenges/                        # Challenge content and solutions
+├── activities/                        # Activity content and solutions
 │   ├── foundations/                   # Tier 1 — guided, Steps 1–4
 │   ├── advanced-action-tools/         # Tier 2 — modular, any order
 │   ├── advanced-evaluation-redteam/
@@ -233,31 +233,31 @@ ai-hackathon/
 └── .env.sample                        # The .env variable contract (never commit a real .env)
 ```
 
-Each challenge folder contains:
-- `README.md`: the challenge brief (what to build)
-- `solution.md`: the solution guide (coaches only)
+Each activity folder contains:
+- `README.md`: the activity brief (what to build)
+- `solution.md`: the solution guide (facilitators only)
 - Sample data or starter code (if needed)
 
 ---
 
-## For Coaches
+## For Facilitators
 
 ### Getting Started
 
-Visit the [Coach Hub](docs/coach-hub.md) for tips on facilitating the event and working with your teams.
+Visit the [Facilitator Hub](docs/facilitator-hub.md) for tips on facilitating the event and working with your teams.
 
 ### Solution Guides
 
-Solution guides for each challenge are included in this repo under `challenges/*/solution.md`. These are **for coaches only**; share judiciously to encourage discovery over answers.
+Solution guides for each activity are included in this repo under `activities/*/solution.md`. These are **for facilitators only**; share judiciously to encourage discovery over answers.
 
-Clone or access this repo locally and navigate to the challenge solution you need.
+Clone or access this repo locally and navigate to the activity solution you need.
 
-### Quick-Start Coaching Checklist
+### Quick-Start Facilitation Checklist
 
 1. Verify all participants have Azure subscriptions and Codespaces access
-2. Review the challenge brief before your team starts
+2. Review the activity brief before your team starts
 3. Walk through Foundations Step 1 with them to confirm the environment works
-4. For each challenge, guide them toward the solution without giving it away
+4. For each activity, guide them toward the solution without giving it away
 5. Use the solution guide to unblock them if they're truly stuck
 
 ---
@@ -270,4 +270,4 @@ Clone or access this repo locally and navigate to the challenge solution you nee
 
 ---
 
-**Ready to build?** Start with [Foundations](challenges/foundations/README.md).
+**Ready to build?** Start with [Foundations](activities/foundations/README.md).

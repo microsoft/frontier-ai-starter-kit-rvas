@@ -72,8 +72,8 @@
   };
 
   /* ─────────────────────────── URL helpers ───────────────────────── */
-  FP.challengeUrl = function (id) {
-    return 'challenge.html?id=' + encodeURIComponent(id);
+  FP.activityUrl = function (id) {
+    return 'activity.html?id=' + encodeURIComponent(id);
   };
   FP.catalogOutcomeUrl = function (id) {
     return 'catalog.html?outcome=' + encodeURIComponent(id);

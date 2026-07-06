@@ -99,7 +99,7 @@ The skill also includes a final "obviously AI generated" audit pass and a second
 | 3 | **Superficial -ing analyses** | "symbolizing... reflecting... showcasing..." | Remove or expand with actual sources |
 | 4 | **Promotional language** | "nestled within the breathtaking region" | "is a town in the Gonder region" |
 | 5 | **Vague attributions** | "Experts believe it plays a crucial role" | "according to a 2019 survey by..." |
-| 6 | **Formulaic challenges** | "Despite challenges... continues to thrive" | Specific facts about actual challenges |
+| 6 | **Formulaic activities** | "Despite activities... continues to thrive" | Specific facts about actual activities |
 
 ### Language Patterns
 
@@ -160,7 +160,7 @@ The skill also includes a final "obviously AI generated" audit pass and a second
 > - 🚀 **Quality:** Output quality has been enhanced through improved training, contributing to higher standards.
 > - ✅ **Adoption:** Usage continues to grow, reflecting broader industry trends.
 >
-> While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite challenges typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.
+> While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite activities typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.
 >
 > In conclusion, the future looks bright. Exciting times lie ahead as we continue this journey toward excellence. Let me know if you’d like me to expand on any section!
 

@@ -9,7 +9,7 @@ description: Add one governed action to your grounded agent — the Customer Bui
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Act" artifact="One approval-gated action from YOUR workflow, proven end-to-end without unsafe auto-execution." next="Once your agent can act safely, move to Prove it's safe." %}
 
-This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter is mutuated from [Advanced · Action Tools](../activities/advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
 > Before you start this chapter: you need a grounded agent from [Ground your app](foundations) and at least one action candidate from your scenario pack.
 
@@ -26,16 +26,16 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 
 **Decisions to make:**
 - Which *action candidate* is valuable enough to demo?
-- What is the safe backend for the hackathon: real dev API, mock service, provided Action Tools backend, or manual queue?
+- What is the safe backend for the session: real dev API, mock service, provided Action Tools backend, or manual queue?
 - What non-secret auth/header contract will the agent use?
 
-**Apply it to your app:** start from the provided REST backend pattern, then substitute your endpoint only if you own the side effect and can reset it. → [Action Tools — Step 0](../challenges/advanced-action-tools#step-0--start-the-provided-backend)
+**Apply it to your app:** start from the provided REST backend pattern, then substitute your endpoint only if you own the side effect and can reset it. → [Action Tools — Step 0](../activities/advanced-action-tools#step-0--start-the-provided-backend)
 
 **Prove you applied it:**
-- `python challenges/advanced-action-tools/validate.py --track customer --step 1 --dry-run`
+- `python activities/advanced-action-tools/validate.py --track customer --step 1 --dry-run`
 - Checklist: □ action endpoint or mock is reachable □ no production data is mutated □ every required env var uses `.env.sample` names (`ACTION_API_URL`, `ACTION_MCP_URL`, `ACTION_API_KEY`).
 
-**Stuck?** [Northfield Step 0](../challenges/advanced-action-tools#step-0--start-the-provided-backend).
+**Stuck?** [Northfield Step 0](../activities/advanced-action-tools#step-0--start-the-provided-backend).
 
 ---
 
@@ -54,13 +54,13 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 - Is the approval policy always-approve-by-human, conditional, or deny-by-default for some inputs?
 - What must be shown to the human before approval: user, record id, amount, date, rationale, source citation?
 
-**Apply it to your app:** write your approval policy before coding the tool. Use the Northfield comparison to separate knowledge from action. → [Action Tools — Step 1](../challenges/advanced-action-tools#step-1--knowledge-tools-vs-action-tools)
+**Apply it to your app:** write your approval policy before coding the tool. Use the Northfield comparison to separate knowledge from action. → [Action Tools — Step 1](../activities/advanced-action-tools#step-1--knowledge-tools-vs-action-tools)
 
 **Prove you applied it:**
-- `python challenges/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
+- `python activities/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
 - Checklist: □ each action has a named side effect □ approval criteria are written □ denial behavior is defined □ unsafe/out-of-scope requests route to refusal or escalation.
 
-**Stuck?** [Northfield Step 1](../challenges/advanced-action-tools#step-1--knowledge-tools-vs-action-tools).
+**Stuck?** [Northfield Step 1](../activities/advanced-action-tools#step-1--knowledge-tools-vs-action-tools).
 
 ---
 
@@ -79,13 +79,13 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 - Which values must come from grounded context vs. user input vs. human approver?
 - What does success return so the agent can cite a ticket id, booking id, or handoff id?
 
-**Apply it to your app:** wrap your backend call as a `FunctionTool` and keep the tool docstring specific to your domain. → [Action Tools — Step 2](../challenges/advanced-action-tools#step-2--define-the-action-tools)
+**Apply it to your app:** wrap your backend call as a `FunctionTool` and keep the tool docstring specific to your domain. → [Action Tools — Step 2](../activities/advanced-action-tools#step-2--define-the-action-tools)
 
 **Prove you applied it:**
-- `python challenges/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
+- `python activities/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
 - Checklist: □ tool names match your business action □ parameters are not Northfield-specific unless your scenario is Northfield □ tool uses `ACTION_API_URL` or a documented equivalent □ no placeholders remain.
 
-**Stuck?** [Northfield Step 2](../challenges/advanced-action-tools#step-2--define-the-action-tools).
+**Stuck?** [Northfield Step 2](../activities/advanced-action-tools#step-2--define-the-action-tools).
 
 ---
 
@@ -99,18 +99,18 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 - Skip it only when all tools are read-only and non-sensitive.
 
 **Decisions to make:**
-- Who approves in the demo: user, operator, coach, or simulated approver?
+- Who approves in the demo: user, operator, facilitator, or simulated approver?
 - What arguments are shown exactly as the human sees them?
 - What audit artifact proves approval happened?
 - What message does the agent return when approval is denied?
 
-**Apply it to your app:** reuse the `RequiredFunctionToolCall` → approve/deny → `ToolOutput` loop, substituting your action functions. → [Action Tools — Step 3](../challenges/advanced-action-tools#step-3--implement-the-tool-approval-loop)
+**Apply it to your app:** reuse the `RequiredFunctionToolCall` → approve/deny → `ToolOutput` loop, substituting your action functions. → [Action Tools — Step 3](../activities/advanced-action-tools#step-3--implement-the-tool-approval-loop)
 
 **Prove you applied it:**
-- `python challenges/advanced-action-tools/validate.py --track customer --step 3 --dry-run`
+- `python activities/advanced-action-tools/validate.py --track customer --step 3 --dry-run`
 - Checklist: □ action cannot execute before approval □ denial performs no side effect □ approval arguments are visible □ logs or records show the decision.
 
-**Stuck?** [Northfield Step 3](../challenges/advanced-action-tools#step-3--implement-the-tool-approval-loop).
+**Stuck?** [Northfield Step 3](../activities/advanced-action-tools#step-3--implement-the-tool-approval-loop).
 
 ---
 
@@ -120,7 +120,7 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 
 **Does this apply to you?**
 - Build it if action is part of your value proposition.
-- Adapt it if only a draft or queue item is safe during the hackathon.
+- Adapt it if only a draft or queue item is safe during the session.
 - Skip it if the demo remains knowledge-only; document this as a deliberate scope decision.
 
 **Decisions to make:**
@@ -129,13 +129,13 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 - What negative test proves denial or invalid input is safe?
 - How will you reset demo state between runs?
 
-**Apply it to your app:** run the same end-to-end pattern, but verify your own side effect and denial path. → [Action Tools — Step 4](../challenges/advanced-action-tools#step-4--test-an-end-to-end-action)
+**Apply it to your app:** run the same end-to-end pattern, but verify your own side effect and denial path. → [Action Tools — Step 4](../activities/advanced-action-tools#step-4--test-an-end-to-end-action)
 
 **Prove you applied it:**
-- `python challenges/advanced-action-tools/validate.py --track customer --all --dry-run`
+- `python activities/advanced-action-tools/validate.py --track customer --all --dry-run`
 - Checklist: □ approved request creates/updates the expected record □ denied request creates nothing □ result id is shown to the user □ action is included in your demo story.
 
-**Stuck?** [Northfield Step 4](../challenges/advanced-action-tools#step-4--test-an-end-to-end-action).
+**Stuck?** [Northfield Step 4](../activities/advanced-action-tools#step-4--test-an-end-to-end-action).
 
 ---
 
@@ -144,7 +144,7 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 You have one governed workflow action attached to your grounded agent, with approval and denial both proven.
 
 ```bash
-python challenges/advanced-action-tools/validate.py --track customer --all --dry-run
+python activities/advanced-action-tools/validate.py --track customer --all --dry-run
 ```
 
 Next: [Prove it's safe](advanced-evaluation-redteam).

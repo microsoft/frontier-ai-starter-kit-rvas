@@ -12,8 +12,8 @@ This is the first task in the Customer Build Track. Fill it out once, use it as 
 
 > First, what is "Northfield"? Throughout this track you'll see *Northfield* used as the
 > reference scenario: a student-services assistant for the fictional *Northfield University*,
-> grounded in a public [university-FAQ corpus]({{ '/challenges/foundations' | relative_url }}). The
-> base [Foundations track]({{ '/challenges/foundations' | relative_url }}) builds it step by step, so
+> grounded in a public [university-FAQ corpus]({{ '/activities/foundations' | relative_url }}). The
+> base [Foundations track]({{ '/activities/foundations' | relative_url }}) builds it step by step, so
 > its steps double as worked examples you can copy the exact commands from. Customer Build keeps
 > Northfield's mechanics and swaps in your own corpus, persona, and questions — you do not need to
 > build the Northfield version first. When a step says "follow the Northfield reference," that's the
@@ -40,14 +40,14 @@ If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer t
 When filling in Knowledge sources, use these guidelines to avoid the most common corpus problems:
 
 - Minimum useful size: 5–20 well-structured documents (FAQs, policy pages, SOPs, product guides)
-  is enough for a compelling hackathon demo. A sparse corpus produces "I don't know" answers even on
+  is enough for a compelling session demo. A sparse corpus produces "I don't know" answers even on
   questions the assistant should handle.
 - Safe data only: no PII, unredacted customer data, confidential pricing, or legal content that
   has not been cleared for use in a demo environment. When in doubt, use public-facing or
   pre-approved summaries.
 - Supported formats: the indexing step you'll build in Foundations Step 4 (following the
   Northfield reference, pointed at *your* files) reads Markdown (`.md`) and plain text (`.txt`)
-  directly. For PDFs, extract text first — `pypdf` is fast enough for hackathon use; Azure Document
+  directly. For PDFs, extract text first — `pypdf` is fast enough for session use; Azure Document
   Intelligence gives higher quality for complex layouts.
 - PDFs / SharePoint: the Foundry portal's Build → Indexes → Add data flow can ingest PDFs
   and SharePoint pages without writing code — a good option if the team is comfortable with portal
@@ -57,7 +57,7 @@ When filling in Knowledge sources, use these guidelines to avoid the most common
   The indexing architecture, agent wiring, and grounding pattern are identical regardless of which
   corpus you use — Northfield is the reference, not a ceiling.
 
-## Map the hackathon tiers to the customer outcome
+## Map the session tiers to the customer outcome
 
 | Tier | Build activity | Customer proof point |
 |---|---|---|
@@ -94,7 +94,7 @@ Each Customer Build team should leave with:
 4. A risk list covering data quality, permissions, safety, actions, and production readiness.
 5. A next-step backlog for pilot or production hardening.
 
-## Coach prompts
+## Facilitator prompts
 
 - What business decision or workflow improves if this prototype works?
 - Which source of truth should the agent cite before anyone trusts the answer?

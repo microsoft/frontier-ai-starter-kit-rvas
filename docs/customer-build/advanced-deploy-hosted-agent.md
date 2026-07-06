@@ -9,7 +9,7 @@ description: Package your agent as a hosted endpoint with identity, auth, and ob
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Grow it into a team." %}
 
-This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challenges/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activities/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](foundations). [See inside it](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
 
@@ -22,7 +22,7 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 **Does this apply to you?**
 - Build it if a stakeholder app, integration, or API client must call your agent.
 - Adapt it if your demo is a UI calling the project agent directly — package only the parts you need and record the gap.
-- Skip it if a local script/notebook is the intended hackathon deliverable.
+- Skip it if a local script/notebook is the intended session deliverable.
 
 **Decisions to make:**
 - What hosted agent name matches your scenario?
@@ -30,13 +30,13 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 - Which model deployment and tools are required at runtime?
 - What data must the container never bake in: secrets, `.env`, customer documents?
 
-**Apply it to your app:** adapt the manifest, entrypoint, and Dockerfile to your agent name and instructions. → [Deploy — Step 1](../challenges/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint)
+**Apply it to your app:** adapt the manifest, entrypoint, and Dockerfile to your agent name and instructions. → [Deploy — Step 1](../activities/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint)
 
 **Prove you applied it:**
-- `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 1 --dry-run`
+- `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 1 --dry-run`
 - Checklist: □ hosted manifest uses your agent name □ instructions are your scenario instructions □ responses protocol is declared □ Dockerfile exposes the expected port □ no secrets are copied.
 
-**Stuck?** [Northfield Step 1](../challenges/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint).
+**Stuck?** [Northfield Step 1](../activities/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint).
 
 ---
 
@@ -55,13 +55,13 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 - Who has permission to deploy and roll back?
 - What status proves the hosted version is active?
 
-**Apply it to your app:** use the hosted-agent deployment flow after confirming current commands in the reference. → [Deploy — Step 2](../challenges/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent)
+**Apply it to your app:** use the hosted-agent deployment flow after confirming current commands in the reference. → [Deploy — Step 2](../activities/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent)
 
 **Prove you applied it:**
-- `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 2 --dry-run`
+- `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 2 --dry-run`
 - Checklist: □ image tag is unique □ hosted version is active or deployment gap is documented □ per-agent identity exists □ rollback/cleanup path is known.
 
-**Stuck?** [Northfield Step 2](../challenges/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent).
+**Stuck?** [Northfield Step 2](../activities/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent).
 
 ---
 
@@ -80,13 +80,13 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 - What prompt proves the endpoint is your scenario, not the Northfield default?
 - What is the expected unauthenticated response?
 
-**Apply it to your app:** invoke the production Responses endpoint with a token and test anonymous rejection. → [Deploy — Step 3](../challenges/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth)
+**Apply it to your app:** invoke the production Responses endpoint with a token and test anonymous rejection. → [Deploy — Step 3](../activities/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth)
 
 **Prove you applied it:**
-- `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 3 --dry-run`
+- `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 3 --dry-run`
 - Checklist: □ authenticated call returns a scenario answer □ anonymous call is rejected □ per-agent identity is named □ no API key is required for local dev unless documented.
 
-**Stuck?** [Northfield Step 3](../challenges/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth).
+**Stuck?** [Northfield Step 3](../activities/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth).
 
 ---
 
@@ -105,22 +105,22 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 - Which KQL query from your tracing confirms hosted telemetry?
 - What alert or dashboard would be next for pilot?
 
-**Apply it to your app:** tie one hosted invocation back to run history and App Insights. → [Deploy — Step 4](../challenges/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history)
+**Apply it to your app:** tie one hosted invocation back to run history and App Insights. → [Deploy — Step 4](../activities/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history)
 
 **Prove you applied it:**
-- `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run`
+- `python activities/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run`
 - Checklist: □ hosted invocation appears in run history □ trace is visible or gap recorded □ operation id is captured □ cleanup plan is clear.
 
-**Stuck?** [Northfield Step 4](../challenges/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history).
+**Stuck?** [Northfield Step 4](../activities/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history).
 
 ---
 
 ## Chapter end-state
 
-You either have a hosted, authenticated, observable endpoint for your scenario agent, or a clear scope decision that the hackathon demo remains local/UI-only.
+You either have a hosted, authenticated, observable endpoint for your scenario agent, or a clear scope decision that the session demo remains local/UI-only.
 
 ```bash
-python challenges/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run
+python activities/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run
 ```
 
 Next: [Grow it into a team](capstone-multi-agent).

@@ -6,11 +6,11 @@ How to decide who handles what.
 
 | Work Type | Route To | Examples |
 |-----------|----------|---------|
-| Challenge architecture, scope decisions, content strategy | Danny | What challenges to include, learning objectives, hackathon format |
+| Activity architecture, scope decisions, content strategy | Danny | What activities to include, learning objectives, session format |
 | GitHub Pages site, UI/UX, participant frontend | Linus | Site layout, navigation, styling, accessibility |
 | GitHub Actions, repo structure, CI/CD, Pages pipeline | Livingston | Workflows, branch protection, deployment, repo scaffolding |
-| Challenge writing, student guides, coach guides | Rusty | Problem statements, hints, walkthroughs, FAQs |
-| QA, validation, coach solution guides, testing | Basher | End-to-end testing, broken links, coach reference solutions |
+| Activity writing, student guides, facilitator guides | Rusty | Problem statements, hints, walkthroughs, FAQs |
+| QA, validation, facilitator solution guides, testing | Basher | End-to-end testing, broken links, facilitator reference solutions |
 | Session logging, decisions, memory | Scribe | Automatic — never needs routing |
 | Work queue monitoring, issue triage | Ralph | GitHub issue scanning, PR status |
 
@@ -23,7 +23,7 @@ How to decide who handles what.
 | `squad:linus` | Frontend / GitHub Pages | Linus |
 | `squad:livingston` | DevOps / GitHub infra | Livingston |
 | `squad:rusty` | Curriculum / content writing | Rusty |
-| `squad:basher` | QA / coach enablement | Basher |
+| `squad:basher` | QA / facilitator enablement | Basher |
 
 ## Escalation
 

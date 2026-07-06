@@ -1,5 +1,5 @@
 /* =====================================================================
-   Microsoft Foundry Hackathon
+   Microsoft Foundry Session
    Visual system: star-chart navigation meets developer terminal.
    Deep-space canvas, Chakra Petch display + DM Sans body, frontier-gold accent.
    ===================================================================== */
@@ -606,8 +606,8 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   border: 1px solid var(--c-line);
 }
 
-/* ═══════════════════════════ CHALLENGE CARDS ═══════════════════════ */
-.challenge-grid {
+/* ═══════════════════════════ ACTIVITY CARDS ═══════════════════════ */
+.activity-grid {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
@@ -946,7 +946,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   white-space: nowrap;
 }
 
-/* ═══════════════════════════ CHALLENGE DETAIL PAGE ════════════════ */
+/* ═══════════════════════════ ACTIVITY DETAIL PAGE ════════════════ */
 .detail-layout {
   display: grid;
   gap: 32px;
@@ -996,8 +996,8 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .view-switch button[aria-pressed="true"] { background: var(--c-800); color: var(--c-fg); }
 .view-switch button:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 2px; }
 
-/* Coach flag banner */
-.coach-flag {
+/* Facilitator flag banner */
+.facilitator-flag {
   display: none;
   align-items: center;
   gap: 10px;
@@ -1009,7 +1009,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   color: var(--c-ghas);
   margin-bottom: 20px;
 }
-[data-view="coach"] .coach-flag { display: flex; }
+[data-view="facilitator"] .facilitator-flag { display: flex; }
 
 /* Markdown guide area */
 .guide-body {
@@ -1181,7 +1181,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   margin-top: 1px;
 }
 
-/* Related challenges */
+/* Related activities */
 .related-grid { display: flex; flex-direction: column; gap: 8px; }
 .related-item {
   display: flex;
@@ -1199,8 +1199,8 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .related-item:hover { background: var(--c-600); border-color: var(--c-dim); }
 .related-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-/* Challenge previous/next navigation */
-.challenge-pager {
+/* Activity previous/next navigation */
+.activity-pager {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
@@ -1208,7 +1208,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   padding-top: 20px;
   border-top: 1px solid var(--c-line);
 }
-.challenge-pager-link {
+.activity-pager-link {
   display: flex;
   min-height: 78px;
   flex-direction: column;
@@ -1224,22 +1224,22 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   text-decoration: none;
   transition: transform 0.18s var(--ease), border-color 0.18s, background 0.18s;
 }
-.guide-body .challenge-pager-link,
-.guide-body .challenge-pager-link:hover {
+.guide-body .activity-pager-link,
+.guide-body .activity-pager-link:hover {
   color: var(--c-fg);
   text-decoration: none;
 }
-.challenge-pager-link:hover {
+.activity-pager-link:hover {
   border-color: var(--c-gold-dim);
   background:
     radial-gradient(220px 140px at 100% 0%, var(--c-gold-glow), transparent 70%),
     var(--c-600);
   transform: translateY(-2px);
 }
-.challenge-pager-link.next {
+.activity-pager-link.next {
   text-align: right;
 }
-.challenge-pager-link span {
+.activity-pager-link span {
   color: var(--c-gold);
   font-family: var(--font-mono);
   font-size: 0.66rem;
@@ -1247,18 +1247,18 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.challenge-pager-link strong {
+.activity-pager-link strong {
   color: var(--c-fg);
   font-family: var(--font-display);
   font-size: 1rem;
   line-height: 1.25;
 }
-.challenge-pager-link.is-disabled {
+.activity-pager-link.is-disabled {
   cursor: not-allowed;
   opacity: 0.45;
   transform: none;
 }
-.challenge-pager-link.is-disabled:hover {
+.activity-pager-link.is-disabled:hover {
   border-color: var(--c-line);
   background: var(--c-700);
 }
@@ -1287,8 +1287,8 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 @media (max-width: 767px) {
   .step-item { border-right: none; border-bottom: 1px solid var(--c-line); }
   .step-item:last-child { border-bottom: none; }
-  .challenge-pager { grid-template-columns: 1fr; }
-  .challenge-pager-link.next { text-align: left; }
+  .activity-pager { grid-template-columns: 1fr; }
+  .activity-pager-link.next { text-align: left; }
 }
 .step-num {
   font-family: var(--font-display);
@@ -1375,7 +1375,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .mod-ghaw        { --mod-color: var(--c-ghaw); }
 .mod-agentic-devops { --mod-color: var(--c-agentic); }
 
-/* Challenge detail page hero */
+/* Activity detail page hero */
 .ch-detail-hero {
   padding: 52px 0 40px;
   border-bottom: 1px solid var(--c-line);

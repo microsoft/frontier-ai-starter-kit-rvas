@@ -152,14 +152,14 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 > The Haolai River supports several endemic fish species, according to a 2019 survey by the Chinese Academy of Sciences.
 
 
-### 6. Outline-like "Challenges and Future Prospects" Sections
+### 6. Outline-like "Activities and Future Prospects" Sections
 
-**Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook
+**Words to watch:** Despite its... faces several activities..., Despite these activities, Activities and Legacy, Future Outlook
 
-**Problem:** Many LLM-generated articles include formulaic "Challenges" sections.
+**Problem:** Many LLM-generated articles include formulaic "Activities" sections.
 
 **Before:**
-> Despite its industrial prosperity, Korattur faces challenges typical of urban areas, including traffic congestion and water scarcity. Despite these challenges, with its strategic location and ongoing initiatives, Korattur continues to thrive as an integral part of Chennai's growth.
+> Despite its industrial prosperity, Korattur faces activities typical of urban areas, including traffic congestion and water scarcity. Despite these activities, with its strategic location and ongoing initiatives, Korattur continues to thrive as an integral part of Chennai's growth.
 
 **After:**
 > Traffic congestion increased after 2015 when three new IT parks opened. The municipal corporation began a stormwater drainage project in 2022 to address recurring floods.
@@ -226,10 +226,10 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 **Problem:** AI has repetition-penalty code causing excessive synonym substitution.
 
 **Before:**
-> The protagonist faces many challenges. The main character must overcome obstacles. The central figure eventually triumphs. The hero returns home.
+> The protagonist faces many activities. The main character must overcome obstacles. The central figure eventually triumphs. The hero returns home.
 
 **After:**
-> The protagonist faces many challenges but eventually triumphs and returns home.
+> The protagonist faces many activities but eventually triumphs and returns home.
 
 
 ### 12. False Ranges
@@ -543,7 +543,7 @@ Deliver the draft, the brief "still-AI" bullets, the final rewrite, and (optiona
 > - 🚀 **Quality:** Output quality has been enhanced through improved training, contributing to higher standards.
 > - ✅ **Adoption:** Usage continues to grow, reflecting broader industry trends.
 >
-> While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite challenges typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.
+> While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite activities typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.
 >
 > In conclusion, the future looks bright. Exciting times lie ahead as we continue this journey toward excellence. Let me know if you’d like me to expand on any section!
 
@@ -572,7 +572,7 @@ Deliver the draft, the brief "still-AI" bullets, the final rewrite, and (optiona
 >
 > The productivity metrics are slippery. GitHub can say Copilot users "accept 30% of suggestions," but acceptance isn't correctness, and correctness isn't value. If you don't have tests, you're basically guessing.
 
-**Changes made:** Stripped the chatbot framing, significance inflation, promotional and -ing padding, rule-of-three and synonym cycling, false ranges, copula avoidance, em dashes/emojis/boldface/curly quotes, the formulaic "challenges" section, cutoff and hedging disclaimers, filler and persuasive framing, and the generic upbeat conclusion - then rebuilt the voice with varied rhythm and concrete detail.
+**Changes made:** Stripped the chatbot framing, significance inflation, promotional and -ing padding, rule-of-three and synonym cycling, false ranges, copula avoidance, em dashes/emojis/boldface/curly quotes, the formulaic "activities" section, cutoff and hedging disclaimers, filler and persuasive framing, and the generic upbeat conclusion - then rebuilt the voice with varied rhythm and concrete detail.
 
 
 ## Reference

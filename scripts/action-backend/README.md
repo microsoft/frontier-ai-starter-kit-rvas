@@ -1,6 +1,6 @@
 # Action Tools Backend + MCP Server
 
-> **Provided infrastructure for the Advanced challenge "Action Tools — Make the Agent Do Work."**
+> **Provided infrastructure for the Advanced activity "Action Tools — Make the Agent Do Work."**
 > Teams **wire** this into their agent; they do **not** build it. It gives the Northfield IQ
 > Assistant *hands*: create an IT ticket, place a course hold, and book an advising slot.
 
@@ -8,7 +8,7 @@ Two processes:
 
 1. **`app.py`** — a FastAPI REST API with an in-memory store (resets on restart).
 2. **`mcp_server.py`** — an optional FastMCP server that wraps the REST API for stretch work.
-   The guided Action Tools challenge uses supported `FunctionTool` wrappers against the REST API.
+   The guided Action Tools activity uses supported `FunctionTool` wrappers against the REST API.
 
 ---
 
@@ -16,11 +16,11 @@ Two processes:
 
 | Variable | Default | Used by | Meaning |
 |---|---|---|---|
-| `ACTION_API_URL` | `http://localhost:8080` | MCP server, challenge | Base URL of the FastAPI backend |
+| `ACTION_API_URL` | `http://localhost:8080` | MCP server, activity | Base URL of the FastAPI backend |
 | `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP server, stretch | Optional FastMCP endpoint for Rung (c) / preview explorations |
 | `ACTION_API_KEY` | *(empty)* | backend, MCP server | Optional `x-api-key` shared secret; empty = open/no-auth |
 
-> If you change a name here, change it in `.env.sample` and the challenge content too.
+> If you change a name here, change it in `.env.sample` and the activity content too.
 
 ---
 
@@ -86,9 +86,9 @@ The supported guided path is:
 
 The FastMCP server is a stretch asset for teams that want to explore the server side of MCP. Before
 attaching it directly to an agent, verify the current MCP tool and approval APIs in Microsoft Learn;
-the guided challenge intentionally avoids preview-only client-side approval classes.
+the guided activity intentionally avoids preview-only client-side approval classes.
 
-See `challenges/advanced-action-tools/` for the supported workshop implementation.
+See `activities/advanced-action-tools/` for the supported workshop implementation.
 
 ---
 

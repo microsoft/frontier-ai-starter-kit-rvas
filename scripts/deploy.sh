@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# WTH AI Hackathon — Bash provisioning FALLBACK.
+# AI Starter Kit RVAS — Bash provisioning FALLBACK.
 #
 # Use this ONLY when `azd up` is unavailable or hits quota/region edge cases.
 # It provisions the same footprint as infra/*.bicep using `az` + a few ARM REST
@@ -25,7 +25,7 @@ fail()  { printf "%b%s%b\n" "$RED"    "$1" "$RESET" >&2; exit 1; }
 
 # ---- defaults (override via flags) -----------------------------------------
 LOCATION="${AZURE_LOCATION:-swedencentral}"
-ENV_NAME="${AZURE_ENV_NAME:-wth-foundry}"
+ENV_NAME="${AZURE_ENV_NAME:-rvas-foundry}"
 MODEL_NAME="${AZURE_AI_MODEL_NAME:-gpt-4o}"
 MODEL_VERSION="${AZURE_AI_MODEL_VERSION:-2024-11-20}"
 MODEL_DEPLOYMENT="${AZURE_AI_MODEL_DEPLOYMENT_NAME:-gpt-4o}"

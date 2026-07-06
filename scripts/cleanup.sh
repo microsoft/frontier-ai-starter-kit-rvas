@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# WTH AI Hackathon — Cleanup / cost-hygiene teardown.
+# AI Starter Kit RVAS — Cleanup / cost-hygiene teardown.
 #
 # Backlog #7 [FWH §4.10]. Idempotent, `.env`-driven teardown so teams don't
 # leak Azure spend after the event.
@@ -86,7 +86,7 @@ MCP_PORT="$(printf '%s' "$ACTION_MCP_URL" | sed -E 's#.*:([0-9]+).*#\1#')"
 # 1. SHOW THE PLAN (always — this is the safe-by-default surface)
 # ============================================================================
 hr
-info "WTH AI Hackathon — cleanup / cost-hygiene"
+info "AI Starter Kit RVAS — cleanup / cost-hygiene"
 hr
 echo ""
 info "Cloud teardown targets (from the .env contract):"

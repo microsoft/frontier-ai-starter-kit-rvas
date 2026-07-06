@@ -1,6 +1,6 @@
-title: "Build AI apps"
+title: "AI Starter Kit RVAS"
 description: "Bring a customer outcome and build a grounded, evaluated Microsoft Foundry agent prototype."
-baseurl: "/ai-hackathon"
+baseurl: "/ai-starter-kit-rvas"
 url: "https://microsoft.github.io"
 
 theme: just-the-docs
@@ -23,15 +23,15 @@ nav_external_links:
   - title: Microsoft Foundry Docs
     url: https://learn.microsoft.com/azure/foundry/
   - title: GitHub Repo
-    url: https://github.com/microsoft/frontier-foundry-hackathon
+    url: https://github.com/microsoft/frontier-ai-starter-kit-rvas
 
 # Footer
-footer_content: "Build AI apps — Built for students and coaches"
+footer_content: "AI Starter Kit RVAS — Built for participants and facilitators"
 
 # Aux links
 aux_links:
   "🚀 Open in Codespaces":
-    - "https://codespaces.new/microsoft/frontier-foundry-hackathon?quickstart=1"
+    - "https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas?quickstart=1"
 
 # Plugins
 plugins:

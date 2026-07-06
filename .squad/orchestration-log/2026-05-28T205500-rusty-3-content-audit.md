@@ -6,18 +6,18 @@
 **Status:** ✅ Completed & Verified
 
 ## Task Summary
-Audited challenges 00–03 against Microsoft Foundry docs + SDK breaking-change flags. Verified Microsoft rebrand, SDK 2.x migration, gpt-4.1-mini usage, FOUNDRY_PROJECT_ENDPOINT references.
+Audited activities 00–03 against Microsoft Foundry docs + SDK breaking-change flags. Verified Microsoft rebrand, SDK 2.x migration, gpt-4.1-mini usage, FOUNDRY_PROJECT_ENDPOINT references.
 
 ## Output Artifacts
 - `.squad/decisions/inbox/rusty-content-audit-00-03.md` — Content audit report
-- **11 files edited** across challenges 00–03 + docs
+- **11 files edited** across activities 00–03 + docs
 
 ## Key Findings
-### Challenge 00
+### Activity 00
 - `solution.md` timing: "creating the hub/project" → "creating the Foundry project"
-- `docs/challenge-00.md` hero: "Azure AI Foundry, Hub and Project" → "Microsoft Foundry, Foundry resource and project"
+- `docs/activity-00.md` hero: "Azure AI Foundry, Hub and Project" → "Microsoft Foundry, Foundry resource and project"
 
-### Challenges 01–03
+### Activities 01–03
 - All claims verified against SDK 2.x, Microsoft Foundry terminology, gpt-4.1-mini usage
 - **No breaking changes detected**
 - Portal URLs (`ai.azure.com`) confirmed valid

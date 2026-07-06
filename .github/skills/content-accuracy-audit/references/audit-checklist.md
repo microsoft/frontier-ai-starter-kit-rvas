@@ -26,7 +26,7 @@ claim you confirm or refute.
 
 ## 3. Environment variables
 
-- [ ] Var names are **identical** across `.env.sample`, `docs/`, `challenges/`, `infra/` outputs,
+- [ ] Var names are **identical** across `.env.sample`, `docs/`, `activities/`, `infra/` outputs,
       and `scripts/`. Any drift is **Inconsistent / Medium**.
 - [ ] Authoritative Action Tools names match `.env.sample`: `ACTION_API_URL`, `ACTION_MCP_URL`,
       `ACTION_API_KEY`.
@@ -62,9 +62,9 @@ claim you confirm or refute.
 
 ## 8. Pacing & pedagogy
 
-- [ ] Each challenge states prerequisites and learning objectives.
+- [ ] Each activity states prerequisites and learning objectives.
 - [ ] Difficulty progresses without unexplained jumps; new concepts are introduced before use.
-- [ ] Coach (`*-coach.md`) notes align with the learner-facing version (no contradictions).
+- [ ] Facilitator (`*-facilitator.md`) notes align with the learner-facing version (no contradictions).
 - [ ] Time/effort estimates (if present) are plausible for the stated steps.
 
 ## Severity reference

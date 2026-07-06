@@ -6,20 +6,20 @@
 **Status:** ✅ Completed & Verified
 
 ## Task Summary
-Audited challenges 04–06 against current Azure SDK docs + Microsoft Foundry deploy-models docs. Performed repo-wide URL sweep. Fixed README badge: `pages.yml` → `deploy-pages.yml`.
+Audited activities 04–06 against current Azure SDK docs + Microsoft Foundry deploy-models docs. Performed repo-wide URL sweep. Fixed README badge: `pages.yml` → `deploy-pages.yml`.
 
 ## Output Artifacts
 - `.squad/decisions/inbox/basher-content-audit-04-06.md` — Content audit report
 - **Secondary:** Fixed README badge URL reference
 
 ## Key Findings
-### Challenge 04 (RAG: Grounding with Data)
+### Activity 04 (RAG: Grounding with Data)
 - "Azure AI Foundry" → "Microsoft Foundry" (rebrand)
 - Learning resources link text updated
 - URLs `learn.microsoft.com/azure/ai-foundry/` verified valid
-- No direct SDK snippets in challenge; no code issues
+- No direct SDK snippets in activity; no code issues
 
-### Challenges 05–06
+### Activities 05–06
 - All URLs, SDK references, deployment patterns verified against current Microsoft Foundry docs
 - Deployment patterns confirmed compatible
 
@@ -33,5 +33,5 @@ Audited challenges 04–06 against current Azure SDK docs + Microsoft Foundry de
 - Livingston's version audit (`livingston-version-audit.md`)
 
 ---
-**Agent Charter:** DevRel / Coach Materials | Content verification & URL hygiene  
+**Agent Charter:** DevRel / Facilitator Materials | Content verification & URL hygiene  
 **Retry Note:** basher-1 & basher-2 failed with `CAPIError: 401 unauthorized` (platform outage). Serial retry succeeded.

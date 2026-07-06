@@ -4,7 +4,7 @@ Persistent memory agent that maintains context across sessions.
 
 ## Project Context
 
-**Project:** ai-hackathon
+**Project:** ai-starter-kit-rvas
 
 
 ## Responsibilities

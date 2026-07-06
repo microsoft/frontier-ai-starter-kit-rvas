@@ -12,7 +12,7 @@
 
 #### What Was Wrong
 
-`curl -sL https://olivomarco.github.io/ai-hackathon/` returned raw HTML fragments — `<div>`, `<h1>`, `<h2>` — with no `<html>`, `<head>`, `<link rel="stylesheet">`, or `<body>` tag.
+`curl -sL https://olivomarco.github.io/ai-starter-kit-rvas/` returned raw HTML fragments — `<div>`, `<h1>`, `<h2>` — with no `<html>`, `<head>`, `<link rel="stylesheet">`, or `<body>` tag.
 
 **Root cause:** No page had `layout: default` in its front-matter, and `docs/_config.yml` had no `defaults:` block to set a fallback. Jekyll converts Markdown to an HTML fragment but never wraps it in a layout unless told to. The just-the-docs `_layouts/default.html` is the file that injects the full HTML shell — `<html><head>` with the stylesheet `<link>`, sidebar, search bar, header, and footer. Without it, visitors see unstyled, chrome-less content.
 
@@ -22,7 +22,7 @@
 
 ##### Tertiary issue: stale title
 
-`docs/_config.yml` `title:` still read `"WTH: Build Intelligent Apps with Azure AI Foundry"` after the project-wide rename to "Microsoft Foundry".
+`docs/_config.yml` `title:` still read `": Build Intelligent Apps with Azure AI Foundry"` after the project-wide rename to "Microsoft Foundry".
 
 ---
 
@@ -46,7 +46,7 @@ just-the-docs 0.12 auto-imports `_sass/custom/custom.scss` at the end of its Sas
 
 ##### Fix 3 — Correct site title
 
-Changed `title:` from `"WTH: Build Intelligent Apps with Azure AI Foundry"` to `"WTH: Build Intelligent Apps with Microsoft Foundry"` to match the rest of the content.
+Changed `title:` from `": Build Intelligent Apps with Azure AI Foundry"` to `": Build Intelligent Apps with Microsoft Foundry"` to match the rest of the content.
 
 ---
 
@@ -74,7 +74,7 @@ The `defaults:` fix is the recommended solution in JTD's documentation and is wh
 
 #### Bug Observed
 
-On `https://olivomarco.github.io/ai-hackathon/challenges/challenge-00.html`, the
+On `https://olivomarco.github.io/ai-starter-kit-rvas/activities/activity-00.html`, the
 `.difficulty-badge.difficulty-1` badge ("⭐ Beginner") was invisible inside the hero panel.
 It rendered as white text on a `#edf8f0` near-white light-green background — essentially
 unreadable.
@@ -127,7 +127,7 @@ Palette is intuitive (cool→warm, easy→hard). No changes made.
 
 ---
 
-### Decision: Inline Challenge Content Instead of GitHub Links
+### Decision: Inline Activity Content Instead of GitHub Links
 
 **Date:** 2026-05-28  
 **Author:** Rusty (Content / Editorial)  
@@ -137,13 +137,13 @@ Palette is intuitive (cool→warm, easy→hard). No changes made.
 
 #### Decision
 
-All hands-on challenge content (Step-by-step, Success Criteria, Tips, Advanced) has been inlined directly into the `docs/challenges/challenge-XX.md` Pages files rather than linking out to the source READMEs in `challenges/*/` via GitHub blob/tree URLs.
+All hands-on activity content (Step-by-step, Success Criteria, Tips, Advanced) has been inlined directly into the `docs/activities/activity-XX.md` Pages files rather than linking out to the source READMEs in `activities/*/` via GitHub blob/tree URLs.
 
 ---
 
 #### Why inline instead of `include_relative`
 
-Jekyll's `include_relative` tag resolves paths relative to the current file and the Jekyll source directory. The source challenge READMEs live in `challenges/challenge-XX-NAME/README.md` at the repository root, which is **outside** the Jekyll source directory (`docs/`). Jekyll cannot include files from outside its source directory, making `include_relative` (or `{% include %}` with a base-path workaround) unworkable without restructuring the repository layout.
+Jekyll's `include_relative` tag resolves paths relative to the current file and the Jekyll source directory. The source activity READMEs live in `activities/activity-XX-NAME/README.md` at the repository root, which is **outside** the Jekyll source directory (`docs/`). Jekyll cannot include files from outside its source directory, making `include_relative` (or `{% include %}` with a base-path workaround) unworkable without restructuring the repository layout.
 
 Alternatives considered:
 
@@ -157,35 +157,35 @@ Alternatives considered:
 
 Inlining creates a **known drift risk** between:
 
-- `challenges/challenge-XX-NAME/README.md` (the Codespaces working-folder version, used inside the dev container)
-- `docs/challenges/challenge-XX.md` (the Pages-rendered version, viewed in the browser)
+- `activities/activity-XX-NAME/README.md` (the Codespaces working-folder version, used inside the dev container)
+- `docs/activities/activity-XX.md` (the Pages-rendered version, viewed in the browser)
 
 Future content updates — new steps, corrected commands, SDK version changes — **must be applied to both files**. The recommended workflow is:
 
-1. Edit `challenges/challenge-XX-NAME/README.md` first (the authoritative hands-on guide).
-2. Reflect the same changes in `docs/challenges/challenge-XX.md` (the Pages version).
-3. If a coach solution changes, update both `challenges/challenge-XX-NAME/solution.md` and `docs/challenges/challenge-XX-coach.md`.
+1. Edit `activities/activity-XX-NAME/README.md` first (the authoritative hands-on guide).
+2. Reflect the same changes in `docs/activities/activity-XX.md` (the Pages version).
+3. If a facilitator solution changes, update both `activities/activity-XX-NAME/solution.md` and `docs/activities/activity-XX-facilitator.md`.
 
 A future automation option would be a CI check that detects out-of-sync section content between the two files and raises a PR review comment. This has not been implemented yet.
 
 ---
 
-#### `nav_exclude: true` for coach pages
+#### `nav_exclude: true` for facilitator pages
 
-The 7 new `docs/challenges/challenge-XX-coach.md` pages are set to `nav_exclude: true` in their front-matter. This hides them from the just-the-docs sidebar navigation so students browsing the site do not encounter the solution path before attempting the challenge.
+The 7 new `docs/activities/activity-XX-facilitator.md` pages are set to `nav_exclude: true` in their front-matter. This hides them from the just-the-docs sidebar navigation so students browsing the site do not encounter the solution path before attempting the activity.
 
 They are still:
 
-- **rendered by Jekyll** and accessible at their URL (e.g., `/challenges/challenge-00-coach`)
-- **indexed by search** (`search_exclude: false`) so coaches can find them via the site search bar
-- **linked from the Coach Hub** (`/coach-hub`) in the per-challenge coach notes table
+- **rendered by Jekyll** and accessible at their URL (e.g., `/activities/activity-00-facilitator`)
+- **indexed by search** (`search_exclude: false`) so facilitators can find them via the site search bar
+- **linked from the Facilitator Hub** (`/facilitator-hub`) in the per-activity facilitator notes table
 
-The choice of `nav_exclude: true` over a separate authentication layer reflects the event context: this is a facilitated hackathon with trusted coaches, not a public exam. The soft barrier (not in the nav, not advertised to students) is sufficient. Full access control would require a backend that GitHub Pages cannot provide.
+The choice of `nav_exclude: true` over a separate authentication layer reflects the event context: this is a facilitated session with trusted facilitators, not a public exam. The soft barrier (not in the nav, not advertised to students) is sufficient. Full access control would require a backend that GitHub Pages cannot provide.
 
 ---
 
 #### References
 
 - [Jekyll include_relative documentation](https://jekyllrb.com/docs/includes/)
-- `docs/coach-hub.md`: coach landing page with per-challenge coach notes table
-- `docs/challenges/challenge-XX-coach.md`: the 7 new coach pages created in this session
+- `docs/facilitator-hub.md`: facilitator landing page with per-activity facilitator notes table
+- `docs/activities/activity-XX-facilitator.md`: the 7 new facilitator pages created in this session

@@ -1,8 +1,8 @@
 # GitHub Copilot — Workspace Instructions
 
-> WTH AI Hackathon · *Build Intelligent Agents with Microsoft Foundry*.
+> AI Starter Kit RVAS · *Build Intelligent Agents with Microsoft Foundry*.
 > Copilot is your always-available pair-programmer here. It does **not** hand you answers —
-> it walks the **same path the challenges teach**, using fresh API signatures from MCP and
+> it walks the **same path the activities teach**, using fresh API signatures from MCP and
 > proven patterns from the Foundry skills.
 
 ## The golden rule: Search Before Implement
@@ -14,7 +14,7 @@ Before writing **any** Azure / Microsoft Foundry SDK code:
    rely on memorized signatures.
 2. **Load** the matching skill from `.github/skills/` for the proven pattern.
 3. **Implement** against the verified signature.
-4. **Validate** with the challenge's `validate.py` / checkpoint.
+4. **Validate** with the activity's `validate.py` / checkpoint.
 
 > **MCP = fresh information. Skills = proven patterns.** Use both, in that order.
 

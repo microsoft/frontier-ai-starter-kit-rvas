@@ -4,7 +4,7 @@
 > **Date:** 2026-06-01
 > **Repo:** https://github.com/microsoft/skills (branch `main`, last push 2026-05-24)
 > **Tagline:** *"Skills, custom agents, AGENTS.md templates, and MCP configurations for AI coding agents working with Azure SDKs and Microsoft AI Foundry."*
-> **Scope of this doc:** Research-only. How we could "plop GitHub Copilot on top of" the WTH AI Hackathon (`Build Intelligent Apps with Microsoft Foundry`) using these Foundry skills + MCP servers.
+> **Scope of this doc:** Research-only. How we could "plop GitHub Copilot on top of" the AI Starter Kit RVAS (`Build Intelligent Apps with Microsoft Foundry`) using these Foundry skills + MCP servers.
 
 ---
 
@@ -14,7 +14,7 @@
 
 Headline numbers (from `README.md`):
 - **174 skills** across Core + 5 language plugins (Python `-py`, .NET `-dotnet`, TypeScript `-ts`, Java `-java`, Rust `-rust`).
-- **11 language-agnostic Foundry skills** — the part most relevant to our hackathon.
+- **11 language-agnostic Foundry skills** — the part most relevant to our session.
 - **Skill Explorer** with 1-click install: https://microsoft.github.io/skills/
 - Backing blog: *"Context-Driven Development: Agent Skills for Microsoft Foundry and Azure"* (devblogs.microsoft.com/all-things-azure).
 
@@ -49,7 +49,7 @@ tests/                            # Copilot SDK test harness (Ralph Loop, Sensei
 ### 2a. Foundry skills (language-agnostic) — the core of a Copilot+Foundry track
 Source: `.github/plugins/microsoft-foundry/skills/` and `.github/plugins/azure-skills/skills/microsoft-foundry/`
 
-| Skill | What it does | Hackathon challenge fit |
+| Skill | What it does | Session activity fit |
 |-------|--------------|-------------------------|
 | `microsoft-foundry` (orchestrator/router) | Maps user intent → correct sub-skill + discovery surface (Docs MCP, Foundry MCP, `azd ai agent`, `az`). The `azure-skills` variant adds full agent lifecycle sub-skills: **deploy, invoke, observe, trace, troubleshoot, create, agent-optimizer, eval-datasets, finetuning, quota, rbac**. | All / Ch00 |
 | `foundry-projects-resources` | Provision Foundry resources & projects; connections (key / OAuth / managed identity / agent identity); standard vs private-network infra. | Ch00 Setup |
@@ -61,7 +61,7 @@ Source: `.github/plugins/microsoft-foundry/skills/` and `.github/plugins/azure-s
 | `foundry-managed-skills` | `SKILL.md` as a **Foundry-side resource (preview)** — author behavioral guidelines once, store via Skills REST API, load into hosted-agent containers as session instructions. Decouples policy from code. | Extras / governance |
 | `foundry-memory` | Long-term **managed memory (preview)** — user-profile vs chat-summary memory, memory-search tool vs store APIs, scoping, prompt-injection/memory-corruption risks. | Extras |
 | `foundry-observability` | Trace/monitor/evaluate hosted agents — OpenTelemetry GenAI traces in App Insights (KQL), eval↔trace correlation, `azd ai agent monitor`, dataset curation from prod traces, built-in quality + safety/RAI evaluators, batch evals, regression detection. | **Ch05 Evaluation** |
-| `foundry-governance` | Govern agent fleets — Foundry Control Plane + **AI Gateway** (MCP routing/policy), RBAC, agent identity, RAI policies, transparency notes. | Extras / coach track |
+| `foundry-governance` | Govern agent fleets — Foundry Control Plane + **AI Gateway** (MCP routing/policy), RBAC, agent identity, RAI policies, transparency notes. | Extras / facilitator track |
 
 ### 2b. Companion SDK skills (called by Foundry agents)
 | Capability | Skills | Plugin |
@@ -104,11 +104,11 @@ Source: `.github/plugins/azure-skills/skills/microsoft-foundry/foundry-agent/cre
 
 ---
 
-## 3. How GitHub Copilot Could Be Layered onto Our Hackathon
+## 3. How GitHub Copilot Could Be Layered onto Our Session
 
-Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→challenge mapping is almost 1:1:
+Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→activity mapping is almost 1:1:
 
-| Our Challenge | Topic | Drop-in Foundry skill(s) | MCP servers |
+| Our Activity | Topic | Drop-in Foundry skill(s) | MCP servers |
 |---------------|-------|--------------------------|-------------|
 | **00 Setup** | Provision Foundry resource/project | `foundry-projects-resources`, router `project/create` + `resource/create` | `azure`, `foundry-mcp` |
 | **01 First Model** | Deploy from model catalog | `foundry-models` (`models/deploy-model`: preset/customize/capacity) | `foundry-mcp`, `microsoft-docs` |
@@ -118,11 +118,11 @@ Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→c
 | **05 Evaluation** | Quality/safety/RAI | **`foundry-observability`** + `azure-ai-contentsafety-py` | `azure`, `microsoft-docs` |
 | **06 Deploy** | Endpoint + app integration | **`foundry-hosted-agents`** + router `deploy`/`invoke` (`azd ai agent`) | `azure`, `foundry-mcp` |
 
-**The "plop Copilot on top" model:** participants keep solving challenges *the manual way* (which is the learning objective — coaches "never give answers directly"), but Copilot becomes the **always-available expert pair-programmer**:
+**The "plop Copilot on top" model:** participants keep solving activities *the manual way* (which is the learning objective — facilitators "never give answers directly"), but Copilot becomes the **always-available expert pair-programmer**:
 1. Add the relevant `SKILL.md` files + `.vscode/mcp.json` + `.github/copilot-instructions.md` to the student Codespace.
 2. Copilot, when asked, queries `microsoft-docs`/`foundry-mcp` for *current* Foundry API surface (avoids the #1 student failure mode: hallucinated/stale SDK calls).
-3. The `microsoft-foundry` router enforces a *workflow* (read sub-skill → discovery step → implement → validate), which keeps Copilot from jumping straight to unverified code and instead walks the same path the challenge teaches.
-4. This is **inversely useful for coaches**: a coach can run the full lifecycle with these skills to validate student solutions and unblock fast.
+3. The `microsoft-foundry` router enforces a *workflow* (read sub-skill → discovery step → implement → validate), which keeps Copilot from jumping straight to unverified code and instead walks the same path the activity teaches.
+4. This is **inversely useful for facilitators**: a facilitator can run the full lifecycle with these skills to validate student solutions and unblock fast.
 
 ---
 
@@ -138,19 +138,19 @@ Our workshop (`PLAN.md`) already mirrors the Foundry lifecycle, so the skill→c
 - **Node/npx** for MCP servers (`@azure/mcp`, `@upstash/context7-mcp`, `@modelcontextprotocol/*`, `@playwright/mcp`).
 - **`azd` (Azure Developer CLI)** + **`az` CLI** — Foundry agent lifecycle (`azd ai agent`, `azd env get-values`, `azure.yaml` with `host: azure.ai.agent`).
 - **Docker** — hosted-agent containerization (build → ACR push) and the `terraform` MCP.
-- **Azure subscription + Foundry project** — already a hackathon prerequisite; hosted agents also need **ACR**, **App Insights** (observability), and **RBAC** (e.g., AI Search tool needs *Search Index Data Contributor* + *Search Service Contributor* on the AI Search resource; keyless via the project's managed identity is recommended).
+- **Azure subscription + Foundry project** — already a session prerequisite; hosted agents also need **ACR**, **App Insights** (observability), and **RBAC** (e.g., AI Search tool needs *Search Index Data Contributor* + *Search Service Contributor* on the AI Search resource; keyless via the project's managed identity is recommended).
 - **`foundry-mcp` is a hosted HTTP endpoint** (`https://mcp.ai.azure.com`) — needs network egress + Azure auth; verify it's reachable from GitHub Codespaces.
 - Optional secrets via `mcp.json` `inputs` (HF token, memory file path, Clarity token).
 
-**Context-budget discipline (critical for a student Codespace):** do **not** ship all 174 skills. Ship only the ~7 Foundry skills + 2–3 companion SDK skills mapped to the active challenge. The repo itself enforces this warning in both `README.md` and `.github/docs/agent-integration.md`.
+**Context-budget discipline (critical for a student Codespace):** do **not** ship all 174 skills. Ship only the ~7 Foundry skills + 2–3 companion SDK skills mapped to the active activity. The repo itself enforces this warning in both `README.md` and `.github/docs/agent-integration.md`.
 
 **Currency risk:** repo is flagged **Work in Progress**; many Foundry features are **preview** (Toolboxes, Foundry IQ, managed-skills, memory). Pin to a commit if we vendor, and lean on `microsoft-docs` MCP for live syntax.
 
 ---
 
-## 5. Specific Items Worth Integrating into an Advanced / Extras Challenge
+## 5. Specific Items Worth Integrating into an Advanced / Extras Activity
 
-A bolt-on **"Challenge 07 (Extras): Copilot + Foundry Skills — Build an Agent the Agent-Assisted Way"**:
+A bolt-on **"Activity 07 (Extras): Copilot + Foundry Skills — Build an Agent the Agent-Assisted Way"**:
 
 1. **Foundry IQ knowledge base for RAG (upgrade Ch04):** instead of hand-rolling an index, use `foundry-iq-knowledge-bases` + the agentic retrieval pipeline (decomposition + parallel search + rerank) over the existing `resources/sample-data/university-faq/` corpus. Expose it via MCP to an agent. *Files:* `.github/plugins/microsoft-foundry/skills/foundry-iq-knowledge-bases/`, `tool-azure-ai-search.md`.
 2. **Toolbox assembly:** have teams curate a `foundry-toolboxes` endpoint bundling AI Search + Web Search + Code Interpreter, then consume it from a hosted agent (`use-toolbox-in-hosted-agent.md`). Demonstrates "build once, consume everywhere."
@@ -158,7 +158,7 @@ A bolt-on **"Challenge 07 (Extras): Copilot + Foundry Skills — Build an Agent 
 4. **Eval-driven dev loop (upgrade Ch05):** `foundry-observability` — OpenTelemetry traces in App Insights, batch evals, **regression detection**, dataset curation from production traces; optionally the **agent-optimizer** / `prompt_optimize` MCP tool to auto-improve instructions.
 5. **Responsible AI gate:** `azure-ai-contentsafety-py` + `foundry-governance` RAI policies as a "ship gate" — fits our Learning Outcome #5 (evaluate for safety/RAI).
 6. **Connected Agents / multi-agent (stretch):** `foundry-workflows` Connected Agents pattern as a capstone.
-7. **Coach enablement:** the `deep-wiki` plugin (`/deep-wiki:onboard`, `/deep-wiki:agents`, `/deep-wiki:generate`) to auto-generate an onboarding wiki + `AGENTS.md` for the hackathon repo itself.
+7. **Facilitator enablement:** the `deep-wiki` plugin (`/deep-wiki:onboard`, `/deep-wiki:agents`, `/deep-wiki:generate`) to auto-generate an onboarding wiki + `AGENTS.md` for the session repo itself.
 
 ---
 
@@ -168,13 +168,13 @@ A bolt-on **"Challenge 07 (Extras): Copilot + Foundry Skills — Build an Agent 
 |-------|-----------|-----------|
 | Foundry plugin MCP config | `.github/plugins/microsoft-foundry/.mcp.json` | Exact 3-server wiring (`azure`, `foundry-mcp`, `microsoft-docs`) — copy verbatim into student Codespace. |
 | Reference MCP set | `.vscode/mcp.json` | Full server catalog incl. `context7`, `playwright`, `github`, `sequentialthinking`. |
-| MCP usage doctrine | `.github/docs/mcp-usage.md` | "Search Before Implement" decision tree — good coach handout. |
+| MCP usage doctrine | `.github/docs/mcp-usage.md` | "Search Before Implement" decision tree — good facilitator handout. |
 | Agent integration model | `.github/docs/agent-integration.md` | Progressive-disclosure / selective-loading rules — explains the token economics to participants. |
-| Skill authoring guide | `.github/skills/skill-creator/SKILL.md` | If we want to write *hackathon-specific* skills (e.g., a "university-faq-rag" skill). |
+| Skill authoring guide | `.github/skills/skill-creator/SKILL.md` | If we want to write *session-specific* skills (e.g., a "university-faq-rag" skill). |
 | MCP builder skill | `.github/skills/mcp-builder/` | Teams building a custom MCP tool (FastMCP/Node/.NET) as a stretch goal. |
 | Copilot SDK skill + test harness | `.github/skills/copilot-sdk/`, `tests/` (Ralph Loop, Sensei scoring) | Pattern for *auto-grading* student output against acceptance criteria (1158 test scenarios across 128 skills). |
 | Agent personas | `.github/agents/*.agent.md` | `planner`, `backend`, `infrastructure` personas as starting points for role-based team work. |
-| Prompt templates | `.github/prompts/` (`code-review`, `add-endpoint`, `create-store`, `create-node`) | Reusable, drop into our prompt-engineering challenge. |
+| Prompt templates | `.github/prompts/` (`code-review`, `add-endpoint`, `create-store`, `create-node`) | Reusable, drop into our prompt-engineering activity. |
 | `azure-ai-projects-py` skill | `.github/plugins/azure-sdk-python/skills/azure-ai-projects-py/` | Highest-tested Foundry SDK skill (12 scenarios) — most reliable Copilot grounding for our Python audience. |
 | AI Search tool reference | `…/microsoft-foundry/foundry-agent/create/references/tool-azure-ai-search.md` | Copy-paste RBAC + query-type table for Ch04. |
 | Skill Explorer | https://microsoft.github.io/skills/ | 1-click install UI; share with participants. |
@@ -185,4 +185,4 @@ A bolt-on **"Challenge 07 (Extras): Copilot + Foundry Skills — Build an Agent 
 ### Open questions / follow-ups
 - Confirm `foundry-mcp` (`https://mcp.ai.azure.com`) reachability + auth flow from a student GitHub Codespace.
 - Decide vendor-vs-reference: pin a commit (repo is WIP + many previews) vs `npx skills add` live.
-- Validate `azd ai agent` availability in the target Azure Pass/sandbox subscriptions before promising a hosted-agent challenge.
+- Validate `azd ai agent` availability in the target Azure Pass/sandbox subscriptions before promising a hosted-agent activity.

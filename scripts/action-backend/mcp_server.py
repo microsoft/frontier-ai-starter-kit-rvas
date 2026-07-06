@@ -1,10 +1,10 @@
-"""WTH AI Hackathon — Action Tools MCP server (FastMCP).
+"""AI Starter Kit RVAS — Action Tools MCP server (FastMCP).
 
 Wraps the FastAPI Action Tools backend (app.py) and exposes its operations as MCP
 tools so a Foundry agent can attach them via `McpTool`. The agent calls these tools;
 each tool forwards to the REST backend.
 
-Env contract (matches .env.sample — AUTHORITATIVE for the Action Tools challenge):
+Env contract (matches .env.sample — AUTHORITATIVE for the Action Tools activity):
     ACTION_API_URL   base URL of the FastAPI backend   (default http://localhost:8080)
     ACTION_MCP_URL   the URL students attach as McpTool (default http://localhost:8765/mcp)
     ACTION_API_KEY   optional shared secret -> forwarded as x-api-key to the backend

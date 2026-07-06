@@ -10,7 +10,7 @@ description: Learn Microsoft Foundry with the guided Northfield University refer
   <p class="hero-tagline">Use the fictional Northfield University IQ Assistant as a safe, known-good scenario. You still practice provisioning, model choice, agents, grounding, actions, evals, tracing, deploy, and orchestration.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/setup' | relative_url }}">Start setup</a>
-    <a class="btn btn-outline" href="{{ '/challenges/foundations' | relative_url }}">Open Foundations</a>
+    <a class="btn btn-outline" href="{{ '/activities/foundations' | relative_url }}">Open Foundations</a>
   </div>
 </div>
 
@@ -31,7 +31,7 @@ description: Learn Microsoft Foundry with the guided Northfield University refer
 <div class="quick-grid">
   <div class="quick-card">
     <h3>Known-good data</h3>
-    <p>The corpus, prompts, tools, and evals are already shaped for the challenge validators.</p>
+    <p>The corpus, prompts, tools, and evals are already shaped for the activity validators.</p>
   </div>
 
   <div class="quick-card">

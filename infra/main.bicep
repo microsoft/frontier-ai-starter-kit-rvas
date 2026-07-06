@@ -1,5 +1,5 @@
 // ============================================================================
-// WTH AI Hackathon — Microsoft Foundry golden-path infrastructure (azd entry).
+// AI Starter Kit RVAS — Microsoft Foundry golden-path infrastructure (azd entry).
 //
 // Subscription-scoped entry point. Creates (or reuses) the resource group, then
 // delegates all resource creation to ./resources.bicep. Outputs are surfaced back
@@ -54,7 +54,7 @@ param chatModelCapacity int = 30
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = {
   'azd-env-name': environmentName
-  project: 'wth-ai-hackathon-foundry'
+  project: 'ai-starter-kit-rvas-foundry'
 }
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -106,6 +106,6 @@ output AZURE_LOG_ANALYTICS_WORKSPACE_ID string = resources.outputs.AZURE_LOG_ANA
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = resources.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT
 output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.AZURE_CONTAINER_REGISTRY_NAME
 
-// GenAI tracing flags — consumed by the Tracing & Observability challenge.
+// GenAI tracing flags — consumed by the Tracing & Observability activity.
 output AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING string = 'true'
 output OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT string = 'true'
