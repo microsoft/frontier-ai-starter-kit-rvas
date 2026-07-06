@@ -34,7 +34,7 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 
 **Prove you applied it:**
 - `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 1 --dry-run`
-- Checklist: ☐ hosted manifest uses your agent name ☐ instructions are your scenario instructions ☐ responses protocol is declared ☐ Dockerfile exposes the expected port ☐ no secrets are copied.
+- Checklist: □ hosted manifest uses your agent name □ instructions are your scenario instructions □ responses protocol is declared □ Dockerfile exposes the expected port □ no secrets are copied.
 
 **Stuck?** [Northfield Step 1](../challenges/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint).
 
@@ -59,7 +59,7 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 
 **Prove you applied it:**
 - `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 2 --dry-run`
-- Checklist: ☐ image tag is unique ☐ hosted version is active or deployment gap is documented ☐ per-agent identity exists ☐ rollback/cleanup path is known.
+- Checklist: □ image tag is unique □ hosted version is active or deployment gap is documented □ per-agent identity exists □ rollback/cleanup path is known.
 
 **Stuck?** [Northfield Step 2](../challenges/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent).
 
@@ -84,7 +84,7 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 
 **Prove you applied it:**
 - `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --step 3 --dry-run`
-- Checklist: ☐ authenticated call returns a scenario answer ☐ anonymous call is rejected ☐ per-agent identity is named ☐ no API key is required for local dev unless documented.
+- Checklist: □ authenticated call returns a scenario answer □ anonymous call is rejected □ per-agent identity is named □ no API key is required for local dev unless documented.
 
 **Stuck?** [Northfield Step 3](../challenges/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth).
 
@@ -109,7 +109,7 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 
 **Prove you applied it:**
 - `python challenges/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run`
-- Checklist: ☐ hosted invocation appears in run history ☐ trace is visible or gap recorded ☐ operation id is captured ☐ cleanup plan is clear.
+- Checklist: □ hosted invocation appears in run history □ trace is visible or gap recorded □ operation id is captured □ cleanup plan is clear.
 
 **Stuck?** [Northfield Step 4](../challenges/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history).
 

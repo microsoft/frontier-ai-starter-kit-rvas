@@ -31,9 +31,9 @@ This deepener is **mutuated from [Extra · Give It a Voice](../challenges/extra-
 **Apply it to your app:** open a Voice Live session against your Foundry endpoint and bind it to your scenario agent. → [Extra · Give It a Voice — Step 1](../challenges/extra-voice-live#step-1--connect-a-voice-live-session-to-your-agent)
 
 **Prove you applied it:**
-- ☐ The client creates a Voice Live session without auth errors.
-- ☐ Spoken turns run through your named agent, not a generic model.
-- ☐ The configured voice and language fit the target user.
+- □ The client creates a Voice Live session without auth errors.
+- □ Spoken turns run through your named agent, not a generic model.
+- □ The configured voice and language fit the target user.
 
 **Stuck?** [Northfield Step 1](../challenges/extra-voice-live#step-1--connect-a-voice-live-session-to-your-agent).
 
@@ -55,9 +55,9 @@ This deepener is **mutuated from [Extra · Give It a Voice](../challenges/extra-
 **Apply it to your app:** stream microphone audio into the session and play response audio as it arrives. → [Extra · Give It a Voice — Step 2](../challenges/extra-voice-live#step-2--speak-in-hear-out-the-full-duplex-loop)
 
 **Prove you applied it:**
-- ☐ Speaking a scenario question produces an audible answer.
-- ☐ Audio starts before the full response is complete.
-- ☐ The answer still follows your persona and safety boundaries.
+- □ Speaking a scenario question produces an audible answer.
+- □ Audio starts before the full response is complete.
+- □ The answer still follows your persona and safety boundaries.
 
 **Stuck?** [Northfield Step 2](../challenges/extra-voice-live#step-2--speak-in-hear-out-the-full-duplex-loop).
 
@@ -79,9 +79,9 @@ This deepener is **mutuated from [Extra · Give It a Voice](../challenges/extra-
 **Apply it to your app:** tune turn detection, barge-in, and a grounded spoken prompt for your scenario. → [Extra · Give It a Voice — Step 3](../challenges/extra-voice-live#step-3--tune-for-natural-conversation)
 
 **Prove you applied it:**
-- ☐ Turn-taking works without awkward manual control.
-- ☐ Barge-in interrupts the assistant and returns to listening.
-- ☐ A grounded spoken answer reflects your approved corpus or safely abstains.
+- □ Turn-taking works without awkward manual control.
+- □ Barge-in interrupts the assistant and returns to listening.
+- □ A grounded spoken answer reflects your approved corpus or safely abstains.
 
 **Stuck?** [Northfield Step 3](../challenges/extra-voice-live#step-3--tune-for-natural-conversation).
 

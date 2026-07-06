@@ -15,6 +15,10 @@ checkpoints — but every step points at *your* scenario from
 commands or code, follow the Northfield reference the step links to. **The mechanics are identical;
 only the corpus, persona, and questions are yours.**
 
+> **"Northfield" in one line:** the reference scenario — a student-services assistant for the
+> fictional *Northfield University*. Its [Foundations steps](../challenges/foundations) are worked
+> examples you copy commands from; **you don't need to build the Northfield version first.**
+
 > **Before you start this chapter:** complete [Chapter 0](../customer-outcome). You need your target
 > user, business outcome, knowledge sources, and one safe scenario question written down. No idea
 > yet? Run [Idea Forge](../idea-forge) first.
@@ -51,8 +55,8 @@ plumbing.
 scenario-specific yet. → [Foundations Step 1](../challenges/foundations#step-1--setup--provisioning-foundry--ai-search)
 
 **Prove you applied it:**
-- `python challenges/foundations/validate.py --step 1` — infra + keyless auth are scenario-agnostic, so the upskill check applies unchanged.
-- Checklist: ☐ `.env` has your project endpoint, model deployment, and search endpoint (no `<...>` placeholders) ☐ no API keys pasted anywhere.
+- `python challenges/foundations/validate.py --step 1` — infra + keyless auth are scenario-agnostic, so this reference check applies unchanged.
+- Checklist: □ `.env` has your project endpoint, model deployment, and search endpoint (no `<...>` placeholders) □ no API keys pasted anywhere.
 
 **Stuck?** [Northfield Step 1](../challenges/foundations#step-1--setup--provisioning-foundry--ai-search).
 
@@ -78,7 +82,7 @@ prompts and instruction. → [Foundations Step 2](../challenges/foundations#step
 
 **Prove you applied it:**
 - `python challenges/foundations/validate.py --track customer --step 2` — confirms your chosen deployment answers via the SDK.
-- Checklist: ☐ you can state one concrete trade-off you observed on *your* prompts ☐ your tuned system instruction is saved ☐ the code call is on-tone for your users.
+- Checklist: □ you can state one concrete trade-off you observed on *your* prompts □ your tuned system instruction is saved □ the code call is on-tone for your users.
 
 **Stuck?** [Northfield Step 2](../challenges/foundations#step-2--model-selection--the-playground).
 
@@ -103,7 +107,7 @@ instructions; test that your specific refusals actually hold. → [Foundations S
 
 **Prove you applied it:**
 - `python challenges/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
-- Checklist: ☐ an in-scope question is answered well ☐ each safety boundary from Chapter 0 is actually refused/escalated ☐ portal and code instructions match.
+- Checklist: □ an in-scope question is answered well □ each safety boundary from Chapter 0 is actually refused/escalated □ portal and code instructions match.
 
 **Stuck?** [Northfield Step 3](../challenges/foundations#step-3--your-first-agent).
 
@@ -137,7 +141,7 @@ trusted source of truth.
 **Prove you applied it:**
 - `python challenges/foundations/validate.py --track customer --step 4 --question "<your real scenario question>"`
   — asserts *your* agent (or index) returns a **cited** answer to a question you provide, instead of Northfield's school code.
-- Checklist: ☐ a real scenario question returns a citation to *your* source ☐ an out-of-corpus question abstains in *your* wording ☐ grounded answer is more specific than the ungrounded Step 3 answer.
+- Checklist: □ a real scenario question returns a citation to *your* source □ an out-of-corpus question abstains in *your* wording □ grounded answer is more specific than the ungrounded Step 3 answer.
 
 **Stuck?** [Northfield Step 4](../challenges/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state).
 

@@ -28,7 +28,7 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 **Prove you applied it:**
 - `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 1 --dataset <your-eval.jsonl>`
-- Checklist: ☐ ≥25 scenario rows or a justified smaller pilot set ☐ ≥5 topics/tasks ☐ abstain/out-of-scope rows included ☐ ground truth comes from trusted sources, not model output.
+- Checklist: □ ≥25 scenario rows or a justified smaller pilot set □ ≥5 topics/tasks □ abstain/out-of-scope rows included □ ground truth comes from trusted sources, not model output.
 
 **Stuck?** [Northfield Step 1](challenge.html?id=advanced-evaluation-redteam#step-1--run-quality-metrics-in-the-portal).
 
@@ -52,7 +52,7 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 **Prove you applied it:**
 - `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 2 --dataset <your-eval.jsonl>`
-- Checklist: ☐ aggregate scores are recorded ☐ weakest rows are reviewed manually ☐ failures map to one fix: prompt, corpus, retrieval, tool, or refusal.
+- Checklist: □ aggregate scores are recorded □ weakest rows are reviewed manually □ failures map to one fix: prompt, corpus, retrieval, tool, or refusal.
 
 **Stuck?** [Northfield Step 2](challenge.html?id=advanced-evaluation-redteam#step-2--drive-evaluation-from-code-with-evaluatepy).
 
@@ -76,7 +76,7 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 **Prove you applied it:**
 - `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 3`
-- Checklist: ☐ evaluator name/rules match your domain ☐ one good and one bad answer score differently ☐ rule is explainable to a stakeholder.
+- Checklist: □ evaluator name/rules match your domain □ one good and one bad answer score differently □ rule is explainable to a stakeholder.
 
 **Stuck?** [Northfield Step 3](challenge.html?id=advanced-evaluation-redteam#step-3--build-a-custom-domain-evaluator).
 
@@ -101,7 +101,7 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 **Prove you applied it:**
 - `python challenges/advanced-evaluation-redteam/validate.py --track customer --step 4 --adversarial <your-adversarial.jsonl>`
-- Checklist: ☐ ≥3 attack categories tested ☐ prompt-injection-via-document included ☐ actual vs. expected behavior recorded ☐ one mitigation applied and re-tested.
+- Checklist: □ ≥3 attack categories tested □ prompt-injection-via-document included □ actual vs. expected behavior recorded □ one mitigation applied and re-tested.
 
 **Stuck?** [Northfield Step 4](challenge.html?id=advanced-evaluation-redteam#step-4--red-team-the-agent-adversarial-safety).
 
@@ -126,7 +126,7 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 **Prove you applied it:**
 - `python challenges/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>`
-- Checklist: ☐ passing threshold recorded ☐ intentional regression fails ☐ scorecard is ready for the 2-minute demo ☐ risks/backlog are documented.
+- Checklist: □ passing threshold recorded □ intentional regression fails □ scorecard is ready for the 2-minute demo □ risks/backlog are documented.
 
 **Stuck?** [Northfield Step 5](challenge.html?id=advanced-evaluation-redteam#step-5--gate-the-build-ci-concept).
 

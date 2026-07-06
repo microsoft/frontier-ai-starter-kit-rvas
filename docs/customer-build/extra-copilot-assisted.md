@@ -31,9 +31,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 **Apply it to your app:** verify the MCP servers, repo instructions, and the matching skill before prompting for code. → [Extra · Copilot-Assisted Build — Step 1](../challenges/extra-copilot-assisted#step-1--confirm-the-copilot-enablement-layer-is-live)
 
 **Prove you applied it:**
-- ☐ The relevant MCP servers show connected in the editor.
-- ☐ You can name the skill that maps to your chosen artifact.
-- ☐ Your prompt will require docs/MCP lookup before implementation.
+- □ The relevant MCP servers show connected in the editor.
+- □ You can name the skill that maps to your chosen artifact.
+- □ Your prompt will require docs/MCP lookup before implementation.
 
 **Stuck?** [Northfield Step 1](../challenges/extra-copilot-assisted#step-1--confirm-the-copilot-enablement-layer-is-live).
 
@@ -55,9 +55,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 **Apply it to your app:** prompt Copilot to search first, load the matching skill, and implement against your real `.env` contract. → [Extra · Copilot-Assisted Build — Step 2](../challenges/extra-copilot-assisted#step-2--pick-a-challenge-and-rebuild-it-agent-assisted)
 
 **Prove you applied it:**
-- ☐ The prompt explicitly required docs/MCP lookup before code.
-- ☐ The generated artifact uses your scenario names and authoritative env variables.
-- ☐ The artifact runs or demonstrates successfully against your project.
+- □ The prompt explicitly required docs/MCP lookup before code.
+- □ The generated artifact uses your scenario names and authoritative env variables.
+- □ The artifact runs or demonstrates successfully against your project.
 
 **Stuck?** [Northfield Step 2](../challenges/extra-copilot-assisted#step-2--pick-a-challenge-and-rebuild-it-agent-assisted).
 
@@ -79,9 +79,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 **Apply it to your app:** compare a grounded Copilot output with a guessing-prone one and document the corrected API detail. → [Extra · Copilot-Assisted Build — Step 3](../challenges/extra-copilot-assisted#step-3--prove-grounding-beats-guessing)
 
 **Prove you applied it:**
-- ☐ You captured a concrete API or pattern difference.
-- ☐ You can explain why the grounded result is safer or more current.
-- ☐ The comparison is tied to your scenario artifact, not a generic sample.
+- □ You captured a concrete API or pattern difference.
+- □ You can explain why the grounded result is safer or more current.
+- □ The comparison is tied to your scenario artifact, not a generic sample.
 
 **Stuck?** [Northfield Step 3](../challenges/extra-copilot-assisted#step-3--prove-grounding-beats-guessing).
 

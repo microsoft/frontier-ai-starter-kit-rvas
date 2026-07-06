@@ -10,6 +10,15 @@ nav_order: 1
 
 **This is the first task in the Customer Build Track.** Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
 
+> **First, what is "Northfield"?** Throughout this track you'll see *Northfield* used as the
+> **reference scenario**: a student-services assistant for the fictional *Northfield University*,
+> grounded in a public [university-FAQ corpus]({{ '/challenges/foundations' | relative_url }}). The
+> base [Foundations track]({{ '/challenges/foundations' | relative_url }}) builds it step by step, so
+> its steps double as worked examples you can copy the exact commands from. **Customer Build keeps
+> Northfield's mechanics and swaps in your own corpus, persona, and questions — you do not need to
+> build the Northfield version first.** When a step says "follow the Northfield reference," that's the
+> place to grab the commands, not a prerequisite you must have finished.
+
 If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer the selected idea's business outcome, users, data sources, tier guidance, and risk notes into the table below.
 
 ## Scenario pack
@@ -36,9 +45,10 @@ When filling in **Knowledge sources**, use these guidelines to avoid the most co
 - **Safe data only:** no PII, unredacted customer data, confidential pricing, or legal content that
   has not been cleared for use in a demo environment. When in doubt, use public-facing or
   pre-approved summaries.
-- **Supported formats:** the indexing script (`step4_index.py`) handles plain text (`.txt`) and
-  Markdown (`.md`) natively. For PDFs, extract text first — `pypdf` is fast enough for hackathon
-  use; Azure Document Intelligence gives higher quality for complex layouts.
+- **Supported formats:** the indexing step you'll build in Foundations Step 4 (following the
+  Northfield reference, pointed at *your* files) reads Markdown (`.md`) and plain text (`.txt`)
+  directly. For PDFs, extract text first — `pypdf` is fast enough for hackathon use; Azure Document
+  Intelligence gives higher quality for complex layouts.
 - **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** flow can ingest PDFs
   and SharePoint pages without writing code — a good option if the team is comfortable with portal
   navigation and wants to move quickly.

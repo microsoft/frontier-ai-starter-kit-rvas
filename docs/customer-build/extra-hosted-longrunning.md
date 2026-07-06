@@ -31,9 +31,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 **Apply it to your app:** package your scenario workflow with the hosted-agent pattern, then invoke it remotely with a real composite request. → [Extra · Long-Running Agents — Step 1](../challenges/extra-hosted-longrunning#step-1--containerize-the-magentic-workflow-as-a-hosted-agent)
 
 **Prove you applied it:**
-- ☐ Your workflow answers through a deployed endpoint, not localhost.
-- ☐ The deployed run uses your scenario names, tools, and instructions.
-- ☐ A remote invocation exercises the same routing or action path as local.
+- □ Your workflow answers through a deployed endpoint, not localhost.
+- □ The deployed run uses your scenario names, tools, and instructions.
+- □ A remote invocation exercises the same routing or action path as local.
 
 **Stuck?** [Northfield Step 1](../challenges/extra-hosted-longrunning#step-1--containerize-the-magentic-workflow-as-a-hosted-agent).
 
@@ -55,9 +55,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 **Apply it to your app:** add a background submission path for one real long-running job and return a run handle immediately. → [Extra · Long-Running Agents — Step 2](../challenges/extra-hosted-longrunning#step-2--add-a-background-long-running-agent)
 
 **Prove you applied it:**
-- ☐ Submitting the job returns a handle without waiting for completion.
-- ☐ The job continues after the submitting client is closed.
-- ☐ The submitted payload is safe, scoped, and tied to your scenario.
+- □ Submitting the job returns a handle without waiting for completion.
+- □ The job continues after the submitting client is closed.
+- □ The submitted payload is safe, scoped, and tied to your scenario.
 
 **Stuck?** [Northfield Step 2](../challenges/extra-hosted-longrunning#step-2--add-a-background-long-running-agent).
 
@@ -79,9 +79,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 **Apply it to your app:** retrieve the completed run from a fresh client and inspect the App Insights trace. → [Extra · Long-Running Agents — Step 3](../challenges/extra-hosted-longrunning#step-3--poll-for-the-result-and-read-the-trace)
 
 **Prove you applied it:**
-- ☐ A fresh process retrieves the result using only the run handle.
-- ☐ App Insights shows spans for the background run.
-- ☐ Your readout includes the duration or trace evidence for the job.
+- □ A fresh process retrieves the result using only the run handle.
+- □ App Insights shows spans for the background run.
+- □ Your readout includes the duration or trace evidence for the job.
 
 **Stuck?** [Northfield Step 3](../challenges/extra-hosted-longrunning#step-3--poll-for-the-result-and-read-the-trace).
 
