@@ -8,24 +8,24 @@ nav_exclude: true
 # Coach Guide · Extra — Give It a Voice (Voice Live API)
 
 > **Coach-only.** Highest *wow-per-effort* Extra and the best demo-day closer, but it has two hard
-> dependencies that fail silently: **regional API access** and **a working mic/speaker on the client**.
+> dependencies that fail silently: regional API access and a working mic/speaker on the client.
 > Verify both before anyone starts.
 
 ## What this challenge is really teaching
 
-That the agent and the **interface** are separable. Students have only ever typed; Voice Live shows the
-*same grounded agent* behind a real-time speech channel. The conceptual win is **full-duplex streaming**
+That the agent and the interface are separable. Students have only ever typed; Voice Live shows the
+*same grounded agent* behind a real-time speech channel. The conceptual win is full-duplex streaming
 (incremental audio in *and* out) versus the naive STT → agent → TTS pipeline — that's where the
 sub-second latency and barge-in come from. Don't let teams build three separate calls; Voice Live is one
 session.
 
 ## Infra to pre-provision (do this BEFORE the session)
 
-1. **Voice Live API access** on an Azure AI Speech / Foundry resource in a **supported region** —
+1. Voice Live API access on an Azure AI Speech / Foundry resource in a supported region —
    confirm availability for your event subscription/region *weeks ahead*; it's newer and not everywhere.
 
-2. **Keyless RBAC** for the project identity (or a key as workshop fallback) on the Speech/Voice resource.
-3. **Client hardware:** each team needs a laptop with a **working mic + speakers** (headset is better —
+2. Keyless RBAC for the project identity (or a key as workshop fallback) on the Speech/Voice resource.
+3. Client hardware: each team needs a laptop with a working mic + speakers (headset is better —
    avoids feedback/echo in a noisy room). This is the #1 silent failure.
 
 4. Confirm `azure-ai-voicelive` installs cleanly via `pip install azure-ai-voicelive` (install on demand; not pre-pinned).
@@ -35,7 +35,7 @@ session.
 
 ## Search-Before-Implement
 
-`azure-ai-voicelive` connect/session signatures are **new and changing**. Send teams to `microsoft-docs`
+`azure-ai-voicelive` connect/session signatures are new and changing. Send teams to `microsoft-docs`
 for the current connect call and event names before coding. The event names in Step 2
 (`session.created`, response audio deltas, response-done) are illustrative — confirm the live ones.
 
@@ -57,12 +57,12 @@ for the current connect call and event names before coding. The event names in S
 - VAD/turn-detection and barge-in are the "feels real" features. If a team is short on time, VAD is the
   priority; barge-in is the flourish.
 
-- On the **Step 4 grounded** agent, confirm the spoken answer is actually grounded (cite-worthy content),
+- On the Step 4 grounded agent, confirm the spoken answer is actually grounded (cite-worthy content),
   proving the voice path didn't bypass the knowledge base.
 
 ## Why no `validate.py`
 
-The deliverable is **audio** — inherently a live/portal demo. Verify by watching/hearing a spoken
+The deliverable is audio — inherently a live/portal demo. Verify by watching/hearing a spoken
 multi-turn conversation with one barge-in. A short screen+audio recording is the artifact for the readout.
 
 ## Common failure modes

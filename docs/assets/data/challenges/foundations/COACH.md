@@ -2,22 +2,22 @@
 # Foundations — Coach's Guide
 
 > **Coach-facing.** Facilitation, pitfalls, timing, and the actual answers/snippets for all four
-> Foundations steps. **Do not paste this content into the student README** — answers live here only.
+> Foundations steps. Do not paste this content into the student README — answers live here only.
 
 ## Overview
 
-Foundations is **one guided, linear challenge** with four ordered steps. The end-state — a deployed,
+Foundations is one guided, linear challenge with four ordered steps. The end-state — a deployed,
 grounded Northfield IQ Assistant that cites its sources — is the prerequisite for every Advanced
 challenge. Your job is to keep teams moving step-to-step: each Checkpoint (`python validate.py --step N`)
 must pass before they advance, because Step N's output is Step N+1's input.
 
-Total guided time is about **3–3.5 hours**. The two places teams lose time are **Step 1** (subscription
-/ region / RBAC blockers during `azd up`) and **Step 4** (indexing + knowledge-base setup). Triage those
+Total guided time is about 3–3.5 hours. The two places teams lose time are Step 1 (subscription
+/ region / RBAC blockers during `azd up`) and Step 4 (indexing + knowledge-base setup). Triage those
 two hard and the middle steps move fast.
 
 The whole arc is one continuous narrative: pick a model (Step 2) → wrap it in a named agent with
-guardrails (Step 3) → ground that agent in real data (Step 4). Remind teams they are extending **one
-artifact**, not building four throwaway demos.
+guardrails (Step 3) → ground that agent in real data (Step 4). Remind teams they are extending one
+artifact, not building four throwaway demos.
 
 ---
 
@@ -26,32 +26,32 @@ artifact**, not building four throwaway demos.
 ### What good looks like
 
 `azd up` completes, a `.env` is generated with real values (no `<...>` placeholders), the project is
-visible at ai.azure.com, and auth is **keyless** (no API keys anywhere — `DefaultAzureCredential`
+visible at ai.azure.com, and auth is keyless (no API keys anywhere — `DefaultAzureCredential`
 reuses the `az login` session).
 
 ### Facilitation walkthrough
 1. Confirm the team is in Codespaces / Dev Container: `python --version`, `az --version`, `azd version`.
-2. Both logins are required: `az login` **and** `azd auth login`. Then `az account set --subscription ...`.
+2. Both logins are required: `az login` and `azd auth login`. Then `az account set --subscription ...`.
 3. `azd up` provisions Foundry + project + model deployment + AI Search + Log Analytics + App Insights
    via Bicep and writes `.env`. First runs take several minutes — let it finish before debugging.
 
 4. Verify the contract: `grep -E "AZURE_AI_PROJECT_ENDPOINT|AZURE_AI_MODEL_DEPLOYMENT_NAME|AZURE_SEARCH_ENDPOINT" .env`.
 
 ### Common pitfalls
-- **Permission errors creating resources** — the user has Reader, not Contributor/Owner. They need
+- Permission errors creating resources — the user has Reader, not Contributor/Owner. They need
   rights to create AI resources on the subscription/RG. Fix RBAC before they keep retrying `azd up`.
 
-- **Wrong subscription selected** — CLI and portal can disagree. `az account show -o table` to confirm.
-- **Region / quota blocks** — some regions lack the model SKU. Fall back to `./scripts/deploy.sh` and
+- Wrong subscription selected — CLI and portal can disagree. `az account show -o table` to confirm.
+- Region / quota blocks — some regions lack the model SKU. Fall back to `./scripts/deploy.sh` and
   pick a supported region, or steer them to the event's approved region.
 
-- **Both logins** — `azd up` fails auth if they only did `az login` and not `azd auth login`.
-- **Committing `.env`** — remind them it is git-ignored; never commit endpoints or keys.
+- Both logins — `azd up` fails auth if they only did `az login` and not `azd auth login`.
+- Committing `.env` — remind them it is git-ignored; never commit endpoints or keys.
 
 ### Timing
-- **0–10 min**: environment + both logins + subscription.
-- **10–25 min**: `azd up` running; use the wait to walk the resource model (resource ↔ project ↔ connection).
-- **25–30 min**: verify `.env` and run `python validate.py --step 1`.
+- 0–10 min: environment + both logins + subscription.
+- 10–25 min: `azd up` running; use the wait to walk the resource model (resource ↔ project ↔ connection).
+- 25–30 min: verify `.env` and run `python validate.py --step 1`.
 
 Intervene fast on permission issues — that is rarely productive struggle.
 
@@ -68,7 +68,7 @@ Intervene fast on permission issues — that is rarely productive struggle.
 
 ### What good looks like
 
-Two contrasting models deployed; the **same** prompts run against both; the team can name one concrete
+Two contrasting models deployed; the same prompts run against both; the team can name one concrete
 trade-off; a tuned system instruction saved to `assets/system-instructions.txt`; and a working
 `app/step2_chat.py` that reproduces the Playground tone in code.
 
@@ -111,22 +111,22 @@ and point the student to the right office rather than guessing.
 ```
 
 ### Common pitfalls
-- **Unfair comparison** — students change the model *and* the prompt at once. Insist they change only
+- Unfair comparison — students change the model *and* the prompt at once. Insist they change only
   the model between runs.
 
-- **Coding before the deployment is Ready** — they hit 404s. Confirm status is **Succeeded/Ready** first.
-- **Wrong endpoint format** — must be `https://<resource>.services.ai.azure.com/api/projects/<project>`,
+- Coding before the deployment is Ready — they hit 404s. Confirm status is Succeeded/Ready first.
+- Wrong endpoint format — must be `https://<resource>.services.ai.azure.com/api/projects/<project>`,
   not a portal page URL. It comes straight from `.env`.
 
-- **Whitespace in env vars** — a trailing space in `AZURE_AI_PROJECT_ENDPOINT` breaks the client.
-- **`responses` vs `chat.completions`** — both work, but the curriculum standardizes on
+- Whitespace in env vars — a trailing space in `AZURE_AI_PROJECT_ENDPOINT` breaks the client.
+- `responses` vs `chat.completions` — both work, but the curriculum standardizes on
   `openai.responses.create()`. Don't let teams revert to `chat.completions` patterns from old samples.
 
 ### Timing
-- **0–10 min**: deploy both models.
-- **10–25 min**: Playground comparison while the second deployment finishes.
-- **25–40 min**: tune + save the system instruction.
-- **40–45 min**: write and run `app/step2_chat.py`, then `python validate.py --step 2`.
+- 0–10 min: deploy both models.
+- 10–25 min: Playground comparison while the second deployment finishes.
+- 25–40 min: tune + save the system instruction.
+- 40–45 min: write and run `app/step2_chat.py`, then `python validate.py --step 2`.
 
 ### Expected questions
 - *"Which model should we pick?"* — Push them to justify from observed cost/latency/quality, not
@@ -143,9 +143,9 @@ and point the student to the right office rather than guessing.
 
 ### What good looks like
 
-A named agent `northfield-iq-assistant` exists in the portal **and** via SDK (code↔portal parity),
+A named agent `northfield-iq-assistant` exists in the portal and via SDK (code↔portal parity),
 created with `agents.create_version(PromptAgentDefinition(...))`, with a persona + guardrails. It
-answers in-scope questions and **refuses** the cheating and out-of-scope prompts.
+answers in-scope questions and refuses the cheating and out-of-scope prompts.
 
 ### The reference snippet (full, runnable)
 
@@ -212,27 +212,27 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 ```
 
 ### Common pitfalls
-- **Over-constraining** — too many rules make the agent robotic or refuse valid questions. Coach
+- Over-constraining — too many rules make the agent robotic or refuse valid questions. Coach
   toward a few clear rules.
 
-- **Under-specifying refusals** — without an explicit academic-integrity clause, the cheating prompt
+- Under-specifying refusals — without an explicit academic-integrity clause, the cheating prompt
   often gets a "helpful" answer. That's the teachable failure; have them add the clause and re-run.
 
-- **`create_agent` vs `create_version`** — the legacy `agents.create_agent(...)` exists, but
-  Foundations standardizes on **versioned** agents via `agents.create_version(PromptAgentDefinition(...))`.
+- `create_agent` vs `create_version` — the legacy `agents.create_agent(...)` exists, but
+  Foundations standardizes on versioned agents via `agents.create_version(PromptAgentDefinition(...))`.
   Make sure they use the versioned API so Step 4 can add a new version cleanly.
 
-- **Drift between portal and code** — if they edit instructions in the portal only, code parity breaks.
+- Drift between portal and code — if they edit instructions in the portal only, code parity breaks.
   Treat `assets/system-instructions.txt` as the single source.
 
 ### Timing
-- **0–15 min**: design persona + guardrails.
-- **15–30 min**: create in portal, test in agent Playground.
-- **30–45 min**: create in code, run the guardrail test loop, `python validate.py --step 3`.
+- 0–15 min: design persona + guardrails.
+- 15–30 min: create in portal, test in agent Playground.
+- 30–45 min: create in code, run the guardrail test loop, `python validate.py --step 3`.
 
 ### Expected questions
 - *"Why version agents?"* — Agents are versioned resources; you can iterate instructions/tools and roll
-  forward. Step 4 adds the search tool as a **new version** of the same agent.
+  forward. Step 4 adds the search tool as a new version of the same agent.
 
 - *"Portal or code?"* — Both, deliberately. The point is parity: the same definition expressed two ways.
 
@@ -243,14 +243,14 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 ### What good looks like
 
 An AI Search index over the FAQ corpus; a Foundry IQ knowledge base using `VECTOR_SEMANTIC_HYBRID`; a
-new agent version with the AI Search tool attached; and a precise, **cited** answer (the FAFSA question
+new agent version with the AI Search tool attached; and a precise, cited answer (the FAFSA question
 is the canonical check). Grounded answers are specific and sourced; ungrounded ones are vague.
 
 ### Canonical verification question (use this for the Checkpoint)
 > "What is Northfield's FAFSA priority deadline and school code?"
 
-Expected grounded answer references **March 1** priority deadline and school code **041777** (both are
-in `resources/sample-data/university-faq/financial-aid.md`), **with a citation** to that source. The
+Expected grounded answer references March 1 priority deadline and school code 041777 (both are
+in `resources/sample-data/university-faq/financial-aid.md`), with a citation to that source. The
 ungrounded Step-3 agent typically invents a date or omits the school code — that contrast is the lesson.
 
 ### The reference grounding snippet (full, runnable)
@@ -309,49 +309,49 @@ print(resp.output_text)
 ```
 
 ### Indexing guidance (Step 4 task 2)
-- **Chunking**: ~500 tokens, ~15% overlap is a good baseline for FAQ-style content. Too large → noisy
+- Chunking: ~500 tokens, ~15% overlap is a good baseline for FAQ-style content. Too large → noisy
   retrieval; too small → split policy details (deadlines, GPA, office hours) lose context.
 
-- **Fields**: keep a retrievable `content` field (used for the answer) and a retrievable `source` field
+- Fields: keep a retrievable `content` field (used for the answer) and a retrievable `source` field
   set to the file name (used for citations). Without a citation-source field, answers can't cite.
 
-- **Query type**: `VECTOR_SEMANTIC_HYBRID` (vector + keyword + semantic rerank) is the recommended
+- Query type: `VECTOR_SEMANTIC_HYBRID` (vector + keyword + semantic rerank) is the recommended
   default and what the knowledge base should use.
 
 ### Customer corpus guidance (for Customer Build Mode teams)
 
 If a team is swapping in their own data:
-- **Minimum useful size:** 5–20 well-structured documents (FAQs, policies, SOPs). Too few = "I don't know" on valid questions; too many untested = noisy retrieval.
-- **Safe data only:** no PII, unredacted customer data, or legal/financial content not pre-cleared. Guide teams toward public-facing or pre-approved summaries.
-- **Formats:** `step4_index.py` handles `.txt` and `.md` natively. PDFs need text extraction first (suggest `pypdf` for quick hackathon use, or Azure Document Intelligence for production quality).
-- **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** ingests PDFs and SharePoint pages directly — point portal-path teams here first.
-- **Northfield as fallback:** if customer data is not ready or not cleared, run Foundations with the Northfield corpus and log the corpus swap as a follow-up. The architecture is identical.
+- Minimum useful size: 5–20 well-structured documents (FAQs, policies, SOPs). Too few = "I don't know" on valid questions; too many untested = noisy retrieval.
+- Safe data only: no PII, unredacted customer data, or legal/financial content not pre-cleared. Guide teams toward public-facing or pre-approved summaries.
+- Formats: `step4_index.py` handles `.txt` and `.md` natively. PDFs need text extraction first (suggest `pypdf` for quick hackathon use, or Azure Document Intelligence for production quality).
+- PDFs / SharePoint: the Foundry portal's Build → Indexes → Add data ingests PDFs and SharePoint pages directly — point portal-path teams here first.
+- Northfield as fallback: if customer data is not ready or not cleared, run Foundations with the Northfield corpus and log the corpus swap as a follow-up. The architecture is identical.
 
 ### Common pitfalls
-- **401/403 querying the index** — the Foundry project managed identity is missing
-  **Search Index Data Contributor** and **Search Service Contributor** on the AI Search resource.
+- 401/403 querying the index — the Foundry project managed identity is missing
+  Search Index Data Contributor and Search Service Contributor on the AI Search resource.
   `azd up` assigns these; if it didn't, assign manually in IAM. This is the #1 Step-4 blocker.
 
-- **No citations** — the agent instructions don't ask for them. The "Always cite your sources as
+- No citations — the agent instructions don't ask for them. The "Always cite your sources as
   [source]" line is required; without it the tool retrieves but the model doesn't surface sources.
 
-- **Index/connection name mismatch** — `AZURE_SEARCH_INDEX_NAME` and `AZURE_SEARCH_CONNECTION_NAME`
+- Index/connection name mismatch — `AZURE_SEARCH_INDEX_NAME` and `AZURE_SEARCH_CONNECTION_NAME`
   must match exactly (case-sensitive) what's in `.env` / the portal.
 
-- **Confusing retrieval quality with answer quality** — separate the two questions: *did it retrieve the
+- Confusing retrieval quality with answer quality — separate the two questions: *did it retrieve the
   right chunk?* vs *did it answer well from that chunk?* A bad answer can come from either stage.
 
-- **Indexing succeeds but ingestion fails later** — uploads can report success while embedding fails.
+- Indexing succeeds but ingestion fails later — uploads can report success while embedding fails.
   Confirm the index actually returns results for a test query before wiring it to the agent.
 
-The **librarian analogy** still helps: RAG doesn't make the model smarter; it hands the model the right
+The librarian analogy still helps: RAG doesn't make the model smarter; it hands the model the right
 shelf before it answers.
 
 ### Timing
-- **0–25 min**: inspect corpus, build + populate the AI Search index, confirm a test query returns hits.
-- **25–45 min**: confirm RBAC; build the Foundry IQ knowledge base (`VECTOR_SEMANTIC_HYBRID`).
-- **45–75 min**: attach the tool as a new agent version; verify the cited FAFSA answer.
-- **75–90 min**: grounded vs. ungrounded comparison; `python validate.py --step 4`.
+- 0–25 min: inspect corpus, build + populate the AI Search index, confirm a test query returns hits.
+- 25–45 min: confirm RBAC; build the Foundry IQ knowledge base (`VECTOR_SEMANTIC_HYBRID`).
+- 45–75 min: attach the tool as a new agent version; verify the cited FAFSA answer.
+- 75–90 min: grounded vs. ungrounded comparison; `python validate.py --step 4`.
 
 This step often runs long because first-time indexing is slow. Budget accordingly.
 
@@ -369,7 +369,7 @@ This step often runs long because first-time indexing is slow. Budget accordingl
 
 When `python validate.py --all` prints
 `✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live`, the team has the prerequisite
-for **every** Advanced challenge. `--all` re-asserts infra (Step 1), model reachability (Step 2), the
+for every Advanced challenge. `--all` re-asserts infra (Step 1), model reachability (Step 2), the
 named versioned agent (Step 3), and a cited grounded answer (Step 4).
 
 Path-B (advanced-skip) teams reach the same end-state via the bootstrap and verify it with the single
@@ -384,7 +384,7 @@ These are the exact commands the README promises; `validate.py` must implement t
 | `python validate.py --step 1` | Foundry + AI Search + App Insights provisioned; `.env` populated; keyless auth works |
 | `python validate.py --step 2` | Two model deployments reachable; `responses.create()` SDK call succeeds |
 | `python validate.py --step 3` | Named agent `northfield-iq-assistant` exists as a version; responds via Responses API; guardrails refuse |
-| `python validate.py --step 4` | AI Search index exists; knowledge base attached to agent; agent returns a **cited** answer |
+| `python validate.py --step 4` | AI Search index exists; knowledge base attached to agent; agent returns a cited answer |
 | `python validate.py --all` | All of the above — the full Foundations end-state |
 
 > `validate.py` is owned by Basher (Checkpoints/QA). This guide only specifies the contract those

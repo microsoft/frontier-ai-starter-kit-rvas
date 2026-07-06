@@ -9,9 +9,9 @@ description: Instrument your agent so you can explain latency, retrieval, tool c
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 4 &middot; Observe" artifact="One traced scenario run with model, retrieval, and tool spans you can explain by operation id." next="Once you can see inside the run, move to Chapter 5 — Ship it." %}
 
-This chapter is **mutuated from [Advanced · Tracing & Observability](../challenges/advanced-tracing-observability)** — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Chapter 0: Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Tracing & Observability](../challenges/advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Chapter 0: Define your outcome](../customer-outcome).
 
-> **Before you start this chapter:** finish [Chapter 1](foundations). If [Chapter 2](advanced-action-tools) applies, include one approved or denied action in the traced path.
+> Before you start this chapter: finish [Chapter 1](foundations). If [Chapter 2](advanced-action-tools) applies, include one approved or denied action in the traced path.
 
 ---
 
@@ -20,9 +20,9 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 **Why it matters for your app:** without instrumentation, failures look like vibes. With traces, you can point to the model, retrieval, or tool span that caused the issue.
 
 **Does this apply to you?**
-- **Build it** if you will show or pilot the agent beyond a notebook.
-- **Adapt it** if this is a tiny local demo — still set the flags and capture one trace, but skip dashboards.
-- **Skip it** only for a static mock where no live agent call happens.
+- Build it if you will show or pilot the agent beyond a notebook.
+- Adapt it if this is a tiny local demo — still set the flags and capture one trace, but skip dashboards.
+- Skip it only for a static mock where no live agent call happens.
 
 **Decisions to make:**
 - Which environment runs the traced demo: local script, notebook, UI backend, or hosted agent?
@@ -45,9 +45,9 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 **Why it matters for your app:** a trace is only useful if it covers the path stakeholders care about, not a generic ping.
 
 **Does this apply to you?**
-- **Build it** for any live agent demo.
-- **Adapt it** if the demo is small — trace one representative question and one failure/abstention.
-- **Skip it** only if you skipped live agent execution entirely.
+- Build it for any live agent demo.
+- Adapt it if the demo is small — trace one representative question and one failure/abstention.
+- Skip it only if you skipped live agent execution entirely.
 
 **Decisions to make:**
 - Which Chapter 0 *demo story* question becomes the traced run?
@@ -70,9 +70,9 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 **Why it matters for your app:** the span tree tells you whether the answer came from the model alone, retrieval, a tool, or a failed branch.
 
 **Does this apply to you?**
-- **Build it** if you need to explain a success or failure to a coach or stakeholder.
-- **Adapt it** if you only have model spans today — record that retrieval/tool spans are absent and why.
-- **Skip it** only if you cannot access the portal during the event; keep the KQL step as backup.
+- Build it if you need to explain a success or failure to a coach or stakeholder.
+- Adapt it if you only have model spans today — record that retrieval/tool spans are absent and why.
+- Skip it only if you cannot access the portal during the event; keep the KQL step as backup.
 
 **Decisions to make:**
 - Which spans should exist for your app path?
@@ -94,9 +94,9 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 **Why it matters for your app:** KQL lets you turn a single demo run into evidence: ordered spans, latency, token totals, and cost signals.
 
 **Does this apply to you?**
-- **Build it** if you need repeatable troubleshooting or a production hardening story.
-- **Adapt it** for a small demo by saving one useful query, not a full dashboard.
-- **Skip it** only if observability is out of scope; document that your prototype is not diagnosable yet.
+- Build it if you need repeatable troubleshooting or a production hardening story.
+- Adapt it for a small demo by saving one useful query, not a full dashboard.
+- Skip it only if observability is out of scope; document that your prototype is not diagnosable yet.
 
 **Decisions to make:**
 - Which operation id is your canonical demo trace?
@@ -115,10 +115,10 @@ This chapter is **mutuated from [Advanced · Tracing & Observability](../challen
 
 ## Chapter 4 end-state
 
-You have **one end-to-end trace for your scenario**, plus a KQL query that explains where time, tokens, retrieval, and tools went.
+You have one end-to-end trace for your scenario, plus a KQL query that explains where time, tokens, retrieval, and tools went.
 
 ```bash
 python challenges/advanced-tracing-observability/validate.py --track customer --all --dry-run
 ```
 
-Next: **[Chapter 5 — Ship it](advanced-deploy-hosted-agent)**.
+Next: [Chapter 5 — Ship it](advanced-deploy-hosted-agent).

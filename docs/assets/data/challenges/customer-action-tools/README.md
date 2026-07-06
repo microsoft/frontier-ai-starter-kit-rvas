@@ -3,9 +3,9 @@
 
 
 
-This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=advanced-action-tools)** — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Chapter 0: Define your outcome](challenge.html?id=customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter is mutuated from [Advanced · Action Tools](challenge.html?id=advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Chapter 0: Define your outcome](challenge.html?id=customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
-> **Before you start this chapter:** you need a grounded agent from [Chapter 1](challenge.html?id=customer-foundations) and at least one action candidate from Chapter 0.
+> Before you start this chapter: you need a grounded agent from [Chapter 1](challenge.html?id=customer-foundations) and at least one action candidate from Chapter 0.
 
 ---
 
@@ -14,9 +14,9 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 **Why it matters for your app:** an action tool needs a real surface to call. Even a demo action should create, update, schedule, submit, or notify somewhere visible.
 
 **Does this apply to you?**
-- **Build it** if your demo promise includes a workflow change, ticket, booking, status update, or handoff.
-- **Adapt it** if your real system is unavailable — use a safe mock API that preserves the same request/response shape.
-- **Skip it** only if your app is knowledge-only; then move straight to [Chapter 3](challenge.html?id=customer-evaluation-redteam).
+- Build it if your demo promise includes a workflow change, ticket, booking, status update, or handoff.
+- Adapt it if your real system is unavailable — use a safe mock API that preserves the same request/response shape.
+- Skip it only if your app is knowledge-only; then move straight to [Chapter 3](challenge.html?id=customer-evaluation-redteam).
 
 **Decisions to make:**
 - Which Chapter 0 *action candidate* is valuable enough to demo?
@@ -38,9 +38,9 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 **Why it matters for your app:** knowledge tools read; action tools change the world. Your safety boundary starts by naming the side effect and who pays for a mistake.
 
 **Does this apply to you?**
-- **Build it** for any action that writes data, sends messages, changes access, spends money, books time, opens cases, or triggers people.
-- **Adapt it** for read-only API calls that expose sensitive data — approval may become consent or audit logging instead.
-- **Skip it** only for fully public, read-only lookups with no sensitive data.
+- Build it for any action that writes data, sends messages, changes access, spends money, books time, opens cases, or triggers people.
+- Adapt it for read-only API calls that expose sensitive data — approval may become consent or audit logging instead.
+- Skip it only for fully public, read-only lookups with no sensitive data.
 
 **Decisions to make:**
 - What is the side effect?
@@ -63,9 +63,9 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 **Why it matters for your app:** the tool schema is the contract between natural language and your system. Ambiguous parameters create bad actions.
 
 **Does this apply to you?**
-- **Build it** if you have one or more approved side effects.
-- **Adapt it** if your action is currently manual — define a tool that creates a review record or draft request instead of executing directly.
-- **Skip it** if Chapter 2 is out of scope for your demo.
+- Build it if you have one or more approved side effects.
+- Adapt it if your action is currently manual — define a tool that creates a review record or draft request instead of executing directly.
+- Skip it if Chapter 2 is out of scope for your demo.
 
 **Decisions to make:**
 - What is the smallest useful action for the demo story?
@@ -88,9 +88,9 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 **Why it matters for your app:** a governed agent pauses, shows the proposed action, and records approve/deny before anything mutates.
 
 **Does this apply to you?**
-- **Build it** for any real or realistic side effect.
-- **Adapt it** if your demo uses a mock backend — still require approval so the production pattern is visible.
-- **Skip it** only when all tools are read-only and non-sensitive.
+- Build it for any real or realistic side effect.
+- Adapt it if your demo uses a mock backend — still require approval so the production pattern is visible.
+- Skip it only when all tools are read-only and non-sensitive.
 
 **Decisions to make:**
 - Who approves in the demo: user, operator, coach, or simulated approver?
@@ -113,9 +113,9 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 **Why it matters for your app:** stakeholders need to see the full loop: user asks, agent proposes, human approves, system changes, agent reports the result.
 
 **Does this apply to you?**
-- **Build it** if action is part of your value proposition.
-- **Adapt it** if only a draft or queue item is safe during the hackathon.
-- **Skip it** if the demo remains knowledge-only; document this as a deliberate scope decision.
+- Build it if action is part of your value proposition.
+- Adapt it if only a draft or queue item is safe during the hackathon.
+- Skip it if the demo remains knowledge-only; document this as a deliberate scope decision.
 
 **Decisions to make:**
 - What one scenario request proves the action is useful?
@@ -135,10 +135,10 @@ This chapter is **mutuated from [Advanced · Action Tools](challenge.html?id=adv
 
 ## Chapter 2 end-state
 
-You have **one governed workflow action** attached to your grounded agent, with approval and denial both proven.
+You have one governed workflow action attached to your grounded agent, with approval and denial both proven.
 
 ```bash
 python challenges/advanced-action-tools/validate.py --track customer --all --dry-run
 ```
 
-Next: **[Chapter 3 — Prove it's safe](challenge.html?id=customer-evaluation-redteam)**.
+Next: [Chapter 3 — Prove it's safe](challenge.html?id=customer-evaluation-redteam).

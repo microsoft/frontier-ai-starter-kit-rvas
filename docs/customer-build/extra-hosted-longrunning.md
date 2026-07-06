@@ -9,9 +9,9 @@ description: Host a workflow and run scenario jobs asynchronously when work shou
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Long-Running Agents" artifact="A hosted background run for YOUR scenario that returns a handle, completes later, and is traceable." next="Use this only for jobs that should outlive a chat turn or browser session." %}
 
-This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../challenges/extra-hosted-longrunning)** — same hosted/background pattern, but applied to your scenario from [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. Use it when your demo story includes durable async work, not for normal chat responses.
+This deepener is mutuated from [Extra · MAF + Hosted Long-Running Agents](../challenges/extra-hosted-longrunning) — same hosted/background pattern, but applied to your scenario from [Chapter 0](../customer-outcome). This is an OPTIONAL deepener. Use it when your demo story includes durable async work, not for normal chat responses.
 
-> **Before you start this deepener:** complete a hosted agent path, and complete Magentic Workflows if the thing you are hosting is a multi-agent workflow. If your action finishes inside one user turn, skip this.
+> Before you start this deepener: complete a hosted agent path, and complete Magentic Workflows if the thing you are hosting is a multi-agent workflow. If your action finishes inside one user turn, skip this.
 
 ---
 
@@ -19,9 +19,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 
 **Why it matters for your app:** hosting turns a local workflow into a deployed endpoint with identity, history, and a path toward production demos.
 
-**Does this apply to you?** → **Skip it** if your build track demo stays local or only needs the existing hosted assistant.
-- **Build it** if your scenario workflow must be invoked remotely by a UI, service, or scheduler.
-- **Adapt it** if you are hosting a single agent or tool worker instead of a Magentic workflow.
+**Does this apply to you?** → Skip it if your build track demo stays local or only needs the existing hosted assistant.
+- Build it if your scenario workflow must be invoked remotely by a UI, service, or scheduler.
+- Adapt it if you are hosting a single agent or tool worker instead of a Magentic workflow.
 
 **Decisions to make:**
 - Which artifact from your build should become the hosted endpoint?
@@ -43,9 +43,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 
 **Why it matters for your app:** long-running work should return a handle quickly and continue after the caller closes the tab or moves on.
 
-**Does this apply to you?** → **Skip it** if every action should complete synchronously in front of the user.
-- **Build it** if your Chapter 0 **action candidates** include batch processing, reconciliation, report generation, or multi-record review.
-- **Adapt it** if the background job is a scheduler-triggered process rather than user-submitted.
+**Does this apply to you?** → Skip it if every action should complete synchronously in front of the user.
+- Build it if your Chapter 0 action candidates include batch processing, reconciliation, report generation, or multi-record review.
+- Adapt it if the background job is a scheduler-triggered process rather than user-submitted.
 
 **Decisions to make:**
 - What is your durable job: queue, report, audit, migration, or case review?
@@ -67,9 +67,9 @@ This deepener is **mutuated from [Extra · MAF + Hosted Long-Running Agents](../
 
 **Why it matters for your app:** async work is only useful if users can retrieve the result later and operators can inspect what happened.
 
-**Does this apply to you?** → **Skip it** if you skipped background execution.
-- **Build it** if your demo promises "come back later" behavior.
-- **Adapt it** if notification or webhook delivery is a better fit than polling.
+**Does this apply to you?** → Skip it if you skipped background execution.
+- Build it if your demo promises "come back later" behavior.
+- Adapt it if notification or webhook delivery is a better fit than polling.
 
 **Decisions to make:**
 - What result summary will prove the job completed successfully?

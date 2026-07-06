@@ -9,9 +9,9 @@ description: Split your scenario assistant into specialist agents coordinated by
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Magentic Workflows" artifact="A multi-agent workflow where a manager routes YOUR composite user request across focused specialists." next="If the workflow proves valuable, consider the Long-Running Agents deepener to host it." %}
 
-This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/extra-magentic-workflows)** — same orchestration pattern, but applied only if your scenario from [Chapter 0](../customer-outcome) needs more than one specialist brain. This is an **OPTIONAL deepener**. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
+This deepener is mutuated from [Extra · Magentic Workflows](../challenges/extra-magentic-workflows) — same orchestration pattern, but applied only if your scenario from [Chapter 0](../customer-outcome) needs more than one specialist brain. This is an OPTIONAL deepener. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
 
-> **Before you start this deepener:** complete Chapter 1 and Chapter 2 if your Action specialist will call a real tool. If one well-instructed agent already handles your demo cleanly, skip this.
+> Before you start this deepener: complete Chapter 1 and Chapter 2 if your Action specialist will call a real tool. If one well-instructed agent already handles your demo cleanly, skip this.
 
 ---
 
@@ -19,13 +19,13 @@ This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/ext
 
 **Why it matters for your app:** specialists let you separate conflicting jobs: triage, grounded answering, action execution, and escalation can each have tighter instructions than one overloaded assistant.
 
-**Does this apply to you?** → **Skip it** if your scenario is a single straightforward Q&A or one action flow.
-- **Build it** if your top user task regularly combines diagnosis, knowledge lookup, action, and escalation.
-- **Adapt it** if you need different specialists than Northfield's four, such as Compliance, Pricing, Scheduler, or Case Summary.
+**Does this apply to you?** → Skip it if your scenario is a single straightforward Q&A or one action flow.
+- Build it if your top user task regularly combines diagnosis, knowledge lookup, action, and escalation.
+- Adapt it if you need different specialists than Northfield's four, such as Compliance, Pricing, Scheduler, or Case Summary.
 
 **Decisions to make:**
-- Which Chapter 0 **user tasks** need different skills or safety posture?
-- Which specialist owns your **corpus** questions, your **action candidates**, and your **safety boundaries**?
+- Which Chapter 0 user tasks need different skills or safety posture?
+- Which specialist owns your corpus questions, your action candidates, and your safety boundaries?
 - What is each specialist explicitly forbidden to do?
 
 **Apply it to your app:** define focused agents for your scenario; keep each one single-purpose and wire only the tools it needs. Use the spine for exact MAF mechanics. → [Extra · Magentic Workflows — Step 1](../challenges/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf)
@@ -43,12 +43,12 @@ This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/ext
 
 **Why it matters for your app:** the manager decides the route at runtime, so a composite user request can use the right specialists without a brittle if/else pipeline.
 
-**Does this apply to you?** → **Skip it** if the route is always fixed and simple.
-- **Build it** if users ask mixed requests like "explain the policy and submit the request."
-- **Adapt it** if your manager should constrain order, require human approval before actions, or escalate early.
+**Does this apply to you?** → Skip it if the route is always fixed and simple.
+- Build it if users ask mixed requests like "explain the policy and submit the request."
+- Adapt it if your manager should constrain order, require human approval before actions, or escalate early.
 
 **Decisions to make:**
-- What routing rules map your Chapter 0 **top tasks** to specialists?
+- What routing rules map your Chapter 0 top tasks to specialists?
 - Which requests must always start with triage or safety screening?
 - What success measure proves orchestration helped: fewer wrong tool calls, clearer handoffs, faster resolution?
 
@@ -67,9 +67,9 @@ This deepener is **mutuated from [Extra · Magentic Workflows](../challenges/ext
 
 **Why it matters for your app:** stakeholders trust orchestration more when they can see why the manager called each specialist and where the work went.
 
-**Does this apply to you?** → **Skip it** if your readout does not need orchestration transparency.
-- **Build it** if your demo story benefits from showing live planning and routing.
-- **Adapt it** if a screenshot or trace is enough for your audience instead of a live DevUI demo.
+**Does this apply to you?** → Skip it if your readout does not need orchestration transparency.
+- Build it if your demo story benefits from showing live planning and routing.
+- Adapt it if a screenshot or trace is enough for your audience instead of a live DevUI demo.
 
 **Decisions to make:**
 - Which demo prompt shows the clearest multi-specialist path?

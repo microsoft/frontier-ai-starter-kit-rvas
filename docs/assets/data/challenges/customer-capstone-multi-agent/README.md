@@ -3,9 +3,9 @@
 
 
 
-This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=capstone-multi-agent)** — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
+This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capstone-multi-agent) — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
 
-> **Before you start this chapter:** finish [Chapter 1](challenge.html?id=customer-foundations) and [Chapter 2](challenge.html?id=customer-action-tools) if your team will include an action specialist. [Chapter 4](challenge.html?id=customer-tracing-observability) makes the final demo much stronger.
+> Before you start this chapter: finish [Chapter 1](challenge.html?id=customer-foundations) and [Chapter 2](challenge.html?id=customer-action-tools) if your team will include an action specialist. [Chapter 4](challenge.html?id=customer-tracing-observability) makes the final demo much stronger.
 
 ---
 
@@ -14,9 +14,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** multi-agent design adds power and complexity. Use it only when separate roles make the outcome clearer, safer, or easier to govern.
 
 **Does this apply to you?**
-- **Build it** if your demo journey naturally crosses multiple roles, tools, risk levels, or knowledge domains.
-- **Adapt it** if you only need a router plus one specialist; keep the graph small and explain the future branches.
-- **Skip it** if one grounded agent with one action already tells the best story.
+- Build it if your demo journey naturally crosses multiple roles, tools, risk levels, or knowledge domains.
+- Adapt it if you only need a router plus one specialist; keep the graph small and explain the future branches.
+- Skip it if one grounded agent with one action already tells the best story.
 
 **Decisions to make:**
 - Which Chapter 0 user journey has real handoffs?
@@ -39,9 +39,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** roles are the architecture. If the org chart is fuzzy, the graph will be fuzzy.
 
 **Does this apply to you?**
-- **Build it** if Chapter 6 is in scope.
-- **Adapt it** if your domain needs different specialists than knowledge/action/escalation.
-- **Skip it** if you decided the monolith is the right demo artifact.
+- Build it if Chapter 6 is in scope.
+- Adapt it if your domain needs different specialists than knowledge/action/escalation.
+- Skip it if you decided the monolith is the right demo artifact.
 
 **Decisions to make:**
 - What does the router classify?
@@ -65,9 +65,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** sequential flow proves contracts and role boundaries before concurrency hides bugs.
 
 **Does this apply to you?**
-- **Build it** if you are implementing the graph.
-- **Adapt it** if your final path is parallel — still run one sequential warm-up path first.
-- **Skip it** only if Chapter 6 is a design-only sketch.
+- Build it if you are implementing the graph.
+- Adapt it if your final path is parallel — still run one sequential warm-up path first.
+- Skip it only if Chapter 6 is a design-only sketch.
 
 **Decisions to make:**
 - What is the smallest route through router → one specialist → synthesizer?
@@ -90,9 +90,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** fan-out lets specialists work in parallel; fan-in forces the final answer to wait for all relevant evidence and decisions.
 
 **Does this apply to you?**
-- **Build it** if one user request needs multiple specialists at once.
-- **Adapt it** if only some requests fan out — route dynamically and keep simple requests single-path.
-- **Skip it** if parallelism does not improve the demo.
+- Build it if one user request needs multiple specialists at once.
+- Adapt it if only some requests fan out — route dynamically and keep simple requests single-path.
+- Skip it if parallelism does not improve the demo.
 
 **Decisions to make:**
 - Which router decision sends work to multiple specialists?
@@ -115,9 +115,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** multi-agent demos are hard to trust unless the audience can see the handoffs and you can trace the run after the fact.
 
 **Does this apply to you?**
-- **Build it** if Chapter 6 is part of the final demo.
-- **Adapt it** if DevUI is unavailable — capture logs plus an operation-id trace.
-- **Skip it** only for a paper design; mark it coach-judged/manual.
+- Build it if Chapter 6 is part of the final demo.
+- Adapt it if DevUI is unavailable — capture logs plus an operation-id trace.
+- Skip it only for a paper design; mark it coach-judged/manual.
 
 **Decisions to make:**
 - Which run will you show in DevUI?
@@ -140,9 +140,9 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 **Why it matters for your app:** the capstone is only valuable if the team handles your corpus, tools, risks, and success measures — not Northfield's.
 
 **Does this apply to you?**
-- **Build it** if you want a stakeholder-ready final story.
-- **Adapt it** if some artifacts are still Northfield-shaped — clearly label what is real vs. placeholder.
-- **Skip it** only if you are doing the upskill path, not Customer Build.
+- Build it if you want a stakeholder-ready final story.
+- Adapt it if some artifacts are still Northfield-shaped — clearly label what is real vs. placeholder.
+- Skip it only if you are doing the upskill path, not Customer Build.
 
 **Decisions to make:**
 - Which domain examples replace Northfield in prompts, tools, data, and evals?
@@ -162,10 +162,10 @@ This chapter is **mutuated from [Capstone · Multi-Agent](challenge.html?id=caps
 
 ## Chapter 6 end-state
 
-You have a **customer-specific agent team**: router, specialists, typed contracts, fan-out/fan-in, and a traceable 2-minute journey.
+You have a customer-specific agent team: router, specialists, typed contracts, fan-out/fan-in, and a traceable 2-minute journey.
 
 ```bash
 python challenges/capstone-multi-agent/validate.py --track customer --all --path <your-capstone-dir>
 ```
 
-Finish with your **2-minute stakeholder demo**, scorecard, known risks, and pilot backlog.
+Finish with your 2-minute stakeholder demo, scorecard, known risks, and pilot backlog.

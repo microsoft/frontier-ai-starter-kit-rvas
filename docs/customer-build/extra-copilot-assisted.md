@@ -9,9 +9,9 @@ description: Use Copilot with MCP and skills to rebuild one scenario artifact fr
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Copilot-Assisted Build" artifact="A before/after build artifact showing Copilot used current docs and skills for YOUR scenario instead of guessing." next="Use this as a learning accelerator after you have built at least one thing manually." %}
 
-This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges/extra-copilot-assisted)** — same MCP-and-skills workflow, but aimed at one artifact from your scenario in [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. It is best after you have felt the manual path and can judge whether Copilot is improving it.
+This deepener is mutuated from [Extra · Copilot-Assisted Build](../challenges/extra-copilot-assisted) — same MCP-and-skills workflow, but aimed at one artifact from your scenario in [Chapter 0](../customer-outcome). This is an OPTIONAL deepener. It is best after you have felt the manual path and can judge whether Copilot is improving it.
 
-> **Before you start this deepener:** have live infrastructure and at least one challenge artifact you understand. If your team is still defining the outcome or debugging basics, skip this until later.
+> Before you start this deepener: have live infrastructure and at least one challenge artifact you understand. If your team is still defining the outcome or debugging basics, skip this until later.
 
 ---
 
@@ -19,9 +19,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 
 **Why it matters for your app:** Copilot can only build safely if it sees the repo instructions, MCP servers, and the right Foundry skill for the task.
 
-**Does this apply to you?** → **Skip it** if your editor cannot use Copilot, MCP, or `npx` during the event.
-- **Build it** if you want Copilot to generate or modify Foundry code for your scenario.
-- **Adapt it** if only one teammate has the full setup and will drive the assisted build.
+**Does this apply to you?** → Skip it if your editor cannot use Copilot, MCP, or `npx` during the event.
+- Build it if you want Copilot to generate or modify Foundry code for your scenario.
+- Adapt it if only one teammate has the full setup and will drive the assisted build.
 
 **Decisions to make:**
 - Which challenge artifact from your scenario is worth rebuilding?
@@ -43,9 +43,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 
 **Why it matters for your app:** the useful lesson is not "Copilot wrote code"; it is whether Copilot used current sources to build your real artifact faster or better.
 
-**Does this apply to you?** → **Skip it** if you do not yet have a manual baseline to compare against.
-- **Build it** if you can choose one concrete artifact: agent create, tool attach, evaluator, hosted agent, or UI slice.
-- **Adapt it** if Copilot should refactor or harden an existing scenario file instead of starting fresh.
+**Does this apply to you?** → Skip it if you do not yet have a manual baseline to compare against.
+- Build it if you can choose one concrete artifact: agent create, tool attach, evaluator, hosted agent, or UI slice.
+- Adapt it if Copilot should refactor or harden an existing scenario file instead of starting fresh.
 
 **Decisions to make:**
 - Which manual artifact will you rebuild?
@@ -67,9 +67,9 @@ This deepener is **mutuated from [Extra · Copilot-Assisted Build](../challenges
 
 **Why it matters for your app:** this is the evidence that MCP-grounded Copilot reduces stale SDK calls and hallucinated patterns.
 
-**Does this apply to you?** → **Skip it** if you cannot capture or compare the grounded and ungrounded outputs.
-- **Build it** if your readout includes how the team used Copilot responsibly.
-- **Adapt it** if the comparison is a code review note rather than a live demo.
+**Does this apply to you?** → Skip it if you cannot capture or compare the grounded and ungrounded outputs.
+- Build it if your readout includes how the team used Copilot responsibly.
+- Adapt it if the comparison is a code review note rather than a live demo.
 
 **Decisions to make:**
 - Which API detail is likely to drift and therefore worth checking?

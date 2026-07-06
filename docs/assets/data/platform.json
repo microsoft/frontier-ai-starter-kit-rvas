@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T06:46:44.004Z",
+  "generated_at": "2026-07-06T07:39:03.599Z",
   "modules": [
     {
       "id": "foundry",
@@ -114,15 +114,14 @@
       ],
       "challenge_ids": [
         "idea-forge",
-        "customer-outcome",
-        "customer-foundations"
+        "customer-outcome"
       ],
       "success_metrics": [
         "A selected idea has an outcome, users, data sources, tier guidance, and risk notes.",
         "The chosen idea transfers cleanly into Customer Build Chapter 0."
       ],
-      "challenge_count": 3,
-      "duration_minutes": 275
+      "challenge_count": 2,
+      "duration_minutes": 65
     },
     {
       "id": "upskill",
@@ -284,8 +283,7 @@
         "citations"
       ],
       "outcomes": [
-        "customer-build",
-        "idea-forge"
+        "customer-build"
       ],
       "personas": [],
       "business_value": [],

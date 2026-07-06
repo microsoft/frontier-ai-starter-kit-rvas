@@ -8,27 +8,27 @@ nav_order: 25
 
 {% include challenge-prereq.html text="Recommended: Foundations end-state. Hard minimum: Foundations Step 1 with infrastructure and `.env` live." %}
 >
-> **Best done *after* you've felt the manual path** on at least one challenge — the contrast is the lesson.
+> Best done *after* you've felt the manual path on at least one challenge — the contrast is the lesson.
 
-> ⚙️ **Infra prerequisite:** **no new Azure resources.** Everything you need ships in this repo:
+> ⚙️ Infra prerequisite: no new Azure resources. Everything you need ships in this repo:
 > [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md),
 > [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json) (the 3 MCP servers), and the
 > [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) Foundry skill stubs. You need GitHub Copilot enabled in your
 > editor and `npx` available.
 >
-> 🎤 **Demo wow-factor:** Copilot builds a Foundry tool **after** fetching current SDK syntax from
+> 🎤 Demo wow-factor: Copilot builds a Foundry tool after fetching current SDK syntax from
 > `microsoft-docs` — and the team can compare that grounded result with an ungrounded draft.
 
 ## Why this challenge
 
-Every other challenge taught you to **search before you implement** by hand. This one makes **Copilot**
+Every other challenge taught you to search before you implement by hand. This one makes Copilot
 do it. With the three MCP servers and the Foundry skills loaded, GitHub Copilot has a required path
-for checking current SDK signatures before it writes code. You'll **re-build one challenge you already
-did manually**, then compare the grounded output with an ungrounded draft so the difference is visible.
+for checking current SDK signatures before it writes code. You'll re-build one challenge you already
+did manually, then compare the grounded output with an ungrounded draft so the difference is visible.
 
 The doctrine, straight from this repo's [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md):
 
-> **MCP = fresh information. Skills = proven patterns. Use both, in that order.**
+> MCP = fresh information. Skills = proven patterns. Use both, in that order.
 
 The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.vscode/mcp.json)):
 
@@ -36,7 +36,7 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
 |---|---|
 | `azure` | Azure resource ops, deployments, RBAC, quota |
 | `foundry-mcp` | Foundry-native: model catalog, agents, knowledge bases, evals |
-| `microsoft-docs` | Real-time Microsoft Learn search — **current** SDK syntax before you code |
+| `microsoft-docs` | Real-time Microsoft Learn search — current SDK syntax before you code |
 
 ---
 
@@ -50,7 +50,7 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
    `foundry-mcp`, `microsoft-docs`) are connected in your editor's MCP panel.
 
 2. Open [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/.github/copilot-instructions.md) and read the
-   **"Search Before Implement"** golden rule — this is the behavior you're about to exploit.
+   "Search Before Implement" golden rule — this is the behavior you're about to exploit.
 
 3. List the available skills under [`.github/skills/`](https://github.com/microsoft/frontier-foundry-hackathon/tree/main/.github/skills) (e.g.
    `foundry-projects-resources`, `foundry-models`, `foundry-iq-knowledge-bases`, `foundry-toolboxes`,
@@ -59,7 +59,7 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
 
 **Success Criteria:**
 
-- [ ] All three MCP servers show **connected** in the editor.
+- [ ] All three MCP servers show connected in the editor.
 - [ ] You can name the skill that maps to the challenge you'll rebuild.
 
 **Checkpoint:** *Editor state* — MCP panel shows `azure`, `foundry-mcp`, `microsoft-docs` connected.
@@ -72,15 +72,15 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
 
 **Tasks:**
 
-1. Choose **one** challenge you already did manually (good picks: **Foundations Step 3** — create an
-   agent; or **Action Tools** — attach an MCP tool).
+1. Choose one challenge you already did manually (good picks: Foundations Step 3 — create an
+   agent; or Action Tools — attach an MCP tool).
 
-2. Prompt Copilot to build it, **explicitly asking it to search first**, e.g.:
+2. Prompt Copilot to build it, explicitly asking it to search first, e.g.:
    *"Using the `foundry-projects-resources` skill, and after checking `microsoft-docs` for the current
    `azure-ai-projects` agent-create API, write code to create the Northfield IQ agent against
    `AZURE_AI_PROJECT_ENDPOINT` with deployment `AZURE_AI_MODEL_DEPLOYMENT_NAME`."*
 
-3. When prompted this way, Copilot will **typically call `microsoft-docs` / `foundry-mcp` first**, then
+3. When prompted this way, Copilot will typically call `microsoft-docs` / `foundry-mcp` first, then
    generate. Whether the tool call is shown depends on your editor/agent mode — if Copilot skips the
    lookup, tell it to *search the docs first*. Run the result against your live `.env`.
 
@@ -101,10 +101,10 @@ before code generation; either way, the generated script runs green against your
 
 **Tasks:**
 
-1. Ask Copilot the *same* task **with MCP context** vs. a deliberately under-specified prompt that
+1. Ask Copilot the *same* task with MCP context vs. a deliberately under-specified prompt that
    invites it to guess. Compare the two outputs.
 
-2. Identify at least one place the grounded answer used a **current** signature the un-grounded one got
+2. Identify at least one place the grounded answer used a current signature the un-grounded one got
    wrong or stale (e.g. a renamed class, a changed parameter, a new API version).
 
 3. Capture the contrast for your readout — this is the teaching artifact.
@@ -121,5 +121,5 @@ detail, shared with your coach.
 
 ## What you built
 
-Not a new feature — a new **way of building**. You configured Copilot to fetch **current** APIs before
+Not a new feature — a new way of building. You configured Copilot to fetch current APIs before
 it codes, then documented the concrete API detail that grounding corrected.

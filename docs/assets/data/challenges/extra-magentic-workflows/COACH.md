@@ -1,29 +1,29 @@
 
 # Coach Guide · Extra — Magentic Workflows (MAF)
 
-> **Coach-only.** Hardest Extra conceptually (⭐⭐⭐⭐⭐), but **no extra Azure infra** — it all runs
-> locally on `agent-framework` + DevUI. The gate is the **Action Tools** prereq (the Action sub-agent
+> **Coach-only.** Hardest Extra conceptually (⭐⭐⭐⭐⭐), but no extra Azure infra — it all runs
+> locally on `agent-framework` + DevUI. The gate is the Action Tools prereq (the Action sub-agent
 > reuses that MCP wiring) and the team's comfort with the fast-moving MAF API.
 
 ## What this challenge is really teaching
 
-**Dynamic** orchestration. The contrast that matters: a fixed sequential/fan-out pipeline routes the
-*same way every time*; a **Magentic manager** *plans the route per request*. Neither reference repo ships
-a Magentic pattern — this is the differentiator. The keeper insight is **single-responsibility agents +
-a planner**: small, sharp specialists beat one do-everything agent, and the manager composes them.
+Dynamic orchestration. The contrast that matters: a fixed sequential/fan-out pipeline routes the
+*same way every time*; a Magentic manager *plans the route per request*. Neither reference repo ships
+a Magentic pattern — this is the differentiator. The keeper insight is single-responsibility agents +
+a planner: small, sharp specialists beat one do-everything agent, and the manager composes them.
 
 ## Infra to pre-provision
 
 None beyond Foundations. Confirm:
 
 - `agent-framework` installs on demand via `pip install agent-framework` (not pre-pinned).
-- **DevUI** launches locally.
-- The **Action Tools backend** is running (`ACTION_MCP_URL` reachable) — the Action sub-agent needs it.
+- DevUI launches locally.
+- The Action Tools backend is running (`ACTION_MCP_URL` reachable) — the Action sub-agent needs it.
 
 ## Search-Before-Implement (critical — MAF moves weekly)
 
-MAF's `ChatAgent` constructor and the Magentic builder API change often. **Do not hand teams a fixed
-snippet.** Point them at `microsoft-docs` + `foundry-mcp` via the `foundry-workflows` skill for the
+MAF's `ChatAgent` constructor and the Magentic builder API change often. Do not hand teams a fixed
+snippet. Point them at `microsoft-docs` + `foundry-mcp` via the `foundry-workflows` skill for the
 current surface. If a team is stuck on import/constructor errors, it's almost always a stale signature —
 re-query rather than guess.
 
@@ -44,7 +44,7 @@ escalation = ChatAgent(name="Escalation", instructions="Draft a human handoff wh
 workflow = MagenticBuilder().participants(triage, knowledge, action, escalation).build()
 
 ```
-The point is the **shape** (4 specialists + planner), not these exact symbols.
+The point is the shape (4 specialists + planner), not these exact symbols.
 
 ## Per-step facilitation
 
@@ -55,10 +55,10 @@ The point is the **shape** (4 specialists + planner), not these exact symbols.
 - `validate.py --step 1` checks the four agents are defined with distinct roles.
 
 ### Step 2 — Magentic manager
-- The composite prompt ("can't log in **and** drop CS101") is designed to force ≥2 specialists. If the
+- The composite prompt ("can't log in and drop CS101") is designed to force ≥2 specialists. If the
   manager only calls one, the manager instructions aren't decomposing the request — tighten them.
 
-- **Critical:** the Action path must still honor the **approval loop** from Action Tools. Composing
+- Critical: the Action path must still honor the approval loop from Action Tools. Composing
   agents does not remove human-in-the-loop on writes.
 
 - `validate.py --step 2` asserts ≥2 specialists fire on the composite request.
@@ -67,13 +67,13 @@ The point is the **shape** (4 specialists + planner), not these exact symbols.
 - This is the demo. Green/purple nodes make the *live planning* visible — that's the "aha." Have them
   screenshot a mid-run graph.
 
-- The out-of-scope prompt ("change my final grade") must route to **Escalation**, proving the manager
+- The out-of-scope prompt ("change my final grade") must route to Escalation, proving the manager
   refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.
 
 ## Validate.py scope
 
 Steps 1–2 are headless-checkable (agents defined; routing fans to ≥2 specialists) — hence
-`validate.py`. Step 3 is a **DevUI visual** (screenshot the plan graph), so its checkpoint is portal/DevUI
+`validate.py`. Step 3 is a DevUI visual (screenshot the plan graph), so its checkpoint is portal/DevUI
 state; `--all` re-runs 1–2.
 
 ## Common failure modes

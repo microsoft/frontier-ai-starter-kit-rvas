@@ -1,24 +1,24 @@
 
 # Coach Guide · Advanced — Action Tools
 
-> **Coach-only.** The full reference implementation of the approval loop is below. Do **not** paste it
+> **Coach-only.** The full reference implementation of the approval loop is below. Do not paste it
 > into the student channel — the starter `agent_with_actions.py` deliberately leaves the FunctionTool
 > and approval loop as `< PLACEHOLDER >` gaps (the ATA "single-line completion moment" pattern).
 
 ## What this challenge is really teaching
 
-The leap from a **knowledge** agent (reads/answers) to an **action** agent (changes state) — and the
+The leap from a knowledge agent (reads/answers) to an action agent (changes state) — and the
 governance that leap demands. Both reference repos stop at knowledge tools or auto-firing actions;
-this challenge adds the **human-in-the-loop approval** that real deployments require. The pedagogical
+this challenge adds the human-in-the-loop approval that real deployments require. The pedagogical
 core is the `requires_action → ToolOutput` loop: the run pauses, the human decides, only then does
 anything execute.
 
 > **SDK note for coaches:** MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
-> `SubmitToolApprovalAction`, `ToolApproval`) are **not** in the current public `azure-ai-agents`
+> `SubmitToolApprovalAction`, `ToolApproval`) are not in the current public `azure-ai-agents`
 > 1.x release. The challenge uses `FunctionTool` + `RequiredFunctionToolCall` +
 > `SubmitToolOutputsAction` + `ToolOutput` — same governance objective, fully supported in 1.x.
 
-We **ship the backend** so teams stay on the approval-loop objective instead of building a CRUD API.
+We ship the backend so teams stay on the approval-loop objective instead of building a CRUD API.
 It lives in `scripts/action-backend/` (FastAPI `app.py` + FastMCP `mcp_server.py`) and exposes three
 REST endpoints that the FunctionTool callables hit.
 
@@ -27,7 +27,7 @@ REST endpoints that the FunctionTool callables hit.
 | Variable | Default | Notes |
 |---|---|---|
 | `ACTION_API_URL` | `http://localhost:8080` | provided FastAPI backend base URL |
-| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint shipped by backend — **optional**, preview/stretch only; not required for the guided path |
+| `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint shipped by backend — optional, preview/stretch only; not required for the guided path |
 | `ACTION_API_KEY` | *(empty)* | optional `x-api-key`; leave empty for the workshop |
 
 These names are defined in `.env.sample`, `scripts/deploy.sh`, and the backend. If anyone renames one,
@@ -53,8 +53,8 @@ az login                                        # keyless DefaultAzureCredential
   `ACTION_API_URL` is wrong. This is the #1 blocker — check it first for any stuck team.
 
 ### Step 1 — knowledge vs action
-- Answer key: side effects — `create_it_ticket` pages IT; `place_course_hold` **blocks a student's
-  registration** (highest-stakes — a wrongful hold is real harm); `book_advising_slot` consumes an
+- Answer key: side effects — `create_it_ticket` pages IT; `place_course_hold` blocks a student's
+  registration (highest-stakes — a wrongful hold is real harm); `book_advising_slot` consumes an
   advisor's calendar. All three warrant approval. The registration hold is the one to dwell on.
 
 ### Step 2 — define the action FunctionTool
@@ -91,7 +91,7 @@ def build_action_tools():
 
 - **Pitfall:** `FunctionTool` builds schemas from docstring `:param name: description` lines. Missing
   docstrings → model won't understand arguments → it will hallucinate or refuse to call the tool.
-- **`validate.py --step 2`** checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
+- `validate.py --step 2` checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
 
 ### Step 3 — the approval loop (the heart of it)
 
@@ -129,31 +129,31 @@ def run_with_approval(agent_id, thread_id):
 
 ```
 
-- **Teaching points:** (1) the run **pauses** at `requires_action` — nothing executes until
+- Teaching points: (1) the run pauses at `requires_action` — nothing executes until
   `submit_tool_outputs` is called; (2) showing `call.function.name` + `call.function.arguments` to
   the human is the governance moment — don't let teams skip the print; (3) returning the denial JSON
   tells the agent "you were blocked" so it reports back gracefully.
-- **Pitfall:** `call.function.arguments` is a **JSON string** — `json.loads` before unpacking as `**args`.
+- **Pitfall:** `call.function.arguments` is a JSON string — `json.loads` before unpacking as `**args`.
 - **Pitfall:** forgetting to re-`get` the run inside the loop → infinite `requires_action`.
 
 ### Step 4 — end-to-end
-- `validate.py --step 4` does its **own** REST round-trip (create IT ticket → list → confirm) against
+- `validate.py --step 4` does its own REST round-trip (create IT ticket → list → confirm) against
   the backend, independent of the agent, so you can verify the backend is wired even if a team's agent
   code is mid-flight.
 
 - The real proof for the team is: NL prompt → approve → agent reports a `ticket_id` → `curl
-  /it-tickets` shows it. Then the **denial** path: deny → nothing created. Make every team run the
+  /it-tickets` shows it. Then the denial path: deny → nothing created. Make every team run the
   denial — it's where the governance lesson lands.
 
 ## Common issues & fast unblocks
-- **`Step 1 FAIL — backend not reachable`** → backend not started / wrong `ACTION_API_URL`.
-- **Model never calls the tool** → function docstrings missing `:param` lines, or `FunctionTool` not in `tools=`.
-- **Agent stalls after approval** → missing the re-`get`/poll inside the while loop.
+- `Step 1 FAIL — backend not reachable` → backend not started / wrong `ACTION_API_URL`.
+- Model never calls the tool → function docstrings missing `:param` lines, or `FunctionTool` not in `tools=`.
+- Agent stalls after approval → missing the re-`get`/poll inside the while loop.
 
-- **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
+- `Unauthorized` to backend → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.
 
-- **Team wants to auto-approve everything** → push back; the whole challenge is the approval gate.
+- Team wants to auto-approve everything → push back; the whole challenge is the approval gate.
 
 ## Timing (75 min)
 - 0–10: Step 0 start backend + Step 1 conceptual

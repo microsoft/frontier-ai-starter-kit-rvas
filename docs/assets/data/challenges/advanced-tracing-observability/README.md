@@ -1,22 +1,22 @@
 # Advanced — Tracing & Observability
 
-> ⏱ **Guided ~1 hr** · 🛠 **Build-from-scratch ~1.5 hr** · ⭐⭐⭐⭐ · **Prereqs:** Foundations end-state
+> ⏱ Guided ~1 hr · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> **Tier 2 · Advanced — modular.** You can attempt this in any order with the other Advanced
-> challenges. **Prerequisite: the Foundations end-state** (a deployed, grounded Northfield IQ
-> Assistant). Complete Foundations, **or** run the bootstrap skip-path:
+> Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
+> challenges. Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ
+> Assistant). Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this challenge
 
 Your Northfield IQ Assistant answers grounded questions today — but when a student gets a slow,
-wrong, or uncited answer, can you explain **why**? Right now the agent is a black box: a model call,
+wrong, or uncited answer, can you explain why? Right now the agent is a black box: a model call,
 a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
 and you can see none of it.
 
-In this challenge you make every answer **observable end to end**. You enable OpenTelemetry (OTel)
-GenAI tracing, export the spans to **Application Insights**, and then read the same data **two ways** —
-the Foundry portal **Tracing** tab and a **KQL** query in App Insights. By the end you can take a single
+In this challenge you make every answer observable end to end. You enable OpenTelemetry (OTel)
+GenAI tracing, export the spans to Application Insights, and then read the same data two ways —
+the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
 student question and reconstruct its entire journey: model → retrieval → tool, with token counts,
 latency per span, and the inputs/outputs at each hop.
 
@@ -46,20 +46,20 @@ you can watch it run.
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
   - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
-- An **Application Insights** resource linked to your Foundry project. Foundations provisions one;
+- An Application Insights resource linked to your Foundry project. Foundations provisions one;
   its connection string lands in `.env` as `APPLICATIONINSIGHTS_CONNECTION_STRING`. If that variable
   is missing, see Step 1 — you will fetch it from the project.
 - Packages from `requirements.txt` (already installed in the devcontainer):
   `azure-ai-projects`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
 
-> 💡 Tracing data takes **1–3 minutes** to land in App Insights after a run. Budget for that lag
+> 💡 Tracing data takes 1–3 minutes to land in App Insights after a run. Budget for that lag
 > before you decide something is broken.
 
 ---
 
-This challenge ships **three rungs** off the same backbone — the **same `validate.py` grades all
-three**. **(a) Guided path** (below) gives you the code to assemble · **(b) Build-from-scratch path**
-gives you only the gotcha + the package list · **(c) Stretch goals** go open-ended.
+This challenge ships three rungs off the same backbone — the same `validate.py` grades all
+three. (a) Guided path (below) gives you the code to assemble · (b) Build-from-scratch path
+gives you only the gotcha + the package list · (c) Stretch goals go open-ended.
 
 ## Rung (a) — Guided path
 
@@ -73,9 +73,9 @@ gives you only the gotcha + the package list · **(c) Stretch goals** go open-en
 
 1. Confirm your project has an App Insights connection. If `APPLICATIONINSIGHTS_CONNECTION_STRING` is
    not already in `.env`, fetch it from the project and add it (the portal shows it under
-   **Monitoring → Application analytics**, or read it via the SDK as shown below).
-2. Create `challenges/advanced-tracing-observability/trace_setup.py` that wires tracing **in the exact
-   order below**. The two `os.environ[...]` lines MUST run **before** any `azure.ai.*` import — this is
+   Monitoring → Application analytics, or read it via the SDK as shown below).
+2. Create `challenges/advanced-tracing-observability/trace_setup.py` that wires tracing in the exact
+   order below. The two `os.environ[...]` lines MUST run before any `azure.ai.*` import — this is
    the single most common mistake in this challenge (see the gotcha box).
 3. Run the file. It should print that instrumentation is enabled and the App Insights connection was
    resolved, without emitting spans yet.
@@ -123,8 +123,8 @@ if __name__ == "__main__":
     enable_tracing()
 ```
 
-> ⚠️ **The "set env before import" gotcha.** If you put the two `os.environ[...]` assignments *after*
-> `from azure.ai... import ...`, the instrumentation has already initialized and will **ignore them**.
+> ⚠️ The "set env before import" gotcha. If you put the two `os.environ[...]` assignments *after*
+> `from azure.ai... import ...`, the instrumentation has already initialized and will ignore them.
 > Symptom: spans appear but every prompt/response field is empty, or no GenAI spans show up at all.
 > Keep the env lines at the very top of the file, above all Azure imports.
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
 - [ ] `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `.env` (or resolved at runtime).
 - [ ] Running `trace_setup.py` prints `✅ GenAI tracing enabled` with no import error.
-- [ ] The two tracing env flags are set **above** every `azure.ai.*` import in the file.
+- [ ] The two tracing env flags are set above every `azure.ai.*` import in the file.
 
 **Checkpoint:**
 
@@ -153,11 +153,11 @@ plus a tool span if Action Tools is attached).
 **Tasks:**
 
 1. Create `challenges/advanced-tracing-observability/traced_run.py`. Import and call
-   `enable_tracing()` from Step 1 **first**, then ask the Northfield IQ Assistant a grounded question
+   `enable_tracing()` from Step 1 first, then ask the Northfield IQ Assistant a grounded question
    that forces a knowledge-base lookup — e.g. *"What documents do I need for financial aid?"*
 2. Drive the agent through the Responses API against your `AZURE_FOUNDRY_AGENT_NAME`. Print the answer and
    the trace/operation id so you can find the run later.
-3. Run it. Then **wait 1–3 minutes** for the spans to land in App Insights.
+3. Run it. Then wait 1–3 minutes for the spans to land in App Insights.
 
 ```python
 # traced_run.py
@@ -191,7 +191,7 @@ print("response id:", response.id)   # use this to locate the trace
 - [ ] Within ~3 minutes, at least one new GenAI span is visible in App Insights (you confirm this in
       Step 3).
 
-**Your run should look like this:**
+Your run should look like this:
 ```text
 Q: What documents do I need to apply for financial aid at Northfield?
 A: You'll need your FAFSA (school code 041777), prior-year tax returns, W-2s, and ...
@@ -213,17 +213,17 @@ python validate.py --step 2
 
 ## Step 3 — Inspect the spans (portal Tracing tab)
 
-**Goal:** You can read a single run as a span tree in the Foundry **Tracing** tab and identify the
+**Goal:** You can read a single run as a span tree in the Foundry Tracing tab and identify the
 model, retrieval, and (if present) tool spans.
 
 **Tasks:**
 
-1. In the Foundry portal, open your project → **Tracing** (under Observability / Monitoring). Find the
+1. In the Foundry portal, open your project → Tracing (under Observability / Monitoring). Find the
    trace for the run you just made (sort by most recent; match the timestamp).
-2. Expand the trace into its **span tree**. Identify and note:
-   - the **model** span — look for the `gen_ai.usage.*` token attributes,
-   - the **retrieval** span — the knowledge-base / AI Search query and the documents returned,
-   - the **tool** span — only present if you completed the Action Tools challenge.
+2. Expand the trace into its span tree. Identify and note:
+   - the model span — look for the `gen_ai.usage.*` token attributes,
+   - the retrieval span — the knowledge-base / AI Search query and the documents returned,
+   - the tool span — only present if you completed the Action Tools challenge.
 3. Open the model span and record: input tokens, output tokens, total tokens, and span duration
    (latency). Note where the prompt and the generated answer appear as attributes (this only works
    because you set `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` in Step 1).
@@ -234,8 +234,8 @@ model, retrieval, and (if present) tool spans.
 - [ ] You can name which child is the model call and which is the retrieval call.
 - [ ] You can read token counts and duration off the model span.
 
-**Checkpoint:** Portal state — the **Tracing** tab shows the run's span tree with an expandable
-model span exposing `gen_ai.usage.total_tokens`. Capture the trace's **operation id** for Step 4.
+**Checkpoint:** Portal state — the Tracing tab shows the run's span tree with an expandable
+model span exposing `gen_ai.usage.total_tokens`. Capture the trace's operation id for Step 4.
 
 ```bash
 python validate.py --step 3
@@ -248,12 +248,12 @@ python validate.py --step 3
 
 ## Step 4 — Correlate one question end-to-end with KQL
 
-**Goal:** Read the **same** run as data — write a KQL query that pulls every span for one student
+**Goal:** Read the same run as data — write a KQL query that pulls every span for one student
 question and surfaces token, latency, and cost signals.
 
 **Tasks:**
 
-1. In App Insights → **Logs**, start from this **starter query** to list recent GenAI spans. Run it,
+1. In App Insights → Logs, start from this starter query to list recent GenAI spans. Run it,
    then copy the `operation_Id` of your financial-aid run:
 
    ```kusto
@@ -266,7 +266,7 @@ question and surfaces token, latency, and cost signals.
    | order by timestamp desc
    ```
 
-2. Pivot to a **single end-to-end correlation** — replace the placeholder with your `operation_Id`
+2. Pivot to a single end-to-end correlation — replace the placeholder with your `operation_Id`
    to reconstruct the whole request as an ordered timeline (model + retrieval + tool):
 
    ```kusto
@@ -281,7 +281,7 @@ question and surfaces token, latency, and cost signals.
    | order by timestamp asc
    ```
 
-3. Extend the correlation query to **surface token, latency, and cost** in one summary row. Compute
+3. Extend the correlation query to surface token, latency, and cost in one summary row. Compute
    cost from total tokens using your model's per-1K-token rate (pick the rate for your deployed model;
    the exact number is not what's graded — the calculation is):
 
@@ -299,7 +299,7 @@ question and surfaces token, latency, and cost signals.
 **Success Criteria:**
 
 - [ ] The starter query returns ≥1 row for your run.
-- [ ] The correlation query returns **all** spans for one `operation_Id` in timestamp order (you can
+- [ ] The correlation query returns all spans for one `operation_Id` in timestamp order (you can
       see model and retrieval, plus tool if attached).
 - [ ] The summary query outputs `total_tokens`, `total_latency_ms`, and an `est_cost_usd` for the run.
 - [ ] You save your final correlation query to
@@ -318,19 +318,19 @@ python validate.py --step 4
 
 ## Rung (b) — Build-from-scratch path
 
-> Stronger team? **Skip the pasted code.** We hand you only the contract and the one gotcha that
-> actually bites. The **same `validate.py`** (it checks for ≥1 emitted GenAI span) grades this path.
+> Stronger team? Skip the pasted code. We hand you only the contract and the one gotcha that
+> actually bites. The same `validate.py` (it checks for ≥1 emitted GenAI span) grades this path.
 
-**Your contract:**
-> Emit GenAI spans to App Insights and reconstruct one question end to end. **Acceptance:** model +
+Your contract:
+> Emit GenAI spans to App Insights and reconstruct one question end to end. Acceptance: model +
 > retrieval spans for one `operation_Id`, with token + latency, surfaced in the portal Tracing tab
-> **and** a KQL query you wrote.
+> and a KQL query you wrote.
 
-**The only help you get:**
-- **The gotcha:** set the two tracing env flags **before any `azure.ai.*` import** (see the gotcha
+The only help you get:
+- The gotcha: set the two tracing env flags before any `azure.ai.*` import (see the gotcha
   box in Step 1) or message content silently never appears on your spans.
-- **The packages:** `azure-ai-projects`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
-- **The three calls you'll need:** `configure_azure_monitor(...)`, `AIProjectInstrumentor().instrument()`,
+- The packages: `azure-ai-projects`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
+- The three calls you'll need: `configure_azure_monitor(...)`, `AIProjectInstrumentor().instrument()`,
   and resolving the App Insights connection string.
 
 Assemble `trace_setup.py` + `traced_run.py` yourself, then answer five questions about one run:
@@ -340,25 +340,25 @@ tokens, latency-per-span, which span retrieved, an estimated cost, and the slowe
 
 ## Done — what you can now do
 
-- Every Northfield IQ answer is observable end to end, two ways: portal **Tracing** tab and **KQL**.
+- Every Northfield IQ answer is observable end to end, two ways: portal Tracing tab and KQL.
 - You can take one student question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 
-**This unlocks:** Evaluation & Red Teaming (trace the exact row that failed an eval) and Deploy as a
+This unlocks: Evaluation & Red Teaming (trace the exact row that failed an eval) and Deploy as a
 Hosted Agent (the same tracing follows the agent to its live endpoint).
 
 ## Rung (c) — Stretch goals
 
 Genuinely open-ended — no single right answer:
 
-1. **3-tier `TelemetryManager` + a custom business metric.** Ship a small `TelemetryManager` and emit
-   **one custom metric** (e.g. `northfield.answers.uncited`) on every run, then chart it in a Workbook.
-2. **Batch-run + dashboard.** Fire 20 questions through the agent and build a KQL **timechart** of
+1. 3-tier `TelemetryManager` + a custom business metric. Ship a small `TelemetryManager` and emit
+   one custom metric (e.g. `northfield.answers.uncited`) on every run, then chart it in a Workbook.
+2. Batch-run + dashboard. Fire 20 questions through the agent and build a KQL timechart of
    token cost across the run.
 
-- Pin your three queries into an **Azure Workbook** so the team has a live observability dashboard.
+- Pin your three queries into an Azure Workbook so the team has a live observability dashboard.
 - Add a `gen_ai.response.model` breakdown to compare token/latency profiles across models.
-- Wire an App Insights **alert** that fires when p95 latency or total tokens per run crosses a threshold.
+- Wire an App Insights alert that fires when p95 latency or total tokens per run crosses a threshold.
 
 ## Learning resources
 

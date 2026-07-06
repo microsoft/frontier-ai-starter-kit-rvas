@@ -77,7 +77,7 @@ const OUTCOMES = [
     personas: ['builder', 'coach', 'account-team'],
     adoption_stage: ['ideate', 'define'],
     business_value: ['find-buildable-use-cases', 'reduce-scope-risk'],
-    challenge_ids: ['idea-forge', 'customer-outcome', 'customer-foundations'],
+    challenge_ids: ['idea-forge', 'customer-outcome'],
     success_metrics: [
       'A selected idea has an outcome, users, data sources, tier guidance, and risk notes.',
       'The chosen idea transfers cleanly into Customer Build Chapter 0.',
@@ -156,7 +156,7 @@ const CHALLENGES = [
     description: 'Provision, choose a model, create your agent, and ground it in your own customer-safe data.',
     prerequisites: ['customer-outcome'],
     tags: ['customer-build', 'grounding', 'knowledge', 'citations'],
-    outcomes: ['customer-build', 'idea-forge'],
+    outcomes: ['customer-build'],
     student: 'docs/customer-build/foundations.md',
   },
   {

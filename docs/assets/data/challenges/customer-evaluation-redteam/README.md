@@ -3,9 +3,9 @@
 
 
 
-This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge.html?id=advanced-evaluation-redteam)** — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
+This chapter is mutuated from [Advanced · Evaluation & Red Teaming](challenge.html?id=advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
 
-> **Before you start this chapter:** have at least one grounded answer from [Chapter 1](challenge.html?id=customer-foundations), and include Chapter 2 actions if they are in your demo path.
+> Before you start this chapter: have at least one grounded answer from [Chapter 1](challenge.html?id=customer-foundations), and include Chapter 2 actions if they are in your demo path.
 
 ---
 
@@ -14,9 +14,9 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 **Why it matters for your app:** an eval set turns “it sounded good” into row-level evidence against your own success measures.
 
 **Does this apply to you?**
-- **Build it** if your assistant answers questions, summarizes, recommends, routes, or decides.
-- **Adapt it** if your demo is action-heavy — evaluate the decision to call/deny/escalate, not only final prose.
-- **Skip it** only for a throwaway UI mock with no agent behavior being claimed.
+- Build it if your assistant answers questions, summarizes, recommends, routes, or decides.
+- Adapt it if your demo is action-heavy — evaluate the decision to call/deny/escalate, not only final prose.
+- Skip it only for a throwaway UI mock with no agent behavior being claimed.
 
 **Decisions to make:**
 - Which Chapter 0 *top user tasks* become eval rows?
@@ -39,9 +39,9 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 **Why it matters for your app:** code-driven evals are repeatable. They let you compare prompt, model, corpus, and tool changes without relying on memory.
 
 **Does this apply to you?**
-- **Build it** if you plan to change prompts, data, tools, or models during the hackathon.
-- **Adapt it** if live judging is too costly — run dry-run/custom-only first, then sample the expensive metrics.
-- **Skip it** only if your prototype will be judged manually and you clearly label that limitation.
+- Build it if you plan to change prompts, data, tools, or models during the hackathon.
+- Adapt it if live judging is too costly — run dry-run/custom-only first, then sample the expensive metrics.
+- Skip it only if your prototype will be judged manually and you clearly label that limitation.
 
 **Decisions to make:**
 - Which model acts as judge?
@@ -63,9 +63,9 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 **Why it matters for your app:** generic metrics miss domain rules: exact thresholds, contact channels, allowed commitments, escalation triggers, and “must not answer” cases.
 
 **Does this apply to you?**
-- **Build it** if your Chapter 0 safety boundaries include domain-specific correctness.
-- **Adapt it** if you only have one rule — encode that one rule and say what is still manual.
-- **Skip it** only when generic metrics fully cover the demo claim.
+- Build it if your Chapter 0 safety boundaries include domain-specific correctness.
+- Adapt it if you only have one rule — encode that one rule and say what is still manual.
+- Skip it only when generic metrics fully cover the demo claim.
 
 **Decisions to make:**
 - What one domain rule can be scored locally without an LLM judge?
@@ -87,9 +87,9 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 **Why it matters for your app:** the dangerous failures are usually boundary failures: prompt injection, unsafe requests, private data, overreach, or tool misuse.
 
 **Does this apply to you?**
-- **Build it** if the agent sees user input, retrieved content, or action tools.
-- **Adapt it** if your risk is narrow — focus attacks on that one boundary.
-- **Skip it** only for a non-interactive demo with no safety claim; document that it was not red-teamed.
+- Build it if the agent sees user input, retrieved content, or action tools.
+- Adapt it if your risk is narrow — focus attacks on that one boundary.
+- Skip it only for a non-interactive demo with no safety claim; document that it was not red-teamed.
 
 **Decisions to make:**
 - Which Chapter 0 *safety boundaries* become attack categories?
@@ -112,9 +112,9 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 **Why it matters for your app:** a gate makes your scorecard operational: if the prototype regresses, it should fail before the demo or pilot.
 
 **Does this apply to you?**
-- **Build it** if you will keep iterating after this chapter.
-- **Adapt it** if the gate is manual today — write the threshold and owner anyway.
-- **Skip it** only for a one-time concept demo; keep the scorecard as a known limitation.
+- Build it if you will keep iterating after this chapter.
+- Adapt it if the gate is manual today — write the threshold and owner anyway.
+- Skip it only for a one-time concept demo; keep the scorecard as a known limitation.
 
 **Decisions to make:**
 - What threshold blocks release?
@@ -134,10 +134,10 @@ This chapter is **mutuated from [Advanced · Evaluation & Red Teaming](challenge
 
 ## Chapter 3 end-state
 
-You have a **scenario-specific trust scorecard**: quality rows, red-team attacks, a domain evaluator, and a gate tied to your safety boundaries.
+You have a scenario-specific trust scorecard: quality rows, red-team attacks, a domain evaluator, and a gate tied to your safety boundaries.
 
 ```bash
 python challenges/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>
 ```
 
-Next: **[Chapter 4 — See inside it](challenge.html?id=customer-tracing-observability)**.
+Next: [Chapter 4 — See inside it](challenge.html?id=customer-tracing-observability).

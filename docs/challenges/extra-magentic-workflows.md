@@ -8,32 +8,32 @@ nav_order: 22
 
 {% include challenge-prereq.html %}
 >
-> **Specific prereq:** the **Advanced · Action Tools** challenge — your Action sub-agent reuses the MCP
+> Specific prereq: the Advanced · Action Tools challenge — your Action sub-agent reuses the MCP
 > action tool (`ACTION_MCP_URL`) you wired there.
 
-> ⚙️ **Infra prerequisite:** the **`agent-framework`** SDK (install on demand — not pre-pinned) and **DevUI** for
-> visualization — both run **locally**, no extra Azure provisioning. You only need your Foundations
+> ⚙️ Infra prerequisite: the `agent-framework` SDK (install on demand — not pre-pinned) and DevUI for
+> visualization — both run locally, no extra Azure provisioning. You only need your Foundations
 > `.env` + the Action Tools backend running.
 >
-> 🎤 **Demo wow-factor:** a **manager agent plans live** which specialist to call next — watch the plan
-> light up in **DevUI** (green = done, purple = running) instead of a hard-coded if/else chain.
+> 🎤 Demo wow-factor: a manager agent plans live which specialist to call next — watch the plan
+> light up in DevUI (green = done, purple = running) instead of a hard-coded if/else chain.
 
 ## Why this challenge
 
-Your assistant is **one** agent doing everything: triage, retrieval, action, escalation. That works
-until the jobs conflict — a good retriever makes a clumsy escalation-writer. The **Microsoft Agent
-Framework (MAF)** lets you compose **specialized** agents and have a **Magentic manager** *plan*, at
-runtime, which one to call for each part of a request. This is **dynamic** orchestration — the manager
+Your assistant is one agent doing everything: triage, retrieval, action, escalation. That works
+until the jobs conflict — a good retriever makes a clumsy escalation-writer. The Microsoft Agent
+Framework (MAF) lets you compose specialized agents and have a Magentic manager *plan*, at
+runtime, which one to call for each part of a request. This is dynamic orchestration — the manager
 decides the route per task, unlike a fixed sequential/fan-out pipeline.
 
 You'll build four specialists and let the manager coordinate them:
 
 | Sub-agent | Responsibility | Backed by |
 |---|---|---|
-| **Triage** | Classify the request, decide what's needed | model + instructions |
-| **Knowledge** | Answer from the FAQ corpus | your Foundations AI Search knowledge base |
-| **Action** | Execute a real operation (ticket/hold/booking) | the MCP action tool (`ACTION_MCP_URL`) |
-| **Escalation** | Draft a human-handoff when confidence is low | model + instructions |
+| Triage | Classify the request, decide what's needed | model + instructions |
+| Knowledge | Answer from the FAQ corpus | your Foundations AI Search knowledge base |
+| Action | Execute a real operation (ticket/hold/booking) | the MCP action tool (`ACTION_MCP_URL`) |
+| Escalation | Draft a human-handoff when confidence is low | model + instructions |
 
 ```text
    request
@@ -59,14 +59,14 @@ You'll build four specialists and let the manager coordinate them:
 
 **Tasks:**
 
-1. `pip install agent-framework` (install on demand; not pre-pinned). **Search before you implement:** query `microsoft-docs`
-   and `foundry-mcp` (the **`foundry-workflows`** skill) for the *current* MAF `ChatAgent` /
+1. `pip install agent-framework` (install on demand; not pre-pinned). Search before you implement: query `microsoft-docs`
+   and `foundry-mcp` (the `foundry-workflows` skill) for the *current* MAF `ChatAgent` /
    Magentic builder API — MAF is fast-moving.
 
-2. Create **Triage**, **Knowledge**, **Action**, **Escalation** as separate agents, each with a tight
+2. Create Triage, Knowledge, Action, Escalation as separate agents, each with a tight
    system prompt scoped to its one job.
 
-3. Give **Knowledge** your AI Search knowledge base and **Action** the MCP tool at `ACTION_MCP_URL`
+3. Give Knowledge your AI Search knowledge base and Action the MCP tool at `ACTION_MCP_URL`
    (reuse the Action Tools wiring). Triage and Escalation are model-only.
 
 **Success Criteria:**
@@ -84,20 +84,20 @@ You'll build four specialists and let the manager coordinate them:
 
 **Tasks:**
 
-1. Build a **Magentic** workflow (manager/planner) and register the four specialists as participants.
+1. Build a Magentic workflow (manager/planner) and register the four specialists as participants.
 2. Write the manager instructions: *triage first; route knowledge questions to Knowledge; route
    do-something requests to Action; if confidence is low or the request is out of scope, hand to
    Escalation.*
 
-3. Run a composite prompt that needs **two** specialists, e.g. *"I can't log into the portal and I need
+3. Run a composite prompt that needs two specialists, e.g. *"I can't log into the portal and I need
    to drop CS101 — help."* (Knowledge for the login FAQ + Action for the course hold/drop).
 
 **Success Criteria:**
 
-- [ ] The manager invokes **more than one** specialist for a composite request.
-- [ ] The Action path still respects the **human-approval** loop from Action Tools.
+- [ ] The manager invokes more than one specialist for a composite request.
+- [ ] The Action path still respects the human-approval loop from Action Tools.
 
-**Checkpoint:** *Self-check* — on the composite request the manager invokes **more than one** specialist, and the Action path still respects the human-approval loop.
+**Checkpoint:** *Self-check* — on the composite request the manager invokes more than one specialist, and the Action path still respects the human-approval loop.
 
 ---
 
@@ -107,12 +107,12 @@ You'll build four specialists and let the manager coordinate them:
 
 **Tasks:**
 
-1. Launch **DevUI** and point it at your workflow.
-2. Submit the composite request and watch the plan graph: nodes go **purple while running**, **green
-   when done**, as the manager fans out to specialists.
+1. Launch DevUI and point it at your workflow.
+2. Submit the composite request and watch the plan graph: nodes go purple while running, green
+   when done, as the manager fans out to specialists.
 
 3. Submit a low-confidence / out-of-scope request ("Can you change my final grade?") and confirm it
-   routes to **Escalation**.
+   routes to Escalation.
 
 **Success Criteria:**
 
@@ -128,5 +128,5 @@ Escalation route.
 
 ## What you built
 
-A **multi-agent** Northfield assistant where a Magentic manager **plans the route at runtime** across
+A multi-agent Northfield assistant where a Magentic manager plans the route at runtime across
 four specialists — dynamic orchestration you can *watch* in DevUI, not a brittle hand-coded pipeline.

@@ -8,15 +8,15 @@ nav_order: 1
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 0" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use this scenario pack to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
 
-**This is the first task in the Customer Build Track.** Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
+This is the first task in the Customer Build Track. Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
 
-> **First, what is "Northfield"?** Throughout this track you'll see *Northfield* used as the
-> **reference scenario**: a student-services assistant for the fictional *Northfield University*,
+> First, what is "Northfield"? Throughout this track you'll see *Northfield* used as the
+> reference scenario: a student-services assistant for the fictional *Northfield University*,
 > grounded in a public [university-FAQ corpus]({{ '/challenges/foundations' | relative_url }}). The
 > base [Foundations track]({{ '/challenges/foundations' | relative_url }}) builds it step by step, so
-> its steps double as worked examples you can copy the exact commands from. **Customer Build keeps
+> its steps double as worked examples you can copy the exact commands from. Customer Build keeps
 > Northfield's mechanics and swaps in your own corpus, persona, and questions — you do not need to
-> build the Northfield version first.** When a step says "follow the Northfield reference," that's the
+> build the Northfield version first. When a step says "follow the Northfield reference," that's the
 > place to grab the commands, not a prerequisite you must have finished.
 
 If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer the selected idea's business outcome, users, data sources, tier guidance, and risk notes into the table below.
@@ -37,22 +37,22 @@ If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer t
 
 ### Preparing your corpus for Foundations Step 4
 
-When filling in **Knowledge sources**, use these guidelines to avoid the most common corpus problems:
+When filling in Knowledge sources, use these guidelines to avoid the most common corpus problems:
 
-- **Minimum useful size:** 5–20 well-structured documents (FAQs, policy pages, SOPs, product guides)
+- Minimum useful size: 5–20 well-structured documents (FAQs, policy pages, SOPs, product guides)
   is enough for a compelling hackathon demo. A sparse corpus produces "I don't know" answers even on
   questions the assistant should handle.
-- **Safe data only:** no PII, unredacted customer data, confidential pricing, or legal content that
+- Safe data only: no PII, unredacted customer data, confidential pricing, or legal content that
   has not been cleared for use in a demo environment. When in doubt, use public-facing or
   pre-approved summaries.
-- **Supported formats:** the indexing step you'll build in Foundations Step 4 (following the
+- Supported formats: the indexing step you'll build in Foundations Step 4 (following the
   Northfield reference, pointed at *your* files) reads Markdown (`.md`) and plain text (`.txt`)
   directly. For PDFs, extract text first — `pypdf` is fast enough for hackathon use; Azure Document
   Intelligence gives higher quality for complex layouts.
-- **PDFs / SharePoint:** the Foundry portal's **Build → Indexes → Add data** flow can ingest PDFs
+- PDFs / SharePoint: the Foundry portal's Build → Indexes → Add data flow can ingest PDFs
   and SharePoint pages without writing code — a good option if the team is comfortable with portal
   navigation and wants to move quickly.
-- **Northfield as fallback:** if customer data is not cleared or not ready by event day, complete
+- Northfield as fallback: if customer data is not cleared or not ready by event day, complete
   Foundations with the Northfield University corpus and capture the corpus swap as a follow-up task.
   The indexing architecture, agent wiring, and grounding pattern are identical regardless of which
   corpus you use — Northfield is the reference, not a ceiling.
@@ -61,12 +61,12 @@ When filling in **Knowledge sources**, use these guidelines to avoid the most co
 
 | Tier | Build activity | Customer proof point |
 |---|---|---|
-| **Foundations** | Provision Foundry, choose a model, create an agent, attach a knowledge base | The agent answers real scenario questions with citations from trusted data |
-| **Action Tools** | Attach an MCP tool and implement approval | The agent safely completes one valuable workflow without acting silently |
-| **Evaluation & Red Teaming** | Create scenario-specific eval and adversarial prompts | The team can show quality, groundedness, refusal, and safety results |
-| **Tracing & Observability** | Instrument the run and inspect spans in App Insights | The team can explain latency, retrieval, tool calls, and failure paths |
-| **Deploy / UI** | Host the agent and expose a simple stakeholder-facing experience | A non-technical stakeholder can try the prototype and see citations or approval cards |
-| **Capstone** | Split the assistant into router and specialists | A realistic customer journey is handled by the right specialist agents |
+| Foundations | Provision Foundry, choose a model, create an agent, attach a knowledge base | The agent answers real scenario questions with citations from trusted data |
+| Action Tools | Attach an MCP tool and implement approval | The agent safely completes one valuable workflow without acting silently |
+| Evaluation & Red Teaming | Create scenario-specific eval and adversarial prompts | The team can show quality, groundedness, refusal, and safety results |
+| Tracing & Observability | Instrument the run and inspect spans in App Insights | The team can explain latency, retrieval, tool calls, and failure paths |
+| Deploy / UI | Host the agent and expose a simple stakeholder-facing experience | A non-technical stakeholder can try the prototype and see citations or approval cards |
+| Capstone | Split the assistant into router and specialists | A realistic customer journey is handled by the right specialist agents |
 
 ## Scenario swap guide
 

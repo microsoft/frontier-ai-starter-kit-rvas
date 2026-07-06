@@ -9,9 +9,9 @@ description: Package your agent as a hosted endpoint with identity, auth, and ob
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 5 &middot; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Chapter 6 — Grow it into a team." %}
 
-This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challenges/advanced-deploy-hosted-agent)** — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Chapter 0: Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challenges/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Chapter 0: Define your outcome](../customer-outcome).
 
-> **Before you start this chapter:** finish [Chapter 1](foundations). [Chapter 4](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
+> Before you start this chapter: finish [Chapter 1](foundations). [Chapter 4](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
 
 ---
 
@@ -20,9 +20,9 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 **Why it matters for your app:** a hosted agent is a real artifact: manifest, container entrypoint, Dockerfile, endpoint protocol, and instructions under source control.
 
 **Does this apply to you?**
-- **Build it** if a stakeholder app, integration, or API client must call your agent.
-- **Adapt it** if your demo is a UI calling the project agent directly — package only the parts you need and record the gap.
-- **Skip it** if a local script/notebook is the intended hackathon deliverable.
+- Build it if a stakeholder app, integration, or API client must call your agent.
+- Adapt it if your demo is a UI calling the project agent directly — package only the parts you need and record the gap.
+- Skip it if a local script/notebook is the intended hackathon deliverable.
 
 **Decisions to make:**
 - What hosted agent name matches your scenario?
@@ -45,9 +45,9 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 **Why it matters for your app:** deployment proves the artifact can leave your dev environment and run with a version, image, and managed identity.
 
 **Does this apply to you?**
-- **Build it** if endpoint delivery is part of your value proposition.
-- **Adapt it** if cloud build or quota blocks you — show the manifest and local container, then mark hosted deploy as backlog.
-- **Skip it** if the demo is intentionally local or embedded in another app.
+- Build it if endpoint delivery is part of your value proposition.
+- Adapt it if cloud build or quota blocks you — show the manifest and local container, then mark hosted deploy as backlog.
+- Skip it if the demo is intentionally local or embedded in another app.
 
 **Decisions to make:**
 - What unique image tag identifies this demo build?
@@ -70,9 +70,9 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 **Why it matters for your app:** a shipped endpoint must answer authenticated callers and reject anonymous ones.
 
 **Does this apply to you?**
-- **Build it** if you deployed a hosted agent.
-- **Adapt it** if another app layer calls the agent — verify auth at that layer and note how it maps to the agent.
-- **Skip it** if Step 2 was skipped.
+- Build it if you deployed a hosted agent.
+- Adapt it if another app layer calls the agent — verify auth at that layer and note how it maps to the agent.
+- Skip it if Step 2 was skipped.
 
 **Decisions to make:**
 - Who is the intended caller: UI backend, integration, test script, or another agent?
@@ -95,9 +95,9 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 **Why it matters for your app:** production readiness includes run history and traces. If a stakeholder reports a bad answer, you need to find the run.
 
 **Does this apply to you?**
-- **Build it** if the agent is hosted.
-- **Adapt it** if you only have local tracing — show the same operation-id pattern and mark hosted observability as backlog.
-- **Skip it** if deployment was intentionally skipped.
+- Build it if the agent is hosted.
+- Adapt it if you only have local tracing — show the same operation-id pattern and mark hosted observability as backlog.
+- Skip it if deployment was intentionally skipped.
 
 **Decisions to make:**
 - Which hosted run is your canonical demo evidence?
@@ -117,10 +117,10 @@ This chapter is **mutuated from [Advanced · Deploy as a Hosted Agent](../challe
 
 ## Chapter 5 end-state
 
-You either have a **hosted, authenticated, observable endpoint** for your scenario agent, or a clear scope decision that the hackathon demo remains local/UI-only.
+You either have a hosted, authenticated, observable endpoint for your scenario agent, or a clear scope decision that the hackathon demo remains local/UI-only.
 
 ```bash
 python challenges/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run
 ```
 
-Next: **[Chapter 6 — Grow it into a team](capstone-multi-agent)**.
+Next: [Chapter 6 — Grow it into a team](capstone-multi-agent).

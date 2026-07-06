@@ -29,17 +29,17 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
 
 ## What to swap from Northfield
 
-**Northfield** is the reference scenario — a student-services assistant for the fictional *Northfield
+Northfield is the reference scenario — a student-services assistant for the fictional *Northfield
 University*, grounded in a public university-FAQ corpus. Its [Foundations track]({{ '/challenges/foundations' | relative_url }})
-builds it step by step, so those steps are worked examples you copy commands from; **you don't need
-to build the Northfield version first.** Customer Build keeps its mechanics and swaps in your content.
+builds it step by step, so those steps are worked examples you copy commands from; you don't need
+to build the Northfield version first. Customer Build keeps its mechanics and swaps in your content.
 
 Use the [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-swap-guide) as the canonical mapping. Do not maintain a second copy here; the canvas owns the customer-specific corpus, persona, workflow, safety boundaries, eval prompts, and demo story.
 
 ## The chapters
 
 Each chapter is *mutuated* from a Northfield reference module: same objective and checkpoints,
-reframed as decisions you make on **your own app**, with an explicit "does this apply to you?" gate.
+reframed as decisions you make on your own app, with an explicit "does this apply to you?" gate.
 Do the decisions here; each chapter links back to the reference for the exact commands.
 
 | # | Chapter | Reframes |
@@ -52,7 +52,7 @@ Do the decisions here; each chapter links back to the reference for the exact co
 | 5 | [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent |
 | 6 | [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone |
 
-**Optional deepeners** (do only if your scenario needs them):
+Optional deepeners (do only if your scenario needs them):
 [Magentic Workflows]({{ '/customer-build/extra-magentic-workflows' | relative_url }}) ·
 [Long-Running Agents]({{ '/customer-build/extra-hosted-longrunning' | relative_url }}) ·
 [Build a UI]({{ '/customer-build/extra-build-ui' | relative_url }}) ·

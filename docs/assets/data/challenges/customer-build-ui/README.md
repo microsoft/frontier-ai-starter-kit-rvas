@@ -3,9 +3,9 @@
 
 
 
-This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-build-ui)** — same browser/BFF pattern, but wrapped around your scenario from [Chapter 0](challenge.html?id=customer-outcome). This is an **OPTIONAL deepener**. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
+This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-build-ui) — same browser/BFF pattern, but wrapped around your scenario from [Chapter 0](challenge.html?id=customer-outcome). This is an OPTIONAL deepener. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
 
-> **Before you start this deepener:** complete the agent you want to show. For approval cards, complete Action Tools. If a script, Playground run, or hosted endpoint already tells your story, skip this.
+> Before you start this deepener: complete the agent you want to show. For approval cards, complete Action Tools. If a script, Playground run, or hosted endpoint already tells your story, skip this.
 
 ---
 
@@ -13,12 +13,12 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** the UI should support the demo story, not become a second product build.
 
-**Does this apply to you?** → **Skip it** if your audience is technical and a trace/script demo is stronger.
-- **Build it** if stakeholders need a browser to understand the assistant.
-- **Adapt it** if you only need one affordance: chat, citations, approval, or public URL.
+**Does this apply to you?** → Skip it if your audience is technical and a trace/script demo is stronger.
+- Build it if stakeholders need a browser to understand the assistant.
+- Adapt it if you only need one affordance: chat, citations, approval, or public URL.
 
 **Decisions to make:**
-- Which Chapter 0 **target user** is this UI for?
+- Which Chapter 0 target user is this UI for?
 - Which success measure must be visible: answer quality, citation trust, approval safety, or latency?
 - What is the smallest UI that supports your demo story?
 
@@ -37,9 +37,9 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** the browser must never hold Foundry credentials. The BFF is the safety boundary between user interface and agent endpoint.
 
-**Does this apply to you?** → **Skip it** if you are not building a browser demo.
-- **Build it** if your final demo uses any web page.
-- **Adapt it** if your UI is Teams, mobile, or another client — keep the same "no secrets in client" rule.
+**Does this apply to you?** → Skip it if you are not building a browser demo.
+- Build it if your final demo uses any web page.
+- Adapt it if your UI is Teams, mobile, or another client — keep the same "no secrets in client" rule.
 
 **Decisions to make:**
 - What front-end stack is fastest for your team?
@@ -61,9 +61,9 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** streaming reduces perceived latency and makes the assistant feel alive during stakeholder demos.
 
-**Does this apply to you?** → **Skip it** if your answers are short and latency is not part of the story.
-- **Build it** if your scenario has long grounded explanations or action summaries.
-- **Adapt it** if your client uses WebSockets or another streaming mechanism instead of SSE.
+**Does this apply to you?** → Skip it if your answers are short and latency is not part of the story.
+- Build it if your scenario has long grounded explanations or action summaries.
+- Adapt it if your client uses WebSockets or another streaming mechanism instead of SSE.
 
 **Decisions to make:**
 - Which response states should the user see: thinking, streaming, complete, error?
@@ -85,9 +85,9 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** citations turn a flashy demo into a trusted answer grounded in your approved corpus.
 
-**Does this apply to you?** → **Skip it** only if your scenario has no knowledge grounding.
-- **Build it** if Chapter 1 grounding is central to your value proposition.
-- **Adapt it** if your sources are records, tickets, or live data instead of documents.
+**Does this apply to you?** → Skip it only if your scenario has no knowledge grounding.
+- Build it if Chapter 1 grounding is central to your value proposition.
+- Adapt it if your sources are records, tickets, or live data instead of documents.
 
 **Decisions to make:**
 - Which source fields should users see: title, snippet, URL, timestamp, owner?
@@ -109,9 +109,9 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** human approval must be visible at the exact moment the agent wants to do something consequential.
 
-**Does this apply to you?** → **Skip it** if your app has no action tools or all actions are read-only.
-- **Build it** if your Chapter 0 **action candidates** change records, send messages, create tickets, spend money, or affect access.
-- **Adapt it** if approval happens outside the UI, such as email, Teams, or a case system.
+**Does this apply to you?** → Skip it if your app has no action tools or all actions are read-only.
+- Build it if your Chapter 0 action candidates change records, send messages, create tickets, spend money, or affect access.
+- Adapt it if approval happens outside the UI, such as email, Teams, or a case system.
 
 **Decisions to make:**
 - Which tool arguments must be shown before approval?
@@ -133,9 +133,9 @@ This deepener is **mutuated from [Extra · Build a UI](challenge.html?id=extra-b
 
 **Why it matters for your app:** a public URL makes the demo shareable, but only if identity and CORS stay locked down.
 
-**Does this apply to you?** → **Skip it** if local demo is enough and deployment time threatens your core outcome.
-- **Build it** if stakeholders need to open the app themselves.
-- **Adapt it** if your organization already has a preferred hosting platform.
+**Does this apply to you?** → Skip it if local demo is enough and deployment time threatens your core outcome.
+- Build it if stakeholders need to open the app themselves.
+- Adapt it if your organization already has a preferred hosting platform.
 
 **Decisions to make:**
 - Container Apps or Static Web Apps + Functions?

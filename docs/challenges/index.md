@@ -8,8 +8,8 @@ has_children: true
 
 {% include journey-status.html tone="shared" path="Build Modules" artifact="The Northfield reference build modules — the known-good hands-on guides." next="Choose the capability your prototype needs next, then open the hands-on guide." %}
 
-These are the **Northfield reference modules** — the known-good, hands-on guides. Upskill teams use
-the Northfield assets exactly as written. **Building your own app?** Follow the
+These are the Northfield reference modules — the known-good, hands-on guides. Upskill teams use
+the Northfield assets exactly as written. Building your own app? Follow the
 [Customer Build Track]({{ '/customer-build' | relative_url }}) instead: it reframes each module below
 as decisions for your scenario and links back here for the mechanics.
 
@@ -19,13 +19,13 @@ as decisions for your scenario and links back here for the mechanics.
 
 | Capability | What you build with Northfield | Hands-on guide |
 |---|---|---|
-| **Ground** | Build Northfield IQ with FAQ citations. | [Ground: Foundations](foundations) |
-| **Act** | Use ticket, hold, and advising actions. | [Act: Action Tools](advanced-action-tools) |
-| **Prove** | Run the Northfield eval and red-team set. | [Prove: Evaluation & Red Teaming](advanced-evaluation-redteam) |
-| **Debug** | Inspect Northfield runs in Foundry and App Insights. | [Debug: Tracing & Observability](advanced-tracing-observability) |
-| **Deploy** | Host the Northfield agent. | [Deploy: Hosted Agent](advanced-deploy-hosted-agent) |
-| **Demo UI** | Build a student-facing Northfield chat demo. | [Demo UI: Build a UI](extra-build-ui) |
-| **Orchestrate** | Turn Northfield into a student-services agent team. | [Orchestrate: Multi-Agent Capstone](capstone-multi-agent) |
+| Ground | Build Northfield IQ with FAQ citations. | [Ground: Foundations](foundations) |
+| Act | Use ticket, hold, and advising actions. | [Act: Action Tools](advanced-action-tools) |
+| Prove | Run the Northfield eval and red-team set. | [Prove: Evaluation & Red Teaming](advanced-evaluation-redteam) |
+| Debug | Inspect Northfield runs in Foundry and App Insights. | [Debug: Tracing & Observability](advanced-tracing-observability) |
+| Deploy | Host the Northfield agent. | [Deploy: Hosted Agent](advanced-deploy-hosted-agent) |
+| Demo UI | Build a student-facing Northfield chat demo. | [Demo UI: Build a UI](extra-build-ui) |
+| Orchestrate | Turn Northfield into a student-services agent team. | [Orchestrate: Multi-Agent Capstone](capstone-multi-agent) |
 
 </div>
 

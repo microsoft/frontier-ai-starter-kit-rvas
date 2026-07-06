@@ -9,9 +9,9 @@ description: Add live operational data beside your static knowledge base when th
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Fabric IQ" artifact="A dual-grounded agent that routes YOUR policy questions to documents and YOUR right-now questions to live data." next="Use this only when live operational state is essential to your scenario." %}
 
-This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-iq)** — same live-data grounding pattern, but pointed at the operational data in your scenario from [Chapter 0](../customer-outcome). This is an **OPTIONAL deepener**. Without Fabric capacity and a meaningful live table, skip it.
+This deepener is mutuated from [Extra · Fabric IQ](../challenges/extra-fabric-iq) — same live-data grounding pattern, but pointed at the operational data in your scenario from [Chapter 0](../customer-outcome). This is an OPTIONAL deepener. Without Fabric capacity and a meaningful live table, skip it.
 
-> **Before you start this deepener:** confirm coach-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
+> Before you start this deepener: confirm coach-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
 
 ---
 
@@ -19,12 +19,12 @@ This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric
 
 **Why it matters for your app:** static RAG answers policy; live data answers "right now." You need a trustworthy operational table before adding a live tool.
 
-**Does this apply to you?** → **Skip it** if your Chapter 0 corpus has no live operational component.
-- **Build it** if users ask about availability, capacity, status, inventory, SLA, queue position, or current metrics.
-- **Adapt it** if your live source is another governed data platform, but keep the same source-of-truth discipline.
+**Does this apply to you?** → Skip it if your Chapter 0 corpus has no live operational component.
+- Build it if users ask about availability, capacity, status, inventory, SLA, queue position, or current metrics.
+- Adapt it if your live source is another governed data platform, but keep the same source-of-truth discipline.
 
 **Decisions to make:**
-- Which Chapter 0 **knowledge source** is live, not static?
+- Which Chapter 0 knowledge source is live, not static?
 - Which fields must the agent be allowed to query?
 - What current value can you record and later prove the agent matched?
 
@@ -43,9 +43,9 @@ This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric
 
 **Why it matters for your app:** the agent needs explicit source routing so it uses live data for current-state questions and documents for stable policy.
 
-**Does this apply to you?** → **Skip it** if you cannot attach a Fabric tool in the event environment.
-- **Build it** if your Foundry project can reach the Fabric IQ/data-agent connection.
-- **Adapt it** if the live tool should be available only to a specialist agent, not the main assistant.
+**Does this apply to you?** → Skip it if you cannot attach a Fabric tool in the event environment.
+- Build it if your Foundry project can reach the Fabric IQ/data-agent connection.
+- Adapt it if the live tool should be available only to a specialist agent, not the main assistant.
 
 **Decisions to make:**
 - Which agent gets the live tool?
@@ -67,9 +67,9 @@ This deepener is **mutuated from [Extra · Fabric IQ](../challenges/extra-fabric
 
 **Why it matters for your app:** the whole point is contrast: the answer changes when the operational source changes, without re-indexing documents.
 
-**Does this apply to you?** → **Skip it** if you cannot safely mutate or observe changing data.
-- **Build it** if your demo can show before/after values from the source of truth.
-- **Adapt it** if you can only show two timestamps or two records instead of mutating data live.
+**Does this apply to you?** → Skip it if you cannot safely mutate or observe changing data.
+- Build it if your demo can show before/after values from the source of truth.
+- Adapt it if you can only show two timestamps or two records instead of mutating data live.
 
 **Decisions to make:**
 - Which question proves live state better than static RAG?

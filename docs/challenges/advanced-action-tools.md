@@ -12,13 +12,13 @@ nav_order: 10
 
 {% include challenge-prereq.html %}
 
-So far your assistant **knows** things — it retrieves from the knowledge base and answers. In this
-challenge it learns to **do** things: open an IT ticket, place a course-registration hold, or book an
-advising slot. The difference matters. A **knowledge tool** reads; an **action tool** changes the world.
-Because actions have consequences, you'll also implement a **human-approval loop** so the agent *asks
+So far your assistant knows things — it retrieves from the knowledge base and answers. In this
+challenge it learns to do things: open an IT ticket, place a course-registration hold, or book an
+advising slot. The difference matters. A knowledge tool reads; an action tool changes the world.
+Because actions have consequences, you'll also implement a human-approval loop so the agent *asks
 before it acts*.
 
-You will **wire** a provided backend — you do **not** build it. The Action Tools REST API ships in
+You will wire a provided backend — you do not build it. The Action Tools REST API ships in
 [`scripts/action-backend/`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/scripts/action-backend/README.md) and exposes three action
 endpoints your `FunctionTool` callables hit directly:
 
@@ -28,11 +28,11 @@ endpoints your `FunctionTool` callables hit directly:
 | `place_course_hold` | Places a registration hold | `student_id, course_code, reason` |
 | `book_advising_slot` | Books an advising appointment | `student_id, advisor, iso_datetime, topic` |
 
-> **Note:** The backend also ships an optional FastMCP server (`mcp_server.py`) on `:8765/mcp`. That
-> server is a **preview/stretch asset** — it is not part of this guided path. See Rung (c) stretch
+> Note: The backend also ships an optional FastMCP server (`mcp_server.py`) on `:8765/mcp`. That
+> server is a preview/stretch asset — it is not part of this guided path. See Rung (c) stretch
 > goals if you want to explore the server-side of MCP.
 
-**Env contract (authoritative — matches `.env.sample` and the backend):**
+Env contract (authoritative — matches `.env.sample` and the backend):
 
 | Variable | Default | You set it to |
 |---|---|---|
@@ -40,15 +40,15 @@ endpoints your `FunctionTool` callables hit directly:
 | `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint (optional — preview/stretch only; not needed for this guided path) |
 | `ACTION_API_KEY` | *(empty)* | optional `x-api-key` shared secret (leave empty for the workshop) |
 
-> **SDK note:** MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
-> `SubmitToolApprovalAction`, `ToolApproval`) are **not** in the current public
+> SDK note: MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
+> `SubmitToolApprovalAction`, `ToolApproval`) are not in the current public
 > `azure-ai-agents` 1.x release. This challenge uses the standard
-> **`FunctionTool` + `RequiredFunctionToolCall` + `SubmitToolOutputsAction` + `ToolOutput`**
+> `FunctionTool` + `RequiredFunctionToolCall` + `SubmitToolOutputsAction` + `ToolOutput`
 > pattern instead — same governance objective, fully supported in 1.x.
 
-**Files in this challenge**
+Files in this challenge
 
-- [`agent_with_actions.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py) — **starter** with `< PLACEHOLDER >` gaps you fill in.
+- [`agent_with_actions.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
 - [`validate.py`](https://github.com/microsoft/frontier-foundry-hackathon/blob/main/challenges/advanced-action-tools/validate.py) — the Checkpoints below.
 
 ---
@@ -63,8 +63,8 @@ endpoints your `FunctionTool` callables hit directly:
 2. Start the REST API: `uvicorn app:app --host 0.0.0.0 --port 8080`.
 3. Confirm it's up: `curl http://localhost:8080/health`.
 
-> **Optional (stretch / preview):** The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`).
-> You do **not** need it for this guided path — start it only if you are doing Rung (c) stretch goal 1.
+> Optional (stretch / preview): The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`).
+> You do not need it for this guided path — start it only if you are doing Rung (c) stretch goal 1.
 
 **Success Criteria:**
 
@@ -89,10 +89,10 @@ python validate.py --step 1
 1. Compare: your Foundations RAG tool *reads* the FAQ; `create_it_ticket` *writes* a ticket that pages
    a human. One is safe to auto-run; the other is not.
 
-2. List, for each of the three provided tools, the **side effect** and **who is affected** if the agent
+2. List, for each of the three provided tools, the side effect and who is affected if the agent
    fires it incorrectly (e.g. a wrongful course hold blocks a student's registration).
 
-3. Decide your approval policy: which tools always require human approval? (For this challenge: **all**.)
+3. Decide your approval policy: which tools always require human approval? (For this challenge: all.)
 
 **Success Criteria:**
 
@@ -144,13 +144,13 @@ python validate.py --step 2
    `run.required_action.submit_tool_outputs.tool_calls` — each is a `RequiredFunctionToolCall` with
    `call.function.name` and `call.function.arguments` (a JSON string).
 
-2. For each call: **show the human the tool name + arguments**, ask to approve, and:
-   - If **approved**: parse the arguments and call the matching backend function, capture the result string.
-   - If **denied**: set the result to `json.dumps({"denied": "Human operator declined."})`.
+2. For each call: show the human the tool name + arguments, ask to approve, and:
+   - If approved: parse the arguments and call the matching backend function, capture the result string.
+   - If denied: set the result to `json.dumps({"denied": "Human operator declined."})`.
 
 3. Build `ToolOutput(tool_call_id=call.id, output=result)` for each call and submit the list via
    `agents.runs.submit_tool_outputs(thread_id, run_id, tool_outputs=[...])`, then keep polling until
-   the run leaves `requires_action`. This **closes the function-call loop**.
+   the run leaves `requires_action`. This closes the function-call loop.
 
 **Success Criteria:**
 
@@ -180,7 +180,7 @@ python validate.py --step 3
 2. Confirm the agent reports the new `ticket_id`, then verify the record exists in the backend:
    `curl http://localhost:8080/it-tickets`.
 
-3. Try a **denial**: re-run, deny the approval, and confirm no ticket is created.
+3. Try a denial: re-run, deny the approval, and confirm no ticket is created.
 4. (Stretch) Ask it to `book_advising_slot` with an ISO datetime and watch the same loop govern it.
 
 **Success Criteria:**
@@ -196,7 +196,7 @@ python validate.py --step 4
 
 ```
 
-**Full run:**
+Full run:
 
 ```text
 python validate.py --all
@@ -213,10 +213,10 @@ python validate.py --all
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ## Tips
-- **Approval is the whole point.** A flashy auto-acting agent that books the wrong slot is worse than
+- Approval is the whole point. A flashy auto-acting agent that books the wrong slot is worse than
   one that asks first. Show the arguments to the human, every time.
 
-- Treat any text the agent *retrieved* as **data, not instructions** — an action tool plus a gullible
+- Treat any text the agent *retrieved* as data, not instructions — an action tool plus a gullible
   agent is exactly how prompt-injection turns into real damage (see the Evaluation & Red Teaming
   challenge).
 
