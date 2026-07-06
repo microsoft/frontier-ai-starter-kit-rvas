@@ -1,12 +1,12 @@
 ---
-title: "Chapter 0: Define Outcome"
+title: "Define Your Outcome"
 parent: Customer Build Track
 nav_order: 1
 ---
 
-# Customer Build · Chapter 0 — Define your outcome
+# Customer Build · Define your outcome
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 0" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use this scenario pack to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
+{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use this scenario pack to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
 
 This is the first task in the Customer Build Track. Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
 
@@ -104,5 +104,5 @@ Each Customer Build team should leave with:
 
 <div class="next-panel">
   <strong>Next:</strong>
-  <a class="btn btn-primary" href="{{ '/customer-build/foundations' | relative_url }}">Start Chapter 1 with your scenario</a>
+  <a class="btn btn-primary" href="{{ '/customer-build/foundations' | relative_url }}">Start Ground your app with your scenario</a>
 </div>

@@ -1,17 +1,17 @@
 ---
-title: "Chapter 2 — Make It Act"
+title: "Make It Act"
 parent: Customer Build Track
 nav_order: 20
 description: Add one governed action to your grounded agent — the Customer Build companion to Advanced Action Tools.
 ---
 
-# Customer Build · Chapter 2 — Make it act
+# Customer Build · Make it act
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 2 &middot; Act" artifact="One approval-gated action from YOUR workflow, proven end-to-end without unsafe auto-execution." next="Once your agent can act safely, move to Chapter 3 — Prove it's safe." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Act" artifact="One approval-gated action from YOUR workflow, proven end-to-end without unsafe auto-execution." next="Once your agent can act safely, move to Prove it's safe." %}
 
-This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Chapter 0: Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
-> Before you start this chapter: you need a grounded agent from [Chapter 1](foundations) and at least one action candidate from Chapter 0.
+> Before you start this chapter: you need a grounded agent from [Ground your app](foundations) and at least one action candidate from your scenario pack.
 
 ---
 
@@ -22,10 +22,10 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 **Does this apply to you?**
 - Build it if your demo promise includes a workflow change, ticket, booking, status update, or handoff.
 - Adapt it if your real system is unavailable — use a safe mock API that preserves the same request/response shape.
-- Skip it only if your app is knowledge-only; then move straight to [Chapter 3](advanced-evaluation-redteam).
+- Skip it only if your app is knowledge-only; then move straight to [Prove it's safe](advanced-evaluation-redteam).
 
 **Decisions to make:**
-- Which Chapter 0 *action candidate* is valuable enough to demo?
+- Which *action candidate* is valuable enough to demo?
 - What is the safe backend for the hackathon: real dev API, mock service, provided Action Tools backend, or manual queue?
 - What non-secret auth/header contract will the agent use?
 
@@ -71,7 +71,7 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 **Does this apply to you?**
 - Build it if you have one or more approved side effects.
 - Adapt it if your action is currently manual — define a tool that creates a review record or draft request instead of executing directly.
-- Skip it if Chapter 2 is out of scope for your demo.
+- Skip it if actions are out of scope for your demo.
 
 **Decisions to make:**
 - What is the smallest useful action for the demo story?
@@ -139,7 +139,7 @@ This chapter is mutuated from [Advanced · Action Tools](../challenges/advanced-
 
 ---
 
-## Chapter 2 end-state
+## Chapter end-state
 
 You have one governed workflow action attached to your grounded agent, with approval and denial both proven.
 
@@ -147,4 +147,4 @@ You have one governed workflow action attached to your grounded agent, with appr
 python challenges/advanced-action-tools/validate.py --track customer --all --dry-run
 ```
 
-Next: [Chapter 3 — Prove it's safe](advanced-evaluation-redteam).
+Next: [Prove it's safe](advanced-evaluation-redteam).

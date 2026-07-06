@@ -1,15 +1,15 @@
 ---
-title: "Deepener — Give It a Voice"
+title: "Give It a Voice"
 parent: Customer Build Track
 nav_order: 78
 description: Turn your scenario assistant into a low-latency spoken experience when voice is the right interface.
 ---
 
-# Customer Build · Deepener — Give It a Voice
+# Customer Build · Give It a Voice
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Voice" artifact="A spoken version of YOUR agent that listens, answers, and preserves grounding or safety behavior." next="Use voice only when it improves access, speed, or demo impact for your users." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Voice" artifact="A spoken version of YOUR agent that listens, answers, and preserves grounding or safety behavior." next="Use voice only when it improves access, speed, or demo impact for your users." %}
 
-This deepener is mutuated from [Extra · Give It a Voice](../challenges/extra-voice-live) — same Voice Live pattern, but bound to your scenario agent from [Chapter 0](../customer-outcome). This is an OPTIONAL deepener. Voice is memorable, but it is not required for most build-track apps.
+This deepener is mutuated from [Extra · Give It a Voice](../challenges/extra-voice-live) — same Voice Live pattern, but bound to your scenario agent from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Voice is memorable, but it is not required for most build-track apps.
 
 > Before you start this deepener: confirm Voice Live access in a supported region and a microphone/speaker client. If typed interaction is better for your users, skip this.
 
@@ -24,7 +24,7 @@ This deepener is mutuated from [Extra · Give It a Voice](../challenges/extra-vo
 - Adapt it if voice should be a demo-only interface over the same backend.
 
 **Decisions to make:**
-- Which Chapter 0 target user benefits from speaking instead of typing?
+- Which target user benefits from speaking instead of typing?
 - Which agent should voice bind to: basic, grounded, or tool-enabled?
 - What voice, language, and audio environment fit the demo?
 

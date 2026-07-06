@@ -1,5 +1,5 @@
 
-# Customer Build · Chapter 0 — Define your outcome
+# Customer Build · Define your outcome
 
 
 
@@ -99,5 +99,5 @@ Each Customer Build team should leave with:
 
 <div class="next-panel">
   <strong>Next:</strong>
-  <a class="btn btn-primary" href="challenge.html?id=customer-foundations">Start Chapter 1 with your scenario</a>
+  <a class="btn btn-primary" href="challenge.html?id=customer-foundations">Start Ground your app with your scenario</a>
 </div>

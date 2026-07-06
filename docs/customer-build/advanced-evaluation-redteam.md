@@ -1,17 +1,17 @@
 ---
-title: "Chapter 3 — Prove It's Safe"
+title: "Prove It's Safe"
 parent: Customer Build Track
 nav_order: 30
 description: Turn your success measures and safety boundaries into evals, red-team tests, and a release gate.
 ---
 
-# Customer Build · Chapter 3 — Prove it's safe
+# Customer Build · Prove it's safe
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 3 &middot; Prove" artifact="A scenario-specific scorecard with quality rows, adversarial prompts, and a gate tied to YOUR safety boundaries." next="Once you can measure quality and safety, move to Chapter 4 — See inside it." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Prove" artifact="A scenario-specific scorecard with quality rows, adversarial prompts, and a gate tied to YOUR safety boundaries." next="Once you can measure quality and safety, move to See inside it." %}
 
-This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challenges/advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Chapter 0: Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challenges/advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](../customer-outcome).
 
-> Before you start this chapter: have at least one grounded answer from [Chapter 1](foundations), and include Chapter 2 actions if they are in your demo path.
+> Before you start this chapter: have at least one grounded answer from [Ground your app](foundations), and include your actions if they are in your demo path.
 
 ---
 
@@ -25,7 +25,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - Skip it only for a throwaway UI mock with no agent behavior being claimed.
 
 **Decisions to make:**
-- Which Chapter 0 *top user tasks* become eval rows?
+- Which *top user tasks* become eval rows?
 - What is the trusted answer or expected behavior for each row?
 - Which rows should abstain because the corpus is silent or the request crosses a safety boundary?
 - What topics must be represented so the dataset is not a tiny happy path?
@@ -69,7 +69,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 **Why it matters for your app:** generic metrics miss domain rules: exact thresholds, contact channels, allowed commitments, escalation triggers, and “must not answer” cases.
 
 **Does this apply to you?**
-- Build it if your Chapter 0 safety boundaries include domain-specific correctness.
+- Build it if your safety boundaries include domain-specific correctness.
 - Adapt it if you only have one rule — encode that one rule and say what is still manual.
 - Skip it only when generic metrics fully cover the demo claim.
 
@@ -98,7 +98,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 - Skip it only for a non-interactive demo with no safety claim; document that it was not red-teamed.
 
 **Decisions to make:**
-- Which Chapter 0 *safety boundaries* become attack categories?
+- Which *safety boundaries* become attack categories?
 - What prompt-injection case hides instructions inside retrieved content?
 - What action request should be refused, escalated, or require approval?
 - What mitigation will you add after the first failure?
@@ -138,7 +138,7 @@ This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../challeng
 
 ---
 
-## Chapter 3 end-state
+## Chapter end-state
 
 You have a scenario-specific trust scorecard: quality rows, red-team attacks, a domain evaluator, and a gate tied to your safety boundaries.
 
@@ -146,4 +146,4 @@ You have a scenario-specific trust scorecard: quality rows, red-team attacks, a 
 python challenges/advanced-evaluation-redteam/validate.py --track customer --all --dataset <your-eval.jsonl> --adversarial <your-adversarial.jsonl>
 ```
 
-Next: [Chapter 4 — See inside it](advanced-tracing-observability).
+Next: [See inside it](advanced-tracing-observability).

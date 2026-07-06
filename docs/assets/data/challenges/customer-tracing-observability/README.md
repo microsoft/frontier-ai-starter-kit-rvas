@@ -1,11 +1,11 @@
 
-# Customer Build · Chapter 4 — See inside it
+# Customer Build · See inside it
 
 
 
-This chapter is mutuated from [Advanced · Tracing & Observability](challenge.html?id=advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
+This chapter is mutuated from [Advanced · Tracing & Observability](challenge.html?id=advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](challenge.html?id=customer-outcome).
 
-> Before you start this chapter: finish [Chapter 1](challenge.html?id=customer-foundations). If [Chapter 2](challenge.html?id=customer-action-tools) applies, include one approved or denied action in the traced path.
+> Before you start this chapter: finish [Ground your app](challenge.html?id=customer-foundations). If [Make it act](challenge.html?id=customer-action-tools) applies, include one approved or denied action in the traced path.
 
 ---
 
@@ -44,7 +44,7 @@ This chapter is mutuated from [Advanced · Tracing & Observability](challenge.ht
 - Skip it only if you skipped live agent execution entirely.
 
 **Decisions to make:**
-- Which Chapter 0 *demo story* question becomes the traced run?
+- Which *demo story* question becomes the traced run?
 - Does it force retrieval, action, escalation, or all three?
 - What output proves the run belongs to your scenario?
 - What identifier will you copy into your notes: response id, operation id, timestamp?
@@ -107,7 +107,7 @@ This chapter is mutuated from [Advanced · Tracing & Observability](challenge.ht
 
 ---
 
-## Chapter 4 end-state
+## Chapter end-state
 
 You have one end-to-end trace for your scenario, plus a KQL query that explains where time, tokens, retrieval, and tools went.
 
@@ -115,4 +115,4 @@ You have one end-to-end trace for your scenario, plus a KQL query that explains 
 python challenges/advanced-tracing-observability/validate.py --track customer --all --dry-run
 ```
 
-Next: [Chapter 5 — Ship it](challenge.html?id=customer-deploy-hosted-agent).
+Next: [Ship it](challenge.html?id=customer-deploy-hosted-agent).

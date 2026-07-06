@@ -80,7 +80,7 @@ const OUTCOMES = [
     challenge_ids: ['idea-forge', 'customer-outcome'],
     success_metrics: [
       'A selected idea has an outcome, users, data sources, tier guidance, and risk notes.',
-      'The chosen idea transfers cleanly into Customer Build Chapter 0.',
+      'The chosen idea transfers cleanly into the Customer Build scenario pack.',
     ],
   },
   {
@@ -138,7 +138,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-outcome',
-    title: 'Chapter 0: Define your outcome',
+    title: 'Define your outcome',
     track: 'define',
     difficulty: 'beginner',
     duration_minutes: 45,
@@ -149,7 +149,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-foundations',
-    title: 'Chapter 1: Ground your app',
+    title: 'Ground your app',
     track: 'foundations',
     difficulty: 'beginner',
     duration_minutes: 210,
@@ -161,7 +161,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-action-tools',
-    title: 'Chapter 2: Make it act',
+    title: 'Make it act',
     track: 'actions',
     difficulty: 'intermediate',
     duration_minutes: 90,
@@ -173,7 +173,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-evaluation-redteam',
-    title: "Chapter 3: Prove it's safe",
+    title: "Prove it's safe",
     track: 'trust',
     difficulty: 'intermediate',
     duration_minutes: 90,
@@ -185,7 +185,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-tracing-observability',
-    title: 'Chapter 4: See inside it',
+    title: 'See inside it',
     track: 'trust',
     difficulty: 'intermediate',
     duration_minutes: 75,
@@ -197,7 +197,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-deploy-hosted-agent',
-    title: 'Chapter 5: Ship it',
+    title: 'Ship it',
     track: 'deploy',
     difficulty: 'advanced',
     duration_minutes: 90,
@@ -221,7 +221,7 @@ const CHALLENGES = [
   },
   {
     id: 'customer-capstone-multi-agent',
-    title: 'Chapter 6: Grow it into a team',
+    title: 'Grow it into a team',
     track: 'orchestrate',
     difficulty: 'advanced',
     duration_minutes: 120,

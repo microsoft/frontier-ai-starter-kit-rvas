@@ -1,15 +1,15 @@
 ---
-title: "Deepener — Copilot-Assisted Build"
+title: "Copilot-Assisted Build"
 parent: Customer Build Track
 nav_order: 80
 description: Use Copilot with MCP and skills to rebuild one scenario artifact from current Foundry guidance.
 ---
 
-# Customer Build · Deepener — Copilot-Assisted Build
+# Customer Build · Copilot-Assisted Build
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Deepener &middot; Copilot-Assisted Build" artifact="A before/after build artifact showing Copilot used current docs and skills for YOUR scenario instead of guessing." next="Use this as a learning accelerator after you have built at least one thing manually." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Copilot-Assisted Build" artifact="A before/after build artifact showing Copilot used current docs and skills for YOUR scenario instead of guessing." next="Use this as a learning accelerator after you have built at least one thing manually." %}
 
-This deepener is mutuated from [Extra · Copilot-Assisted Build](../challenges/extra-copilot-assisted) — same MCP-and-skills workflow, but aimed at one artifact from your scenario in [Chapter 0](../customer-outcome). This is an OPTIONAL deepener. It is best after you have felt the manual path and can judge whether Copilot is improving it.
+This deepener is mutuated from [Extra · Copilot-Assisted Build](../challenges/extra-copilot-assisted) — same MCP-and-skills workflow, but aimed at one artifact from your scenario in [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. It is best after you have felt the manual path and can judge whether Copilot is improving it.
 
 > Before you start this deepener: have live infrastructure and at least one challenge artifact you understand. If your team is still defining the outcome or debugging basics, skip this until later.
 

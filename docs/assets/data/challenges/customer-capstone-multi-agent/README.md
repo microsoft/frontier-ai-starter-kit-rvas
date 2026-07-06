@@ -1,11 +1,11 @@
 
-# Customer Build · Chapter 6 — Grow it into a team
+# Customer Build · Grow it into a team
 
 
 
-This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capstone-multi-agent) — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Chapter 0: Define your outcome](challenge.html?id=customer-outcome).
+This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capstone-multi-agent) — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Define your outcome](challenge.html?id=customer-outcome).
 
-> Before you start this chapter: finish [Chapter 1](challenge.html?id=customer-foundations) and [Chapter 2](challenge.html?id=customer-action-tools) if your team will include an action specialist. [Chapter 4](challenge.html?id=customer-tracing-observability) makes the final demo much stronger.
+> Before you start this chapter: finish [Ground your app](challenge.html?id=customer-foundations) and [Make it act](challenge.html?id=customer-action-tools) if your team will include an action specialist. [See inside it](challenge.html?id=customer-tracing-observability) makes the final demo much stronger.
 
 ---
 
@@ -19,7 +19,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 - Skip it if one grounded agent with one action already tells the best story.
 
 **Decisions to make:**
-- Which Chapter 0 user journey has real handoffs?
+- Which user journey has real handoffs?
 - What work should be routed, retrieved, acted on, escalated, and synthesized?
 - Which responsibilities must not overlap?
 - What will the audience learn from seeing a team instead of one agent?
@@ -39,15 +39,15 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 **Why it matters for your app:** roles are the architecture. If the org chart is fuzzy, the graph will be fuzzy.
 
 **Does this apply to you?**
-- Build it if Chapter 6 is in scope.
+- Build it if the capstone is in scope.
 - Adapt it if your domain needs different specialists than knowledge/action/escalation.
 - Skip it if you decided the monolith is the right demo artifact.
 
 **Decisions to make:**
 - What does the router classify?
 - Which specialists map to real business functions or systems?
-- Which specialist reuses your Chapter 1 grounded agent?
-- Which specialist reuses your Chapter 2 approval loop?
+- Which specialist reuses your grounded agent?
+- Which specialist reuses your approval loop?
 - What does the synthesizer merge, cite, and refuse?
 
 **Apply it to your app:** replace the Northfield help-desk roles with your own process roles. → [Capstone — Agent org-chart](challenge.html?id=capstone-multi-agent#the-agent-org-chart-role-as-agent)
@@ -67,7 +67,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 **Does this apply to you?**
 - Build it if you are implementing the graph.
 - Adapt it if your final path is parallel — still run one sequential warm-up path first.
-- Skip it only if Chapter 6 is a design-only sketch.
+- Skip it only if the capstone is a design-only sketch.
 
 **Decisions to make:**
 - What is the smallest route through router → one specialist → synthesizer?
@@ -115,7 +115,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 **Why it matters for your app:** multi-agent demos are hard to trust unless the audience can see the handoffs and you can trace the run after the fact.
 
 **Does this apply to you?**
-- Build it if Chapter 6 is part of the final demo.
+- Build it if the capstone is part of the final demo.
 - Adapt it if DevUI is unavailable — capture logs plus an operation-id trace.
 - Skip it only for a paper design; mark it coach-judged/manual.
 
@@ -125,7 +125,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 - What token/latency signal is most important for this team design?
 - How will you explain a branch that did not run?
 
-**Apply it to your app:** visualize first, then reuse Chapter 4 tracing to capture the multi-agent span tree. → [Capstone — Visual-first, then traced](challenge.html?id=capstone-multi-agent#visual-first-then-traced)
+**Apply it to your app:** visualize first, then reuse your tracing to capture the multi-agent span tree. → [Capstone — Visual-first, then traced](challenge.html?id=capstone-multi-agent#visual-first-then-traced)
 
 **Prove you applied it:**
 - `python challenges/capstone-multi-agent/validate.py --track customer --all --path <your-capstone-dir>`
@@ -160,7 +160,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](challenge.html?id=capsto
 
 ---
 
-## Chapter 6 end-state
+## Chapter end-state
 
 You have a customer-specific agent team: router, specialists, typed contracts, fan-out/fan-in, and a traceable 2-minute journey.
 

@@ -1,17 +1,17 @@
 ---
-title: "Chapter 5 — Ship It"
+title: "Ship It"
 parent: Customer Build Track
 nav_order: 50
 description: Package your agent as a hosted endpoint with identity, auth, and observable runs — if your demo needs shipping.
 ---
 
-# Customer Build · Chapter 5 — Ship it
+# Customer Build · Ship it
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Chapter 5 &middot; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Chapter 6 — Grow it into a team." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Grow it into a team." %}
 
-This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challenges/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Chapter 0: Define your outcome](../customer-outcome).
+This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challenges/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
 
-> Before you start this chapter: finish [Chapter 1](foundations). [Chapter 4](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
+> Before you start this chapter: finish [Ground your app](foundations). [See inside it](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
 
 ---
 
@@ -26,7 +26,7 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 
 **Decisions to make:**
 - What hosted agent name matches your scenario?
-- Which persona/guardrails from Chapter 1 move into the manifest?
+- Which persona/guardrails from your grounded agent move into the manifest?
 - Which model deployment and tools are required at runtime?
 - What data must the container never bake in: secrets, `.env`, customer documents?
 
@@ -102,7 +102,7 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 **Decisions to make:**
 - Which hosted run is your canonical demo evidence?
 - What run-history fields matter to the stakeholder: latency, status, token usage, caller, outcome?
-- Which KQL query from Chapter 4 confirms hosted telemetry?
+- Which KQL query from your tracing confirms hosted telemetry?
 - What alert or dashboard would be next for pilot?
 
 **Apply it to your app:** tie one hosted invocation back to run history and App Insights. → [Deploy — Step 4](../challenges/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history)
@@ -115,7 +115,7 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../challeng
 
 ---
 
-## Chapter 5 end-state
+## Chapter end-state
 
 You either have a hosted, authenticated, observable endpoint for your scenario agent, or a clear scope decision that the hackathon demo remains local/UI-only.
 
@@ -123,4 +123,4 @@ You either have a hosted, authenticated, observable endpoint for your scenario a
 python challenges/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run
 ```
 
-Next: [Chapter 6 — Grow it into a team](capstone-multi-agent).
+Next: [Grow it into a team](capstone-multi-agent).

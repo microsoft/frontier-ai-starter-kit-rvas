@@ -1,9 +1,9 @@
 
-# Customer Build · Deepener — Build a UI
+# Customer Build · Build a UI
 
 
 
-This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-build-ui) — same browser/BFF pattern, but wrapped around your scenario from [Chapter 0](challenge.html?id=customer-outcome). This is an OPTIONAL deepener. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
+This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-build-ui) — same browser/BFF pattern, but wrapped around your scenario from [Define your outcome](challenge.html?id=customer-outcome). This is an OPTIONAL deepener. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
 
 > Before you start this deepener: complete the agent you want to show. For approval cards, complete Action Tools. If a script, Playground run, or hosted endpoint already tells your story, skip this.
 
@@ -18,7 +18,7 @@ This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-bui
 - Adapt it if you only need one affordance: chat, citations, approval, or public URL.
 
 **Decisions to make:**
-- Which Chapter 0 target user is this UI for?
+- Which target user is this UI for?
 - Which success measure must be visible: answer quality, citation trust, approval safety, or latency?
 - What is the smallest UI that supports your demo story?
 
@@ -86,7 +86,7 @@ This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-bui
 **Why it matters for your app:** citations turn a flashy demo into a trusted answer grounded in your approved corpus.
 
 **Does this apply to you?** → Skip it only if your scenario has no knowledge grounding.
-- Build it if Chapter 1 grounding is central to your value proposition.
+- Build it if grounding is central to your value proposition.
 - Adapt it if your sources are records, tickets, or live data instead of documents.
 
 **Decisions to make:**
@@ -110,7 +110,7 @@ This deepener is mutuated from [Extra · Build a UI](challenge.html?id=extra-bui
 **Why it matters for your app:** human approval must be visible at the exact moment the agent wants to do something consequential.
 
 **Does this apply to you?** → Skip it if your app has no action tools or all actions are read-only.
-- Build it if your Chapter 0 action candidates change records, send messages, create tickets, spend money, or affect access.
+- Build it if your action candidates change records, send messages, create tickets, spend money, or affect access.
 - Adapt it if approval happens outside the UI, such as email, Teams, or a case system.
 
 **Decisions to make:**

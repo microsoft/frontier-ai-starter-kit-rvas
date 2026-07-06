@@ -10,12 +10,12 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
   <h1>Turn a real outcome into a working agent prototype.</h1>
   <p class="hero-tagline">Use Northfield as the reference shape, but swap in your customer-safe corpus, persona, workflow, trust tests, and final demo story.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Start Chapter 0</a>
-    <a class="btn btn-outline" href="{{ '/customer-build/foundations' | relative_url }}">Open Chapter 1</a>
+    <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Define your outcome</a>
+    <a class="btn btn-outline" href="{{ '/customer-build/foundations' | relative_url }}">Ground your app</a>
   </div>
 </div>
 
-{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A customer-safe scenario pack plus one evolving Foundry agent prototype." next="Complete Chapter 0, then run Foundations with your own data and Northfield as the reference." %}
+{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A customer-safe scenario pack plus one evolving Foundry agent prototype." next="Complete Define your outcome, then run Foundations with your own data and Northfield as the reference." %}
 
 ## The customer route
 
@@ -42,15 +42,15 @@ Each chapter is *mutuated* from a Northfield reference module: same objective an
 reframed as decisions you make on your own app, with an explicit "does this apply to you?" gate.
 Do the decisions here; each chapter links back to the reference for the exact commands.
 
-| # | Chapter | Reframes |
-|---|---|---|
-| 0 | [Define your outcome]({{ '/customer-outcome' | relative_url }}) | Scenario pack: user, corpus, action, safety, demo |
-| 1 | [Ground your app]({{ '/customer-build/foundations' | relative_url }}) | Foundations |
-| 2 | [Make it act]({{ '/customer-build/advanced-action-tools' | relative_url }}) | Action Tools |
-| 3 | [Prove it's safe]({{ '/customer-build/advanced-evaluation-redteam' | relative_url }}) | Evaluation & Red Teaming |
-| 4 | [See inside it]({{ '/customer-build/advanced-tracing-observability' | relative_url }}) | Tracing & Observability |
-| 5 | [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent |
-| 6 | [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone |
+| Chapter | Reframes |
+|---|---|
+| [Define your outcome]({{ '/customer-outcome' | relative_url }}) | Scenario pack: user, corpus, action, safety, demo |
+| [Ground your app]({{ '/customer-build/foundations' | relative_url }}) | Foundations |
+| [Make it act]({{ '/customer-build/advanced-action-tools' | relative_url }}) | Action Tools |
+| [Prove it's safe]({{ '/customer-build/advanced-evaluation-redteam' | relative_url }}) | Evaluation & Red Teaming |
+| [See inside it]({{ '/customer-build/advanced-tracing-observability' | relative_url }}) | Tracing & Observability |
+| [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent |
+| [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone |
 
 Optional deepeners (do only if your scenario needs them):
 [Magentic Workflows]({{ '/customer-build/extra-magentic-workflows' | relative_url }}) ·
@@ -65,7 +65,7 @@ Optional deepeners (do only if your scenario needs them):
 <div class="quick-grid">
   <div class="quick-card">
     <span class="track-badge">Must do</span>
-    <h3>Chapter 0 + Foundations</h3>
+    <h3>Define your outcome + Foundations</h3>
     <p>Leave with a grounded assistant that answers customer-relevant questions with citations from trusted data.</p>
   </div>
 
@@ -84,9 +84,9 @@ Optional deepeners (do only if your scenario needs them):
 
 ## Your first move
 
-Complete [Chapter 0: Define your outcome]({{ '/customer-outcome' | relative_url }}) before starting Foundations. If you do not have an app idea yet, go through [Idea Forge]({{ '/idea-forge' | relative_url }}) first; it feeds directly into Chapter 0.
+Complete [Define your outcome]({{ '/customer-outcome' | relative_url }}) before starting Foundations. If you do not have an app idea yet, go through [Idea Forge]({{ '/idea-forge' | relative_url }}) first; it feeds directly into Define your outcome.
 
 <div class="next-panel">
   <strong>Next:</strong>
-  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Complete Chapter 0</a>
+  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Complete Define your outcome</a>
 </div>
