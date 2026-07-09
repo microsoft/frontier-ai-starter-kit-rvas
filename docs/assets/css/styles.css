@@ -352,7 +352,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 }
 
 .hero h1 { margin-top: 18px; }
-.hero h1 .accent { color: var(--c-gold); }
+.hero h1 .accent { color: var(--c-hero-accent); }
 
 .lede {
   margin: 20px 0 32px;
@@ -1088,11 +1088,12 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   word-break: break-word;
 }
 .guide-body blockquote {
-  border-left: 3px solid var(--c-gold);
+  border: 1px solid var(--c-line);
+  box-shadow: inset 0 3px 0 var(--c-gold);
   margin: 1rem 0;
   padding: 8px 16px;
   background: var(--c-gold-glow);
-  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  border-radius: var(--r-sm);
 }
 .guide-body blockquote p { margin: 0; font-size: 0.9rem; color: var(--c-dim); }
 .guide-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; table-layout: fixed; }
