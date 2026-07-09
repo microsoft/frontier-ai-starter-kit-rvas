@@ -13,14 +13,14 @@
       } catch (e) {}
     })();
   </script>
-  <title>Activity â AI Starter Kit RVAS</title>
-  <meta name="description" content="Microsoft Foundry activity guide â participant and facilitator views." />
+  <title>Activity — AI Starter Kit RVAS</title>
+  <meta name="description" content="Microsoft Foundry activity guide — participant and facilitator views." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="icon" href="assets/img/logo-mark.png" />
-  <!-- marked.js â vendored, no CDN dependency at runtime -->
+  <!-- marked.js — vendored, no CDN dependency at runtime -->
   <script src="assets/js/marked.min.js"></script>
 </head>
 <body data-view="participant">
@@ -33,7 +33,6 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="catalog.html">Paths</a>
-        <a class="cta" href="catalog.html">Choose a path â</a>
       </nav>
       <div class="nav-actions">
         <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme"></button>
@@ -51,12 +50,12 @@
       <div class="wrap">
         <nav class="breadcrumbs" aria-label="Breadcrumb" id="breadcrumbs">
           <a href="index.html">Home</a>
-          <span>âº</span>
+          <span>›</span>
           <a href="catalog.html">Paths</a>
-          <span>âº</span>
-          <span class="mono" id="activityId">â¦</span>
+          <span>›</span>
+          <span class="mono" id="activityId">…</span>
         </nav>
-        <h1 id="activityTitle">Loadingâ¦</h1>
+        <h1 id="activityTitle">Loading…</h1>
         <div class="ch-meta-row" id="activityMeta"></div>
         <p class="attribution" id="attribution"></p>
       </div>
@@ -72,22 +71,22 @@
             <!-- Participant/facilitator toggle -->
             <div class="view-switch" role="tablist" aria-label="Guide view">
               <button data-view="participant" aria-pressed="true" role="tab" type="button">
-                â¸ Participant guide
+                ▸ Participant guide
               </button>
               <button data-view="facilitator" aria-pressed="false" role="tab" type="button">
-                â Facilitator guide
+                ◆ Facilitator guide
               </button>
             </div>
 
             <!-- Facilitator warning banner (shown only in facilitator view) -->
             <div class="facilitator-flag" role="alert" aria-live="polite">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
-              Facilitator view â facilitation notes, rubric &amp; verification. Keep this out of the participant room.
+              Facilitator view — facilitation notes, rubric &amp; verification. Keep this out of the participant room.
             </div>
 
             <!-- Rendered Markdown guide -->
             <article class="guide-body" id="guideBody" aria-live="polite">
-              <p class="mono" style="color:var(--c-faint)">Loading guideâ¦</p>
+              <p class="mono" style="color:var(--c-faint)">Loading guide…</p>
             </article>
           </div>
 
@@ -138,7 +137,7 @@
             </div>
 
             <a class="btn btn-ghost btn-sm" href="catalog.html" style="justify-content:center">
-              â Back to catalog
+              ← Back to catalog
             </a>
 
           </aside>
