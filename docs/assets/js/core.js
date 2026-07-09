@@ -92,28 +92,8 @@
   const THEME_KEY = 'fp-theme';
 
   FP.initTheme = function () {
-    const saved = localStorage.getItem(THEME_KEY);
-    const pref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    const theme = saved || pref;
-    document.documentElement.setAttribute('data-theme', theme);
-
-    const btn = document.getElementById('themeBtn');
-    if (!btn) return;
-
-    const sync = () => {
-      const t = document.documentElement.getAttribute('data-theme');
-      btn.innerHTML = t === 'light' ? _moonIcon() : _sunIcon();
-      btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
-    };
-    sync();
-
-    btn.addEventListener('click', () => {
-      const cur = document.documentElement.getAttribute('data-theme');
-      const next = cur === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem(THEME_KEY, next);
-      sync();
-    });
+    /* RVAS brand: light theme only; toggle removed. */
+    document.documentElement.setAttribute('data-theme', 'light');
   };
 
   function _sunIcon() {
