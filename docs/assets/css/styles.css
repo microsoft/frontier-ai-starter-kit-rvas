@@ -1,48 +1,48 @@
 /* =====================================================================
    Microsoft Foundry Session
    Visual system: star-chart navigation meets developer terminal.
-   Deep-space canvas, Chakra Petch display + DM Sans body, frontier-gold accent.
+   RVAP brand: clean light surface, Outfit/Inter typography, RVAP Blue accent.
    ===================================================================== */
 
 /* ═══════════════════════════ TOKENS ════════════════════════════════ */
 :root {
-  /* Canvas */
-  --c-900: #03050d;
-  --c-850: #06090f;
-  --c-800: #080c18;
-  --c-700: #0d1222;
-  --c-600: #131829;
-  --c-line: #1e2742;
-  --c-line-soft: #141b2e;
+  /* Canvas — RVAP Deep Navy dark surface */
+  --c-900: #04162f;
+  --c-850: #071f3d;
+  --c-800: #0a2748;
+  --c-700: #0e3160;
+  --c-600: #143b72;
+  --c-line: #1d3e68;
+  --c-line-soft: #122b4c;
 
   /* Foreground */
-  --c-fg: #cdd6ea;
-  --c-dim: #7a8aaa;
-  --c-faint: #3f4e68;
+  --c-fg: #e6edf7;
+  --c-dim: #9fb2ce;
+  --c-faint: #5e7290;
 
-  /* Brand accent */
-  --c-gold: #c084fc;
-  --c-gold-dim: #a855f7;
-  --c-gold-glow: rgba(192, 132, 252, 0.16);
+  /* Brand accent — RVAP Blue */
+  --c-gold: #3d8bee;
+  --c-gold-dim: #1a77e3;
+  --c-gold-glow: rgba(26, 119, 227, 0.20);
 
-  /* Module accents */
-  --c-ghec: #38bdf8;
-  --c-ghec-glow: rgba(56, 189, 248, 0.18);
-  --c-ghas: #f87171;
-  --c-ghas-glow: rgba(248, 113, 113, 0.18);
-  --c-ghaw: #a78bfa;
-  --c-ghaw-glow: rgba(167, 139, 250, 0.18);
-  --c-agentic: #fb923c;
-  --c-agentic-glow: rgba(251, 146, 60, 0.18);
+  /* Pillar accents — Build / Scale / Innovate / RVAP Blue */
+  --c-ghec: #2e90e0;
+  --c-ghec-glow: rgba(0, 120, 212, 0.20);
+  --c-ghas: #24a3a7;
+  --c-ghas-glow: rgba(20, 134, 138, 0.20);
+  --c-ghaw: #7a6bc4;
+  --c-ghaw-glow: rgba(80, 64, 146, 0.22);
+  --c-agentic: #4c9bf0;
+  --c-agentic-glow: rgba(26, 119, 227, 0.18);
 
-  /* Difficulty */
-  --c-beginner: #4ade80;
-  --c-intermediate: #facc15;
-  --c-advanced: #f87171;
+  /* Difficulty — RVAP palette */
+  --c-beginner: #24a3a7;
+  --c-intermediate: #3d8bee;
+  --c-advanced: #7a6bc4;
 
-  /* Typography */
-  --font-display: 'Chakra Petch', 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'DM Sans', 'Inter', system-ui, sans-serif;
+  /* Typography — Aptos family with Outfit/Inter web fallback */
+  --font-display: 'Aptos Display', 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Aptos', 'Inter', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', monospace;
 
   /* Layout */
@@ -55,39 +55,39 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Light theme */
+/* Light theme — RVAP clean light (default) */
 [data-theme="light"] {
-  --c-900: #f2f5fd;
-  --c-850: #f8faff;
+  --c-900: #f5f8fe;
+  --c-850: #ffffff;
   --c-800: #ffffff;
-  --c-700: #eef1fa;
-  --c-600: #e5e9f5;
-  --c-line: #d0d8ee;
-  --c-line-soft: #dce4f6;
+  --c-700: #f5f8fe;
+  --c-600: #e3e6ed;
+  --c-line: #e3e6ed;
+  --c-line-soft: #eef2f9;
 
-  --c-fg: #131828;
-  --c-dim: #4a5578;
-  --c-faint: #8090b2;
+  --c-fg: #16243a;
+  --c-dim: #5a6472;
+  --c-faint: #97a2b3;
 
-  --c-gold: #6d28d9;
-  --c-gold-dim: #7c3aed;
-  --c-gold-glow: rgba(109, 40, 217, 0.12);
+  --c-gold: #1a77e3;
+  --c-gold-dim: #0078d4;
+  --c-gold-glow: rgba(26, 119, 227, 0.14);
 
-  --c-ghec: #0284c7;
-  --c-ghec-glow: rgba(2, 132, 199, 0.10);
-  --c-ghas: #dc2626;
-  --c-ghas-glow: rgba(220, 38, 38, 0.10);
-  --c-ghaw: #7c3aed;
-  --c-ghaw-glow: rgba(124, 58, 237, 0.10);
-  --c-agentic: #ea580c;
-  --c-agentic-glow: rgba(234, 88, 12, 0.10);
+  --c-ghec: #0078d4;
+  --c-ghec-glow: rgba(0, 120, 212, 0.12);
+  --c-ghas: #14868a;
+  --c-ghas-glow: rgba(20, 134, 138, 0.12);
+  --c-ghaw: #504092;
+  --c-ghaw-glow: rgba(80, 64, 146, 0.12);
+  --c-agentic: #1a77e3;
+  --c-agentic-glow: rgba(26, 119, 227, 0.10);
 
-  --c-beginner: #16a34a;
-  --c-intermediate: #ca8a04;
-  --c-advanced: #dc2626;
+  --c-beginner: #14868a;
+  --c-intermediate: #1a77e3;
+  --c-advanced: #504092;
 
-  --shadow: 0 24px 60px -36px rgba(20, 24, 40, 0.30);
-  --shadow-card: 0 10px 28px -20px rgba(20, 24, 40, 0.22);
+  --shadow: 0 24px 60px -36px rgba(3, 34, 84, 0.30);
+  --shadow-card: 0 10px 28px -20px rgba(3, 34, 84, 0.22);
 }
 
 /* ═══════════════════════════ RESET ════════════════════════════════ */
@@ -230,6 +230,15 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   flex-shrink: 0;
 }
 .brand-glyph svg { display: block; }
+.brand-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+[data-theme="dark"] .brand-logo {
+  /* Reverse the dark navy wordmark to white for contrast on the navy nav */
+  filter: brightness(0) invert(1);
+}
 .brand-tag {
   font-family: var(--font-mono);
   font-size: 0.65rem;

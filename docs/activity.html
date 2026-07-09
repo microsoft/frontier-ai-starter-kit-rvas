@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-view="participant">
+<html lang="en" data-theme="light" data-view="participant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,37 +8,32 @@
       try {
         var k = 'fp-theme';
         var saved = localStorage.getItem(k);
-        var pref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        var pref = 'light';
         document.documentElement.setAttribute('data-theme', saved || pref);
       } catch (e) {}
     })();
   </script>
-  <title>Activity — AI Starter Kit RVAS</title>
-  <meta name="description" content="Microsoft Foundry activity guide — participant and facilitator views." />
+  <title>Activity â AI Starter Kit RVAS</title>
+  <meta name="description" content="Microsoft Foundry activity guide â participant and facilitator views." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e8c84a'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' font-weight='800' text-anchor='middle' fill='%2303050d'%3EA%3C/text%3E%3C/svg%3E" />
-  <!-- marked.js — vendored, no CDN dependency at runtime -->
+  <link rel="icon" href="assets/img/logo-mark.png" />
+  <!-- marked.js â vendored, no CDN dependency at runtime -->
   <script src="assets/js/marked.min.js"></script>
 </head>
 <body data-view="participant">
 
   <header class="nav" role="banner">
     <div class="nav-inner">
-      <a class="brand" href="index.html" aria-label="AI Starter Kit RVAS — Home">
-        <span class="brand-glyph" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 1L10 6h5L11 9.5l1.5 5L8 12l-4.5 2.5L5 9.5 1 6h5z" fill="#03050d" stroke="#03050d" stroke-width="0.5" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span>AI Starter Kit RVAS</span>
+      <a class="brand" href="index.html" aria-label="Real Value Acceleration Program — Home">
+        <img src="assets/img/logo-full.png" alt="Real Value Acceleration Program" class="brand-logo" />
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="catalog.html">Paths</a>
-        <a class="cta" href="catalog.html">Choose a path →</a>
+        <a class="cta" href="catalog.html">Choose a path â</a>
       </nav>
       <div class="nav-actions">
         <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme"></button>
@@ -56,12 +51,12 @@
       <div class="wrap">
         <nav class="breadcrumbs" aria-label="Breadcrumb" id="breadcrumbs">
           <a href="index.html">Home</a>
-          <span>›</span>
+          <span>âº</span>
           <a href="catalog.html">Paths</a>
-          <span>›</span>
-          <span class="mono" id="activityId">…</span>
+          <span>âº</span>
+          <span class="mono" id="activityId">â¦</span>
         </nav>
-        <h1 id="activityTitle">Loading…</h1>
+        <h1 id="activityTitle">Loadingâ¦</h1>
         <div class="ch-meta-row" id="activityMeta"></div>
         <p class="attribution" id="attribution"></p>
       </div>
@@ -77,22 +72,22 @@
             <!-- Participant/facilitator toggle -->
             <div class="view-switch" role="tablist" aria-label="Guide view">
               <button data-view="participant" aria-pressed="true" role="tab" type="button">
-                ▸ Participant guide
+                â¸ Participant guide
               </button>
               <button data-view="facilitator" aria-pressed="false" role="tab" type="button">
-                ◆ Facilitator guide
+                â Facilitator guide
               </button>
             </div>
 
             <!-- Facilitator warning banner (shown only in facilitator view) -->
             <div class="facilitator-flag" role="alert" aria-live="polite">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
-              Facilitator view — facilitation notes, rubric &amp; verification. Keep this out of the participant room.
+              Facilitator view â facilitation notes, rubric &amp; verification. Keep this out of the participant room.
             </div>
 
             <!-- Rendered Markdown guide -->
             <article class="guide-body" id="guideBody" aria-live="polite">
-              <p class="mono" style="color:var(--c-faint)">Loading guide…</p>
+              <p class="mono" style="color:var(--c-faint)">Loading guideâ¦</p>
             </article>
           </div>
 
@@ -143,7 +138,7 @@
             </div>
 
             <a class="btn btn-ghost btn-sm" href="catalog.html" style="justify-content:center">
-              ← Back to catalog
+              â Back to catalog
             </a>
 
           </aside>
@@ -155,13 +150,8 @@
 
   <footer class="footer" role="contentinfo">
     <div class="wrap footer-inner">
-      <a class="brand" href="index.html" aria-label="AI Starter Kit RVAS — Home">
-        <span class="brand-glyph" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 1L10 6h5L11 9.5l1.5 5L8 12l-4.5 2.5L5 9.5 1 6h5z" fill="#03050d" stroke="#03050d" stroke-width="0.5" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span>AI Starter Kit RVAS</span>
+      <a class="brand" href="index.html" aria-label="Real Value Acceleration Program — Home">
+        <img src="assets/img/logo-full.png" alt="Real Value Acceleration Program" class="brand-logo" />
       </a>
       <p>AI Starter Kit RVAS.</p>
       <nav class="footer-links" aria-label="Footer">
