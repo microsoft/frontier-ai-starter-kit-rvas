@@ -39,7 +39,7 @@ const MODULES = [
       { id: 'actions', name: 'Action Tools', description: 'Attach governed tools and approval-gated workflows.' },
       { id: 'trust', name: 'Trust', description: 'Evaluate, red-team, trace, and debug agent behavior.' },
       { id: 'deploy', name: 'Deploy', description: 'Host the agent and expose a stakeholder-ready experience.' },
-      { id: 'orchestrate', name: 'Orchestrate', description: 'Compose routers, specialists, and multi-agent workflows.' },
+      { id: 'orchestrate', name: 'Orchestrate', description: 'Coordinate multiple agents with manager, planner, and router patterns.' },
       { id: 'extras', name: 'Extras', description: 'Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.' },
     ],
   },

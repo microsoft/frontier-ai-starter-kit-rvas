@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T14:44:03.188Z",
+  "generated_at": "2026-07-09T14:53:32.385Z",
   "modules": [
     {
       "id": "foundry",
@@ -41,7 +41,7 @@
         {
           "id": "orchestrate",
           "name": "Orchestrate",
-          "description": "Compose routers, specialists, and multi-agent workflows.",
+          "description": "Coordinate multiple agents with manager, planner, and router patterns.",
           "activity_count": 3
         },
         {
