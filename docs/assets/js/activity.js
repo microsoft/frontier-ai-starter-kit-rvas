@@ -2,13 +2,6 @@
 (function () {
   'use strict';
 
-  // Home-repo slugs (this live consolidated repo); render as plain text without a hyperlink.
-  const SELF_SOURCE_REPOS = new Set([
-    'microsoft/frontier-agenticdevops-session',
-    'microsoft/frontier-agentic-devops-session',
-    'microsoft/frontier-ai-starter-kit-rvas',
-  ]);
-
   let _route = null;
 
   function cUrl(id) {
@@ -74,21 +67,11 @@
       meta.innerHTML = `
         ${FP.diffBadge(c.difficulty)}
         ${FP.durBadge(c.duration_minutes)}
-        ${FP.emuBadge(c.emu_compatible)}
         ${c.tier && c.tier !== 'core' ? `<span class="badge badge-app">${FP.esc(c.tier)}</span>` : ''}
         ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">▣ ${FP.esc(c.app_dependency)}</span>` : ''}
         <span class="badge-tag badge" style="margin-left:auto;color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
     }
 
-    // Attribution
-    const attr = document.getElementById('attribution');
-    if (attr && c.source_repo) {
-      if (SELF_SOURCE_REPOS.has(c.source_repo)) {
-        attr.innerHTML = `Source: ${FP.esc(c.source_repo)} · ${FP.esc(c.license || 'MIT')} License`;
-      } else {
-        attr.innerHTML = `Source: <a href="https://github.com/${FP.esc(c.source_repo)}" target="_blank" rel="noopener">${FP.esc(c.source_repo)}</a> · ${FP.esc(c.license || 'MIT')} License`;
-      }
-    }
   }
 
   function renderFacts(c, mod, allActivities, outcomes) {
@@ -141,7 +124,6 @@
         ['Track', FP.esc(c.track || '—')],
         ['Tier', FP.esc(c.tier || 'core')],
         ['App', c.app_dependency && c.app_dependency !== 'none' ? FP.esc(c.app_dependency) : 'none'],
-        ['EMU', FP.emuBadge(c.emu_compatible) || '—'],
       ];
       factRows.innerHTML = rows.map(([k, v]) =>
         `<div class="fact-row"><span class="fact-key">${k}</span><span class="fact-val">${v}</span></div>`
@@ -234,12 +216,33 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const md = await res.text();
       FP.renderMd(md, body);
+      removeDuplicateGuideTitle(body, c);
       body.querySelectorAll('.next-panel').forEach((el) => el.remove());
       renderActivityPager(body, c, allActivities);
     } catch (e) {
       body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Could not load guide: ${FP.esc(e.message)}</p>`;
       renderActivityPager(body, c, allActivities);
     }
+  }
+
+  function removeDuplicateGuideTitle(container, activity) {
+    const title = container.querySelector('h1');
+    if (!title || !activity || !activity.title) return;
+
+    const guideTitle = normalizeTitle(title.textContent);
+    const activityTitle = normalizeTitle(activity.title);
+
+    if (guideTitle === activityTitle || guideTitle.endsWith(' · ' + activityTitle)) {
+      title.remove();
+    }
+  }
+
+  function normalizeTitle(value) {
+    return String(value || '')
+      .replace(/[‘’]/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
   }
 
   function renderActivityPager(container, current, allActivities) {

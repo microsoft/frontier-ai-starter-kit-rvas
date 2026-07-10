@@ -59,12 +59,6 @@
     return `<span class="badge badge-duration">⏱ ${label}</span>`;
   };
 
-  FP.emuBadge = function (compat) {
-    if (compat === false) return '<span class="badge badge-emu-no">⚠ EMU N/A</span>';
-    if (compat === true)  return '<span class="badge badge-emu">✓ EMU</span>';
-    return '';
-  };
-
   FP.tagBadges = function (tags, limit) {
     if (!Array.isArray(tags) || !tags.length) return '';
     const show = limit ? tags.slice(0, limit) : tags;

@@ -500,7 +500,6 @@ function activityOutput(activity) {
     business_value: activity.business_value || [],
     adoption_stage: activity.adoption_stage || '',
     app_dependency: 'none',
-    emu_compatible: true,
     tier: activity.track === 'extras' ? 'extra' : 'core',
     references: activity.references || [],
     source_repo: 'microsoft/frontier-ai-starter-kit-rvas',
