@@ -6,6 +6,8 @@ nav_order: 12
 
 # Advanced — Tracing & Observability
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Debug" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
 
 {% include module-lens.html upskill="Trace Northfield runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
@@ -138,7 +140,7 @@ if __name__ == "__main__":
 **Checkpoint:**
 
 ```bash
-python validate.py --step 1
+python activities/advanced-tracing-observability/validate.py --step 1
 # expected: "✅ Step 1 PASS — instrumentation wired, App Insights connection resolved"
 
 ```
@@ -200,7 +202,7 @@ print("response id:", response.id)   # use this to locate the trace
 
 ```bash
 python activities/advanced-tracing-observability/traced_run.py
-python validate.py --step 2
+python activities/advanced-tracing-observability/validate.py --step 2
 # expected: "✅ Step 2 PASS — agent run emitted >=1 GenAI span to App Insights"
 
 ```
@@ -237,7 +239,7 @@ model, retrieval, and (if present) tool spans.
 model span exposing `gen_ai.usage.total_tokens`. Capture the trace's operation id for Step 4.
 
 ```bash
-python validate.py --step 3
+python activities/advanced-tracing-observability/validate.py --step 3
 # expected: "✅ Step 3 PASS — span tree present with model + retrieval spans"
 
 ```
@@ -312,7 +314,7 @@ question and surfaces token, latency, and cost signals.
 **Checkpoint:**
 
 ```bash
-python validate.py --step 4
+python activities/advanced-tracing-observability/validate.py --step 4
 # expected: "✅ Step 4 PASS — correlate.kql present and returns end-to-end spans for one run"
 
 ```

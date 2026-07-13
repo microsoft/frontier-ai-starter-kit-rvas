@@ -5,10 +5,15 @@ on:
     branches:
       - main
     paths:
+      - README.md
+      - CONTRIBUTING.md
       - docs/**
       - activities/**
       - resources/**
+      - scripts/action-backend/README.md
+      - scripts/audit-docs.js
       - package.json
+      - .github/workflows/deploy-pages.yml
 
   workflow_dispatch:
 
@@ -35,6 +40,12 @@ jobs:
 
       - name: Build static site data
         run: npm run build
+
+      - name: Verify generated guides are committed
+        run: |
+          test -z "$(git status --porcelain --untracked-files=all -- \
+            docs/assets/data/activities docs/assets/data/platform.json \
+            docs/assets/data/dependency-graph.json docs/resources)"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

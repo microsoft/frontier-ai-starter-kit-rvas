@@ -31,9 +31,9 @@ This deepener is mutuated from [Extra · Magentic Workflows](../activities/extra
 **Apply it to your app:** define focused agents for your scenario; keep each one single-purpose and wire only the tools it needs. Use the spine for exact MAF mechanics. → [Extra · Magentic Workflows — Step 1](../activities/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf)
 
 **Prove you applied it:**
-- □ Each specialist has a distinct name and one responsibility.
-- □ Knowledge specialists cite your corpus; action specialists use only approved tools.
-- □ At least one safety boundary is assigned to an escalation or refusal path.
+- [ ] Each specialist has a distinct name and one responsibility.
+- [ ] Knowledge specialists cite your corpus; action specialists use only approved tools.
+- [ ] At least one safety boundary is assigned to an escalation or refusal path.
 
 **Stuck?** [Northfield Step 1](../activities/extra-magentic-workflows#step-1--define-the-four-specialist-agents-maf).
 
@@ -55,9 +55,9 @@ This deepener is mutuated from [Extra · Magentic Workflows](../activities/extra
 **Apply it to your app:** register your specialists and write manager instructions that reflect your real routing rules. Test with a composite prompt from your demo story. → [Extra · Magentic Workflows — Step 2](../activities/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager)
 
 **Prove you applied it:**
-- □ One realistic composite prompt invokes more than one specialist.
-- □ The action path still preserves your approval or safety gate.
-- □ Out-of-scope or low-confidence requests do not reach the action specialist.
+- [ ] One realistic composite prompt invokes more than one specialist.
+- [ ] The action path still preserves your approval or safety gate.
+- [ ] Out-of-scope or low-confidence requests do not reach the action specialist.
 
 **Stuck?** [Northfield Step 2](../activities/extra-magentic-workflows#step-2--compose-them-under-a-magentic-manager).
 
@@ -79,9 +79,9 @@ This deepener is mutuated from [Extra · Magentic Workflows](../activities/extra
 **Apply it to your app:** run the same composite prompt in DevUI and capture the live plan with your specialist names. → [Extra · Magentic Workflows — Step 3](../activities/extra-magentic-workflows#step-3--visualize-the-plan-in-devui)
 
 **Prove you applied it:**
-- □ DevUI shows your manager and specialist nodes.
-- □ A screenshot captures at least one running and one completed node.
-- □ A low-confidence or unsafe request routes to escalation/refusal.
+- [ ] DevUI shows your manager and specialist nodes.
+- [ ] A screenshot captures at least one running and one completed node.
+- [ ] A low-confidence or unsafe request routes to escalation/refusal.
 
 **Stuck?** [Northfield Step 3](../activities/extra-magentic-workflows#step-3--visualize-the-plan-in-devui).
 

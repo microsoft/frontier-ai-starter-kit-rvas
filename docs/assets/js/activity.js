@@ -51,11 +51,11 @@
     if (crumbs) {
       crumbs.innerHTML = `
         <a href="index.html">Home</a>
-        <span>›</span>
+        <span aria-hidden="true">/</span>
         <a href="catalog.html">Catalog</a>
-        <span>›</span>
+        <span aria-hidden="true">/</span>
         <span style="color:${color}">${FP.esc(c.track || c.module)}</span>
-        <span>›</span>
+        <span aria-hidden="true">/</span>
         <span>${FP.esc(c.id)}</span>`;
     }
 
@@ -68,7 +68,7 @@
         ${FP.diffBadge(c.difficulty)}
         ${FP.durBadge(c.duration_minutes)}
         ${c.tier && c.tier !== 'core' ? `<span class="badge badge-app">${FP.esc(c.tier)}</span>` : ''}
-        ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">▣ ${FP.esc(c.app_dependency)}</span>` : ''}
+        ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">App: ${FP.esc(c.app_dependency)}</span>` : ''}
         <span class="badge-tag badge" style="margin-left:auto;color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
     }
 

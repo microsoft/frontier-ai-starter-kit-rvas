@@ -63,6 +63,16 @@ def load_env() -> dict:
     return env
 
 
+def response_has_citation(response, text: str) -> bool:
+    """Recognize structured Responses citations, with text markers as a fallback."""
+    for item in getattr(response, "output", []) or []:
+        for content in getattr(item, "content", []) or []:
+            for annotation in getattr(content, "annotations", []) or []:
+                if "citation" in str(getattr(annotation, "type", "")).lower():
+                    return True
+    return bool(text) and ("[" in text or "source" in text.lower() or ".md" in text.lower())
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate the Foundations end-state.")
     parser.add_argument(
@@ -153,7 +163,7 @@ def main() -> int:
     # Agent must exist.
     agent_found = False
     try:
-        for a in project.agents.list_agents():
+        for a in project.agents.list():
             if getattr(a, "name", None) == agent_name:
                 agent_found = True
                 break
@@ -174,12 +184,10 @@ def main() -> int:
         )
         resp = oai.responses.create(
             conversation=conv.id,
-            extra_body={"agent": {"name": agent_name, "type": "agent_reference"}},
+            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
         )
         text = getattr(resp, "output_text", "") or ""
-        has_citation = bool(text) and (
-            "[" in text or "source" in text.lower() or ".md" in text.lower()
-        )
+        has_citation = response_has_citation(resp, text)
         if not text:
             bad("Agent returned an empty answer — check grounding + model deployment.")
             failures += 1

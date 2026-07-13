@@ -58,7 +58,7 @@ The point is the shape (4 specialists + planner), not these exact symbols.
 - **Pitfall:** instructions too broad → agents overlap and the manager can't route cleanly. Push for
   *one job each*. Knowledge must be grounded; Action must hold the MCP tool.
 
-- `validate.py --step 1` checks the four agents are defined with distinct roles.
+- Optional automation: a learner-authored checker can assert that the four agents have distinct roles.
 
 ### Step 2 — Magentic manager
 - The composite prompt ("can't log in and drop CS101") is designed to force ≥2 specialists. If the
@@ -67,7 +67,7 @@ The point is the shape (4 specialists + planner), not these exact symbols.
 - Critical: the Action path must still honor the approval loop from Action Tools. Composing
   agents does not remove human-in-the-loop on writes.
 
-- `validate.py --step 2` asserts ≥2 specialists fire on the composite request.
+- Optional automation: a learner-authored checker can assert that at least two specialists fire.
 
 ### Step 3 — DevUI
 - This is the demo. Green/purple nodes make the *live planning* visible — that's the "aha." Have them
@@ -76,11 +76,11 @@ The point is the shape (4 specialists + planner), not these exact symbols.
 - The out-of-scope prompt ("change my final grade") must route to Escalation, proving the manager
   refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.
 
-## Validate.py scope
+## Optional validator scope
 
-Steps 1–2 are headless-checkable (agents defined; routing fans to ≥2 specialists) — hence
-`validate.py`. Step 3 is a DevUI visual (screenshot the plan graph), so its checkpoint is portal/DevUI
-state; `--all` re-runs 1–2.
+No `validate.py` ships with this activity. Steps 1–2 are suitable for a learner-authored headless
+checker (agents defined; routing fans to at least two specialists). Step 3 remains a DevUI visual
+checkpoint: screenshot the plan graph.
 
 ## Common failure modes
 

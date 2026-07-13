@@ -7,6 +7,8 @@ description: Package your agent as a hosted endpoint with identity, auth, and ob
 
 # Customer Build · Ship it
 
+> **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
+
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Grow it into a team." %}
 
 This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activities/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
@@ -34,7 +36,12 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activiti
 
 **Prove you applied it:**
 - `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 1 --dry-run`
-- Checklist: □ hosted manifest uses your agent name □ instructions are your scenario instructions □ responses protocol is declared □ Dockerfile exposes the expected port □ no secrets are copied.
+- Checklist:
+  - [ ] hosted manifest uses your agent name
+  - [ ] instructions are your scenario instructions
+  - [ ] responses protocol is declared
+  - [ ] Dockerfile exposes the expected port
+  - [ ] no secrets are copied.
 
 **Stuck?** [Northfield Step 1](../activities/advanced-deploy-hosted-agent#step-1--author-agentyaml-and-the-container-entrypoint).
 
@@ -59,7 +66,11 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activiti
 
 **Prove you applied it:**
 - `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 2 --dry-run`
-- Checklist: □ image tag is unique □ hosted version is active or deployment gap is documented □ per-agent identity exists □ rollback/cleanup path is known.
+- Checklist:
+  - [ ] image tag is unique
+  - [ ] hosted version is active or deployment gap is documented
+  - [ ] per-agent identity exists
+  - [ ] rollback/cleanup path is known.
 
 **Stuck?** [Northfield Step 2](../activities/advanced-deploy-hosted-agent#step-2--containerize-and-deploy-with-azd-ai-agent).
 
@@ -84,7 +95,11 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activiti
 
 **Prove you applied it:**
 - `python activities/advanced-deploy-hosted-agent/validate.py --track customer --step 3 --dry-run`
-- Checklist: □ authenticated call returns a scenario answer □ anonymous call is rejected □ per-agent identity is named □ no API key is required for local dev unless documented.
+- Checklist:
+  - [ ] authenticated call returns a scenario answer
+  - [ ] anonymous call is rejected
+  - [ ] per-agent identity is named
+  - [ ] no API key is required for local dev unless documented.
 
 **Stuck?** [Northfield Step 3](../activities/advanced-deploy-hosted-agent#step-3--invoke-the-live-endpoint-and-verify-identityauth).
 
@@ -109,7 +124,11 @@ This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activiti
 
 **Prove you applied it:**
 - `python activities/advanced-deploy-hosted-agent/validate.py --track customer --all --dry-run`
-- Checklist: □ hosted invocation appears in run history □ trace is visible or gap recorded □ operation id is captured □ cleanup plan is clear.
+- Checklist:
+  - [ ] hosted invocation appears in run history
+  - [ ] trace is visible or gap recorded
+  - [ ] operation id is captured
+  - [ ] cleanup plan is clear.
 
 **Stuck?** [Northfield Step 4](../activities/advanced-deploy-hosted-agent#step-4--tie-monitoring-back-to-tracing--review-run-history).
 

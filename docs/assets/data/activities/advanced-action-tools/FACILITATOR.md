@@ -1,6 +1,8 @@
 
 # Facilitator Guide · Advanced — Action Tools
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-only.** The full reference implementation of the approval loop is below. Do not paste it
 > into the student channel — the starter `agent_with_actions.py` deliberately leaves the FunctionTool
 > and approval loop as `< PLACEHOLDER >` gaps (the ATA "single-line completion moment" pattern).
@@ -49,7 +51,7 @@ az login                                        # keyless DefaultAzureCredential
 ## Per-step facilitation
 
 ### Step 0 / Step 1 checkpoint — backend reachable
-- `validate.py --step 1` hits `GET /health` over REST. If it fails, the backend isn't running or
+- `python activities/advanced-action-tools/validate.py --step 1` hits `GET /health` over REST. If it fails, the backend isn't running or
   `ACTION_API_URL` is wrong. This is the #1 blocker — check it first for any stuck team.
 
 ### Step 1 — knowledge vs action
@@ -91,7 +93,7 @@ def build_action_tools():
 
 - **Pitfall:** `FunctionTool` builds schemas from docstring `:param name: description` lines. Missing
   docstrings → model won't understand arguments → it will hallucinate or refuse to call the tool.
-- `validate.py --step 2` checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
+- `python activities/advanced-action-tools/validate.py --step 2` checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
 
 ### Step 3 — the approval loop (the heart of it)
 
@@ -137,7 +139,7 @@ def run_with_approval(agent_id, thread_id):
 - **Pitfall:** forgetting to re-`get` the run inside the loop → infinite `requires_action`.
 
 ### Step 4 — end-to-end
-- `validate.py --step 4` does its own REST round-trip (create IT ticket → list → confirm) against
+- `python activities/advanced-action-tools/validate.py --step 4` does its own REST round-trip (create IT ticket → list → confirm) against
   the backend, independent of the agent, so you can verify the backend is wired even if a team's agent
   code is mid-flight.
 
@@ -172,7 +174,7 @@ def run_with_approval(agent_id, thread_id):
 With the backend running and `agent_with_actions.py` completed:
 
 ```text
-python validate.py --all
+python activities/advanced-action-tools/validate.py --all
 # ✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080
 # ✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)
 # ✅ Step 3 PASS — human tool-approval loop implemented

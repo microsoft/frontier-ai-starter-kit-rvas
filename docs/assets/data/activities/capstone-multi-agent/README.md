@@ -1,5 +1,7 @@
 # Capstone · Northfield IQ, the Team — Multi-Agent Orchestration with MAF
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > Tier 3 · Capstone — the summit. ⏱ Core 2–2.5 hr (sequential + fan-out + DevUI + trace) ·
 > +1 hr Magentic manager stretch · +1.5 hr hosted long-running deploy variant.
 > ⭐⭐⭐⭐⭐ · Open-ended design brief — not a placeholder-fill.
@@ -202,7 +204,7 @@ live with your facilitator.
 
 ```text
 # structural subset of the acceptance criteria
-python validate.py --all
+python activities/capstone-multi-agent/validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
 ```
 

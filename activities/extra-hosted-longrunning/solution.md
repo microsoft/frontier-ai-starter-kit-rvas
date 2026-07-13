@@ -25,7 +25,7 @@ All already created by `azd up` (Foundations/Deploy), but **verify**:
 
 ## Search-Before-Implement
 
-Two preview surfaces here: `azd ai agent` / `agent.yaml` (via `foundry-hosted-agents`) and the
+Two preview surfaces here: unified hosted-agent `azure.yaml` / `azd` (via `foundry-hosted-agents`) and the
 **background-run** API (`background=True`, submit/poll). Both move. Send teams to `microsoft-docs` /
 `foundry-mcp` for current signatures rather than guessing.
 

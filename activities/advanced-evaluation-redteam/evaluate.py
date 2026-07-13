@@ -9,13 +9,13 @@ mean of any gated metric falls below a threshold (the CI-gate concept).
 Usage
 -----
     # quality eval over the shipped dataset (calls your grounded agent for each row)
-    python evaluate.py --dataset assets/northfield-eval.jsonl
+    python activities/advanced-evaluation-redteam/evaluate.py
 
     # custom evaluator only, no LLM-judge cost
-    python evaluate.py --dataset assets/northfield-eval.jsonl --custom-only
+    python activities/advanced-evaluation-redteam/evaluate.py --custom-only
 
     # gate the run in CI: fail if any mean score < 3.5 (1-5 scale)
-    python evaluate.py --dataset assets/northfield-eval.jsonl --gate 3.5
+    python activities/advanced-evaluation-redteam/evaluate.py --gate 3.5
 
 Environment (.env, from the Foundations end-state)
 --------------------------------------------------
@@ -42,6 +42,8 @@ import re
 import statistics
 import sys
 from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
 
 # --------------------------------------------------------------------------- #
 # Custom domain evaluator — runs locally, no LLM judge, no Azure calls.        #
@@ -72,6 +74,19 @@ class NorthfieldDomainEvaluator:
     def __call__(self, *, query: str, response: str, ground_truth: str = "", category: str = "", **_):
         score = 3.0
         reasons = []
+
+        response_words = set(re.findall(r"[a-z0-9]{4,}", response.lower()))
+        truth_words = set(re.findall(r"[a-z0-9]{4,}", ground_truth.lower()))
+        overlap = len(response_words & truth_words)
+        if not response.strip():
+            score -= 2.0
+            reasons.append("empty response")
+        elif truth_words and overlap < 2:
+            score -= 1.0
+            reasons.append("little evidence of the expected grounded answer")
+        elif truth_words:
+            score += 1.0
+            reasons.append("matches grounded answer content")
 
         gt_wants_contact = bool(NORTHFIELD_CONTACT.search(ground_truth)) or "(555)" in ground_truth
         if gt_wants_contact:
@@ -107,22 +122,16 @@ class NorthfieldDomainEvaluator:
 # Falls back to the dataset's ground_truth in --dry-run so the harness is      #
 # runnable before the agent exists (useful for wiring/CI smoke tests).         #
 # --------------------------------------------------------------------------- #
-def get_agent_response(project_client, agent_id: str, query: str) -> str:
+def get_agent_response(openai_client, agent_name: str, query: str) -> str:
     """Run one query against the grounded Northfield agent and return its text."""
-    agents = project_client.agents
-    thread = agents.threads.create()
-    agents.messages.create(thread_id=thread.id, role="user", content=query)
-    run = agents.runs.create_and_process(thread_id=thread.id, agent_id=agent_id)
-    if run.status == "failed":
-        return f"[agent run failed: {run.last_error}]"
-    msgs = agents.messages.list(thread_id=thread.id, order="desc")
-    for m in msgs:
-        if m.role == "assistant" and m.text_messages:
-            return m.text_messages[-1].text.value
-    return ""
+    response = openai_client.responses.create(
+        input=query,
+        extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+    )
+    return getattr(response, "output_text", "") or ""
 
 
-def build_rows(dataset: Path, dry_run: bool, project_client, agent_id: str) -> list[dict]:
+def build_rows(dataset: Path, dry_run: bool, openai_client, agent_name: str) -> list[dict]:
     rows = []
     for line in dataset.read_text(encoding="utf-8").splitlines():
         line = line.strip()
@@ -132,7 +141,7 @@ def build_rows(dataset: Path, dry_run: bool, project_client, agent_id: str) -> l
         if dry_run:
             item["response"] = item.get("ground_truth", "")
         else:
-            item["response"] = get_agent_response(project_client, agent_id, item["query"])
+            item["response"] = get_agent_response(openai_client, agent_name, item["query"])
         rows.append(item)
     return rows
 
@@ -174,7 +183,7 @@ def run_builtin_evaluators(rows: list[dict]) -> dict[str, list[float]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate the Northfield IQ Assistant.")
-    parser.add_argument("--dataset", default="assets/northfield-eval.jsonl", type=Path)
+    parser.add_argument("--dataset", default=HERE / "assets" / "northfield-eval.jsonl", type=Path)
     parser.add_argument("--gate", type=float, default=None,
                         help="Fail (exit 1) if any gated metric mean < this value (1-5).")
     parser.add_argument("--custom-only", action="store_true",
@@ -183,36 +192,38 @@ def main() -> int:
                         help="Use ground_truth as the response instead of calling the agent.")
     args = parser.parse_args()
 
+    if not args.dataset.exists() and not args.dataset.is_absolute():
+        activity_relative = HERE / args.dataset
+        if activity_relative.exists():
+            args.dataset = activity_relative
+
     if not args.dataset.exists():
         print(f"❌ dataset not found: {args.dataset}")
         return 2
 
-    project_client = None
-    # AZURE_FOUNDRY_AGENT_NAME is a NAME; runs.create_and_process needs the agent id.
+    openai_client = None
     agent_name = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "")
-    agent_id = ""
     if not args.dry_run:
+        if not agent_name:
+            print("❌ AZURE_FOUNDRY_AGENT_NAME is required for a live evaluation.")
+            return 2
         try:
             from azure.ai.projects import AIProjectClient
             from azure.identity import DefaultAzureCredential
 
-            project_client = AIProjectClient(
+            project = AIProjectClient(
                 endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
                 credential=DefaultAzureCredential(),
             )
-            # Resolve the agent name to its id (same name->id idiom as foundations/validate.py).
-            for a in project_client.agents.list_agents():
-                if getattr(a, "name", None) == agent_name:
-                    agent_id = getattr(a, "id", "") or ""
-                    break
-            if not agent_id:
-                print(f"⚠ agent '{agent_name}' not found in project; falling back to --dry-run")
-                args.dry_run = True
+            if not any(getattr(agent, "name", None) == agent_name for agent in project.agents.list()):
+                print(f"❌ agent '{agent_name}' not found in the configured project.")
+                return 2
+            openai_client = project.get_openai_client()
         except Exception as exc:
-            print(f"⚠ could not init project client ({exc}); falling back to --dry-run")
-            args.dry_run = True
+            print(f"❌ could not initialize the live agent evaluation ({exc})")
+            return 2
 
-    rows = build_rows(args.dataset, args.dry_run, project_client, agent_id)
+    rows = build_rows(args.dataset, args.dry_run, openai_client, agent_name)
     print(f"Loaded {len(rows)} rows from {args.dataset}"
           + (" (dry-run: response=ground_truth)" if args.dry_run else ""))
 

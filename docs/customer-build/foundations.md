@@ -7,6 +7,8 @@ description: Provision, choose a model, create your agent, and ground it in your
 
 # Customer Build · Ground your app
 
+> **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
+
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ground" artifact="A deployed agent grounded in YOUR customer-safe corpus, answering a real scenario question with a citation." next="Once your agent cites your own data, move to Make it act." %}
 
 This chapter is mutuated from [Foundations](../activities/foundations) — same objective, same
@@ -56,7 +58,9 @@ scenario-specific yet. → [Foundations Step 1](../activities/foundations#step-1
 
 **Prove you applied it:**
 - `python activities/foundations/validate.py --step 1` — infra + keyless auth are scenario-agnostic, so this reference check applies unchanged.
-- Checklist: □ `.env` has your project endpoint, model deployment, and search endpoint (no `<...>` placeholders) □ no API keys pasted anywhere.
+- Checklist:
+  - [ ] `.env` has your project endpoint, model deployment, and search endpoint (no `<...>` placeholders)
+  - [ ] no API keys pasted anywhere.
 
 **Stuck?** [Northfield Step 1](../activities/foundations#step-1--setup--provisioning-foundry--ai-search).
 
@@ -82,7 +86,10 @@ prompts and instruction. → [Foundations Step 2](../activities/foundations#step
 
 **Prove you applied it:**
 - `python activities/foundations/validate.py --track customer --step 2` — confirms your chosen deployment answers via the SDK.
-- Checklist: □ you can state one concrete trade-off you observed on *your* prompts □ your tuned system instruction is saved □ the code call is on-tone for your users.
+- Checklist:
+  - [ ] you can state one concrete trade-off you observed on *your* prompts
+  - [ ] your tuned system instruction is saved
+  - [ ] the code call is on-tone for your users.
 
 **Stuck?** [Northfield Step 2](../activities/foundations#step-2--model-selection--the-playground).
 
@@ -107,7 +114,10 @@ instructions; test that your specific refusals actually hold. → [Foundations S
 
 **Prove you applied it:**
 - `python activities/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
-- Checklist: □ an in-scope question is answered well □ each safety boundary from your scenario pack is actually refused/escalated □ portal and code instructions match.
+- Checklist:
+  - [ ] an in-scope question is answered well
+  - [ ] each safety boundary from your scenario pack is actually refused/escalated
+  - [ ] portal and code instructions match.
 
 **Stuck?** [Northfield Step 3](../activities/foundations#step-3--your-first-agent).
 
@@ -141,7 +151,10 @@ trusted source of truth.
 **Prove you applied it:**
 - `python activities/foundations/validate.py --track customer --step 4 --question "<your real scenario question>"`
   — asserts *your* agent (or index) returns a cited answer to a question you provide, instead of Northfield's school code.
-- Checklist: □ a real scenario question returns a citation to *your* source □ an out-of-corpus question abstains in *your* wording □ grounded answer is more specific than the ungrounded Step 3 answer.
+- Checklist:
+  - [ ] a real scenario question returns a citation to *your* source
+  - [ ] an out-of-corpus question abstains in *your* wording
+  - [ ] grounded answer is more specific than the ungrounded Step 3 answer.
 
 **Stuck?** [Northfield Step 4](../activities/foundations#step-4--knowledge-base-index--foundry-iq---foundations-end-state).
 

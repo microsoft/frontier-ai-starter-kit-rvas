@@ -1,5 +1,7 @@
 # Advanced — Deploy as a Hosted Agent
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > ⏱ Guided ~60–90 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
@@ -23,9 +25,9 @@ This is a genuine containerized deployment — not a "next steps" hand-wave. The
 now running as its own service.
 
 ```text
-   agent.yaml + Dockerfile + app code
+   azure.yaml + src/<agent>/ + Dockerfile
                 │
-                ▼  azd ai agent create/deploy
+                ▼  azd deploy
    ┌──────────────────────────────────────────────┐
    │  container image ──▶ ACR ──▶ hosted agent     │
    │                        (per-agent identity)   │
@@ -61,136 +63,107 @@ gives you only the deploy contract + the gotcha list · (c) Stretch goals go ope
 
 ## Rung (a) — Guided path
 
-> The beginner on-ramp: the `agent.yaml`, `main.py`, and `Dockerfile` are printed for you to adapt.
-> The real difficulty here is operational (async provisioning, ACR build), not authoring.
+> The beginner on-ramp starts from the current official Agent Framework Responses sample, then
+> adapts the generated `azure.yaml` and source. The real difficulty is the hosted runtime contract
+> and asynchronous deployment, not reconstructing a deprecated manifest.
 
-## Step 1 — Author `agent.yaml` and the container entrypoint
+## Step 1 — Scaffold the unified hosted-agent project
 
-**Goal:** Your repo holds a self-contained hosted-agent project: an `agent.yaml` manifest, the app code
-that serves the Responses protocol, and a Dockerfile.
+**Goal:** Your repo holds a current hosted-agent project: one unified `azure.yaml`, agent source under
+`src/<agent-name>/`, and a Dockerfile.
 
 **Tasks:**
 
-1. Create the folder `activities/advanced-deploy-hosted-agent/hosted/` and add an `agent.yaml`
-   that declares the agent name, the model deployment, the system instructions (reuse your Foundations
-   persona/guardrails), and the `responses` protocol on port `8088`.
-2. Add `main.py` that hosts the agent and serves `POST /responses` on `8088`. The simplest path is the
-   Microsoft Agent Framework hosted-agent server, which speaks the Responses protocol for you.
-3. Add a `Dockerfile` (slim Python base, `linux/amd64`, expose `8088`) and a `requirements.txt` for the
-   container (`agent-framework`, `azure-ai-projects`, `azure-identity`).
+1. Install the current Foundry extension, create an empty activity-local project directory, and
+   initialize the official basic Responses sample. In the wizard, select the **existing** Foundry
+   project created in Foundations and its existing model deployment:
 
-```yaml
-# hosted/agent.yaml
-name: northfield-iq-assistant
-description: Northfield University student-services IQ Assistant (grounded, hosted).
-model:
-  deployment: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
-instructions: |
-  You are the Northfield University Student Services Assistant. Answer only from the
-  Northfield knowledge base and always cite your sources. If the answer is not in the
-  knowledge base, say so and point the student to the relevant office. Never invent
-  deadlines, dollar amounts, or policies.
-protocols:
-  - type: responses
-    version: 1.0.0
-    port: 8088
-```
+   ```bash
+   azd ext install microsoft.foundry
+   mkdir -p activities/advanced-deploy-hosted-agent/hosted
+   cd activities/advanced-deploy-hosted-agent/hosted
+   azd ai agent init \
+     -m https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/responses/01-basic/azure.yaml \
+     --deploy-mode code \
+     --agent-name northfield-iq-assistant
+   ```
 
-```python
-# hosted/main.py — serves the Responses protocol on :8088
-import os
-from agent_framework.azure import AzureAIAgentServerHost
-from azure.identity import DefaultAzureCredential
+2. Inspect the generated `azure.yaml`. The `azure.ai.agent` service is the deploy contract and must
+   use `kind: hosted`, point `project:` at the generated source directory, and declare:
 
-host = AzureAIAgentServerHost(
-    endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
-    credential=DefaultAzureCredential(),
-    agent_name=os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant"),
-    model_deployment=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
-)
+   ```yaml
+   protocols:
+     - protocol: responses
+       version: 2.0.0
+   ```
 
-if __name__ == "__main__":
-    # Hosted agents must listen on 0.0.0.0:8088 for the Responses protocol.
-    host.run(host_address="0.0.0.0", port=8088)
-```
+3. Adapt the generated source under `src/<agent-name>/` to use the Foundations persona and model
+   deployment. Keep the generated Agent Framework Responses host, `requirements.txt`, and Dockerfile.
+   The hosted runtime contract is: listen on port `8088`, expose `GET /readiness`, and serve the
+   Responses protocol.
+4. From the `hosted/` directory, run the generated project locally:
 
-```dockerfile
-# hosted/Dockerfile
-FROM python:3.13-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 8088
-CMD ["python", "main.py"]
-```
+   ```bash
+   azd ai agent run
+   ```
 
 **Success Criteria:**
 
-- [ ] `hosted/agent.yaml` declares the `responses` protocol (v `1.0.0`) on port `8088`.
-- [ ] `hosted/main.py` serves `POST /responses` on `0.0.0.0:8088`.
-- [ ] `hosted/Dockerfile` targets `linux/amd64`, exposes `8088`, and runs `main.py`.
-- [ ] The container runs locally and answers a Responses call:
-      `curl -s -X POST http://localhost:8088/responses -d '{"input":"Where is the registrar?"}'`.
+- [ ] `hosted/azure.yaml` contains an `azure.ai.agent` service with `kind: hosted`.
+- [ ] The service declares the `responses` protocol at version `2.0.0`.
+- [ ] Its `project:` directory and configured entry point exist under `hosted/src/`.
+- [ ] `azd ai agent run` starts the local agent and the inspector receives an answer.
 
 **Checkpoint:**
 
 ```bash
-python validate.py --step 1
-# expected: "✅ Step 1 PASS — agent.yaml + responses entrypoint + Dockerfile present and valid"
+python activities/advanced-deploy-hosted-agent/validate.py --step 1
+# expected: "✅ Step 1 PASS — azure.yaml + hosted Responses service + source project present and valid"
 ```
 
 > _Facilitator note: see solution.md._
 
 ---
 
-## Step 2 — Containerize and deploy with `azd ai agent`
+## Step 2 — Provision and deploy with `azd`
 
-**Goal:** The image is built, pushed to ACR, and the agent is deployed as a hosted agent with its
-own version and a per-agent managed identity.
+**Goal:** The generated project is connected to Azure and deployed as a hosted agent with its own
+version and per-agent managed identity.
 
 **Tasks:**
 
-1. From `hosted/`, build the image to ACR. Prefer cloud build (no local Docker needed); the
-   `--source-acr-auth-id "[caller]"` flag is mandatory:
+1. From `activities/advanced-deploy-hosted-agent/hosted/`, provision or connect the resources
+   declared by the generated `azure.yaml`:
 
    ```bash
-   az acr build \
-     --registry <acr-name> \
-     --image northfield-iq-assistant:$(date +%Y%m%d%H%M) \
-     --platform linux/amd64 \
-     --source-acr-auth-id "[caller]" \
-     --file Dockerfile .
+   azd provision
    ```
 
-2. Deploy the hosted agent. `azd ai agent` reads `agent.yaml`, wires the image, creates the agent
-   version, and provisions the per-agent identity:
+2. Deploy the hosted agent. `azd deploy` builds the generated project and rolls out a hosted version:
 
    ```bash
-   azd ai agent create   # first time: registers the agent from agent.yaml
-   azd ai agent deploy    # builds/pushes (if needed) and rolls out the hosted version
+   azd deploy
    ```
 
-3. Confirm the deployed version is `active` before invoking — a hosted version provisions
-   asynchronously:
+3. Invoke the deployed version through the CLI:
 
    ```bash
-   az ai agent show --name northfield-iq-assistant --query "version,status"
+   azd ai agent invoke "Where is the registrar?"
    ```
 
-> ⚠️ Use a unique image tag every build (e.g. a timestamp). Reusing `latest` or `v1` causes ACR to
-> serve a stale layer and your changes won't roll out.
+> Hosted versions provision asynchronously. If invocation reports that the session is not ready,
+> wait for deployment to become active and retry; `azd ai agent monitor --follow` shows live logs.
 
 **Success Criteria:**
 
-- [ ] The image is present in ACR with a unique (timestamped) tag.
-- [ ] `azd ai agent deploy` completes and the agent has a deployed hosted version.
-- [ ] The version status reports `active`.
+- [ ] `azd provision` completes against the intended Foundry project.
+- [ ] `azd deploy` completes and reports the agent endpoint/playground.
+- [ ] `azd ai agent invoke` returns an answer from the deployed agent.
 
 **Checkpoint:**
 
 ```bash
-python validate.py --step 2
+python activities/advanced-deploy-hosted-agent/validate.py --step 2
 # expected: "✅ Step 2 PASS — hosted agent deployed, version active in the project"
 ```
 
@@ -254,7 +227,7 @@ $ curl -s -o /dev/null -w "%{http_code}" <endpoint>/responses   # no token
 
 ```bash
 python activities/advanced-deploy-hosted-agent/invoke_hosted.py
-python validate.py --step 3
+python activities/advanced-deploy-hosted-agent/validate.py --step 3
 # expected: "✅ Step 3 PASS — live endpoint answers authenticated calls, rejects anonymous"
 ```
 
@@ -295,7 +268,7 @@ the same OTel traces you learned to read in the Tracing activity.
 **Checkpoint:**
 
 ```bash
-python validate.py --step 4
+python activities/advanced-deploy-hosted-agent/validate.py --step 4
 # expected: "✅ Step 4 PASS — hosted run visible in run history and App Insights traces"
 ```
 
@@ -305,8 +278,8 @@ python validate.py --step 4
 
 ## Rung (b) — Build-from-scratch path
 
-> Stronger team? Skip the pasted manifests. We hand you only the deploy contract and the gotcha
-> list — you author the `agent.yaml`, `Dockerfile`, and entrypoint yourself. The same `validate.py`
+> Stronger team? Skip the sample implementation details. Start from `azd ai agent init` around your
+> own code, then author the unified `azure.yaml`, Dockerfile, and entrypoint. The same `validate.py`
 > grades this path.
 
 Your contract:
@@ -315,8 +288,8 @@ Your contract:
 > Acceptance: a live grounded answer and a rejected anonymous call.
 
 The gotchas you get (everything else you design):
-- Unique image tag every build (a timestamp) — reusing `latest`/`v1` serves a stale layer.
-- `--source-acr-auth-id "[caller]"` is mandatory on `az acr build`.
+- Standalone `agent.yaml` / `agent.manifest.yaml` files are deprecated; use unified `azure.yaml`.
+- The Responses declaration is `protocol: responses`, version `2.0.0`.
 - A hosted version provisions asynchronously — gate on `status == active` before invoking.
 - Look up the current MAF server-host class name via the `microsoft-docs` MCP — don't assume it.
 
@@ -342,19 +315,14 @@ Genuinely open-ended — no single right answer:
    KB, then prove a missing role yields a `403` — the security story most demos skip.
 
 - Add a second `invocations` protocol to the same container for a custom request schema.
-- Wire a CI step (GitHub Actions) that rebuilds the image with a fresh tag and runs
-  `azd ai agent deploy` on push.
+- Wire a CI step (GitHub Actions) that runs `azd deploy` and a remote smoke invocation on push.
 - Grant the per-agent identity least-privilege data-plane roles and remove any local-auth fallback.
 
 ## Cleanup
 
-After the event, delete the hosted agent and its image to stop incurring cost:
-
-```bash
-azd down            # tears down azd-provisioned resources
-# or, agent-only:
-az ai agent delete --name northfield-iq-assistant
-```
+After the event, remove the hosted version from the Foundry portal. Do **not** run `azd down` when
+the hosted project is connected to the shared Foundations resource group: that command can delete
+the Foundry project, model deployments, Search, ACR, and App Insights together.
 
 ## Learning resources
 

@@ -1,5 +1,7 @@
 # Advanced — Tracing & Observability
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > ⏱ Guided ~1 hr · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
@@ -137,7 +139,7 @@ if __name__ == "__main__":
 **Checkpoint:**
 
 ```bash
-python validate.py --step 1
+python activities/advanced-tracing-observability/validate.py --step 1
 # expected: "✅ Step 1 PASS — instrumentation wired, App Insights connection resolved"
 ```
 
@@ -203,7 +205,7 @@ response id: resp_01J8X...   ← use this to find the trace
 
 ```bash
 python activities/advanced-tracing-observability/traced_run.py
-python validate.py --step 2
+python activities/advanced-tracing-observability/validate.py --step 2
 # expected: "✅ Step 2 PASS — agent run emitted >=1 GenAI span to App Insights"
 ```
 
@@ -238,7 +240,7 @@ model, retrieval, and (if present) tool spans.
 model span exposing `gen_ai.usage.total_tokens`. Capture the trace's operation id for Step 4.
 
 ```bash
-python validate.py --step 3
+python activities/advanced-tracing-observability/validate.py --step 3
 # expected: "✅ Step 3 PASS — span tree present with model + retrieval spans"
 ```
 
@@ -308,7 +310,7 @@ question and surfaces token, latency, and cost signals.
 **Checkpoint:**
 
 ```bash
-python validate.py --step 4
+python activities/advanced-tracing-observability/validate.py --step 4
 # expected: "✅ Step 4 PASS — correlate.kql present and returns end-to-end spans for one run"
 ```
 

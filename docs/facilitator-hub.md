@@ -99,7 +99,7 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful fa
 | Action Tools | 1–1.5 hr | Tool fires without approval, or never fires | Inspect the MCP `requires_action` loop and approval gate. |
 | Evaluation & Red Teaming | 1–1.5 hr | Teams ignore metrics they do not like | Reframe metrics as design feedback; check the CI score gate. |
 | Tracing & Observability | 1 hr | No spans land in App Insights | Confirm GenAI tracing env vars are set **before** SDK import. |
-| Deploy as a Hosted Agent | 1–1.5 hr | Image builds but endpoint 401/500s | Check ACR push, `agent.yaml`, and per-agent managed identity. |
+| Deploy as a Hosted Agent | 1–1.5 hr | Deployment completes but endpoint 401/500s | Check `azure.yaml`, hosted logs, and per-agent managed identity. |
 | Extras (Fabric IQ, Voice Live, Magentic Workflows, Build a UI, …) | 45–90 min each | Teams lose 30+ min on unrelated concepts | Anchor each Extra to the outcome: *"what does this add to the prototype for your customer?"* |
 
 **Tier 3 · Capstone** *(optional — only attempt if Foundations + ≥1 Advanced are complete)*:

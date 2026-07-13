@@ -1,6 +1,8 @@
 
 # Customer Build · Make it act
 
+> **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
+
 
 
 This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](activity.html?id=customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
@@ -27,7 +29,10 @@ This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanc
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --step 1 --dry-run`
-- Checklist: □ action endpoint or mock is reachable □ no production data is mutated □ every required env var uses `.env.sample` names (`ACTION_API_URL`, `ACTION_MCP_URL`, `ACTION_API_KEY`).
+- Checklist:
+  - [ ] action endpoint or mock is reachable
+  - [ ] no production data is mutated
+  - [ ] every required env var uses `.env.sample` names (`ACTION_API_URL`, `ACTION_MCP_URL`, `ACTION_API_KEY`).
 
 **Stuck?** [Northfield Step 0](activity.html?id=advanced-action-tools#step-0--start-the-provided-backend).
 
@@ -52,7 +57,11 @@ This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanc
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
-- Checklist: □ each action has a named side effect □ approval criteria are written □ denial behavior is defined □ unsafe/out-of-scope requests route to refusal or escalation.
+- Checklist:
+  - [ ] each action has a named side effect
+  - [ ] approval criteria are written
+  - [ ] denial behavior is defined
+  - [ ] unsafe/out-of-scope requests route to refusal or escalation.
 
 **Stuck?** [Northfield Step 1](activity.html?id=advanced-action-tools#step-1--knowledge-tools-vs-action-tools).
 
@@ -77,7 +86,11 @@ This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanc
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --step 2 --dry-run`
-- Checklist: □ tool names match your business action □ parameters are not Northfield-specific unless your scenario is Northfield □ tool uses `ACTION_API_URL` or a documented equivalent □ no placeholders remain.
+- Checklist:
+  - [ ] tool names match your business action
+  - [ ] parameters are not Northfield-specific unless your scenario is Northfield
+  - [ ] tool uses `ACTION_API_URL` or a documented equivalent
+  - [ ] no placeholders remain.
 
 **Stuck?** [Northfield Step 2](activity.html?id=advanced-action-tools#step-2--define-the-action-tools).
 
@@ -102,7 +115,11 @@ This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanc
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --step 3 --dry-run`
-- Checklist: □ action cannot execute before approval □ denial performs no side effect □ approval arguments are visible □ logs or records show the decision.
+- Checklist:
+  - [ ] action cannot execute before approval
+  - [ ] denial performs no side effect
+  - [ ] approval arguments are visible
+  - [ ] logs or records show the decision.
 
 **Stuck?** [Northfield Step 3](activity.html?id=advanced-action-tools#step-3--implement-the-tool-approval-loop).
 
@@ -127,7 +144,11 @@ This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanc
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --all --dry-run`
-- Checklist: □ approved request creates/updates the expected record □ denied request creates nothing □ result id is shown to the user □ action is included in your demo story.
+- Checklist:
+  - [ ] approved request creates/updates the expected record
+  - [ ] denied request creates nothing
+  - [ ] result id is shown to the user
+  - [ ] action is included in your demo story.
 
 **Stuck?** [Northfield Step 4](activity.html?id=advanced-action-tools#step-4--test-an-end-to-end-action).
 

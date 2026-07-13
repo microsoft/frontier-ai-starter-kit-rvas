@@ -288,7 +288,7 @@ const ACTIVITIES = [
     track: 'deploy',
     difficulty: 'advanced',
     duration_minutes: 90,
-    description: 'Package and deploy your agent as a hosted endpoint with the agent.yaml contract.',
+    description: 'Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.',
     prerequisites: ['foundations'],
     tags: ['deployment', 'hosted-agent', 'container'],
     outcomes: ['upskill'],
@@ -435,6 +435,7 @@ function transformMarkdown(markdown, activity) {
     .replace(/\]\(\.\.\/activities\/([^)#]+)(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(slug, hash)})`)
     .replace(/\]\(\.\.\/customer-outcome(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('customer-outcome', hash)})`)
     .replace(/\]\(\.\.\/idea-forge(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('idea-forge', hash)})`)
+    .replace(/\]\(\.\.\/customer-build\)/g, '](catalog.html?outcome=customer-build)')
     .replace(/\]\(\.\.\/\.\.\/resources\//g, '](resources/')
     .replace(/\]\(\.\.\/\.\.\/docs\/activities\/([^)]+)\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
     .replace(/\]\((?:\.\.\/)*customer-build\.md\)/g, '](catalog.html?outcome=customer-build)')
@@ -443,10 +444,17 @@ function transformMarkdown(markdown, activity) {
     .replace(/\]\((foundations|advanced-action-tools|advanced-evaluation-redteam|advanced-tracing-observability|advanced-deploy-hosted-agent|extra-build-ui|capstone-multi-agent)(#[^)]+)?\)/g,
       (_m, slug, hash = '') => isCustomerChapter ? `](${activityUrl(customerChapterId(slug), hash)})` : _m)
     .replace(/\]\(assets\//g, `](${activityAssetBase}`)
+    .replace(/\]\(([^):?#]+\.(?:py|sh|js|mjs|cjs|ps1))(#[^)]+)?\)/g, (_m, target, hash = '') => {
+      if (!sourceDir) return _m;
+      const candidate = path.resolve(ROOT, sourceDir, target);
+      if (!candidate.startsWith(`${ROOT}${path.sep}`) || !fs.existsSync(candidate)) return _m;
+      return `](${repoBlob(path.relative(ROOT, candidate).split(path.sep).join('/'))}${hash})`;
+    })
     .replace(/\]\(solution\.md\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/solution.md`)})` : '](#)')
     .replace(/\]\(evaluate\.py\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/evaluate.py`)})` : '](#)')
     .replace(/\]\(validate\.py\)/g, sourceDir ? `](${repoBlob(`${sourceDir}/validate.py`)})` : '](#)')
     .replace(/\]\(\.\.\/\.\.\/\.env\.sample\)/g, `](${repoBlob('.env.sample')})`)
+    .replace(/\]\(\.\.\/\.\.\/\.vscode\//g, `](${repoBlob('.vscode/')}`)
     .replace(/\]\(\.\.\/\.\.\/\.github\//g, `](${repoBlob('.github/')}`)
     .replace(/\]\(\.\.\/\.\.\/scripts\//g, `](${repoBlob('scripts/')}`)
     .replace(/\]\(\.\.\/\.\.\/docs\//g, `](${repoBlob('docs/')}`);
@@ -578,7 +586,7 @@ function main() {
 
   fs.writeFileSync(
     path.join(OUT_DATA_DIR, 'platform.json'),
-    JSON.stringify({ generated_at: new Date().toISOString(), modules, outcomes, activities: outputActivities }, null, 2),
+    JSON.stringify({ modules, outcomes, activities: outputActivities }, null, 2),
   );
   fs.writeFileSync(path.join(OUT_DATA_DIR, 'dependency-graph.json'), JSON.stringify(graph, null, 2));
 

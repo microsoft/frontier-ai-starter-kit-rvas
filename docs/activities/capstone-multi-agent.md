@@ -6,6 +6,8 @@ nav_order: 30
 
 # Capstone · Northfield IQ, the Team — Multi-Agent Orchestration with MAF
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Orchestrate" artifact="A router plus specialist agents that handle a realistic journey as a team." next="Start from the monolithic assistant, define the agent org chart, then wire the MAF workflow." %}
 
 {% include module-lens.html upskill="Turn Northfield into a student-services team with knowledge, action, and escalation specialists." %}
@@ -211,7 +213,7 @@ live with your facilitator.
 
 ```text
 # structural subset of the acceptance criteria
-python validate.py --all
+python activities/capstone-multi-agent/validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
 
 ```

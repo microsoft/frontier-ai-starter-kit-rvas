@@ -118,6 +118,8 @@ Follow the prompts to sign in with your Azure account. This connects your worksp
 
 **Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 
+Run these commands from the repository root:
+
 ```bash
 azd up                                   # provision Foundry + AI Search + App Insights + ACR
 ./scripts/setup-foundations.sh           # build the agent + index + IQ knowledge base

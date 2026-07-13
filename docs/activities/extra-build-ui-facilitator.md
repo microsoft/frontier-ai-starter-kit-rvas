@@ -87,7 +87,7 @@ Run: `uvicorn server.app:app --port 5000` and open `http://localhost:5000`.
   `.responses.create(...)`. A trailing slash on the endpoint env var double-slashes the path — `rstrip("/")`.
 
 - No Deploy done. Fall back to the prompt-agent route with
-  `extra_body={"agent": {"name": _agent, "type": "agent_reference"}}` — works against the Foundations agent.
+  `extra_body={"agent_reference": {"name": _agent, "type": "agent_reference"}}` — works against the Foundations agent.
 
 ---
 
@@ -201,9 +201,9 @@ origin.
 
 ---
 
-## Checkpoint command reference (for QA)
+## Optional checkpoint automation contract
 
-`validate.py` should implement:
+No `validate.py` ships with this activity. If a team chooses to create one, it can implement:
 
 | Command | Asserts |
 |---|---|

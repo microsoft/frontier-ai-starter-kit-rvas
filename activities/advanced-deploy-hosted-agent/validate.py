@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Checkpoints for Advanced · Deploy as a Hosted Agent.
 
-Step 1 is fully STRUCTURAL (the hosted/ project you author: agent.yaml +
-entrypoint + Dockerfile) and runs offline. Steps 2-4 need a live deployment, so
+Step 1 is fully STRUCTURAL (the hosted/ project you scaffold: azure.yaml +
+agent source + Dockerfile) and runs offline. Steps 2-4 need a live deployment, so
 they are GUARDED and degrade to a clear message when creds / the SDK / the
 deployed agent are unavailable. `--dry-run` forces the offline path everywhere.
 
-    python validate.py --step 1     # hosted/agent.yaml + main.py + Dockerfile present and valid
+    python validate.py --step 1     # hosted/azure.yaml + agent source + Dockerfile are valid
     python validate.py --step 2     # hosted agent deployed, a version is active
     python validate.py --step 3     # live endpoint answers authenticated calls, rejects anonymous
     python validate.py --step 4     # hosted run visible (run history / App Insights)
@@ -24,7 +24,6 @@ try:
     load_dotenv()
 except ImportError:  # python-dotenv optional; .env may already be exported in the shell
     pass
-import re
 import sys
 from pathlib import Path
 
@@ -33,11 +32,8 @@ GREEN, YELLOW, RED, CYAN, RESET = "\033[0;32m", "\033[1;33m", "\033[0;31m", "\03
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
 HOSTED = HERE / "hosted"
-AGENT_YAML = HOSTED / "agent.yaml"
-MAIN_PY = HOSTED / "main.py"
-DOCKERFILE = HOSTED / "Dockerfile"
+AZURE_YAML = HOSTED / "azure.yaml"
 INVOKE = HERE / "invoke_hosted.py"
-PORT = "8088"
 
 
 def ok(m: str) -> None:
@@ -78,51 +74,64 @@ def _agent_name(env: dict, track: str) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# Step 1 — agent.yaml + responses entrypoint + Dockerfile present and valid    #
+# Step 1 — unified azure.yaml + hosted source project present and valid         #
 # --------------------------------------------------------------------------- #
 def check_step1(env: dict, dry_run: bool, track: str) -> bool:
-    if not AGENT_YAML.exists():
-        return _fail("1", f"missing {AGENT_YAML.relative_to(HERE)} — author the hosted-agent project (README Step 1)")
-    raw = AGENT_YAML.read_text(encoding="utf-8")
+    if not AZURE_YAML.exists():
+        return _fail("1", f"missing {AZURE_YAML.relative_to(HERE)} — run 'azd ai agent init' (README Step 1)")
+    raw = AZURE_YAML.read_text(encoding="utf-8")
     manifest = None
     try:
         import yaml
 
         manifest = yaml.safe_load(raw)
     except ImportError:
-        warn("PyYAML not installed — falling back to text checks on agent.yaml")
+        warn("PyYAML not installed — falling back to text checks on azure.yaml")
     except Exception as exc:  # noqa: BLE001
-        return _fail("1", f"agent.yaml is not valid YAML ({exc})")
+        return _fail("1", f"azure.yaml is not valid YAML ({exc})")
 
     if manifest is not None:
-        protocols = manifest.get("protocols") or []
-        types = {(p or {}).get("type") for p in protocols if isinstance(p, dict)}
-        ports = {str((p or {}).get("port")) for p in protocols if isinstance(p, dict)}
-        if "responses" not in types:
-            return _fail("1", "agent.yaml must declare the 'responses' protocol")
-        if PORT not in ports:
-            return _fail("1", f"agent.yaml 'responses' protocol should listen on port {PORT}")
-        if not manifest.get("name"):
-            return _fail("1", "agent.yaml must declare a 'name'")
+        services = manifest.get("services") or {}
+        agents = [
+            service for service in services.values()
+            if isinstance(service, dict) and service.get("host") == "azure.ai.agent"
+        ]
+        if not agents:
+            return _fail("1", "azure.yaml must declare a service with host: azure.ai.agent")
+        agent_service = agents[0]
+        if agent_service.get("kind") != "hosted":
+            return _fail("1", "the azure.ai.agent service must declare kind: hosted")
+        protocols = agent_service.get("protocols") or []
+        protocol_names = {(p or {}).get("protocol") for p in protocols if isinstance(p, dict)}
+        if "responses" not in protocol_names:
+            return _fail("1", "the hosted agent service must declare protocol: responses")
+        response_versions = {
+            str((p or {}).get("version"))
+            for p in protocols
+            if isinstance(p, dict) and (p or {}).get("protocol") == "responses"
+        }
+        if "2.0.0" not in response_versions:
+            return _fail("1", "the Responses protocol version must be 2.0.0")
+        project_dir = HOSTED / str(agent_service.get("project") or "")
+        if not agent_service.get("project") or not project_dir.is_dir():
+            return _fail("1", "the hosted agent service 'project' directory does not exist")
+        if not (project_dir / "Dockerfile").exists():
+            return _fail("1", f"missing {(project_dir / 'Dockerfile').relative_to(HERE)}")
+        code_config = agent_service.get("codeConfiguration") or {}
+        entry_point = code_config.get("entryPoint") if isinstance(code_config, dict) else None
+        if entry_point and not (project_dir / str(entry_point)).exists():
+            return _fail("1", f"codeConfiguration.entryPoint does not exist: {entry_point}")
+        if not entry_point and not agent_service.get("startupCommand"):
+            return _fail("1", "the hosted agent service needs codeConfiguration.entryPoint or startupCommand")
     else:
-        if "responses" not in raw or PORT not in raw:
-            return _fail("1", f"agent.yaml must declare the 'responses' protocol on port {PORT}")
-
-    if not MAIN_PY.exists():
-        return _fail("1", f"missing {MAIN_PY.relative_to(HERE)} — the Responses entrypoint")
-    main_src = MAIN_PY.read_text(encoding="utf-8")
-    if PORT not in main_src:
-        return _fail("1", f"main.py must serve on port {PORT}")
-
-    if not DOCKERFILE.exists():
-        return _fail("1", f"missing {DOCKERFILE.relative_to(HERE)}")
-    dockerfile = DOCKERFILE.read_text(encoding="utf-8")
-    if not re.search(rf"EXPOSE\s+{PORT}", dockerfile):
-        return _fail("1", f"Dockerfile must EXPOSE {PORT}")
+        required = ("azure.ai.agent", "kind: hosted", "protocol: responses", "version: 2.0.0")
+        missing = [value for value in required if value not in raw]
+        if missing:
+            return _fail("1", f"azure.yaml is missing current hosted-agent fields: {', '.join(missing)}")
 
     if track == "customer" and "northfield" in raw.lower():
-        warn("--track customer: hosted/agent.yaml still contains Northfield text; adapt name/instructions before demo.")
-    ok("✅ Step 1 PASS — agent.yaml + responses entrypoint + Dockerfile present and valid")
+        warn("--track customer: hosted/azure.yaml still contains Northfield text; adapt the agent before demo.")
+    ok("✅ Step 1 PASS — azure.yaml + hosted Responses service + source project present and valid")
     return True
 
 
@@ -132,9 +141,9 @@ def check_step1(env: dict, dry_run: bool, track: str) -> bool:
 def check_step2(env: dict, dry_run: bool, track: str) -> bool:
     agent_name = _agent_name(env, track)
     if dry_run:
-        if not AGENT_YAML.exists():
-            return _fail("2", "author hosted/agent.yaml first (Step 1)")
-        ok(f"✅ Step 2 PASS (dry-run) — agent.yaml ready to deploy '{agent_name}' (live status skipped)")
+        if not AZURE_YAML.exists():
+            return _fail("2", "scaffold hosted/azure.yaml first (Step 1)")
+        ok(f"✅ Step 2 PASS (dry-run) — azure.yaml ready to deploy '{agent_name}' (live status skipped)")
         return True
     endpoint = (env.get("AZURE_AI_PROJECT_ENDPOINT") or "").strip()
     if not endpoint:
@@ -145,12 +154,12 @@ def check_step2(env: dict, dry_run: bool, track: str) -> bool:
 
         project = AIProjectClient(endpoint=endpoint, credential=DefaultAzureCredential())
         found = None
-        for a in project.agents.list_agents():
+        for a in project.agents.list():
             if getattr(a, "name", None) == agent_name:
                 found = a
                 break
         if found is None:
-            return _fail("2", f"hosted agent '{agent_name}' not found — run 'azd ai agent create/deploy'")
+            return _fail("2", f"hosted agent '{agent_name}' not found — run 'azd deploy' from hosted/")
         status = (getattr(found, "status", "") or "").lower()
         if status and status != "active":
             return _fail("2", f"agent '{agent_name}' version status is '{status}' (waiting to become active)")
@@ -160,7 +169,7 @@ def check_step2(env: dict, dry_run: bool, track: str) -> bool:
     except ImportError as exc:
         return _fail("2", f"azure-ai-projects not installed ({exc})")
     except Exception as exc:  # noqa: BLE001
-        return _fail("2", f"could not query the deployed agent ({exc}); run 'az login' and 'azd ai agent deploy'")
+        return _fail("2", f"could not query the deployed agent ({exc}); run 'az login' and 'azd deploy' from hosted/")
 
 
 # --------------------------------------------------------------------------- #

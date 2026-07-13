@@ -99,6 +99,8 @@ info "Creating Azure AI Search (basic)..."
 az search service create -g "$RG" -n "$SEARCH" -l "$LOCATION" \
   --sku basic --identity-type SystemAssigned -o none 2>/dev/null \
   || az search service create -g "$RG" -n "$SEARCH" -l "$LOCATION" --sku basic -o none
+az search service update -g "$RG" -n "$SEARCH" \
+  --identity-type SystemAssigned --semantic-search standard -o none
 SEARCH_ENDPOINT="https://${SEARCH}.search.windows.net"
 
 # ---- Azure Container Registry ----------------------------------------------
@@ -152,10 +154,84 @@ az rest --method put \
   -o none || warn "Project create returned non-zero (may already exist)."
 
 PROJECT_ENDPOINT="https://${FOUNDRY}.services.ai.azure.com/api/projects/${PROJECT}"
+PROJECT_RESOURCE_URL="${ARM}/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.CognitiveServices/accounts/${FOUNDRY}/projects/${PROJECT}"
+PROJECT_PRINCIPAL_ID=""
+for i in $(seq 1 12); do
+  PROJECT_PRINCIPAL_ID="$(az rest --method get \
+    --url "${PROJECT_RESOURCE_URL}?api-version=${API}" \
+    --query identity.principalId -o tsv 2>/dev/null || true)"
+  [[ -n "$PROJECT_PRINCIPAL_ID" ]] && break
+  sleep 5
+done
+[[ -n "$PROJECT_PRINCIPAL_ID" ]] || fail "Foundry project managed identity was not provisioned."
+
+SEARCH_PRINCIPAL_ID="$(az search service show -g "$RG" -n "$SEARCH" --query identity.principalId -o tsv)"
+[[ -n "$SEARCH_PRINCIPAL_ID" ]] || fail "Azure AI Search managed identity was not provisioned."
+
+# ---- Foundry project connections -------------------------------------------
+info "Creating Foundry project connections..."
+az rest --method put \
+  --url "${PROJECT_RESOURCE_URL}/connections/search?api-version=${API}" \
+  --body "$(cat <<JSON
+{
+  "properties": {
+    "category": "CognitiveSearch",
+    "target": "${SEARCH_ENDPOINT}",
+    "authType": "AAD",
+    "isSharedToAll": true,
+    "metadata": {
+      "ApiType": "Azure",
+      "ResourceId": "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Search/searchServices/${SEARCH}",
+      "Location": "${LOCATION}"
+    }
+  }
+}
+JSON
+)" -o none
+
+az rest --method put \
+  --url "${PROJECT_RESOURCE_URL}/connections/appinsights?api-version=${API}" \
+  --body "$(cat <<JSON
+{
+  "properties": {
+    "category": "AppInsights",
+    "target": "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Insights/components/${APPI}",
+    "authType": "ApiKey",
+    "isSharedToAll": true,
+    "credentials": { "key": "${APPI_CONN}" },
+    "metadata": {
+      "ApiType": "Azure",
+      "ResourceId": "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Insights/components/${APPI}"
+    }
+  }
+}
+JSON
+)" -o none
+
+# ---- managed-identity RBAC -------------------------------------------------
+info "Granting Search roles to the Foundry project identity..."
+az role assignment create --assignee-object-id "$PROJECT_PRINCIPAL_ID" --assignee-principal-type ServicePrincipal \
+  --role "Search Index Data Contributor" \
+  --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Search/searchServices/${SEARCH}" \
+  -o none 2>/dev/null || warn "Could not assign project Search data role (insufficient perms?)."
+az role assignment create --assignee-object-id "$PROJECT_PRINCIPAL_ID" --assignee-principal-type ServicePrincipal \
+  --role "Search Service Contributor" \
+  --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Search/searchServices/${SEARCH}" \
+  -o none 2>/dev/null || warn "Could not assign project Search service role (insufficient perms?)."
+
+info "Granting model access to the Search identity..."
+az role assignment create --assignee-object-id "$SEARCH_PRINCIPAL_ID" --assignee-principal-type ServicePrincipal \
+  --role "Cognitive Services OpenAI User" \
+  --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.CognitiveServices/accounts/${FOUNDRY}" \
+  -o none 2>/dev/null || warn "Could not assign Search model-access role (insufficient perms?)."
 
 # ---- best-effort RBAC for keyless local dev --------------------------------
 if [[ -n "$PRINCIPAL_ID" ]]; then
   info "Granting data-plane roles to signed-in user (keyless dev)..."
+  az role assignment create --assignee-object-id "$PRINCIPAL_ID" --assignee-principal-type User \
+    --role "Cognitive Services User" \
+    --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.CognitiveServices/accounts/${FOUNDRY}" \
+    -o none 2>/dev/null || warn "Could not assign Cognitive Services User role (insufficient perms?)."
   az role assignment create --assignee-object-id "$PRINCIPAL_ID" --assignee-principal-type User \
     --role "Cognitive Services OpenAI User" \
     --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.CognitiveServices/accounts/${FOUNDRY}" \
@@ -164,6 +240,14 @@ if [[ -n "$PRINCIPAL_ID" ]]; then
     --role "Search Index Data Contributor" \
     --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Search/searchServices/${SEARCH}" \
     -o none 2>/dev/null || warn "Could not assign Search role (insufficient perms?)."
+  az role assignment create --assignee-object-id "$PRINCIPAL_ID" --assignee-principal-type User \
+    --role "Search Service Contributor" \
+    --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.Search/searchServices/${SEARCH}" \
+    -o none 2>/dev/null || warn "Could not assign Search service role (insufficient perms?)."
+  az role assignment create --assignee-object-id "$PRINCIPAL_ID" --assignee-principal-type User \
+    --role "AcrPush" \
+    --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.ContainerRegistry/registries/${ACR}" \
+    -o none 2>/dev/null || warn "Could not assign ACR push role (insufficient perms?)."
 fi
 
 # ---- write the .env contract ------------------------------------------------

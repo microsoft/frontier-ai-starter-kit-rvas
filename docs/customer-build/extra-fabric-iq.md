@@ -31,9 +31,9 @@ This deepener is mutuated from [Extra · Fabric IQ](../activities/extra-fabric-i
 **Apply it to your app:** locate your lakehouse/table and record a current value that your assistant should answer from. → [Extra · Fabric IQ — Step 1](../activities/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake)
 
 **Prove you applied it:**
-- □ You can read at least one live row for your scenario.
-- □ You know the workspace, lakehouse, table, and key fields.
-- □ You recorded a current value for the demo comparison.
+- [ ] You can read at least one live row for your scenario.
+- [ ] You know the workspace, lakehouse, table, and key fields.
+- [ ] You recorded a current value for the demo comparison.
 
 **Stuck?** [Northfield Step 1](../activities/extra-fabric-iq#step-1--confirm-the-live-data-source-in-onelake).
 
@@ -55,9 +55,9 @@ This deepener is mutuated from [Extra · Fabric IQ](../activities/extra-fabric-i
 **Apply it to your app:** attach the Fabric IQ tool alongside your existing knowledge base and update instructions with your routing rule. → [Extra · Fabric IQ — Step 2](../activities/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent)
 
 **Prove you applied it:**
-- □ The agent lists both static knowledge and live data tools.
-- □ Instructions state when to use each source.
-- □ A test "right now" question invokes the live-data path.
+- [ ] The agent lists both static knowledge and live data tools.
+- [ ] Instructions state when to use each source.
+- [ ] A test "right now" question invokes the live-data path.
 
 **Stuck?** [Northfield Step 2](../activities/extra-fabric-iq#step-2--wire-the-fabric-iq-tool-to-your-agent).
 
@@ -79,9 +79,9 @@ This deepener is mutuated from [Extra · Fabric IQ](../activities/extra-fabric-i
 **Apply it to your app:** ask a right-now question, compare with OneLake, change or observe the data, and ask again; then ask a policy question to prove routing. → [Extra · Fabric IQ — Step 3](../activities/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag)
 
 **Prove you applied it:**
-- □ The agent's first live answer matches the table value.
-- □ After the value changes, the answer changes without re-indexing.
-- □ A policy question still cites your static corpus.
+- [ ] The agent's first live answer matches the table value.
+- [ ] After the value changes, the answer changes without re-indexing.
+- [ ] A policy question still cites your static corpus.
 
 **Stuck?** [Northfield Step 3](../activities/extra-fabric-iq#step-3--prove-live-grounding-and-contrast-with-static-rag).
 

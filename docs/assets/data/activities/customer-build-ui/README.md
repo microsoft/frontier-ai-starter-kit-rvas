@@ -25,9 +25,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** map your demo story to the required UI pieces before writing code. → [Extra · Build a UI — What you will need](activity.html?id=extra-build-ui#what-you-will-need)
 
 **Prove you applied it:**
-- □ You can name the user and one demo task the UI must support.
-- □ You chose which affordances are in scope and which are out.
-- □ You know which existing endpoint the BFF will call.
+- [ ] You can name the user and one demo task the UI must support.
+- [ ] You chose which affordances are in scope and which are out.
+- [ ] You know which existing endpoint the BFF will call.
 
 **Stuck?** [Northfield preflight](activity.html?id=extra-build-ui#what-you-will-need).
 
@@ -49,9 +49,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** create the browser and BFF around your hosted agent endpoint; do not copy secrets into delivered JS or HTML. → [Extra · Build a UI — Step 1](activity.html?id=extra-build-ui#step-1--scaffold-the-ui-and-a-credential-holding-bff)
 
 **Prove you applied it:**
-- □ A typed scenario question round-trips through the BFF to your agent.
-- □ DevTools shows no bearer token, key, or `AZURE_*` secret in browser-delivered assets.
-- □ The BFF authenticates keylessly.
+- [ ] A typed scenario question round-trips through the BFF to your agent.
+- [ ] DevTools shows no bearer token, key, or `AZURE_*` secret in browser-delivered assets.
+- [ ] The BFF authenticates keylessly.
 
 **Stuck?** [Northfield Step 1](activity.html?id=extra-build-ui#step-1--scaffold-the-ui-and-a-credential-holding-bff).
 
@@ -73,9 +73,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** relay streamed response chunks through the BFF and render them progressively. → [Extra · Build a UI — Step 2](activity.html?id=extra-build-ui#step-2--stream-the-answer-into-the-chat-window)
 
 **Prove you applied it:**
-- □ The answer appears progressively, not as one late block.
-- □ The send control is disabled or guarded while streaming.
-- □ Errors end the stream cleanly and leave the UI usable.
+- [ ] The answer appears progressively, not as one late block.
+- [ ] The send control is disabled or guarded while streaming.
+- [ ] Errors end the stream cleanly and leave the UI usable.
 
 **Stuck?** [Northfield Step 2](activity.html?id=extra-build-ui#step-2--stream-the-answer-into-the-chat-window).
 
@@ -97,9 +97,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** extract source annotations in the BFF and render them beside the answer using your corpus names. → [Extra · Build a UI — Step 3](activity.html?id=extra-build-ui#step-3--render-the-citations-panel)
 
 **Prove you applied it:**
-- □ A grounded scenario answer shows at least one real source.
-- □ An ungrounded or abstained answer does not fabricate a source.
-- □ The displayed source is useful to your target user.
+- [ ] A grounded scenario answer shows at least one real source.
+- [ ] An ungrounded or abstained answer does not fabricate a source.
+- [ ] The displayed source is useful to your target user.
 
 **Stuck?** [Northfield Step 3](activity.html?id=extra-build-ui#step-3--render-the-citations-panel).
 
@@ -121,9 +121,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** render a pending tool call as an approval card and resume only after the user chooses. → [Extra · Build a UI — Step 4](activity.html?id=extra-build-ui#step-4--surface-the-action-approval-prompt-in-the-ui)
 
 **Prove you applied it:**
-- □ A consequential request shows an approval card before any action runs.
-- □ Approve performs the action and shows the result.
-- □ Deny performs nothing and explains the outcome.
+- [ ] A consequential request shows an approval card before any action runs.
+- [ ] Approve performs the action and shows the result.
+- [ ] Deny performs nothing and explains the outcome.
 
 **Stuck?** [Northfield Step 4](activity.html?id=extra-build-ui#step-4--surface-the-action-approval-prompt-in-the-ui).
 
@@ -145,9 +145,9 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 **Apply it to your app:** deploy the UI+BFF, switch to managed identity, and scope CORS to the front-end origin. → [Extra · Build a UI — Step 5](activity.html?id=extra-build-ui#step-5--deploy-the-app-to-azure-container-apps-or-static-web-apps)
 
 **Prove you applied it:**
-- □ The public URL answers a grounded scenario question.
-- □ The BFF uses managed identity, not stored credentials.
-- □ CORS rejects an unlisted origin.
+- [ ] The public URL answers a grounded scenario question.
+- [ ] The BFF uses managed identity, not stored credentials.
+- [ ] CORS rejects an unlisted origin.
 
 **Stuck?** [Northfield Step 5](activity.html?id=extra-build-ui#step-5--deploy-the-app-to-azure-container-apps-or-static-web-apps).
 
@@ -155,4 +155,4 @@ This deepener is mutuated from [Extra · Build a UI](activity.html?id=extra-buil
 
 ## Deepener end-state
 
-You have a safe browser demo for your agent: chat, citations, and approvals only where they help your story. Deepeners are optional; return to the [Customer Build Track](../customer-build) and protect time for the outcome.
+You have a safe browser demo for your agent: chat, citations, and approvals only where they help your story. Deepeners are optional; return to the [Customer Build Track](catalog.html?outcome=customer-build) and protect time for the outcome.

@@ -56,7 +56,7 @@
     const h = Math.floor(mins / 60);
     const m = mins % 60;
     const label = h && m ? `${h}h ${m}m` : h ? `${h}h` : `${m}m`;
-    return `<span class="badge badge-duration">⏱ ${label}</span>`;
+    return `<span class="badge badge-duration">${label}</span>`;
   };
 
   FP.tagBadges = function (tags, limit) {

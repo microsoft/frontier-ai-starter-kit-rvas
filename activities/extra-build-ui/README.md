@@ -1,5 +1,7 @@
 # Extra · Build a UI — Wrap the Assistant in a Web App
 
+> **Command context:** Run the bootstrap command from the repository root.
+
 > Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
 > Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ Assistant).
 > Complete Foundations, or run the bootstrap skip-path:

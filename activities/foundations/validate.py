@@ -150,7 +150,7 @@ def check_step2(env: dict, dry_run: bool) -> bool:
 def _find_agent(project, agent_name: str):
     """Return the agent object whose name matches, or None (preview-surface tolerant)."""
     try:
-        for a in project.agents.list_agents():
+        for a in project.agents.list():
             if getattr(a, "name", None) == agent_name:
                 return a
     except Exception:  # noqa: BLE001
@@ -184,7 +184,12 @@ def check_step3(env: dict, dry_run: bool) -> bool:
 # --------------------------------------------------------------------------- #
 # Step 4 — Grounded answer WITH a citation (Foundations end-state)            #
 # --------------------------------------------------------------------------- #
-def _has_citation(text: str) -> bool:
+def _has_citation(text: str, response=None) -> bool:
+    for item in getattr(response, "output", []) or []:
+        for content in getattr(item, "content", []) or []:
+            for annotation in getattr(content, "annotations", []) or []:
+                if "citation" in str(getattr(annotation, "type", "")).lower():
+                    return True
     t = (text or "").lower()
     return bool(text) and ("[" in text or "source" in t or ".md" in t)
 
@@ -224,16 +229,16 @@ def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill")
         project = AIProjectClient(endpoint=env["AZURE_AI_PROJECT_ENDPOINT"], credential=cred)
         agent = _find_agent(project, agent_name)
         if agent is not None:
-            thread = project.agents.threads.create()
-            project.agents.messages.create(thread_id=thread.id, role="user", content=question)
-            project.agents.runs.create_and_process(thread_id=thread.id, agent_id=agent.id)
-            text = " ".join(
-                getattr(c, "text", {}).get("value", "")
-                for m in project.agents.messages.list(thread_id=thread.id)
-                for c in getattr(m, "content", [])
-                if getattr(m, "role", "") == "assistant"
+            openai = project.get_openai_client()
+            conversation = openai.conversations.create(
+                items=[{"type": "message", "role": "user", "content": question}],
             )
-            if _has_citation(text):
+            response = openai.responses.create(
+                conversation=conversation.id,
+                extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+            )
+            text = getattr(response, "output_text", "") or ""
+            if _has_citation(text, response):
                 ok(f"✅ Step 4 PASS — agent '{agent_name}' returned a grounded answer WITH a citation")
                 return True
             if text:

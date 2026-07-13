@@ -1,5 +1,7 @@
 # Facilitator Guide — Advanced: Tracing & Observability
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-only.** Do not share with students. This guide holds the verified answers, the pitfalls
 > teams hit, and the facilitation arc. The student `README.md` deliberately stops at the gotcha box.
 
@@ -63,7 +65,7 @@ Tell-tale signs and the fix:
   **retrieval** spans; a **tool** span appears only if they attached the Action Tools MCP tool.
 - Token attributes to point at: `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`,
   `gen_ai.usage.total_tokens`. Latency = the span `duration`.
-- This step's checkpoint is portal-state; `validate.py --step 3` confirms via App Insights that a
+- This step's checkpoint is portal-state; `python activities/advanced-tracing-observability/validate.py --step 3` confirms via App Insights that a
   multi-span trace exists for a recent run (it can't read the portal UI directly).
 
 ### Step 4 — KQL correlation (the answers)
@@ -124,5 +126,5 @@ the full cost rollup.
 
 ## Success definition
 
-A team is done when `validate.py --step 4` passes, `correlate.kql` returns all spans for one run, and
+A team is done when `python activities/advanced-tracing-observability/validate.py --step 4` passes, `correlate.kql` returns all spans for one run, and
 they can verbally walk the trace from question → model → retrieval → answer with tokens and latency.

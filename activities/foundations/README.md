@@ -1,5 +1,7 @@
 # Foundations — Build the Northfield University IQ Assistant
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > Tier 1 · Foundations — the guided, linear activity everyone completes.
 > One evolving artifact, four ordered steps. By the end you will have a deployed, grounded
 > Northfield University "IQ" Assistant — an agent that answers student-services questions from
@@ -45,9 +47,9 @@ across the four steps:
 - An Azure subscription where you can create AI resources.
 - About 3–3.5 hours for the full guided path.
 
-> Checkpoints are machine-checkable. Each step ends with `python validate.py --step N`. The
+> Checkpoints are machine-checkable. Each step ends with `python activities/foundations/validate.py --step N`. The
 > validator (provided in this folder) inspects your live Azure resources and prints
-> `✅ Step N PASS` or a specific failure. The final `python validate.py --all` asserts the complete
+> `✅ Step N PASS` or a specific failure. The final `python activities/foundations/validate.py --all` asserts the complete
 > end-state.
 
 ---
@@ -106,7 +108,7 @@ across the four steps:
 
 **Checkpoint:** Provisioning and auth are verified programmatically.
 ```bash
-python validate.py --step 1
+python activities/foundations/validate.py --step 1
 # expected: "✅ Step 1 PASS"
 ```
 
@@ -138,8 +140,8 @@ python validate.py --step 1
    model between runs so the comparison is fair.
 4. Iterate on the system instruction until the smaller model behaves well: define audience, tone,
    how to handle missing information, and what is out of scope. Save your best version to
-   [foundations/assets/system-instructions.txt](assets/system-instructions.txt).
-5. Reproduce the Playground behavior in code. Create [foundations/app/step2_chat.py](app/step2_chat.py)
+   `activities/foundations/assets/system-instructions.txt`.
+5. Reproduce the Playground behavior in code. Create `activities/foundations/app/step2_chat.py`
    and call your chosen deployment through the project's OpenAI client.
 
    > Responses API — the stateless OpenAI-compatible endpoint used throughout this session.
@@ -149,6 +151,7 @@ python validate.py --step 1
 
    ```python
    import os
+   from pathlib import Path
    from azure.ai.projects import AIProjectClient
    from azure.identity import DefaultAzureCredential
    from dotenv import load_dotenv
@@ -161,7 +164,8 @@ python validate.py --step 1
    )
    openai = project.get_openai_client()
 
-   with open("assets/system-instructions.txt", encoding="utf-8") as f:
+   instructions_path = Path(__file__).resolve().parents[1] / "assets" / "system-instructions.txt"
+   with instructions_path.open(encoding="utf-8") as f:
        system_instructions = f.read()
 
    response = openai.responses.create(
@@ -171,17 +175,17 @@ python validate.py --step 1
    )
    print(response.output_text)
    ```
-   Run it: `python app/step2_chat.py`. The code answer should match the tone you tuned in the Playground.
+   Run it: `python activities/foundations/app/step2_chat.py`. The code answer should match the tone you tuned in the Playground.
 
 **Success Criteria:**
 - [ ] Two contrasting models are deployed and visible in the Models / Deployments view.
 - [ ] You ran the same prompts against both models and can state one concrete trade-off (cost, latency, tone, or detail).
 - [ ] A tuned system instruction is saved to `assets/system-instructions.txt`.
-- [ ] `python app/step2_chat.py` prints an on-tone answer using `responses.create()` and `DefaultAzureCredential` (no API key).
+- [ ] `python activities/foundations/app/step2_chat.py` prints an on-tone answer using `responses.create()` and `DefaultAzureCredential` (no API key).
 
 **Checkpoint:** The deployments exist and the SDK call succeeds.
 ```bash
-python validate.py --step 2
+python activities/foundations/validate.py --step 2
 # expected: "✅ Step 2 PASS"
 ```
 
@@ -203,9 +207,10 @@ python validate.py --step 2
    `northfield-iq-assistant`, select your `gpt-4o` deployment, paste your instructions, and save.
    Test it on a few questions in the agent Playground surface.
 3. Create the same agent in code as a versioned resource. Create
-   [foundations/app/step3_agent.py](app/step3_agent.py):
+   `activities/foundations/app/step3_agent.py`:
    ```python
    import os
+   from pathlib import Path
    from azure.ai.projects import AIProjectClient
    from azure.ai.projects.models import PromptAgentDefinition
    from azure.identity import DefaultAzureCredential
@@ -218,7 +223,8 @@ python validate.py --step 2
        credential=DefaultAzureCredential(),
    )
 
-   with open("assets/system-instructions.txt", encoding="utf-8") as f:
+   instructions_path = Path(__file__).resolve().parents[1] / "assets" / "system-instructions.txt"
+   with instructions_path.open(encoding="utf-8") as f:
        instructions = f.read()
 
    agent = project.agents.create_version(
@@ -230,7 +236,7 @@ python validate.py --step 2
    )
    print(f"Created {agent.name} version {agent.version}")
    ```
-   Run it: `python app/step3_agent.py`. Re-running it creates a new version of the same named agent.
+   Run it: `python activities/foundations/app/step3_agent.py`. Re-running it creates a new version of the same named agent.
 4. Drive the agent through the Responses API using an `agent_reference`, and confirm guardrails
    hold. Append to `step3_agent.py`:
    ```python
@@ -243,20 +249,20 @@ python validate.py --step 2
    ]:
        resp = openai.responses.create(
            input=question,
-           extra_body={"agent": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+           extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
        )
        print(f"\nQ: {question}\nA: {resp.output_text}")
    ```
 
 **Success Criteria:**
 - [ ] An agent named `northfield-iq-assistant` exists in the portal Agents list with a persona + guardrails.
-- [ ] `python app/step3_agent.py` creates (or versions) the agent via `agents.create_version(PromptAgentDefinition(...))` and prints a version number.
+- [ ] `python activities/foundations/app/step3_agent.py` creates (or versions) the agent via `agents.create_version(PromptAgentDefinition(...))` and prints a version number.
 - [ ] The agent answers an in-scope question and refuses the cheating request and the out-of-scope request.
 - [ ] The same instructions exist in both the portal and code (code↔portal parity).
 
 **Checkpoint:** The named, versioned agent exists and responds through the Responses API.
 ```bash
-python validate.py --step 3
+python activities/foundations/validate.py --step 3
 # expected: "✅ Step 3 PASS"
 ```
 
@@ -273,7 +279,7 @@ python validate.py --step 3
    it covers tells you what the assistant should and should not be able to answer.
 
 2. Index it into Azure AI Search. Create a vector/hybrid index over the FAQ files. Use the
-   helper [foundations/app/step4_index.py](app/step4_index.py) (outline below) to chunk, embed, and upload:
+   helper `activities/foundations/app/step4_index.py` (outline below) to chunk, embed, and upload:
    ```python
    import os, glob
    from azure.identity import DefaultAzureCredential
@@ -294,14 +300,13 @@ python validate.py --step 3
    query later returns 401/403, assign them in the portal (AI Search → Access control (IAM)).
 4. Build a Foundry IQ knowledge base over the index (agentic retrieval: query decomposition →
    parallel search → rerank). In the portal: Build → Knowledge bases → New, point it at your AI
-   Search index, and choose the `VECTOR_SEMANTIC_HYBRID` query type.
+   Search index, and choose the `SEMANTIC` query type.
 
-   > `VECTOR_SEMANTIC_HYBRID` — Azure AI Search query type that combines vector similarity
-   > (semantic meaning), BM25 keyword matching (exact terms), and semantic reranking in one call.
-   > It typically outperforms pure vector search on factual FAQ-style content and is the recommended
-   > default for grounded agents.
+   > `SEMANTIC` — Azure AI Search query type that applies semantic reranking to the text index
+   > created in the previous task. Use a vector or hybrid query type only when the index also
+   > contains an embedding vector field and vector-search configuration.
 5. Attach the knowledge base to the agent and require citations. Create
-   [foundations/app/step4_ground.py](app/step4_ground.py) — add the Azure AI Search tool to a new
+   `activities/foundations/app/step4_ground.py` — add the Azure AI Search tool to a new
    version of `northfield-iq-assistant` and update the instructions to demand sources:
    ```python
    import os
@@ -340,7 +345,7 @@ python validate.py --step 3
                azure_ai_search=AzureAISearchToolResource(indexes=[
                    AISearchIndexResource(
                        index_asset_id=kb.id,
-                       query_type=AzureAISearchQueryType.VECTOR_SEMANTIC_HYBRID,
+                       query_type=AzureAISearchQueryType.SEMANTIC,
                        top_k=5,
                    ),
                ])
@@ -355,7 +360,7 @@ python validate.py --step 3
    openai = project.get_openai_client()
    resp = openai.responses.create(
        input="What is Northfield's FAFSA priority deadline and school code?",
-       extra_body={"agent": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+       extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
    )
    print(resp.output_text)   # expect: March 1 priority deadline, school code 041777, with a citation
    ```
@@ -364,14 +369,14 @@ python validate.py --step 3
 
 **Success Criteria:**
 - [ ] An Azure AI Search index over the Northfield FAQ corpus exists and returns results for a test query.
-- [ ] A Foundry IQ knowledge base is built over the index using `VECTOR_SEMANTIC_HYBRID` retrieval.
+- [ ] A Foundry IQ knowledge base is built over the text index using `SEMANTIC` retrieval.
 - [ ] The `northfield-iq-assistant` agent has a new version with the AI Search tool attached.
 - [ ] The agent answers a precise question (e.g. FAFSA deadline + school code `041777`) with at least one citation to a source document.
 - [ ] A grounded vs. ungrounded comparison shows the grounded answer is more specific and sourced.
 
 **Checkpoint:** The grounded agent returns a cited answer — this is the Foundations end-state.
 ```bash
-python validate.py --step 4
+python activities/foundations/validate.py --step 4
 # expected: "✅ Step 4 PASS"
 ```
 
@@ -383,7 +388,7 @@ You have reached the Foundations end-state: a deployed, grounded Northfield Univ
 Assistant that answers from the FAQ corpus with citations. Confirm the whole thing end-to-end:
 
 ```bash
-python validate.py --all
+python activities/foundations/validate.py --all
 # expected: "✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live"
 ```
 

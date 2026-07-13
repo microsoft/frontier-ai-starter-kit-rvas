@@ -12,3 +12,16 @@ instructions provided by the bot. You will only need to do this once across all 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
 or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Documentation validation
+
+Before submitting documentation or activity changes, run:
+
+```bash
+npm run build
+```
+
+The build audits first-party documentation for broken script references, invalid invocation flags,
+ambiguous checklist glyphs, invalid UTF-8, likely mojibake, and fragile text icons in the site chrome.
+It then regenerates and audits the participant and facilitator guides under `docs/assets/data/`.
+Generated guides must be committed with their source changes.

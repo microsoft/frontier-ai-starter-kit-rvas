@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Microsoft Foundry session static site builder",
   "scripts": {
-    "build": "node docs/build.js"
+    "audit:docs": "node scripts/audit-docs.js",
+    "audit:docs:source": "node scripts/audit-docs.js --source",
+    "audit:docs:generated": "node scripts/audit-docs.js --generated",
+    "build": "npm run audit:docs:source && node docs/build.js && npm run audit:docs:generated"
   },
   "engines": {
     "node": ">=18"

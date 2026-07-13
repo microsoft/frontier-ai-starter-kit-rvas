@@ -1,5 +1,7 @@
 # Facilitator Guide — Advanced: Deploy as a Hosted Agent
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-only.** Do not share with students. This guide holds the verified deployment path, the
 > failure modes teams hit with `azd ai agent`, and the facilitation arc.
 
@@ -22,18 +24,18 @@ Foundations problem first.
 
 ## The deployment pipeline at a glance
 
-`agent.yaml` + `Dockerfile` + `main.py` → `az acr build` (or local docker) → image in ACR →
-`azd ai agent create/deploy` → hosted version provisions + per-agent identity → invoke Responses
-endpoint → run history + traces. The most common mistake is treating a successful `azd ai agent deploy`
+Unified `azure.yaml` + `src/<agent>/` → `azd ai agent run` → `azd deploy` → hosted version
+provisions + per-agent identity → invoke Responses endpoint → run history + traces. The most common
+mistake is treating a successful `azd deploy`
 exit code as "done" — the version provisions **asynchronously**, so Step 2's checkpoint waits for
 `status == active`.
 
 ## Step-by-step facilitation
 
-### Step 1 — agent.yaml + entrypoint
+### Step 1 — unified azure.yaml + entrypoint
 
 - **Protocol + port are load-bearing.** Hosted agents must listen on `0.0.0.0:8088` and declare the
-  `responses` protocol (v `1.0.0`) in `agent.yaml`. A container that binds `127.0.0.1` or a different
+  `responses` protocol (v `2.0.0`) in the `azure.ai.agent` service in `azure.yaml`. A container that binds `127.0.0.1` or a different
   port will deploy but never become healthy.
 - **Reuse the Foundations persona.** The `instructions:` block should be the same grounded,
   cite-your-sources persona from Foundations Step 3 — don't let teams rewrite it here.
@@ -41,18 +43,14 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
   release) implements the Responses contract for them. Teams that try to hand-roll a Flask `/responses`
   route can do it, but it's a time sink — steer them to the framework host. Verified reference:
   `foundry-samples/samples/python/hosted-agents/agent-framework/responses/`.
-- **Local smoke test** before any cloud work:
-  `docker build --platform linux/amd64 -t niq:test hosted/ && docker run -p 8088:8088 niq:test`, then
-  `curl -X POST http://localhost:8088/responses -d '{"input":"Where is the registrar?"}'`. If this
-  fails locally it will fail in ACR — fix it here.
+- **Local smoke test** before deployment: run `azd ai agent run` from `hosted/` and use the opened
+  agent inspector. If the generated project fails locally, fix it before `azd deploy`.
 
 ### Step 2 — Containerize + deploy
 
-- **Cloud build is the default** — most devcontainers don't have a working Docker daemon. The
-  `--source-acr-auth-id "[caller]"` flag is **mandatory**; omitting it is the #1 `az acr build` failure
-  (auth context missing). Verified command is in the README.
-- **Unique image tag every build.** Reusing `latest`/`v1` serves a stale layer and changes won't roll
-  out. The README uses `$(date +%Y%m%d%H%M)`.
+- **Use the generated project flow.** `azd provision` connects/provisions the services declared in
+  `azure.yaml`; `azd deploy` builds and deploys the hosted agent. The old
+  `azd ai agent create/deploy` commands and standalone `agent.yaml` are deprecated.
 - **ACR pull permission:** the Foundry project managed identity needs repository-scoped pull on the ACR
   (Foundry hosted agents use ABAC mode — `Container Registry Repository Reader`, **not** registry-level
   `AcrPull`). `azd ai agent` usually wires this; if the version fails to pull, this is why.
@@ -83,8 +81,8 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 
 ## Timing (60 min)
 
-- 0–20 min: Step 1 — agent.yaml, entrypoint, local container smoke test (biggest time sink).
-- 20–40 min: Step 2 — ACR build + `azd ai agent deploy` + wait for `active`.
+- 0–20 min: Step 1 — `azd ai agent init`, adapt source, local agent smoke test.
+- 20–40 min: Step 2 — `azd provision` + `azd deploy` + wait for `active`.
 - 40–50 min: Step 3 — invoke + identity/auth verification.
 - 50–60 min: Step 4 — run history + traces.
 
@@ -93,23 +91,23 @@ portal walkthrough.
 
 ## Expected questions
 
-- **"`azd ai agent deploy` succeeded but invoke returns 424."** → version still provisioning. Wait for
+- **"`azd deploy` succeeded but invoke returns 424."** → version still provisioning. Wait for
   `status == active`.
-- **"`az acr build` fails with an auth error."** → missing `--source-acr-auth-id "[caller]"`.
-- **"My code change didn't take effect."** → reused image tag; rebuild with a fresh timestamp tag.
+- **"`azd ai agent init` generated another project."** → run it in the empty `hosted/` directory and
+  select the existing Foundations project in the wizard.
 - **"403 on an authenticated call."** → caller missing `Foundry User` (formerly `Azure AI User`) role on the project.
 - **"Where's the Flask app / managed endpoint from the old activity?"** → removed. This is a hosted
   agent now; a UI is the separate *Build a UI* extra.
 - **"Container deploys but never goes healthy."** → not listening on `0.0.0.0:8088`, or wrong protocol
-  in `agent.yaml`.
+  in `azure.yaml`.
 
 ## Cleanup discipline
 
-Remind teams to `azd down` (or `az ai agent delete`) after the event — a running hosted agent and its
-ACR image incur cost. Good hygiene to call out at the showcase wrap-up.
+Remove the hosted version from the portal after the event. Do not run `azd down` against a project
+connected to the shared Foundations resource group, because it can delete the whole workshop footprint.
 
 ## Success definition
 
-`validate.py --step 4` passes; the agent has an `active` hosted version; an authenticated Responses call
+`python activities/advanced-deploy-hosted-agent/validate.py --step 4` passes; the agent has an `active` hosted version; an authenticated Responses call
 returns a grounded answer; an anonymous call is rejected; and the team can point to the run in both run
 history and App Insights. No Prompt Flow, no managed online endpoint anywhere in their solution.

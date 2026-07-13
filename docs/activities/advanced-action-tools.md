@@ -6,6 +6,8 @@ nav_order: 10
 
 # Advanced · Action Tools — Make the Agent Do Work
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Act" artifact="A grounded assistant that can request one approval-gated workflow action." next="Start the provided backend, wire FunctionTool callables, then validate the human approval loop." %}
 
 {% include module-lens.html upskill="Use the provided Northfield ticket, course-hold, and advising actions to practice the approval loop." %}
@@ -73,7 +75,7 @@ Files in this activity
 **Checkpoint:** The provided backend answers over REST.
 
 ```text
-python validate.py --step 1
+python activities/advanced-action-tools/validate.py --step 1
 # expected: "✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080"
 
 ```
@@ -126,7 +128,7 @@ python validate.py --step 1
 **Checkpoint:** The wiring file defines the action tools correctly.
 
 ```text
-python validate.py --step 2
+python activities/advanced-action-tools/validate.py --step 2
 # expected: "✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)"
 
 ```
@@ -161,7 +163,7 @@ python validate.py --step 2
 **Checkpoint:** The approval loop is implemented.
 
 ```text
-python validate.py --step 3
+python activities/advanced-action-tools/validate.py --step 3
 # expected: "✅ Step 3 PASS — human tool-approval loop implemented"
 
 ```
@@ -174,7 +176,7 @@ python validate.py --step 3
 
 **Tasks:**
 
-1. Run `python agent_with_actions.py`. The seeded prompt asks to open a high-priority WiFi ticket for
+1. Run `python activities/advanced-action-tools/agent_with_actions.py`. The seeded prompt asks to open a high-priority WiFi ticket for
    `s1029384`. Approve when prompted.
 
 2. Confirm the agent reports the new `ticket_id`, then verify the record exists in the backend:
@@ -191,7 +193,7 @@ python validate.py --step 3
 **Checkpoint:** An action round-trips through the provided backend.
 
 ```text
-python validate.py --step 4
+python activities/advanced-action-tools/validate.py --step 4
 # expected: "✅ Step 4 PASS — action round-tripped through the backend (ticket ...)"
 
 ```
@@ -199,7 +201,7 @@ python validate.py --step 4
 Full run:
 
 ```text
-python validate.py --all
+python activities/advanced-action-tools/validate.py --all
 # expected: "✅ ALL CHECKPOINTS PASS"
 
 ```

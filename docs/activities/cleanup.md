@@ -15,6 +15,8 @@ Cleanup is driven by one idempotent, `.env`-aware script:
 reuses only the variable names from the `.env` contract — it never invents, renames, or persists
 new env vars.
 
+Run the cleanup commands below from the repository root.
+
 ## Safe by default (dry-run first)
 
 A bare run only prints what it would tear down. Nothing destructive happens until you pass

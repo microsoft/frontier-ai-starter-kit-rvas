@@ -1,5 +1,7 @@
 # Advanced · Action Tools — Make the Agent Do Work
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > ⏱ Guided ~45 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
@@ -47,7 +49,7 @@ Env contract (authoritative — matches `.env.sample` and the backend):
 > pattern instead — same governance objective, fully supported in 1.x.
 
 Files in this activity
-- [`agent_with_actions.py`](agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
+- [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
 - [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/validate.py) — the Checkpoints below.
 
 This activity ships three rungs off the same backbone — pick your depth. The same
@@ -78,7 +80,7 @@ walks you through a starter file · (b) Build-from-scratch path hands you only t
 
 **Checkpoint:** The provided backend answers over REST.
 ```text
-python validate.py --step 1
+python activities/advanced-action-tools/validate.py --step 1
 # expected: "✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080"
 ```
 
@@ -107,7 +109,7 @@ python validate.py --step 1
 **Goal:** Give the agent the three actions by wrapping the provided backend functions in a `FunctionTool`.
 
 **Tasks:**
-1. Open [`agent_with_actions.py`](agent_with_actions.py). The imports are already present:
+1. Open [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py). The imports are already present:
    `from azure.ai.agents.models import FunctionTool, RequiredFunctionToolCall, SubmitToolOutputsAction, ToolOutput`.
 2. Complete the three stub functions (`create_it_ticket`, `place_course_hold`, `book_advising_slot`)
    so each calls the appropriate `POST` endpoint on `ACTION_API_URL` and returns the response as a string.
@@ -121,7 +123,7 @@ python validate.py --step 1
 
 **Checkpoint:** The wiring file defines the action tools correctly.
 ```text
-python validate.py --step 2
+python activities/advanced-action-tools/validate.py --step 2
 # expected: "✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)"
 ```
 
@@ -151,7 +153,7 @@ python validate.py --step 2
 
 **Checkpoint:** The approval loop is implemented.
 ```text
-python validate.py --step 3
+python activities/advanced-action-tools/validate.py --step 3
 # expected: "✅ Step 3 PASS — human tool-approval loop implemented"
 ```
 
@@ -162,7 +164,7 @@ python validate.py --step 3
 **Goal:** Drive a real action from a natural-language request, approve it, and verify it landed.
 
 **Tasks:**
-1. Run `python agent_with_actions.py`. The seeded prompt asks to open a high-priority WiFi ticket for
+1. Run `python activities/advanced-action-tools/agent_with_actions.py`. The seeded prompt asks to open a high-priority WiFi ticket for
    `s1029384`. Approve when prompted.
 2. Confirm the agent reports the new `ticket_id`, then verify the record exists in the backend:
    `curl http://localhost:8080/it-tickets`.
@@ -183,13 +185,13 @@ Approve this action? [y/N]: y
 
 **Checkpoint:** An action round-trips through the provided backend.
 ```text
-python validate.py --step 4
+python activities/advanced-action-tools/validate.py --step 4
 # expected: "✅ Step 4 PASS — action round-tripped through the backend (ticket ...)"
 ```
 
 Full run:
 ```text
-python validate.py --all
+python activities/advanced-action-tools/validate.py --all
 # expected: "✅ ALL CHECKPOINTS PASS"
 ```
 
@@ -198,7 +200,7 @@ python validate.py --all
 ## Rung (b) — Build-from-scratch path
 
 > Stronger team? Delete the starter and write `agent_with_actions.py` from an empty file. We hand
-> you only the contract below — no skeleton, no placeholders. The same `python validate.py --all`
+> you only the contract below — no skeleton, no placeholders. The same `python activities/advanced-action-tools/validate.py --all`
 > grades this path, so the acceptance criteria are identical.
 
 Your contract:
@@ -210,7 +212,7 @@ Your contract:
 You get the running backend (Step 0) and the env contract (the `ACTION_*` table above) — nothing
 else. Discover the SDK surface from the [Agents SDK quickstart](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code)
 and the [FunctionTool reference](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/function-calling),
-author the file, and run `python validate.py --all`.
+author the file, and run `python activities/advanced-action-tools/validate.py --all`.
 
 ## Rung (c) — Stretch goals
 

@@ -1,6 +1,8 @@
 
 # Facilitator Guide · Capstone — Northfield IQ, the Team
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-only.** This is the lowest-guidance activity in the curriculum by design — there is
 > no starter file and no PLACEHOLDER moments. Your job is not to hand out a reference graph; it is
 > to keep teams unblocked while they design it themselves. Resist the urge to paste the solution. The
@@ -114,10 +116,11 @@ prose, that's the intervention moment — it's both the graded criterion and the
 
 ## DevUI launch (visual-first)
 
-Have them launch the workflow in MAF's DevUI *before* tracing. Reuse the directory-based
-`devui_launcher.py` pattern (the same one the Magentic Extra uses). The win is watching the graph light
-up: green = done, purple = running, black = pending. Facilitation cue: ask *"why is the synthesizer still
-black?"* — the answer (it's waiting on both fan-in branches) is the concurrency lesson made visible.
+Have them launch the workflow in MAF's DevUI *before* tracing. Create a local
+`devui_launcher.py` using the directory-based pattern from the Magentic Extra. The win is watching
+the graph light up: green = done, purple = running, black = pending. Facilitation cue: ask *"why is
+the synthesizer still black?"* — the answer (it's waiting on both fan-in branches) is the concurrency
+lesson made visible.
 
 ```bash
 # illustrative — confirm current launcher entrypoint via the foundry-workflows skill / MCP
@@ -223,7 +226,7 @@ subset of the §3.7 acceptance criteria — the headless-checkable ones:
 - Typed (Pydantic) contracts are in use between executors (no free-text-only message passing).
 
 ```text
-python validate.py --all
+python activities/capstone-multi-agent/validate.py --all
 # expected: "✅ ALL STRUCTURAL CHECKS PASS — ≥3 agents, fan-out edge present, typed contracts in use"
 
 ```

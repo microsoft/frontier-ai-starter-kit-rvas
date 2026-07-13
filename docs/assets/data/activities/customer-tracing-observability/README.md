@@ -1,6 +1,8 @@
 
 # Customer Build · See inside it
 
+> **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
+
 
 
 This chapter is mutuated from [Advanced · Tracing & Observability](activity.html?id=advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](activity.html?id=customer-outcome).
@@ -28,7 +30,11 @@ This chapter is mutuated from [Advanced · Tracing & Observability](activity.htm
 
 **Prove you applied it:**
 - `python activities/advanced-tracing-observability/validate.py --track customer --step 1 --dry-run`
-- Checklist: □ tracing flags are set before Azure SDK imports □ App Insights connection is resolved □ message capture is acceptable for your demo data □ no secrets or PII are logged.
+- Checklist:
+  - [ ] tracing flags are set before Azure SDK imports
+  - [ ] App Insights connection is resolved
+  - [ ] message capture is acceptable for your demo data
+  - [ ] no secrets or PII are logged.
 
 **Stuck?** [Northfield Step 1](activity.html?id=advanced-tracing-observability#step-1--enable-genai-instrumentation).
 
@@ -53,7 +59,11 @@ This chapter is mutuated from [Advanced · Tracing & Observability](activity.htm
 
 **Prove you applied it:**
 - `python activities/advanced-tracing-observability/validate.py --track customer --step 2 --dry-run`
-- Checklist: □ traced run prints an answer □ run includes your scenario question □ operation/response id is captured □ wait time for span propagation is accounted for.
+- Checklist:
+  - [ ] traced run prints an answer
+  - [ ] run includes your scenario question
+  - [ ] operation/response id is captured
+  - [ ] wait time for span propagation is accounted for.
 
 **Stuck?** [Northfield Step 2](activity.html?id=advanced-tracing-observability#step-2--run-the-agent-and-emit-spans).
 
@@ -77,7 +87,11 @@ This chapter is mutuated from [Advanced · Tracing & Observability](activity.htm
 
 **Prove you applied it:**
 - `python activities/advanced-tracing-observability/validate.py --track customer --step 3 --dry-run`
-- Checklist: □ parent span found □ model span identified □ retrieval/tool spans identified or explicitly absent □ token and latency notes recorded.
+- Checklist:
+  - [ ] parent span found
+  - [ ] model span identified
+  - [ ] retrieval/tool spans identified or explicitly absent
+  - [ ] token and latency notes recorded.
 
 **Stuck?** [Northfield Step 3](activity.html?id=advanced-tracing-observability#step-3--inspect-the-spans-portal-tracing-tab).
 
@@ -101,7 +115,11 @@ This chapter is mutuated from [Advanced · Tracing & Observability](activity.htm
 
 **Prove you applied it:**
 - `python activities/advanced-tracing-observability/validate.py --track customer --all --dry-run`
-- Checklist: □ `correlate.kql` exists □ query filters one operation id □ output includes ordered spans □ one latency/token/cost observation is ready for the demo.
+- Checklist:
+  - [ ] `correlate.kql` exists
+  - [ ] query filters one operation id
+  - [ ] output includes ordered spans
+  - [ ] one latency/token/cost observation is ready for the demo.
 
 **Stuck?** [Northfield Step 4](activity.html?id=advanced-tracing-observability#step-4--correlate-one-question-end-to-end-with-kql).
 

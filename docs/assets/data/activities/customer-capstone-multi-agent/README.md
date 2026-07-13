@@ -1,6 +1,8 @@
 
 # Customer Build · Grow it into a team
 
+> **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
+
 
 
 This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capstone-multi-agent) — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Define your outcome](activity.html?id=customer-outcome).
@@ -28,7 +30,10 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --list`
-- Checklist: □ team design is justified □ one-agent alternative considered □ final demo journey needs at least two specialist viewpoints.
+- Checklist:
+  - [ ] team design is justified
+  - [ ] one-agent alternative considered
+  - [ ] final demo journey needs at least two specialist viewpoints.
 
 **Stuck?** [Northfield learning objectives](activity.html?id=capstone-multi-agent#learning-objectives).
 
@@ -54,7 +59,12 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --step 1 --path <your-capstone-dir>`
-- Checklist: □ ≥3 roles named □ one router/triage role □ ≥2 specialists □ roles are non-overlapping □ at least one role reuses prior chapter work.
+- Checklist:
+  - [ ] ≥3 roles named
+  - [ ] one router/triage role
+  - [ ] ≥2 specialists
+  - [ ] roles are non-overlapping
+  - [ ] at least one role reuses prior chapter work.
 
 **Stuck?** [Northfield org chart](activity.html?id=capstone-multi-agent#the-agent-org-chart-role-as-agent).
 
@@ -79,7 +89,11 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --step 3 --path <your-capstone-dir>`
-- Checklist: □ typed Pydantic contracts exist □ agents pass typed objects, not regex-parsed prose □ one sequential run completes □ final answer cites or explains limits.
+- Checklist:
+  - [ ] typed Pydantic contracts exist
+  - [ ] agents pass typed objects, not regex-parsed prose
+  - [ ] one sequential run completes
+  - [ ] final answer cites or explains limits.
 
 **Stuck?** [Northfield Pass 1](activity.html?id=capstone-multi-agent#pass-1--sequential-warm-up).
 
@@ -104,7 +118,11 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --step 2 --path <your-capstone-dir>`
-- Checklist: □ router fans out to ≥2 branches □ synthesizer waits for relevant branches □ action branch still honors approval □ knowledge branch still cites sources.
+- Checklist:
+  - [ ] router fans out to ≥2 branches
+  - [ ] synthesizer waits for relevant branches
+  - [ ] action branch still honors approval
+  - [ ] knowledge branch still cites sources.
 
 **Stuck?** [Northfield Pass 2](activity.html?id=capstone-multi-agent#pass-2--parallel-fan-out--fan-in).
 
@@ -129,7 +147,11 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --all --path <your-capstone-dir>`
-- Checklist: □ DevUI or equivalent shows the graph □ trace shows multi-agent handoffs □ operation id is captured □ 2-minute demo narrates the journey.
+- Checklist:
+  - [ ] DevUI or equivalent shows the graph
+  - [ ] trace shows multi-agent handoffs
+  - [ ] operation id is captured
+  - [ ] 2-minute demo narrates the journey.
 
 **Stuck?** [Northfield visual/tracing guidance](activity.html?id=capstone-multi-agent#visual-first-then-traced).
 
@@ -154,7 +176,11 @@ This chapter is mutuated from [Capstone · Multi-Agent](activity.html?id=capston
 
 **Prove you applied it:**
 - `python activities/capstone-multi-agent/validate.py --track customer --all --path <your-capstone-dir>`
-- Checklist: □ Northfield defaults removed or clearly marked as placeholders □ existing `.env` contract reused □ acceptance criteria mapped to your demo □ risks and next-step backlog are ready.
+- Checklist:
+  - [ ] Northfield defaults removed or clearly marked as placeholders
+  - [ ] existing `.env` contract reused
+  - [ ] acceptance criteria mapped to your demo
+  - [ ] risks and next-step backlog are ready.
 
 **Stuck?** [Northfield scenario-swap](activity.html?id=capstone-multi-agent#make-it-your-own-scenario-swap) and [acceptance criteria](activity.html?id=capstone-multi-agent#acceptance-criteria-graded--no-step-by-step).
 

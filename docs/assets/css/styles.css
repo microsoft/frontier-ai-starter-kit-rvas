@@ -1038,6 +1038,26 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .guide-body p { margin: 0 0 1rem; font-size: 0.925rem; line-height: 1.75; }
 .guide-body ul, .guide-body ol { margin: 0.5rem 0 1rem; padding-left: 1.5rem; }
 .guide-body li { margin-bottom: 0.35rem; font-size: 0.925rem; line-height: 1.7; }
+.guide-body ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+.guide-body .contains-task-list .contains-task-list {
+  padding-left: 1.5rem;
+}
+.guide-body .task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+.guide-body .task-list-item input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0.28rem 0 0;
+  flex: 0 0 auto;
+  accent-color: var(--c-gold);
+  opacity: 1;
+}
 .guide-body a { color: var(--c-gold); text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
 .guide-body a:hover { text-decoration-color: var(--c-gold); }
 .guide-body a.btn,

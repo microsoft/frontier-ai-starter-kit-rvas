@@ -6,6 +6,8 @@ nav_order: 11
 
 # Advanced · Evaluation & Red Teaming
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Prove" artifact="A trust scorecard that measures quality, groundedness, refusal behavior, and adversarial safety." next="Run the Northfield eval set or replace it with scenario-specific customer prompts." %}
 
 {% include module-lens.html upskill="Use the Northfield eval and adversarial seed sets to learn the evaluation workflow." %}
@@ -25,7 +27,7 @@ What you'll produce
 
 - A custom domain evaluator that rewards grounded contacts and correct abstention.
 - Documented red-team results across ≥ 3 attack categories.
-- A `python evaluate.py --gate <threshold>` invocation that exits non-zero on regression.
+- A `python activities/advanced-evaluation-redteam/evaluate.py --gate <threshold>` invocation that exits non-zero on regression.
 
 Assets shipped with this activity
 
@@ -63,7 +65,7 @@ Assets shipped with this activity
 **Checkpoint:** The dataset is valid and large enough to evaluate (no tiny 10-row set).
 
 ```text
-python validate.py --step 1
+python activities/advanced-evaluation-redteam/validate.py --step 1
 # expected: "✅ Step 1 PASS — 36 rows, 13 topics, abstain cases present"
 
 ```
@@ -82,8 +84,8 @@ python validate.py --step 1
 2. Read [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py): it loads the JSONL, calls your grounded agent for each `query`,
    then scores Groundedness/Relevance/Coherence/Fluency with `azure-ai-evaluation`.
 
-3. Smoke-test offline first (no quota): `python evaluate.py --dry-run --custom-only`.
-4. Run the real thing against your agent: `python evaluate.py --dataset assets/northfield-eval.jsonl`.
+3. Smoke-test offline first (no quota): `python activities/advanced-evaluation-redteam/evaluate.py --dry-run --custom-only`.
+4. Run the real thing against your agent: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl`.
 
 **Success Criteria:**
 
@@ -93,7 +95,7 @@ python validate.py --step 1
 **Checkpoint:** The harness runs end-to-end (validated offline so facilitators don't burn quota).
 
 ```text
-python validate.py --step 2
+python activities/advanced-evaluation-redteam/validate.py --step 2
 # expected: "✅ Step 2 PASS — evaluate.py runs and reports aggregate scores"
 
 ```
@@ -114,7 +116,7 @@ python validate.py --step 2
 2. Extend it with one rule of your own — e.g. penalize answers that quote a deadline date not
    present in the row's `context` (a groundedness proxy), or reward citing the correct office name.
 
-3. Re-run: `python evaluate.py --dataset assets/northfield-eval.jsonl --custom-only` and confirm the
+3. Re-run: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl --custom-only` and confirm the
    custom metric appears alongside the built-ins.
 
 **Success Criteria:**
@@ -125,7 +127,7 @@ python validate.py --step 2
 **Checkpoint:** The evaluator discriminates good from fabricated answers.
 
 ```text
-python validate.py --step 3
+python activities/advanced-evaluation-redteam/validate.py --step 3
 # expected: "✅ Step 3 PASS — custom evaluator discriminates (grounded > fabricated)"
 
 ```
@@ -162,7 +164,7 @@ python validate.py --step 3
 **Checkpoint:** The adversarial seed set is present, labeled, and includes an injection case.
 
 ```text
-python validate.py --step 4
+python activities/advanced-evaluation-redteam/validate.py --step 4
 # expected: "✅ Step 4 PASS — N adversarial prompts across M categories, injection case present"
 
 ```
@@ -175,7 +177,7 @@ python validate.py --step 4
 
 **Tasks:**
 
-1. Run with a gate: `python evaluate.py --dataset assets/northfield-eval.jsonl --gate 3.5`. The script
+1. Run with a gate: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl --gate 3.5`. The script
    exits non-zero if any metric mean drops below the threshold.
 
 2. Apply your Step 4 mitigation to the agent's system prompt, then re-run and compare. Improve one
@@ -192,7 +194,7 @@ python validate.py --step 4
 **Checkpoint:** End-to-end — all prior checkpoints pass together.
 
 ```text
-python validate.py --all
+python activities/advanced-evaluation-redteam/validate.py --all
 # expected: "✅ ALL CHECKPOINTS PASS"
 
 ```

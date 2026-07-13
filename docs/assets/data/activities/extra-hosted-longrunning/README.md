@@ -1,5 +1,7 @@
 # Extra · MAF + Hosted Long-Running Agents
 
+> **Command context:** Run the bootstrap command from the repository root.
+
 > Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
 > Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ Assistant).
 > Complete Foundations, or run the bootstrap skip-path:
@@ -42,10 +44,10 @@ result — and every step is traced in App Insights.
 **Goal:** The Extra C workflow runs as a deployed hosted agent, not a local script.
 
 **Tasks:**
-1. Reuse the Deploy as a Hosted Agent pattern: author an `agent.yaml` + Dockerfile that serve your
-   Extra C Magentic workflow (manager + 4 specialists) over the Responses/Invocations protocol.
-2. Build + push to ACR and deploy with `azd ai agent` (ACR cloud build works without local Docker).
-   Search before you implement: confirm the *current* `azd ai agent` + `agent.yaml` schema via the
+1. Reuse the Deploy as a Hosted Agent pattern: scaffold a unified `azure.yaml` + source project that
+   serves your Extra C Magentic workflow (manager + 4 specialists) over Responses or Invocations.
+2. Test with `azd ai agent run`, then deploy with `azd deploy`.
+   Search before you implement: confirm the current `azure.yaml` hosted-agent schema via the
    `foundry-hosted-agents` skill (`foundry-mcp` / `microsoft-docs`).
 3. Invoke the deployed endpoint with the composite request from Extra C and confirm it still routes
    across specialists.

@@ -203,7 +203,7 @@ search_tool = AzureAISearchTool(
         indexes=[
             AISearchIndexResource(
                 index_asset_id=kb_asset_id,
-                query_type=AzureAISearchQueryType.VECTOR_SEMANTIC_HYBRID,
+                query_type=AzureAISearchQueryType.SEMANTIC,
                 top_k=5,
             )
         ]

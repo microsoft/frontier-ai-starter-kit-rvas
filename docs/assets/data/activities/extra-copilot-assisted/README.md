@@ -1,5 +1,7 @@
 # Extra · Copilot-Assisted Build (microsoft/skills)
 
+> **Command context:** Run the bootstrap command from the repository root.
+
 > Tier 2 · Extra — modular & cross-cutting. You can attempt this in any order.
 > Prerequisite: the Foundations end-state is recommended, but the hard minimum is Foundations
 > Step 1 (infra + `.env` live). Complete Foundations, or run the bootstrap skip-path:
@@ -9,7 +11,7 @@
 
 > ⚙️ Infra prerequisite: no new Azure resources. Everything you need ships in this repo:
 > [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/copilot-instructions.md),
-> [`.vscode/mcp.json`](../../.vscode/mcp.json) (the 3 MCP servers), and the
+> [`.vscode/mcp.json`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.vscode/mcp.json) (the 3 MCP servers), and the
 > [`.github/skills/`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/) Foundry skill stubs. You need GitHub Copilot enabled in your
 > editor and `npx` available.
 >
@@ -27,7 +29,7 @@ The doctrine, straight from this repo's [`.github/copilot-instructions.md`](http
 
 > MCP = fresh information. Skills = proven patterns. Use both, in that order.
 
-The three MCP servers (from [`.vscode/mcp.json`](../../.vscode/mcp.json)):
+The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.vscode/mcp.json)):
 
 | Server | Use it for |
 |---|---|
@@ -42,7 +44,7 @@ The three MCP servers (from [`.vscode/mcp.json`](../../.vscode/mcp.json)):
 **Goal:** Your editor has the instructions, the 3 MCP servers, and the Foundry skills available.
 
 **Tasks:**
-1. Open [`.vscode/mcp.json`](../../.vscode/mcp.json) and start/verify the three servers (`azure`,
+1. Open [`.vscode/mcp.json`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.vscode/mcp.json) and start/verify the three servers (`azure`,
    `foundry-mcp`, `microsoft-docs`) are connected in your editor's MCP panel.
 2. Open [`.github/copilot-instructions.md`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/copilot-instructions.md) and read the
    "Search Before Implement" golden rule — this is the behavior you're about to exploit.

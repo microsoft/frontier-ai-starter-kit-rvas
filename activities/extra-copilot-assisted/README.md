@@ -1,5 +1,7 @@
 # Extra · Copilot-Assisted Build (microsoft/skills)
 
+> **Command context:** Run the bootstrap command from the repository root.
+
 > Tier 2 · Extra — modular & cross-cutting. You can attempt this in any order.
 > Prerequisite: the Foundations end-state is recommended, but the hard minimum is Foundations
 > Step 1 (infra + `.env` live). Complete Foundations, or run the bootstrap skip-path:

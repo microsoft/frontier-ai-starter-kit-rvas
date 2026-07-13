@@ -1,5 +1,4 @@
 {
-  "generated_at": "2026-07-10T09:27:49.728Z",
   "modules": [
     {
       "id": "foundry",
@@ -635,7 +634,7 @@
       "track": "deploy",
       "difficulty": "advanced",
       "duration_minutes": 90,
-      "description": "Package and deploy your agent as a hosted endpoint with the agent.yaml contract.",
+      "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
       "prerequisites": [
         "foundations"
       ],

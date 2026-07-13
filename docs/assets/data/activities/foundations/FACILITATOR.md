@@ -1,6 +1,8 @@
 
 # Foundations — Facilitator's Guide
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-facing.** Facilitation, pitfalls, timing, and the actual answers/snippets for all four
 > Foundations steps. Do not paste this content into the student README — answers live here only.
 
@@ -8,7 +10,7 @@
 
 Foundations is one guided, linear activity with four ordered steps. The end-state — a deployed,
 grounded Northfield IQ Assistant that cites its sources — is the prerequisite for every Advanced
-activity. Your job is to keep teams moving step-to-step: each Checkpoint (`python validate.py --step N`)
+activity. Your job is to keep teams moving step-to-step: each Checkpoint (`python activities/foundations/validate.py --step N`)
 must pass before they advance, because Step N's output is Step N+1's input.
 
 Total guided time is about 3–3.5 hours. The two places teams lose time are Step 1 (subscription
@@ -51,7 +53,7 @@ reuses the `az login` session).
 ### Timing
 - 0–10 min: environment + both logins + subscription.
 - 10–25 min: `azd up` running; use the wait to walk the resource model (resource ↔ project ↔ connection).
-- 25–30 min: verify `.env` and run `python validate.py --step 1`.
+- 25–30 min: verify `.env` and run `python activities/foundations/validate.py --step 1`.
 
 Intervene fast on permission issues — that is rarely productive struggle.
 
@@ -126,7 +128,7 @@ and point the student to the right office rather than guessing.
 - 0–10 min: deploy both models.
 - 10–25 min: Playground comparison while the second deployment finishes.
 - 25–40 min: tune + save the system instruction.
-- 40–45 min: write and run `app/step2_chat.py`, then `python validate.py --step 2`.
+- 40–45 min: write and run `app/step2_chat.py`, then `python activities/foundations/validate.py --step 2`.
 
 ### Expected questions
 - *"Which model should we pick?"* — Push them to justify from observed cost/latency/quality, not
@@ -183,7 +185,7 @@ for question in [
 ]:
     resp = openai.responses.create(
         input=question,
-        extra_body={"agent": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+        extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
     )
     print(f"\nQ: {question}\nA: {resp.output_text}")
 
@@ -228,7 +230,7 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 ### Timing
 - 0–15 min: design persona + guardrails.
 - 15–30 min: create in portal, test in agent Playground.
-- 30–45 min: create in code, run the guardrail test loop, `python validate.py --step 3`.
+- 30–45 min: create in code, run the guardrail test loop, `python activities/foundations/validate.py --step 3`.
 
 ### Expected questions
 - *"Why version agents?"* — Agents are versioned resources; you can iterate instructions/tools and roll
@@ -242,7 +244,7 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 
 ### What good looks like
 
-An AI Search index over the FAQ corpus; a Foundry IQ knowledge base using `VECTOR_SEMANTIC_HYBRID`; a
+An AI Search index over the FAQ corpus; a Foundry IQ knowledge base using `SEMANTIC`; a
 new agent version with the AI Search tool attached; and a precise, cited answer (the FAFSA question
 is the canonical check). Grounded answers are specific and sourced; ungrounded ones are vague.
 
@@ -290,7 +292,7 @@ agent = project.agents.create_version(
             azure_ai_search=AzureAISearchToolResource(indexes=[
                 AISearchIndexResource(
                     index_asset_id=kb.id,
-                    query_type=AzureAISearchQueryType.VECTOR_SEMANTIC_HYBRID,
+                    query_type=AzureAISearchQueryType.SEMANTIC,
                     top_k=5,
                 ),
             ])
@@ -302,7 +304,7 @@ print(f"Grounded {agent.name} version {agent.version}")
 openai = project.get_openai_client()
 resp = openai.responses.create(
     input="What is Northfield's FAFSA priority deadline and school code?",
-    extra_body={"agent": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+    extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
 )
 print(resp.output_text)
 
@@ -315,8 +317,8 @@ print(resp.output_text)
 - Fields: keep a retrievable `content` field (used for the answer) and a retrievable `source` field
   set to the file name (used for citations). Without a citation-source field, answers can't cite.
 
-- Query type: `VECTOR_SEMANTIC_HYBRID` (vector + keyword + semantic rerank) is the recommended
-  default and what the knowledge base should use.
+- Query type: `SEMANTIC` matches the shipped text-only index. Use vector or hybrid retrieval only
+  after adding embeddings, a vector field, and vector-search configuration.
 
 ### Customer corpus guidance (for Customer Build Mode teams)
 
@@ -349,9 +351,9 @@ shelf before it answers.
 
 ### Timing
 - 0–25 min: inspect corpus, build + populate the AI Search index, confirm a test query returns hits.
-- 25–45 min: confirm RBAC; build the Foundry IQ knowledge base (`VECTOR_SEMANTIC_HYBRID`).
+- 25–45 min: confirm RBAC; build the Foundry IQ knowledge base (`SEMANTIC`).
 - 45–75 min: attach the tool as a new agent version; verify the cited FAFSA answer.
-- 75–90 min: grounded vs. ungrounded comparison; `python validate.py --step 4`.
+- 75–90 min: grounded vs. ungrounded comparison; `python activities/foundations/validate.py --step 4`.
 
 This step often runs long because first-time indexing is slow. Budget accordingly.
 
@@ -367,13 +369,13 @@ This step often runs long because first-time indexing is slow. Budget accordingl
 
 ## End-state Checkpoint (`--all`)
 
-When `python validate.py --all` prints
+When `python activities/foundations/validate.py --all` prints
 `✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live`, the team has the prerequisite
 for every Advanced activity. `--all` re-asserts infra (Step 1), model reachability (Step 2), the
 named versioned agent (Step 3), and a cited grounded answer (Step 4).
 
 Path-B (advanced-skip) teams reach the same end-state via the bootstrap and verify it with the single
-gate `python scripts/validate-foundations.py` — functionally equivalent to `validate.py --all` here.
+gate `python scripts/validate-foundations.py` — functionally equivalent to `python activities/foundations/validate.py --all` here.
 
 ## Checkpoint command reference (for QA / Basher)
 
@@ -381,11 +383,11 @@ These are the exact commands the README promises; `validate.py` must implement t
 
 | Command | Asserts |
 |---|---|
-| `python validate.py --step 1` | Foundry + AI Search + App Insights provisioned; `.env` populated; keyless auth works |
-| `python validate.py --step 2` | Two model deployments reachable; `responses.create()` SDK call succeeds |
-| `python validate.py --step 3` | Named agent `northfield-iq-assistant` exists as a version; responds via Responses API; guardrails refuse |
-| `python validate.py --step 4` | AI Search index exists; knowledge base attached to agent; agent returns a cited answer |
-| `python validate.py --all` | All of the above — the full Foundations end-state |
+| `python activities/foundations/validate.py --step 1` | Foundry + AI Search + App Insights provisioned; `.env` populated; keyless auth works |
+| `python activities/foundations/validate.py --step 2` | Two model deployments reachable; `responses.create()` SDK call succeeds |
+| `python activities/foundations/validate.py --step 3` | Named agent `northfield-iq-assistant` exists as a version; responds via Responses API; guardrails refuse |
+| `python activities/foundations/validate.py --step 4` | AI Search index exists; knowledge base attached to agent; agent returns a cited answer |
+| `python activities/foundations/validate.py --all` | All of the above — the full Foundations end-state |
 
 > `validate.py` is owned by Basher (Checkpoints/QA). This guide only specifies the contract those
 > commands must satisfy.

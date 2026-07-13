@@ -1,6 +1,8 @@
 
 # Facilitator Guide · Advanced — Evaluation & Red Teaming
 
+> **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
+
 > **Facilitator-only.** Do not paste this into the student channel. Answer keys, expected scores, and the
 > mitigation snippets live here, not in the README.
 
@@ -34,7 +36,7 @@ this activity fills it. Push teams to connect a low score back to a *design choi
 
 ### Step 2 — `evaluate.py`
 - `--dry-run --custom-only` runs with zero Azure calls (response = ground_truth). Use it to unblock
-  teams stuck on auth/quota so they can still see the harness shape. The facilitator `validate.py --step 2`
+  teams stuck on auth/quota so they can still see the harness shape. The facilitator `python activities/advanced-evaluation-redteam/validate.py --step 2`
   uses exactly this path.
 
 - The real run calls the agent per row via `create_and_process`. With 36 rows × 4 judges this consumes
@@ -118,7 +120,7 @@ this activity fills it. Push teams to connect a low score back to a *design choi
 All four offline checkpoints pass on the shipped assets:
 
 ```text
-python validate.py --all
+python activities/advanced-evaluation-redteam/validate.py --all
 # ✅ Step 1 PASS — 36 rows, 13 topics, abstain cases present
 # ✅ Step 2 PASS — evaluate.py runs and reports aggregate scores
 # ✅ Step 3 PASS — custom evaluator discriminates (grounded=4.0 > fabricated=1.0)
