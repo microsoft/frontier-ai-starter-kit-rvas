@@ -79,6 +79,8 @@ python activities/advanced-evaluation-redteam/validate.py --step 1
 2. Read [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py): it loads the JSONL, calls your grounded agent for each `query`,
    then scores Groundedness/Relevance/Coherence/Fluency with `azure-ai-evaluation`.
 3. Smoke-test offline first (no quota): `python activities/advanced-evaluation-redteam/evaluate.py --dry-run --custom-only`.
+   For a saved regression fixture that already contains a `response` field, use
+   `--use-dataset-responses --custom-only`.
 4. Run the real thing against your agent: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl`.
 
 **Success Criteria:**

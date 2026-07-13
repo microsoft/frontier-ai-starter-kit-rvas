@@ -131,7 +131,13 @@ def get_agent_response(openai_client, agent_name: str, query: str) -> str:
     return getattr(response, "output_text", "") or ""
 
 
-def build_rows(dataset: Path, dry_run: bool, openai_client, agent_name: str) -> list[dict]:
+def build_rows(
+    dataset: Path,
+    dry_run: bool,
+    use_dataset_responses: bool,
+    openai_client,
+    agent_name: str,
+) -> list[dict]:
     rows = []
     for line in dataset.read_text(encoding="utf-8").splitlines():
         line = line.strip()
@@ -140,6 +146,9 @@ def build_rows(dataset: Path, dry_run: bool, openai_client, agent_name: str) -> 
         item = json.loads(line)
         if dry_run:
             item["response"] = item.get("ground_truth", "")
+        elif use_dataset_responses:
+            if "response" not in item:
+                raise ValueError("every row must include response when --use-dataset-responses is set")
         else:
             item["response"] = get_agent_response(openai_client, agent_name, item["query"])
         rows.append(item)
@@ -190,6 +199,11 @@ def main() -> int:
                         help="Run only the custom Northfield evaluator (no LLM-judge cost).")
     parser.add_argument("--dry-run", action="store_true",
                         help="Use ground_truth as the response instead of calling the agent.")
+    parser.add_argument(
+        "--use-dataset-responses",
+        action="store_true",
+        help="Score each row's existing response field without calling the agent.",
+    )
     args = parser.parse_args()
 
     if not args.dataset.exists() and not args.dataset.is_absolute():
@@ -203,7 +217,7 @@ def main() -> int:
 
     openai_client = None
     agent_name = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "")
-    if not args.dry_run:
+    if not args.dry_run and not args.use_dataset_responses:
         if not agent_name:
             print("❌ AZURE_FOUNDRY_AGENT_NAME is required for a live evaluation.")
             return 2
@@ -223,9 +237,20 @@ def main() -> int:
             print(f"❌ could not initialize the live agent evaluation ({exc})")
             return 2
 
-    rows = build_rows(args.dataset, args.dry_run, openai_client, agent_name)
+    try:
+        rows = build_rows(
+            args.dataset,
+            args.dry_run,
+            args.use_dataset_responses,
+            openai_client,
+            agent_name,
+        )
+    except (ValueError, json.JSONDecodeError) as exc:
+        print(f"❌ invalid evaluation dataset: {exc}")
+        return 2
     print(f"Loaded {len(rows)} rows from {args.dataset}"
-          + (" (dry-run: response=ground_truth)" if args.dry_run else ""))
+          + (" (dry-run: response=ground_truth)" if args.dry_run else "")
+          + (" (using dataset responses)" if args.use_dataset_responses else ""))
 
     # Custom evaluator (always runs — cheap, local).
     custom = NorthfieldDomainEvaluator()
@@ -249,6 +274,17 @@ def main() -> int:
 
     # CI gate.
     if args.gate is not None:
+        incomplete = {
+            name: len(vals)
+            for name, vals in all_scores.items()
+            if len(vals) != len(rows)
+        }
+        if incomplete:
+            print(
+                "\n❌ GATE FAILED — incomplete evaluator coverage: "
+                + ", ".join(f"{name}={count}/{len(rows)}" for name, count in incomplete.items())
+            )
+            return 1
         failed = {k: v for k, v in means.items() if v < args.gate}
         if failed:
             print(f"\n❌ GATE FAILED (threshold {args.gate}): "

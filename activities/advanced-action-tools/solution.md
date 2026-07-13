@@ -11,14 +11,13 @@
 The leap from a **knowledge** agent (reads/answers) to an **action** agent (changes state) — and the
 governance that leap demands. Both reference repos stop at knowledge tools or auto-firing actions;
 this activity adds the **human-in-the-loop approval** that real deployments require. The pedagogical
-core is the `requires_action → ToolOutput` loop: the run pauses, the human decides, only then does
-anything execute.
+core is the application-owned `function_call → approve/deny → FunctionCallOutput` loop: the model
+requests an action, the human decides, and only then can application code execute it.
 
-> **SDK note for facilitators:** MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
-> `SubmitToolApprovalAction`, `ToolApproval`) are **not** in the current public `azure-ai-agents`
-> 1.x release. The activity uses `FunctionTool` + `RequiredFunctionToolCall` +
-> `SubmitToolOutputsAction` + `ToolOutput` — same governance objective, same pedagogical arc,
-> fully supported in 1.x. If `McpTool` ships in a future version the pattern is analogous.
+> **SDK note for facilitators:** the current path is `azure-ai-projects` 2.x:
+> `agents.create_version(PromptAgentDefinition(...))`, Responses `function_call` items, and
+> `FunctionCallOutput` with `previous_response_id`. Do not steer teams to the retired
+> `agents.threads` / `agents.runs` surface.
 
 ## Env contract (authoritative — keep in lockstep)
 
@@ -58,9 +57,8 @@ az login                                        # keyless DefaultAzureCredential
 ### Step 2 — define the action FunctionTool
 Reference completion of `build_action_tools()` and the three action stubs:
 ```python
-from azure.ai.agents.models import (
-    FunctionTool, RequiredFunctionToolCall, SubmitToolOutputsAction, ToolOutput
-)
+from azure.ai.projects.models import FunctionTool, PromptAgentDefinition
+from openai.types.responses.response_input_param import FunctionCallOutput
 import httpx, json, os
 
 API_URL = os.environ.get("ACTION_API_URL", "http://localhost:8080").rstrip("/")
@@ -113,58 +111,117 @@ def book_advising_slot(student_id, advisor, iso_datetime, topic="General advisin
     return r.text
 
 def build_action_tools():
-    return FunctionTool(functions={create_it_ticket, place_course_hold, book_advising_slot})
+    return [
+        FunctionTool(
+            name="create_it_ticket",
+            description="Open an IT support ticket for a student.",
+            parameters={
+                "type": "object",
+                "properties": {
+                    "student_id": {"type": "string"},
+                    "summary": {"type": "string"},
+                    "category": {"type": "string", "enum": ["wifi", "account", "hardware", "software", "other"]},
+                    "priority": {"type": "string", "enum": ["low", "normal", "high", "urgent"]},
+                },
+                "required": ["student_id", "summary", "category", "priority"],
+                "additionalProperties": False,
+            },
+            strict=True,
+        ),
+        FunctionTool(
+            name="place_course_hold",
+            description="Place a registration hold on a course for a student.",
+            parameters={
+                "type": "object",
+                "properties": {
+                    "student_id": {"type": "string"},
+                    "course_code": {"type": "string"},
+                    "reason": {"type": "string"},
+                },
+                "required": ["student_id", "course_code", "reason"],
+                "additionalProperties": False,
+            },
+            strict=True,
+        ),
+        FunctionTool(
+            name="book_advising_slot",
+            description="Book an academic advising slot for a student.",
+            parameters={
+                "type": "object",
+                "properties": {
+                    "student_id": {"type": "string"},
+                    "advisor": {"type": "string"},
+                    "iso_datetime": {"type": "string"},
+                    "topic": {"type": "string"},
+                },
+                "required": ["student_id", "advisor", "iso_datetime", "topic"],
+                "additionalProperties": False,
+            },
+            strict=True,
+        ),
+    ]
 ```
-- **Pitfall:** `FunctionTool` builds schemas from docstring `:param name: description` lines — if a
-  function is missing a docstring or has no `:param` entries, the model won't understand the arguments.
-  The stubs in the starter have correct docstrings; students just need to fill the body.
+- **Pitfall:** `azure-ai-projects` 2.x requires explicit function names, descriptions, and JSON
+  parameter schemas. The old `FunctionTool(functions={...})` reflection helper belongs to the
+  retired threads/runs surface and is not used here.
 - **`python activities/advanced-action-tools/validate.py --step 2`** checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
   It FAIL/PLACEHOLDERs out if the stubs aren't filled.
 
 ### Step 3 — the approval loop (the heart of it)
 Reference completion of `run_with_approval()`:
 ```python
-def run_with_approval(agent_id, thread_id):
-    run = agents.runs.create(thread_id=thread_id, agent_id=agent_id)
-    while run.status in ("queued", "in_progress", "requires_action"):
-        if run.status == "requires_action" and isinstance(
-            run.required_action, SubmitToolOutputsAction
-        ):
-            tool_outputs = []
-            for call in run.required_action.submit_tool_outputs.tool_calls:
-                if isinstance(call, RequiredFunctionToolCall):
-                    args = json.loads(call.function.arguments)
-                    print(f"\n🔧 Action requested: {call.function.name}")
-                    print(f"   {call.function.arguments}")
-                    decision = input("Approve this action? [y/N] ").strip().lower() == "y"
-                    if decision:
-                        fn_map = {
-                            "create_it_ticket": create_it_ticket,
-                            "place_course_hold": place_course_hold,
-                            "book_advising_slot": book_advising_slot,
-                        }
-                        result = fn_map[call.function.name](**args)
-                    else:
-                        result = json.dumps({"denied": "Human operator declined."})
-                    tool_outputs.append(ToolOutput(tool_call_id=call.id, output=result))
-            agents.runs.submit_tool_outputs(
-                thread_id=thread_id, run_id=run.id, tool_outputs=tool_outputs
-            )
-        run = agents.runs.get(thread_id=thread_id, run_id=run.id)
-    return run
+def run_with_approval(openai, agent_name, prompt):
+    response = openai.responses.create(
+        input=prompt,
+        extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+    )
+    while any(item.type == "function_call" for item in response.output):
+        outputs = []
+        for item in response.output:
+            if item.type != "function_call":
+                continue
+            args = json.loads(item.arguments)
+            print(f"\nAction requested: {item.name}\n  {item.arguments}")
+            approved = input("Approve this action? [y/N] ").strip().lower() == "y"
+            if approved:
+                fn_map = {
+                    "create_it_ticket": create_it_ticket,
+                    "place_course_hold": place_course_hold,
+                    "book_advising_slot": book_advising_slot,
+                }
+                fn = fn_map.get(item.name)
+                result = (
+                    fn(**args)
+                    if fn is not None
+                    else json.dumps({"error": f"Unknown action: {item.name}"})
+                )
+            else:
+                result = json.dumps({"denied": "Human operator declined."})
+            outputs.append(FunctionCallOutput(
+                type="function_call_output",
+                call_id=item.call_id,
+                output=result,
+            ))
+        response = openai.responses.create(
+            input=outputs,
+            previous_response_id=response.id,
+            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+        )
+    return response
 ```
-- **Teaching points:** (1) the run **pauses** at `requires_action` — nothing executes until
-  `submit_tool_outputs` is called; (2) showing `call.function.name` + `call.function.arguments` to
-  the human is the governance moment — don't let teams skip the print; (3) returning the denial JSON
+- **Teaching points:** (1) the application receives a requested function call and executes nothing
+  until the human decides; (2) showing the function name + arguments to
+  the human is the governance moment; (3) returning the denial JSON
   cleanly tells the agent "you were blocked" so it can report back gracefully.
-- **Pitfall:** forgetting to re-`get` the run inside the loop → infinite `requires_action`.
-- **Pitfall:** `call.function.arguments` is a **JSON string** — parse it with `json.loads` before
+- **Pitfall:** forgetting `previous_response_id` loses the tool-call turn context.
+- **Pitfall:** `item.arguments` is a **JSON string** — parse it with `json.loads` before
   unpacking as `**args`.
 
 ### Step 4 — end-to-end
-- `python activities/advanced-action-tools/validate.py --step 4` does its **own** REST round-trip (create IT ticket → list → confirm) against
-  the backend, independent of the agent, so you can verify the backend is wired even if a team's agent
-  code is mid-flight.
+- `python activities/advanced-action-tools/validate.py --step 4` imports the learner's completed
+  `run_with_approval()`, supplies a deterministic fake Responses function call, approves it, and
+  verifies the real backend record. This catches broken dispatch and continuation wiring without
+  consuming model quota.
 - The real proof for the team is: NL prompt → approve → agent reports a `ticket_id` → `curl
   /it-tickets` shows it. Then the **denial** path: deny → nothing created. Make every team run the
   denial — it's where the governance lesson lands.
@@ -172,7 +229,7 @@ def run_with_approval(agent_id, thread_id):
 ## Common issues & fast unblocks
 - **`Step 1 FAIL — backend not reachable`** → backend not started / wrong `ACTION_API_URL`.
 - **Model never calls the tool** → function docstrings missing `:param` lines, or `FunctionTool` not passed to `tools=`.
-- **Agent stalls after approval** → missing the re-`get`/poll inside the while loop.
+- **Agent loses context after approval** → missing `previous_response_id=response.id`.
 - **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.
 - **Team wants to auto-approve everything** → push back; the whole activity is the approval gate.
@@ -185,7 +242,7 @@ def run_with_approval(agent_id, thread_id):
 
 ## Debrief questions
 - "Which of the three actions is most dangerous to auto-run, and why?"
-- "Walk me through what the run looks like at the moment it pauses."
+- "Walk me through the function-call item at the moment the application asks for approval."
 - "Show me the denial path — what did the agent do, what did the backend store?"
 - "How does an action tool change your threat model vs. a knowledge tool?" (bridge to Red Teaming)
 
@@ -196,8 +253,9 @@ python activities/advanced-action-tools/validate.py --all
 # ✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080
 # ✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)
 # ✅ Step 3 PASS — human tool-approval loop implemented
-# ✅ Step 4 PASS — action round-tripped through the backend (ticket ...)
+# ✅ Step 4 PASS — approval loop created backend ticket ...
 # ✅ ALL CHECKPOINTS PASS
 ```
-Steps 1 & 4 require the provided backend running; Steps 2 & 3 are static checks on the wiring file.
+Steps 1 & 4 require the provided backend running; Step 4 also executes the completed approval loop
+against a deterministic fake Responses client. Steps 2 & 3 are structural checks.
 Before completion, Steps 2/3 correctly FAIL on the unfilled `< PLACEHOLDER >` markers.

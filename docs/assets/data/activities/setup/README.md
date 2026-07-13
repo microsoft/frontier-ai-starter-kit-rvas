@@ -99,8 +99,16 @@ python resources/scripts/validate-environment.py
 
 A successful run should confirm your local tooling, Python environment, and Azure connectivity are ready for the Foundations activity.
 
+After `azd up` has populated `.env`, rerun the stricter cloud-contract check:
+
+```bash
+python resources/scripts/validate-environment.py --require-cloud
+```
+
 <div class="callout-info" markdown="1">
-<strong>Heads up:</strong> If the validation script reports missing environment variables, copy `.env.sample` to `.env` and fill in the values provided for your event before retrying.
+<strong>Heads up:</strong> Before provisioning, missing Foundry environment variables are warnings.
+Do not invent endpoint values. After provisioning, export the real azd outputs to `.env` and use
+<code>--require-cloud</code>.
 </div>
 
 ## Troubleshooting

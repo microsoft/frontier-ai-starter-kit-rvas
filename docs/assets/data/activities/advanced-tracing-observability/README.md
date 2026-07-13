@@ -164,6 +164,7 @@ plus a tool span if Action Tools is attached).
 ```python
 # traced_run.py
 import os
+from pathlib import Path
 from trace_setup import enable_tracing   # importing this runs the env-first setup
 
 project = enable_tracing()
@@ -174,7 +175,7 @@ QUESTION = "What documents do I need to apply for financial aid at Northfield?"
 response = client.responses.create(
     input=QUESTION,
     extra_body={
-        "agent": {
+        "agent_reference": {
             "name": os.environ["AZURE_FOUNDRY_AGENT_NAME"],
             "type": "agent_reference",
         }
@@ -184,6 +185,7 @@ response = client.responses.create(
 print("Q:", QUESTION)
 print("A:", response.output_text)
 print("response id:", response.id)   # use this to locate the trace
+Path(__file__).with_name(".last-response-id").write_text(response.id, encoding="utf-8")
 ```
 
 **Success Criteria:**
@@ -206,7 +208,7 @@ response id: resp_01J8X...   ← use this to find the trace
 ```bash
 python activities/advanced-tracing-observability/traced_run.py
 python activities/advanced-tracing-observability/validate.py --step 2
-# expected: "✅ Step 2 PASS — agent run emitted >=1 GenAI span to App Insights"
+# expected: "✅ Step 2 PASS — span(s) found for response ..."
 ```
 
 > _Facilitator note: see solution.md._
@@ -311,7 +313,7 @@ question and surfaces token, latency, and cost signals.
 
 ```bash
 python activities/advanced-tracing-observability/validate.py --step 4
-# expected: "✅ Step 4 PASS — correlate.kql present and returns end-to-end spans for one run"
+# expected: "✅ Step 4 PASS — correlate.kql correlates one operation_Id across the span tables"
 ```
 
 > _Facilitator note: see solution.md._
@@ -321,7 +323,8 @@ python activities/advanced-tracing-observability/validate.py --step 4
 ## Rung (b) — Build-from-scratch path
 
 > Stronger team? Skip the pasted code. We hand you only the contract and the one gotcha that
-> actually bites. The same `validate.py` (it checks for ≥1 emitted GenAI span) grades this path.
+> actually bites. The same `validate.py` grades this path by querying the response id saved by
+> `traced_run.py`, rather than accepting unrelated recent telemetry.
 
 Your contract:
 > Emit GenAI spans to App Insights and reconstruct one question end to end. Acceptance: model +

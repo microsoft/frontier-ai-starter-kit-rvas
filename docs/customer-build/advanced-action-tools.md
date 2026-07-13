@@ -117,7 +117,9 @@ This chapter is mutuated from [Advanced · Action Tools](../activities/advanced-
 - What audit artifact proves approval happened?
 - What message does the agent return when approval is denied?
 
-**Apply it to your app:** reuse the `RequiredFunctionToolCall` → approve/deny → `ToolOutput` loop, substituting your action functions. → [Action Tools — Step 3](../activities/advanced-action-tools#step-3--implement-the-tool-approval-loop)
+**Apply it to your app:** reuse the Responses `function_call` → approve/deny →
+`FunctionCallOutput` loop, substituting your action functions.
+→ [Action Tools — Step 3](../activities/advanced-action-tools#step-3--implement-the-tool-approval-loop)
 
 **Prove you applied it:**
 - `python activities/advanced-action-tools/validate.py --track customer --step 3 --dry-run`

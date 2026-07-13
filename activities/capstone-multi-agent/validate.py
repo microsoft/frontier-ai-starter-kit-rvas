@@ -42,8 +42,7 @@ KB_RE = re.compile(
     re.IGNORECASE,
 )
 APPROVAL_RE = re.compile(
-    r"RequiredFunctionToolCall|RequiredMcpToolCall|ToolOutput|SubmitToolOutputsAction|"
-    r"SubmitToolApprovalAction|submit_tool_outputs|"
+    r"function_call|FunctionCallOutput|previous_response_id|agent_reference|"
     r"ACTION_MCP_URL|ACTION_API_URL|northfield_actions|McpTool|FunctionTool|approval",
     re.IGNORECASE,
 )

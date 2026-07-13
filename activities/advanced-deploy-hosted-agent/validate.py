@@ -148,28 +148,25 @@ def check_step2(env: dict, dry_run: bool, track: str) -> bool:
     endpoint = (env.get("AZURE_AI_PROJECT_ENDPOINT") or "").strip()
     if not endpoint:
         return _fail("2", "AZURE_AI_PROJECT_ENDPOINT missing from .env")
+    base = f"{endpoint.rstrip('/')}/agents/{agent_name}/endpoint/protocols/openai/responses"
     try:
-        from azure.ai.projects import AIProjectClient
-        from azure.identity import DefaultAzureCredential
-
-        project = AIProjectClient(endpoint=endpoint, credential=DefaultAzureCredential())
-        found = None
-        for a in project.agents.list():
-            if getattr(a, "name", None) == agent_name:
-                found = a
-                break
-        if found is None:
-            return _fail("2", f"hosted agent '{agent_name}' not found — run 'azd deploy' from hosted/")
-        status = (getattr(found, "status", "") or "").lower()
-        if status and status != "active":
-            return _fail("2", f"agent '{agent_name}' version status is '{status}' (waiting to become active)")
-        ok(f"✅ Step 2 PASS — hosted agent '{agent_name}' deployed"
-           + (f" (status active)" if status else " (status surfaced once provisioning completes)"))
-        return True
+        import httpx
     except ImportError as exc:
-        return _fail("2", f"azure-ai-projects not installed ({exc})")
+        return _fail("2", f"httpx not installed ({exc})")
+    try:
+        response = httpx.post(base, json={"input": "deployment probe"}, timeout=15.0)
+        if response.status_code in (401, 403):
+            ok(f"✅ Step 2 PASS — hosted endpoint for '{agent_name}' exists and requires authentication")
+            return True
+        if response.status_code == 200:
+            return _fail("2", "hosted endpoint answered anonymously; authentication must be required")
+        return _fail(
+            "2",
+            f"hosted endpoint returned {response.status_code}; run 'azd deploy' from hosted/ "
+            "and wait for the version to become ready",
+        )
     except Exception as exc:  # noqa: BLE001
-        return _fail("2", f"could not query the deployed agent ({exc}); run 'az login' and 'azd deploy' from hosted/")
+        return _fail("2", f"hosted endpoint probe failed ({exc}); run 'azd deploy' from hosted/")
 
 
 # --------------------------------------------------------------------------- #
@@ -225,9 +222,8 @@ def check_step4(env: dict, dry_run: bool, track: str) -> bool:
         return True
     workspace = (env.get("AZURE_LOG_ANALYTICS_WORKSPACE_ID") or "").strip()
     if not workspace:
-        warn("AZURE_LOG_ANALYTICS_WORKSPACE_ID not set — verify run history in the portal Tracing tab")
-        ok("✅ Step 4 PASS (structure verified; confirm the hosted run in the portal)")
-        return True
+        return _fail("4", "AZURE_LOG_ANALYTICS_WORKSPACE_ID is required for live hosted-run proof; "
+                          "use --dry-run for structural validation")
     try:
         from azure.identity import DefaultAzureCredential
         from azure.monitor.query import LogsQueryClient, LogsQueryStatus
@@ -235,22 +231,20 @@ def check_step4(env: dict, dry_run: bool, track: str) -> bool:
 
         client = LogsQueryClient(DefaultAzureCredential())
         query = (f'dependencies | where timestamp > ago(1h) '
-                 f'| where cloud_RoleName has "{agent_name}" or customDimensions has "gen_ai" | count')
+                 f'| where cloud_RoleName has "{agent_name}" | count')
         resp = client.query_workspace(workspace, query, timespan=timedelta(hours=1))
         if resp.status == LogsQueryStatus.SUCCESS and resp.tables and resp.tables[0].rows:
             n = resp.tables[0].rows[0][0]
             if n and int(n) > 0:
                 ok(f"✅ Step 4 PASS — {n} hosted run span(s) visible in App Insights")
                 return True
-        warn("no hosted-run spans found yet (propagation lag) — structure is valid")
-        ok("✅ Step 4 PASS (structure verified; re-run after the trace propagates)")
-        return True
+        return _fail("4", "no hosted-run spans found; invoke the hosted agent, wait for telemetry "
+                          "propagation, and retry")
     except ImportError as exc:
-        warn(f"azure-monitor-query not installed ({exc}) — verify run history in the portal")
+        return _fail("4", f"azure-monitor-query not installed ({exc})")
     except Exception as exc:  # noqa: BLE001
-        warn(f"live trace query unavailable ({exc}) — verify run history in the portal")
-    ok("✅ Step 4 PASS (structure verified; live trace query skipped gracefully)")
-    return True
+        return _fail("4", f"live hosted trace query failed ({exc}); verify login, workspace RBAC, "
+                          "and telemetry configuration")
 
 
 def main() -> int:

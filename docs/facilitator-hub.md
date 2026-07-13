@@ -96,7 +96,7 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful fa
 
 | Advanced activity | Expected Time | Warning Sign | Intervention |
 |--------------------|---------------|--------------|--------------|
-| Action Tools | 1–1.5 hr | Tool fires without approval, or never fires | Inspect the MCP `requires_action` loop and approval gate. |
+| Action Tools | 1–1.5 hr | Tool fires without approval, or never fires | Inspect the Responses function-call loop and approval gate. |
 | Evaluation & Red Teaming | 1–1.5 hr | Teams ignore metrics they do not like | Reframe metrics as design feedback; check the CI score gate. |
 | Tracing & Observability | 1 hr | No spans land in App Insights | Confirm GenAI tracing env vars are set **before** SDK import. |
 | Deploy as a Hosted Agent | 1–1.5 hr | Deployment completes but endpoint 401/500s | Check `azure.yaml`, hosted logs, and per-agent managed identity. |

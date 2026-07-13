@@ -63,6 +63,7 @@ const OUTCOMES = [
       'customer-deploy-hosted-agent',
       'customer-build-ui',
       'customer-capstone-multi-agent',
+      'cleanup',
     ],
     success_metrics: [
       'The team can explain the target users, corpus, action, safety boundaries, and demo story.',
@@ -105,6 +106,7 @@ const OUTCOMES = [
       'extra-magentic-workflows',
       'extra-hosted-longrunning',
       'capstone-multi-agent',
+      'cleanup',
     ],
     success_metrics: [
       'The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.',
@@ -124,6 +126,17 @@ const ACTIVITIES = [
     tags: ['setup', 'codespaces', 'azure'],
     outcomes: ['upskill'],
     participant: 'docs/setup.md',
+  },
+  {
+    id: 'cleanup',
+    title: 'Cleanup and cost hygiene',
+    track: 'extras',
+    difficulty: 'beginner',
+    duration_minutes: 10,
+    description: 'Review teardown targets, stop local processes, and remove event resources safely.',
+    tags: ['cleanup', 'cost', 'azure'],
+    outcomes: ['customer-build', 'upskill'],
+    participant: 'docs/activities/cleanup.md',
   },
   {
     id: 'idea-forge',

@@ -230,11 +230,8 @@ def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill")
         agent = _find_agent(project, agent_name)
         if agent is not None:
             openai = project.get_openai_client()
-            conversation = openai.conversations.create(
-                items=[{"type": "message", "role": "user", "content": question}],
-            )
             response = openai.responses.create(
-                conversation=conversation.id,
+                input=question,
                 extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
             )
             text = getattr(response, "output_text", "") or ""
@@ -242,28 +239,10 @@ def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill")
                 ok(f"✅ Step 4 PASS — agent '{agent_name}' returned a grounded answer WITH a citation")
                 return True
             if text:
-                warn("agent answered but no citation detected; falling back to a direct Search check")
+                return _fail("4", f"agent '{agent_name}' answered without a structured citation")
+            return _fail("4", f"agent '{agent_name}' returned no answer")
     except Exception as exc:  # noqa: BLE001
-        warn(f"agent invocation surface unavailable ({exc}); falling back to a direct Search check")
-
-    # Fallback proof of grounding: the index returns a citable result.
-    try:
-        from azure.search.documents import SearchClient
-
-        sc = SearchClient(
-            endpoint=env["AZURE_SEARCH_ENDPOINT"],
-            index_name=env["AZURE_SEARCH_INDEX_NAME"],
-            credential=cred,
-        )
-        results = list(sc.search(search_text=question, top=3))
-        if results and any(r.get("source") for r in results):
-            ok(f"✅ Step 4 PASS — grounded retrieval works (top hit cites '{results[0].get('source')}')")
-            return True
-        return _fail("4", "Search returned no citable result — run ./scripts/setup-foundations.sh")
-    except ImportError as exc:
-        return _fail("4", f"azure-search-documents not installed ({exc})")
-    except Exception as exc:  # noqa: BLE001
-        return _fail("4", f"grounded retrieval check failed ({exc}); verify the index + RBAC")
+        return _fail("4", f"grounded agent invocation failed ({exc}); verify the agent, index, and RBAC")
 
 
 def main() -> int:

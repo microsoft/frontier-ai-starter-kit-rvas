@@ -164,7 +164,7 @@ version and per-agent managed identity.
 
 ```bash
 python activities/advanced-deploy-hosted-agent/validate.py --step 2
-# expected: "✅ Step 2 PASS — hosted agent deployed, version active in the project"
+# expected: "✅ Step 2 PASS — hosted endpoint exists and requires authentication"
 ```
 
 > _Facilitator note: see solution.md._

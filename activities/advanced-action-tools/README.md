@@ -42,11 +42,9 @@ Env contract (authoritative — matches `.env.sample` and the backend):
 | `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint (optional — preview/stretch only; not needed for this guided path) |
 | `ACTION_API_KEY` | *(empty)* | optional `x-api-key` shared secret (leave empty for the workshop) |
 
-> SDK note: MCP-native approval classes (`McpTool`, `RequiredMcpToolCall`,
-> `SubmitToolApprovalAction`, `ToolApproval`) are not in the current public
-> `azure-ai-agents` 1.x release. This activity uses the standard
-> `FunctionTool` + `RequiredFunctionToolCall` + `SubmitToolOutputsAction` + `ToolOutput`
-> pattern instead — same governance objective, fully supported in 1.x.
+> SDK note: this activity uses the current `azure-ai-projects` 2.x prompt-agent pattern:
+> explicit `FunctionTool` schemas on `PromptAgentDefinition`, function-call items returned by the
+> Responses API, and `FunctionCallOutput` results submitted with `previous_response_id`.
 
 Files in this activity
 - [`agent_with_actions.py`](agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
@@ -106,20 +104,22 @@ python activities/advanced-action-tools/validate.py --step 1
 
 ## Step 2 — Define the action tools
 
-**Goal:** Give the agent the three actions by wrapping the provided backend functions in a `FunctionTool`.
+**Goal:** Give the versioned prompt agent three explicit `FunctionTool` schemas.
 
 **Tasks:**
-1. Open [`agent_with_actions.py`](agent_with_actions.py). The imports are already present:
-   `from azure.ai.agents.models import FunctionTool, RequiredFunctionToolCall, SubmitToolOutputsAction, ToolOutput`.
+1. Open [`agent_with_actions.py`](agent_with_actions.py). The current SDK imports are already present:
+   `PromptAgentDefinition` / `FunctionTool` from `azure.ai.projects.models` and
+   `FunctionCallOutput` from the OpenAI Responses types.
 2. Complete the three stub functions (`create_it_ticket`, `place_course_hold`, `book_advising_slot`)
    so each calls the appropriate `POST` endpoint on `ACTION_API_URL` and returns the response as a string.
    (Hint: `httpx.post(f"{API_URL}/it-tickets", json={...}, headers=_headers()).text`)
-3. Complete `build_action_tools()`: return `FunctionTool(functions={create_it_ticket, place_course_hold, book_advising_slot})`.
-   `FunctionTool` builds the tool schemas from the function signatures and docstrings automatically.
+3. Complete `build_action_tools()`: return one `FunctionTool(...)` per action with its name,
+   description, strict JSON parameter schema, and required fields. Pass the returned list to
+   `PromptAgentDefinition(tools=...)` when creating the agent version.
 
 **Success Criteria:**
 - [ ] The three action functions call the backend and return JSON strings.
-- [ ] `build_action_tools()` returns a `FunctionTool`; no `< PLACEHOLDER >` remains before `run_with_approval`.
+- [ ] `build_action_tools()` returns three `FunctionTool` definitions; no `< PLACEHOLDER >` remains before `run_with_approval`.
 
 **Checkpoint:** The wiring file defines the action tools correctly.
 ```text
@@ -134,21 +134,20 @@ python activities/advanced-action-tools/validate.py --step 2
 **Goal:** Make the agent *pause and ask* before any action runs, then resume on approval or denial.
 
 **Tasks:**
-1. Complete `run_with_approval()`. When `run.status == "requires_action"`, check that
-   `run.required_action` is a `SubmitToolOutputsAction`. The pending calls are in
-   `run.required_action.submit_tool_outputs.tool_calls` — each is a `RequiredFunctionToolCall` with
-   `call.function.name` and `call.function.arguments` (a JSON string).
-2. For each call: show the human the tool name + arguments, ask to approve, and:
+1. Complete `run_with_approval()`. Call the versioned prompt agent through
+   `openai.responses.create(..., extra_body={"agent_reference": ...})`, then inspect
+   `response.output` for items whose `type == "function_call"`.
+2. For each function-call item: show the human `item.name` + `item.arguments`, ask to approve, and:
    - If approved: parse the arguments and call the matching backend function (e.g.
-     `create_it_ticket(**json.loads(call.function.arguments))`), capture the result string.
+     `create_it_ticket(**json.loads(item.arguments))`), capture the result string.
    - If denied: set the result to `json.dumps({"denied": "Human operator declined."})`.
-3. Build `ToolOutput(tool_call_id=call.id, output=result)` for each call and submit the list via
-   `agents.runs.submit_tool_outputs(thread_id, run_id, tool_outputs=[...])`, then keep polling until
-   the run leaves `requires_action`. This closes the function-call loop.
+3. Build `FunctionCallOutput(type="function_call_output", call_id=item.call_id, output=result)`
+   for each call. Continue the turn with another `responses.create` using the output list,
+   `previous_response_id=response.id`, and the same `agent_reference`.
 
 **Success Criteria:**
 - [ ] An action never executes without an explicit approve decision.
-- [ ] Denying a call cleanly ends the run without performing the action.
+- [ ] Denying a call returns a denial result to the agent without performing the action.
 - [ ] No `< PLACEHOLDER >` remains.
 
 **Checkpoint:** The approval loop is implemented.
@@ -186,7 +185,7 @@ Approve this action? [y/N]: y
 **Checkpoint:** An action round-trips through the provided backend.
 ```text
 python activities/advanced-action-tools/validate.py --step 4
-# expected: "✅ Step 4 PASS — action round-tripped through the backend (ticket ...)"
+# expected: "✅ Step 4 PASS — approval loop created backend ticket ..."
 ```
 
 Full run:
@@ -205,8 +204,8 @@ python activities/advanced-action-tools/validate.py --all
 
 Your contract:
 > Define the three backend action functions (`create_it_ticket`, `place_course_hold`,
-> `book_advising_slot`) calling `ACTION_API_URL`; wrap them in a `FunctionTool`; implement a
-> human-approval loop using `RequiredFunctionToolCall` / `SubmitToolOutputsAction` / `ToolOutput`.
+> `book_advising_slot`) calling `ACTION_API_URL`; declare three `FunctionTool` schemas; implement a
+> human-approval loop over Responses `function_call` items and return `FunctionCallOutput` results.
 > Acceptance: no action runs without an approve; a denial creates nothing.
 
 You get the running backend (Step 0) and the env contract (the `ACTION_*` table above) — nothing

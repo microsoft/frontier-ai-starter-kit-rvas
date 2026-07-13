@@ -92,8 +92,6 @@ def book_advising_slot(
 
 if __name__ == "__main__":
     parsed = urlparse(ACTION_MCP_URL)
-    host = parsed.hostname or "0.0.0.0"
-    port = parsed.port or 8765
     path = parsed.path or "/mcp"
-    print(f"Action Tools MCP server -> http://{host}:{port}{path}  (backend: {ACTION_API_URL})")
-    mcp.run(transport="http", host=host, port=port, path=path)
+    print(f"Action Tools MCP server -> {ACTION_MCP_URL}  (local bind: 0.0.0.0:8765; backend: {ACTION_API_URL})")
+    mcp.run(transport="http", host="0.0.0.0", port=8765, path=path)

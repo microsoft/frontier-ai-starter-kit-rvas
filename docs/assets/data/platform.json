@@ -47,10 +47,10 @@
           "id": "extras",
           "name": "Extras",
           "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
-          "activity_count": 3
+          "activity_count": 4
         }
       ],
-      "activity_count": 22
+      "activity_count": 23
     }
   ],
   "outcomes": [
@@ -84,14 +84,15 @@
         "customer-tracing-observability",
         "customer-deploy-hosted-agent",
         "customer-build-ui",
-        "customer-capstone-multi-agent"
+        "customer-capstone-multi-agent",
+        "cleanup"
       ],
       "success_metrics": [
         "The team can explain the target users, corpus, action, safety boundaries, and demo story.",
         "The prototype answers with citations, acts only through governed tools, and has a trust scorecard."
       ],
-      "activity_count": 8,
-      "duration_minutes": 795
+      "activity_count": 9,
+      "duration_minutes": 805
     },
     {
       "id": "idea-forge",
@@ -154,14 +155,15 @@
         "extra-copilot-assisted",
         "extra-magentic-workflows",
         "extra-hosted-longrunning",
-        "capstone-multi-agent"
+        "capstone-multi-agent",
+        "cleanup"
       ],
       "success_metrics": [
         "The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.",
         "Participants can identify what to swap when moving from Northfield to a customer scenario."
       ],
-      "activity_count": 13,
-      "duration_minutes": 1140
+      "activity_count": 14,
+      "duration_minutes": 1150
     }
   ],
   "activities": [
@@ -195,6 +197,38 @@
       "license": "MIT",
       "participant_path": "assets/data/activities/setup/README.md",
       "facilitator_path": "assets/data/activities/setup/FACILITATOR.md"
+    },
+    {
+      "id": "cleanup",
+      "title": "Cleanup and cost hygiene",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "beginner",
+      "duration_minutes": 10,
+      "description": "Review teardown targets, stop local processes, and remove event resources safely.",
+      "prerequisites": [],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "cleanup",
+        "cost",
+        "azure"
+      ],
+      "outcomes": [
+        "customer-build",
+        "upskill"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "docs/activities/cleanup.md",
+      "license": "MIT",
+      "participant_path": "assets/data/activities/cleanup/README.md",
+      "facilitator_path": "assets/data/activities/cleanup/FACILITATOR.md"
     },
     {
       "id": "idea-forge",

@@ -8,15 +8,19 @@
     python validate.py --all
     python validate.py --all --dry-run   # offline structural smoke (no REST calls)
 
-Steps 1 & 4 exercise the PROVIDED backend over REST (no Azure calls), so a facilitator can
-verify wiring without burning model quota. `--dry-run` skips the REST round-trips and
-falls back to a structural check of the provided backend source. Set ACTION_API_URL in
-your environment (default matches .env.sample). Start the backend first:
+Steps 1 & 4 exercise the PROVIDED backend over REST (no Azure calls). Step 4 drives the
+learner's real approval-loop function with a deterministic fake Responses client, so broken
+dispatch or FunctionCallOutput wiring cannot pass merely because the backend works. `--dry-run`
+skips REST calls and performs structural checks. Set ACTION_API_URL in your environment. Start:
     cd ../../scripts/action-backend && uvicorn app:app --port 8080
 """
 from __future__ import annotations
 
 import argparse
+import ast
+import builtins
+import importlib.util
+import json
 import os
 
 try:
@@ -28,6 +32,7 @@ except ImportError:  # python-dotenv optional; .env may already be exported in t
 import re
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
@@ -72,13 +77,26 @@ def check_step2() -> bool:
     if not WIRING.exists():
         return _fail("2", f"missing wiring file {WIRING.name}")
     src = WIRING.read_text(encoding="utf-8")
-    if "FunctionTool" not in src:
-        return _fail("2", "no FunctionTool — wrap the three action callables as a FunctionTool")
     northfield_actions = ("create_it_ticket", "place_course_hold", "book_advising_slot")
-    missing = [fn for fn in northfield_actions if fn not in src]
+    try:
+        tree = ast.parse(src)
+    except SyntaxError as exc:
+        return _fail("2", f"{WIRING.name} is not valid Python ({exc})")
+    tool_names = {
+        keyword.value.value
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "FunctionTool"
+        for keyword in node.keywords
+        if keyword.arg == "name"
+        and isinstance(keyword.value, ast.Constant)
+        and isinstance(keyword.value.value, str)
+    }
+    missing = [fn for fn in northfield_actions if fn not in tool_names]
     if TRACK == "upskill" and missing:
-        return _fail("2", f"define all three action functions; missing: {', '.join(missing)}")
-    if TRACK == "customer" and not missing:
+        return _fail("2", f"declare explicit FunctionTool schemas for: {', '.join(missing)}")
+    if TRACK == "customer" and tool_names.issuperset(northfield_actions):
         print("⚠  --track customer: default Northfield action names are still present; replace/adapt them for your workflow before demo.")
     if "ACTION_API_URL" not in src:
         return _fail("2", "wire tool execution to ACTION_API_URL (the provided REST backend)")
@@ -93,12 +111,16 @@ def check_step3() -> bool:
     if not WIRING.exists():
         return _fail("3", f"missing wiring file {WIRING.name}")
     src = WIRING.read_text(encoding="utf-8")
-    if "RequiredFunctionToolCall" not in src:
-        return _fail("3", "approval loop must inspect RequiredFunctionToolCall items")
-    if "submit_tool_outputs" not in src:
-        return _fail("3", "approval loop must submit decisions via submit_tool_outputs")
-    if "ToolOutput" not in src:
-        return _fail("3", "build ToolOutput(tool_call_id=..., output=...) for each decision")
+    if 'type == "function_call"' not in src:
+        return _fail("3", "approval loop must inspect Responses function_call items")
+    if "FunctionCallOutput" not in src:
+        return _fail("3", "return each approval decision with FunctionCallOutput")
+    if "previous_response_id" not in src:
+        return _fail("3", "continue the tool-call turn with previous_response_id")
+    if "agent_reference" not in src:
+        return _fail("3", "route both Responses calls through the versioned prompt agent")
+    if "Approve" not in src or "input(" not in src:
+        return _fail("3", "show each requested action and collect an explicit human approval")
     if PLACEHOLDER.search(src):
         return _fail("3", "a < PLACEHOLDER > remains — complete the approval loop")
     print("✅ Step 3 PASS — human tool-approval loop implemented")
@@ -111,11 +133,11 @@ def check_step4() -> bool:
             return _fail("4", f"provided REST backend not found at {BACKEND} (expected app.py)")
         print("✅ Step 4 PASS (dry-run) — provided REST backend source present (round-trip skipped)")
         return True
-    try:
-        import httpx
-    except ImportError:
-        return _fail("4", "httpx not installed")
     if TRACK == "customer":
+        try:
+            import httpx
+        except ImportError:
+            return _fail("4", "httpx not installed")
         print("⚠  --track customer: custom action side effects are scenario-specific; validating backend reachability only.")
         try:
             r = httpx.get(f"{API_URL}/health", headers=_headers(), timeout=5.0)
@@ -125,24 +147,92 @@ def check_step4() -> bool:
             return _fail("4", f"health endpoint returned {r.status_code}")
         print(f"✅ Step 4 PASS — customer action backend reachable at {API_URL} (manual side-effect proof required)")
         return True
+
+    try:
+        import httpx
+    except ImportError:
+        return _fail("4", "httpx not installed")
+
     payload = {"student_id": "validate_py", "summary": "checkpoint smoke ticket",
                "category": "other", "priority": "low"}
+
+    class FakeResponses:
+        def __init__(self):
+            self.calls = []
+
+        def create(self, **kwargs):
+            self.calls.append(kwargs)
+            if len(self.calls) == 1:
+                return SimpleNamespace(
+                    id="validation-response-1",
+                    output=[
+                        SimpleNamespace(
+                            type="function_call",
+                            name="create_it_ticket",
+                            arguments=json.dumps(payload),
+                            call_id="validation-call-1",
+                        )
+                    ],
+                    output_text="",
+                )
+            return SimpleNamespace(
+                id="validation-response-2",
+                output=[],
+                output_text="Ticket created.",
+            )
+
+    class FakeOpenAI:
+        def __init__(self):
+            self.responses = FakeResponses()
+
     try:
-        created = httpx.post(f"{API_URL}/it-tickets", json=payload, headers=_headers(), timeout=10.0)
-        created.raise_for_status()
-        ticket = created.json()
-        tid = ticket.get("ticket_id") or ticket.get("id")
-        if not tid:
-            return _fail("4", f"create returned no ticket id: {ticket}")
+        spec = importlib.util.spec_from_file_location("agent_with_actions_validation", WIRING)
+        if spec is None or spec.loader is None:
+            return _fail("4", f"could not load {WIRING.name}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        fake_openai = FakeOpenAI()
+        original_input = builtins.input
+        builtins.input = lambda _prompt="": "y"
+        try:
+            module.run_with_approval(
+                fake_openai,
+                "northfield-iq-actions",
+                "Open a low-priority checkpoint ticket for validate_py.",
+            )
+        finally:
+            builtins.input = original_input
+
+        calls = fake_openai.responses.calls
+        if len(calls) != 2:
+            return _fail("4", f"approval loop made {len(calls)} Responses calls; expected 2")
+        continuation = calls[1]
+        if continuation.get("previous_response_id") != "validation-response-1":
+            return _fail("4", "approval loop did not continue with previous_response_id")
+        outputs = continuation.get("input") or []
+        output_call_id = (
+            outputs[0].get("call_id")
+            if outputs and isinstance(outputs[0], dict)
+            else getattr(outputs[0], "call_id", None) if outputs else None
+        )
+        if len(outputs) != 1 or output_call_id != "validation-call-1":
+            return _fail("4", "approval loop did not submit the matching FunctionCallOutput")
+
         listed = httpx.get(f"{API_URL}/it-tickets", headers=_headers(), timeout=10.0)
         listed.raise_for_status()
         body = listed.json()
         items = body if isinstance(body, list) else body.get("items", body.get("tickets", []))
-        if not any((t.get("ticket_id") or t.get("id")) == tid for t in items):
-            return _fail("4", "created ticket not found when listing — backend state not persisting")
+        matches = [
+            t for t in items
+            if t.get("student_id") == payload["student_id"] and t.get("summary") == payload["summary"]
+        ]
+        if not matches:
+            return _fail("4", "approved call did not create the expected backend ticket")
     except Exception as exc:
-        return _fail("4", f"end-to-end action failed against {API_URL}: {exc}")
-    print(f"✅ Step 4 PASS — action round-tripped through the backend (ticket {tid})")
+        return _fail("4", f"approval-loop round trip failed against {API_URL}: {exc}")
+    tid = matches[-1].get("ticket_id") or matches[-1].get("id")
+    print(f"✅ Step 4 PASS — approval loop created backend ticket {tid}")
     return True
 
 

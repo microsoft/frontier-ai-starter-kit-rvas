@@ -156,19 +156,20 @@ with SDK versions — read it live, don't hard-code from memory.
 
 Asking to open a WiFi ticket renders an approval card (tool name + arguments) before anything runs.
 Approve creates the record (check `curl http://localhost:8080/it-tickets`); Deny creates nothing. This
-is the Action Tools `requires_action` loop surfaced in the browser.
+is the Action Tools Responses function-call loop surfaced in the browser.
 
 ### The shape
 
-The BFF detects `run.status == "requires_action"`, returns the pending `RequiredFunctionToolCall`(s) to the
-page (don't auto-approve!), and on the user's click submits a `ToolOutput(tool_call_id, output=...)`
-via `submit_tool_outputs`, then resumes. Reuse the exact approval logic from the Action Tools
-`solution.md` — this Extra just moves the human decision from the terminal to a button.
+The BFF detects `function_call` items in `response.output`, stores the response id and pending call,
+and returns the name + arguments to the page. On the user's click it creates a
+`FunctionCallOutput(call_id=..., output=...)` and resumes with `previous_response_id`. Reuse the
+approval logic from the Action Tools `solution.md`; this Extra moves the human decision from the
+terminal to a button.
 
 ### Common pitfalls
 - Auto-approving to "make it work." Defeats the entire point. The card must block on a human click.
-- Losing the run between requests. The approval is a second HTTP call — the BFF must keep the run/
-  response id around (in-memory dict keyed by a session id is fine for a workshop) to resume the right run.
+- Losing the response between requests. The approval is a second HTTP call — the BFF must keep the
+  response id and pending call around (an in-memory dict keyed by session id is fine here).
 
 - Action Tools backend not running. Step 4 needs `scripts/action-backend` up (REST :8080 + MCP :8765).
 
@@ -210,7 +211,7 @@ No `validate.py` ships with this activity. If a team chooses to create one, it c
 | `python validate.py --step 1` | BFF proxies to the hosted agent; no secret in browser-delivered assets |
 | `python validate.py --step 2` | `/api/chat/stream` returns `text/event-stream`; deltas relayed |
 | `python validate.py --step 3` | A grounded answer returns a non-empty structured `sources` array |
-| `python validate.py --step 4` | `requires_action` surfaces a pending tool call; approve creates, deny cancels |
+| Browser Step 4 check | A Responses `function_call` surfaces before execution; approve creates, deny cancels |
 | `python validate.py --all` | All of the above |
 
 > Step 5 (Azure deploy) is portal/URL-verified — no programmatic checkpoint is required, but a facilitator

@@ -199,9 +199,9 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
   toward a few clear rules.
 - **Under-specifying refusals** — without an explicit academic-integrity clause, the cheating prompt
   often gets a "helpful" answer. That's the teachable failure; have them add the clause and re-run.
-- **`create_agent` vs `create_version`** — the legacy `agents.create_agent(...)` exists, but
-  Foundations standardizes on **versioned** agents via `agents.create_version(PromptAgentDefinition(...))`.
-  Make sure they use the versioned API so Step 4 can add a new version cleanly.
+- **Stale agent creation samples** — current `azure-ai-projects` 2.x uses
+  `agents.create_version(PromptAgentDefinition(...))`. Do not copy older `create_agent` /
+  threads / runs examples; Step 4 adds a new version of the same named agent.
 - **Drift between portal and code** — if they edit instructions in the portal only, code parity breaks.
   Treat `assets/system-instructions.txt` as the single source.
 

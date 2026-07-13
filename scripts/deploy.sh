@@ -136,6 +136,8 @@ for i in $(seq 1 36); do
   [[ "$STATE" == "Failed" ]] && fail "Foundry provisioning Failed."
   sleep 10
 done
+[[ "$STATE" == "Succeeded" ]] \
+  || fail "Foundry provisioning did not reach Succeeded within 6 minutes (last state: ${STATE})."
 FOUNDRY_ENDPOINT="$(az cognitiveservices account show -n "$FOUNDRY" -g "$RG" --query properties.endpoint -o tsv)"
 
 # ---- model deployment -------------------------------------------------------

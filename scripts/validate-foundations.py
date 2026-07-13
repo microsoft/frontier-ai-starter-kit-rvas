@@ -179,11 +179,8 @@ def main() -> int:
     info("\nCHECK 4 — grounded answer with a citation")
     try:
         oai = project.get_openai_client()
-        conv = oai.conversations.create(
-            items=[{"type": "message", "role": "user", "content": args.question}]
-        )
         resp = oai.responses.create(
-            conversation=conv.id,
+            input=args.question,
             extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
         )
         text = getattr(resp, "output_text", "") or ""

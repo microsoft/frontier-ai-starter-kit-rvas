@@ -168,6 +168,7 @@ plus a tool span if Action Tools is attached).
 ```python
 # traced_run.py
 import os
+from pathlib import Path
 from trace_setup import enable_tracing   # importing this runs the env-first setup
 
 project = enable_tracing()
@@ -178,7 +179,7 @@ QUESTION = "What documents do I need to apply for financial aid at Northfield?"
 response = client.responses.create(
     input=QUESTION,
     extra_body={
-        "agent": {
+        "agent_reference": {
             "name": os.environ["AZURE_FOUNDRY_AGENT_NAME"],
             "type": "agent_reference",
         }
@@ -188,7 +189,7 @@ response = client.responses.create(
 print("Q:", QUESTION)
 print("A:", response.output_text)
 print("response id:", response.id)   # use this to locate the trace
-
+Path(__file__).with_name(".last-response-id").write_text(response.id, encoding="utf-8")
 ```
 
 **Success Criteria:**
@@ -203,7 +204,7 @@ print("response id:", response.id)   # use this to locate the trace
 ```bash
 python activities/advanced-tracing-observability/traced_run.py
 python activities/advanced-tracing-observability/validate.py --step 2
-# expected: "✅ Step 2 PASS — agent run emitted >=1 GenAI span to App Insights"
+# expected: "✅ Step 2 PASS — span(s) found for response ..."
 
 ```
 

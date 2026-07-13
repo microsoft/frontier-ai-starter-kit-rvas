@@ -36,6 +36,7 @@ REPO_ROOT = HERE.parents[1]
 TRACE_SETUP = HERE / "trace_setup.py"
 TRACED_RUN = HERE / "traced_run.py"
 CORRELATE = HERE / "correlate.kql"
+LAST_RESPONSE_ID = HERE / ".last-response-id"
 
 ENABLE_FLAG = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING"
 CAPTURE_FLAG = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"
@@ -118,43 +119,49 @@ def check_step2(env: dict, dry_run: bool) -> bool:
     src = TRACED_RUN.read_text(encoding="utf-8")
     if "enable_tracing" not in src:
         return _fail("2", f"{TRACED_RUN.name} must import/call enable_tracing() from trace_setup first")
-    if "responses.create" not in src and "create_and_process" not in src:
-        return _fail("2", "drive the agent (responses.create / runs.create_and_process) so a span is emitted")
+    if "responses.create" not in src:
+        return _fail("2", "drive the agent with responses.create so a span is emitted")
+    if "agent_reference" not in src:
+        return _fail("2", "route the traced call through the versioned agent with agent_reference")
+    if ".last-response-id" not in src or "response.id" not in src:
+        return _fail("2", "persist response.id to .last-response-id so the live check can query that run")
     if dry_run:
         ok("✅ Step 2 PASS (dry-run) — traced_run.py calls enable_tracing() then drives the agent")
         return True
 
-    # Live (best-effort): query App Insights for a recent GenAI span.
-    conn = env.get("APPLICATIONINSIGHTS_CONNECTION_STRING", "")
+    # Live: query App Insights for the exact response emitted by traced_run.py.
     workspace = env.get("AZURE_LOG_ANALYTICS_WORKSPACE_ID", "")
     if not workspace:
-        warn("AZURE_LOG_ANALYTICS_WORKSPACE_ID not set — skipping the live span query")
-        ok("✅ Step 2 PASS (structure verified; run traced_run.py and confirm spans in the portal)")
-        return True
+        return _fail("2", "AZURE_LOG_ANALYTICS_WORKSPACE_ID is required for the live span query; "
+                          "use --dry-run for a structural-only check")
+    if not LAST_RESPONSE_ID.exists():
+        return _fail("2", "missing .last-response-id; run traced_run.py and wait for telemetry first")
+    response_id = LAST_RESPONSE_ID.read_text(encoding="utf-8").strip()
+    if not re.fullmatch(r"[A-Za-z0-9_.:-]+", response_id):
+        return _fail("2", ".last-response-id is empty or malformed; rerun traced_run.py")
     try:
         from azure.identity import DefaultAzureCredential
         from azure.monitor.query import LogsQueryClient, LogsQueryStatus
         from datetime import timedelta
 
         client = LogsQueryClient(DefaultAzureCredential())
-        query = ('dependencies | where timestamp > ago(1h) '
-                 '| where customDimensions has "gen_ai" or name has_any ("chat","responses","retrieval","tool","agent") '
-                 '| count')
+        query = (
+            "dependencies | where timestamp > ago(1h) "
+            f'| where tostring(customDimensions) has "{response_id}" '
+            "| count"
+        )
         resp = client.query_workspace(workspace, query, timespan=timedelta(hours=1))
         if resp.status == LogsQueryStatus.SUCCESS and resp.tables and resp.tables[0].rows:
             n = resp.tables[0].rows[0][0]
             if n and int(n) > 0:
-                ok(f"✅ Step 2 PASS — {n} GenAI span(s) found in App Insights in the last hour")
+                ok(f"✅ Step 2 PASS — {n} span(s) found for response {response_id}")
                 return True
-        warn("no GenAI spans found yet (spans take 1-3 min to land) — structure is valid")
-        ok("✅ Step 2 PASS (structure verified; re-run after spans propagate)")
-        return True
+        return _fail("2", f"no spans found for response {response_id}; wait for telemetry "
+                          "propagation and retry")
     except ImportError as exc:
-        warn(f"azure-monitor-query not installed ({exc}) — skipping live span query")
+        return _fail("2", f"azure-monitor-query not installed ({exc})")
     except Exception as exc:  # noqa: BLE001
-        warn(f"live span query unavailable ({exc}) — verify spans in the portal Tracing tab")
-    ok("✅ Step 2 PASS (structure verified; live span query skipped gracefully)")
-    return True
+        return _fail("2", f"live span query failed ({exc}); verify Azure login, workspace RBAC, and telemetry")
 
 
 # --------------------------------------------------------------------------- #

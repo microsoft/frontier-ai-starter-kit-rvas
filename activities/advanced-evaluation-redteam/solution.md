@@ -39,8 +39,9 @@ this activity fills it. Push teams to connect a low score back to a *design choi
   quota — if the room is quota-constrained, have teams subset the dataset (`head -n 12`).
 - **Pitfall:** `AIProjectClient` 2.x requires `endpoint=` (not a connection string). Already correct in
   the shipped script; flag it if a team rewrites it.
-- **Pitfall:** the agents API surface (`agents.threads.create`, `agents.runs.create_and_process`,
-  `agents.messages.list`) — if their SDK differs, point them at `references/sdk/foundry-sdk-py.md`.
+- **Pitfall:** older samples use `agents.threads` / `agents.runs`. The current harness invokes the
+  versioned agent through `project.get_openai_client().responses.create(...)` with
+  `agent_reference`; point teams at `references/sdk/foundry-sdk-py.md`.
 
 ### Step 3 — Custom evaluator
 - Answer for "what rule to add": the strongest student rule is a **date-grounding** check — extract any

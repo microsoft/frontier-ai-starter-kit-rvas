@@ -185,15 +185,15 @@ or deny — the Action Tools governance loop, now with a button.
 
 **Tasks:**
 
-1. When the run comes back as `requires_action` (a `RequiredFunctionToolCall` from the action backend), have
-   the BFF return the pending tool call — tool name + arguments — instead of an answer.
+1. When the Responses API returns a `function_call` item, have the BFF persist the response id and
+   return the pending tool call — name + arguments — instead of executing it.
 
 2. In the page, render an approval card: show the tool (`create_it_ticket`), its arguments
    (`student_id`, `summary`, …), and Approve / Deny buttons. Nothing runs until the user clicks.
 
-3. On the click, `POST /api/chat/approve` with the decision; the BFF submits the `ToolOutput` and
-   resumes the run, then streams the final result (the new `ticket_id`, or a clean "no action taken"
-   on deny).
+3. On the click, `POST /api/chat/approve` with the decision; the BFF creates a
+   `FunctionCallOutput`, resumes with `previous_response_id`, and streams the final result (the new
+   `ticket_id`, or a clean "no action taken" on deny).
 
 **Success Criteria:**
 

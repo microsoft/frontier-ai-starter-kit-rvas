@@ -169,7 +169,7 @@ hand-edit.
 | A fan-out branch never lights up in DevUI | Triage didn't route to it (or the edge is missing) | Inspect the typed `RouteDecision`; check the `add_edge` for that branch |
 | Synthesizer fires before both branches finish | Fan-in modeled as two separate sinks, not a join | Both specialist edges must target the *same* synthesizer executor |
 | Regex-parsing prose between agents | Skipped the typed-contract step | Define Pydantic models per hop; `send_message` the object, not a string |
-| Approval loop lost after wrapping the Action agent | Re-implemented the agent instead of reusing it | Wrap the existing Action Tools agent as an executor; keep its `requires_action` loop intact |
+| Approval loop lost after wrapping the Action agent | Re-implemented the agent instead of reusing it | Wrap the existing Action Tools agent as an executor; keep its Responses approval loop intact |
 | `AttributeError` on a `WorkflowBuilder` method | Memorized a stale MAF signature | Confirm the current builder surface via `microsoft-docs` MCP — it drifts between previews |
 | Model "router" is actually a hard-coded `if` | Misread "router" as branching logic | The routing decision must come from the model and be a typed output |
 

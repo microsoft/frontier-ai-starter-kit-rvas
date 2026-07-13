@@ -82,7 +82,8 @@ The supported guided path is:
 2. Implement Python functions that call `ACTION_API_URL` (`/it-tickets`, `/course-holds`,
    `/advising-slots`).
 3. Wrap those functions in `FunctionTool`.
-4. Govern each `RequiredFunctionToolCall` with the `SubmitToolOutputsAction` approval loop.
+4. Govern each Responses `function_call` with explicit human approval, then return a
+   `FunctionCallOutput` and continue with `previous_response_id`.
 
 The FastMCP server is a stretch asset for teams that want to explore the server side of MCP. Before
 attaching it directly to an agent, verify the current MCP tool and approval APIs in Microsoft Learn;
@@ -95,6 +96,7 @@ See `activities/advanced-action-tools/` for the supported workshop implementatio
 ## Notes
 
 - **In-memory only** — state is lost on restart. That is intentional for a workshop.
-- For a public demo over the internet, front the MCP server with a tunnel (e.g. `azd`/Container
-  Apps or a dev tunnel) and set `ACTION_MCP_URL` to the public URL.
+- For a public demo over the internet, front local port `8765` with a tunnel (for example a dev
+  tunnel) and set `ACTION_MCP_URL` to the advertised public URL. The server still binds locally to
+  `0.0.0.0:8765`; it never tries to bind to the public hostname.
 - No secrets are committed. `ACTION_API_KEY` is read from the environment only.

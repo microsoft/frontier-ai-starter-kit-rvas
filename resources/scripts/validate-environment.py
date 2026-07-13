@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import importlib
 import os
 import shutil
@@ -133,6 +134,15 @@ class Reporter:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate local workshop prerequisites and optional provisioned cloud configuration."
+    )
+    parser.add_argument(
+        "--require-cloud",
+        action="store_true",
+        help="Fail unless .env contains the provisioned Foundry contract and the project endpoint is reachable.",
+    )
+    args = parser.parse_args()
     reporter = Reporter()
 
     python_ok = sys.version_info >= (3, 11)
@@ -176,16 +186,16 @@ def main() -> int:
     if not ENV_PATH.exists():
         reporter.add(
             ".env file",
-            "FAIL",
-            "No .env file found in the repository root.",
-            critical=True,
+            "FAIL" if args.require_cloud else "WARN",
+            "No .env file found. This is expected before `azd up`; use --require-cloud after provisioning.",
+            critical=args.require_cloud,
         )
     elif missing_required:
         reporter.add(
             ".env file",
-            "FAIL",
+            "FAIL" if args.require_cloud else "WARN",
             f"Set required: {', '.join(set_required) or 'none'} | Missing required: {', '.join(missing_required)} | Optional set: {', '.join(set_optional) or 'none'} | Optional missing: {', '.join(missing_optional) or 'none'}",
-            critical=True,
+            critical=args.require_cloud,
         )
     else:
         reporter.add(
@@ -223,8 +233,9 @@ def main() -> int:
     else:
         reporter.add(
             "Foundry project endpoint",
-            "WARN",
-            "Skipped because AZURE_AI_PROJECT_ENDPOINT is not configured.",
+            "FAIL" if args.require_cloud else "WARN",
+            "Skipped because AZURE_AI_PROJECT_ENDPOINT is not configured. This is expected before provisioning.",
+            critical=args.require_cloud,
         )
 
     az_path = shutil.which("az")

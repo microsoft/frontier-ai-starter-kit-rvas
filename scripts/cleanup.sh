@@ -176,13 +176,10 @@ fi
 # 4. CLOUD TEARDOWN (gated; guarded; idempotent)
 # ============================================================================
 if ! command -v az >/dev/null 2>&1; then
-  warn "Azure CLI (az) not found — skipping cloud teardown."
-  warn "Install https://aka.ms/azcli, then re-run, or delete RG '${RG}' from the portal."
-  exit 0
+  fail "Azure CLI (az) not found — cloud teardown did not run. Install it, then retry."
 fi
 if ! az account show >/dev/null 2>&1; then
-  warn "Not logged in to Azure — skipping cloud teardown. Run: az login"
-  exit 0
+  fail "Not logged in to Azure — cloud teardown did not run. Run 'az login', then retry."
 fi
 if [[ -z "$RG" ]]; then
   fail "AZURE_RESOURCE_GROUP is empty — refusing to guess a teardown target. Aborting."
@@ -196,15 +193,17 @@ fi
 if command -v azd >/dev/null 2>&1 && [[ -f "${REPO_ROOT}/azure.yaml" ]]; then
   warn "Tearing down via 'azd down' (purge=${PURGE}) — this deletes the provisioned footprint."
   if [[ "$PURGE" == true ]]; then
-    guarded 1800 azd down --force --purge </dev/null || warn "azd down returned non-zero — see output above. RG may need manual delete."
+    guarded 1800 azd down --force --purge </dev/null \
+      || fail "azd down failed — cloud teardown is incomplete. Review the output and retry."
   else
-    guarded 1800 azd down --force </dev/null || warn "azd down returned non-zero — see output above. RG may need manual delete."
+    guarded 1800 azd down --force </dev/null \
+      || fail "azd down failed — cloud teardown is incomplete. Review the output and retry."
   fi
 else
   warn "azd not available — deleting resource group '${RG}' directly."
   az group delete -n "$RG" --yes --no-wait \
     && ok "Resource group delete submitted (--no-wait)." \
-    || warn "Resource group delete returned non-zero."
+    || fail "Resource group delete failed — cloud teardown was not submitted."
 fi
 
 # Optional: hard-purge soft-deleted Cognitive Services / Foundry accounts so the

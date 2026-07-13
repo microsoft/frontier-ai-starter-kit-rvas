@@ -56,8 +56,11 @@ if ! az account show >/dev/null 2>&1; then
 fi
 
 python3 - <<'PYCHECK' || fail "Missing Python SDKs. Run:  pip install -r requirements.txt"
-import importlib, sys
-missing = [m for m in ("azure.search.documents", "azure.identity", "azure.core") if importlib.util.find_spec(m) is None]
+import importlib.util, sys
+missing = [
+    m for m in ("azure.search.documents", "azure.identity", "azure.core", "azure.ai.projects")
+    if importlib.util.find_spec(m) is None
+]
 sys.exit(1 if missing else 0)
 PYCHECK
 
@@ -149,7 +152,11 @@ if not docs:
 
 search_client = SearchClient(endpoint=endpoint, index_name=index_name, credential=cred)
 result = search_client.upload_documents(documents=docs)
-ok(f"✅ Step 1: uploaded {sum(1 for r in result if r.succeeded)}/{len(docs)} chunks from {corpus_dir}.")
+uploaded = sum(1 for r in result if r.succeeded)
+if uploaded != len(docs):
+    failed = [getattr(r, "key", "<unknown>") for r in result if not r.succeeded]
+    die(f"Search upload was partial ({uploaded}/{len(docs)}); failed document keys: {failed}")
+ok(f"✅ Step 1: uploaded {uploaded}/{len(docs)} chunks from {corpus_dir}.")
 
 # ---------------------------------------------------------------------------
 # STEP 2 — Foundry IQ knowledge base = a Foundry-project Index resource over the
