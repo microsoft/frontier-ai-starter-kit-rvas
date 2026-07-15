@@ -47,30 +47,6 @@ const MODULES = [
 
 const OUTCOMES = [
   {
-    id: 'customer-build',
-    name: 'Bring your own customer outcome',
-    tagline: 'Turn a real customer-safe scenario into a grounded, evaluated Foundry agent prototype.',
-    description: 'Define the outcome, swap in your own corpus and persona, add one governed action, prove trust, and demo the result.',
-    personas: ['builder', 'solution-architect', 'account-team', 'customer-engineer'],
-    adoption_stage: ['define', 'build', 'prove', 'demo'],
-    business_value: ['accelerate-prototyping', 'de-risk-ai-adoption', 'prove-customer-value'],
-    activity_ids: [
-      'customer-outcome',
-      'customer-foundations',
-      'customer-action-tools',
-      'customer-evaluation-redteam',
-      'customer-tracing-observability',
-      'customer-deploy-hosted-agent',
-      'customer-build-ui',
-      'customer-capstone-multi-agent',
-      'cleanup',
-    ],
-    success_metrics: [
-      'The team can explain the target users, corpus, action, safety boundaries, and demo story.',
-      'The prototype answers with citations, acts only through governed tools, and has a trust scorecard.',
-    ],
-  },
-  {
     id: 'idea-forge',
     name: 'Need an idea first',
     tagline: 'Generate a ranked, buildable AI application idea before starting the customer build path.',
@@ -111,6 +87,30 @@ const OUTCOMES = [
     success_metrics: [
       'The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.',
       'Participants can identify what to swap when moving from Northfield to a customer scenario.',
+    ],
+  },
+  {
+    id: 'customer-build',
+    name: 'Bring your own customer outcome',
+    tagline: 'Turn a real customer-safe scenario into a grounded, evaluated Foundry agent prototype.',
+    description: 'Define the outcome, swap in your own corpus and persona, add one governed action, prove trust, and demo the result.',
+    personas: ['builder', 'solution-architect', 'account-team', 'customer-engineer'],
+    adoption_stage: ['define', 'build', 'prove', 'demo'],
+    business_value: ['accelerate-prototyping', 'de-risk-ai-adoption', 'prove-customer-value'],
+    activity_ids: [
+      'customer-outcome',
+      'customer-foundations',
+      'customer-action-tools',
+      'customer-evaluation-redteam',
+      'customer-tracing-observability',
+      'customer-deploy-hosted-agent',
+      'customer-build-ui',
+      'customer-capstone-multi-agent',
+      'cleanup',
+    ],
+    success_metrics: [
+      'The team can explain the target users, corpus, action, safety boundaries, and demo story.',
+      'The prototype answers with citations, acts only through governed tools, and has a trust scorecard.',
     ],
   },
 ];
