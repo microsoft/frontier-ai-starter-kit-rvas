@@ -18,6 +18,8 @@ tools:
     min-integrity: approved
     toolsets: [issues, labels]
 safe-outputs:
+  noop:
+    report-as-issue: false
   add-labels:
     allowed: [bug, feature, enhancement, documentation, question, help-wanted, good-first-issue]
   add-comment: {}

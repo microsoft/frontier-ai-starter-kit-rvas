@@ -21,6 +21,8 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
+  noop:
+    report-as-issue: false
   create-issue:
     title-prefix: "[ci-doctor] "
     labels: [automation, ci]
@@ -195,4 +197,3 @@ When creating an investigation issue, use this structure:
 - Persist findings across workflow runs using GitHub Actions cache
 - Build cumulative knowledge about failure patterns and solutions using structured JSON files
 - Use file-based indexing for fast pattern matching and similarity detection
-
