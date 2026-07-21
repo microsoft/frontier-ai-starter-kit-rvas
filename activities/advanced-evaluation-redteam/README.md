@@ -202,7 +202,7 @@ evaluators, your custom evaluator, and the gate yourself, then run `python activ
 
 ## Rung (c) — Stretch goals
 
-Genuinely open-ended — no single right answer:
+Open-ended: no single right answer.
 
 1. Mandatory automated red-team run. Don't stop at pasting prompts by hand — invoke an actual
    `RedTeam(...).scan(...)` (or `IndirectAttackEvaluator`) with results on record. Manual prompting

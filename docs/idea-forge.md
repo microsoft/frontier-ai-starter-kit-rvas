@@ -7,7 +7,7 @@ description: Generate a buildable customer AI application idea, then continue in
 <div class="hero-panel track-hero track-hero--idea">
   <span class="hero-kicker">Intake • Need an idea</span>
   <h1>No app idea yet? Forge one, then build it.</h1>
-  <p class="hero-tagline">This is not a separate track. It is a fast intake step that turns a customer name or industry into a ranked set of Foundry application ideas.</p>
+  <p class="hero-tagline">This fast intake step turns a customer name or industry into a ranked set of Foundry application ideas.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md">Open Activity-Forge</a>
     <a class="btn btn-outline" href="{{ '/customer-build' | relative_url }}">See Customer Build</a>

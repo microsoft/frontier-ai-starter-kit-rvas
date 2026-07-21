@@ -354,7 +354,7 @@ Hosted Agent (the same tracing follows the agent to its live endpoint).
 
 ## Rung (c) — Stretch goals
 
-Genuinely open-ended — no single right answer:
+Open-ended: no single right answer.
 
 1. 3-tier `TelemetryManager` + a custom business metric. Ship a small `TelemetryManager` and emit
    one custom metric (e.g. `northfield.answers.uncited`) on every run, then chart it in a Workbook.

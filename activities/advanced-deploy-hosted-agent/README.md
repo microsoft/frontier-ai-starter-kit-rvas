@@ -21,8 +21,7 @@ Foundry agent with `azd ai agent`, give it a per-agent Entra (managed) identity,
 over its production Responses endpoint. Then you tie its live runs back to the observability you
 built in the Tracing activity.
 
-This is a genuine containerized deployment — not a "next steps" hand-wave. The same grounded assistant,
-now running as its own service.
+This activity deploys the grounded assistant as a containerized service.
 
 ```text
    azure.yaml + src/<agent>/ + Dockerfile
@@ -307,7 +306,7 @@ target this live endpoint.
 
 ## Rung (c) — Stretch goals
 
-Genuinely open-ended — no single right answer:
+Open-ended: no single right answer.
 
 1. Blue/green a new version. Deploy a v2 with tweaked instructions, confirm both versions exist,
    then roll the active pointer — versioned hosted agents in practice. *(+30 min)*

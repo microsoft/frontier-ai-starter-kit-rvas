@@ -35,7 +35,7 @@ exit code as "done" — the version provisions asynchronously, so Step 2's check
 
 ### Step 1 — unified azure.yaml + entrypoint
 
-- Protocol + port are load-bearing. Hosted agents must listen on `0.0.0.0:8088` and declare the
+- Protocol and port are required. Hosted agents must listen on `0.0.0.0:8088` and declare the
   `responses` protocol (v `2.0.0`) in the `azure.ai.agent` service in `azure.yaml`. A container that binds `127.0.0.1` or a different
   port will deploy but never become healthy.
 

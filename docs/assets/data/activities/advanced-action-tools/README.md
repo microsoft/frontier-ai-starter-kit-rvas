@@ -215,7 +215,7 @@ author the file, and run `python activities/advanced-action-tools/validate.py --
 
 ## Rung (c) — Stretch goals
 
-Genuinely open-ended — no single right answer:
+Open-ended: no single right answer.
 
 1. Build the MCP server, don't just wire it. Add a *fourth* action (`waive_late_fee`) end to end:
    implement the REST handler in [`scripts/action-backend/app.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/app.py),
