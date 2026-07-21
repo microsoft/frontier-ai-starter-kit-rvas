@@ -1,6 +1,6 @@
 # GitHub Copilot — Workspace Instructions
 
-> AI Starter Kit RVAS · *Build Intelligent Agents with Microsoft Foundry*.
+> AI Starter Kit · *Build Intelligent Agents with Microsoft Foundry*.
 > Copilot is your always-available pair-programmer here. It does **not** hand you answers —
 > it walks the **same path the activities teach**, using fresh API signatures from MCP and
 > proven patterns from the Foundry skills.

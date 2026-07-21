@@ -1,5 +1,5 @@
 // ============================================================================
-// AI Starter Kit RVAS — resource-group-scoped resources for the Foundry footprint.
+// AI Starter Kit — resource-group-scoped resources for the Foundry footprint.
 //
 // Provisions, keyless-by-default (managed identity + RBAC):
 //   • Microsoft Foundry resource (Cognitive Services kind=AIServices, project mgmt on)
@@ -145,7 +145,7 @@ resource project 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-previ
   identity: { type: 'SystemAssigned' }
   properties: {
     displayName: 'Northfield IQ Assistant'
-    description: 'AI Starter Kit RVAS — Northfield University IQ Assistant project.'
+    description: 'AI Starter Kit — Northfield University IQ Assistant project.'
   }
 }
 

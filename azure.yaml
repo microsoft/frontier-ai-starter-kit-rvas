@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 #
-# azd project for the AI Starter Kit RVAS session (Microsoft Foundry).
+# azd project for the AI Starter Kit session (Microsoft Foundry).
 # Golden path:  azd up   ->  provisions infra/ (Bicep)  ->  writes outputs into the azd env,
 # which scripts/*  read back as a .env contract (see .env.sample).
 #

@@ -240,7 +240,7 @@ The V2 curriculum was implemented to disk this batch (staged, NOT committed). Th
 **Date:** 2026-05-28T16:15:34.722+01:00  
 **Status:** Proposed
 
-**Context:** Framework for the AI Starter Kit RVAS built on Azure AI Foundry, targeting university students/early professionals.
+**Context:** Framework for the AI Starter Kit built on Azure AI Foundry, targeting university students/early professionals.
 
 **Decisions:**
 - **Activity Structure:** 7 activities (00–06), linear dependency chain. Activity 00 is setup-only (no AI content).
@@ -742,4 +742,3 @@ Step 4's heading has two spaces before `*(` and a stripped `*(←`, producing th
 **Decision:** Applied two scoped documentation-only diagram fixes per QA follow-up: (1) explicit four-branch fan-out mapping in `docs/activities/extra-magentic-workflows.md`; (2) wrap-safe line splitting in the architecture diagram in `docs/activities/extra-build-ui.md` with unchanged semantics.
 
 **Why:** Reviewer gate requested elimination of remaining ASCII ambiguity and line-wrap fragility without broad content edits.
-

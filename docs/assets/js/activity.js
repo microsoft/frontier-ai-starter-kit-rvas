@@ -26,7 +26,7 @@
     const allActivities = data.activities || [];
     _route = resolveRoute(activity);
 
-    document.title = activity.title + ' — AI Starter Kit RVAS';
+    document.title = activity.title + ' — AI Starter Kit';
     applyModuleColor(activity.module);
     renderHero(activity, mod);
     renderFacts(activity, mod, allActivities, data.outcomes || []);

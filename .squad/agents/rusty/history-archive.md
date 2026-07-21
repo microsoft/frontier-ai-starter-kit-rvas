@@ -36,7 +36,7 @@
 - **Reusable instinct:** when auditing "is it really X hours," separate **wall-clock** from **hands-on-keyboard effort** — copy-paste + ingestion/provisioning waits inflate the former without adding the latter.
 
 ### Project Context
-- **Project:** AI Starter Kit RVAS — Microsoft Foundry format
+- **Project:** AI Starter Kit — Microsoft Foundry format
 - **Repo:** ai-starter-kit-rvas
 - **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
 - **Participants:** Students (new to AI) + Facilitators (facilitators)

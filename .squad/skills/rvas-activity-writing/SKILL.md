@@ -1,6 +1,6 @@
 ---
 name: "rvas-activity-writing"
-description: "Write student and facilitator activity content for AI Starter Kit RVAS repositories in a beginner-friendly, guided format."
+description: "Write student and facilitator activity content for AI Starter Kit repositories in a beginner-friendly, guided format."
 domain: "instructional-design"
 confidence: "high"
 source: "earned"
@@ -11,7 +11,7 @@ tools:
 ---
 
 ## Context
-Use this skill when creating or revising activity content for a AI Starter Kit RVAS repository. It applies best when the audience is hands-on learners who need enough structure to make progress without turning the experience into a tutorial. The goal is to create student materials that drive action and facilitator materials that support facilitation.
+Use this skill when creating or revising activity content for an AI Starter Kit repository. It applies best when the audience is hands-on learners who need enough structure to make progress without turning the experience into a tutorial. The goal is to create student materials that drive action and facilitator materials that support facilitation.
 
 ## Patterns
 - Start from the repo blueprint first: read the plan, activity descriptions, existing decisions, and audience constraints.

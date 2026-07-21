@@ -1,4 +1,4 @@
-"""AI Starter Kit RVAS — Action Tools backend (provided; teams WIRE it, not build it).
+"""AI Starter Kit — Action Tools backend (provided; teams WIRE it, not build it).
 
 A tiny FastAPI REST API exposing three *action* operations a student-services agent
 can perform. State is in-memory (resets on restart) — that is intentional for a workshop.

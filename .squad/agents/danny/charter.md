@@ -4,7 +4,7 @@
 Lead and Content Architect on the ai-starter-kit-rvas project.
 
 ## Responsibilities
-- Own the overall AI Starter Kit RVAS session format structure and narrative arc
+- Own the overall AI Starter Kit session format structure and narrative arc
 - Design the activity progression (beginner → advanced) across AI/Foundry topics
 - Make architectural decisions on content, repo layout, and participant journey
 - Define learning objectives for each activity

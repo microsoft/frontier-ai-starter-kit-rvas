@@ -1,4 +1,4 @@
-"""AI Starter Kit RVAS — Action Tools MCP server (FastMCP).
+"""AI Starter Kit — Action Tools MCP server (FastMCP).
 
 Wraps the FastAPI Action Tools backend (app.py) and exposes its operations as MCP
 tools so a Foundry agent can attach them via `McpTool`. The agent calls these tools;

@@ -4,7 +4,7 @@
 > **Date:** 2026-06-01
 > **Repo:** https://github.com/microsoft/skills (branch `main`, last push 2026-05-24)
 > **Tagline:** *"Skills, custom agents, AGENTS.md templates, and MCP configurations for AI coding agents working with Azure SDKs and Microsoft AI Foundry."*
-> **Scope of this doc:** Research-only. How we could "plop GitHub Copilot on top of" the AI Starter Kit RVAS (`Build Intelligent Apps with Microsoft Foundry`) using these Foundry skills + MCP servers.
+> **Scope of this doc:** Research-only. How we could "plop GitHub Copilot on top of" the AI Starter Kit (`Build Intelligent Apps with Microsoft Foundry`) using these Foundry skills + MCP servers.
 
 ---
 

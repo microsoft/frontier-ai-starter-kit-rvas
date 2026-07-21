@@ -1,4 +1,4 @@
-# AI Starter Kit RVAS: Content Architecture Plan
+# AI Starter Kit: Content Architecture Plan
 
 > **Archived V1 plan. Do not use for current curriculum.** This file preserves the original
 > Prompt Flow-era design for history only. The active curriculum is the agent-era three-tier plan in
@@ -6,7 +6,7 @@
 
 > **"Build Intelligent Apps with Microsoft Foundry"**
 >
-> A AI Starter Kit RVAS session-in-a-box that takes participants from zero to deploying an AI-powered application using Microsoft Foundry.
+> An AI Starter Kit session-in-a-box that takes participants from zero to deploying an AI-powered application using Microsoft Foundry.
 
 ---
 
@@ -346,7 +346,7 @@ ipykernel>=6.29.0
 
 ```markdown
 # 🤖 Build Intelligent Apps with Microsoft Foundry
-> A AI Starter Kit RVAS session — from prompt to production
+> An AI Starter Kit session — from prompt to production
 
 ## What is this?
 [2-3 sentence overview of the session and format]

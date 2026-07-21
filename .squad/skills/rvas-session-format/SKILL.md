@@ -1,7 +1,7 @@
 # SKILL: Session Format Design
 
 ## What This Skill Covers
-Designing a "AI Starter Kit RVAS" () session-in-a-box content architecture — the pattern for structuring activities, guides, and supporting infrastructure.
+Designing an "AI Starter Kit" session-in-a-box content architecture — the pattern for structuring activities, guides, and supporting infrastructure.
 
 ## When to Use
 - Creating any -format session regardless of technology focus

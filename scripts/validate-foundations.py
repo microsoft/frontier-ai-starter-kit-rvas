@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""AI Starter Kit RVAS — Foundations END-STATE validator (the single Path-B checkpoint).
+"""AI Starter Kit — Foundations END-STATE validator (the single Path-B checkpoint).
 
 Asserts that the Foundations end-state exists and works:
 

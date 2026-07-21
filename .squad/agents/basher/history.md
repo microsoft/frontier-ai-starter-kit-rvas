@@ -3,7 +3,7 @@
 > Older detail archived to `history-archive.md` (2026-06-01, size gate). This file keeps the durable facts + current state.
 
 ## Project Context
-- **Project:** AI Starter Kit RVAS — Microsoft Foundry format · **Repo:** ai-starter-kit-rvas · **Requested by:** Marco Olivo.
+- **Project:** AI Starter Kit — Microsoft Foundry format · **Repo:** ai-starter-kit-rvas · **Requested by:** Marco Olivo.
 - Role: QA & Facilitator Enablement. Owns `validate.py` validators (activities author *to* the contract; I implement it).
 
 ## Durable learnings / gotchas

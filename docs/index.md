@@ -5,7 +5,7 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
 ---
 
 <div class="hero-panel home-hero">
-  <span class="hero-kicker">AI Starter Kit RVAS • Microsoft Foundry</span>
+  <span class="hero-kicker">AI Starter Kit • Microsoft Foundry</span>
   <h1>Bring your idea. Build it with Foundry.</h1>
   <p class="hero-tagline">Choose a route, then follow one shared build spine: define the outcome, ground the agent, add useful action, prove trust, and demo the result.</p>
   <div class="cta-row">

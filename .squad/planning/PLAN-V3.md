@@ -1,4 +1,4 @@
-# AI Starter Kit RVAS — Curriculum V3 (Tier Tree + De-Guided Advanced + MAF Capstone)
+# AI Starter Kit — Curriculum V3 (Tier Tree + De-Guided Advanced + MAF Capstone)
 
 > **"Build Intelligent Agents with Microsoft Foundry"**
 >

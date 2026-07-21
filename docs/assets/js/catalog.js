@@ -1,4 +1,4 @@
-/* AI Starter Kit RVAS — path catalog: choose one route, then filter chapters. */
+/* AI Starter Kit — path catalog: choose one route, then filter chapters. */
 (function () {
   'use strict';
 

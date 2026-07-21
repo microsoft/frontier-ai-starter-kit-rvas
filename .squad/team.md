@@ -22,7 +22,7 @@
 
 ## Project Context
 
-- **Project:** AI Starter Kit RVAS — Microsoft Foundry
+- **Project:** AI Starter Kit — Microsoft Foundry
 - **Owner:** Marco Olivo
 - **Stack:** Microsoft Foundry AI, GitHub Pages, Jekyll/Markdown, GitHub Actions
 - **Audience:** Students (AI newcomers) + Facilitators (facilitators)

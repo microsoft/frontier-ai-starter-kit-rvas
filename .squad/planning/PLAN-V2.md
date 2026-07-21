@@ -1,4 +1,4 @@
-# AI Starter Kit RVAS — Curriculum V2 (Agent-Era Rearchitecture)
+# AI Starter Kit — Curriculum V2 (Agent-Era Rearchitecture)
 
 > ➡️ **Superseded in part by [PLAN-V3.md](PLAN-V3.md).** V3 **extends** this doc and overrides it on
 > three things only: the **two-tier** framing below becomes a **three-tier tree** (V3 §1), the Advanced

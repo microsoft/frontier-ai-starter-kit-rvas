@@ -108,7 +108,7 @@ class Reporter:
 
     def render(self) -> None:
         if self.console and Table and Panel:
-            table = Table(title="AI Starter Kit RVAS Environment Validation")
+            table = Table(title="AI Starter Kit Environment Validation")
             table.add_column("Check", style="cyan", no_wrap=True)
             table.add_column("Status", no_wrap=True)
             table.add_column("Details", style="white")
@@ -127,7 +127,7 @@ class Reporter:
                 )
             )
         else:
-            print("AI Starter Kit RVAS Environment Validation")
+            print("AI Starter Kit Environment Validation")
             print("=" * 40)
             for check, status, details in self.rows:
                 print(f"- {check}: {status} - {details}")

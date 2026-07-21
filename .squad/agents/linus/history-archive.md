@@ -30,7 +30,7 @@
 - **Convention:** in-repo nav uses relative links only (no `https://github.com/.../blob` URLs).
 
 ### Project Context
-- **Project:** AI Starter Kit RVAS — Microsoft Foundry format
+- **Project:** AI Starter Kit — Microsoft Foundry format
 - **Repo:** ai-starter-kit-rvas
 - **Stack:** Microsoft Foundry AI, GitHub Pages (Jekyll/static), Markdown, GitHub Actions
 - **Participants:** Students (new to AI) + Facilitators (facilitators)

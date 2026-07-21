@@ -1,4 +1,4 @@
-# Scenario Template — AI Starter Kit RVAS reskin contract
+# Scenario Template — AI Starter Kit reskin contract
 
 > Fill this in to generate a new vertical with the **Lab Generator** meta-agent
 > (`.github/agents/lab-generator.agent.md`). It captures the **4 swap surfaces**

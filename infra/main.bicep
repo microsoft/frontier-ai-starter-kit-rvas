@@ -1,5 +1,5 @@
 // ============================================================================
-// AI Starter Kit RVAS — Microsoft Foundry golden-path infrastructure (azd entry).
+// AI Starter Kit — Microsoft Foundry golden-path infrastructure (azd entry).
 //
 // Subscription-scoped entry point. Creates (or reuses) the resource group, then
 // delegates all resource creation to ./resources.bicep. Outputs are surfaced back

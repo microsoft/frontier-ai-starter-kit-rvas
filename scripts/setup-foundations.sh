@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# AI Starter Kit RVAS — Foundations END-STATE materializer (Path B bootstrap).
+# AI Starter Kit — Foundations END-STATE materializer (Path B bootstrap).
 #
 # After `azd up` (or ./scripts/deploy.sh) has provisioned infra, this script builds
 # the Foundations end-state so Advanced teams can skip the guided steps:

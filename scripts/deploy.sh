@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# AI Starter Kit RVAS — Bash provisioning FALLBACK.
+# AI Starter Kit — Bash provisioning FALLBACK.
 #
 # Use this ONLY when `azd up` is unavailable or hits quota/region edge cases.
 # It provisions the same footprint as infra/*.bicep using `az` + a few ARM REST

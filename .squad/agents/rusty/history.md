@@ -3,7 +3,7 @@
 > Older detail archived to `history-archive.md` (2026-06-01, size gate). This file keeps the durable facts + current state.
 
 ## Project Context
-- **Project:** AI Starter Kit RVAS — Microsoft Foundry format · **Repo:** ai-starter-kit-rvas · **Requested by:** Marco Olivo.
+- **Project:** AI Starter Kit — Microsoft Foundry format · **Repo:** ai-starter-kit-rvas · **Requested by:** Marco Olivo.
 - Role: Curriculum Designer. Audience: students (new to AI) + facilitators. Single domain theme = Northfield University for continuity.
 
 ## Durable learnings / gotchas
@@ -62,7 +62,7 @@ PLAN-V3 is now **implemented** (staged, not committed). My piece: all 4 Advanced
 **Files changed:**
 - `docs/index.md` — Hero tagline, "What is this?" paragraph, quick-grid cards, and mode table reordered (Customer Build first); added "Which path is right for you?" mode comparison table; added Customer Activity-Forge callout and pointer; final CTA button row updated.
 - `docs/customer-outcome.md` — Intro rewritten as the DEFAULT starting point (not "more than upskilling"); mode table reordered (Customer Build primary); added "Don't have a customer or idea yet?" section pointing to `.github/skills/customer-activity-forge/` with explanation of how its output maps to the pre-work canvas fields.
-- `README.md` — "What is AI Starter Kit RVAS?" rewritten so the evolving artifact defaults to the participant's own application; Northfield framed as guided fallback; section heading renamed to "Two ways to run it: Customer Build or Upskill"; mode table reordered; Customer Activity-Forge on-ramp added; Getting Started step 3 reordered (Customer Build first) with Activity-Forge pointer.
+- `README.md` — "What is AI Starter Kit?" rewritten so the evolving artifact defaults to the participant's own application; Northfield framed as guided fallback; section heading renamed to "Two ways to run it: Customer Build or Upskill"; mode table reordered; Customer Activity-Forge on-ramp added; Getting Started step 3 reordered (Customer Build first) with Activity-Forge pointer.
 - `docs/facilitator-hub.md` — Pre-event checklist expanded with three-branch decision tree (has scenario → canvas; no scenario → run Activity-Forge → canvas; no scenario + pure upskill → Northfield); "During the event" bullet updated to start from team outcome; "Anchor customer work in outcomes" subsection expanded with a step-by-step Customer Activity-Forge facilitation guide; Northfield retained as safe fallback.
 
 **Skill referenced:** Customer Activity-Forge at `.github/skills/customer-activity-forge/` — on-ramp for "I want to build something real but don't have an idea yet."
