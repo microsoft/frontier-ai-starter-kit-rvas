@@ -1,0 +1,108 @@
+(function () {
+  'use strict';
+
+  const GUIDES = {
+    accelerator: { title: 'Accelerator guide', path: 'accelerator_path', summary: 'Deployable starter assets and module checkpoints.' },
+    demo: { title: 'Local demo', path: 'local_demo_path', summary: 'Offline demo and validation flow for this scenario.' },
+    facilitator: { title: 'Facilitator guide', path: 'facilitator_path', summary: 'Delivery notes, pacing, prompts, and facilitation guardrails.' },
+    validator: { title: 'Local validator', path: 'validator_path', summary: 'Validator source and the checks it runs.' },
+  };
+
+  async function init() {
+    const scenarioId = FP.qp('scenario');
+    const guideId = FP.qp('guide');
+    if (!scenarioId || !guideId) return showError('Select a scenario and guide.');
+
+    try {
+      const data = await FP.loadData();
+      const scenario = (data.scenarios || []).find((item) => item.id === scenarioId);
+      const guide = GUIDES[guideId];
+      if (!scenario || !guide) return showError('This scenario guide was not found.');
+
+      const sourcePath = scenario[guide.path];
+      if (!sourcePath) return showError(`The ${guide.title.toLowerCase()} is not configured for this scenario.`);
+
+      renderShell(scenario, guide);
+      const response = await fetch(sourcePath, { cache: 'no-cache' });
+      if (!response.ok) throw new Error(`Could not load guide (${response.status})`);
+      const body = document.getElementById('guideBody');
+      const content = await response.text();
+      if (/\.md$/i.test(sourcePath)) {
+        FP.renderMd(content, body);
+        rewriteGuideLinks(body, scenario, sourcePath, data.activities || []);
+      } else {
+        renderCode(content, body);
+      }
+    } catch (error) {
+      showError(error.message);
+    }
+  }
+
+  function renderShell(scenario, guide) {
+    document.title = `${guide.title} — ${scenario.name} — AI Starter Kit`;
+    document.getElementById('guideTitle').textContent = guide.title;
+    document.getElementById('guideEyebrow').textContent = scenario.name;
+    document.getElementById('guideSummary').textContent = guide.summary;
+    document.getElementById('scenarioBack').href = `scenario.html?id=${encodeURIComponent(scenario.id)}`;
+  }
+
+  function renderCode(content, target) {
+    const pre = document.createElement('pre');
+    pre.className = 'code-block';
+    pre.textContent = content;
+    target.innerHTML = '';
+    target.appendChild(pre);
+  }
+
+  function resolveRelative(basePath, href) {
+    const segments = basePath.split('/').slice(0, -1);
+    href.split('/').forEach((part) => {
+      if (!part || part === '.') return;
+      if (part === '..') segments.pop();
+      else segments.push(part);
+    });
+    return segments.join('/');
+  }
+
+  function routeAppPage(path, hash) {
+    const match = path.match(/(?:^|\/)(lesson|activity|scenario|slides|guide)\.html(\?.*)?$/i);
+    return match ? `${match[1].toLowerCase()}.html${match[2] || ''}${hash ? `#${hash}` : ''}` : '';
+  }
+
+  function rewriteGuideLinks(container, scenario, sourcePath, activities) {
+    const lessonRoutes = new Map((scenario.lessons || []).map((lesson) => [lesson.content_path, lesson.lesson_path]));
+    const activityIds = new Set((activities || []).map((activity) => activity.id));
+
+    container.querySelectorAll('a[href]').forEach((link) => {
+      const raw = link.getAttribute('href') || '';
+      if (!raw || raw.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(raw)) return;
+
+      const [path, hash] = raw.split('#');
+      const appRoute = routeAppPage(path, hash);
+      if (appRoute) {
+        link.href = appRoute;
+        return;
+      }
+
+      const resolved = resolveRelative(sourcePath, path);
+      if (lessonRoutes.has(resolved)) {
+        link.href = lessonRoutes.get(resolved) + (hash ? `#${hash}` : '');
+        return;
+      }
+
+      const activityMatch = resolved.match(/^assets\/data\/activities\/([^/]+)\/(?:README|FACILITATOR)\.md$/i);
+      if (activityMatch && activityIds.has(activityMatch[1])) {
+        link.href = FP.activityUrl(activityMatch[1]) + (hash ? `#${hash}` : '');
+        return;
+      }
+
+      link.href = `${resolved}${hash ? `#${hash}` : ''}`;
+    });
+  }
+
+  function showError(message) {
+    FP.renderError('mainContent', message);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();

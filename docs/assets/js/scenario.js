@@ -26,10 +26,10 @@
     document.getElementById('scenarioMaturity').textContent = `${scenario.maturity} scenario playbook`;
     document.getElementById('customerOutcome').textContent = scenario.customer_outcome;
     document.getElementById('slidesLink').href = `slides.html?id=${encodeURIComponent(scenario.id)}`;
-    document.getElementById('acceleratorLink').href = scenario.accelerator_path;
-    document.getElementById('localDemoLink').href = scenario.local_demo_path;
-    document.getElementById('facilitatorLink').href = scenario.facilitator_path;
-    document.getElementById('validatorLink').href = scenario.validator_path;
+    document.getElementById('acceleratorLink').href = scenarioGuideUrl(scenario.id, 'accelerator');
+    document.getElementById('localDemoLink').href = scenarioGuideUrl(scenario.id, 'demo');
+    document.getElementById('facilitatorLink').href = scenarioGuideUrl(scenario.id, 'facilitator');
+    document.getElementById('validatorLink').href = scenarioGuideUrl(scenario.id, 'validator');
     document.getElementById('decisionPrompts').innerHTML = (scenario.decision_prompts || [])
       .map((prompt) => `<li>${FP.esc(prompt)}</li>`).join('');
     document.getElementById('buildModuleList').innerHTML = (scenario.build_modules || [])
@@ -49,8 +49,12 @@
   }
 
   function routeAppPage(path, hash) {
-    const match = path.match(/(?:^|\/)(lesson|activity|scenario|slides)\.html(\?.*)?$/i);
+    const match = path.match(/(?:^|\/)(lesson|activity|scenario|slides|guide)\.html(\?.*)?$/i);
     return match ? `${match[1].toLowerCase()}.html${match[2] || ''}${hash ? `#${hash}` : ''}` : '';
+  }
+
+  function scenarioGuideUrl(scenarioId, guideId) {
+    return `guide.html?scenario=${encodeURIComponent(scenarioId)}&guide=${encodeURIComponent(guideId)}`;
   }
 
   function rewriteScenarioLinks(container, scenario, activities) {

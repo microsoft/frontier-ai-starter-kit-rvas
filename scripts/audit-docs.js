@@ -430,10 +430,14 @@ function auditBuildModules(scenario, activityIds, failures) {
 function auditScenarioCourseRoutes(failures) {
   const lessonPage = path.join(ROOT, 'docs', 'lesson.html');
   const lessonScript = path.join(ROOT, 'docs', 'assets', 'js', 'lesson.js');
+  const guidePage = path.join(ROOT, 'docs', 'guide.html');
+  const guideScript = path.join(ROOT, 'docs', 'assets', 'js', 'guide.js');
   const platformPath = path.join(ROOT, 'docs', 'assets', 'data', 'platform.json');
 
   if (!fs.existsSync(lessonPage)) failures.push('docs/lesson.html: customer lesson route is missing');
   if (!fs.existsSync(lessonScript)) failures.push('docs/assets/js/lesson.js: customer lesson renderer is missing');
+  if (!fs.existsSync(guidePage)) failures.push('docs/guide.html: scenario guide route is missing');
+  if (!fs.existsSync(guideScript)) failures.push('docs/assets/js/guide.js: scenario guide renderer is missing');
   if (!fs.existsSync(platformPath)) {
     failures.push('docs/assets/data/platform.json: generated course registry is missing; run npm run build');
     return;
