@@ -27,7 +27,7 @@ REQUIRED_MANIFEST_FIELDS = {
     "facilitator": "FACILITATOR.md",
     "local_demo": "local-demo.md",
     "validator": "validate.py",
-    "solution": "solution.md",
+    "solution": "accelerator/solution.md",
 }
 
 # The new technical-build lesson contract: these H2 sections, in this order.
@@ -182,7 +182,7 @@ def validate() -> list[str]:
     if manifest:
         _validate_lessons(manifest, errors)
     _validate_bicep(errors)
-    for relative_path in ("FACILITATOR.md", "local-demo.md", "solution.md"):
+    for relative_path in ("FACILITATOR.md", "local-demo.md", "accelerator/solution.md"):
         if not (ROOT / relative_path).is_file():
             errors.append(f"missing {relative_path}")
     _validate_pack(errors)

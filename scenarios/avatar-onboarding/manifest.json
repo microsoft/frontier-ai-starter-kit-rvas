@@ -114,6 +114,6 @@
   "accelerator": "accelerator/README.md",
   "facilitator": "FACILITATOR.md",
   "local_demo": "local-demo.md",
-  "solution": "solution.md",
+  "solution": "accelerator/solution.md",
   "validator": "validate.py"
 }
