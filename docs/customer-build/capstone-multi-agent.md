@@ -9,9 +9,9 @@ description: Split your monolithic assistant into a router and specialists that 
 
 > **Command context:** Run commands from the repository root unless a linked reference step explicitly says otherwise.
 
-{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Team" artifact="A router plus specialist agents that handle YOUR demo journey with typed contracts, fan-out, and traceable handoffs." next="Finish with a 2-minute stakeholder demo and a pilot backlog." %}
+{% include journey-status.html tone="customer" path="Customer Build Track &rarr; Team" artifact="A router plus specialist agents that handle YOUR demo scenario with typed contracts, fan-out, and traceable handoffs." next="Finish with a 2-minute stakeholder demo and a pilot backlog." %}
 
-This chapter is mutuated from [Capstone · Multi-Agent](../activities/capstone-multi-agent) — same MAF design brief, same structural validator — but the org chart, specialists, contracts, and demo journey come from *your* scenario in [Define your outcome](../customer-outcome).
+This chapter adapts [Capstone · Multi-Agent](../activities/capstone-multi-agent): it uses the same MAF design brief and structural validator, but the org chart, specialists, contracts, and demo scenario come from *your* scenario in [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](foundations) and [Make it act](advanced-action-tools) if your team will include an action specialist. [See inside it](advanced-tracing-observability) makes the final demo much stronger.
 
@@ -22,7 +22,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](../activities/capstone-m
 **Why it matters for your app:** multi-agent design adds power and complexity. Use it only when separate roles make the outcome clearer, safer, or easier to govern.
 
 **Does this apply to you?**
-- Build it if your demo journey naturally crosses multiple roles, tools, risk levels, or knowledge domains.
+- Build it if your demo scenario naturally crosses multiple roles, tools, risk levels, or knowledge domains.
 - Adapt it if you only need a router plus one specialist; keep the graph small and explain the future branches.
 - Skip it if one grounded agent with one action already tells the best story.
 
@@ -39,7 +39,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](../activities/capstone-m
 - Checklist:
   - [ ] team design is justified
   - [ ] one-agent alternative considered
-  - [ ] final demo journey needs at least two specialist viewpoints.
+  - [ ] final demo scenario needs at least two specialist viewpoints.
 
 **Stuck?** [Northfield learning objectives](../activities/capstone-multi-agent#learning-objectives).
 
@@ -157,7 +157,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](../activities/capstone-m
   - [ ] DevUI or equivalent shows the graph
   - [ ] trace shows multi-agent handoffs
   - [ ] operation id is captured
-  - [ ] 2-minute demo narrates the journey.
+  - [ ] 2-minute demo explains the request path.
 
 **Stuck?** [Northfield visual/tracing guidance](../activities/capstone-multi-agent#visual-first-then-traced).
 
@@ -194,7 +194,7 @@ This chapter is mutuated from [Capstone · Multi-Agent](../activities/capstone-m
 
 ## Chapter end-state
 
-You have a customer-specific agent team: router, specialists, typed contracts, fan-out/fan-in, and a traceable 2-minute journey.
+You have a customer-specific agent team: router, specialists, typed contracts, fan-out/fan-in, and a traceable request path for a 2-minute demo.
 
 ```bash
 python activities/capstone-multi-agent/validate.py --track customer --all --path <your-capstone-dir>

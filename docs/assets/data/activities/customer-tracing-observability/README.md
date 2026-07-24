@@ -5,7 +5,7 @@
 
 
 
-This chapter is mutuated from [Advanced · Tracing & Observability](activity.html?id=advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](activity.html?id=customer-outcome).
+This chapter adapts [Advanced · Tracing & Observability](activity.html?id=advanced-tracing-observability): it uses the same OpenTelemetry setup and span-reading workflow, but you trace a run from *your* demo scenario in [Define your outcome](activity.html?id=customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](activity.html?id=customer-foundations). If [Make it act](activity.html?id=customer-action-tools) applies, include one approved or denied action in the traced path.
 

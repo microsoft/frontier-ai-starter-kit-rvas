@@ -5,7 +5,7 @@
 
 
 
-This chapter is mutuated from [Foundations](activity.html?id=foundations) — same objective, same
+This chapter adapts [Foundations](activity.html?id=foundations) — same objective, same
 checkpoints — but every step points at *your* scenario from
 [Define your outcome](activity.html?id=customer-outcome). Do the decisions here; when you need the exact
 commands or code, follow the Northfield reference the step links to. The mechanics are identical;

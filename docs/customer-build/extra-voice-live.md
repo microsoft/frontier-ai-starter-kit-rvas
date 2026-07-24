@@ -9,7 +9,7 @@ description: Turn your scenario assistant into a low-latency spoken experience w
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Voice" artifact="A spoken version of YOUR agent that listens, answers, and preserves grounding or safety behavior." next="Use voice only when it improves access, speed, or demo impact for your users." %}
 
-This deepener is mutuated from [Extra · Give It a Voice](../activities/extra-voice-live) — same Voice Live pattern, but bound to your scenario agent from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Voice is memorable, but it is not required for most build-track apps.
+This deepener adapts [Extra · Give It a Voice](../activities/extra-voice-live): it uses the same Voice Live pattern for your scenario agent from [Define your outcome](../customer-outcome). Voice is useful for some scenarios, but it is not required for most build-track apps.
 
 > Before you start this deepener: confirm Voice Live access in a supported region and a microphone/speaker client. If typed interaction is better for your users, skip this.
 

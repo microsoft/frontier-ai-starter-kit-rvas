@@ -11,7 +11,7 @@ description: Provision, choose a model, create your agent, and ground it in your
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ground" artifact="A deployed agent grounded in YOUR customer-safe corpus, answering a real scenario question with a citation." next="Once your agent cites your own data, move to Make it act." %}
 
-This chapter is mutuated from [Foundations](../activities/foundations) — same objective, same
+This chapter adapts [Foundations](../activities/foundations) — same objective, same
 checkpoints — but every step points at *your* scenario from
 [Define your outcome](../customer-outcome). Do the decisions here; when you need the exact
 commands or code, follow the Northfield reference the step links to. The mechanics are identical;

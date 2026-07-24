@@ -11,7 +11,7 @@ description: Turn your success measures and safety boundaries into evals, red-te
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Prove" artifact="A scenario-specific scorecard with quality rows, adversarial prompts, and a gate tied to YOUR safety boundaries." next="Once you can measure quality and safety, move to See inside it." %}
 
-This chapter is mutuated from [Advanced · Evaluation & Red Teaming](../activities/advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](../customer-outcome).
+This chapter adapts [Advanced · Evaluation & Red Teaming](../activities/advanced-evaluation-redteam): it uses the same evaluation workflow and checkpoints, but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: have at least one grounded answer from [Ground your app](foundations), and include your actions if they are in your demo path.
 

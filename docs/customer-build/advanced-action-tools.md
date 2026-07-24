@@ -11,7 +11,7 @@ description: Add one governed action to your grounded agent — the Customer Bui
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Act" artifact="One approval-gated action from YOUR workflow, proven end-to-end without unsafe auto-execution." next="Once your agent can act safely, move to Prove it's safe." %}
 
-This chapter is mutuated from [Advanced · Action Tools](../activities/advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter adapts [Advanced · Action Tools](../activities/advanced-action-tools): it uses the same approval-loop pattern and checkpoints, but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
 > Before you start this chapter: you need a grounded agent from [Ground your app](foundations) and at least one action candidate from your scenario pack.
 

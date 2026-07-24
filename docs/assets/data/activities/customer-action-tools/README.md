@@ -5,7 +5,7 @@
 
 
 
-This chapter is mutuated from [Advanced · Action Tools](activity.html?id=advanced-action-tools) — same approval-loop pattern, same checkpoints — but the action belongs to *your* scenario from [Define your outcome](activity.html?id=customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
+This chapter adapts [Advanced · Action Tools](activity.html?id=advanced-action-tools): it uses the same approval-loop pattern and checkpoints, but the action belongs to *your* scenario from [Define your outcome](activity.html?id=customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
 > Before you start this chapter: you need a grounded agent from [Ground your app](activity.html?id=customer-foundations) and at least one action candidate from your scenario pack.
 

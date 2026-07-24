@@ -5,7 +5,7 @@
 
 
 
-This chapter is mutuated from [Advanced · Evaluation & Red Teaming](activity.html?id=advanced-evaluation-redteam) — same evaluation workflow, same checkpoints — but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](activity.html?id=customer-outcome).
+This chapter adapts [Advanced · Evaluation & Red Teaming](activity.html?id=advanced-evaluation-redteam): it uses the same evaluation workflow and checkpoints, but the questions, ground truth, attack prompts, and pass/fail gate come from *your* scenario in [Define your outcome](activity.html?id=customer-outcome).
 
 > Before you start this chapter: have at least one grounded answer from [Ground your app](activity.html?id=customer-foundations), and include your actions if they are in your demo path.
 

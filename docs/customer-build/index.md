@@ -38,9 +38,9 @@ Use the [Scenario swap guide]({{ '/customer-outcome' | relative_url }}#scenario-
 
 ## The chapters
 
-Each chapter is *mutuated* from a Northfield reference module: same objective and checkpoints,
-reframed as decisions you make on your own app, with an explicit "does this apply to you?" gate.
-Do the decisions here; each chapter links back to the reference for the exact commands.
+Each chapter adapts a Northfield reference module. It keeps the same objective and checkpoints,
+but applies them to your app and asks whether the step is relevant. Make the decisions here; use
+the linked reference for exact commands.
 
 | Chapter | Reframes |
 |---|---|

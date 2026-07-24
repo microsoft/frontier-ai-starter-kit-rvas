@@ -9,7 +9,7 @@ description: Put your scenario agent behind a safe browser experience with strea
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Build a UI" artifact="A stakeholder-facing UI for YOUR scenario with no browser secrets, streamed answers, citations, and optional approval cards." next="Use the UI only if it improves your final demo story." %}
 
-This deepener is mutuated from [Extra · Build a UI](../activities/extra-build-ui) — same browser/BFF pattern, but wrapped around your scenario from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. A UI can make a demo real; it can also consume time better spent proving grounding, action safety, or evaluation.
+This deepener adapts [Extra · Build a UI](../activities/extra-build-ui): it uses the same browser/BFF pattern for your scenario from [Define your outcome](../customer-outcome). A UI can make a demo easier to understand, but it can also take time better spent proving grounding, action safety, or evaluation.
 
 > Before you start this deepener: complete the agent you want to show. For approval cards, complete Action Tools. If a script, Playground run, or hosted endpoint already tells your story, skip this.
 

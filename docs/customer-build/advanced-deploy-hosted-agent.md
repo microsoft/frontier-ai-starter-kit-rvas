@@ -11,7 +11,7 @@ description: Package your agent as a hosted endpoint with identity, auth, and ob
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Ship" artifact="A hosted endpoint for YOUR agent, or an explicit decision that local/UI demo is the right scope." next="Once the artifact is shippable, move to Grow it into a team." %}
 
-This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](../activities/advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
+This chapter adapts [Advanced · Deploy as a Hosted Agent](../activities/advanced-deploy-hosted-agent): it uses the same hosted-agent pattern and identity checks, but the hosted artifact is *your* scenario agent from [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](foundations). [See inside it](advanced-tracing-observability) is strongly recommended so hosted runs are observable.
 

@@ -2,9 +2,9 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-> Tier 3 · Capstone — the summit. ⏱ Core 2–2.5 hr (sequential + fan-out + DevUI + trace) ·
+> Tier 3 · Capstone. ⏱ Core 2–2.5 hr (sequential + fan-out + DevUI + trace) ·
 > +1 hr Magentic manager stretch · +1.5 hr hosted long-running deploy variant.
-> ⭐⭐⭐⭐⭐ · Open-ended design brief — not a placeholder-fill.
+> ⭐⭐⭐⭐⭐ · Open-ended design activity with acceptance criteria.
 >
 > Prerequisites: the Foundations end-state (a deployed, grounded Northfield IQ Assistant)
 > and the Advanced · Action Tools activity (you reuse its approval loop). Tracing &
@@ -189,13 +189,13 @@ Your submission passes if all of these are demonstrably true. You show it; a lig
       Action Tools approval loop (governed).
 - [ ] The run is visualized in DevUI and traced end-to-end (a multi-agent span tree by
       `operation_Id`).
-- [ ] A 2-minute demo narrates one question's journey through the team.
+- [ ] A 2-minute demo explains how one question moves through the team.
 - [ ] *(Stretch / deploy variant)* the workflow is hosted with a background / long-running run
       that completes after the tab is closed.
 
 > Guidance level is intentionally LOW. We give the org-chart sketch, the two `WorkflowBuilder`
-> snippets, the acceptance criteria, and pointers to the skills + MCP — not a placeholder file. The
-> learning *is* the design and wiring. This is the autonomy payoff of the curriculum tree.
+> snippets, the acceptance criteria, and pointers to the skills + MCP — not a placeholder file.
+> The learning comes from making and testing the design decisions yourself.
 
 **Checkpoint:** `validate.py` (in-repo at `activities/capstone-multi-agent/validate.py`) asserts the structural subset of
 the criteria above — ≥ 3 agents defined, a fan-out edge present, and typed (Pydantic) contracts in use.

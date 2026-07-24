@@ -9,7 +9,7 @@ description: Host a workflow and run scenario jobs asynchronously when work shou
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Long-Running Agents" artifact="A hosted background run for YOUR scenario that returns a handle, completes later, and is traceable." next="Use this only for jobs that should outlive a chat turn or browser session." %}
 
-This deepener is mutuated from [Extra · MAF + Hosted Long-Running Agents](../activities/extra-hosted-longrunning) — same hosted/background pattern, but applied to your scenario from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Use it when your demo story includes durable async work, not for normal chat responses.
+This deepener adapts [Extra · MAF + Hosted Long-Running Agents](../activities/extra-hosted-longrunning): it uses the same hosted/background pattern for your scenario from [Define your outcome](../customer-outcome). Use it when your demo includes durable asynchronous work, not for normal chat responses.
 
 > Before you start this deepener: complete a hosted agent path, and complete Magentic Workflows if the thing you are hosting is a multi-agent workflow. If your action finishes inside one user turn, skip this.
 

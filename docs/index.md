@@ -50,9 +50,9 @@ description: Choose your route, then build a grounded Microsoft Foundry agent pr
   <li><span>4</span><strong>Demo</strong><small>Host, UI, scorecard, backlog</small></li>
 </ol>
 
-## Use the site like a cockpit
+## Find your next step
 
-Each journey page now starts with **You are here**, **Current output**, and **Next move**. If you feel lost, go back to your track page rather than browsing the activity list directly.
+Each track page starts with **You are here**, **Current output**, and **Next move**. If you are unsure where to continue, return to your track page instead of browsing the activity list.
 
 <div class="quick-grid">
   <div class="quick-card">

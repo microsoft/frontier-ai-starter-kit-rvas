@@ -5,7 +5,7 @@
 
 
 
-This chapter is mutuated from [Advanced · Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent) — same hosted-agent pattern, same identity checks — but the hosted artifact is *your* scenario agent from [Define your outcome](activity.html?id=customer-outcome).
+This chapter adapts [Advanced · Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent): it uses the same hosted-agent pattern and identity checks, but the hosted artifact is *your* scenario agent from [Define your outcome](activity.html?id=customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](activity.html?id=customer-foundations). [See inside it](activity.html?id=customer-tracing-observability) is strongly recommended so hosted runs are observable.
 

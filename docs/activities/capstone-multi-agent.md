@@ -14,7 +14,7 @@ nav_order: 30
 
 > Tier 3 · Capstone. ⏱ Core 2–2.5 hr (sequential + fan-out + DevUI + trace) ·
 > +1 hr Magentic manager stretch · +1.5 hr hosted long-running deploy variant.
-> ⭐⭐⭐⭐⭐ · Open-ended multi-agent design activity.
+> ⭐⭐⭐⭐⭐ · Open-ended multi-agent design activity with acceptance criteria.
 
 {% include activity-prereq.html text="Foundations end-state plus Advanced · Action Tools. Tracing & Observability is strongly recommended; Deploy as a Hosted Agent is required only for the hosted variant." skip_path="false" %}
 
@@ -198,13 +198,13 @@ Your submission passes if all of these are demonstrably true. You show it; a lig
 - [ ] The run is visualized in DevUI and traced end-to-end (a multi-agent span tree by
       `operation_Id`).
 
-- [ ] A 2-minute demo narrates one question's journey through the team.
+- [ ] A 2-minute demo explains how one question moves through the team.
 - [ ] *(Stretch / deploy variant)* the workflow is hosted with a background / long-running run
       that completes after the tab is closed.
 
 > Guidance level is intentionally LOW. We give the org-chart sketch, the two `WorkflowBuilder`
-> snippets, the acceptance criteria, and pointers to the skills + MCP — not a placeholder file. The
-> learning *is* the design and wiring. This is the autonomy payoff of the curriculum tree.
+> snippets, the acceptance criteria, and pointers to the skills + MCP — not a placeholder file.
+> The learning comes from making and testing the design decisions yourself.
 
 **Checkpoint:** `validate.py` (in-repo at `activities/capstone-multi-agent/validate.py`) asserts the structural subset of
 the criteria above — ≥ 3 agents defined, a fan-out edge present, and typed (Pydantic) contracts in use.

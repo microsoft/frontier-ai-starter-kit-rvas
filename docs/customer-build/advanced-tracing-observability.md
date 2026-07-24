@@ -11,7 +11,7 @@ description: Instrument your agent so you can explain latency, retrieval, tool c
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Observe" artifact="One traced scenario run with model, retrieval, and tool spans you can explain by operation id." next="Once you can see inside the run, move to Ship it." %}
 
-This chapter is mutuated from [Advanced · Tracing & Observability](../activities/advanced-tracing-observability) — same OpenTelemetry setup, same span-reading workflow — but the run you trace is *your* demo journey from [Define your outcome](../customer-outcome).
+This chapter adapts [Advanced · Tracing & Observability](../activities/advanced-tracing-observability): it uses the same OpenTelemetry setup and span-reading workflow, but you trace a run from *your* demo scenario in [Define your outcome](../customer-outcome).
 
 > Before you start this chapter: finish [Ground your app](foundations). If [Make it act](advanced-action-tools) applies, include one approved or denied action in the traced path.
 

@@ -12,7 +12,9 @@
 
 This repository is a hands-on session for building intelligent applications with Microsoft Foundry, a unified platform for building, evaluating, and deploying AI applications.
 
-This session, you and your team build **one evolving artifact** across three tiers — and that artifact defaults to **your own application**. Bring a customer scenario, a business outcome, or an idea from the [Customer Activity-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill, and leave with a grounded, evaluated, demo-ready agent prototype. New to Foundry and have no customer scenario ready? The **Northfield University IQ Assistant** is the guided fallback: a fictional university corpus and provided action tools let you learn every Foundry concept without needing real customer data. Both paths follow the same three-tier structure: a guided **Foundations** activity (four ordered steps) that stands up a deployed, grounded agent; **Advanced** activities in any order that make it act, prove it safe, observe it, and ship it; and an open-ended **Capstone** that breaks the single agent into a multi-agent team. Rather than lectures, you'll learn by *doing*: deploying models, building agents, grounding them in real data with a knowledge base, wiring action tools, shipping a hosted agent, and orchestrating a multi-agent system. Facilitators guide discovery and unblock issues, but the learning is yours to own.
+You and your team build an agent prototype through three tiers. Bring a customer scenario, a business outcome, or an idea from the [Customer Activity-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill. If you do not have a scenario yet, use the **Northfield University IQ Assistant**: a fictional university corpus with provided action tools.
+
+Both paths use the same structure. **Foundations** has four ordered steps to create and ground an agent. Choose **Advanced** activities to add actions, evaluation, tracing, or deployment. The **Capstone** turns one agent into a multi-agent team. You learn by building and testing each part; facilitators help you investigate blockers.
 
 By the end, you'll have hands-on experience with the Microsoft Foundry platform, practical skills in prompt engineering and RAG (Retrieval-Augmented Generation), and a deployment-ready AI application to show for your work.
 
@@ -130,11 +132,10 @@ python scripts/validate-foundations.py   # ✅ asserts the Foundations end-state
 
 ## Activities
 
-The curriculum is a **tree of three tiers** — climb a guided trunk, fan out across modular branches,
-then converge on an open summit. **Tier 1 Foundations** is one guided, linear activity with four
-ordered steps (everyone does it). **Tier 2 Advanced** activities are modular and can be attempted in
-**any order** — they all assume the Foundations end-state. **Tier 3 Capstone** is an open-ended
-design brief that composes everything into a multi-agent system.
+The curriculum has three tiers. **Tier 1 Foundations** is one guided activity with four ordered
+steps. **Tier 2 Advanced** activities are modular and can be completed in **any order** after
+Foundations. **Tier 3 Capstone** is an open-ended design activity that combines the work into a
+multi-agent system.
 
 For customer engagements, treat every tier as an outcome checkpoint:
 
@@ -144,10 +145,10 @@ For customer engagements, treat every tier as an outcome checkpoint:
 | Action Tools | Governed MCP action loop | Completes one valuable workflow with human approval |
 | Evaluation | Quality + safety tests | Produces a trust scorecard the customer can review |
 | Tracing / Deploy / UI | Observable, hosted app | Stakeholders can try it and inspect failures |
-| Capstone | Multi-agent orchestration | A realistic business journey handled by specialists |
+| Capstone | Multi-agent orchestration | Specialist agents handle a realistic business request |
 
 ```text
-  TIER 1  FOUNDATIONS (guided, linear, everyone)
+  TIER 1  FOUNDATIONS (guided, linear)
     Step1 --> Step2 --> Step3 --> Step4  <-- Foundations end-state
            |
            v
@@ -156,7 +157,7 @@ For customer engagements, treat every tier as an outcome checkpoint:
     deepeners: Fabric IQ | Voice Live | Build a UI | Copilot-Assisted
            |
            v
-  TIER 3  CAPSTONE (open-ended design brief)
+  TIER 3  CAPSTONE (open-ended design activity)
     Northfield IQ multi-agent: triage/router fans out to specialists
     (knowledge, actions), then converges.
 ```
@@ -192,10 +193,10 @@ See the `activities/extra-*` folders.
 
 ### Tier 3 — Capstone (`activities/capstone-multi-agent/`)
 
-The open-ended summit: break the single Northfield IQ Assistant into a **multi-agent team** — a
+Break the single Northfield IQ Assistant into a **multi-agent team** — a
 [triage/router that fans out to specialist agents and converges](activities/capstone-multi-agent/README.md#the-agent-org-chart-role-as-agent),
-orchestrated with the **Microsoft Agent Framework (MAF)**. It's a **design brief, not a placeholder-fill** —
-you decide the org-chart and wire the graph.
+orchestrated with the **Microsoft Agent Framework (MAF)**. You decide the org chart and wire the graph
+against the acceptance criteria.
 
 | Capstone | Time | Difficulty | Prereqs |
 |----------|------|------------|---------|

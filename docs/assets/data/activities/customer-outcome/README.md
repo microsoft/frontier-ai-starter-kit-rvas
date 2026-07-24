@@ -3,7 +3,7 @@
 
 
 
-This is the first task in the Customer Build Track. Fill it out once, use it as the north star from Foundations through Capstone, and update it only when the customer outcome changes.
+This is the first task in the Customer Build Track. Fill it out once, use it from Foundations through Capstone, and update it when the customer outcome changes.
 
 > First, what is "Northfield"? Throughout this track you'll see *Northfield* used as the
 > reference scenario: a student-services assistant for the fictional *Northfield University*,
@@ -28,7 +28,7 @@ If you arrived from [Idea Forge](activity.html?id=idea-forge), transfer the sele
 | Action candidates | What should the agent be allowed to do, and which actions require approval? |
 | Safety boundaries | What should the agent refuse, escalate, redact, or avoid automating? |
 | Success measures | What metrics or demo evidence would make stakeholders trust the prototype? |
-| Final demo story | What 2-minute journey will show the outcome clearly? |
+| Final demo story | What 2-minute scenario will show the outcome clearly? |
 
 ### Preparing your corpus for Foundations Step 4
 
@@ -61,7 +61,7 @@ When filling in Knowledge sources, use these guidelines to avoid the most common
 | Evaluation & Red Teaming | Create scenario-specific eval and adversarial prompts | The team can show quality, groundedness, refusal, and safety results |
 | Tracing & Observability | Instrument the run and inspect spans in App Insights | The team can explain latency, retrieval, tool calls, and failure paths |
 | Deploy / UI | Host the agent and expose a simple stakeholder-facing experience | A non-technical stakeholder can try the prototype and see citations or approval cards |
-| Capstone | Split the assistant into router and specialists | A realistic customer journey is handled by the right specialist agents |
+| Capstone | Split the assistant into router and specialists | The right specialist agents handle a realistic customer request |
 
 ## Scenario swap guide
 

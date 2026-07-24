@@ -9,7 +9,7 @@ description: Add live operational data beside your static knowledge base when th
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Fabric IQ" artifact="A dual-grounded agent that routes YOUR policy questions to documents and YOUR right-now questions to live data." next="Use this only when live operational state is essential to your scenario." %}
 
-This deepener is mutuated from [Extra · Fabric IQ](../activities/extra-fabric-iq) — same live-data grounding pattern, but pointed at the operational data in your scenario from [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. Without Fabric capacity and a meaningful live table, skip it.
+This deepener adapts [Extra · Fabric IQ](../activities/extra-fabric-iq): it uses the same live-data grounding pattern for the operational data in your scenario from [Define your outcome](../customer-outcome). Without Fabric capacity and a meaningful live table, skip it.
 
 > Before you start this deepener: confirm facilitator-provisioned Fabric capacity, OneLake data, and a Foundry-reachable Fabric IQ connection. If your answers are document-grounded and not time-sensitive, skip this.
 

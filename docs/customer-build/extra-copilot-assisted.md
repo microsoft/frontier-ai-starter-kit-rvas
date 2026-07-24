@@ -9,7 +9,7 @@ description: Use Copilot with MCP and skills to rebuild one scenario artifact fr
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Copilot-Assisted Build" artifact="A before/after build artifact showing Copilot used current docs and skills for YOUR scenario instead of guessing." next="Use this as a learning accelerator after you have built at least one thing manually." %}
 
-This deepener is mutuated from [Extra · Copilot-Assisted Build](../activities/extra-copilot-assisted) — same MCP-and-skills workflow, but aimed at one artifact from your scenario in [Define your outcome](../customer-outcome). This is an OPTIONAL deepener. It is best after you have felt the manual path and can judge whether Copilot is improving it.
+This deepener adapts [Extra · Copilot-Assisted Build](../activities/extra-copilot-assisted): it uses the same MCP-and-skills workflow for one artifact from your scenario in [Define your outcome](../customer-outcome). Use it after you have tried the manual path and can judge whether Copilot improves it.
 
 > Before you start this deepener: have live infrastructure and at least one activity artifact you understand. If your team is still defining the outcome or debugging basics, skip this until later.
 

@@ -9,7 +9,7 @@ description: Split your scenario assistant into specialist agents coordinated by
 
 {% include journey-status.html tone="customer" path="Customer Build Track &rarr; Magentic Workflows" artifact="A multi-agent workflow where a manager routes YOUR composite user request across focused specialists." next="If the workflow proves valuable, consider the Long-Running Agents deepener to host it." %}
 
-This deepener is mutuated from [Extra · Magentic Workflows](../activities/extra-magentic-workflows) — same orchestration pattern, but applied only if your scenario from [Define your outcome](../customer-outcome) needs more than one specialist brain. This is an OPTIONAL deepener. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration just because it is impressive.
+This deepener adapts [Extra · Magentic Workflows](../activities/extra-magentic-workflows): use it only when your scenario from [Define your outcome](../customer-outcome) needs more than one specialist. Keep your corpus, action candidates, safety boundaries, success measures, and demo story in view; do not add Magentic orchestration only because it seems impressive.
 
 > Before you start this deepener: complete Ground your app and Make it act if your Action specialist will call a real tool. If one well-instructed agent already handles your demo cleanly, skip this.
 
