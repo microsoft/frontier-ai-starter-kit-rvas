@@ -6,6 +6,7 @@
     "audit:docs": "node scripts/audit-docs.js",
     "audit:docs:source": "node scripts/audit-docs.js --source",
     "audit:docs:generated": "node scripts/audit-docs.js --generated",
+    "validate:scenarios": "python3 scripts/validate-scenarios.py",
     "build": "npm run audit:docs:source && node docs/build.js && npm run audit:docs:generated"
   },
   "engines": {

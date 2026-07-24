@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
+const SCENARIOS_DIR = path.join(ROOT, 'scenarios');
 const OUT_DATA_DIR = path.join(__dirname, 'assets', 'data');
 const OUT_GUIDES_DIR = path.join(OUT_DATA_DIR, 'activities');
 const OUT_RESOURCES_DIR = path.join(__dirname, 'resources');
@@ -613,6 +614,98 @@ function copyResources() {
   }
 }
 
+function loadScenarioRegistry() {
+    if (!fs.existsSync(SCENARIOS_DIR)) return [];
+
+    return fs.readdirSync(SCENARIOS_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => {
+        const root = path.join(SCENARIOS_DIR, entry.name);
+        const manifestPath = path.join(root, 'manifest.json');
+        if (!fs.existsSync(manifestPath)) {
+          throw new Error(`scenario ${entry.name} is missing manifest.json`);
+        }
+        try {
+          return { root, ...JSON.parse(fs.readFileSync(manifestPath, 'utf8')) };
+        } catch (error) {
+          throw new Error(`scenario ${entry.name} has invalid manifest.json: ${error.message}`);
+        }
+      })
+      .sort((left, right) => left.name.localeCompare(right.name));
+}
+
+function scenarioPathExists(scenario, relativePath) {
+    if (!relativePath || typeof relativePath !== 'string') return false;
+    const target = path.resolve(scenario.root, relativePath);
+    return target.startsWith(`${scenario.root}${path.sep}`) && fs.existsSync(target);
+}
+
+function detectScenarioProblems(scenarios) {
+    const problems = [];
+    const ids = new Set();
+    for (const scenario of scenarios) {
+      if (!scenario.id || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(scenario.id)) {
+        problems.push(`${path.basename(scenario.root)} scenario needs a kebab-case id`);
+      }
+      if (!scenario.name || !scenario.tagline || !scenario.customer_outcome || !scenario.owner || !scenario.maturity) {
+        problems.push(`${scenario.id || path.basename(scenario.root)} scenario manifest needs name, tagline, customer_outcome, owner, and maturity`);
+      }
+      if (!Array.isArray(scenario.decision_prompts) || !scenario.decision_prompts.length) {
+        problems.push(`${scenario.id} scenario needs at least one decision prompt`);
+      }
+      if (ids.has(scenario.id)) problems.push(`duplicate scenario id ${scenario.id}`);
+      ids.add(scenario.id);
+      if (!scenarioPathExists(scenario, 'README.md')) problems.push(`${scenario.id} scenario is missing README.md`);
+      if (!scenarioPathExists(scenario, scenario.slides)) problems.push(`${scenario.id} scenario slides ${scenario.slides} missing`);
+      if (!scenarioPathExists(scenario, scenario.accelerator)) problems.push(`${scenario.id} scenario accelerator ${scenario.accelerator} missing`);
+      if (!scenarioPathExists(scenario, scenario.facilitator)) problems.push(`${scenario.id} scenario facilitator guide missing`);
+      if (!scenarioPathExists(scenario, scenario.local_demo)) problems.push(`${scenario.id} scenario local demo guide missing`);
+      if (!scenarioPathExists(scenario, scenario.validator)) problems.push(`${scenario.id} scenario validator missing`);
+      if (!Array.isArray(scenario.lessons) || !scenario.lessons.length) {
+        problems.push(`${scenario.id} scenario needs at least one lesson`);
+        continue;
+      }
+      const lessonIds = new Set();
+      for (const lesson of scenario.lessons) {
+        if (!lesson.id || !lesson.title || !scenarioPathExists(scenario, lesson.path)) {
+          problems.push(`${scenario.id} lesson needs id, title, and an existing path`);
+        }
+        if (lessonIds.has(lesson.id)) problems.push(`${scenario.id} duplicate lesson id ${lesson.id}`);
+        lessonIds.add(lesson.id);
+      }
+    }
+    return problems;
+}
+
+function copyScenarioAssets(scenarios) {
+    const outputRoot = path.join(OUT_DATA_DIR, 'scenarios');
+    fs.rmSync(outputRoot, { recursive: true, force: true });
+    for (const scenario of scenarios) {
+      fs.cpSync(scenario.root, path.join(outputRoot, scenario.id), { recursive: true });
+    }
+}
+
+function scenarioOutput(scenario) {
+    const assetBase = `assets/data/scenarios/${scenario.id}/`;
+    return {
+      id: scenario.id,
+      name: scenario.name,
+      tagline: scenario.tagline,
+      customer_outcome: scenario.customer_outcome,
+      maturity: scenario.maturity || 'initial',
+      owner: scenario.owner || 'Unassigned',
+      decision_prompts: scenario.decision_prompts || [],
+      lessons: scenario.lessons,
+      asset_base: assetBase,
+      readme_path: `${assetBase}README.md`,
+      slides_path: `${assetBase}${scenario.slides}`,
+      accelerator_path: `${assetBase}${scenario.accelerator}`,
+      facilitator_path: `${assetBase}${scenario.facilitator}`,
+      local_demo_path: `${assetBase}${scenario.local_demo}`,
+      validator_path: `${assetBase}${scenario.validator}`,
+    };
+}
+
 function activityOutput(activity, pathIds, outcomeIds) {
   return {
     id: activity.id,
@@ -650,7 +743,7 @@ function markdownHeadingId(heading) {
     .replace(/\s+/gu, '-');
 }
 
-function detectMissingReferences(activities, outcomes, paths, aliases) {
+function detectMissingReferences(activities, outcomes, paths, aliases, scenarios) {
   const ids = new Set(activities.map((c) => c.id));
   const missing = [];
   for (const activity of activities) {
@@ -687,11 +780,13 @@ function detectMissingReferences(activities, outcomes, paths, aliases) {
       missing.push(`${legacyId} alias path ${target.path}`);
     }
   }
+  missing.push(...detectScenarioProblems(scenarios));
   return missing;
 }
 
 function main() {
-  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, APP_PATHS, LEGACY_ACTIVITY_ALIASES);
+  const scenarios = loadScenarioRegistry();
+  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, APP_PATHS, LEGACY_ACTIVITY_ALIASES, scenarios);
   if (missing.length) {
     console.error('Build failed: missing references');
     missing.forEach((m) => console.error(`  - ${m}`));
@@ -701,6 +796,7 @@ function main() {
   fs.rmSync(OUT_GUIDES_DIR, { recursive: true, force: true });
   fs.mkdirSync(OUT_DATA_DIR, { recursive: true });
   copyResources();
+  copyScenarioAssets(scenarios);
 
   for (const activity of ACTIVITIES) {
     writeGuide(activity, 'participant');
@@ -769,11 +865,18 @@ function main() {
 
   fs.writeFileSync(
     path.join(OUT_DATA_DIR, 'platform.json'),
-    JSON.stringify({ modules, outcomes, paths, aliases: LEGACY_ACTIVITY_ALIASES, activities: outputActivities }, null, 2),
+    JSON.stringify({
+      modules,
+      outcomes,
+      paths,
+      scenarios: scenarios.map(scenarioOutput),
+      aliases: LEGACY_ACTIVITY_ALIASES,
+      activities: outputActivities,
+    }, null, 2),
   );
   fs.writeFileSync(path.join(OUT_DATA_DIR, 'dependency-graph.json'), JSON.stringify(graph, null, 2));
 
-  console.log(`✓ built platform.json (modules: ${modules.length}, outcomes: ${outcomes.length}, activities: ${outputActivities.length})`);
+  console.log(`✓ built platform.json (modules: ${modules.length}, outcomes: ${outcomes.length}, scenarios: ${scenarios.length}, activities: ${outputActivities.length})`);
   console.log(`✓ copied guides → ${path.relative(ROOT, OUT_GUIDES_DIR)}`);
 }
 

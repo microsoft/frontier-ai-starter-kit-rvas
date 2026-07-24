@@ -1,0 +1,59 @@
+{
+  "id": "avatar-enabled-onboarding",
+  "name": "Avatar-enabled Onboarding",
+  "tagline": "Deliver approved, accessible avatar-led onboarding with accountable human oversight.",
+  "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, and operational evidence.",
+  "maturity": "initial",
+  "owner": "RVAS field team",
+  "decision_prompts": [
+    "Which onboarding moment, cohort, locale, and channel should the pilot serve first?",
+    "Which approved sources and named owners may support the script, and when do they expire?",
+    "Who must approve factual accuracy, legal/compliance implications, brand, and publication?",
+    "Which vendor or platform best meets consent, privacy, accessibility, language, audit, and exit requirements?",
+    "How will the experience disclose avatar or AI assistance, provide human help, and avoid deceptive representation?",
+    "Which feedback and operational measures will determine whether to iterate, scale, pause, or withdraw?"
+  ],
+  "lessons": [
+    {
+      "id": "approved-content",
+      "title": "Establish the approved-content pack",
+      "path": "lessons/01-approved-content.md",
+      "reused_with": [
+        "policy communications",
+        "knowledge-grounded experiences"
+      ]
+    },
+    {
+      "id": "script-storyboard",
+      "title": "Draft a grounded script and storyboard",
+      "path": "lessons/02-script-storyboard.md",
+      "reused_with": [
+        "learning content",
+        "employee communications"
+      ]
+    },
+    {
+      "id": "human-approval-selection",
+      "title": "Run approval and select delivery options",
+      "path": "lessons/03-human-approval-and-selection.md",
+      "reused_with": [
+        "brand-governed generation",
+        "vendor evaluation"
+      ]
+    },
+    {
+      "id": "experience-evidence",
+      "title": "Pilot, observe, and improve",
+      "path": "lessons/04-experience-evidence.md",
+      "reused_with": [
+        "employee experience",
+        "operational measurement"
+      ]
+    }
+  ],
+  "slides": "slides.md",
+  "accelerator": "accelerator/README.md",
+  "facilitator": "FACILITATOR.md",
+  "local_demo": "local-demo.md",
+  "validator": "validate.py"
+}

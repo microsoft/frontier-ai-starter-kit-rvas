@@ -1,0 +1,15 @@
+{
+  "suite_id": "content-understanding-golden-v1",
+  "cases": [
+    {
+      "fixture_id": "rfq-1002",
+      "expected_result": "expected/rfq-1002.json",
+      "purpose": "Tests a missing delivery date and requires human review."
+    },
+    {
+      "fixture_id": "invoice-2002",
+      "expected_result": "expected/invoice-2002.json",
+      "purpose": "Tests a conflicting total and verifies the correction record."
+    }
+  ]
+}

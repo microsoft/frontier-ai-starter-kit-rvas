@@ -1,0 +1,16 @@
+{
+  "document_id": "invoice-2001",
+  "document_class": "invoice",
+  "routing_decision": "route_accounts_payable_validation",
+  "requires_human_review": false,
+  "review_reasons": [],
+  "fields": {
+    "invoice_number": "INV-2001",
+    "purchase_order": "PO-7001",
+    "subtotal_usd": "120.00",
+    "supplier": "Contoso Demo Parts",
+    "tax_usd": "12.00",
+    "total_due_usd": "132.00"
+  },
+  "source_sha256": "fc0158e845f4165bbfb998479e22212549217e2cc28983dd27f909529fb538a1"
+}

@@ -1,0 +1,38 @@
+{
+  "approval_record_id": "DEMO-APPROVAL-ONB-WELCOME-001-0.1.0",
+  "script_id": "ONB-WELCOME-001",
+  "script_version": "0.1.0",
+  "approval_status": "approved-for-demo-only",
+  "approvals": [
+    {
+      "role": "SME",
+      "decision": "approved",
+      "approver": "named-demo-sme",
+      "decided_at": "2026-07-05T09:00:00Z"
+    },
+    {
+      "role": "legal-compliance",
+      "decision": "approved",
+      "approver": "named-demo-legal-reviewer",
+      "decided_at": "2026-07-05T09:10:00Z"
+    },
+    {
+      "role": "brand-communications",
+      "decision": "approved",
+      "approver": "named-demo-brand-reviewer",
+      "decided_at": "2026-07-05T09:20:00Z"
+    },
+    {
+      "role": "content-owner",
+      "decision": "approved",
+      "approver": "named-demo-content-owner",
+      "decided_at": "2026-07-05T09:30:00Z"
+    }
+  ],
+  "publication_conditions": [
+    "Display an avatar or AI-assisted disclosure.",
+    "Publish captions and transcript with the experience.",
+    "Offer an accessible non-avatar alternative and human help route.",
+    "Do not use a person likeness or cloned voice without recorded authorization."
+  ]
+}

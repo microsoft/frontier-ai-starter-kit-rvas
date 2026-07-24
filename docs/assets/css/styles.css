@@ -903,6 +903,114 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   border-color: color-mix(in srgb, var(--c-gold) 42%, var(--c-line));
 }
 
+/* ── Scenario delivery kit: editorial decision workspace ───────────────── */
+.decision-page,
+.scenario-page {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Aptos', 'Segoe UI', sans-serif;
+  --font-mono: 'DM Mono', 'JetBrains Mono', monospace;
+}
+.decision-hero,
+.scenario-hero {
+  padding: 86px 0 62px;
+  background:
+    linear-gradient(118deg, rgba(20, 134, 138, .12), transparent 48%),
+    linear-gradient(300deg, rgba(80, 64, 146, .12), transparent 50%);
+  border-bottom: 1px solid var(--c-line);
+}
+.decision-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, .6fr);
+  gap: 52px;
+  align-items: end;
+}
+.decision-hero h1,
+.scenario-hero h1 { margin-top: 20px; max-width: 12ch; }
+.decision-hero h1 em { color: var(--c-ghas); font-style: italic; }
+.decision-hero p,
+.scenario-hero p { font-size: 1.1rem; max-width: 58ch; color: var(--c-dim); }
+.decision-principle {
+  border-left: 3px solid var(--c-ghas);
+  padding: 16px 0 16px 22px;
+  display: grid;
+  gap: 8px;
+}
+.decision-principle span,
+.result-kicker,
+.panel-label {
+  font: 500 .72rem var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-ghas);
+}
+.decision-principle strong { font: 600 1.35rem/1.25 var(--font-display); }
+.decision-principle small { color: var(--c-dim); }
+.explorer-layout {
+  display: grid;
+  grid-template-columns: minmax(290px, .85fr) minmax(360px, 1.15fr);
+  align-items: start;
+  gap: 44px;
+}
+.explorer-form {
+  display: grid;
+  gap: 24px;
+  padding: 28px;
+  background: color-mix(in srgb, var(--c-850) 88%, var(--c-ghas));
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+.explorer-form fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 9px; }
+.explorer-form legend { font: 600 1.05rem var(--font-display); margin-bottom: 10px; }
+.explorer-form legend span { color: var(--c-ghas); font: 500 .72rem var(--font-mono); margin-right: 8px; }
+.explorer-form label {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--c-dim);
+  cursor: pointer;
+}
+.explorer-form label:hover { background: var(--c-line-soft); color: var(--c-fg); }
+.explorer-form input { accent-color: var(--c-ghas); }
+.explorer-result { min-height: 540px; padding: 24px 0 0; }
+.explorer-result h2 { margin: 12px 0; color: var(--c-fg); }
+.explorer-result > p { color: var(--c-dim); max-width: 62ch; }
+.result-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+.decision-cards { display: grid; gap: 11px; }
+.decision-card {
+  padding: 18px 20px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r);
+  background: var(--c-850);
+  position: relative;
+  overflow: hidden;
+}
+.decision-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c-gold); }
+.decision-card span { font: 500 .68rem var(--font-mono); text-transform: uppercase; color: var(--c-gold); letter-spacing: .08em; }
+.decision-card h3 { margin: 5px 0 7px; font-size: 1.13rem; }
+.decision-card p { margin: 0; color: var(--c-dim); font-size: .92rem; }
+.result-disclaimer { margin-top: 20px; font-size: .8rem; border-top: 1px solid var(--c-line); padding-top: 13px; }
+.back-link { display: inline-block; margin-bottom: 32px; color: var(--c-dim); font-size: .9rem; }
+.scenario-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.scenario-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); gap: 52px; }
+.scenario-sidebar { display: grid; gap: 14px; align-content: start; }
+.scenario-panel { padding: 18px; background: var(--c-850); border: 1px solid var(--c-line); border-radius: var(--r); }
+.scenario-panel p { margin: 8px 0 0; color: var(--c-dim); }
+.scenario-panel ul,
+.scenario-panel ol { margin: 10px 0 0; padding-left: 20px; color: var(--c-dim); }
+.scenario-panel li + li { margin-top: 7px; }
+.scenario-panel a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 800px) {
+  .decision-hero-grid,
+  .explorer-layout,
+  .scenario-layout { grid-template-columns: 1fr; gap: 28px; }
+  .decision-hero,
+  .scenario-hero { padding: 58px 0 42px; }
+  .explorer-result { min-height: auto; }
+}
+
 /* Empty/loading state */
 .empty {
   grid-column: 1 / -1;
@@ -1437,3 +1545,36 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 }
 .attribution a { color: var(--c-gold); }
 .attribution a:hover { text-decoration: underline; }
+
+/* Customer slide decks are source-controlled Markdown and browser-exportable. */
+.slides-page { background: #eef2f7; color: #16233a; }
+.slides-toolbar {
+  position: sticky; top: 0; z-index: 2; display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem; padding: 0.8rem 1.5rem;
+  background: #16233a; color: #fff; font-size: 0.9rem;
+}
+.slides-toolbar a, .slides-toolbar button { color: inherit; }
+.slides-toolbar button {
+  border: 1px solid currentColor; border-radius: 0.3rem; background: transparent;
+  padding: 0.4rem 0.65rem; cursor: pointer;
+}
+#slideDeck { display: grid; gap: 2rem; max-width: 72rem; margin: 2rem auto; padding: 0 1rem; }
+.customer-slide {
+  position: relative; box-sizing: border-box; aspect-ratio: 16 / 9; overflow: hidden;
+  padding: 4rem 5rem; background: #fff; box-shadow: 0 0.8rem 2rem rgb(22 35 58 / 14%);
+}
+.slide-number {
+  position: absolute; top: 1.4rem; right: 1.8rem; color: #63738d;
+  font-family: var(--font-mono, monospace); font-size: 0.8rem;
+}
+.slide-content > :first-child { margin-top: 0; }
+.slide-content h1 { color: #1a77e3; font-size: clamp(2.5rem, 5vw, 4.8rem); }
+.slide-content h2 { color: #504092; font-size: clamp(1.8rem, 3.5vw, 3rem); }
+.slide-content p, .slide-content li, .slide-content td, .slide-content th { font-size: clamp(1rem, 1.65vw, 1.45rem); }
+.slide-content table { width: 100%; border-collapse: collapse; }
+.slide-content th, .slide-content td { padding: 0.55rem; border-bottom: 1px solid #d9e0ea; text-align: left; }
+@media print {
+  .slides-toolbar { display: none; }
+  #slideDeck { display: block; max-width: none; margin: 0; padding: 0; }
+  .customer-slide { width: 100%; break-after: page; box-shadow: none; page-break-after: always; }
+}

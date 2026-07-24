@@ -1,0 +1,53 @@
+{
+  "id": "content-understanding-document-workflow",
+  "name": "Content Understanding and Document Workflow",
+  "tagline": "Move from SME-tested document understanding to a governed business workflow.",
+  "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
+  "maturity": "initial",
+  "owner": "RVAS field team",
+  "decision_prompts": [
+    "Which document decision creates measurable value when it is faster and more consistent?",
+    "Are representative, authorized samples and expected outcomes ready for SME testing?",
+    "Where must human review, correction, and evidence be retained in the workflow?",
+    "What isolation, access, and promotion controls are required beyond Studio project/analyzer boundaries?"
+  ],
+  "lessons": [
+    {
+      "id": "outcome-and-readiness",
+      "title": "Outcome and data readiness",
+      "path": "lessons/01-outcome-and-readiness.md",
+      "reused_with": [
+        "document workflow discovery"
+      ]
+    },
+    {
+      "id": "sme-studio-loop",
+      "title": "SME Studio loop",
+      "path": "lessons/02-sme-studio-loop.md",
+      "reused_with": [
+        "Content Understanding Studio"
+      ]
+    },
+    {
+      "id": "secure-handoff-and-workflow",
+      "title": "Secure handoff and workflow",
+      "path": "lessons/03-secure-handoff-and-workflow.md",
+      "reused_with": [
+        "SharePoint document ingestion"
+      ]
+    },
+    {
+      "id": "review-evaluation-lifecycle",
+      "title": "Review, evaluation, and lifecycle",
+      "path": "lessons/04-review-evaluation-lifecycle.md",
+      "reused_with": [
+        "responsible AI operations"
+      ]
+    }
+  ],
+  "slides": "slides.md",
+  "accelerator": "accelerator/README.md",
+  "facilitator": "FACILITATOR.md",
+  "local_demo": "LOCAL_DEMO.md",
+  "validator": "scripts/validate_local_pack.py"
+}

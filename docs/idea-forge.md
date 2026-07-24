@@ -1,51 +1,26 @@
 ---
 title: Idea Forge
-nav_order: 3
-description: Generate a buildable customer AI application idea, then continue into Customer Build.
+nav_order: 2
+description: Generate a researched customer AI application idea, then shape it with the Decision Explorer.
 ---
 
 <div class="hero-panel track-hero track-hero--idea">
   <span class="hero-kicker">Intake • Need an idea</span>
-  <h1>No app idea yet? Forge one, then build it.</h1>
-  <p class="hero-tagline">This fast intake step turns a customer name or industry into a ranked set of Foundry application ideas.</p>
+  <h1>No app idea yet? Forge one, then shape the engagement.</h1>
+  <p class="hero-tagline">Customer Activity-Forge turns a customer name and industry into researched, buildable ideas that map to a scenario playbook and its first customer decisions.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md">Open Activity-Forge</a>
-    <a class="btn btn-outline" href="{{ '/customer-build' | relative_url }}">See Customer Build</a>
+    <a class="btn btn-outline" href="{{ '/decision-explorer.html' | relative_url }}">Open Decision Explorer</a>
   </div>
 </div>
-
-{% include journey-status.html tone="idea" path="Idea Forge &rarr; Customer Build Track" artifact="One selected AI application idea with outcome, users, data sources, and tier guidance." next="Paste the chosen idea into Customer Build Step 0, then continue the track." %}
 
 ## Five-minute idea funnel
 
-<ol class="route-list">
-  <li><strong>Name the context.</strong> Provide a customer name, business area, or target industry.</li>
-  <li><strong>Run Customer Activity-Forge.</strong> Generate roughly 10 ranked, right-sized ideas grounded in public context.</li>
-  <li><strong>Pick one idea.</strong> Prefer the idea with clear users, safe data, one useful action, and a believable demo.</li>
-  <li><strong>Complete Customer Build Step 0.</strong> Transfer the idea's outcome, users, sources, action candidates, and risk notes.</li>
-  <li><strong>Continue as Customer Build.</strong> From this point on, you are no longer in an idea flow; you are building the prototype.</li>
-</ol>
+1. Name the customer, business area, or industry.
+2. Run Customer Activity-Forge for researched, right-sized ideas.
+3. Pick the idea with a narrow user, a safe representative sample, an accountable owner, and a believable first proof.
+4. Run the [Decision Explorer]({{ '/decision-explorer.html' | relative_url }}) with the customer.
+5. Open the recommended scenario playbook and select the lessons needed for the next decision.
 
-## Pick the idea that can actually ship today
-
-<div class="quick-grid">
-  <div class="quick-card">
-    <h3>Good idea</h3>
-    <p>Has a narrow user, a trusted corpus, one workflow action, and a two-minute demo story.</p>
-  </div>
-
-  <div class="quick-card">
-    <h3>Risky idea</h3>
-    <p>Requires confidential data, broad automation, unclear users, or production integrations you cannot safely mock.</p>
-  </div>
-
-  <div class="quick-card">
-    <h3>Best session shape</h3>
-    <p>A grounded assistant that answers with citations, performs one approval-gated action, and produces a trust scorecard.</p>
-  </div>
-</div>
-
-<div class="next-panel">
-  <strong>Next:</strong>
-  <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Complete Step 0</a>
-</div>
+The goal is not to commit to an architecture during intake. The goal is to arrive at a transparent
+working direction, the assumptions to verify, and a useful first demonstrator.

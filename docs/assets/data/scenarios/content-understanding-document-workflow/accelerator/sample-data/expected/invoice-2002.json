@@ -1,0 +1,18 @@
+{
+  "document_id": "invoice-2002",
+  "document_class": "invoice",
+  "routing_decision": "route_human_review",
+  "requires_human_review": true,
+  "review_reasons": [
+    "conflicting_invoice_total"
+  ],
+  "fields": {
+    "invoice_number": "INV-2002",
+    "purchase_order": "PO-7002",
+    "subtotal_usd": "200.00",
+    "supplier": "Contoso Demo Parts",
+    "tax_usd": "20.00",
+    "total_due_usd": "250.00"
+  },
+  "source_sha256": "1aa11c61f9331353b513dccd80eaa99edae83ddcdb55e0844cab873c413dc852"
+}

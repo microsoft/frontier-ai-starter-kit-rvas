@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deploymentMode": {
+      "value": "byo-existing-environment"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "existingEnvironmentResourceId": {
+      "value": "/subscriptions/<subscription-id>/resourceGroups/<approved-resource-group>/providers/<approved-provider>/<approved-resource-type>/<approved-resource-name>"
+    },
+    "contextPattern": {
+      "value": "Copilot Studio + SharePoint decision pending"
+    }
+  }
+}

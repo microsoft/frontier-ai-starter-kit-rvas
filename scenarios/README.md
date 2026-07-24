@@ -1,0 +1,67 @@
+# Scenario contribution contract
+
+A scenario is a customer-delivery playbook, not a technology tutorial. It contains a client
+conversation, reusable lessons, source-controlled slides, and a deliberately small accelerator.
+
+## Required files
+
+```text
+scenarios/<scenario-id>/
+  manifest.json
+  README.md
+  FACILITATOR.md
+  slides.md
+  local-demo.md
+  validate.py
+  lessons/
+  accelerator/
+    README.md
+    main.bicep
+    parameters.example.json
+    sample-data/
+```
+
+`manifest.json` must include:
+
+```json
+{
+  "id": "kebab-case-id",
+  "name": "Customer-facing scenario name",
+  "tagline": "One outcome-focused sentence",
+  "customer_outcome": "What becomes faster, safer, cheaper, or more reliable",
+  "maturity": "initial",
+  "owner": "Named team or role",
+  "decision_prompts": ["Question to ask with the customer"],
+  "lessons": [
+    {
+      "id": "lesson-id",
+      "title": "Customer decision",
+      "path": "lessons/lesson-id.md",
+      "reused_with": ["other-scenario-id"]
+    }
+  ],
+  "slides": "slides.md",
+  "accelerator": "accelerator/README.md",
+  "facilitator": "FACILITATOR.md",
+  "local_demo": "local-demo.md",
+  "validator": "validate.py"
+}
+```
+
+## Acceptance checklist
+
+- The scenario starts from a customer outcome, not a product.
+- Every lesson names the decision, inputs, proof, and next decision.
+- Every lesson includes duration, facilitator preparation, a timed participant activity, an
+  artifact template, expected output, validation, debrief, and next decision.
+- Slides can be used with a customer without exposing internal implementation detail.
+- Slides use Marp-compatible Markdown. Open them through `docs/slides.html?id=<scenario-id>` and
+  use the browser's **Print / save as PDF** action for a customer-deck export.
+- The accelerator has a minimal safe-demo path and a bring-your-own-environment path.
+- No accelerator provisions an enterprise landing zone.
+- Preview and fast-moving services instruct the reader to search current Microsoft documentation
+  and MCP tools before writing SDK code.
+- Data ownership, access, evaluation, and operating evidence are explicit from the first lesson.
+- Synthetic sample data, expected outputs, and a local no-credential demo are present for every
+  scenario; each is clearly replaceable by approved customer data.
+- A named owner and maturity label are present; update the scenario changelog when material changes.

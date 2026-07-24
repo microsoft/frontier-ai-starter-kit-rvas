@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "contentPackName": {"value": "avatar-onboarding-demo"},
+    "deliveryAdapterName": {"value": "customer-selected-adapter-or-mock"},
+    "deliveryConfigurationReference": {"value": "https://example.invalid/customer-owned/configuration-reference"},
+    "approvedContentReference": {"value": "sample-data/README.md"}
+  }
+}

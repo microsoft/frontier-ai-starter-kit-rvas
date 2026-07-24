@@ -1,72 +1,42 @@
 ---
 title: Start Here
 nav_order: 1
-description: Choose your route, then build a grounded Microsoft Foundry agent prototype.
+description: Shape a customer AI engagement, choose a scenario, and reuse the lessons that prove the next decision.
 ---
 
 <div class="hero-panel home-hero">
-  <span class="hero-kicker">AI Starter Kit • Microsoft Foundry</span>
-  <h1>Bring your idea. Build it with Foundry.</h1>
-  <p class="hero-tagline">Choose a route, then follow one shared build spine: define the outcome, ground the agent, add useful action, prove trust, and demo the result.</p>
+  <span class="hero-kicker">RVAS • AI Starter Kit</span>
+  <h1>Turn a customer conversation into a useful AI start.</h1>
+  <p class="hero-tagline">Use Idea Forge when the opportunity is unclear. Otherwise, use the Decision Explorer and one of three scenario playbooks to choose the next useful decision, slide, lesson, and demonstrator.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/customer-build' | relative_url }}">Bring your outcome</a>
+    <a class="btn btn-primary" href="{{ '/decision-explorer.html' | relative_url }}">Open Decision Explorer</a>
     <a class="btn btn-outline" href="{{ '/idea-forge' | relative_url }}">Need an idea?</a>
-    <a class="btn btn-outline" href="{{ '/upskill' | relative_url }}">Here to upskill</a>
   </div>
 </div>
 
-## Choose your starting point
-
-<div class="quick-grid path-chooser">
-  <div class="quick-card track-card track-card--customer">
-    <span class="track-badge">Customer Build</span>
-    <h3>Bring your own outcome</h3>
-    <p>You have a customer, account, process, or business problem. Start by turning it into a scenario pack, then build the prototype with your own safe data.</p>
-    <a class="track-link" href="{{ '/customer-build' | relative_url }}">Start the track &rarr;</a>
-  </div>
-
-  <div class="quick-card track-card track-card--idea">
-    <span class="track-badge">Idea intake</span>
-    <h3>Generate an idea first</h3>
-    <p>You know the customer or industry, but not the app. Use Customer Activity-Forge to pick a buildable idea, then continue into Customer Build.</p>
-    <a class="track-link" href="{{ '/idea-forge' | relative_url }}">Forge an idea &rarr;</a>
-  </div>
-
-  <div class="quick-card track-card track-card--upskill">
-    <span class="track-badge">Upskill</span>
-    <h3>Learn with Northfield</h3>
-    <p>You want the guided reference path. Build the Northfield University IQ Assistant, then reuse the pattern for customer work later.</p>
-    <a class="track-link" href="{{ '/upskill' | relative_url }}">Start learning &rarr;</a>
-  </div>
-</div>
-
-## One build spine, two real tracks
+## The customer-delivery journey
 
 <ol class="journey-map">
-  <li><span>0</span><strong>Define</strong><small>Outcome, users, data, safety, demo</small></li>
-  <li><span>1</span><strong>Foundations</strong><small>Provision, model, agent, knowledge</small></li>
-  <li><span>2</span><strong>Act</strong><small>Attach one governed workflow</small></li>
-  <li><span>3</span><strong>Prove</strong><small>Evaluate, red-team, trace</small></li>
-  <li><span>4</span><strong>Demo</strong><small>Host, UI, scorecard, backlog</small></li>
+  <li><span>1</span><strong>Frame</strong><small>Forge or clarify the customer outcome</small></li>
+  <li><span>2</span><strong>Decide</strong><small>Surface data, ownership, environment, and platform assumptions</small></li>
+  <li><span>3</span><strong>Prove</strong><small>Use one scenario’s lessons, slides, and minimal accelerator</small></li>
+  <li><span>4</span><strong>Continue</strong><small>Capture evidence for the next engagement decision</small></li>
 </ol>
 
-## Find your next step
+## Choose a scenario
 
-Each track page starts with **You are here**, **Current output**, and **Next move**. If you are unsure where to continue, return to your track page instead of browsing the activity list.
+| Scenario | Use it when | Start |
+|---|---|---|
+| AI Grounding / IQ | People need trusted answers from the right combination of enterprise knowledge and operational context. | [Open AI Grounding / IQ]({{ '/scenario.html?id=ai-grounding' | relative_url }}) |
+| Content Understanding and Document Workflow | Business content must become AI-ready, be understood by an SME, and enter a reviewable process. | [Open Content Understanding]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}) |
+| Avatar-enabled Onboarding | Approved training or onboarding content needs a governed, accessible semi-automated experience. | [Open Avatar-enabled Onboarding]({{ '/scenario.html?id=avatar-enabled-onboarding' | relative_url }}) |
 
-<div class="quick-grid">
-  <div class="quick-card">
-    <h3>Track pages guide the day</h3>
-    <p>Use Customer Build or Upskill as your primary route. They tell you what artifact you are producing at each stage.</p>
-  </div>
+Each scenario is a playbook, not a fixed course. Select only the lessons that support the current
+customer decision. Every playbook includes customer-facing Markdown slides that can be printed or
+saved as a PDF, a minimal accelerator, and a bring-your-own-environment path.
 
-  <div class="quick-card">
-    <h3>Build Modules are reusable</h3>
-    <p>Ground, Act, Prove, Debug, Deploy, Demo UI, and Orchestrate are shared capabilities used by both tracks.</p>
-  </div>
+## Technical reference archive
 
-  <div class="quick-card">
-    <h3>Facilitators anchor on outcomes</h3>
-    <p>The right question is not "which page am I on?" It is "what should my team have produced before moving on?"</p>
-  </div>
-</div>
+The original Northfield activities remain available as a technical reference while this kit evolves.
+They are not the primary customer journey. Use the [legacy reference catalog]({{ '/catalog.html' | relative_url }})
+only when a scenario lesson points to a specific implementation pattern.

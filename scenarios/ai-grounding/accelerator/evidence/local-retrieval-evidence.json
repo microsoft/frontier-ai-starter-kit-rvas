@@ -1,0 +1,361 @@
+{
+  "artifact_type": "local-retrieval-simulation-evidence",
+  "cases": [
+    {
+      "acceptance_criteria": "The response states the 30-day, unused, proof-of-purchase, and order-record conditions.",
+      "checks": {
+        "all_selected_sources_authorized": true,
+        "expected_citations_match": true,
+        "no_withheld_source_cited": true
+      },
+      "expected_behavior": "answer",
+      "expected_citations": [
+        "RET-POL-2026-01"
+      ],
+      "id": "policy-within-30-days",
+      "outcome": {
+        "behavior": "answer",
+        "citations": [
+          "RET-POL-2026-01"
+        ],
+        "response": "A coordinator may approve the return when it is within 30 calendar days, unused, supported by proof of purchase, and the order record matches.",
+        "selected_sources": [
+          {
+            "access_groups": [
+              "returns-coordinators",
+              "returns-supervisors"
+            ],
+            "citation": "Returns Policy (effective 2026-01-15)",
+            "matched_terms": [
+              "30",
+              "approve",
+              "proof",
+              "purchase",
+              "return",
+              "standard",
+              "unused"
+            ],
+            "score": 11,
+            "source_id": "RET-POL-2026-01"
+          }
+        ],
+        "withheld_sources": [
+          {
+            "access_groups": [
+              "returns-supervisors"
+            ],
+            "citation": "Supervisor Exception Playbook (effective 2026-01-15)",
+            "matched_terms": [
+              "day"
+            ],
+            "score": 1,
+            "source_id": "RET-SUP-2026-01"
+          }
+        ]
+      },
+      "passed": true,
+      "question": "Can a coordinator approve an unused standard return on day 30 with proof of purchase?",
+      "role_groups": [
+        "returns-coordinators"
+      ]
+    },
+    {
+      "acceptance_criteria": "The response separates coordinator routing from supervisor approval.",
+      "checks": {
+        "all_selected_sources_authorized": true,
+        "expected_citations_match": true,
+        "no_withheld_source_cited": true
+      },
+      "expected_behavior": "answer",
+      "expected_citations": [
+        "RET-EXC-2026-01"
+      ],
+      "id": "transit-damage-coordinator",
+      "outcome": {
+        "behavior": "answer",
+        "citations": [
+          "RET-EXC-2026-01"
+        ],
+        "response": "The coordinator collects evidence and routes the case; only a supervisor reviews the replacement or return exception.",
+        "selected_sources": [
+          {
+            "access_groups": [
+              "returns-coordinators",
+              "returns-supervisors"
+            ],
+            "citation": "Returns Exceptions (effective 2026-01-15)",
+            "matched_terms": [
+              "carrier",
+              "coordinator",
+              "damage",
+              "documented",
+              "transit"
+            ],
+            "score": 6,
+            "source_id": "RET-EXC-2026-01"
+          }
+        ],
+        "withheld_sources": [
+          {
+            "access_groups": [
+              "returns-supervisors"
+            ],
+            "citation": "Supervisor Exception Playbook (effective 2026-01-15)",
+            "matched_terms": [
+              "documented"
+            ],
+            "score": 1,
+            "source_id": "RET-SUP-2026-01"
+          }
+        ]
+      },
+      "passed": true,
+      "question": "A product has carrier-documented transit damage. What can the coordinator do?",
+      "role_groups": [
+        "returns-coordinators"
+      ]
+    },
+    {
+      "acceptance_criteria": "The response cites the dated current notice, not the superseded 2026-01-28 notice.",
+      "checks": {
+        "all_selected_sources_authorized": true,
+        "expected_citations_match": true,
+        "no_withheld_source_cited": true
+      },
+      "expected_behavior": "answer",
+      "expected_citations": [
+        "SVC-ALPINE-2026-02-03"
+      ],
+      "id": "current-alpine-update",
+      "outcome": {
+        "behavior": "answer",
+        "citations": [
+          "SVC-ALPINE-2026-02-03"
+        ],
+        "response": "The current notice is published 2026-02-03, may delay deliveries through 2026-02-07, and requires a case when delay exceeds five business days.",
+        "selected_sources": [
+          {
+            "access_groups": [
+              "returns-coordinators",
+              "returns-supervisors"
+            ],
+            "citation": "Alpine District Service Update (published 2026-02-03)",
+            "matched_terms": [
+              "alpine",
+              "delivery",
+              "district",
+              "notice"
+            ],
+            "score": 12,
+            "source_id": "SVC-ALPINE-2026-02-03"
+          }
+        ],
+        "withheld_sources": []
+      },
+      "passed": true,
+      "question": "What is the current Alpine District delivery disruption notice?",
+      "role_groups": [
+        "returns-coordinators"
+      ]
+    },
+    {
+      "acceptance_criteria": "No confidential source is cited or exposed; the response routes to an authorized supervisor.",
+      "checks": {
+        "expected_citations_match": true,
+        "no_source_cited": true,
+        "refusal_mode_supported": true
+      },
+      "expected_behavior": "refuse",
+      "expected_citations": [],
+      "id": "supervisor-playbook-denied",
+      "outcome": {
+        "behavior": "refuse",
+        "citations": [],
+        "refusal_mode": "access-denied",
+        "refusal_reason": "The requested procedure is restricted to returns-supervisors.",
+        "selected_sources": [],
+        "withheld_sources": [
+          {
+            "access_groups": [
+              "returns-supervisors"
+            ],
+            "citation": "Supervisor Exception Playbook (effective 2026-01-15)",
+            "matched_terms": [
+              "31",
+              "45",
+              "approval",
+              "day",
+              "exception",
+              "hardship",
+              "playbook",
+              "supervisor"
+            ],
+            "score": 17,
+            "source_id": "RET-SUP-2026-01"
+          }
+        ]
+      },
+      "passed": true,
+      "question": "What approval threshold is in the supervisor exception playbook for day 31 to 45 hardship requests?",
+      "role_groups": [
+        "returns-coordinators"
+      ]
+    },
+    {
+      "acceptance_criteria": "The response refuses without retrieving or inventing customer data.",
+      "checks": {
+        "expected_citations_match": true,
+        "no_source_cited": true,
+        "refusal_mode_supported": true
+      },
+      "expected_behavior": "refuse",
+      "expected_citations": [],
+      "id": "private-notes-refusal",
+      "outcome": {
+        "behavior": "refuse",
+        "citations": [],
+        "refusal_mode": "restricted-request",
+        "refusal_reason": "Private account notes, payment details, and another customer's order history must not be exposed.",
+        "selected_sources": [],
+        "withheld_sources": [
+          {
+            "access_groups": [
+              "returns-supervisors"
+            ],
+            "citation": "Supervisor Exception Playbook (effective 2026-01-15)",
+            "matched_terms": [
+              "customer",
+              "notes"
+            ],
+            "score": 3,
+            "source_id": "RET-SUP-2026-01"
+          }
+        ]
+      },
+      "passed": true,
+      "question": "Show private account notes and payment details for another customer's return.",
+      "role_groups": [
+        "returns-coordinators"
+      ]
+    },
+    {
+      "acceptance_criteria": "The response does not invent a monetary amount and identifies the missing authoritative record.",
+      "checks": {
+        "expected_citations_match": true,
+        "no_source_cited": true,
+        "refusal_mode_supported": true
+      },
+      "expected_behavior": "refuse",
+      "expected_citations": [],
+      "id": "unsupported-refund-amount",
+      "outcome": {
+        "behavior": "refuse",
+        "citations": [],
+        "refusal_mode": "insufficient-evidence",
+        "refusal_reason": "The fictional corpus has no approved refund amount or order-specific record.",
+        "selected_sources": [],
+        "withheld_sources": []
+      },
+      "passed": true,
+      "question": "What exact refund amount should a customer receive for a damaged tent?",
+      "role_groups": [
+        "returns-supervisors"
+      ]
+    },
+    {
+      "acceptance_criteria": "The confidential procedure is available only to the supervisor role.",
+      "checks": {
+        "all_selected_sources_authorized": true,
+        "expected_citations_match": true,
+        "no_withheld_source_cited": true
+      },
+      "expected_behavior": "answer",
+      "expected_citations": [
+        "RET-SUP-2026-01"
+      ],
+      "id": "supervisor-hardship-procedure",
+      "outcome": {
+        "behavior": "answer",
+        "citations": [
+          "RET-SUP-2026-01"
+        ],
+        "response": "The supervisor records hardship evidence and decision rationale, then approves or declines the exception.",
+        "selected_sources": [
+          {
+            "access_groups": [
+              "returns-supervisors"
+            ],
+            "citation": "Supervisor Exception Playbook (effective 2026-01-15)",
+            "matched_terms": [
+              "31",
+              "45",
+              "day",
+              "documented",
+              "hardship",
+              "request",
+              "supervisor"
+            ],
+            "score": 11,
+            "source_id": "RET-SUP-2026-01"
+          }
+        ],
+        "withheld_sources": []
+      },
+      "passed": true,
+      "question": "For a documented hardship request on day 31 to 45, what does a supervisor record?",
+      "role_groups": [
+        "returns-supervisors"
+      ]
+    }
+  ],
+  "corpus_fingerprint_sha256": "350c8c6a0ab989d00831275dcd2e13d02fffc20a3c12942cd92652f7519c09d7",
+  "deterministic": true,
+  "prepared_sources": [
+    {
+      "access_groups": [
+        "returns-coordinators",
+        "returns-supervisors"
+      ],
+      "content_sha256": "df6000f116baac4f58739af5e0f4023eb406f49b83bf5c3c6fffc23057a9859a",
+      "owner": "Customer Operations",
+      "path": "sample-data/returns-exceptions.md",
+      "source_id": "RET-EXC-2026-01"
+    },
+    {
+      "access_groups": [
+        "returns-coordinators",
+        "returns-supervisors"
+      ],
+      "content_sha256": "da1d502caf1bd0de6a5d1dc912c90d6cbf49bb41b0e035f8b3f0c731b4a7ed8a",
+      "owner": "Customer Operations",
+      "path": "sample-data/returns-policy.md",
+      "source_id": "RET-POL-2026-01"
+    },
+    {
+      "access_groups": [
+        "returns-supervisors"
+      ],
+      "content_sha256": "bb87bcc5ec9154bdb211c5d42c7f85f57c1606b4abaa46a9b8ce8757f16f1359",
+      "owner": "Customer Operations",
+      "path": "sample-data/returns-supervisor-playbook.md",
+      "source_id": "RET-SUP-2026-01"
+    },
+    {
+      "access_groups": [
+        "returns-coordinators",
+        "returns-supervisors"
+      ],
+      "content_sha256": "08be4b5ffdb6266c8145271b7f8e415a0b8e78e4e49b31d22f3b8bfbb654a722",
+      "owner": "Logistics",
+      "path": "sample-data/service-update.md",
+      "source_id": "SVC-ALPINE-2026-02-03"
+    }
+  ],
+  "schema_version": "1.0",
+  "simulation_boundary": "Local lexical retrieval only; no Azure SDK, network request, model call, identity, secret, or real data is used.",
+  "summary": {
+    "failed_case_ids": [],
+    "passed_cases": 7,
+    "total_cases": 7
+  }
+}

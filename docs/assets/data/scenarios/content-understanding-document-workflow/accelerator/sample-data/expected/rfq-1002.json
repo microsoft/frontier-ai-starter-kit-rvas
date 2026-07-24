@@ -1,0 +1,16 @@
+{
+  "document_id": "rfq-1002",
+  "document_class": "request_for_quote",
+  "routing_decision": "route_procurement_review",
+  "requires_human_review": true,
+  "review_reasons": [
+    "missing_requested_delivery_date"
+  ],
+  "fields": {
+    "buyer": "Northwind Workshop Supplies",
+    "request_id": "RFQ-1002",
+    "requested_delivery_date": null,
+    "supplier": "Adventure Works Demo Fabrication"
+  },
+  "source_sha256": "61955e303a58ae37cec0f54efe3abdb68d4346d398441b1a58d2f4d1a598b7f2"
+}

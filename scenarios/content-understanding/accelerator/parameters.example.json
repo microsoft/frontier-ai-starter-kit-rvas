@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "demonstrationName": {
+      "value": "content-understanding-safe-demo"
+    },
+    "plannedLocation": {
+      "value": "<supported-region>"
+    },
+    "environmentReference": {
+      "value": "<approved-environment-reference>"
+    },
+    "fixturePackPath": {
+      "value": "../sample-data"
+    },
+    "requiresHumanReview": {
+      "value": true
+    },
+    "dataApprovalOwner": {
+      "value": "<data-approval-owner>"
+    }
+  }
+}

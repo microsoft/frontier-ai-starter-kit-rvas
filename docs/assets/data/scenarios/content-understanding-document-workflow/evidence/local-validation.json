@@ -1,0 +1,34 @@
+{
+  "actual_comparisons": [],
+  "checked_fixtures": [
+    {
+      "expected_result": "expected/rfq-1001.json",
+      "fixture_id": "rfq-1001",
+      "fixture_path": "fixtures/tuning/rfq-1001.md",
+      "source_sha256": "0f68691656f472aa084e946df5d0b4be6cc5c01eaea28364384bbea5065ae6ac"
+    },
+    {
+      "expected_result": "expected/invoice-2001.json",
+      "fixture_id": "invoice-2001",
+      "fixture_path": "fixtures/tuning/invoice-2001.txt",
+      "source_sha256": "fc0158e845f4165bbfb998479e22212549217e2cc28983dd27f909529fb538a1"
+    },
+    {
+      "expected_result": "expected/rfq-1002.json",
+      "fixture_id": "rfq-1002",
+      "fixture_path": "fixtures/golden/rfq-1002.html",
+      "source_sha256": "61955e303a58ae37cec0f54efe3abdb68d4346d398441b1a58d2f4d1a598b7f2"
+    },
+    {
+      "expected_result": "expected/invoice-2002.json",
+      "fixture_id": "invoice-2002",
+      "fixture_path": "fixtures/golden/invoice-2002.txt",
+      "source_sha256": "1aa11c61f9331353b513dccd80eaa99edae83ddcdb55e0844cab873c413dc852"
+    }
+  ],
+  "errors": [],
+  "fixture_count": 4,
+  "golden_case_count": 2,
+  "valid": true,
+  "validator": "content-understanding-local-pack-v1"
+}

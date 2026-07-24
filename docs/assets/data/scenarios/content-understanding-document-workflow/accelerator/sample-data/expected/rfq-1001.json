@@ -1,0 +1,14 @@
+{
+  "document_id": "rfq-1001",
+  "document_class": "request_for_quote",
+  "routing_decision": "route_procurement",
+  "requires_human_review": false,
+  "review_reasons": [],
+  "fields": {
+    "buyer": "Northwind Workshop Supplies",
+    "request_id": "RFQ-1001",
+    "requested_delivery_date": "2030-06-15",
+    "supplier": "Fabrikam Components"
+  },
+  "source_sha256": "0f68691656f472aa084e946df5d0b4be6cc5c01eaea28364384bbea5065ae6ac"
+}

@@ -1,57 +1,47 @@
-# Build Intelligent Apps with Microsoft Foundry
+# AI Starter Kit — Customer Delivery with Microsoft Foundry
 
 [![Deploy GitHub Pages](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
-*A hands-on AI apps session: from prompt to production*
+*Turn a customer conversation into a useful AI start.*
 
 ---
 
-## What is this session?
+## Start with the customer decision
 
-This repository is a hands-on session for building intelligent applications with Microsoft Foundry, a unified platform for building, evaluating, and deploying AI applications.
+This repository is a reusable customer-delivery kit—not a fixed RAG curriculum. It helps a seller,
+partner, or customer choose the next useful AI decision, then provides the relevant playbook
+lessons, customer-facing slides, and a deliberately minimal accelerator.
 
-You and your team build an agent prototype through three tiers. Bring a customer scenario, a business outcome, or an idea from the [Customer Activity-Forge](#two-ways-to-run-it-customer-build-or-upskill) skill. If you do not have a scenario yet, use the **Northfield University IQ Assistant**: a fictional university corpus with provided action tools.
+1. Use [Customer Activity-Forge](.github/skills/customer-activity-forge/) when the customer
+   opportunity is unclear.
+2. Use the [Decision Explorer](docs/decision-explorer.html) to discuss outcome, data reality,
+   existing environment, ownership, and evidence without pretending a file count decides architecture.
+3. Choose one equal-priority scenario:
+   - [AI Grounding / IQ](docs/scenario.html?id=ai-grounding)
+   - [Content Understanding and Document Workflow](docs/scenario.html?id=content-understanding-document-workflow)
+   - [Avatar-enabled Onboarding](docs/scenario.html?id=avatar-enabled-onboarding)
+4. Select only the lessons required to prove the next decision. Each scenario includes
+   source-controlled slides that can be printed or saved as a PDF, a safe minimal demonstrator,
+   and a bring-your-own-environment path.
 
-Both paths use the same structure. **Foundations** has four ordered steps to create and ground an agent. Choose **Advanced** activities to add actions, evaluation, tracing, or deployment. The **Capstone** turns one agent into a multi-agent team. You learn by building and testing each part; facilitators help you investigate blockers.
+The kit does not prescribe a landing zone or a platform before the conversation. Foundry, Copilot
+Studio, SharePoint, Fabric, and the IQ family are decision outcomes, evaluated against the
+customer’s access, ownership, licensing, and operating needs.
 
-By the end, you'll have hands-on experience with the Microsoft Foundry platform, practical skills in prompt engineering and RAG (Retrieval-Augmented Generation), and a deployment-ready AI application to show for your work.
+## Scenario contribution
 
----
+Scenarios live in [`scenarios/`](scenarios/) and are validated during `npm run build`. Read the
+[scenario contribution contract](scenarios/README.md) before proposing a scenario or lesson.
+Accelerators provision only the resources required for a safe demonstration; they never create an
+enterprise platform baseline.
 
-## Learning Outcomes
+## Legacy technical reference
 
-By the end of this session, you will be able to:
-
-- Navigate Microsoft Foundry and provision an AI project with connected resources (`azd up`)
-- Deploy and compare models from the Microsoft Foundry model catalog
-- Build a named, versioned Foundry **agent** with a persona and guardrails
-- Ground the agent in your own data with an **Index + Foundry IQ knowledge base** (with citations)
-- Give the agent **action tools** via MCP that execute real operations
-- Evaluate outputs for quality and safety, including **red teaming**
-- Trace every answer end-to-end, then **deploy a hosted agent**
-
----
-
-## Two ways to run it: Customer Build or Upskill
-
-This repo supports two event motions:
-
-| Mode | Best for | What teams build |
-|---|---|---|
-| **Customer Build Mode** *(primary)* | Customer engagements, account workshops, project kickoff events, and anyone with a scenario to build | A grounded, evaluated, demo-ready agent prototype for a customer scenario, using safe customer-relevant data and one governed workflow |
-| **Upskill Mode** *(fallback)* | Teams learning Microsoft Foundry for the first time, or teams without a customer scenario | The default **Northfield University IQ Assistant**, using the fictional corpus and provided action tools |
-
-Start with the [Customer Outcome Canvas](docs/customer-outcome.md) to define your user, data source,
-workflow, safety boundary, and demo story before the first line of code. Then map the same tiered
-activities to your domain: data for grounding, actions for workflows, evals for trust, tracing for
-debugging, and UI/deploy for stakeholder demos.
-
-**No idea yet?** Use the [**Customer Activity-Forge**](.github/skills/customer-activity-forge/) skill:
-give it a customer name and industry and it generates ~10 right-sized, buildable Microsoft Foundry AI
-application ideas with industry rationale and tier mapping. Pick one and fill in the canvas. If your
-team has no customer at all, Northfield remains the known-good reference path.
+The remaining Northfield activities are retained as a technical reference for existing deep links,
+safe samples, and implementation patterns. They are not the primary customer journey. Use the
+scenario playbook first, then draw on the reference only when a selected lesson requires it.
 
 ---
 
@@ -112,11 +102,12 @@ az login
 
 Follow the prompts to sign in with your Azure account. This connects your workspace to your Azure subscription so you can provision Microsoft Foundry resources.
 
-### 3. Choose your event mode
+### 3. Start the customer-delivery journey
 
-**Customer Build Mode (primary):** Complete the [Customer Outcome Canvas](docs/customer-outcome.md) first. Define your user, data source, workflow, safety boundary, and demo story — then follow the guided, chapter-based [Customer Build Track](docs/customer-build/index.md), which reframes each Northfield module as decisions for your own app (with "does this apply to you?" gates) and links back to the reference for the mechanics. No idea yet? Run the [Customer Activity-Forge](.github/skills/customer-activity-forge/) skill to generate ~10 tailored ideas from a customer name and industry, then pick one and fill in the canvas.
-
-**Upskill Mode (fallback):** Read [Foundations](activities/foundations/README.md) and work through Steps 1–4 to stand up a deployed, grounded Northfield IQ Assistant exactly as written.
+Open the [Decision Explorer](docs/decision-explorer.html) with the customer and select the
+recommended scenario playbook. Use its lessons, printable customer slides, and either the minimal
+accelerator or the bring-your-own-environment path. The remaining activity material below is an
+archived implementation reference, not a prerequisite or a competing event mode.
 
 **Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 

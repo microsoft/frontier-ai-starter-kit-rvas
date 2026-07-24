@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Decision Explorer — AI Starter Kit</title>
+  <meta name="description" content="Shape an AI engagement with transparent scenario and platform guidance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/shell.css" />
+</head>
+<body class="decision-page">
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="RVAS AI Starter Kit home">
+        <img src="assets/img/logo-full.png" alt="Real Value Acceleration Program" class="brand-logo" />
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="decision-explorer.html" aria-current="page">Decision Explorer</a>
+        <a href="catalog.html">Legacy reference</a>
+        <a class="gh" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="nav-actions"><button class="icon-btn nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">☰</button></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="decision-hero">
+      <div class="wrap decision-hero-grid">
+        <div>
+          <span class="eyebrow">Customer conversation tool</span>
+          <h1>Make the next<br><em>useful decision.</em></h1>
+          <p>Not a file-count tree. Answer a few questions with the customer, see the assumptions, and choose the scenario and platform discussion that deserves attention next.</p>
+        </div>
+        <aside class="decision-principle">
+          <span>Working rule</span>
+          <strong>Start with the outcome and the data reality. Infrastructure follows.</strong>
+          <small>This explorer guides a conversation; it does not approve an architecture.</small>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="wrap explorer-layout">
+        <form id="explorerForm" class="explorer-form" aria-label="Decision Explorer questions">
+          <fieldset>
+            <legend><span>01</span> What needs to improve first?</legend>
+            <label><input type="radio" name="outcome" value="grounding" checked> Help people find and trust the right answer</label>
+            <label><input type="radio" name="outcome" value="content"> Prepare documents or content for a business process</label>
+            <label><input type="radio" name="outcome" value="avatar"> Explain approved content consistently to a learning audience</label>
+          </fieldset>
+          <fieldset>
+            <legend><span>02</span> Where is the useful context today?</legend>
+            <label><input type="radio" name="data" value="sharepoint" checked> SharePoint, files, policies, or knowledge pages</label>
+            <label><input type="radio" name="data" value="structured"> Operational or analytical data with a governed owner</label>
+            <label><input type="radio" name="data" value="mixed"> Mixed content and data, with unclear ownership or readiness</label>
+          </fieldset>
+          <fieldset>
+            <legend><span>03</span> What is already in place?</legend>
+            <label><input type="radio" name="environment" value="greenfield" checked> A clean environment or safe demonstration subscription</label>
+            <label><input type="radio" name="environment" value="azure"> An Azure/Foundry foundation already exists</label>
+            <label><input type="radio" name="environment" value="m365"> Microsoft 365 / Copilot Studio is already the working environment</label>
+          </fieldset>
+          <fieldset>
+            <legend><span>04</span> Who must own the experience?</legend>
+            <label><input type="radio" name="ownership" value="engineering" checked> Engineering owns the build and operating model</label>
+            <label><input type="radio" name="ownership" value="business"> Business teams need a controlled authoring or maker surface</label>
+            <label><input type="radio" name="ownership" value="shared"> Both need a clear handoff and review model</label>
+          </fieldset>
+          <button class="btn btn-primary" type="submit">Shape the engagement</button>
+          <button class="btn btn-ghost" id="resetExplorer" type="button">Reset</button>
+        </form>
+
+        <section class="explorer-result" aria-live="polite">
+          <div class="result-kicker">Your working direction</div>
+          <h2 id="scenarioName">AI Grounding / IQ</h2>
+          <p id="scenarioWhy">Start by agreeing the trusted sources, access boundary, and evidence that makes an answer useful.</p>
+          <div class="result-actions">
+            <a id="scenarioLink" class="btn btn-primary" href="scenario.html?id=ai-grounding">Open scenario playbook</a>
+            <button id="copyDecision" class="btn btn-ghost" type="button">Copy conversation summary</button>
+          </div>
+          <div class="decision-cards" id="decisionCards"></div>
+          <p class="result-disclaimer">Treat this as a transparent hypothesis. Confirm data ownership, security, licensing, regional availability, and the current product surface before committing.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/decision-explorer.js"></script>
+  <script src="assets/js/shell.js"></script>
+</body>
+</html>

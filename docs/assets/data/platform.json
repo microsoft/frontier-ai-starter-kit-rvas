@@ -739,6 +739,199 @@
       ]
     }
   ],
+  "scenarios": [
+    {
+      "id": "ai-grounding",
+      "name": "AI Grounding / IQ",
+      "tagline": "Choose trusted knowledge and operational context for one customer decision.",
+      "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
+      "maturity": "initial",
+      "owner": "RVAS field team",
+      "decision_prompts": [
+        "Which user decision or action will trusted context improve?",
+        "What access boundary, source owner, and system of record apply?",
+        "Should the experience lead with Copilot Studio + SharePoint, Foundry IQ, Fabric IQ, Work IQ, or Web IQ?",
+        "What golden dataset and operating evidence will prove the pilot is safe and useful?"
+      ],
+      "lessons": [
+        {
+          "id": "outcome-and-access-boundary",
+          "title": "Outcome and access boundary",
+          "path": "lessons/01-outcome-and-access-boundary.md",
+          "reused_with": [
+            "copilot-studio",
+            "foundry-agents",
+            "governance"
+          ]
+        },
+        {
+          "id": "decision-explorer-context",
+          "title": "Decision explorer context",
+          "path": "lessons/02-decision-explorer-context.md",
+          "reused_with": [
+            "copilot-studio",
+            "foundry-agents",
+            "fabric-iq"
+          ]
+        },
+        {
+          "id": "source-and-iq-pattern-selection",
+          "title": "Source and IQ pattern selection",
+          "path": "lessons/03-source-and-iq-pattern-selection.md",
+          "reused_with": [
+            "copilot-studio",
+            "foundry-iq",
+            "fabric-iq",
+            "work-iq",
+            "web-iq"
+          ]
+        },
+        {
+          "id": "golden-dataset-and-evaluation",
+          "title": "Golden dataset and evaluation from the beginning",
+          "path": "lessons/04-golden-dataset-and-evaluation.md",
+          "reused_with": [
+            "agent-evaluation",
+            "copilot-studio",
+            "foundry-agents"
+          ]
+        },
+        {
+          "id": "operating-evidence",
+          "title": "Operating evidence",
+          "path": "lessons/05-operating-evidence.md",
+          "reused_with": [
+            "governance",
+            "agent-evaluation",
+            "operational-readiness"
+          ]
+        }
+      ],
+      "asset_base": "assets/data/scenarios/ai-grounding/",
+      "readme_path": "assets/data/scenarios/ai-grounding/README.md",
+      "slides_path": "assets/data/scenarios/ai-grounding/slides.md",
+      "accelerator_path": "assets/data/scenarios/ai-grounding/accelerator/README.md",
+      "facilitator_path": "assets/data/scenarios/ai-grounding/FACILITATOR.md",
+      "local_demo_path": "assets/data/scenarios/ai-grounding/accelerator/LOCAL-DEMO.md",
+      "validator_path": "assets/data/scenarios/ai-grounding/accelerator/validate.py"
+    },
+    {
+      "id": "avatar-enabled-onboarding",
+      "name": "Avatar-enabled Onboarding",
+      "tagline": "Deliver approved, accessible avatar-led onboarding with accountable human oversight.",
+      "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, and operational evidence.",
+      "maturity": "initial",
+      "owner": "RVAS field team",
+      "decision_prompts": [
+        "Which onboarding moment, cohort, locale, and channel should the pilot serve first?",
+        "Which approved sources and named owners may support the script, and when do they expire?",
+        "Who must approve factual accuracy, legal/compliance implications, brand, and publication?",
+        "Which vendor or platform best meets consent, privacy, accessibility, language, audit, and exit requirements?",
+        "How will the experience disclose avatar or AI assistance, provide human help, and avoid deceptive representation?",
+        "Which feedback and operational measures will determine whether to iterate, scale, pause, or withdraw?"
+      ],
+      "lessons": [
+        {
+          "id": "approved-content",
+          "title": "Establish the approved-content pack",
+          "path": "lessons/01-approved-content.md",
+          "reused_with": [
+            "policy communications",
+            "knowledge-grounded experiences"
+          ]
+        },
+        {
+          "id": "script-storyboard",
+          "title": "Draft a grounded script and storyboard",
+          "path": "lessons/02-script-storyboard.md",
+          "reused_with": [
+            "learning content",
+            "employee communications"
+          ]
+        },
+        {
+          "id": "human-approval-selection",
+          "title": "Run approval and select delivery options",
+          "path": "lessons/03-human-approval-and-selection.md",
+          "reused_with": [
+            "brand-governed generation",
+            "vendor evaluation"
+          ]
+        },
+        {
+          "id": "experience-evidence",
+          "title": "Pilot, observe, and improve",
+          "path": "lessons/04-experience-evidence.md",
+          "reused_with": [
+            "employee experience",
+            "operational measurement"
+          ]
+        }
+      ],
+      "asset_base": "assets/data/scenarios/avatar-enabled-onboarding/",
+      "readme_path": "assets/data/scenarios/avatar-enabled-onboarding/README.md",
+      "slides_path": "assets/data/scenarios/avatar-enabled-onboarding/slides.md",
+      "accelerator_path": "assets/data/scenarios/avatar-enabled-onboarding/accelerator/README.md",
+      "facilitator_path": "assets/data/scenarios/avatar-enabled-onboarding/FACILITATOR.md",
+      "local_demo_path": "assets/data/scenarios/avatar-enabled-onboarding/local-demo.md",
+      "validator_path": "assets/data/scenarios/avatar-enabled-onboarding/validate.py"
+    },
+    {
+      "id": "content-understanding-document-workflow",
+      "name": "Content Understanding and Document Workflow",
+      "tagline": "Move from SME-tested document understanding to a governed business workflow.",
+      "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
+      "maturity": "initial",
+      "owner": "RVAS field team",
+      "decision_prompts": [
+        "Which document decision creates measurable value when it is faster and more consistent?",
+        "Are representative, authorized samples and expected outcomes ready for SME testing?",
+        "Where must human review, correction, and evidence be retained in the workflow?",
+        "What isolation, access, and promotion controls are required beyond Studio project/analyzer boundaries?"
+      ],
+      "lessons": [
+        {
+          "id": "outcome-and-readiness",
+          "title": "Outcome and data readiness",
+          "path": "lessons/01-outcome-and-readiness.md",
+          "reused_with": [
+            "document workflow discovery"
+          ]
+        },
+        {
+          "id": "sme-studio-loop",
+          "title": "SME Studio loop",
+          "path": "lessons/02-sme-studio-loop.md",
+          "reused_with": [
+            "Content Understanding Studio"
+          ]
+        },
+        {
+          "id": "secure-handoff-and-workflow",
+          "title": "Secure handoff and workflow",
+          "path": "lessons/03-secure-handoff-and-workflow.md",
+          "reused_with": [
+            "SharePoint document ingestion"
+          ]
+        },
+        {
+          "id": "review-evaluation-lifecycle",
+          "title": "Review, evaluation, and lifecycle",
+          "path": "lessons/04-review-evaluation-lifecycle.md",
+          "reused_with": [
+            "responsible AI operations"
+          ]
+        }
+      ],
+      "asset_base": "assets/data/scenarios/content-understanding-document-workflow/",
+      "readme_path": "assets/data/scenarios/content-understanding-document-workflow/README.md",
+      "slides_path": "assets/data/scenarios/content-understanding-document-workflow/slides.md",
+      "accelerator_path": "assets/data/scenarios/content-understanding-document-workflow/accelerator/README.md",
+      "facilitator_path": "assets/data/scenarios/content-understanding-document-workflow/FACILITATOR.md",
+      "local_demo_path": "assets/data/scenarios/content-understanding-document-workflow/LOCAL_DEMO.md",
+      "validator_path": "assets/data/scenarios/content-understanding-document-workflow/scripts/validate_local_pack.py"
+    }
+  ],
   "aliases": {
     "customer-foundations": {
       "id": "foundations",

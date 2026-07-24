@@ -1,0 +1,40 @@
+name: Scenario or lesson proposal
+description: Propose a customer-delivery scenario, lesson, slide change, or accelerator.
+title: "[Scenario] "
+labels: ["scenario"]
+body:
+  - type: input
+    id: outcome
+    attributes:
+      label: Customer outcome
+      description: What becomes faster, safer, cheaper, or more reliable?
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Customer decisions
+      description: Which decisions does the material help a customer make?
+    validations:
+      required: true
+  - type: textarea
+    id: lessons
+    attributes:
+      label: Reusable lessons
+      description: List candidate lessons and which existing scenarios could reuse them.
+    validations:
+      required: true
+  - type: textarea
+    id: accelerator
+    attributes:
+      label: Minimal accelerator
+      description: State the safe-demo path and the bring-your-own-environment path. Do not propose a landing zone.
+    validations:
+      required: true
+  - type: dropdown
+    id: maturity
+    attributes:
+      label: Maturity
+      options: [proposal, initial, validated]
+    validations:
+      required: true

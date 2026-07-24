@@ -1,0 +1,10 @@
+SYNTHETIC DEMONSTRATION DATA — Invoice
+
+Invoice number: INV-2001
+Supplier: Contoso Demo Parts
+Purchase order: PO-7001
+Subtotal: 120.00 USD
+Tax: 12.00 USD
+Total due: 132.00 USD
+
+The arithmetic agrees. Route this invented invoice to the accounts-payable validation path.

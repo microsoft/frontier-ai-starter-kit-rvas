@@ -1,0 +1,25 @@
+{
+  "contract_id": "content-understanding-local-result-v1",
+  "required_keys": [
+    "document_id",
+    "document_class",
+    "routing_decision",
+    "requires_human_review",
+    "review_reasons",
+    "fields",
+    "source_sha256"
+  ],
+  "field_value_types": {
+    "document_id": "string",
+    "document_class": "string",
+    "routing_decision": "string",
+    "requires_human_review": "boolean",
+    "review_reasons": "array",
+    "fields": "object",
+    "source_sha256": "string"
+  },
+  "notes": [
+    "This is a workshop result contract, not a Content Understanding API response.",
+    "A human or a separately approved integration may produce a result that is compared with these expected values."
+  ]
+}
