@@ -459,6 +459,12 @@ function auditScenarioCourseRoutes(failures) {
     if (/\]\(lessons\/[^)#]+\.md(?:#[^)]+)?\)/u.test(playbook)) {
       failures.push(`scenario ${scenario.id}: generated playbook links directly to a raw lesson Markdown file`);
     }
+    if (/\]\(\.\.\/[^)]+\)/u.test(playbook)) {
+      failures.push(`scenario ${scenario.id}: generated playbook contains parent-relative links that 404 from scenario.html`);
+    }
+    if (/\]\((?:\.\.\/)+(?:lesson|activity|scenario|slides)\.html/u.test(playbook)) {
+      failures.push(`scenario ${scenario.id}: generated playbook must use root-relative app routes, not parent-relative app links`);
+    }
 
     auditBuildModules(scenario, activityIds, failures);
 

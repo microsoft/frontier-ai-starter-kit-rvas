@@ -57,7 +57,7 @@ Verified API facts (API versions, model ids, SDK packages) were fetched from lea
 
 ## Non-negotiable boundaries
 
-- **Synthetic data only.** The fixtures under [`accelerator/sample-data/`](accelerator/sample-data/)
+- **Synthetic data only.** The fixtures under [`accelerator/sample-data/README.md`](accelerator/sample-data/README.md)
   are fictional. Real deployable infrastructure is fine; real customer documents are not, until a
   source owner, security owner, and retention policy approve a separate path.
 - **Keyless-first.** `DefaultAzureCredential` + managed identity + Entra RBAC. No keys in code, `.env`,

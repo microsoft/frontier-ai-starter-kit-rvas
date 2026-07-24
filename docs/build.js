@@ -704,14 +704,22 @@ function copyScenarioAssets(scenarios) {
       const readmePath = path.join(outputRoot, scenario.id, 'README.md');
       if (fs.existsSync(readmePath)) {
         const lessonByPath = new Map((scenario.lessons || []).map((lesson) => [lesson.path, lesson]));
-        const rewritten = fs.readFileSync(readmePath, 'utf8').replace(
+        let rewritten = fs.readFileSync(readmePath, 'utf8').replace(
           /\]\((lessons\/[^)#]+\.md)(#[^)]+)?\)/g,
           (match, lessonPath, hash = '') => {
             const lesson = lessonByPath.get(lessonPath);
             return lesson
-              ? `](../../../../lesson.html?scenario=${encodeURIComponent(scenario.id)}&lesson=${encodeURIComponent(lesson.id)}${hash})`
+              ? `](lesson.html?scenario=${encodeURIComponent(scenario.id)}&lesson=${encodeURIComponent(lesson.id)}${hash})`
               : match;
           },
+        );
+        rewritten = rewritten.replace(
+          /\]\(\.\.\/\.\.\/activities\/([^/)#]+)\/(?:README|FACILITATOR)\.md(#[^)]+)?\)/g,
+          (_match, activityId, hash = '') => `](activity.html?id=${encodeURIComponent(activityId)}${hash})`,
+        );
+        rewritten = rewritten.replace(
+          /\]\(((?:accelerator|evidence|lessons)\/[^)#]+\.md)(#[^)]+)?\)/g,
+          (_match, localPath, hash = '') => `](assets/data/scenarios/${scenario.id}/${localPath}${hash})`,
         );
         fs.writeFileSync(readmePath, rewritten);
       }

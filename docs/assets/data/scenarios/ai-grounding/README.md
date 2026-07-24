@@ -24,13 +24,13 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 
 | Module | What you build | Checkpoint |
 |---|---|---|
-| [1. Provision the foundation](../../../../lesson.html?scenario=ai-grounding&lesson=foundation) | Foundry account and project, chat + embedding deployments, AI Search, storage, observability, and the `.env` contract | `verify_foundation.py` |
-| [2. Source and permission architecture](../../../../lesson.html?scenario=ai-grounding&lesson=source-selection) | The source decision, the identity evaluated at query time, and a probe proving a restricted identity retrieves nothing | `probe_permissions.py` |
-| [3. Ingest and index approved content](../../../../lesson.html?scenario=ai-grounding&lesson=ingestion) | Ingestion, chunking, citation metadata, ACL carry-forward, and a refresh schedule | `verify_retrieval.py` |
-| [4. Compare chat and embedding choices](../../../../lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | `compare_models.py` |
-| [5. Build retrieval before adding an agent](../../../../lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | `grounded_answer.py` |
-| [6. Add agent and routing only when justified](../../../../lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | `verify_routing.py` |
-| [7. Evaluate, trace, deploy, and operate](../../../../lesson.html?scenario=ai-grounding&lesson=prove-and-ship) | Evaluation gate, red-team evidence, end-to-end traces, deployment, release decision | `validate.py --all` |
+| [1. Provision the foundation](lesson.html?scenario=ai-grounding&lesson=foundation) | Foundry account and project, chat + embedding deployments, AI Search, storage, observability, and the `.env` contract | `verify_foundation.py` |
+| [2. Source and permission architecture](lesson.html?scenario=ai-grounding&lesson=source-selection) | The source decision, the identity evaluated at query time, and a probe proving a restricted identity retrieves nothing | `probe_permissions.py` |
+| [3. Ingest and index approved content](lesson.html?scenario=ai-grounding&lesson=ingestion) | Ingestion, chunking, citation metadata, ACL carry-forward, and a refresh schedule | `verify_retrieval.py` |
+| [4. Compare chat and embedding choices](lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | `compare_models.py` |
+| [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | `grounded_answer.py` |
+| [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | `verify_routing.py` |
+| [7. Evaluate, trace, deploy, and operate](lesson.html?scenario=ai-grounding&lesson=prove-and-ship) | Evaluation gate, red-team evidence, end-to-end traces, deployment, release decision | `validate.py --all` |
 
 Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
 retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
@@ -58,15 +58,15 @@ python3 scenarios/ai-grounding/accelerator/validate.py --all
 
 These lessons compose the kit's canonical activities rather than duplicating them:
 
-- [Foundations](../../activities/foundations/README.md) — provisioning, model selection, and the
+- [Foundations](activity.html?id=foundations) — provisioning, model selection, and the
   Azure AI Search grounding baseline
-- [Evaluation & Red Teaming](../../activities/advanced-evaluation-redteam/README.md) — the harness,
+- [Evaluation & Red Teaming](activity.html?id=advanced-evaluation-redteam) — the harness,
   custom evaluators, and adversarial seed set used in module 7
-- [Tracing & Observability](../../activities/advanced-tracing-observability/README.md) — GenAI
+- [Tracing & Observability](activity.html?id=advanced-tracing-observability) — GenAI
   spans, the instrumentation ordering gotcha, and the KQL correlation queries
-- [Action Tools](../../activities/advanced-action-tools/README.md) and
-  [Fabric IQ](../../activities/extra-fabric-iq/README.md) — live-data and action routing in module 6
-- [Deploy as a Hosted Agent](../../activities/advanced-deploy-hosted-agent/README.md) — the hosted
+- [Action Tools](activity.html?id=advanced-action-tools) and
+  [Fabric IQ](activity.html?id=extra-fabric-iq) — live-data and action routing in module 6
+- [Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent) — the hosted
   deployment option in module 7
 
 ## Non-negotiables
