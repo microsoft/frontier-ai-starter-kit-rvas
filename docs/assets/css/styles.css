@@ -1033,6 +1033,26 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .scenario-panel ol { margin: 10px 0 0; padding-left: 20px; color: var(--c-dim); }
 .scenario-panel li + li { margin-top: 7px; }
 .scenario-panel a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
+#buildModuleList,
+#lessonBuildModules { display: grid; gap: 14px; padding-left: 22px; }
+#buildModuleList li,
+#lessonBuildModules li { padding-left: 2px; }
+#buildModuleList strong,
+#buildModuleList span,
+#buildModuleList small,
+#buildModuleList a,
+#lessonBuildModules strong,
+#lessonBuildModules span,
+#lessonBuildModules small,
+#lessonBuildModules a { display: block; }
+#buildModuleList strong,
+#lessonBuildModules strong { color: var(--c-heading); font-size: .9rem; line-height: 1.35; }
+#buildModuleList span,
+#lessonBuildModules span { margin-top: 4px; font-size: .82rem; line-height: 1.55; }
+#buildModuleList small,
+#lessonBuildModules small { margin-top: 6px; color: var(--c-faint); font-family: var(--font-mono); font-size: .68rem; }
+#buildModuleList a,
+#lessonBuildModules a { margin-top: 6px; font-size: .8rem; }
 .course-progress { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
 .course-progress a { display: flex; gap: 9px; align-items: baseline; text-decoration: none; color: var(--c-dim); font-size: .875rem; }
 .course-progress a:hover { color: var(--c-gold); text-decoration: underline; }

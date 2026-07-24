@@ -1,72 +1,72 @@
-# Avatar-enabled Onboarding
+# Avatar-enabled Onboarding — technical build course
 
-**Version 0.1.0 · Customer-delivery scenario**
+Build a governed, accessible, avatar-led employee onboarding pilot on Azure and Microsoft Foundry —
+where every published statement traces to approved content, named human approvals, a synthetic-media
+disclosure, and operational evidence, and where any published revision can be withdrawn the moment
+its source changes.
 
-Create an employee onboarding experience from approved policy and program content. The outcome is not an avatar demo: it is a controlled, inclusive learning journey whose published messages can be traced, approved, measured, and improved.
+This is a **build** course, not a survey. Each module makes one high-stakes decision, shows how to
+implement **every** viable Microsoft option (not just the default), and ends in a runnable
+checkpoint. The reference implementation is in [`solution.md`](solution.md); the deployable
+infrastructure is in [`accelerator/`](accelerator).
 
-## Customer outcome
+> **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
+> content, or a real person's voice or likeness, in this repository. **Keyless-first:**
+> `DefaultAzureCredential` + managed identity + RBAC — never keys in code or Bicep.
 
-A new employee receives a short, clear onboarding experience in a suitable channel, can use captions, transcript, language, and non-video alternatives, and can give feedback or ask for help. Content owners can answer: *what was said, which approved source supported it, who approved it, where was it delivered, and what happened afterward?*
+## The 7 modules
 
-## Delivery flow
+| Module | You build | Default path | Canonical activity |
+| --- | --- | --- | --- |
+| [1 — Select the experience capability](lessons/01-experience-selection.md) | A dated, evidence-backed capability decision (batch avatar vs real-time vs Voice Live vs video translation vs audio) | Speech **batch avatar**, standard voice | Current Microsoft docs |
+| [2 — Provision the foundation](lessons/02-foundation.md) | Keyless Foundry + model + Search + Speech data plane + observability | `azd`/Bicep, managed identity | [Foundations](../../activities/foundations/README.md) |
+| [3 — Governed content pipeline](lessons/03-content-pipeline.md) | Versioned claims with owner/version/expiry that gate everything downstream | Blob + typed claim set | This scenario's accelerator |
+| [4 — Grounded assistant](lessons/04-grounded-assistant.md) | A citing assistant that refuses on unapproved claims and hands off | Foundry agent grounded on approved content | [Foundations, Steps 3–4](../../activities/foundations/README.md) |
+| [5 — Generate the accessible experience](lessons/05-experience-generation.md) | Avatar render from an approved revision with disclosure, captions, transcript, fallback | Batch synthesis + accessibility outputs | [Voice & Live](../../activities/extra-voice-live/README.md) |
+| [6 — Gate publication behind human approval](lessons/06-approval-gating.md) | A versioned four-role approval gate and a withdrawal path | Signed record enforced in code | This scenario's accelerator |
+| [7 — Evaluate, red-team, trace, operate](lessons/07-prove-and-operate.md) | Evaluation + red-team + tracing + release scorecard | Foundry evaluations + AI Red Teaming Agent | [Evaluation](../../activities/advanced-evaluation-redteam/README.md) |
 
-| Stage | Customer decision and output | Required control |
-| --- | --- | --- |
-| 1. Approved content | Identify authoritative policy, benefits, safety, and welcome content; assign content owner and expiry/review date. | Source ID, version, owner, and approved claim list. |
-| 2. Script and storyboard | Produce a concise script, scene plan, accessibility plan, and claim-to-source links. | Do not introduce claims absent from the approved pack. |
-| 3. SME, legal, and brand approval | Review factual accuracy, employment/legal implications, privacy, disclosure, visual identity, and localization. | Named human approvers; changes return to the script stage. |
-| 4. Avatar, voice, and channel choice | Select avatar presentation, voice, languages, and channels after a vendor/platform assessment. | Consent and likeness policy; accessible alternative; channel owner. |
-| 5. Employee experience | Publish the approved version with an avatar disclosure, captions, transcript, help path, and feedback prompt. | No production publish without the approval record. |
-| 6. Feedback and operational evidence | Review completion, accessibility use, questions, sentiment, defects, and support handoffs. | Evidence is aggregated and minimized; content changes restart approval. |
+Work the modules in order — Module 1 is the highest-stakes decision and every later module depends
+on it.
 
-## Grounding and traceability
+## Working contract
 
-Each script segment carries a source reference such as `ONB-001@2026-07-01#benefits-enrolment`. The production record keeps:
+- **Approved content is the publishing boundary.** A grounded assistant may cite permitted sources
+  for interactive help, but it may not silently add claims to a published script.
+- **Human approval is a release gate.** Factual/SME, legal/compliance, brand, and content-owner
+  decisions are required before anything publishes, and they bind to an exact script revision.
+- **Accessibility is a first-class output.** Every experience ships a transcript, captions (where the
+  capability supports them), an equivalent non-avatar fallback, a human-help path, and a clear
+  AI/avatar disclosure.
+- **Consent and privacy are non-negotiable.** Never clone a real voice or likeness without explicit
+  recorded authorization; custom avatar/voice is an Azure limited-access feature. Minimize pilot
+  telemetry to aggregate, identifier-free signals.
+- **Withdrawal is part of the build.** A source change, consent withdrawal, safety issue, or defect
+  must identify and pause the affected published revision.
 
-- approved source ID and version;
-- script and storyboard revision;
-- SME, legal, and brand decisions with timestamps;
-- selected avatar/voice/channel configuration identifier;
-- publication date, audience, locale, and withdrawal/review date; and
-- feedback and operational metrics associated with the published revision.
+## Quick start
 
-A knowledge source can assist drafting or answer employee questions only when access, permissions, and citations are appropriate. It must not silently replace the approved-content pack for a published script.
+```bash
+# 1. Deploy the keyless foundation (writes accelerator/.env):
+scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 
-## Platform and vendor decision
+# 2. Run the scenario's offline contract + all module checkpoints:
+python3 scenarios/avatar-onboarding/validate.py
 
-This scenario is intentionally vendor-neutral. Evaluate candidates against the customer’s requirements rather than assuming an avatar or voice service is available:
+# 3. Deterministic render of the fictional pack (no service calls); inspect, then clean up:
+python3 scenarios/avatar-onboarding/accelerator/mock_renderer.py \
+  --data-dir scenarios/avatar-onboarding/accelerator/sample-data \
+  --output-dir scenarios/avatar-onboarding/accelerator/demo-artifacts
+rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
+```
 
-1. **Trust and rights** — disclosure controls, avatar likeness/voice consent, data residency, retention, training-data terms, and incident support.
-2. **Experience** — caption quality, transcripts, keyboard/mobile access, language and regional voice coverage, WCAG conformance evidence, and a non-avatar fallback.
-3. **Operations** — approval workflow integration, audit export, content/version management, identity and channel integration, observability, cost, and exit path.
-4. **Safety and brand** — prohibited use, moderation, restricted content, brand controls, and escalation to a human owner.
+The mock renderer produces a deterministic JSON record; it is not a media generator and makes no
+service calls. The full reference implementation, end-to-end, is in [`solution.md`](solution.md).
 
-Do not use a real person’s likeness or clone a voice without explicit, recorded authorization. Clearly label the experience as avatar-generated or AI-assisted where an employee could reasonably mistake it for a human presenter. Never position the avatar as a human employee or authority beyond its approved role.
+## Responsible AI
 
-## Workshop use
-
-1. Follow `FACILITATOR.md`, review `slides.md`, and complete Lessons 1–4 using one real onboarding topic.
-2. Use the complete fictional pack in `accelerator/sample-data/` to demonstrate claims, approvals, the script, transcript, accessible fallback, and aggregated feedback.
-3. Run `local-demo.md` to render a traceable mock artifact from only the approved claims.
-4. Replace the sample only with a small, sanitized customer-approved pack; do not fabricate policy answers.
-5. Decide the pilot cohort, measures, review cadence, and the human owners who can approve, pause, or withdraw content.
-
-## Demo boundaries
-
-The accelerator supplies an approved-content contract and deployment seam, not an avatar runtime or a landing zone. A clean demo can use the sample pack and a mock rendering/channel adapter. A bring-your-own (BYO) environment connects the customer’s selected platform after security, privacy, accessibility, and procurement reviews. No vendor SDK signatures are assumed here.
-
-## Scenario assets
-
-- `FACILITATOR.md` — 90-minute facilitated-workshop runbook.
-- `local-demo.md` — dependency-free local demonstration instructions.
-- `validate.py` — static validation for the blueprint, fixture, lesson structure, and manifest.
-- `accelerator/mock_renderer.py` — deterministic local mock that rejects unapproved content and writes a traceable JSON artifact.
-
-## Search before implement
-
-Before connecting any avatar, voice, channel, workflow, or knowledge service:
-
-1. Search the selected vendor’s current official documentation and the customer’s approved architecture standards.
-2. Verify current APIs, service availability, data handling, accessibility support, and identity model.
-3. Map the approved-content fields and approval record to the selected platform’s verified integration points.
-4. Test disclosure, captions/transcript, language fallback, audit evidence, and withdrawal before pilot publication.
+Standard avatar + standard neural voice needs **no** registration, but synthetic-media **disclosure**
+to users and a feedback channel are still required. **Custom** avatar / **custom** or **personal**
+voice is **Limited Access** (registration only, Microsoft-managed customers), and custom video avatar
+requires actor consent and advance disclosure to the talent. Module 1 records the exact gates for
+your chosen capability; Module 7 proves them before any release.

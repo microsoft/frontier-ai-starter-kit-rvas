@@ -665,6 +665,25 @@ function detectScenarioProblems(scenarios) {
         problems.push(`${scenario.id} scenario needs at least one lesson`);
         continue;
       }
+      if (!Array.isArray(scenario.build_modules) || !scenario.build_modules.length) {
+        problems.push(`${scenario.id} scenario needs at least one build module`);
+      }
+      const moduleIds = new Set();
+      for (const module of scenario.build_modules || []) {
+        if (!module.id || !module.title || !module.summary || !module.checkpoint) {
+          problems.push(`${scenario.id} build module needs id, title, summary, and checkpoint`);
+        }
+        if (moduleIds.has(module.id)) problems.push(`${scenario.id} duplicate build module id ${module.id}`);
+        moduleIds.add(module.id);
+        if (module.activity_id && !ACTIVITIES.some((activity) => activity.id === module.activity_id)) {
+          problems.push(`${scenario.id} build module ${module.id} references unknown activity ${module.activity_id}`);
+        }
+        for (const implementationPath of module.implementation_paths || []) {
+          if (!scenarioPathExists(scenario, implementationPath)) {
+            problems.push(`${scenario.id} build module ${module.id} implementation path ${implementationPath} missing`);
+          }
+        }
+      }
       const lessonIds = new Set();
       for (const lesson of scenario.lessons) {
         if (!lesson.id || !lesson.title || !scenarioPathExists(scenario, lesson.path)) {
@@ -714,6 +733,11 @@ function scenarioOutput(scenario) {
         sequence: index + 1,
         content_path: `${assetBase}${lesson.path}`,
         lesson_path: `lesson.html?scenario=${encodeURIComponent(scenario.id)}&lesson=${encodeURIComponent(lesson.id)}`,
+      })),
+      build_modules: (scenario.build_modules || []).map((module, index) => ({
+        ...module,
+        sequence: index + 1,
+        activity_path: module.activity_id ? activityUrl(module.activity_id) : '',
       })),
       asset_base: assetBase,
       readme_path: `${assetBase}README.md`,

@@ -1,90 +1,67 @@
-# Content Understanding and Document Workflow
+# Content Understanding — the reviewable document workflow
 
-## Customer outcome
+Build a controlled document-to-decision path for invoices, RFQs, or specifications: a typed,
+evidence-backed, human-reviewed result — not an autonomous business decision and not a generic OCR
+demo. This is a practical, opinionated build course. Each module names the Microsoft options, picks a
+default, shows how to build **every** option, and ends in a machine-checkable checkpoint.
 
-A procurement or operations SME uses **Content Understanding Studio** to shape and test an analyzer for safe sample invoices, RFQs, or technical specifications. The SME is not asked to build an integration. Instead, they hand engineering a reviewable, portable JSON configuration contract and evidence from testing. Engineering connects the approved analyzer to a SharePoint/document-ingestion path or another business workflow, with human correction and lifecycle controls in place.
+The quality bar and reference format are the [Foundations activity](../../activities/foundations/README.md)
+and the AI Grounding scenario lessons. The complete reference implementation lives in
+[`accelerator/solution.md`](accelerator/solution.md).
 
-This is a document-workflow scenario—not a generic OCR or Document Intelligence demonstration.
+## The seven modules
 
-## Delivery flow
+| # | Module | You decide | Checkpoint |
+| --- | --- | --- | --- |
+| 1 | [Provision the foundation](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=foundation) | How to stand up a keyless Foundry account with Content Understanding, Document Intelligence, models, and document storage | `verify_foundation.py` |
+| 2 | [Connect an approved source](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=document-source) | Azure Blob, ADLS Gen2, SharePoint, or OneLake — and the intake/quarantine controls | `verify_document_source.py` |
+| 3 | [Select the extraction capability](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=extraction-selection) | CU prebuilt/custom analyzer, DI prebuilt/custom model, LLM structured outputs, or multimodal | `verify_extraction_selection.py` |
+| 4 | [Typed extraction with evidence](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=typed-extraction) | How to normalize output into one validated contract with confidence + grounding | `verify_typed_extraction.py` |
+| 5 | [Review, correction, and handoff](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=human-review) | Action-tool handoff, a review app, or a workflow handoff | `verify_human_review.py` |
+| 6 | [Evaluate and trace](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | `verify_prove_and_observe.py` |
+| 7 | [Deploy the workflow](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=deploy) | Hosted agent, container app, or an API behind APIM | `verify_deploy.py` |
 
-1. **Choose one decision:** for example, route an RFQ, validate invoice fields, or flag a specification requirement.
-2. **Prepare safe samples:** include representative layouts, suppliers, languages, poor scans, and known difficult cases. Record source, sensitivity, expected result, and whether each document may be used in Studio.
-3. **SME builds in Studio:** define the document class and fields, test extraction/classification, inspect failures, and refine the analyzer/schema.
-4. **Capture the handoff:** engineering receives a versioned JSON contract containing the analyzer identity/version or export reference, field definitions, document classes, test-set reference, acceptance thresholds, review rules, and owning contacts. Treat this contract as an application artifact; do not assume that a Studio export is portable across projects, tenants, or service versions.
-5. **Integrate and review:** an ingestion service obtains documents from the approved SharePoint or business source, invokes the approved analyzer using a currently documented interface, stores results and confidence/evidence, and routes exceptions to people.
-6. **Operate with evidence:** compare results with corrected outcomes, monitor drift and failures, retain audit records, and approve changes before promotion.
+Each lesson follows the same contract: **What you build · Choose your path · Implementation · Verify ·
+Troubleshooting · Decision record · Next module.** Modules build on the previous one — module N's
+checkpoint is module N+1's prerequisite.
 
-## Roles and boundaries
+## Canonical activities
 
-| Role | Accountable for |
-| --- | --- |
-| Business SME | Schema intent, representative samples, acceptance examples, review decisions |
-| Data/workflow owner | Source authorization, retention, SharePoint/workflow ownership |
-| Engineering | Current API integration, identity, error handling, records, release pipeline |
-| Security/platform | Resource access, network/data controls, logging policy, separation decisions |
-| Product owner | Thresholds, exception policy, lifecycle approval |
+The scenario supplies document-specific decisions, contracts, and evidence gates, and **links** to the
+canonical activities for shared mechanics rather than duplicating them:
 
-## Data readiness checklist
+- [Foundations](../../activities/foundations/README.md) — provisioning and the `.env` contract.
+- [Document Workflow](../../activities/extra-document-workflow/README.md) — extraction implementation.
+- [Action Tools](../../activities/advanced-action-tools/README.md) — the governed handoff seam.
+- [Evaluation & Red Teaming](../../activities/advanced-evaluation-redteam/README.md) and
+  [Tracing & Observability](../../activities/advanced-tracing-observability/README.md) — the gate and traces.
+- [Deploy as a Hosted Agent](../../activities/advanced-deploy-hosted-agent/README.md) — the pilot endpoint.
 
-- A purpose, decision, and failure impact are stated for each document type.
-- Samples are authorized, minimized, and safe for the selected environment; sensitive production files are not casually copied into Studio.
-- Expected values and acceptable alternatives are recorded before testing.
-- The sample set includes normal, edge, low-quality, and negative documents.
-- Source access, retention, residency, and redaction requirements have owners.
-- A reviewer can see the original document, extracted value, evidence/location where available, confidence, reason for exception, and correction history.
+## Get started
 
-## Secure handoff and integration
+```bash
+# 1. Provision (real, deployable Bicep — no inline secrets, keyless)
+./accelerator/scripts/deploy.sh rg-content-understanding eastus2
 
-Use a repository or approved configuration store for the portable contract. Protect it with change review, semantic versioning, and environment-specific references—not secrets. Keep secrets and service credentials in the platform's approved identity/secret mechanism. Engineering should map the contract to the target environment only after confirming that the Studio project/analyzer is accessible to the intended workload identity.
+# 2. Work through the modules; each has an offline checkpoint you can run now
+python3 accelerator/scripts/verify_foundation.py --offline
+python3 accelerator/scripts/verify_document_source.py --offline
+# ... through verify_deploy.py
 
-The workflow seam is intentionally simple:
+# 3. Validate the synthetic pack end-to-end, no network
+python3 scripts/validate_local_pack.py
+```
 
-`approved source → ingestion/normalization → current Content Understanding integration → confidence/policy decision → human review when needed → business system + evidence store`
+Verified API facts (API versions, model ids, SDK packages) were fetched from learn.microsoft.com on
+**2026-07-24** and are cited inline in each lesson and in [`accelerator/solution.md`](accelerator/solution.md).
 
-For SharePoint, preserve source item/version identifiers and permissions rather than flattening documents into an ungoverned copy. A correction may update the business record, but it must also be retained as evaluation evidence.
+## Non-negotiable boundaries
 
-## Human review policy
-
-Do not treat confidence as an automatic approval. Define field- and decision-specific rules such as: missing required value, conflicting totals, unsupported document class, source policy violation, or confidence below a business-approved threshold. Human reviewers correct values, select a reason, and can reject the whole result. Escalate access-sensitive documents to the source owner rather than exposing them to a broad review queue.
-
-## Lifecycle and evaluation from day one
-
-Maintain a small, labeled holdout set that does not drive tuning. For each analyzer/configuration release, retain:
-
-- contract version and analyzer/project reference;
-- test documents or approved immutable references;
-- expected and observed fields/classes;
-- field-level quality, routing accuracy, review rate, and correction rate;
-- failures segmented by supplier, layout, quality, language, and document type where permitted;
-- approval decision, owner, date, and rollback reference.
-
-Promotion should require agreed business measures, not an impressive single-document demonstration. Re-test after schema edits, source-template changes, workflow changes, or service updates.
-
-## Maturity and design gaps
-
-Content Understanding Studio can accelerate SME-led schema exploration, but it is not automatically a complete enterprise workflow platform. Service capabilities, project/analyzer boundaries, export behavior, RBAC, regional availability, and preview terms can change. Confirm the current product documentation and tenant behavior before design commitments.
-
-In particular, do **not** assume that a Studio project or analyzer is a strong security boundary, that sharing an analyzer safely shares only the intended data, or that an export can be imported unchanged into every environment. Use separate environments/resources where isolation is required, enforce document-source permissions outside the analyzer, and design an explicit promotion and access model with security stakeholders.
-
-## Search before implement
-
-Before engineering writes Azure SDK, REST, SharePoint, or workflow code:
-
-1. Search current Microsoft documentation/MCP for the supported Content Understanding resource, project/analyzer lifecycle, authentication, and invocation surface.
-2. Confirm the Studio-created analyzer can be reached by the intended workload identity in the target environment.
-3. Load the relevant Foundry/Azure skill and follow the verified pattern.
-4. Implement only against the verified signature, then validate with safe documents and the recorded evaluation set.
-
-This scenario deliberately does not publish guessed SDK or REST signatures.
-
-## Materials
-
-- [Customer conversation slides](slides.md)
-- [Facilitator guide](FACILITATOR.md)
-- [Local demo runbook](LOCAL_DEMO.md)
-- [Lesson 1: outcome and readiness](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=outcome-and-readiness)
-- [Lesson 2: SME Studio loop](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=sme-studio-loop)
-- [Lesson 3: secure handoff and workflow](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=secure-handoff-and-workflow)
-- [Lesson 4: review, evaluation, and lifecycle](../../../../lesson.html?scenario=content-understanding-document-workflow&lesson=review-evaluation-lifecycle)
-- [Accelerator](accelerator/README.md)
+- **Synthetic data only.** The fixtures under [`accelerator/sample-data/`](accelerator/sample-data/)
+  are fictional. Real deployable infrastructure is fine; real customer documents are not, until a
+  source owner, security owner, and retention policy approve a separate path.
+- **Keyless-first.** `DefaultAzureCredential` + managed identity + Entra RBAC. No keys in code, `.env`,
+  or Bicep.
+- **Evidence, never inference.** Every extracted value keeps its confidence and grounding; a value
+  without evidence is rejected and a missing value is surfaced for review, never guessed.
+- **Prompt Flow is banned** in this curriculum — use agents + tools + MCP instead.

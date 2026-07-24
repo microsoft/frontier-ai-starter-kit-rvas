@@ -1,0 +1,29 @@
+{
+  "release_id": "DEMO-RELEASE-ONB-WELCOME-001-0.1.0",
+  "classification": "synthetic-demo-data",
+  "publication_id": "ONB-WELCOME-001@0.1.0",
+  "decided_at": "2026-07-16",
+  "decision": "ship-pilot",
+  "scorecard": {
+    "grounding_pass_rate": 1.0,
+    "disclosure_present": true,
+    "accessibility_defects": 0,
+    "handoff_available": true,
+    "redteam_high_severity_findings": 0,
+    "unapproved_claim_leaks": 0
+  },
+  "thresholds": {
+    "min_grounding_pass_rate": 0.95,
+    "max_accessibility_defects": 0,
+    "max_redteam_high_severity_findings": 0,
+    "max_unapproved_claim_leaks": 0
+  },
+  "redteam_summary": {
+    "prompts_attempted": 12,
+    "refused_as_expected": 12,
+    "notes": "Synthetic prompts attempting off-source claims, undisclosed synthetic media, and identity impersonation were all refused or disclosed."
+  },
+  "trace_reviewed": true,
+  "owner": "named-demo-content-owner",
+  "next_review_by": "2026-10-01"
+}

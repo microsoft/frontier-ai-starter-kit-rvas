@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline checks for scenario workshop-kit structure and safe blueprints."""
+"""Offline checks for scenario build-curriculum structure and safe blueprints."""
 from __future__ import annotations
 
 import json
@@ -8,17 +8,37 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCENARIOS = ROOT / "scenarios"
-REQUIRED_LESSON_SIGNALS = (
-    "goal",
-    "duration",
-    "facilitator",
-    "artifact",
-    "expected",
-    "validation",
-    "debrief",
-    "next decision",
+REQUIRED_MODULE_SIGNALS = (
+    "what you build",
+    "choose your path",
+    "implementation",
+    "verify",
+    "troubleshooting",
+    "decision record",
+    "next module",
 )
-TIMED_EXERCISE_SIGNALS = ("timed activity", "timed exercise")
+# Scenarios still on the pre-rebuild contract. Remove entries as each is migrated;
+# this list must be empty when the rebuild is finished.
+LEGACY_CONTRACT_SCENARIOS: set[str] = set()
+LEGACY_MODULE_SIGNALS = (
+    "decision",
+    "prerequisites",
+    "build steps",
+    "files and commands",
+    "checkpoint",
+    "evidence",
+    "common failures",
+    "next module",
+)
+RETIRED_WORKSHOP_SIGNALS = (
+    "## audience",
+    "## preparation",
+    "## timed activity",
+    "## timed exercise",
+    "## artifact",
+    "## expected output",
+    "## debrief",
+)
 
 
 def check(condition: bool, message: str, failures: list[str]) -> None:
@@ -43,20 +63,58 @@ def main() -> int:
         blueprint = scenario_root / "accelerator" / "main.bicep"
         source = blueprint.read_text(encoding="utf-8") if blueprint.is_file() else ""
         check(blueprint.is_file(), "Bicep blueprint exists", failures)
-        check("\nresource " not in f"\n{source}", "Bicep blueprint declares no resources", failures)
+        # Scenario Bicep is now deployable. The guardrail is no longer "declares no resources";
+        # it is "parameterised, no inline secrets, and compiles".
+        lowered_bicep = source.lower()
+        secret_markers = ("password =", "apikey =", "accountkey=", "sharedaccesskey")
+        check(
+            not any(marker in lowered_bicep.replace(" ", " ") for marker in secret_markers),
+            "Bicep blueprint declares no inline secrets",
+            failures,
+        )
+        if source:
+            check("param " in source, "Bicep blueprint is parameterised", failures)
 
         data_root = scenario_root / "accelerator" / "sample-data"
         fixtures = [item for item in data_root.rglob("*") if item.is_file() and item.name != "README.md"]
         check(bool(fixtures), "synthetic sample fixtures exist", failures)
 
+        legacy = scenario_id in LEGACY_CONTRACT_SCENARIOS
+        required_signals = LEGACY_MODULE_SIGNALS if legacy else REQUIRED_MODULE_SIGNALS
+        contract_label = "legacy build-module" if legacy else "practical build-module"
+
         for lesson in manifest.get("lessons", []):
             lesson_path = scenario_root / lesson["path"]
             text = lesson_path.read_text(encoding="utf-8").lower() if lesson_path.is_file() else ""
             check(lesson_path.is_file(), f"lesson {lesson['id']} exists", failures)
-            missing = [signal for signal in REQUIRED_LESSON_SIGNALS if signal not in text]
-            if not any(signal in text for signal in TIMED_EXERCISE_SIGNALS):
-                missing.append("timed activity or exercise")
-            check(not missing, f"lesson {lesson['id']} has workshop contract", failures)
+            missing = [signal for signal in required_signals if signal not in text]
+            check(not missing, f"lesson {lesson['id']} has the {contract_label} contract", failures)
+            retired = [signal for signal in RETIRED_WORKSHOP_SIGNALS if signal in text]
+            check(not retired, f"lesson {lesson['id']} drops the retired workshop template", failures)
+
+        modules = manifest.get("build_modules", [])
+        check(bool(modules), "manifest declares build modules", failures)
+        module_ids: set[str] = set()
+        for module in modules:
+            module_id = module.get("id", "<missing>")
+            complete = all(module.get(field) for field in ("id", "title", "summary", "checkpoint"))
+            check(complete, f"build module {module_id} declares id, title, summary, and checkpoint", failures)
+            check(module_id not in module_ids, f"build module {module_id} is unique", failures)
+            module_ids.add(module_id)
+            for implementation_path in module.get("implementation_paths", []):
+                check(
+                    (scenario_root / implementation_path).exists(),
+                    f"build module {module_id} implementation path {implementation_path} exists",
+                    failures,
+                )
+
+        if not legacy:
+            lesson_ids = [lesson["id"] for lesson in manifest.get("lessons", [])]
+            check(
+                len(lesson_ids) == len(modules),
+                f"one lesson per build module ({len(lesson_ids)} lessons, {len(modules)} modules)",
+                failures,
+            )
 
     print("\nSCENARIO VALIDATION PASSED" if not failures else f"\nSCENARIO VALIDATION FAILED ({len(failures)} issues)")
     return 0 if not failures else 1

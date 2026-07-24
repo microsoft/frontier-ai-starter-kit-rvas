@@ -30,6 +30,8 @@
     document.getElementById('validatorLink').href = scenario.validator_path;
     document.getElementById('decisionPrompts').innerHTML = (scenario.decision_prompts || [])
       .map((prompt) => `<li>${FP.esc(prompt)}</li>`).join('');
+    document.getElementById('buildModuleList').innerHTML = (scenario.build_modules || [])
+      .map((module) => `<li><strong>${module.sequence}. ${FP.esc(module.title)}</strong><span>${FP.esc(module.summary)}</span><small>Checkpoint: ${FP.esc(module.checkpoint)}</small>${module.activity_path ? `<a href="${FP.esc(module.activity_path)}">Open implementation activity</a>` : ''}</li>`).join('');
     document.getElementById('lessonList').innerHTML = (scenario.lessons || [])
       .map((lesson) => `<li><a href="${FP.esc(lesson.lesson_path)}">Lesson ${lesson.sequence}: ${FP.esc(lesson.title)}</a></li>`).join('');
   }

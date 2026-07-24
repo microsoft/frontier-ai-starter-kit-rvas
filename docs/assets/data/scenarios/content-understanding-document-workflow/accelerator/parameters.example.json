@@ -2,23 +2,19 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "demonstrationName": {
-      "value": "content-understanding-safe-demo"
-    },
-    "plannedLocation": {
-      "value": "<supported-region>"
-    },
-    "environmentReference": {
-      "value": "<approved-environment-reference>"
-    },
-    "fixturePackPath": {
-      "value": "../sample-data"
-    },
-    "requiresHumanReview": {
-      "value": true
-    },
-    "dataApprovalOwner": {
-      "value": "<data-approval-owner>"
+    "resourceToken": { "value": "cudoc01" },
+    "location": { "value": "eastus2" },
+    "principalId": { "value": "" },
+    "chatModelName": { "value": "gpt-4.1-mini" },
+    "chatModelDeploymentName": { "value": "chat" },
+    "chatModelCapacity": { "value": 30 },
+    "embeddingModelName": { "value": "text-embedding-3-large" },
+    "embeddingModelDeploymentName": { "value": "embedding" },
+    "embeddingModelCapacity": { "value": 30 },
+    "inboundContainerName": { "value": "documents-inbound" },
+    "quarantineContainerName": { "value": "documents-quarantine" },
+    "tags": {
+      "value": { "workload": "content-understanding", "managedBy": "ai-starter-kit" }
     }
   }
 }

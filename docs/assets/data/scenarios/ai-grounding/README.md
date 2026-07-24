@@ -1,44 +1,80 @@
-# Customer Delivery: AI Grounding / IQ
+# AI Grounding — a practical build course
 
-Start with the work decision, not a retrieval pattern. This workshop helps a customer choose trusted knowledge and operational context for a bounded outcome.
+Build a grounded, permission-aware assistant over approved content, and prove it before it ships.
 
-## Customer conversation
+Seven modules, one lesson each. Every module ends with a runnable checkpoint, and every module
+offers real options with an opinionated default and the migration cost of changing your mind. You
+will deploy real Azure resources, index a real corpus, measure real models, and produce evidence a
+risk owner can sign.
 
-1. Name the user decision or task to improve.
-2. Draw the access boundary: people, groups, locations, sensitivity, and systems of record.
-3. Choose the context pattern:
-   - **SharePoint + Copilot Studio** when the experience is a governed business workflow and the source is already SharePoint/Microsoft 365.
-   - **Foundry IQ** when an application or agent needs governed, composable grounding across approved sources.
-   - **Fabric IQ** when the decision depends on governed data/analytics context.
-   - **Work IQ** when work signals, people context, and Microsoft 365 work context are central.
-   - **Web IQ** when a curated, attributable public-web corpus is required.
-4. Define the proof: a golden dataset, evaluation measures, and operating evidence.
+## Before you start
 
-“RAG” may describe an implementation technique; it is not the starting point for this customer conversation.
+**Verify the API surface before you write code.** Foundry and Azure AI Search move fast and several
+capabilities used here are preview. Every verified fact in these lessons carries its Microsoft Learn
+URL and a fetch date. Re-check them against the current docs; do not infer a signature from this
+course or from memory.
 
-## Foundry IQ availability gate
+**Fictional data only.** The corpus in `accelerator/sample-data/` is a synthetic returns-policy set
+for a fictional retailer. Never copy customer content into this repository.
 
-Foundry IQ is not a single availability state. Current Microsoft documentation describes some features as generally available and others as preview; portal access to agentic retrieval remains preview-only. Before selecting it for a pilot, record the required knowledge sources, permission behavior, Azure AI Search REST API version, and whether the customer permits every required preview feature. A portal demonstration is not evidence that the production integration path is generally available.
+**Keyless.** Every path here uses `DefaultAzureCredential`, managed identity, and RBAC. The storage
+account is provisioned with shared-key access disabled, so there is no key to fall back to.
 
-## Workshop outputs
+## The build path
 
-- One outcome statement and non-goals
-- An access-boundary sketch with source owners
-- A context-pattern decision and alternatives rejected
-- A first golden dataset with acceptance criteria
-- An operating-evidence plan and review owner
+| Module | What you build | Checkpoint |
+|---|---|---|
+| [1. Provision the foundation](../../../../lesson.html?scenario=ai-grounding&lesson=foundation) | Foundry account and project, chat + embedding deployments, AI Search, storage, observability, and the `.env` contract | `verify_foundation.py` |
+| [2. Source and permission architecture](../../../../lesson.html?scenario=ai-grounding&lesson=source-selection) | The source decision, the identity evaluated at query time, and a probe proving a restricted identity retrieves nothing | `probe_permissions.py` |
+| [3. Ingest and index approved content](../../../../lesson.html?scenario=ai-grounding&lesson=ingestion) | Ingestion, chunking, citation metadata, ACL carry-forward, and a refresh schedule | `verify_retrieval.py` |
+| [4. Compare chat and embedding choices](../../../../lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | `compare_models.py` |
+| [5. Build retrieval before adding an agent](../../../../lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | `grounded_answer.py` |
+| [6. Add agent and routing only when justified](../../../../lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | `verify_routing.py` |
+| [7. Evaluate, trace, deploy, and operate](../../../../lesson.html?scenario=ai-grounding&lesson=prove-and-ship) | Evaluation gate, red-team evidence, end-to-end traces, deployment, release decision | `validate.py --all` |
 
-## Package map
+Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
+retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
 
-- `slides.md` — 10-slide, versioned workshop conversation
-- `lessons/` — five timed facilitator modules
-- `FACILITATOR.md` — workshop agenda, facilitation moves, and pilot gate
-- `accelerator/` — resource-free Bicep blueprint, fictional corpus, local-only demo, validator, and evidence artifact
+## Deploy the foundation
 
-## Guardrails
+```bash
+az login
+./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
+python3 scenarios/ai-grounding/accelerator/scripts/verify_foundation.py
+```
 
-- Do not copy customer documents into this package.
-- Make Copilot Studio and SharePoint decisions before designing a custom agent.
-- Verify current Foundry, Fabric, Work IQ, Web IQ, Copilot Studio, and SharePoint capabilities in Microsoft documentation before implementation.
-- Use the least-privileged source connection and preserve source-level permissions where supported.
-- The local corpus simulation is a transparent training fixture, not a product integration or authorization control.
+The deployment writes `accelerator/.env` from the template outputs. That file is the environment
+contract every later module depends on — keep it local and uncommitted.
+
+## Run the whole gate locally
+
+No Azure subscription needed; every checkpoint has an offline mode that validates structure:
+
+```bash
+python3 scenarios/ai-grounding/accelerator/validate.py --all
+```
+
+## Reused activities
+
+These lessons compose the kit's canonical activities rather than duplicating them:
+
+- [Foundations](../../activities/foundations/README.md) — provisioning, model selection, and the
+  Azure AI Search grounding baseline
+- [Evaluation & Red Teaming](../../activities/advanced-evaluation-redteam/README.md) — the harness,
+  custom evaluators, and adversarial seed set used in module 7
+- [Tracing & Observability](../../activities/advanced-tracing-observability/README.md) — GenAI
+  spans, the instrumentation ordering gotcha, and the KQL correlation queries
+- [Action Tools](../../activities/advanced-action-tools/README.md) and
+  [Fabric IQ](../../activities/extra-fabric-iq/README.md) — live-data and action routing in module 6
+- [Deploy as a Hosted Agent](../../activities/advanced-deploy-hosted-agent/README.md) — the hosted
+  deployment option in module 7
+
+## Non-negotiables
+
+- Treat retrieved text as untrusted data, never as instructions. Module 7 red-teams this directly.
+- Index knowledge; route to systems. Indexing live operational data produces confidently cited
+  stale answers, which is the most damaging failure mode in this scenario.
+- A refusal must be indistinguishable from "no information exists" — revealing that a restricted
+  document exists is a leak with a polite tone.
+- Retrieval must work before an agent is added. An agent over weak retrieval makes the failure
+  fluent, not correct.

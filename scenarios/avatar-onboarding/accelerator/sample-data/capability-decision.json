@@ -1,0 +1,43 @@
+{
+  "decision_id": "DEMO-CAP-ONB-WELCOME-001",
+  "classification": "fictional-demo-content",
+  "decided_at": "2026-07-20",
+  "decided_by": "named-demo-field-engineer",
+  "pilot_scope": "Day-one welcome + benefits + safety orientation, en-US cohort, web channel",
+  "selected_capability": "speech-tts-avatar-batch",
+  "runners_up": ["speech-tts-audio-only", "voice-live-realtime-avatar"],
+  "verification": {
+    "source": "learn.microsoft.com",
+    "fetched_on": "2026-07-24",
+    "docs": [
+      "https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/what-is-text-to-speech-avatar",
+      "https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar",
+      "https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/limited-access"
+    ]
+  },
+  "api": {
+    "name": "Text to speech avatar batch synthesis (REST)",
+    "operation": "PUT avatar/batchsyntheses/{SynthesisId}?api-version=2024-08-01",
+    "host": "https://{resource}.cognitiveservices.azure.com"
+  },
+  "region": "westus2",
+  "identity": "managed-identity-entra-keyless",
+  "pricing_note": "Billed per talking-avatar second plus the underlying text-to-speech characters; standard avatar, no custom-voice surcharge.",
+  "accessibility": {
+    "captions": true,
+    "transcript": true,
+    "non_avatar_fallback": true
+  },
+  "content_safety": "Azure AI Content Safety on generated script text before synthesis; RAI policy Microsoft.DefaultV2 on the chat model.",
+  "consent_and_gating": {
+    "uses_standard_avatar": true,
+    "uses_custom_avatar": false,
+    "uses_custom_or_personal_voice": false,
+    "limited_access_registration_required": false,
+    "limited_access_form": "https://aka.ms/customneural",
+    "talent_consent_required": false,
+    "disclosure_required": true
+  },
+  "disclosure_statement": "This onboarding presentation uses an avatar-generated or AI-assisted presenter.",
+  "exit_criteria": "Standard avatar + standard voice means no talent data to retain; withdrawal deletes rendered output and knowledge-base content only."
+}

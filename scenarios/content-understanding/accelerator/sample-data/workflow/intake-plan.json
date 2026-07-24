@@ -1,0 +1,26 @@
+{
+  "data_classification": "synthetic",
+  "plan_id": "cu-intake-plan-v1",
+  "source_kind": "azure_blob",
+  "system_of_record": "Contoso Demo Procurement (synthetic)",
+  "inbound_container": "documents-inbound",
+  "quarantine_container": "documents-quarantine",
+  "identity_evaluated_at_query_time": "service_managed_identity",
+  "approved_document_classes": ["invoice", "rfq"],
+  "retained_metadata": [
+    "source_uri",
+    "source_version",
+    "ingested_by",
+    "sha256",
+    "sensitivity_label",
+    "permission_owner_ids"
+  ],
+  "quarantine_rules": [
+    "unapproved_document_class",
+    "unauthorized_source",
+    "oversize_or_unsupported_type",
+    "missing_sensitivity_label"
+  ],
+  "retention_days": 90,
+  "keyless": true
+}

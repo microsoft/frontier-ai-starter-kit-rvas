@@ -2,17 +2,44 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "deploymentMode": {
-      "value": "byo-existing-environment"
+    "resourceToken": {
+      "value": "grnd01"
     },
     "location": {
-      "value": "eastus"
+      "value": "eastus2"
     },
-    "existingEnvironmentResourceId": {
-      "value": "/subscriptions/<subscription-id>/resourceGroups/<approved-resource-group>/providers/<approved-provider>/<approved-resource-type>/<approved-resource-name>"
+    "principalId": {
+      "value": ""
     },
-    "contextPattern": {
-      "value": "Copilot Studio + SharePoint decision pending"
+    "chatModelName": {
+      "value": "gpt-4.1-mini"
+    },
+    "chatModelDeploymentName": {
+      "value": "chat"
+    },
+    "chatModelCapacity": {
+      "value": 30
+    },
+    "embeddingModelName": {
+      "value": "text-embedding-3-large"
+    },
+    "embeddingModelDeploymentName": {
+      "value": "embedding"
+    },
+    "embeddingModelCapacity": {
+      "value": 30
+    },
+    "searchSku": {
+      "value": "basic"
+    },
+    "approvedContentContainerName": {
+      "value": "approved-content"
+    },
+    "tags": {
+      "value": {
+        "workload": "ai-grounding",
+        "managedBy": "ai-starter-kit"
+      }
     }
   }
 }

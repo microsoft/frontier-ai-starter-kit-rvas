@@ -1,0 +1,20 @@
+{
+  "data_classification": "synthetic",
+  "decision_id": "cu-extraction-decision-v1",
+  "selected_capability": "document_intelligence_prebuilt",
+  "selected_model_or_analyzer": "prebuilt-invoice",
+  "api_version": "2024-11-30",
+  "confidence_threshold": 0.70,
+  "requires_evidence": true,
+  "rationale": "Structured supplier invoices with a stable template. DI prebuilt-invoice gives high-accuracy deterministic fields with confidence and bounding regions at low latency.",
+  "considered": [
+    "content_understanding_prebuilt",
+    "content_understanding_custom",
+    "document_intelligence_prebuilt",
+    "document_intelligence_custom",
+    "llm_structured_outputs",
+    "multimodal_vision"
+  ],
+  "fallback_capability": "content_understanding_custom",
+  "fallback_trigger": "Documents drift to variable, semi-structured layouts DI templates miss."
+}

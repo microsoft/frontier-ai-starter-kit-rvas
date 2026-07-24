@@ -12,7 +12,7 @@
       const lesson = scenario && (scenario.lessons || []).find((item) => item.id === lessonId);
       if (!scenario || !lesson) return showError('This lesson was not found in the scenario course.');
       renderCourse(scenario, lesson);
-      await renderLesson(scenario, lesson);
+      await renderLesson(scenario, lesson, data.activities || []);
     } catch (error) {
       showError(error.message);
     }
@@ -32,6 +32,13 @@
       'Make one customer decision, capture the evidence, and use the result to decide the next engagement move.';
     document.getElementById('lessonOutcome').textContent = scenario.customer_outcome;
     ['playbookBack', 'playbookNav'].forEach((id) => { document.getElementById(id).href = playbookUrl; });
+    document.getElementById('lessonBuildModules').innerHTML = (scenario.build_modules || []).map((module) => `
+      <li>
+        <strong>${module.sequence}. ${FP.esc(module.title)}</strong>
+        <span>${FP.esc(module.summary)}</span>
+        <small>Checkpoint: ${FP.esc(module.checkpoint)}</small>
+        ${module.activity_path ? `<a href="${FP.esc(module.activity_path)}">Open implementation activity</a>` : ''}
+      </li>`).join('');
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `
       <li class="${item.id === lesson.id ? 'is-current' : ''}">
@@ -47,20 +54,48 @@
     `;
   }
 
-  async function renderLesson(scenario, lesson) {
+  async function renderLesson(scenario, lesson, activities) {
     const target = document.getElementById('lessonBody');
     const response = await fetch(lesson.content_path, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`Could not load lesson (${response.status})`);
     FP.renderMd(await response.text(), target);
-    rewriteLessonLinks(target, scenario);
+    rewriteLessonLinks(target, scenario, lesson, activities);
   }
 
-  function rewriteLessonLinks(container, scenario) {
-    const byPath = new Map((scenario.lessons || []).map((lesson) => [lesson.path, lesson.lesson_path]));
+  function resolveRelative(basePath, href) {
+    const segments = basePath.split('/').slice(0, -1);
+    href.split('/').forEach((part) => {
+      if (!part || part === '.') return;
+      if (part === '..') segments.pop();
+      else segments.push(part);
+    });
+    return segments.join('/');
+  }
+
+  function rewriteLessonLinks(container, scenario, lesson, activities) {
+    const lessonRoutes = new Map((scenario.lessons || []).map((item) => [item.path, item.lesson_path]));
+    const activityIds = new Set((activities || []).map((item) => item.id));
+
     container.querySelectorAll('a[href]').forEach((link) => {
       const raw = link.getAttribute('href') || '';
-      const normalized = raw.replace(/^\.\//, '');
-      if (byPath.has(normalized)) link.href = byPath.get(normalized);
+      if (!raw || raw.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(raw)) return;
+
+      const [path, hash] = raw.split('#');
+      const resolved = resolveRelative(lesson.path, path);
+
+      if (lessonRoutes.has(resolved)) {
+        link.href = lessonRoutes.get(resolved);
+        return;
+      }
+
+      const activityMatch = resolved.match(/^activities\/([^/]+)\/(README|FACILITATOR)\.md$/i);
+      if (activityMatch && activityIds.has(activityMatch[1])) {
+        link.href = FP.activityUrl(activityMatch[1]) + (hash ? `#${hash}` : '');
+        link.dataset.route = 'activity';
+        return;
+      }
+
+      if (/\.md$/i.test(path)) link.classList.add('is-source-link');
     });
   }
 

@@ -318,6 +318,115 @@ function auditGeneratedLinks(files, failures) {
   return checked;
 }
 
+const RETIRED_LESSON_HEADINGS = [
+  /^#{1,6}\s+audience\b/gimu,
+  /^#{1,6}\s+preparation\b/gimu,
+  /^#{1,6}\s+timed (?:activity|exercise)\b/gimu,
+  /^#{1,6}\s+artifact\b/gimu,
+  /^#{1,6}\s+expected output\b/gimu,
+  /^#{1,6}\s+debrief\b/gimu,
+];
+
+const REQUIRED_LESSON_HEADINGS = [
+  'what you build',
+  'choose your path',
+  'implementation',
+  'verify',
+  'troubleshooting',
+  'decision record',
+  'next module',
+];
+
+// Scenarios still on the pre-rebuild contract. Remove entries as each is migrated;
+// this set must be empty when the rebuild is finished.
+const LEGACY_CONTRACT_SCENARIOS = new Set([]);
+
+const LEGACY_LESSON_HEADINGS = [
+  'decision',
+  'prerequisites',
+  'build steps',
+  'files and commands',
+  'checkpoint',
+  'evidence',
+  'common failures',
+  'next module',
+];
+
+function resolveRelativePath(basePath, href) {
+  const segments = basePath.split('/').slice(0, -1);
+  for (const part of href.split('/')) {
+    if (!part || part === '.') continue;
+    if (part === '..') segments.pop();
+    else segments.push(part);
+  }
+  return segments.join('/');
+}
+
+function auditLessonRouting(scenario, lesson, activityIds, failures) {
+  const source = path.join(ROOT, 'docs', lesson.content_path);
+  if (!fs.existsSync(source)) {
+    failures.push(`scenario ${scenario.id} lesson ${lesson.id}: generated lesson source is missing`);
+    return;
+  }
+
+  const body = fs.readFileSync(source, 'utf8');
+  const label = `scenario ${scenario.id} lesson ${lesson.id}`;
+
+  for (const pattern of RETIRED_LESSON_HEADINGS) {
+    pattern.lastIndex = 0;
+    const match = pattern.exec(body);
+    if (match) failures.push(`${label}: uses the retired workshop heading "${match[0].trim()}"`);
+  }
+
+  const headings = (body.match(/^#{1,6}\s+.*$/gmu) || []).map((line) =>
+    line.replace(/^#{1,6}\s+/u, '').toLowerCase());
+  const requiredHeadings = LEGACY_CONTRACT_SCENARIOS.has(scenario.id)
+    ? LEGACY_LESSON_HEADINGS
+    : REQUIRED_LESSON_HEADINGS;
+  for (const required of requiredHeadings) {
+    if (!headings.some((heading) => heading.includes(required))) {
+      failures.push(`${label}: build-module contract is missing a "${required}" section`);
+    }
+  }
+
+  const lessonPaths = new Set((scenario.lessons || []).map((item) => item.path));
+  for (const match of body.matchAll(/\]\(([^)\s]+)\)/gu)) {
+    const raw = match[1];
+    if (!raw || raw.startsWith('#') || /^[a-z][a-z0-9+.-]*:/iu.test(raw)) continue;
+    const [target] = raw.split('#');
+    if (!/\.md$/iu.test(target)) continue;
+
+    const resolved = resolveRelativePath(lesson.path, target);
+    if (lessonPaths.has(resolved)) continue;
+
+    const activityMatch = resolved.match(/^activities\/([^/]+)\/(?:README|FACILITATOR)\.md$/iu);
+    if (activityMatch && activityIds.has(activityMatch[1])) continue;
+
+    failures.push(`${label}: Markdown link "${raw}" does not resolve to an in-site course or activity route`);
+  }
+}
+
+function auditBuildModules(scenario, activityIds, failures) {
+  const modules = scenario.build_modules || [];
+  if (!modules.length) {
+    failures.push(`scenario ${scenario.id}: no build modules are published to the course roadmap`);
+    return;
+  }
+
+  const seen = new Set();
+  for (const module of modules) {
+    const label = `scenario ${scenario.id} build module ${module.id || '<missing id>'}`;
+    for (const field of ['id', 'title', 'summary', 'checkpoint', 'sequence']) {
+      if (!module[field]) failures.push(`${label}: missing "${field}"`);
+    }
+    if (module.id && seen.has(module.id)) failures.push(`${label}: duplicate module id`);
+    if (module.id) seen.add(module.id);
+    if (module.activity_id && !activityIds.has(module.activity_id)) {
+      failures.push(`${label}: references unknown activity "${module.activity_id}"`);
+    }
+  }
+}
+
 function auditScenarioCourseRoutes(failures) {
   const lessonPage = path.join(ROOT, 'docs', 'lesson.html');
   const lessonScript = path.join(ROOT, 'docs', 'assets', 'js', 'lesson.js');
@@ -338,6 +447,8 @@ function auditScenarioCourseRoutes(failures) {
     return;
   }
 
+  const activityIds = new Set((platform.activities || []).map((activity) => activity.id));
+
   for (const scenario of platform.scenarios || []) {
     const readme = path.join(ROOT, 'docs', 'assets', 'data', 'scenarios', scenario.id, 'README.md');
     if (!fs.existsSync(readme)) {
@@ -348,15 +459,15 @@ function auditScenarioCourseRoutes(failures) {
     if (/\]\(lessons\/[^)#]+\.md(?:#[^)]+)?\)/u.test(playbook)) {
       failures.push(`scenario ${scenario.id}: generated playbook links directly to a raw lesson Markdown file`);
     }
+
+    auditBuildModules(scenario, activityIds, failures);
+
     for (const lesson of scenario.lessons || []) {
       if (!lesson.lesson_path || !lesson.content_path) {
         failures.push(`scenario ${scenario.id} lesson ${lesson.id}: missing in-site lesson route metadata`);
         continue;
       }
-      const source = path.join(ROOT, 'docs', lesson.content_path);
-      if (!fs.existsSync(source)) {
-        failures.push(`scenario ${scenario.id} lesson ${lesson.id}: generated lesson source is missing`);
-      }
+      auditLessonRouting(scenario, lesson, activityIds, failures);
     }
   }
 }

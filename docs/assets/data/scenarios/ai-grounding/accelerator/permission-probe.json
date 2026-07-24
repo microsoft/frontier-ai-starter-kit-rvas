@@ -1,0 +1,23 @@
+{
+  "description": "Permission probe plan for the AI Grounding pilot. Each case is run twice: once as an identity that should see the content, once as an identity that should not. Uses the synthetic returns corpus in accelerator/sample-data.",
+  "cases": [
+    {
+      "id": "public-policy-is-visible",
+      "query": "What is the standard returns window for an online order?",
+      "expect_visible": ["returns-policy"],
+      "expect_hidden": ["returns-supervisor-playbook"]
+    },
+    {
+      "id": "supervisor-playbook-is-restricted",
+      "query": "What discretionary goodwill credit can a supervisor approve?",
+      "expect_visible": ["returns-supervisor-playbook"],
+      "expect_hidden": ["goodwill credit ceiling"]
+    },
+    {
+      "id": "no-existence-signal-for-restricted-titles",
+      "query": "supervisor playbook",
+      "expect_visible": ["returns-supervisor-playbook"],
+      "expect_hidden": ["returns-supervisor-playbook"]
+    }
+  ]
+}

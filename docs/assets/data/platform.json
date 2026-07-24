@@ -755,71 +755,187 @@
       ],
       "lessons": [
         {
-          "id": "outcome-and-access-boundary",
-          "title": "Outcome and access boundary",
-          "path": "lessons/01-outcome-and-access-boundary.md",
+          "id": "foundation",
+          "title": "Provision the grounding foundation",
+          "path": "lessons/01-provision-foundation.md",
           "reused_with": [
-            "copilot-studio",
-            "foundry-agents",
+            "foundations",
             "governance"
           ],
           "sequence": 1,
-          "content_path": "assets/data/scenarios/ai-grounding/lessons/01-outcome-and-access-boundary.md",
-          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=outcome-and-access-boundary"
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/01-provision-foundation.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=foundation"
         },
         {
-          "id": "decision-explorer-context",
-          "title": "Decision explorer context",
-          "path": "lessons/02-decision-explorer-context.md",
+          "id": "source-selection",
+          "title": "Select the source and permission architecture",
+          "path": "lessons/02-source-and-permission-architecture.md",
           "reused_with": [
-            "copilot-studio",
-            "foundry-agents",
-            "fabric-iq"
-          ],
-          "sequence": 2,
-          "content_path": "assets/data/scenarios/ai-grounding/lessons/02-decision-explorer-context.md",
-          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=decision-explorer-context"
-        },
-        {
-          "id": "source-and-iq-pattern-selection",
-          "title": "Source and IQ pattern selection",
-          "path": "lessons/03-source-and-iq-pattern-selection.md",
-          "reused_with": [
-            "copilot-studio",
             "foundry-iq",
+            "copilot-studio",
             "fabric-iq",
             "work-iq",
-            "web-iq"
+            "governance"
+          ],
+          "sequence": 2,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/02-source-and-permission-architecture.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=source-selection"
+        },
+        {
+          "id": "ingestion",
+          "title": "Ingest and index approved content",
+          "path": "lessons/03-ingest-and-index.md",
+          "reused_with": [
+            "foundry-iq",
+            "ai-search",
+            "content-understanding"
           ],
           "sequence": 3,
-          "content_path": "assets/data/scenarios/ai-grounding/lessons/03-source-and-iq-pattern-selection.md",
-          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=source-and-iq-pattern-selection"
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/03-ingest-and-index.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=ingestion"
         },
         {
-          "id": "golden-dataset-and-evaluation",
-          "title": "Golden dataset and evaluation from the beginning",
-          "path": "lessons/04-golden-dataset-and-evaluation.md",
+          "id": "model-selection",
+          "title": "Compare chat and embedding choices",
+          "path": "lessons/04-model-selection.md",
           "reused_with": [
-            "agent-evaluation",
-            "copilot-studio",
-            "foundry-agents"
+            "foundations",
+            "capacity-planning"
           ],
           "sequence": 4,
-          "content_path": "assets/data/scenarios/ai-grounding/lessons/04-golden-dataset-and-evaluation.md",
-          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=golden-dataset-and-evaluation"
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/04-model-selection.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=model-selection"
         },
         {
-          "id": "operating-evidence",
-          "title": "Operating evidence",
-          "path": "lessons/05-operating-evidence.md",
+          "id": "grounded-app",
+          "title": "Build retrieval before adding an agent",
+          "path": "lessons/05-grounded-retrieval.md",
           "reused_with": [
-            "governance",
-            "agent-evaluation",
-            "operational-readiness"
+            "foundations",
+            "foundry-iq",
+            "agent-evaluation"
           ],
           "sequence": 5,
-          "content_path": "assets/data/scenarios/ai-grounding/lessons/05-operating-evidence.md",
-          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=operating-evidence"
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/05-grounded-retrieval.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=grounded-app"
+        },
+        {
+          "id": "agent-routing",
+          "title": "Add agent and live-data routing only when justified",
+          "path": "lessons/06-agent-and-routing.md",
+          "reused_with": [
+            "foundry-agents",
+            "fabric-iq",
+            "action-tools"
+          ],
+          "sequence": 6,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/06-agent-and-routing.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=agent-routing"
+        },
+        {
+          "id": "prove-and-ship",
+          "title": "Evaluate, trace, deploy, and operate",
+          "path": "lessons/07-prove-and-ship.md",
+          "reused_with": [
+            "agent-evaluation",
+            "observability",
+            "operational-readiness"
+          ],
+          "sequence": 7,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/07-prove-and-ship.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=prove-and-ship"
+        }
+      ],
+      "build_modules": [
+        {
+          "id": "foundation",
+          "title": "Provision Foundry, AI Search, and observability",
+          "summary": "Create the shared keyless foundation and verify its generated environment contract before adding customer data.",
+          "activity_id": "foundations",
+          "checkpoint": "Foundations Step 1",
+          "implementation_paths": [
+            "accelerator/main.bicep",
+            "accelerator/scripts/deploy.sh",
+            "accelerator/scripts/verify_foundation.py"
+          ],
+          "sequence": 1,
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "source-selection",
+          "title": "Select the source and permission architecture",
+          "summary": "Choose the approved source path: SharePoint/Copilot Studio, Azure AI Search, Foundry IQ, Fabric IQ, Work IQ, or Web IQ.",
+          "checkpoint": "Signed source, access, freshness, and system-of-record decision",
+          "implementation_paths": [
+            "accelerator/permission-probe.json",
+            "accelerator/scripts/probe_permissions.py"
+          ],
+          "sequence": 2,
+          "activity_path": ""
+        },
+        {
+          "id": "ingestion",
+          "title": "Ingest and index approved content",
+          "summary": "Connect the selected source, preserve source/version metadata and access controls, then prove retrieval with a seeded corpus.",
+          "implementation_paths": [
+            "accelerator/sample-data",
+            "accelerator/scripts/prepare_local_corpus.py",
+            "accelerator/scripts/build_knowledge_source.py",
+            "accelerator/scripts/verify_retrieval.py"
+          ],
+          "checkpoint": "Approved documents are discoverable with source metadata",
+          "sequence": 3,
+          "activity_path": ""
+        },
+        {
+          "id": "model-selection",
+          "title": "Compare chat and embedding choices",
+          "summary": "Compare supported deployments for quality, latency, cost, regional capacity, and the grounded-answer behavior the pilot needs.",
+          "activity_id": "foundations",
+          "checkpoint": "Foundations Step 2",
+          "implementation_paths": [
+            "accelerator/scripts/compare_models.py"
+          ],
+          "sequence": 4,
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "grounded-app",
+          "title": "Build retrieval before adding an agent",
+          "summary": "Implement citations, abstention, access-denied behavior, and source freshness before deciding whether Foundry IQ or an agent adds value.",
+          "activity_id": "foundations",
+          "checkpoint": "Foundations Step 4",
+          "implementation_paths": [
+            "accelerator/scripts/grounded_answer.py",
+            "accelerator/golden-questions.json"
+          ],
+          "sequence": 5,
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "agent-routing",
+          "title": "Add agent and live-data routing only when justified",
+          "summary": "Create an agent with explicit source-routing rules and add a verified live-data tool only for a real-time requirement.",
+          "activity_id": "extra-fabric-iq",
+          "checkpoint": "Policy and live-data questions route to the correct source",
+          "implementation_paths": [
+            "accelerator/scripts/verify_routing.py"
+          ],
+          "sequence": 6,
+          "activity_path": "activity.html?id=extra-fabric-iq"
+        },
+        {
+          "id": "prove-and-ship",
+          "title": "Evaluate, trace, deploy, and operate",
+          "summary": "Prove citation, access, injection, and stale-source behavior; trace failures; then deploy an approved pilot endpoint.",
+          "activity_id": "advanced-evaluation-redteam",
+          "checkpoint": "Evaluation gate, trace evidence, and pilot release decision",
+          "implementation_paths": [
+            "accelerator/validate.py",
+            "accelerator/golden-questions.json"
+          ],
+          "sequence": 7,
+          "activity_path": "activity.html?id=advanced-evaluation-redteam"
         }
       ],
       "asset_base": "assets/data/scenarios/ai-grounding/",
@@ -833,66 +949,187 @@
     {
       "id": "avatar-enabled-onboarding",
       "name": "Avatar-enabled Onboarding",
-      "tagline": "Deliver approved, accessible avatar-led onboarding with accountable human oversight.",
-      "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, and operational evidence.",
+      "tagline": "Build approved, accessible, avatar-led onboarding with accountable human oversight on Azure.",
+      "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
       "maturity": "initial",
       "owner": "RVAS field team",
       "decision_prompts": [
+        "Which Azure/Microsoft experience capability (Speech avatar batch, real-time avatar, Voice Live, video translation, or plain audio) fits the pilot's consent, accessibility, latency, language, and cost requirements?",
         "Which onboarding moment, cohort, locale, and channel should the pilot serve first?",
         "Which approved sources and named owners may support the script, and when do they expire?",
-        "Who must approve factual accuracy, legal/compliance implications, brand, and publication?",
-        "Which vendor or platform best meets consent, privacy, accessibility, language, audit, and exit requirements?",
-        "How will the experience disclose avatar or AI assistance, provide human help, and avoid deceptive representation?",
-        "Which feedback and operational measures will determine whether to iterate, scale, pause, or withdraw?"
+        "Who must approve factual accuracy, legal/compliance, brand, and accessibility before anything is published?",
+        "How will the experience disclose synthetic/AI assistance, offer human help, and avoid deceptive representation?",
+        "Which evaluation, red-team, and operational measures decide whether to iterate, scale, pause, or withdraw?"
       ],
       "lessons": [
         {
-          "id": "approved-content",
-          "title": "Establish the approved-content pack",
-          "path": "lessons/01-approved-content.md",
+          "id": "experience-selection",
+          "title": "Module 1 — Select the avatar/experience capability",
+          "path": "lessons/01-experience-selection.md",
+          "reused_with": [
+            "policy communications",
+            "learning content",
+            "multilingual video"
+          ],
+          "sequence": 1,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/01-experience-selection.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-selection"
+        },
+        {
+          "id": "foundation",
+          "title": "Module 2 — Provision the Foundry + Speech foundation",
+          "path": "lessons/02-foundation.md",
+          "reused_with": [
+            "any Foundry app",
+            "speech experiences"
+          ],
+          "sequence": 2,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/02-foundation.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=foundation"
+        },
+        {
+          "id": "content-pipeline",
+          "title": "Module 3 — Build the governed content pipeline",
+          "path": "lessons/03-content-pipeline.md",
           "reused_with": [
             "policy communications",
             "knowledge-grounded experiences"
           ],
-          "sequence": 1,
-          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/01-approved-content.md",
-          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=approved-content"
+          "sequence": 3,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/03-content-pipeline.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=content-pipeline"
         },
         {
-          "id": "script-storyboard",
-          "title": "Draft a grounded script and storyboard",
-          "path": "lessons/02-script-storyboard.md",
+          "id": "grounded-assistant",
+          "title": "Module 4 — Build the grounded assistant behind the experience",
+          "path": "lessons/04-grounded-assistant.md",
+          "reused_with": [
+            "employee help desk",
+            "grounded chat"
+          ],
+          "sequence": 4,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/04-grounded-assistant.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=grounded-assistant"
+        },
+        {
+          "id": "experience-generation",
+          "title": "Module 5 — Generate the accessible avatar experience",
+          "path": "lessons/05-experience-generation.md",
           "reused_with": [
             "learning content",
-            "employee communications"
+            "employee communications",
+            "multilingual video"
           ],
-          "sequence": 2,
-          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/02-script-storyboard.md",
-          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=script-storyboard"
+          "sequence": 5,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/05-experience-generation.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-generation"
         },
         {
-          "id": "human-approval-selection",
-          "title": "Run approval and select delivery options",
-          "path": "lessons/03-human-approval-and-selection.md",
+          "id": "approval-gating",
+          "title": "Module 6 — Gate publication behind human approval",
+          "path": "lessons/06-approval-gating.md",
           "reused_with": [
             "brand-governed generation",
-            "vendor evaluation"
+            "regulated communications"
           ],
-          "sequence": 3,
-          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/03-human-approval-and-selection.md",
-          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=human-approval-selection"
+          "sequence": 6,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/06-approval-gating.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=approval-gating"
         },
         {
-          "id": "experience-evidence",
-          "title": "Pilot, observe, and improve",
-          "path": "lessons/04-experience-evidence.md",
+          "id": "prove-and-operate",
+          "title": "Module 7 — Evaluate, red-team, trace, and operate",
+          "path": "lessons/07-prove-and-operate.md",
           "reused_with": [
             "employee experience",
             "operational measurement"
           ],
+          "sequence": 7,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/07-prove-and-operate.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=prove-and-operate"
+        }
+      ],
+      "build_modules": [
+        {
+          "id": "experience-selection",
+          "title": "Verify and select the Azure experience capability",
+          "summary": "Before implementation, use current Microsoft docs to confirm a supported Speech avatar (batch or real-time), Voice Live, video-translation, or plain-audio capability, and record its API, region, identity, pricing, accessibility, content-safety, consent, and responsible-AI gating contract.",
+          "checkpoint": "Dated, evidence-backed capability decision record covering service, API, region, identity, pricing, accessibility, disclosure, and limited-access gating",
+          "sequence": 1,
+          "activity_path": ""
+        },
+        {
+          "id": "foundation",
+          "title": "Provision the shared Foundry + Speech foundation",
+          "summary": "Deploy the keyless Foundry, model, Azure AI Search, Speech data plane, and observability baseline the onboarding application uses, with managed-identity RBAC and no secrets.",
+          "activity_id": "foundations",
+          "implementation_paths": [
+            "accelerator/main.bicep",
+            "accelerator/scripts/deploy.sh",
+            "accelerator/scripts/verify_foundation.py"
+          ],
+          "checkpoint": "Foundations Steps 1 and 2 plus a keyless .env contract",
+          "sequence": 2,
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "content-pipeline",
+          "title": "Build the governed content pipeline",
+          "summary": "Connect approved onboarding source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
+          "implementation_paths": [
+            "accelerator/scripts/verify_content_pipeline.py",
+            "accelerator/sample-data"
+          ],
+          "checkpoint": "Versioned claim set with authoritative sources, owners, and expiry",
+          "sequence": 3,
+          "activity_path": ""
+        },
+        {
+          "id": "grounded-assistant",
+          "title": "Build the grounded assistant behind the experience",
+          "summary": "Build the model or Foundry agent path for cited drafting, refusal on unapproved claims, human escalation, and approved-content retrieval that feeds the script.",
+          "activity_id": "foundations",
+          "checkpoint": "Foundations Steps 3 and 4 — grounded, citing, refusing agent",
           "sequence": 4,
-          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/04-experience-evidence.md",
-          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-evidence"
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "experience-generation",
+          "title": "Generate the accessible avatar experience",
+          "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
+          "activity_id": "extra-voice-live",
+          "implementation_paths": [
+            "accelerator/mock_renderer.py",
+            "accelerator/scripts/verify_experience.py"
+          ],
+          "checkpoint": "Accessible experience generated from an approved revision, with disclosure and fallback",
+          "sequence": 5,
+          "activity_path": "activity.html?id=extra-voice-live"
+        },
+        {
+          "id": "approval-gating",
+          "title": "Gate publication behind human approval",
+          "summary": "Version output, collect factual, legal, brand, and accessibility approvals, and implement pause or withdrawal when a source changes.",
+          "implementation_paths": [
+            "accelerator/scripts/verify_approval.py",
+            "accelerator/sample-data/approvals.json"
+          ],
+          "checkpoint": "Approved publication and withdrawal record with a full trace",
+          "sequence": 6,
+          "activity_path": ""
+        },
+        {
+          "id": "prove-and-operate",
+          "title": "Evaluate, red-team, trace, and operate",
+          "summary": "Measure grounding, disclosure, accessibility, handoff, and defect behaviour; red-team the experience; trace it; and deploy a controlled pilot with a scorecard and release decision.",
+          "activity_id": "advanced-evaluation-redteam",
+          "implementation_paths": [
+            "accelerator/scripts/verify_operate.py",
+            "accelerator/sample-data/feedback-fixture.json"
+          ],
+          "checkpoint": "Pilot scorecard, red-team result, trace review, and release decision",
+          "sequence": 7,
+          "activity_path": "activity.html?id=advanced-evaluation-redteam"
         }
       ],
       "asset_base": "assets/data/scenarios/avatar-enabled-onboarding/",
@@ -918,48 +1155,183 @@
       ],
       "lessons": [
         {
-          "id": "outcome-and-readiness",
-          "title": "Outcome and data readiness",
-          "path": "lessons/01-outcome-and-readiness.md",
+          "id": "foundation",
+          "title": "Provision the shared Foundry foundation",
+          "path": "lessons/01-provision-foundation.md",
           "reused_with": [
-            "document workflow discovery"
+            "foundations",
+            "content-understanding",
+            "document-intelligence"
           ],
           "sequence": 1,
-          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/01-outcome-and-readiness.md",
-          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=outcome-and-readiness"
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/01-provision-foundation.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=foundation"
         },
         {
-          "id": "sme-studio-loop",
-          "title": "SME Studio loop",
-          "path": "lessons/02-sme-studio-loop.md",
+          "id": "document-source",
+          "title": "Connect an approved document source",
+          "path": "lessons/02-document-source.md",
           "reused_with": [
-            "Content Understanding Studio"
+            "azure-blob",
+            "adls-gen2",
+            "sharepoint",
+            "onelake"
           ],
           "sequence": 2,
-          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/02-sme-studio-loop.md",
-          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=sme-studio-loop"
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/02-document-source.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=document-source"
         },
         {
-          "id": "secure-handoff-and-workflow",
-          "title": "Secure handoff and workflow",
-          "path": "lessons/03-secure-handoff-and-workflow.md",
+          "id": "extraction-selection",
+          "title": "Select the extraction capability",
+          "path": "lessons/03-extraction-selection.md",
           "reused_with": [
-            "SharePoint document ingestion"
+            "content-understanding",
+            "document-intelligence",
+            "llm-structured-outputs",
+            "multimodal"
           ],
           "sequence": 3,
-          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/03-secure-handoff-and-workflow.md",
-          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=secure-handoff-and-workflow"
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/03-extraction-selection.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=extraction-selection"
         },
         {
-          "id": "review-evaluation-lifecycle",
-          "title": "Review, evaluation, and lifecycle",
-          "path": "lessons/04-review-evaluation-lifecycle.md",
+          "id": "typed-extraction",
+          "title": "Implement typed extraction with evidence",
+          "path": "lessons/04-typed-extraction.md",
           "reused_with": [
-            "responsible AI operations"
+            "content-understanding",
+            "document-intelligence",
+            "confidence-and-grounding"
           ],
           "sequence": 4,
-          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/04-review-evaluation-lifecycle.md",
-          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=review-evaluation-lifecycle"
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/04-typed-extraction.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=typed-extraction"
+        },
+        {
+          "id": "human-review",
+          "title": "Build review, correction, and handoff",
+          "path": "lessons/05-human-review.md",
+          "reused_with": [
+            "action-tools",
+            "human-in-the-loop",
+            "workflow-handoff"
+          ],
+          "sequence": 5,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/05-human-review.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=human-review"
+        },
+        {
+          "id": "prove-and-observe",
+          "title": "Evaluate and trace the workflow",
+          "path": "lessons/06-prove-and-observe.md",
+          "reused_with": [
+            "agent-evaluation",
+            "red-teaming",
+            "tracing-observability"
+          ],
+          "sequence": 6,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/06-prove-and-observe.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe"
+        },
+        {
+          "id": "deploy",
+          "title": "Deploy the reviewable workflow",
+          "path": "lessons/07-deploy.md",
+          "reused_with": [
+            "hosted-agent",
+            "deployment",
+            "operational-readiness"
+          ],
+          "sequence": 7,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/07-deploy.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=deploy"
+        }
+      ],
+      "build_modules": [
+        {
+          "id": "foundation",
+          "title": "Provision the shared Foundry foundation",
+          "summary": "Create the keyless Foundry account, chat + embedding deployments, document storage, and observability baseline before adding document services or customer files.",
+          "activity_id": "foundations",
+          "implementation_paths": [
+            "accelerator/main.bicep",
+            "accelerator/scripts/verify_foundation.py"
+          ],
+          "checkpoint": "Foundations Step 1",
+          "sequence": 1,
+          "activity_path": "activity.html?id=foundations"
+        },
+        {
+          "id": "document-source",
+          "title": "Connect an approved document source",
+          "summary": "Choose Azure Blob, ADLS Gen2, SharePoint, or OneLake and preserve source identity, version, permissions, and quarantine controls.",
+          "implementation_paths": [
+            "accelerator/scripts/verify_document_source.py"
+          ],
+          "checkpoint": "Approved intake and document-retention design",
+          "sequence": 2,
+          "activity_path": ""
+        },
+        {
+          "id": "extraction-selection",
+          "title": "Select the extraction capability",
+          "summary": "Verify and choose the current Content Understanding analyzer, Document Intelligence model, LLM structured-output, or multimodal approach against schema, document quality, region, cost, and review needs.",
+          "activity_id": "extra-document-workflow",
+          "implementation_paths": [
+            "accelerator/scripts/verify_extraction_selection.py"
+          ],
+          "checkpoint": "Document capability and implementation decision",
+          "sequence": 3,
+          "activity_path": "activity.html?id=extra-document-workflow"
+        },
+        {
+          "id": "typed-extraction",
+          "title": "Implement typed extraction with evidence",
+          "summary": "Return a validated result with confidence, page references, missing-field handling, and no inferred values.",
+          "activity_id": "extra-document-workflow",
+          "implementation_paths": [
+            "accelerator/scripts/verify_typed_extraction.py"
+          ],
+          "checkpoint": "Structured extraction result and low-confidence failure path",
+          "sequence": 4,
+          "activity_path": "activity.html?id=extra-document-workflow"
+        },
+        {
+          "id": "human-review",
+          "title": "Build review, correction, and handoff",
+          "summary": "Route exceptions to a named reviewer, retain corrections as evaluation evidence, and hand approved results to a governed downstream seam.",
+          "activity_id": "advanced-action-tools",
+          "implementation_paths": [
+            "accelerator/scripts/verify_human_review.py"
+          ],
+          "checkpoint": "Reviewer correction and approval trace",
+          "sequence": 5,
+          "activity_path": "activity.html?id=advanced-action-tools"
+        },
+        {
+          "id": "prove-and-observe",
+          "title": "Evaluate and trace the workflow",
+          "summary": "Measure field accuracy, false approval, review rate, injection resistance, and workflow latency across representative document cases.",
+          "activity_id": "advanced-evaluation-redteam",
+          "implementation_paths": [
+            "accelerator/scripts/verify_prove_and_observe.py"
+          ],
+          "checkpoint": "Scenario evaluation gate and trace review",
+          "sequence": 6,
+          "activity_path": "activity.html?id=advanced-evaluation-redteam"
+        },
+        {
+          "id": "deploy",
+          "title": "Deploy the reviewable workflow",
+          "summary": "Ship the approved workflow behind an authenticated endpoint with managed identity, application monitoring, and a rollback path.",
+          "activity_id": "advanced-deploy-hosted-agent",
+          "implementation_paths": [
+            "accelerator/scripts/verify_deploy.py"
+          ],
+          "checkpoint": "Controlled pilot deployment",
+          "sequence": 7,
+          "activity_path": "activity.html?id=advanced-deploy-hosted-agent"
         }
       ],
       "asset_base": "assets/data/scenarios/content-understanding-document-workflow/",

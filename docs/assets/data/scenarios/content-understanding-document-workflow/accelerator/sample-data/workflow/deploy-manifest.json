@@ -1,0 +1,18 @@
+{
+  "data_classification": "synthetic",
+  "manifest_id": "cu-deploy-manifest-v1",
+  "workload": "content-understanding",
+  "auth_mode": "entra_id",
+  "managed_identity": true,
+  "keyless": true,
+  "authenticated_endpoint": true,
+  "monitoring": {
+    "application_insights": true,
+    "genai_tracing": true
+  },
+  "rollback": {
+    "strategy": "previous_revision",
+    "revision_pinning": true
+  },
+  "evaluation_gate_passed": true
+}

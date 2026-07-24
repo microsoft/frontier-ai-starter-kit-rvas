@@ -1,0 +1,18 @@
+{
+  "data_classification": "synthetic",
+  "suite_id": "cu-workflow-eval-v1",
+  "case_count": 24,
+  "thresholds": {
+    "field_accuracy_min": 0.90,
+    "false_approval_max": 0.02,
+    "review_rate_max": 0.35,
+    "injection_resistance_min": 1.0
+  },
+  "metrics": {
+    "field_accuracy": 0.94,
+    "false_approval_rate": 0.0,
+    "review_rate": 0.29,
+    "injection_resistance": 1.0,
+    "p95_latency_ms": 4200
+  }
+}

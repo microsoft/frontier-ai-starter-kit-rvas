@@ -1,59 +1,119 @@
 {
   "id": "avatar-enabled-onboarding",
   "name": "Avatar-enabled Onboarding",
-  "tagline": "Deliver approved, accessible avatar-led onboarding with accountable human oversight.",
-  "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, and operational evidence.",
+  "tagline": "Build approved, accessible, avatar-led onboarding with accountable human oversight on Azure.",
+  "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
   "maturity": "initial",
   "owner": "RVAS field team",
   "decision_prompts": [
+    "Which Azure/Microsoft experience capability (Speech avatar batch, real-time avatar, Voice Live, video translation, or plain audio) fits the pilot's consent, accessibility, latency, language, and cost requirements?",
     "Which onboarding moment, cohort, locale, and channel should the pilot serve first?",
     "Which approved sources and named owners may support the script, and when do they expire?",
-    "Who must approve factual accuracy, legal/compliance implications, brand, and publication?",
-    "Which vendor or platform best meets consent, privacy, accessibility, language, audit, and exit requirements?",
-    "How will the experience disclose avatar or AI assistance, provide human help, and avoid deceptive representation?",
-    "Which feedback and operational measures will determine whether to iterate, scale, pause, or withdraw?"
+    "Who must approve factual accuracy, legal/compliance, brand, and accessibility before anything is published?",
+    "How will the experience disclose synthetic/AI assistance, offer human help, and avoid deceptive representation?",
+    "Which evaluation, red-team, and operational measures decide whether to iterate, scale, pause, or withdraw?"
   ],
   "lessons": [
     {
-      "id": "approved-content",
-      "title": "Establish the approved-content pack",
-      "path": "lessons/01-approved-content.md",
-      "reused_with": [
-        "policy communications",
-        "knowledge-grounded experiences"
-      ]
+      "id": "experience-selection",
+      "title": "Module 1 — Select the avatar/experience capability",
+      "path": "lessons/01-experience-selection.md",
+      "reused_with": ["policy communications", "learning content", "multilingual video"]
     },
     {
-      "id": "script-storyboard",
-      "title": "Draft a grounded script and storyboard",
-      "path": "lessons/02-script-storyboard.md",
-      "reused_with": [
-        "learning content",
-        "employee communications"
-      ]
+      "id": "foundation",
+      "title": "Module 2 — Provision the Foundry + Speech foundation",
+      "path": "lessons/02-foundation.md",
+      "reused_with": ["any Foundry app", "speech experiences"]
     },
     {
-      "id": "human-approval-selection",
-      "title": "Run approval and select delivery options",
-      "path": "lessons/03-human-approval-and-selection.md",
-      "reused_with": [
-        "brand-governed generation",
-        "vendor evaluation"
-      ]
+      "id": "content-pipeline",
+      "title": "Module 3 — Build the governed content pipeline",
+      "path": "lessons/03-content-pipeline.md",
+      "reused_with": ["policy communications", "knowledge-grounded experiences"]
     },
     {
-      "id": "experience-evidence",
-      "title": "Pilot, observe, and improve",
-      "path": "lessons/04-experience-evidence.md",
-      "reused_with": [
-        "employee experience",
-        "operational measurement"
-      ]
+      "id": "grounded-assistant",
+      "title": "Module 4 — Build the grounded assistant behind the experience",
+      "path": "lessons/04-grounded-assistant.md",
+      "reused_with": ["employee help desk", "grounded chat"]
+    },
+    {
+      "id": "experience-generation",
+      "title": "Module 5 — Generate the accessible avatar experience",
+      "path": "lessons/05-experience-generation.md",
+      "reused_with": ["learning content", "employee communications", "multilingual video"]
+    },
+    {
+      "id": "approval-gating",
+      "title": "Module 6 — Gate publication behind human approval",
+      "path": "lessons/06-approval-gating.md",
+      "reused_with": ["brand-governed generation", "regulated communications"]
+    },
+    {
+      "id": "prove-and-operate",
+      "title": "Module 7 — Evaluate, red-team, trace, and operate",
+      "path": "lessons/07-prove-and-operate.md",
+      "reused_with": ["employee experience", "operational measurement"]
+    }
+  ],
+  "build_modules": [
+    {
+      "id": "experience-selection",
+      "title": "Verify and select the Azure experience capability",
+      "summary": "Before implementation, use current Microsoft docs to confirm a supported Speech avatar (batch or real-time), Voice Live, video-translation, or plain-audio capability, and record its API, region, identity, pricing, accessibility, content-safety, consent, and responsible-AI gating contract.",
+      "checkpoint": "Dated, evidence-backed capability decision record covering service, API, region, identity, pricing, accessibility, disclosure, and limited-access gating"
+    },
+    {
+      "id": "foundation",
+      "title": "Provision the shared Foundry + Speech foundation",
+      "summary": "Deploy the keyless Foundry, model, Azure AI Search, Speech data plane, and observability baseline the onboarding application uses, with managed-identity RBAC and no secrets.",
+      "activity_id": "foundations",
+      "implementation_paths": ["accelerator/main.bicep", "accelerator/scripts/deploy.sh", "accelerator/scripts/verify_foundation.py"],
+      "checkpoint": "Foundations Steps 1 and 2 plus a keyless .env contract"
+    },
+    {
+      "id": "content-pipeline",
+      "title": "Build the governed content pipeline",
+      "summary": "Connect approved onboarding source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
+      "implementation_paths": ["accelerator/scripts/verify_content_pipeline.py", "accelerator/sample-data"],
+      "checkpoint": "Versioned claim set with authoritative sources, owners, and expiry"
+    },
+    {
+      "id": "grounded-assistant",
+      "title": "Build the grounded assistant behind the experience",
+      "summary": "Build the model or Foundry agent path for cited drafting, refusal on unapproved claims, human escalation, and approved-content retrieval that feeds the script.",
+      "activity_id": "foundations",
+      "checkpoint": "Foundations Steps 3 and 4 — grounded, citing, refusing agent"
+    },
+    {
+      "id": "experience-generation",
+      "title": "Generate the accessible avatar experience",
+      "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
+      "activity_id": "extra-voice-live",
+      "implementation_paths": ["accelerator/mock_renderer.py", "accelerator/scripts/verify_experience.py"],
+      "checkpoint": "Accessible experience generated from an approved revision, with disclosure and fallback"
+    },
+    {
+      "id": "approval-gating",
+      "title": "Gate publication behind human approval",
+      "summary": "Version output, collect factual, legal, brand, and accessibility approvals, and implement pause or withdrawal when a source changes.",
+      "implementation_paths": ["accelerator/scripts/verify_approval.py", "accelerator/sample-data/approvals.json"],
+      "checkpoint": "Approved publication and withdrawal record with a full trace"
+    },
+    {
+      "id": "prove-and-operate",
+      "title": "Evaluate, red-team, trace, and operate",
+      "summary": "Measure grounding, disclosure, accessibility, handoff, and defect behaviour; red-team the experience; trace it; and deploy a controlled pilot with a scorecard and release decision.",
+      "activity_id": "advanced-evaluation-redteam",
+      "implementation_paths": ["accelerator/scripts/verify_operate.py", "accelerator/sample-data/feedback-fixture.json"],
+      "checkpoint": "Pilot scorecard, red-team result, trace review, and release decision"
     }
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
   "facilitator": "FACILITATOR.md",
   "local_demo": "local-demo.md",
+  "solution": "solution.md",
   "validator": "validate.py"
 }

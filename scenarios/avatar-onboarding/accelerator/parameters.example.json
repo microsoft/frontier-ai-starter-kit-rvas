@@ -2,9 +2,16 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "contentPackName": {"value": "avatar-onboarding-demo"},
-    "deliveryAdapterName": {"value": "customer-selected-adapter-or-mock"},
-    "deliveryConfigurationReference": {"value": "https://example.invalid/customer-owned/configuration-reference"},
-    "approvedContentReference": {"value": "sample-data/README.md"}
+    "location": { "value": "westus2" },
+    "resourceToken": { "value": "avonb001" },
+    "tags": { "value": { "scenario": "avatar-enabled-onboarding", "env": "pilot" } },
+    "chatModelName": { "value": "gpt-4.1-mini" },
+    "chatModelDeploymentName": { "value": "chat" },
+    "chatModelCapacity": { "value": 30 },
+    "embeddingModelName": { "value": "text-embedding-3-large" },
+    "embeddingModelDeploymentName": { "value": "embedding" },
+    "searchSku": { "value": "basic" },
+    "approvedContentContainerName": { "value": "approved-content" },
+    "experienceOutputContainerName": { "value": "experience-output" }
   }
 }
