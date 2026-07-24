@@ -97,34 +97,6 @@
           </li>`;
         }).join('');
       }
-
-      function renderPathContext(activity, paths) {
-        const panel = document.getElementById('pathPanel');
-        const list = document.getElementById('pathList');
-        if (!panel || !list) return;
-
-        const usedBy = paths.filter((path) =>
-          (path.sessions || []).some((session) => session.activity_id === activity.id)
-        );
-        if (!usedBy.length) {
-          panel.style.display = 'none';
-          return;
-        }
-
-        const selectedPath = paths.find((path) => path.id === _path);
-        const selectedSession = selectedPath && selectedPath.sessions.find((session) => session.activity_id === activity.id);
-        if (selectedPath && selectedSession) {
-          list.innerHTML = `
-            <p><strong>${FP.esc(selectedPath.name)}</strong></p>
-            <p class="text-dim">${FP.esc(selectedSession.status)} — ${FP.esc(selectedSession.note || '')}</p>
-            <a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(selectedPath.id)}">View this path</a>`;
-          return;
-        }
-
-        list.innerHTML = usedBy.map((path) =>
-          `<a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(path.id)}" style="display:block;margin-bottom:6px">${FP.esc(path.name)}</a>`
-        ).join('');
-      }
     }
 
     // Prerequisite capabilities
@@ -191,6 +163,34 @@
         ).join('');
       }
     }
+  }
+
+  function renderPathContext(activity, paths) {
+    const panel = document.getElementById('pathPanel');
+    const list = document.getElementById('pathList');
+    if (!panel || !list) return;
+
+    const usedBy = paths.filter((path) =>
+      (path.sessions || []).some((session) => session.activity_id === activity.id)
+    );
+    if (!usedBy.length) {
+      panel.style.display = 'none';
+      return;
+    }
+
+    const selectedPath = paths.find((path) => path.id === _path);
+    const selectedSession = selectedPath && selectedPath.sessions.find((session) => session.activity_id === activity.id);
+    if (selectedPath && selectedSession) {
+      list.innerHTML = `
+        <p><strong>${FP.esc(selectedPath.name)}</strong></p>
+        <p class="text-dim">${FP.esc(selectedSession.status)} — ${FP.esc(selectedSession.note || '')}</p>
+        <a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(selectedPath.id)}">View this path</a>`;
+      return;
+    }
+
+    list.innerHTML = usedBy.map((path) =>
+      `<a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(path.id)}" style="display:block;margin-bottom:6px">${FP.esc(path.name)}</a>`
+    ).join('');
   }
 
   function renderRelated(c, allActivities) {
