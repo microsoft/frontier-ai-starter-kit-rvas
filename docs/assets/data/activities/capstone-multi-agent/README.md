@@ -155,7 +155,7 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 The agent-graph shape here is identical for almost any help-desk-shaped domain — only the corpus,
 the specialist prompts, the action tools, and the eval set change. Reskinning the capstone
 for your own domain (insurance, factory ops, retail, …) is exactly what the
-[Customer Build Track — Grow It Into a Team](activity.html?id=customer-capstone-multi-agent)
+[Customer Build Track — Grow It Into a Team](activity.html?id=capstone-multi-agent)
 chapter walks you through, decision by decision. Build the Northfield version below first; it is the
 known-good reference the customer chapter links back to.
 

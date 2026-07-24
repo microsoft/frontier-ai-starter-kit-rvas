@@ -32,7 +32,7 @@ If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer t
 | Target users and access | Who will use the assistant, and who should not? Note employees, customers, operators, or other audiences and any access assumptions. |
 | Business outcome | What should be faster, safer, cheaper, or more reliable after the prototype works? |
 | Top user tasks | What are the top 3 questions or workflows users need help with? |
-| Knowledge sources and access | Which approved documents, FAQs, policies, manuals, tickets, or pages can ground answers? Who owns them, who may see them, and who keeps them current? *(See corpus prep guidance below.)* |
+| Knowledge sources and access | Which approved documents, FAQs, policies, manuals, tickets, pages, APIs, or operational datasets are relevant? Who owns them, who may see them, and who keeps them current? *(Use corpus prep guidance below only when the selected path needs document grounding.)* |
 | Action candidates | What may the agent do? For each meaningful action, who may request it, approve it, or must receive an escalation? |
 | Safety boundaries | What must the agent refuse, escalate, redact, or never automate? What failure would be unacceptable even if other results look good? |
 | Success measures | What evidence would make stakeholders trust the prototype? Separate useful quality measures from failures that must block a pilot. |
@@ -47,7 +47,7 @@ Use these checkpoints to keep the engagement moving. A decision can be **yes**, 
 | Checkpoint | Decision | Evidence from the journey |
 |---|---|---|
 | Before building | Is the outcome bounded enough to build safely? | Owners, intended users, approved data, safety boundaries, and a narrow first outcome |
-| Before intended-user testing | Is the agent grounded and access-aware enough to test? | Cited answers, abstention behavior, source ownership, and data/access assumptions |
+| Before intended-user testing | Is the core capability and access model ready to test? | Cited answers or live-data proof where applicable, action approval behavior where applicable, source ownership, and data/access assumptions |
 | Before a controlled pilot | Is the action, behavior, and operating plan understood well enough to expose it? | Approval policy, evaluation and red-team results, trace-data decision, support owner, and known risks |
 | Before broader release | Should we launch, harden first, or remain demo-only? | Hosted deployment evidence, caller/agent permissions, rollback path, service signals, and residual gaps |
 
@@ -76,16 +76,18 @@ When filling in Knowledge sources, use these guidelines to avoid the most common
   The indexing architecture, agent wiring, and grounding pattern are identical regardless of which
   corpus you use — Northfield is the reference, not a ceiling.
 
-## Map the session tiers to the customer outcome
+## Map the path to the customer outcome
 
-| Tier | Build activity | Customer proof point |
+Choose an application path after this page. It links the canonical sessions below without copying
+them; do not force a RAG build onto an app whose value is action, live data, voice, or orchestration.
+
+| Capability | Build activity | Customer proof point |
 |---|---|---|
-| Foundations | Provision Foundry, choose a model, create an agent, attach a knowledge base | The agent answers real scenario questions with citations from trusted data |
-| Action Tools | Attach an MCP tool and implement approval | The agent safely completes one valuable workflow without acting silently |
-| Evaluation & Red Teaming | Create scenario-specific eval and adversarial prompts | The team can show quality, groundedness, refusal, and safety results |
-| Tracing & Observability | Instrument the run and inspect spans in App Insights | The team can explain latency, retrieval, tool calls, and failure paths |
-| Deploy / UI | Host the agent and expose a simple stakeholder-facing experience | A non-technical stakeholder can try the prototype and see citations or approval cards |
-| Capstone | Split the assistant into router and specialists | The right specialist agents handle a realistic customer request |
+| Shared agent baseline | Provision Foundry, choose a model, create an agent, and define guardrails | The team has a bounded, owned agent contract |
+| Knowledge, action, data, voice, or orchestration | Select the route-specific canonical session(s) | The primary outcome works with the right source, interface, or workflow control |
+| Evaluation & Red Teaming | Create scenario-specific eval and adversarial prompts | The team can show task quality, safety, and critical-failure behavior |
+| Tracing & Observability | Instrument the run and inspect spans in App Insights | The team can explain latency, retrieval, tool calls, handoffs, and failure paths |
+| Deploy / UI | Host the agent and expose a stakeholder-facing experience | A non-technical stakeholder can test the relevant proof point |
 
 ## Scenario swap guide
 
@@ -124,5 +126,5 @@ trace/operating notes, and a short list of residual risks and next actions.
 
 <div class="next-panel">
   <strong>Next:</strong>
-  <a class="btn btn-primary" href="{{ '/customer-build/foundations' | relative_url }}">Start Ground your app with your scenario</a>
+  <a class="btn btn-primary" href="{{ '/customer-build' | relative_url }}">Choose your application path</a>
 </div>

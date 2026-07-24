@@ -29,55 +29,6 @@
       "tier": "core"
     },
     {
-      "id": "customer-foundations",
-      "title": "Ground your app",
-      "module": "foundry",
-      "track": "foundations",
-      "tier": "core"
-    },
-    {
-      "id": "customer-action-tools",
-      "title": "Make it act",
-      "module": "foundry",
-      "track": "actions",
-      "tier": "core"
-    },
-    {
-      "id": "customer-evaluation-redteam",
-      "title": "Prove it's safe",
-      "module": "foundry",
-      "track": "trust",
-      "tier": "core"
-    },
-    {
-      "id": "customer-tracing-observability",
-      "title": "See inside it",
-      "module": "foundry",
-      "track": "trust",
-      "tier": "core"
-    },
-    {
-      "id": "customer-deploy-hosted-agent",
-      "title": "Ship it",
-      "module": "foundry",
-      "track": "deploy",
-      "tier": "core"
-    },
-    {
-      "id": "customer-build-ui",
-      "title": "Demo UI: Build your app face",
-      "module": "foundry",
-      "track": "deploy",
-      "tier": "core"
-    },
-    {
-      "id": "customer-capstone-multi-agent",
-      "title": "Grow it into a team",
-      "module": "foundry",
-      "track": "orchestrate",
-      "tier": "core"
-    },
-    {
       "id": "foundations",
       "title": "Ground: Foundations",
       "module": "foundry",
@@ -134,6 +85,27 @@
       "tier": "extra"
     },
     {
+      "id": "extra-document-workflow",
+      "title": "Build: Document Workflow",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-visual-multimodal",
+      "title": "Build: Visual Multimodal",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-governed-data-copilot",
+      "title": "Build: Governed Data Copilot",
+      "module": "foundry",
+      "track": "extras",
+      "tier": "extra"
+    },
+    {
       "id": "extra-copilot-assisted",
       "title": "Accelerate: Copilot-Assisted Build",
       "module": "foundry",
@@ -164,34 +136,6 @@
   ],
   "edges": [
     {
-      "from": "customer-outcome",
-      "to": "customer-foundations"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-action-tools"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-evaluation-redteam"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-tracing-observability"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-deploy-hosted-agent"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-build-ui"
-    },
-    {
-      "from": "customer-foundations",
-      "to": "customer-capstone-multi-agent"
-    },
-    {
       "from": "foundations",
       "to": "advanced-action-tools"
     },
@@ -218,6 +162,18 @@
     {
       "from": "foundations",
       "to": "extra-fabric-iq"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-document-workflow"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-visual-multimodal"
+    },
+    {
+      "from": "foundations",
+      "to": "extra-governed-data-copilot"
     },
     {
       "from": "foundations",

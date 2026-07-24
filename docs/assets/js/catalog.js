@@ -4,7 +4,9 @@
 
   let _all = [];
   let _outcomes = [];
+  let _paths = [];
   let _activeOutcome = null;
+  let _activePath = null;
   let _activeDiff = null;
   let _query = '';
 
@@ -15,7 +17,9 @@
 
     _all = data.activities || [];
     _outcomes = data.outcomes || [];
+    _paths = data.paths || [];
 
+    buildPathChips();
     buildOutcomeChips();
     buildDiffChips();
     initSearch();
@@ -32,6 +36,9 @@
     const outcome = FP.qp('outcome');
     if (outcome && _outcomes.some((o) => o.id === outcome)) _activeOutcome = outcome;
     if (!_activeOutcome) _activeOutcome = defaultOutcomeId();
+
+    const path = FP.qp('path');
+    if (path && _paths.some((p) => p.id === path)) _activePath = path;
 
     const diff = FP.qp('difficulty');
     if (diff && DIFFS.indexOf(diff) !== -1) _activeDiff = diff;
@@ -54,6 +61,11 @@
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', String(on));
     });
+    document.querySelectorAll('#pathChips .chip').forEach((b) => {
+      const on = b.dataset.path === _activePath;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
     document.querySelectorAll('#diffChips .chip').forEach((b) => {
       const on = b.dataset.diff === _activeDiff;
       b.classList.toggle('active', on);
@@ -66,11 +78,34 @@
   function syncUrl() {
     const q = new URLSearchParams();
     q.set('outcome', _activeOutcome || defaultOutcomeId());
+    if (_activePath) q.set('path', _activePath);
     if (_activeDiff) q.set('difficulty', _activeDiff);
     if (_query) q.set('q', _query);
     const qs = q.toString();
     const url = window.location.pathname + (qs ? '?' + qs : '');
     window.history.replaceState(null, '', url);
+  }
+
+  function buildPathChips() {
+    const container = document.getElementById('pathChips');
+    if (!container || !_paths.length) return;
+    container.innerHTML = _paths.map((p) =>
+      `<button class="chip chip-path" data-path="${FP.esc(p.id)}"
+         aria-pressed="false" type="button" title="${FP.esc(p.description)}">
+         ${FP.esc(p.name)}
+       </button>`
+    ).join('');
+
+    container.querySelectorAll('.chip').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.path;
+        _activePath = _activePath === id ? null : id;
+        if (_activePath) _activeOutcome = 'customer-build';
+        syncChipState();
+        syncUrl();
+        render();
+      });
+    });
   }
 
   function buildOutcomeChips() {
@@ -131,6 +166,7 @@
         _query = '';
         input.value = '';
         _activeOutcome = defaultOutcomeId();
+        _activePath = null;
         _activeDiff = null;
         syncChipState();
         syncUrl();
@@ -140,19 +176,29 @@
   }
 
   function filtered() {
-    return _all.filter((c) => {
-      if (!_activeOutcome) return false;
-      if (!(c.outcomes || []).includes(_activeOutcome)) return false;
-      if (_activeDiff   && c.difficulty !== _activeDiff) return false;
-      if (_query) {
-        const outcomeNames = (c.outcomes || []).map((id) => FP.outcomeName(id, _outcomes));
-        const hay = [c.title, c.description, ...(c.tags || []), ...outcomeNames, c.module, c.track]
-          .join(' ').toLowerCase();
-        if (!hay.includes(_query)) return false;
-      }
+    if (_activePath) {
+      const path = _paths.find((candidate) => candidate.id === _activePath);
+      if (!path) return [];
+      return (path.sessions || [])
+        .map((session) => {
+          const activity = _all.find((candidate) => candidate.id === session.activity_id);
+          return activity ? { ...activity, path_session: session } : null;
+        })
+        .filter(Boolean)
+        .filter(matchesFilters);
+    }
 
-      return true;
-    });
+    return _all.filter(matchesFilters);
+  }
+
+  function matchesFilters(c) {
+    if (!_activePath && (!_activeOutcome || !(c.outcomes || []).includes(_activeOutcome))) return false;
+    if (_activeDiff && c.difficulty !== _activeDiff) return false;
+    if (!_query) return true;
+    const outcomeNames = (c.outcomes || []).map((id) => FP.outcomeName(id, _outcomes));
+    const hay = [c.title, c.description, ...(c.tags || []), ...outcomeNames, c.module, c.track]
+      .join(' ').toLowerCase();
+    return hay.includes(_query);
   }
 
   function defaultOutcomeId() {
@@ -193,6 +239,7 @@
         <div class="ch-footer">
           ${FP.diffBadge(c.difficulty)}
           ${FP.durBadge(c.duration_minutes)}
+          ${c.path_session ? `<span class="badge badge-outcome">${FP.esc(c.path_session.status)}</span>` : ''}
           <div class="ch-tags">${FP.tagBadges(c.tags, 3)}</div>
         </div>
       </a>`;
@@ -202,7 +249,8 @@
     const q = new URLSearchParams();
     q.set('id', c.id);
     q.set('outcome', _activeOutcome);
-    return 'activity.html?' + q.toString();
+    if (_activePath) q.set('path', _activePath);
+    return 'activity.html?' + q.toString() + ((c.path_session && c.path_session.anchor) || '');
   }
 
   document.addEventListener('DOMContentLoaded', init);

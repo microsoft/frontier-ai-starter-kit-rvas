@@ -39,6 +39,24 @@ as decisions for your scenario and links back here for the mechanics.
   </div>
 
   <div class="quick-card">
+    <span class="track-badge">Documents</span>
+    <h3><a href="extra-document-workflow">Build: Document Workflow</a></h3>
+    <p>Extract, validate, review, and route document data without silently trusting low-confidence fields.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">Vision</span>
+    <h3><a href="extra-visual-multimodal">Build: Visual Multimodal</a></h3>
+    <p>Turn approved images into structured, uncertainty-aware results with a human-review boundary.</p>
+  </div>
+
+  <div class="quick-card">
+    <span class="track-badge">Data governance</span>
+    <h3><a href="extra-governed-data-copilot">Build: Governed Data Copilot</a></h3>
+    <p>Query operational data through explicit field, access, and provenance controls.</p>
+  </div>
+
+  <div class="quick-card">
     <span class="track-badge">Interface</span>
     <h3><a href="extra-voice-live">Interface: Voice Live</a></h3>
     <p>Add a spoken interaction path for contact-center, accessibility, or demo scenarios.</p>

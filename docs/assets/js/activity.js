@@ -3,33 +3,39 @@
   'use strict';
 
   let _route = null;
+  let _path = null;
 
   function cUrl(id) {
     const q = new URLSearchParams();
     q.set('id', id);
     if (_route) q.set('outcome', _route);
+    if (_path) q.set('path', _path);
     return 'activity.html?' + q.toString();
   }
 
   async function init() {
-    const activityId = FP.qp('id');
-    if (!activityId) { showError('No activity ID specified.'); return; }
+    const requestedId = FP.qp('id');
+    if (!requestedId) { showError('No activity ID specified.'); return; }
 
     let data;
     try { data = await FP.loadData(); }
     catch (e) { showError(e.message); return; }
 
+    const alias = (data.aliases || {})[requestedId];
+    const activityId = alias ? alias.id : requestedId;
     const activity = (data.activities || []).find((c) => c.id === activityId);
-    if (!activity) { showError('Activity "' + activityId + '" not found.'); return; }
+    if (!activity) { showError('Activity "' + requestedId + '" not found.'); return; }
 
     const mod = (data.modules || []).find((m) => m.id === activity.module);
     const allActivities = data.activities || [];
+    _path = resolvePath(activity, data.paths || [], alias);
     _route = resolveRoute(activity);
 
     document.title = activity.title + ' — AI Starter Kit';
     applyModuleColor(activity.module);
     renderHero(activity, mod);
     renderFacts(activity, mod, allActivities, data.outcomes || []);
+    renderPathContext(activity, data.paths || []);
     renderRelated(activity, allActivities);
     initViewSwitch(activity, allActivities);
     loadGuide('participant', activity, allActivities);
@@ -90,6 +96,34 @@
               : `<span class="mono">${FP.esc(pid)}</span>`}
           </li>`;
         }).join('');
+      }
+
+      function renderPathContext(activity, paths) {
+        const panel = document.getElementById('pathPanel');
+        const list = document.getElementById('pathList');
+        if (!panel || !list) return;
+
+        const usedBy = paths.filter((path) =>
+          (path.sessions || []).some((session) => session.activity_id === activity.id)
+        );
+        if (!usedBy.length) {
+          panel.style.display = 'none';
+          return;
+        }
+
+        const selectedPath = paths.find((path) => path.id === _path);
+        const selectedSession = selectedPath && selectedPath.sessions.find((session) => session.activity_id === activity.id);
+        if (selectedPath && selectedSession) {
+          list.innerHTML = `
+            <p><strong>${FP.esc(selectedPath.name)}</strong></p>
+            <p class="text-dim">${FP.esc(selectedSession.status)} — ${FP.esc(selectedSession.note || '')}</p>
+            <a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(selectedPath.id)}">View this path</a>`;
+          return;
+        }
+
+        list.innerHTML = usedBy.map((path) =>
+          `<a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(path.id)}" style="display:block;margin-bottom:6px">${FP.esc(path.name)}</a>`
+        ).join('');
       }
     }
 
@@ -216,12 +250,35 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const md = await res.text();
       FP.renderMd(md, body);
+      ensureGuideAnchors(body);
       removeDuplicateGuideTitle(body, c);
       body.querySelectorAll('.next-panel').forEach((el) => el.remove());
       renderActivityPager(body, c, allActivities);
+      scrollToGuideAnchor(body);
     } catch (e) {
       body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Could not load guide: ${FP.esc(e.message)}</p>`;
       renderActivityPager(body, c, allActivities);
+    }
+
+    function ensureGuideAnchors(container) {
+      container.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+        if (!heading.id) heading.id = guideHeadingId(heading.textContent || '');
+      });
+    }
+
+    function guideHeadingId(value) {
+      return String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s-]/gu, '')
+        .replace(/\s+/gu, '-');
+    }
+
+    function scrollToGuideAnchor(container) {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (!id) return;
+      const target = container.querySelector('#' + CSS.escape(id));
+      if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
     }
   }
 
@@ -266,16 +323,40 @@
   }
 
   function activitySequence(allActivities, current) {
+    if (_path) {
+      // Paths own their order; shared activities must not inherit a generic catalog order.
+      return _pathSessions(allActivities);
+    }
     const route = _route || (current.outcomes || [])[0];
     if (!route) return allActivities;
     return allActivities.filter((c) => (c.outcomes || []).includes(route));
   }
 
+  function _pathSessions(allActivities) {
+    const path = _pathData;
+    if (!path) return allActivities;
+    return path.sessions
+      .map((session) => allActivities.find((activity) => activity.id === session.activity_id))
+      .filter(Boolean);
+  }
+
   function resolveRoute(activity) {
+    if (_path) return 'customer-build';
     const routes = activity.outcomes || [];
     const requested = FP.qp('outcome');
     if (requested && routes.includes(requested)) return requested;
     return routes[0] || null;
+  }
+
+  let _pathData = null;
+
+  function resolvePath(activity, paths, alias) {
+    const requested = FP.qp('path') || (alias && alias.path);
+    const path = paths.find((candidate) =>
+      candidate.id === requested && (candidate.sessions || []).some((session) => session.activity_id === activity.id)
+    );
+    _pathData = path || null;
+    return path ? path.id : null;
   }
 
   function pagerItem(activity, direction, label) {

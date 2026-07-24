@@ -17,40 +17,40 @@
           "id": "foundations",
           "name": "Foundations",
           "description": "Provision Foundry, choose a model, create an agent, and ground it with knowledge.",
-          "activity_count": 2
+          "activity_count": 1
         },
         {
           "id": "actions",
           "name": "Action Tools",
           "description": "Attach governed tools and approval-gated workflows.",
-          "activity_count": 2
+          "activity_count": 1
         },
         {
           "id": "trust",
           "name": "Trust",
           "description": "Evaluate, red-team, trace, and debug agent behavior.",
-          "activity_count": 4
+          "activity_count": 2
         },
         {
           "id": "deploy",
           "name": "Deploy",
           "description": "Host the agent and expose a stakeholder-ready experience.",
-          "activity_count": 5
+          "activity_count": 3
         },
         {
           "id": "orchestrate",
           "name": "Orchestrate",
           "description": "Coordinate multiple agents with manager, planner, and router patterns.",
-          "activity_count": 3
+          "activity_count": 2
         },
         {
           "id": "extras",
           "name": "Extras",
           "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
-          "activity_count": 4
+          "activity_count": 7
         }
       ],
-      "activity_count": 23
+      "activity_count": 19
     }
   ],
   "outcomes": [
@@ -112,6 +112,9 @@
         "extra-build-ui",
         "extra-voice-live",
         "extra-fabric-iq",
+        "extra-document-workflow",
+        "extra-visual-multimodal",
+        "extra-governed-data-copilot",
         "extra-copilot-assisted",
         "extra-magentic-workflows",
         "extra-hosted-longrunning",
@@ -122,8 +125,8 @@
         "The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.",
         "Participants can identify what to swap when moving from Northfield to a customer scenario."
       ],
-      "activity_count": 14,
-      "duration_minutes": 1150
+      "activity_count": 17,
+      "duration_minutes": 1420
     },
     {
       "id": "customer-build",
@@ -149,23 +152,619 @@
       ],
       "activity_ids": [
         "customer-outcome",
-        "customer-foundations",
-        "customer-action-tools",
-        "customer-evaluation-redteam",
-        "customer-tracing-observability",
-        "customer-deploy-hosted-agent",
-        "customer-build-ui",
-        "customer-capstone-multi-agent",
+        "setup",
+        "foundations",
+        "advanced-action-tools",
+        "advanced-evaluation-redteam",
+        "advanced-tracing-observability",
+        "advanced-deploy-hosted-agent",
+        "extra-build-ui",
+        "extra-voice-live",
+        "extra-fabric-iq",
+        "extra-document-workflow",
+        "extra-visual-multimodal",
+        "extra-governed-data-copilot",
+        "extra-magentic-workflows",
+        "extra-hosted-longrunning",
+        "capstone-multi-agent",
         "cleanup"
       ],
       "success_metrics": [
         "The team can explain the target users, corpus, action, safety boundaries, and demo story.",
         "The prototype answers with citations, acts only through governed tools, and has a trust scorecard."
       ],
-      "activity_count": 9,
-      "duration_minutes": 805
+      "activity_count": 17,
+      "duration_minutes": 1420
     }
   ],
+  "paths": [
+    {
+      "id": "knowledge-assistant",
+      "name": "Knowledge and policy assistant",
+      "tagline": "Answer from trusted, approved sources with clear citations and abstention.",
+      "description": "Choose this path when the primary customer value is reliable answers about policies, manuals, FAQs, or other governed knowledge.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define users, approved sources, access assumptions, and abstention boundaries.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Build the agent and knowledge base",
+          "note": "Complete Steps 1-4, including Foundry IQ grounding.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test cited answers, abstention, and domain-specific safety.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "recommended",
+          "note": "Show retrieval, latency, and failure paths.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Expose a controlled endpoint for stakeholder testing.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Use only when a visible citations experience strengthens the demo.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-action-tools",
+          "status": "optional",
+          "note": "Add only a clearly governed side effect; knowledge alone is enough for this path.",
+          "title": "Act: Action Tools",
+          "description": "Attach governed tools and approval-gated actions to your Foundry agent.",
+          "duration_minutes": 90
+        }
+      ]
+    },
+    {
+      "id": "governed-workflow-agent",
+      "name": "Governed action and workflow agent",
+      "tagline": "Turn an approved request into one safe, reviewable workflow action.",
+      "description": "Choose this path when value comes from creating, changing, routing, or escalating work rather than answering from a document corpus.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define the side effect, requester, approver, escalation, and evidence.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. Knowledge-base Step 4 is optional unless the action needs policy context.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "advanced-action-tools",
+          "status": "required",
+          "note": "Implement one small approval-gated action or safe draft/queue equivalent.",
+          "title": "Act: Action Tools",
+          "description": "Attach governed tools and approval-gated actions to your Foundry agent.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Evaluate call, deny, escalate, and refusal behavior.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "required",
+          "note": "Trace tool calls and approval decisions end to end.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host the controlled workflow for stakeholder testing.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Add when users need an approval card or workflow status surface.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "extra-hosted-longrunning",
+          "status": "optional",
+          "note": "Use for work that must survive the request or browser session.",
+          "title": "Deploy: Long-Running Agents",
+          "description": "Use background run patterns for workflows that outlive a browser session.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "document-workflow",
+      "name": "Document workflow",
+      "tagline": "Extract, validate, review, and route structured work from documents.",
+      "description": "Choose this path when documents begin a business process and a human must be able to see, correct, and approve the extracted result.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define approved document types, retention, reviewers, unacceptable extraction errors, and the route after review.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. A knowledge base is optional unless the workflow needs policy context.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-document-workflow",
+          "status": "required",
+          "note": "Build extraction, confidence validation, review, and structured handoff for one safe document type.",
+          "title": "Build: Document Workflow",
+          "description": "Extract, validate, review, and route document data with a keyless, human-governed workflow.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test extraction quality, low-confidence handling, prompt injection in documents, and review routing.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "required",
+          "note": "Trace document processing, validation, and reviewer decisions.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host the controlled workflow only after document and reviewer access are understood.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Add a review surface only when it makes correction and approval clearer.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "live-data-copilot",
+      "name": "Live data and insights copilot",
+      "tagline": "Answer right-now operational questions from a governed live data source.",
+      "description": "Choose this path when the customer needs current state, capacity, inventory, queue, SLA, or metric insight rather than static policy retrieval.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define the source of truth, allowed fields, freshness expectation, and access boundary.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. Add a static knowledge base only when policy context is also needed.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-fabric-iq",
+          "status": "required",
+          "note": "Connect the approved operational data path and prove source routing.",
+          "title": "Deepen: Fabric IQ",
+          "description": "Ground answers in operational or analytical data when static documents are not enough.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test factuality, access boundaries, and safe handling of missing or stale data.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "required",
+          "note": "Trace live-data tool selection and latency.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host the copilot for a controlled user trial.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Use when a data-oriented stakeholder experience improves the proof point.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "voice-multimodal-assistant",
+      "name": "Voice assistant",
+      "tagline": "Deliver a low-friction spoken interaction without weakening the agent contract.",
+      "description": "Choose this path when voice, accessibility, hands-free use, or a live conversational experience is central to the customer outcome.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define audience, language, accessibility needs, handoff behavior, and the safe spoken demo.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. Grounding is optional unless spoken answers need trusted source citations.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-voice-live",
+          "status": "required",
+          "note": "Bind Voice Live to the scenario agent and tune turn-taking.",
+          "title": "Interface: Voice Live",
+          "description": "Add a spoken interaction path for contact-center, accessibility, or demo scenarios.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test safety, refusal, and task completion in the spoken experience.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "recommended",
+          "note": "Make latency and failed interaction paths visible.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host the agent for a repeatable voice demo.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Add a companion transcript or handoff surface when it helps the user journey.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "visual-multimodal-assistant",
+      "name": "Visual multimodal assistant",
+      "tagline": "Turn safe image inputs into structured, reviewable assistance.",
+      "description": "Choose this path when a user needs help understanding an image and the outcome can be bounded with explicit uncertainty and review behavior.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define allowed image classes, privacy boundaries, unsupported cases, reviewers, and the safe proof scenario.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3; add document grounding only if the image result needs policy context.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-visual-multimodal",
+          "status": "required",
+          "note": "Build structured image analysis with uncertainty and human-review boundaries.",
+          "title": "Build: Visual Multimodal",
+          "description": "Analyze safe image inputs with structured results, uncertainty handling, and human review boundaries.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test correct interpretation, uncertainty, unsafe inputs, and escalation.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "recommended",
+          "note": "Trace image processing and failure paths without exposing unsafe content.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host only the approved, access-controlled experience.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Use when the result needs a clear, reviewable visual interface.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "governed-data-copilot",
+      "name": "Governed data copilot",
+      "tagline": "Answer structured-data questions through explicit access, field, and provenance controls.",
+      "description": "Choose this path when operational insight needs more governance than a generic live-data lookup: approved fields, query rules, access assumptions, and explainable results.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define the data owner, approved fields, requester access, unacceptable disclosures, and a trustworthy result proof.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. Static knowledge is optional and may supply policy context.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-governed-data-copilot",
+          "status": "required",
+          "note": "Implement allowlisted structured-data access, query validation, provenance, and sensitive-result review.",
+          "title": "Build: Governed Data Copilot",
+          "description": "Query approved structured data through explicit access, field, and result-provenance controls.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Test access denial, unsafe query attempts, unsupported questions, and result correctness.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "required",
+          "note": "Trace the governed query path and inspect denied or escalated requests.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Expose only after caller identity and data-platform permissions are decided.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-build-ui",
+          "status": "optional",
+          "note": "Use when results need a visible provenance and approval surface.",
+          "title": "Demo UI: Build a UI",
+          "description": "Create a stakeholder-facing chat or demo UI for the Foundry agent.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "extra-fabric-iq",
+          "status": "optional",
+          "note": "Use Fabric IQ when the governed source is a supported Fabric/OneLake workload.",
+          "title": "Deepen: Fabric IQ",
+          "description": "Ground answers in operational or analytical data when static documents are not enough.",
+          "duration_minutes": 75
+        }
+      ]
+    },
+    {
+      "id": "orchestrated-workflow",
+      "name": "Orchestrated or long-running workflow",
+      "tagline": "Coordinate specialist work when a single agent or one chat turn is not enough.",
+      "description": "Choose this path when the outcome has real handoffs, specialist roles, durable jobs, or an auditable multi-step process.",
+      "sessions": [
+        {
+          "activity_id": "customer-outcome",
+          "status": "required",
+          "note": "Define role boundaries, handoffs, ownership, and the smallest valuable end-to-end process.",
+          "title": "Define your outcome",
+          "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
+          "duration_minutes": 45
+        },
+        {
+          "activity_id": "foundations",
+          "status": "required",
+          "label": "Provision and define the agent",
+          "note": "Complete Steps 1-3. Add grounding only to specialists that need trusted documents.",
+          "anchor": "#step-1-setup-provisioning-foundry-ai-search",
+          "title": "Ground: Foundations",
+          "description": "Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.",
+          "duration_minutes": 210
+        },
+        {
+          "activity_id": "extra-magentic-workflows",
+          "status": "required",
+          "note": "Model the manager/planner workflow before adding concurrency.",
+          "title": "Orchestrate: Magentic Workflows",
+          "description": "Explore manager/planner orchestration with Microsoft Agent Framework patterns.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "capstone-multi-agent",
+          "status": "required",
+          "note": "Build the smallest router and specialist team that proves the outcome.",
+          "title": "Orchestrate: Multi-Agent Capstone",
+          "description": "Split the assistant into a router and specialist agents for a realistic customer journey.",
+          "duration_minutes": 120
+        },
+        {
+          "activity_id": "advanced-evaluation-redteam",
+          "status": "required",
+          "note": "Evaluate routing, handoffs, refusals, and final task completion.",
+          "title": "Prove: Evaluation & Red Teaming",
+          "description": "Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "advanced-tracing-observability",
+          "status": "required",
+          "note": "Trace handoffs and investigate failed paths.",
+          "title": "Debug: Tracing & Observability",
+          "description": "Trace model calls, retrieval, tool use, and failures in Application Insights.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-action-tools",
+          "status": "recommended",
+          "note": "Add only if a specialist must safely change a downstream system.",
+          "title": "Act: Action Tools",
+          "description": "Attach governed tools and approval-gated actions to your Foundry agent.",
+          "duration_minutes": 90
+        },
+        {
+          "activity_id": "extra-hosted-longrunning",
+          "status": "optional",
+          "note": "Use when the workflow must continue after the initiating request ends.",
+          "title": "Deploy: Long-Running Agents",
+          "description": "Use background run patterns for workflows that outlive a browser session.",
+          "duration_minutes": 75
+        },
+        {
+          "activity_id": "advanced-deploy-hosted-agent",
+          "status": "recommended",
+          "note": "Host the workflow behind a controlled endpoint.",
+          "title": "Deploy: Hosted Agent",
+          "description": "Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.",
+          "duration_minutes": 90
+        }
+      ]
+    }
+  ],
+  "aliases": {
+    "customer-foundations": {
+      "id": "foundations",
+      "path": "knowledge-assistant"
+    },
+    "customer-action-tools": {
+      "id": "advanced-action-tools",
+      "path": "governed-workflow-agent"
+    },
+    "customer-evaluation-redteam": {
+      "id": "advanced-evaluation-redteam"
+    },
+    "customer-tracing-observability": {
+      "id": "advanced-tracing-observability"
+    },
+    "customer-deploy-hosted-agent": {
+      "id": "advanced-deploy-hosted-agent"
+    },
+    "customer-build-ui": {
+      "id": "extra-build-ui"
+    },
+    "customer-capstone-multi-agent": {
+      "id": "capstone-multi-agent",
+      "path": "orchestrated-workflow"
+    }
+  },
   "activities": [
     {
       "id": "setup",
@@ -184,8 +783,10 @@
         "azure"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
       ],
+      "paths": [],
       "personas": [],
       "business_value": [],
       "adoption_stage": "",
@@ -218,6 +819,7 @@
         "customer-build",
         "upskill"
       ],
+      "paths": [],
       "personas": [],
       "business_value": [],
       "adoption_stage": "",
@@ -249,6 +851,7 @@
       "outcomes": [
         "idea-forge"
       ],
+      "paths": [],
       "personas": [],
       "business_value": [],
       "adoption_stage": "",
@@ -281,6 +884,16 @@
         "customer-build",
         "idea-forge"
       ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot",
+        "orchestrated-workflow"
+      ],
       "personas": [],
       "business_value": [],
       "adoption_stage": "",
@@ -292,240 +905,6 @@
       "license": "MIT",
       "participant_path": "assets/data/activities/customer-outcome/README.md",
       "facilitator_path": "assets/data/activities/customer-outcome/FACILITATOR.md"
-    },
-    {
-      "id": "customer-foundations",
-      "title": "Ground your app",
-      "module": "foundry",
-      "track": "foundations",
-      "difficulty": "beginner",
-      "duration_minutes": 210,
-      "description": "Provision, choose a model, create your agent, and ground it in your own customer-safe data.",
-      "prerequisites": [
-        "customer-outcome"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "grounding",
-        "knowledge",
-        "citations"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/foundations.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-foundations/README.md",
-      "facilitator_path": "assets/data/activities/customer-foundations/FACILITATOR.md"
-    },
-    {
-      "id": "customer-action-tools",
-      "title": "Make it act",
-      "module": "foundry",
-      "track": "actions",
-      "difficulty": "intermediate",
-      "duration_minutes": 90,
-      "description": "Add one governed action from your own workflow, with approval before any side effect.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "tools",
-        "approval",
-        "workflow"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/advanced-action-tools.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-action-tools/README.md",
-      "facilitator_path": "assets/data/activities/customer-action-tools/FACILITATOR.md"
-    },
-    {
-      "id": "customer-evaluation-redteam",
-      "title": "Prove it's safe",
-      "module": "foundry",
-      "track": "trust",
-      "difficulty": "intermediate",
-      "duration_minutes": 90,
-      "description": "Create customer-scenario evals and red-team prompts that prove quality, safety, and groundedness.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "evaluation",
-        "red-team",
-        "safety"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/advanced-evaluation-redteam.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-evaluation-redteam/README.md",
-      "facilitator_path": "assets/data/activities/customer-evaluation-redteam/FACILITATOR.md"
-    },
-    {
-      "id": "customer-tracing-observability",
-      "title": "See inside it",
-      "module": "foundry",
-      "track": "trust",
-      "difficulty": "intermediate",
-      "duration_minutes": 75,
-      "description": "Trace your customer scenario end-to-end so stakeholders can see retrieval, tools, latency, and failure paths.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "observability",
-        "tracing"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/advanced-tracing-observability.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-tracing-observability/README.md",
-      "facilitator_path": "assets/data/activities/customer-tracing-observability/FACILITATOR.md"
-    },
-    {
-      "id": "customer-deploy-hosted-agent",
-      "title": "Ship it",
-      "module": "foundry",
-      "track": "deploy",
-      "difficulty": "advanced",
-      "duration_minutes": 90,
-      "description": "Package and host your customer agent behind a real endpoint for stakeholder testing.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "deployment",
-        "hosted-agent"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/advanced-deploy-hosted-agent.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-deploy-hosted-agent/README.md",
-      "facilitator_path": "assets/data/activities/customer-deploy-hosted-agent/FACILITATOR.md"
-    },
-    {
-      "id": "customer-build-ui",
-      "title": "Demo UI: Build your app face",
-      "module": "foundry",
-      "track": "deploy",
-      "difficulty": "intermediate",
-      "duration_minutes": 75,
-      "description": "Create a stakeholder-facing UI for your customer scenario, including citations or approval state.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "ui",
-        "demo"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/extra-build-ui.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-build-ui/README.md",
-      "facilitator_path": "assets/data/activities/customer-build-ui/FACILITATOR.md"
-    },
-    {
-      "id": "customer-capstone-multi-agent",
-      "title": "Grow it into a team",
-      "module": "foundry",
-      "track": "orchestrate",
-      "difficulty": "advanced",
-      "duration_minutes": 120,
-      "description": "Split your customer assistant into a router and specialist agents that match your demo journey.",
-      "prerequisites": [
-        "customer-foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "tags": [
-        "customer-build",
-        "multi-agent",
-        "capstone"
-      ],
-      "outcomes": [
-        "customer-build"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-build/capstone-multi-agent.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-capstone-multi-agent/README.md",
-      "facilitator_path": "assets/data/activities/customer-capstone-multi-agent/FACILITATOR.md"
     },
     {
       "id": "foundations",
@@ -545,7 +924,18 @@
         "citations"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -579,7 +969,13 @@
         "approval"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -613,7 +1009,18 @@
         "quality"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -647,7 +1054,18 @@
         "debugging"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -680,7 +1098,18 @@
         "container"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -713,7 +1142,17 @@
         "frontend"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "knowledge-assistant",
+        "governed-workflow-agent",
+        "document-workflow",
+        "live-data-copilot",
+        "voice-multimodal-assistant",
+        "visual-multimodal-assistant",
+        "governed-data-copilot"
       ],
       "personas": [],
       "business_value": [],
@@ -746,7 +1185,11 @@
         "interface"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "voice-multimodal-assistant"
       ],
       "personas": [],
       "business_value": [],
@@ -779,7 +1222,12 @@
         "data"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "live-data-copilot",
+        "governed-data-copilot"
       ],
       "personas": [],
       "business_value": [],
@@ -792,6 +1240,120 @@
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-fabric-iq/README.md",
       "facilitator_path": "assets/data/activities/extra-fabric-iq/FACILITATOR.md"
+    },
+    {
+      "id": "extra-document-workflow",
+      "title": "Build: Document Workflow",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Extract, validate, review, and route document data with a keyless, human-governed workflow.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "documents",
+        "document-intelligence",
+        "human-review",
+        "workflow"
+      ],
+      "outcomes": [
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "document-workflow"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-document-workflow/README.md",
+      "license": "MIT",
+      "participant_path": "assets/data/activities/extra-document-workflow/README.md",
+      "facilitator_path": "assets/data/activities/extra-document-workflow/FACILITATOR.md"
+    },
+    {
+      "id": "extra-visual-multimodal",
+      "title": "Build: Visual Multimodal",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "intermediate",
+      "duration_minutes": 90,
+      "description": "Analyze safe image inputs with structured results, uncertainty handling, and human review boundaries.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "vision",
+        "multimodal",
+        "structured-output",
+        "human-review"
+      ],
+      "outcomes": [
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "visual-multimodal-assistant"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-visual-multimodal/README.md",
+      "license": "MIT",
+      "participant_path": "assets/data/activities/extra-visual-multimodal/README.md",
+      "facilitator_path": "assets/data/activities/extra-visual-multimodal/FACILITATOR.md"
+    },
+    {
+      "id": "extra-governed-data-copilot",
+      "title": "Build: Governed Data Copilot",
+      "module": "foundry",
+      "track": "extras",
+      "difficulty": "advanced",
+      "duration_minutes": 90,
+      "description": "Query approved structured data through explicit access, field, and result-provenance controls.",
+      "prerequisites": [
+        "foundations"
+      ],
+      "prerequisite_capabilities": [],
+      "success_criteria": [],
+      "tags": [
+        "data",
+        "governance",
+        "structured-data",
+        "provenance"
+      ],
+      "outcomes": [
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "governed-data-copilot"
+      ],
+      "personas": [],
+      "business_value": [],
+      "adoption_stage": "",
+      "app_dependency": "none",
+      "tier": "extra",
+      "references": [],
+      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
+      "source_path": "activities/extra-governed-data-copilot/README.md",
+      "license": "MIT",
+      "participant_path": "assets/data/activities/extra-governed-data-copilot/README.md",
+      "facilitator_path": "assets/data/activities/extra-governed-data-copilot/FACILITATOR.md"
     },
     {
       "id": "extra-copilot-assisted",
@@ -812,6 +1374,7 @@
       "outcomes": [
         "upskill"
       ],
+      "paths": [],
       "personas": [],
       "business_value": [],
       "adoption_stage": "",
@@ -843,7 +1406,11 @@
         "magentic"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -876,7 +1443,12 @@
         "workflow"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "governed-workflow-agent",
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],
@@ -909,7 +1481,11 @@
         "router"
       ],
       "outcomes": [
-        "upskill"
+        "upskill",
+        "customer-build"
+      ],
+      "paths": [
+        "orchestrated-workflow"
       ],
       "personas": [],
       "business_value": [],

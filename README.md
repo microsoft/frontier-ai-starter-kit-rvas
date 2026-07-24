@@ -154,7 +154,7 @@ For customer engagements, treat every tier as an outcome checkpoint:
            v
   TIER 2  ADVANCED (modular, pick any order)
     Action Tools | Evaluation+RedTeam | Tracing | Deploy
-    deepeners: Fabric IQ | Voice Live | Build a UI | Copilot-Assisted
+    deepeners: Fabric IQ | Document Workflow | Visual Multimodal | Governed Data Copilot | Voice Live | Build a UI | Copilot-Assisted
            |
            v
   TIER 3  CAPSTONE (open-ended design activity)
@@ -187,7 +187,8 @@ Each Advanced activity offers two paths: a **Guided** path (revised, honest time
 - **Capstone-feeders**: Magentic Workflows, MAF + Hosted Long-Running Agents — the strongest content
   feeds straight into the Tier 3 multi-agent build.
 - **Capstone companion**: Build a UI — a web front-end for your agent (or agent team).
-- **Deepeners**: Fabric IQ, Give It a Voice (Voice Live), Copilot-Assisted Build — extend one concept.
+- **Deepeners**: Fabric IQ, Document Workflow, Visual Multimodal, Governed Data Copilot,
+  Give It a Voice (Voice Live), Copilot-Assisted Build — extend one concept.
 
 See the `activities/extra-*` folders.
 
