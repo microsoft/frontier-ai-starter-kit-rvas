@@ -14,14 +14,15 @@ local document → layout/OCR → field confidence + rules → human review → 
 ## Before you write SDK code
 
 Document Intelligence SDK and REST signatures change. **First search `microsoft-docs` MCP** for the
-current TypeScript Document Intelligence layout-analysis example, authentication/RBAC guidance, and
+current Python Document Intelligence layout-analysis example, authentication/RBAC guidance, and
 poller signature. Record the URLs or search titles you consulted in your build notes. Then load the
 project `azure-ai` skill reference and implement the current signature you found. Do not copy an
 old key-based sample.
 
 Use keyless auth: `DefaultAzureCredential`, with `az login` locally and a managed identity when
-deployed. Keep `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT` in environment configuration; never put a key,
-connection string, or applicant data in source or trace logs.
+deployed. Microsoft Entra authentication requires a Document Intelligence **custom subdomain** endpoint,
+not a regional endpoint. Keep `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT` in environment configuration; never
+put a key, connection string, or applicant data in source or trace logs.
 
 ## Build `document_workflow.py`
 

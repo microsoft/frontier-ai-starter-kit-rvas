@@ -20,7 +20,7 @@ Usage
 Environment (.env, from the Foundations end-state)
 --------------------------------------------------
     AZURE_AI_PROJECT_ENDPOINT       # https://<res>.services.ai.azure.com/api/projects/<proj>
-    AZURE_OPENAI_ENDPOINT           # https://<res>.openai.azure.com
+    AZURE_OPENAI_ENDPOINT           # Foundry account endpoint from .env
     AZURE_AI_MODEL_DEPLOYMENT_NAME  # judge model deployment, e.g. gpt-4o
     AZURE_FOUNDRY_AGENT_NAME        # the grounded agent created in Foundations Step 3/4
 
@@ -163,16 +163,18 @@ def run_builtin_evaluators(rows: list[dict]) -> dict[str, list[float]]:
         GroundednessEvaluator,
         RelevanceEvaluator,
     )
+    from azure.identity import DefaultAzureCredential
 
     model_config = {
         "azure_endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
         "azure_deployment": os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
     }
+    credential = DefaultAzureCredential()
     evaluators = {
-        "groundedness": GroundednessEvaluator(model_config),
-        "relevance": RelevanceEvaluator(model_config),
-        "coherence": CoherenceEvaluator(model_config),
-        "fluency": FluencyEvaluator(model_config),
+        "groundedness": GroundednessEvaluator(model_config, credential=credential),
+        "relevance": RelevanceEvaluator(model_config, credential=credential),
+        "coherence": CoherenceEvaluator(model_config, credential=credential),
+        "fluency": FluencyEvaluator(model_config, credential=credential),
     }
     scores: dict[str, list[float]] = {name: [] for name in evaluators}
     for row in rows:

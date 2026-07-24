@@ -113,9 +113,10 @@ credential ever reaches the browser.
 
 **Tasks:**
 1. Switch the BFF to stream the Responses output (`stream=True`) and relay it to the browser as
-   Server-Sent Events (`text/event-stream`) over `GET/POST /api/chat/stream`.
-2. In the page, consume the stream with `EventSource` (or `fetch` + `ReadableStream`) and append each
-   delta to the in-flight assistant message so the answer grows live.
+   Server-Sent Events (`text/event-stream`) over `POST /api/chat/stream`.
+2. In the page, consume the POST stream with `fetch` + `ReadableStream` and append each delta to the
+   in-flight assistant message so the answer grows live. `EventSource` is only suitable if you instead
+   design a separate GET stream endpoint and pass no request body.
 3. Add minimal UX: a "typing…" indicator while streaming, disable the send button mid-stream, and
    re-enable it when the stream closes.
 
@@ -164,9 +165,10 @@ or deny — the Action Tools governance loop, now with a button.
    return the pending tool call — name + arguments — instead of executing it.
 2. In the page, render an approval card: show the tool (`create_it_ticket`), its arguments
    (`student_id`, `summary`, …), and Approve / Deny buttons. Nothing runs until the user clicks.
-3. On the click, `POST /api/chat/approve` with the decision; the BFF creates a
-   `FunctionCallOutput`, resumes with `previous_response_id`, and streams the final result (the new
-   `ticket_id`, or a clean "no action taken" on deny).
+3. On the click, `POST /api/chat/approve` with the decision; the BFF submits the current client's
+   `function_call_output` input item, resumes with `previous_response_id`, and streams the final result
+   (the new `ticket_id`, or a clean "no action taken" on deny). Confirm the exact item model and
+   response shape in the current client documentation.
 
 **Success Criteria:**
 - [ ] Asking to *"open a high-priority WiFi ticket"* shows an approval card with the tool name +

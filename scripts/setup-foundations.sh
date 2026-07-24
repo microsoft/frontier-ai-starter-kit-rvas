@@ -6,15 +6,14 @@
 # the Foundations end-state so Advanced teams can skip the guided steps:
 #
 #   1. Create the Azure AI Search index over resources/sample-data/university-faq/
-#   2. Register a Foundry IQ knowledge base (project Index resource) over that index
-#   3. Create the "northfield-iq-assistant" agent with the knowledge base attached
+#   2. Create the "northfield-iq-assistant" agent with an Azure AI Search tool
 #
 # Idempotent: re-running updates in place. Expected runtime ~10–15 min (mostly indexing).
 # Verify afterwards with:  python scripts/validate-foundations.py
 #
 # Live Azure calls are GUARDED — the script fails fast with a clear message if
-# prerequisites (login, .env, SDKs) are missing, OR if the Foundry IQ knowledge base
-# or agent cannot be created. The AI Search index build (step 1) is independent and runs first.
+# prerequisites (login, .env, SDKs) are missing, OR if the grounded agent cannot be created.
+# The AI Search index build (step 1) is independent and runs first.
 # ============================================================================
 set -Eeuo pipefail
 
@@ -44,7 +43,6 @@ fi
 : "${AZURE_AI_PROJECT_ENDPOINT:?AZURE_AI_PROJECT_ENDPOINT missing from .env — provisioning incomplete}"
 : "${AZURE_AI_MODEL_DEPLOYMENT_NAME:?AZURE_AI_MODEL_DEPLOYMENT_NAME missing from .env}"
 SEARCH_INDEX_NAME="${AZURE_SEARCH_INDEX_NAME:-university-faq}"
-KB_NAME="${AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME:-northfield-faq-kb}"
 AGENT_NAME="${AZURE_FOUNDRY_AGENT_NAME:-northfield-iq-assistant}"
 CORPUS_DIR="${REPO_ROOT}/resources/sample-data/university-faq"
 
@@ -64,20 +62,19 @@ missing = [
 sys.exit(1 if missing else 0)
 PYCHECK
 
-info "Materializing Foundations end-state (index='${SEARCH_INDEX_NAME}', kb='${KB_NAME}', agent='${AGENT_NAME}')..."
+info "Materializing Foundations end-state (index='${SEARCH_INDEX_NAME}', agent='${AGENT_NAME}')..."
 echo ""
 
-# ---- step 1+2+3: run the Python materializer --------------------------------
+# ---- step 1+2: run the Python materializer ----------------------------------
 # Exported so the embedded Python can read them.
 export AZURE_SEARCH_ENDPOINT AZURE_AI_PROJECT_ENDPOINT AZURE_AI_MODEL_DEPLOYMENT_NAME
 export AZURE_AI_FOUNDRY_ENDPOINT="${AZURE_AI_FOUNDRY_ENDPOINT:-}"
-export SEARCH_INDEX_NAME KB_NAME AGENT_NAME CORPUS_DIR
+export SEARCH_INDEX_NAME AGENT_NAME CORPUS_DIR
 export AZURE_SEARCH_CONNECTION_NAME="${AZURE_SEARCH_CONNECTION_NAME:-search}"
 
 python3 - <<'PYEOF'
 import glob, os, re, sys
 from azure.identity import DefaultAzureCredential
-from azure.core.credentials import AzureKeyCredential  # noqa: F401 (fallback path)
 
 GREEN, YELLOW, RED, RESET = "\033[0;32m", "\033[1;33m", "\033[0;31m", "\033[0m"
 def ok(m):   print(f"{GREEN}{m}{RESET}")
@@ -95,9 +92,8 @@ cred = DefaultAzureCredential()
 from azure.search.documents.indexes import SearchIndexClient
 from azure.search.documents import SearchClient
 from azure.search.documents.indexes.models import (
-    SearchIndex, SimpleField, SearchableField, SearchField,
-    SearchFieldDataType, VectorSearch, HnswAlgorithmConfiguration,
-    VectorSearchProfile, SemanticConfiguration, SemanticSearch,
+    SearchIndex, SimpleField, SearchableField, SearchFieldDataType,
+    SemanticConfiguration, SemanticSearch,
     SemanticPrioritizedFields, SemanticField,
 )
 
@@ -159,16 +155,12 @@ if uploaded != len(docs):
 ok(f"✅ Step 1: uploaded {uploaded}/{len(docs)} chunks from {corpus_dir}.")
 
 # ---------------------------------------------------------------------------
-# STEP 2 — Foundry IQ knowledge base = a Foundry-project Index resource over the
-#          AI Search index (agentic retrieval source). azure-ai-projects 2.x.
-# STEP 3 — Grounded agent with the KB attached as an Azure AI Search tool.
+# STEP 2 — Grounded agent with the Azure AI Search tool.
 # ---------------------------------------------------------------------------
 project_endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
 model_deployment = os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"]
 search_conn      = os.environ.get("AZURE_SEARCH_CONNECTION_NAME", "search")
-kb_name          = os.environ["KB_NAME"]
 agent_name       = os.environ["AGENT_NAME"]
-kb_version       = "1"
 
 INSTRUCTIONS = (
     "You are the Northfield University Student Services Assistant. Answer student "
@@ -179,7 +171,6 @@ INSTRUCTIONS = (
 
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import (
-    AzureAISearchIndex,
     AzureAISearchTool,
     AzureAISearchToolResource,
     AISearchIndexResource,
@@ -189,27 +180,21 @@ from azure.ai.projects.models import (
 
 project = AIProjectClient(endpoint=project_endpoint, credential=cred)
 
-# STEP 2 — register/refresh the Foundry IQ knowledge base (Index resource).
+# Resolve the Search connection ID. The current Azure AI Search tool API attaches
+# the project connection and index directly.
 try:
-    kb = project.indexes.create_or_update(
-        name=kb_name,
-        version=kb_version,
-        index=AzureAISearchIndex(connection_name=search_conn, index_name=index_name),
-    )
-    kb_asset_id = getattr(kb, "id", None)
-    ok(f"✅ Step 2: Foundry IQ knowledge base '{kb_name}' (v{kb_version}) registered over "
-       f"index '{index_name}' via connection '{search_conn}' (asset_id={kb_asset_id}).")
+    connection_id = project.connections.get(search_conn).id
 except Exception as e:  # noqa: BLE001
-    die(f"Step 2 FAILED creating Foundry IQ knowledge base '{kb_name}': {e}\n"
-        f"  Verify the project has an Azure AI Search connection named '{search_conn}' "
-        f"and that you have the Azure AI Project Manager / Search Index Data Reader roles.")
+    die(f"Step 2 FAILED resolving Azure AI Search connection '{search_conn}': {e}\n"
+        f"  Verify the Foundry project has a Search connection named '{search_conn}'.")
 
-# STEP 3 — create/refresh the grounded agent with the KB attached as a search tool.
+# STEP 2 — create a grounded agent with the Search tool.
 search_tool = AzureAISearchTool(
     azure_ai_search=AzureAISearchToolResource(
         indexes=[
             AISearchIndexResource(
-                index_asset_id=kb_asset_id,
+                project_connection_id=connection_id,
+                index_name=index_name,
                 query_type=AzureAISearchQueryType.SEMANTIC,
                 top_k=5,
             )
@@ -225,12 +210,11 @@ try:
             tools=[search_tool],
         ),
     )
-    ok(f"✅ Step 3: agent '{agent_name}' created "
-       f"(version={getattr(agent, 'version', '?')}, knowledge_base='{kb_name}' attached).")
+    ok(f"✅ Step 2: agent '{agent_name}' created "
+       f"(version={getattr(agent, 'version', '?')}, index='{index_name}' attached).")
 except Exception as e:  # noqa: BLE001
-    die(f"Step 3 FAILED creating agent '{agent_name}': {e}\n"
-        f"  The KB index '{kb_name}' is registered; check model deployment "
-        f"'{model_deployment}' and azure-ai-projects>=2.1.0 is installed.")
+    die(f"Step 2 FAILED creating agent '{agent_name}': {e}\n"
+        f"  Check model deployment '{model_deployment}' and install requirements.txt.")
 
 print()
 ok("Foundations materialization finished. Verify with: python scripts/validate-foundations.py")

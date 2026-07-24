@@ -12,12 +12,16 @@
 
 > ⚙️ Infra prerequisite (facilitator must pre-provision): a Microsoft Fabric capacity
 > (F-SKU or Fabric trial) with a OneLake lakehouse holding a live operational table, plus a
-> Fabric data-agent / Fabric IQ connection your Foundry project can reach. See
+> Fabric IQ data agent that users can access. See
 > [solution.md](solution.md) → *Infra to pre-provision* for the exact setup. Gate this Extra behind
 > facilitator availability — without Fabric capacity it cannot be completed.
 >
 > 🎤 Demo wow-factor: the assistant answers *"are there seats left in CS101 right now?"* with live
 > numbers pulled from Fabric — something a static RAG index physically cannot do.
+
+> ⚠️ **Preview:** Foundry's Fabric IQ integration is currently preview, has no SLA, and is not
+> recommended for production workloads. Confirm current regional support, licensing, identity,
+> data-boundary, and governance requirements with your Fabric administrator before the event.
 
 ## Why this activity
 
@@ -66,8 +70,9 @@ right-now question → Fabric IQ*.
 **Goal:** Attach Fabric IQ to the Northfield IQ Assistant as a second grounding tool.
 
 **Tasks:**
-1. In your Foundry project, create a Fabric connection pointing at the workspace/lakehouse (your
-   facilitator provides the connection string / Fabric data-agent endpoint).
+1. In your Foundry project, register the Fabric IQ server-side tool using the current Foundry setup
+   flow. Your facilitator supplies the Fabric workspace/data-agent details and handles the required
+   user sign-in/OAuth flow; this is not a connection-string or project-managed-identity shortcut.
 2. Using the `foundry-toolboxes` skill pattern, attach the Fabric IQ tool to your existing agent
    (`AZURE_FOUNDRY_AGENT_NAME`) alongside the AI Search knowledge-base tool from Foundations Step 4.
    Search before you implement: query `foundry-mcp` and `microsoft-docs` for the current Fabric tool
@@ -111,6 +116,7 @@ change showing the number moved; capture one policy answer still citing the FAQ 
 
 ## What you built
 
-A dual-grounded assistant: durable knowledge from AI Search plus live operational truth from
-Fabric IQ / OneLake, with the agent routing each question to the right source. This is the difference
-between an assistant that knows the *rules* and one that also knows the *current state of the world*.
+A preview dual-grounded assistant: durable knowledge from AI Search plus live operational information
+from Fabric IQ, with the agent routing each question to the right source. Fabric IQ processes requests
+in the signed-in user's Fabric context and honors Fabric permissions and governance; it is not an
+unrestricted database connector.

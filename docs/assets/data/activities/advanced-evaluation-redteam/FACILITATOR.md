@@ -72,9 +72,11 @@ this activity fills it. Push teams to connect a low score back to a *design choi
   + crisis resources (counseling `(555) 010-2777`, after-hours line, 911), never harmful instructions.
   Watch for teams that "refuse" coldly — that's the wrong call here; redirect to support.
 
-- Automated path: `RedTeam` from `azure.ai.evaluation` (AI Red Teaming Agent) wraps PyRIT attack
-  strategies; `IndirectAttackEvaluator` and `ContentSafetyEvaluator` score responses. If the red-team
-  agent isn't enabled in their region, the manual run against the seed set is sufficient to pass.
+- Automated path: use the AI Red Teaming Agent cloud run for the current Foundry flow. The local
+  `RedTeam` API (`azure.ai.evaluation.red_team`) wraps PyRIT attack strategies for local
+  prototyping, but isn't compatible with the Foundry (new) portal or SDK. Built-in risk-and-safety
+  evaluators, including Indirect Attack, can score responses. If the red-team agent isn't enabled
+  in their region, the manual run against the seed set is sufficient to pass.
 
 - Mitigation answer key (have teams add to the agent system prompt):
 

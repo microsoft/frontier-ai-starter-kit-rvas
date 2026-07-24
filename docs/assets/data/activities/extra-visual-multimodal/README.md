@@ -57,8 +57,9 @@ Choose the smallest capability that answers it:
 | Compare image cues against a policy or explain uncertainty in context | A current, approved Foundry multimodal model |
 
 For Image Analysis, request **only** the features required for the demo (normally `READ` and
-optionally `CAPTION` or `TAGS`). More features increase processing, cost, and data exposure. Do
-not enable people/face analysis for this activity.
+optionally `CAPTION` or `TAGS`). Caption availability varies by region, so confirm the selected
+resource supports every requested feature before building the demo. More features increase processing,
+cost, and data exposure. Do not enable people/face analysis for this activity.
 
 **Checkpoint:** Explain why your selected model/task needs only those features.
 

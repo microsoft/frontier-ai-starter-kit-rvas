@@ -7,7 +7,7 @@
 # This file intentionally has NO `services:` block. The session does not deploy app code
 # through azd at provision time — `azd up` only stands up the shared Foundry footprint
 # (Foundry resource + project + model deployment + AI Search + App Insights + ACR).
-# The Foundations end-state (agent + index + IQ knowledge base) is materialized afterward by
+# The Foundations end-state (agent + index + Azure AI Search grounding) is materialized afterward by
 # scripts/setup-foundations.sh. The hosted-agent Advanced activity scaffolds a separate unified
 # azure.yaml under activities/advanced-deploy-hosted-agent/hosted/.
 name: ai-starter-kit-rvas

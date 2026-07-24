@@ -93,7 +93,7 @@ exit code as "done" — the version provisions asynchronously, so Step 2's check
   agent/container name — that's how they scope KQL to hosted runs.
 
 - If a team skipped the Tracing activity, they can still pass Step 4 via the portal Run history +
-  Tracing tab; the `correlate.kql` reuse is the richer path but not required.
+  Traces view; the `correlate.kql` reuse is the richer path but not required.
 
 ## Timing (60 min)
 

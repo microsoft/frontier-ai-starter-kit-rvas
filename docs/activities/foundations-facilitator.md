@@ -250,8 +250,8 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 
 ### What good looks like
 
-An AI Search index over the FAQ corpus; a Foundry IQ knowledge base using `SEMANTIC`; a
-new agent version with the AI Search tool attached; and a precise, cited answer (the FAFSA question
+An AI Search index over the FAQ corpus; a new agent version with the project Search connection
+and `SEMANTIC` query type attached; and a precise, cited answer (the FAFSA question
 is the canonical check). Grounded answers are specific and sourced; ungrounded ones are vague.
 
 ### Canonical verification question (use this for the Checkpoint)
@@ -279,8 +279,8 @@ project = AIProjectClient(
     endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
     credential=DefaultAzureCredential(),
 )
-kb = project.indexes.get(
-    name=os.environ["AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME"], version="1",
+search_connection = project.connections.get(
+    os.environ.get("AZURE_SEARCH_CONNECTION_NAME", "search"),
 )
 
 instructions = (
@@ -297,7 +297,8 @@ agent = project.agents.create_version(
         tools=[AzureAISearchTool(
             azure_ai_search=AzureAISearchToolResource(indexes=[
                 AISearchIndexResource(
-                    index_asset_id=kb.id,
+                    project_connection_id=search_connection.id,
+                    index_name=os.environ["AZURE_SEARCH_INDEX_NAME"],
                     query_type=AzureAISearchQueryType.SEMANTIC,
                     top_k=5,
                 ),

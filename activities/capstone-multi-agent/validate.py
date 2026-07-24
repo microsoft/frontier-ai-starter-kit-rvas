@@ -138,10 +138,18 @@ def _collect(scan: Scan, tree: ast.AST) -> None:
                 for tgt in node.targets:
                     if isinstance(tgt, ast.Name):
                         scan.executors.add(tgt.id)
-        # calls: add_edge / set_start_executor / send_message / yield_output
+        # calls: workflow edges / start executor / send_message / yield_output
         if isinstance(node, ast.Call):
             fname = _call_func_name(node)
-            if fname in EDGE_BUILDERS and len(node.args) >= 2:
+            if fname == "add_fan_in_edges" and len(node.args) >= 2:
+                source_arg, destination_arg = node.args[:2]
+                destination = _node_name(destination_arg)
+                if isinstance(source_arg, (ast.List, ast.Tuple, ast.Set)):
+                    for source_arg_item in source_arg.elts:
+                        source = _node_name(source_arg_item)
+                        scan.edges.append((source, destination))
+                        scan.executors.update({source, destination})
+            elif fname in EDGE_BUILDERS and len(node.args) >= 2:
                 src = _node_name(node.args[0])
                 # support fan-out helpers: add_edge(a, b) or add_fan_out_edges(a, [b, c])
                 dst_arg = node.args[1]
@@ -312,7 +320,7 @@ ADVISORY (printed, NOT gating — README marks these facilitator-confirmed):
   +  ≥1 specialist reuses the Foundations KB; ≥1 reuses the Action Tools approval loop
 FACILITATOR-JUDGED / MANUAL (live with your facilitator — never asserted here):
   manual  Both sequential AND parallel topologies shown
-  manual  Run visualized in DevUI (green/purple/black state)
+  manual  Run visualized in DevUI (workflow state/events visible)
   manual  Traced end-to-end — multi-agent span tree by operation_Id
   manual  2-minute demo narrates one question's journey through the team
   manual  (Stretch) hosted background/long-running run that survives a closed tab

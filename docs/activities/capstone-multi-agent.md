@@ -24,8 +24,8 @@ asks the question every real deployment eventually hits: what happens when one a
 
 You will break the monolith into a team — a triage/router that decides who handles a request,
 specialist agents that each own one job, and a synthesizer that merges their work into one
-cited, governed answer. You orchestrate them with the Microsoft Agent Framework (MAF) — the Oct-2025
-SDK that merges Semantic Kernel + AutoGen into a code-first graph of agents.
+cited, governed answer. You orchestrate them with Microsoft Agent Framework (MAF), using its workflow
+primitives to compose agents into a code-first graph.
 
 This activity is less guided than the earlier modules. There is no starter file with placeholder
 gaps; you choose the org chart and wire the workflow.
@@ -53,8 +53,8 @@ By the end, your team can:
    fan-out.
 
 5. Pass typed (Pydantic) data contracts between agents instead of regex-parsing prose.
-6. Visualize first in DevUI (green = done / purple = running / black = pending), then instrument
-   with the OTel tracing you already learned — and confirm a multi-agent span tree.
+6. Visualize workflow state and events in DevUI, then instrument with the OTel tracing you already
+   learned — and confirm a multi-agent span tree.
 
 7. *(Deploy variant)* Host the workflow as a long-running / background agent that keeps working
    after the tab is closed.
@@ -107,11 +107,12 @@ you add concurrency.
 
 ```python
 # illustrative — confirm current MAF surface via microsoft-docs MCP before coding
-WorkflowBuilder()
-  .set_start_executor(triage_executor)
-  .add_edge(triage_executor, knowledge_executor)
-  .add_edge(knowledge_executor, synthesizer_executor)
-  .build()
+workflow = (
+    WorkflowBuilder(start_executor=triage_executor)
+    .add_edge(triage_executor, knowledge_executor)
+    .add_edge(knowledge_executor, synthesizer_executor)
+    .build()
+)
 
 ```
 
@@ -121,13 +122,16 @@ Triage fans out to Knowledge and Action concurrently; both converge on the Synth
 
 ```python
 # illustrative — confirm current MAF surface via microsoft-docs MCP before coding
-WorkflowBuilder()
-  .set_start_executor(triage_executor)
-  .add_edge(triage_executor, knowledge_executor)       # fan-out
-  .add_edge(triage_executor, action_executor)          # fan-out
-  .add_edge(knowledge_executor, synthesizer_executor)  # fan-in
-  .add_edge(action_executor,    synthesizer_executor)  # fan-in
-  .build()
+workflow = (
+    WorkflowBuilder(start_executor=triage_executor)
+    .add_edge(triage_executor, knowledge_executor)       # fan-out
+    .add_edge(triage_executor, action_executor)          # fan-out
+    .add_fan_in_edges(
+        [knowledge_executor, action_executor],
+        synthesizer_executor,
+    )
+    .build()
+)
 
 ```
 
@@ -145,9 +149,9 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 
 ## Visual-first, then traced
 
-1. DevUI first. Launch the workflow in MAF's DevUI and *watch* the graph light up as a question
-   flows through (green = done, purple = running, black = pending). Build intuition before rigor — you
-   should be able to *see* the fan-out happen and the fan-in wait for both branches.
+1. DevUI first. Launch the workflow in MAF's DevUI and watch its state and events as a question flows
+   through. Build intuition before rigor — you should be able to see the fan-out happen and the fan-in
+   wait for both branches. UI colors and labels can change between DevUI releases.
 
 2. Then instrument. Turn on the OTel GenAI tracing from the Tracing & Observability activity
    (set the env flags above all `azure.ai.*` imports). Re-run one question and confirm you now get a
@@ -177,7 +181,7 @@ Livingston via Bicep outputs — never hand-edited into `.env.sample`.
 |---|---|
 | `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_AI_MODEL_DEPLOYMENT_NAME`, `AZURE_FOUNDRY_AGENT_NAME` | every agent (model + project) |
 | `AZURE_SEARCH_*`, `AZURE_SEARCH_INDEX_NAME=university-faq` | Knowledge specialist (grounding) |
-| `ACTION_API_URL=http://localhost:8080`, `ACTION_MCP_URL=http://localhost:8765/mcp`, `ACTION_API_KEY` *(empty)*; `server_label=northfield_actions` | Action specialist (MCP + approval loop) |
+| `ACTION_API_URL=http://localhost:8080`, `ACTION_MCP_URL=http://localhost:8765/mcp`, `ACTION_API_KEY` *(empty)* | Action specialist (MCP + approval loop) |
 | `APPLICATIONINSIGHTS_CONNECTION_STRING`, `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true`, `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` | the trace step |
 
 ---
@@ -221,7 +225,7 @@ python activities/capstone-multi-agent/validate.py --all
 ---
 
 ## Learning Resources
-- [Microsoft Agent Framework (MAF) overview](https://learn.microsoft.com/azure/foundry/agents/)
+- [Microsoft Agent Framework (MAF) overview](https://learn.microsoft.com/agent-framework/overview/)
 - [`foundry-workflows` skill](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/foundry-workflows/SKILL.md) — Magentic + workflow patterns
 - [Advanced · Action Tools](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/README.md) — the approval loop you reuse
 - [Advanced · Tracing & Observability](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-tracing-observability/README.md) — the OTel setup for Step 5

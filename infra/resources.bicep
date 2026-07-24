@@ -17,6 +17,7 @@ param location string
 @description('Tags applied to every resource.')
 param tags object
 
+@minLength(5)
 @description('Unique token used to name globally-unique resources.')
 param resourceToken string
 
@@ -80,7 +81,7 @@ resource search 'Microsoft.Search/searchServices@2024-06-01-preview' = {
     hostingMode: 'default'
     semanticSearch: 'standard'
     // Keyless-first: prefer RBAC, but keep key auth available as a fallback for the workshop.
-    authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerActivity' } }
+    authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerChallenge' } }
     disableLocalAuth: false
   }
 }
@@ -129,7 +130,9 @@ resource chatDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-0
     model: {
       format: 'OpenAI'
       name: chatModelName
-      version: empty(chatModelVersion) ? null : chatModelVersion
+      ...empty(chatModelVersion) ? {} : {
+        version: chatModelVersion
+      }
     }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
     raiPolicyName: 'Microsoft.DefaultV2'
@@ -208,17 +211,6 @@ resource projSearchServiceRole 'Microsoft.Authorization/roleAssignments@2022-04-
   }
 }
 
-// Search MI needs to read embeddings from Foundry (integrated vectorization / agentic retrieval).
-resource searchOpenAIRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(foundry.id, search.id, roleCognitiveServicesOpenAIUser)
-  scope: foundry
-  properties: {
-    principalId: search.identity.principalId
-    roleDefinitionId: roleCognitiveServicesOpenAIUser
-    principalType: 'ServicePrincipal'
-  }
-}
-
 // ---------------------------------------------------------------------------
 // RBAC — optional human principal (keyless local dev). Skipped when principalId is empty.
 // ---------------------------------------------------------------------------
@@ -280,7 +272,6 @@ output AZURE_AI_PROJECT_ENDPOINT string = 'https://${foundry.name}.services.ai.a
 output AZURE_AI_PROJECT_NAME string = project.name
 output AZURE_AI_MODEL_DEPLOYMENT_NAME string = chatModelDeploymentName
 output AZURE_AI_MODEL_NAME string = chatModelName
-output AZURE_AI_API_VERSION string = '2025-04-01-preview'
 
 output AZURE_SEARCH_ENDPOINT string = 'https://${search.name}.search.windows.net'
 output AZURE_SEARCH_INDEX_NAME string = searchIndexName

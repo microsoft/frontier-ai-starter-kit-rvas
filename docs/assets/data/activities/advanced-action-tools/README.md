@@ -44,7 +44,7 @@ Env contract (authoritative — matches `.env.sample` and the backend):
 
 > SDK note: this activity uses the current `azure-ai-projects` 2.x prompt-agent pattern:
 > explicit `FunctionTool` schemas on `PromptAgentDefinition`, function-call items returned by the
-> Responses API, and `FunctionCallOutput` results submitted with `previous_response_id`.
+> Responses API, and `FunctionCallOutput` results submitted in the same Foundry conversation.
 
 Files in this activity
 - [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
@@ -141,9 +141,10 @@ python activities/advanced-action-tools/validate.py --step 2
    - If approved: parse the arguments and call the matching backend function (e.g.
      `create_it_ticket(**json.loads(item.arguments))`), capture the result string.
    - If denied: set the result to `json.dumps({"denied": "Human operator declined."})`.
-3. Build `FunctionCallOutput(type="function_call_output", call_id=item.call_id, output=result)`
-   for each call. Continue the turn with another `responses.create` using the output list,
-   `previous_response_id=response.id`, and the same `agent_reference`.
+3. Create a conversation before the initial call with `openai.conversations.create()`. Build
+   `FunctionCallOutput(type="function_call_output", call_id=item.call_id, output=result)` for each
+   call. Continue the turn with another `responses.create` using the output list, the same
+   `conversation=conversation.id`, and the same `agent_reference`. Delete the conversation when done.
 
 **Success Criteria:**
 - [ ] An action never executes without an explicit approve decision.

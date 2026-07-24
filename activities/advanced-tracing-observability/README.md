@@ -16,9 +16,9 @@ wrong, or uncited answer, can you explain why? Right now the agent is a black bo
 a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
 and you can see none of it.
 
-In this activity you make every answer observable end to end. You enable OpenTelemetry (OTel)
-GenAI tracing, export the spans to Application Insights, and then read the same data two ways —
-the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
+Foundry records agent-service traces after the project is connected to Application Insights. In this
+activity you also enable OpenTelemetry (OTel) in your client process, then read the telemetry two
+ways — the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
 student question and reconstruct its entire journey: model → retrieval → tool, with token counts,
 latency per span, and the inputs/outputs at each hop.
 
@@ -77,8 +77,7 @@ gives you only the gotcha + the package list · (c) Stretch goals go open-ended.
    not already in `.env`, fetch it from the project and add it (the portal shows it under
    Monitoring → Application analytics, or read it via the SDK as shown below).
 2. Create `activities/advanced-tracing-observability/trace_setup.py` that wires tracing in the exact
-   order below. The two `os.environ[...]` lines MUST run before any `azure.ai.*` import — this is
-   the single most common mistake in this activity (see the gotcha box).
+   order below. Set the two `os.environ[...]` lines before calling `AIProjectInstrumentor().instrument()`.
 3. Run the file. It should print that instrumentation is enabled and the App Insights connection was
    resolved, without emitting spans yet.
 
@@ -86,9 +85,8 @@ gives you only the gotcha + the package list · (c) Stretch goals go open-ended.
 # trace_setup.py
 import os
 
-# ── 1. Tracing flags MUST be set BEFORE importing the Azure AI SDK. ──────────────
-#    The instrumentation reads these at import time. Set them first or message
-#    content (prompts/answers) will silently never appear on your spans.
+# ── 1. Set tracing flags BEFORE calling .instrument(). ──────────────────────────
+#    The instrumentor reads these settings when instrumentation starts.
 os.environ["AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING"] = "true"
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 
@@ -125,16 +123,15 @@ if __name__ == "__main__":
     enable_tracing()
 ```
 
-> ⚠️ The "set env before import" gotcha. If you put the two `os.environ[...]` assignments *after*
-> `from azure.ai... import ...`, the instrumentation has already initialized and will ignore them.
-> Symptom: spans appear but every prompt/response field is empty, or no GenAI spans show up at all.
-> Keep the env lines at the very top of the file, above all Azure imports.
+> ⚠️ The "set env before instrumentation" gotcha. If you set either `os.environ[...]` assignment
+> *after* `AIProjectInstrumentor().instrument()`, the instrumentor can omit message content.
+> Keep the settings above that call.
 
 **Success Criteria:**
 
 - [ ] `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `.env` (or resolved at runtime).
 - [ ] Running `trace_setup.py` prints `✅ GenAI tracing enabled` with no import error.
-- [ ] The two tracing env flags are set above every `azure.ai.*` import in the file.
+- [ ] The two tracing env flags are set before `AIProjectInstrumentor().instrument()` in the file.
 
 **Checkpoint:**
 
@@ -165,7 +162,7 @@ plus a tool span if Action Tools is attached).
 # traced_run.py
 import os
 from pathlib import Path
-from trace_setup import enable_tracing   # importing this runs the env-first setup
+from trace_setup import enable_tracing
 
 project = enable_tracing()
 client = project.get_openai_client()
@@ -332,8 +329,8 @@ Your contract:
 > and a KQL query you wrote.
 
 The only help you get:
-- The gotcha: set the two tracing env flags before any `azure.ai.*` import (see the gotcha
-  box in Step 1) or message content silently never appears on your spans.
+- The gotcha: set the two tracing env flags before `AIProjectInstrumentor().instrument()` (see the
+  gotcha box in Step 1) or message content can be absent from client spans.
 - The packages: `azure-ai-projects`, `azure-monitor-opentelemetry`, `azure-core-tracing-opentelemetry`.
 - The three calls you'll need: `configure_azure_monitor(...)`, `AIProjectInstrumentor().instrument()`,
   and resolving the App Insights connection string.
@@ -367,7 +364,7 @@ Open-ended: no single right answer.
 
 ## Learning resources
 
-- [Trace AI agents with OpenTelemetry (Foundry)](https://learn.microsoft.com/azure/foundry/how-to/develop/trace-agents-sdk)
+- [Set up tracing for AI agents in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/observability/how-to/trace-agent-setup)
 - [Azure Monitor OpenTelemetry for Python](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=python)
 - [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 - [Kusto Query Language (KQL) reference](https://learn.microsoft.com/azure/data-explorer/kusto/query/)

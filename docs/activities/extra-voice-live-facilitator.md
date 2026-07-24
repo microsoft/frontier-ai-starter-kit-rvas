@@ -21,14 +21,18 @@ session.
 
 ## Infra to pre-provision (do this BEFORE the session)
 
-1. Voice Live API access on an Azure AI Speech / Foundry resource in a supported region —
+1. Voice Live API access on a Microsoft Foundry resource in a supported region —
    confirm availability for your event subscription/region *weeks ahead*; it's newer and not everywhere.
 
-2. Keyless RBAC for the project identity (or a key as workshop fallback) on the Speech/Voice resource.
+2. Microsoft Entra ID RBAC: assign the project identity the current `Foundry User` role. Voice Live
+   agent mode does not support key-based authentication.
 3. Client hardware: each team needs a laptop with a working mic + speakers (headset is better —
    avoids feedback/echo in a noisy room). This is the #1 silent failure.
 
-4. Confirm `azure-ai-voicelive` installs cleanly via `pip install azure-ai-voicelive` (install on demand; not pre-pinned).
+4. Confirm Python 3.10+ and `azure-ai-voicelive` install cleanly (install on demand; not pre-pinned).
+   Record the Voice Live endpoint, Foundry project name, agent name, and any selected agent version in
+   each team's local, untracked configuration. They are additional agent-mode prerequisites; the three
+   shared Foundry variables alone are insufficient.
 
 > **Flag for the coordinator:** if the venue is loud, headsets or a quiet breakout corner make or break
 > the demo. Echo cancellation only goes so far.
@@ -38,12 +42,15 @@ session.
 `azure-ai-voicelive` connect/session signatures are new and changing. Send teams to `microsoft-docs`
 for the current connect call and event names before coding. The event names in Step 2
 (`session.created`, response audio deltas, response-done) are illustrative — confirm the live ones.
+The Python SDK is async-only; use an async event loop rather than trying to wrap it in synchronous calls.
 
 ## Per-step facilitation
 
 ### Step 1 — connect
+- **Pitfall:** configuring only the three shared Foundry variables. The agent quickstart also needs
+  Voice Live resource/project context; verify its current environment list and keep those values local.
 - **Pitfall:** binding to a bare model instead of the agent → spoken answers lose persona/grounding.
-  They must pass `AZURE_FOUNDRY_AGENT_NAME` so turns run through the Northfield agent.
+  They must pass the Northfield agent name so turns run through the Northfield agent.
 
 - Auth errors here are usually region/access, not code. Check the resource supports Voice Live.
 
@@ -70,7 +77,7 @@ multi-turn conversation with one barge-in. A short screen+audio recording is the
 | Symptom | Cause | Fix |
 |---|---|---|
 | No audio out | playback waits for full response | play streamed audio deltas incrementally |
-| Auth/region error on connect | Voice Live not available in region | use a supported region / resource |
+| Auth/region error on connect | Missing Entra role, Voice Live context, or supported region | check `Foundry User`, the local Voice Live/project settings, and region support |
 | Echo / feedback loop | open speakers + mic | use a headset; enable echo cancellation |
 | Answers ignore the corpus | bound to model not agent | bind session to `AZURE_FOUNDRY_AGENT_NAME` |
 | Push-to-talk feels clunky | VAD not enabled | enable server-side turn detection |

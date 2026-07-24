@@ -11,12 +11,14 @@ nav_order: 22
 > Specific prereq: the Advanced · Action Tools activity — your Action sub-agent reuses the MCP
 > action tool (`ACTION_MCP_URL`) you wired there.
 
-> ⚙️ Infra prerequisite: the `agent-framework` SDK (install on demand — not pre-pinned) and DevUI for
-> visualization — both run locally, no extra Azure provisioning. You only need your Foundations
-> `.env` + the Action Tools backend running.
+> ⚙️ Infra prerequisite: compatible Microsoft Agent Framework packages installed locally — the core
+> `agent-framework` package, the `agent-framework-foundry` integration for Foundry, and the prerelease
+> `agent-framework-devui` package for visualization. Confirm the current install commands before the
+> session; these packages move independently. No extra Azure provisioning is required beyond
+> Foundations and the Action Tools backend.
 >
-> 🎤 Demo wow-factor: a manager agent plans live which specialist to call next — watch the plan
-> light up in DevUI (green = done, purple = running) instead of a hard-coded if/else chain.
+> 🎤 Demo wow-factor: a manager agent plans live which specialist to call next — watch the plan and
+> execution state update in DevUI instead of a hard-coded if/else chain.
 
 ## Why this activity
 
@@ -55,13 +57,13 @@ You'll build four specialists and let the manager coordinate them:
 
 ## Step 1 — Define the four specialist agents (MAF)
 
-**Goal:** Four single-responsibility agents exist as MAF `ChatAgent`s with focused instructions.
+**Goal:** Four single-responsibility MAF agents exist with focused instructions.
 
 **Tasks:**
 
-1. `pip install agent-framework` (install on demand; not pre-pinned). Search before you implement: query `microsoft-docs`
-   and `foundry-mcp` (the `foundry-workflows` skill) for the *current* MAF `ChatAgent` /
-   Magentic builder API — MAF is fast-moving.
+1. Install the current compatible core, Foundry-integration, and DevUI packages. Search before you
+   implement: query `microsoft-docs` and `foundry-mcp` (the `foundry-workflows` skill) for the
+   current `Agent`, `FoundryChatClient`, Magentic, and DevUI installation/API surface.
 
 2. Create Triage, Knowledge, Action, Escalation as separate agents, each with a tight
    system prompt scoped to its one job.
@@ -108,15 +110,15 @@ You'll build four specialists and let the manager coordinate them:
 **Tasks:**
 
 1. Launch DevUI and point it at your workflow.
-2. Submit the composite request and watch the plan graph: nodes go purple while running, green
-   when done, as the manager fans out to specialists.
+2. Submit the composite request and watch the plan graph and events update as the manager fans out to
+   specialists. Do not depend on a particular color or label; DevUI presentation can change.
 
 3. Submit a low-confidence / out-of-scope request ("Can you change my final grade?") and confirm it
    routes to Escalation.
 
 **Success Criteria:**
 
-- [ ] DevUI renders the plan with live status colors per sub-agent.
+- [ ] DevUI renders the plan with live execution state per sub-agent.
 - [ ] An out-of-scope request is routed to Escalation, not actioned.
 
 **Checkpoint:** *DevUI state* — screenshot the plan graph mid-run (a running + a completed node) and the

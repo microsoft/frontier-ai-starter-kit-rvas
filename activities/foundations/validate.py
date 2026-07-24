@@ -17,12 +17,13 @@ no network, no quota) — handy in CI or before `azd up` finishes.
 Env contract (from `.env`, produced by `azd up` / ./scripts/deploy.sh):
     AZURE_AI_PROJECT_ENDPOINT, AZURE_AI_MODEL_DEPLOYMENT_NAME,
     AZURE_SEARCH_ENDPOINT, AZURE_SEARCH_INDEX_NAME, AZURE_SEARCH_CONNECTION_NAME,
-    AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME, AZURE_FOUNDRY_AGENT_NAME
+    AZURE_FOUNDRY_AGENT_NAME
 """
 from __future__ import annotations
 
 import argparse
 import os
+import re
 
 try:
     from dotenv import load_dotenv
@@ -190,8 +191,7 @@ def _has_citation(text: str, response=None) -> bool:
             for annotation in getattr(content, "annotations", []) or []:
                 if "citation" in str(getattr(annotation, "type", "")).lower():
                     return True
-    t = (text or "").lower()
-    return bool(text) and ("[" in text or "source" in t or ".md" in t)
+    return bool(re.search(r"\b[\w-]+\.(?:md|txt)\b", text or "", re.IGNORECASE))
 
 
 def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill") -> bool:

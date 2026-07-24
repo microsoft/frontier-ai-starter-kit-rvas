@@ -10,7 +10,7 @@
 
 By the end a team can take one student question and account for its full execution: model span,
 retrieval span, optional tool span, with tokens, latency, and an estimated cost — read two ways
-(portal Tracing tab + KQL). The pedagogy is deliberately FrontierWeekHack's "same data, two lenses"
+(portal Traces view + KQL). The pedagogy is deliberately FrontierWeekHack's "same data, two lenses"
 pattern: the portal teaches the *shape* of a trace, KQL teaches *querying* it.
 
 The activity assumes the Foundations end-state (a deployed, grounded Northfield IQ Assistant) or
@@ -40,7 +40,8 @@ Tell-tale signs and the fix:
 - App Insights connection string: Foundations writes `APPLICATIONINSIGHTS_CONNECTION_STRING` to
   `.env`. If a team is on the bootstrap path and it's missing, the SDK call
   `project.telemetry.get_application_insights_connection_string()` resolves it (shown in the README).
-  Portal path: project → Monitoring → Application analytics → copy connection string.
+  Portal path: project → Agents → Traces or Project details → Connected resources; use the SDK
+  call shown in the README to resolve the connection string.
 
 - SDK import note: the verified instrumentor import in the current stack is
   `from azure.ai.projects.telemetry import AIProjectInstrumentor` then `.instrument()`. Some teams may
@@ -64,7 +65,7 @@ Tell-tale signs and the fix:
 - Auth errors here are almost always `DefaultAzureCredential` (not logged in / wrong subscription),
   not tracing. Have them run `az account show` first.
 
-### Step 3 — Portal Tracing tab
+### Step 3 — Portal Traces view
 
 - The span hierarchy: a parent agent/response span, with child model (`gen_ai` attributes) and
   retrieval spans; a tool span appears only if they attached the Action Tools MCP tool.

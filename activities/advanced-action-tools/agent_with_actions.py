@@ -9,7 +9,7 @@ API function-call loop:
   - FunctionTool       — declares each action's JSON schema on the agent version
   - response.output    — contains requested `function_call` items
   - FunctionCallOutput — returns the approved result or denial to the model
-  - previous_response_id — continues the same tool-call turn
+  - conversation ID    — continues the same tool-call turn
 
 Same governance objective as the MCP-native path: nothing executes without
 explicit human approval.
@@ -117,24 +117,19 @@ def run_with_approval(openai, agent_name: str, prompt: str):
     the human each call, asks y/n, then either executes the backend function or
     returns a denial as FunctionCallOutput. Nothing executes before approval.
     """
-    response = openai.responses.create(
-        input=prompt,
-        extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
-    )
-
-    while any(item.type == "function_call" for item in response.output):
-        # TODO Step 3:
-        #   1. Iterate response.output and handle each item whose type is "function_call".
-        #   2. Show item.name + item.arguments to the human and ask for approval.
-        #   3. If approved, execute the matching backend function with
-        #      **json.loads(item.arguments). If denied, return a denial JSON string.
-        #   4. Append FunctionCallOutput(type="function_call_output",
-        #      call_id=item.call_id, output=result) to a ResponseInputParam list.
-        #   5. Continue with openai.responses.create(input=outputs,
-        #      previous_response_id=response.id, extra_body={"agent_reference": ...}).
-        raise NotImplementedError("< PLACEHOLDER: implement the Responses approval loop >")
-
-    return response
+    # TODO Step 3:
+    #   1. Create a conversation with openai.conversations.create().
+    #   2. Call the agent with conversation=conversation.id, then handle every
+    #      function_call item in response.output.
+    #   3. Show item.name + item.arguments to the human and ask for approval.
+    #   4. If approved, execute the matching backend function with
+    #      **json.loads(item.arguments). If denied, return a denial JSON string.
+    #   5. Append FunctionCallOutput(type="function_call_output",
+    #      call_id=item.call_id, output=result) to a ResponseInputParam list.
+    #   6. Continue with openai.responses.create(input=outputs,
+    #      conversation=conversation.id, extra_body={"agent_reference": ...}).
+    #   7. Delete the conversation after the final response.
+    raise NotImplementedError("< PLACEHOLDER: implement the Responses approval loop >")
 
 
 def main() -> None:

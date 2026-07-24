@@ -14,9 +14,6 @@
     "chatModelName": {
       "value": "${AZURE_AI_MODEL_NAME=gpt-4o}"
     },
-    "chatModelVersion": {
-      "value": "${AZURE_AI_MODEL_VERSION=2024-11-20}"
-    },
     "chatModelDeploymentName": {
       "value": "${AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4o}"
     },

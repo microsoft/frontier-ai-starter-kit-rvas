@@ -18,18 +18,21 @@ All already created by `azd up` (Foundations/Deploy), but verify:
 
 1. ACR exists and the team can push (or use ACR cloud build — no local Docker needed).
 2. Hosted-agent endpoints enabled on the project (`azd ai agent` works — same as Deploy activity).
-3. App Insights wired: `APPLICATIONINSIGHTS_CONNECTION_STRING` present so background runs trace.
+   Managed hosted agents are generally available; verify regional availability and the current `azd` surface.
+3. App Insights wired. Hosted Agent Service provides observability configuration to the running
+   container; do not bake a connection string into an image or source file.
 4. The Action Tools backend reachable from the *hosted* environment — `localhost` won't resolve from a
-   container. They must point `ACTION_MCP_URL` at a tunneled/Container-Apps URL, not localhost.
+   container. Use an authenticated remote endpoint, not an unauthenticated public tunnel.
 
 > **Flag for the coordinator:** the localhost→container gap is the #1 deploy-time surprise. If the Action
-> tool is local, the hosted workflow can't reach it — plan a dev tunnel or deploy the backend too.
+> tool is local, the hosted workflow can't reach it — deploy it behind MCP-compatible authentication or
+> use an approved authenticated integration.
 
 ## Search-Before-Implement
 
-Two preview surfaces here: unified hosted-agent `azure.yaml` / `azd` (via `foundry-hosted-agents`) and the
-background-run API (`background=True`, submit/poll). Both move. Send teams to `microsoft-docs` /
-`foundry-mcp` for current signatures rather than guessing.
+Hosted Agent Service is generally available, but the Python Agent Framework hosting integration may be
+prerelease and its APIs can move. The Responses `background=True` submission/retrieval flow also evolves.
+Send teams to `microsoft-docs` / `foundry-mcp` for current signatures rather than guessing.
 
 ## Per-step facilitation
 
@@ -65,7 +68,7 @@ run history; an immediate-return submit; a fresh-process poll retrieving the res
 | Symptom | Cause | Fix |
 |---|---|---|
 | Workflow won't start in container | `agent-framework` missing from image | add to container `requirements.txt` |
-| Action specialist fails when hosted | `ACTION_MCP_URL` = localhost | point at tunneled/Container-Apps URL |
-| Submit blocks until done | not using background path | use `background=True` submit + poll |
-| No spans for background run | App Insights conn string unset in container | pass `APPLICATIONINSIGHTS_CONNECTION_STRING` |
-| Can't retrieve result later | relying on in-memory state | poll the run handle, not local vars |
+| Action specialist fails when hosted | `ACTION_MCP_URL` = localhost | use an authenticated remote MCP endpoint |
+| Submit blocks until done | not using the Responses background path | use `background=True` and retrieve the response later |
+| No spans for background run | observability isn't configured for the hosted agent | verify the hosted-agent/App Insights deployment configuration |
+| Can't retrieve result later | relying on in-memory state | retrieve the platform response handle, not local vars |

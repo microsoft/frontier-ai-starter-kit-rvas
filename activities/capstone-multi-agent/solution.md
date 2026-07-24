@@ -16,8 +16,8 @@ contracts** between hops, **fan-out/fan-in** concurrency, and **visual-first the
 Neither reference repo (FrontierWeekHack, azure-trust-agents) hands the org-chart to the learner — ATA
 ships a *fixed* fan-out, FWH a *fixed* portal DAG. The open-endedness is the point.
 
-> ⚠️ **Search-Before-Implement is a facilitator-enforced rule here.** MAF is Oct-2025 and much of it is
-> preview. The `WorkflowBuilder` method names, the executor/context API, and the Magentic manager class
+> ⚠️ **Search-Before-Implement is a facilitator-enforced rule here.** The `WorkflowBuilder` method
+> names, executor/context API, and Magentic manager class
 > **drift between versions.** All code in this guide is **illustrative**. Send teams to `microsoft-docs`
 > MCP and the `foundry-workflows` skill to confirm the current surface — do **not** let them (or you)
 > treat these snippets as pinned fact.
@@ -57,8 +57,7 @@ agents.
 **Pass 1 — sequential** (illustrative; confirm surface via MCP):
 
 ```python
-WorkflowBuilder() \
-  .set_start_executor(triage_executor) \
+WorkflowBuilder(start_executor=triage_executor) \
   .add_edge(triage_executor, knowledge_executor) \
   .add_edge(knowledge_executor, synthesizer_executor) \
   .build()
@@ -67,12 +66,10 @@ WorkflowBuilder() \
 **Pass 2 — fan-out + fan-in** (illustrative):
 
 ```python
-WorkflowBuilder() \
-  .set_start_executor(triage_executor) \
+WorkflowBuilder(start_executor=triage_executor) \
   .add_edge(triage_executor, knowledge_executor) \
   .add_edge(triage_executor, action_executor) \
-  .add_edge(knowledge_executor, synthesizer_executor) \
-  .add_edge(action_executor,    synthesizer_executor) \
+  .add_fan_in_edges([knowledge_executor, action_executor], synthesizer_executor) \
   .build()
 ```
 
@@ -110,9 +107,9 @@ prose, that's the intervention moment — it's both the graded criterion and the
 
 Have them launch the workflow in MAF's **DevUI** *before* tracing. Create a local
 `devui_launcher.py` using the directory-based pattern from the Magentic Extra. The win is watching
-the graph light up: green = done, purple = running, black = pending. Facilitation cue: ask *"why is
-the synthesizer still black?"* — the answer (it's waiting on both fan-in branches) is the concurrency
-lesson made visible.
+workflow state and events change. UI colors and labels can change between DevUI releases. Facilitation
+cue: ask *"why is the synthesizer still waiting?"* — the answer (it is waiting on both fan-in branches)
+is the concurrency lesson made visible.
 
 ```bash
 # illustrative — confirm current launcher entrypoint via the foundry-workflows skill / MCP

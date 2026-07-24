@@ -74,20 +74,22 @@ across the four steps:
    ```
 3. Provision everything with one `azd up`. This deploys, via Bicep, a Foundry resource
    (project-management enabled), a Foundry project, a chat model deployment, an Azure AI
-   Search service, and Log Analytics + Application Insights — and auto-generates your `.env`:
+   Search service, and Log Analytics + Application Insights:
    ```bash
    azd up
    ```
    > If `azd up` is blocked by quota or region limits, use the Bash fallback `./scripts/deploy.sh`
    > and pick a supported region when prompted.
-4. Confirm the generated `.env` exists and holds your resource contract (do not commit it).
+4. Export the `azd` environment to `.env`, then confirm it holds your resource contract (do not commit it).
 
-   > What is the `.env` contract? `azd up` writes a `.env` file containing your resource
+   > What is the `.env` contract? `azd up` writes outputs to the selected `azd` environment.
+   > Export them with `azd env get-values > .env`; that file contains your resource
    > endpoints, deployment names, and connection strings. Every script in this repo loads it
    > automatically via `python-dotenv` (`load_dotenv()`). It is git-ignored — never commit it.
 
    At minimum it contains the project endpoint, the model deployment name, and the search endpoint:
    ```bash
+   azd env get-values > .env
    grep -E "AZURE_AI_PROJECT_ENDPOINT|AZURE_AI_MODEL_DEPLOYMENT_NAME|AZURE_SEARCH_ENDPOINT" .env
    ```
 5. Verify keyless authentication works (no API keys — `DefaultAzureCredential` reuses your
@@ -119,12 +121,12 @@ python activities/foundations/validate.py --step 1
 **Goal:** Choose a model for the assistant by comparing two contrasting models in the Playground, tune the system instructions, then reproduce that behavior in code.
 
 **Tasks:**
-1. `azd up` already deployed `gpt-4o` (deployment name `gpt-4o`) — this is the model your `.env`
-   `AZURE_AI_MODEL_DEPLOYMENT_NAME` points at and the one you carry forward through Foundations. In
+1. `azd up` deployed the model named by `.env`'s `AZURE_AI_MODEL_DEPLOYMENT_NAME`; this is the
+   deployment you carry forward through Foundations. In
    the Foundry portal, go to Discover → Models and deploy one contrasting model to compare it
    against — a faster, lower-cost option such as `gpt-4.1-mini`, or a different family such as `phi-4`.
    Wait until the new deployment status reads Succeeded / Ready.
-2. Open the Chat Playground, select your `gpt-4o` deployment, and set a starting system
+2. Open the Chat Playground, select that deployment, and set a starting system
    instruction for the assistant:
    ```text
    You are Northfield University's student services assistant. Answer in a warm, clear,
@@ -204,7 +206,8 @@ python activities/foundations/validate.py --step 2
    - Refusals — declines off-topic, harmful, or academic-integrity-violating requests, and redirects to the right office.
    - Format — concise, student-friendly; offers a next action or contact when relevant.
 2. Create the agent in the portal: open Build → Agents → New agent, name it
-   `northfield-iq-assistant`, select your `gpt-4o` deployment, paste your instructions, and save.
+   `northfield-iq-assistant`, select the deployment from `AZURE_AI_MODEL_DEPLOYMENT_NAME`, paste
+   your instructions, and save.
    Test it on a few questions in the agent Playground surface.
 3. Create the same agent in code as a versioned resource. Create
    `activities/foundations/app/step3_agent.py`:
@@ -268,9 +271,10 @@ python activities/foundations/validate.py --step 3
 
 ---
 
-## Step 4 — Knowledge Base: Index + Foundry IQ  *(← Foundations end-state)*
+## Step 4 — Knowledge Base: Azure AI Search grounding  *(← Foundations end-state)*
 
-**Goal:** Ground the agent in Northfield's own data — index the FAQ corpus into Azure AI Search, build a Foundry IQ knowledge base, attach it to the agent, and verify answers come back with citations.
+**Goal:** Ground the agent in Northfield's own data — index the FAQ corpus into Azure AI Search,
+attach that index to the agent, and verify answers come back with source citations.
 
 **Tasks:**
 1. Inspect the corpus. The source data lives in
@@ -278,34 +282,33 @@ python activities/foundations/validate.py --step 3
    financial aid, housing, registration, academics, student clubs, IT support, and more. Knowing what
    it covers tells you what the assistant should and should not be able to answer.
 
-2. Index it into Azure AI Search. Create a vector/hybrid index over the FAQ files. Use the
-   helper `activities/foundations/app/step4_index.py` (outline below) to chunk, embed, and upload:
+2. Index it into Azure AI Search. Create a text index with semantic ranking over the FAQ files. Use the
+   helper `activities/foundations/app/step4_index.py` (outline below) to chunk and upload:
    ```python
    import os, glob
    from azure.identity import DefaultAzureCredential
    from azure.search.documents.indexes import SearchIndexClient
-   # Build a vector + keyword (hybrid) index named after AZURE_SEARCH_INDEX_NAME.
+   # Build a text index with semantic ranking named after AZURE_SEARCH_INDEX_NAME.
    # For each .md file under resources/sample-data/university-faq/:
-   #   - chunk to ~500 tokens with ~15% overlap
-   #   - embed each chunk
+   #   - chunk to a size appropriate for the corpus
    #   - upload documents with a retrievable `content` field (for answers)
    #     and a `source` field = the file name (for citations)
    ```
    Aim for moderate chunks with light overlap so policy details (deadlines, GPA thresholds,
    office hours) are not split awkwardly. Keep a retrievable `content` field and a `source` field so
-   the agent can cite where each answer came from.
+   the agent can cite where each answer came from. The local Northfield corpus uses filenames as
+   citations. For clickable URL citations, index a retrievable source-URL field that points to
+   documents your users are authorized to access.
 3. Confirm keyless RBAC. For the agent's managed identity to read the index without keys, the
    Foundry project managed identity needs two roles on the AI Search resource:
    Search Index Data Contributor and Search Service Contributor. `azd up` assigns these; if a
    query later returns 401/403, assign them in the portal (AI Search → Access control (IAM)).
-4. Build a Foundry IQ knowledge base over the index (agentic retrieval: query decomposition →
-   parallel search → rerank). In the portal: Build → Knowledge bases → New, point it at your AI
-   Search index, and choose the `SEMANTIC` query type.
 
-   > `SEMANTIC` — Azure AI Search query type that applies semantic reranking to the text index
-   > created in the previous task. Use a vector or hybrid query type only when the index also
-   > contains an embedding vector field and vector-search configuration.
-5. Attach the knowledge base to the agent and require citations. Create
+   > **Foundry IQ is separate.** The managed [Foundry IQ](https://learn.microsoft.com/azure/foundry/agents/concepts/what-is-foundry-iq)
+   > workflow is configured in **Build → Knowledge**. A project Index asset or an Azure AI Search
+   > tool is not a Foundry IQ knowledge base. This workshop's reproducible baseline uses the
+   > Azure AI Search tool directly.
+4. Attach the Azure AI Search index to the agent and require citations. Create
    `activities/foundations/app/step4_ground.py` — add the Azure AI Search tool to a new
    version of `northfield-iq-assistant` and update the instructions to demand sources:
    ```python
@@ -324,11 +327,9 @@ python activities/foundations/validate.py --step 3
        endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
        credential=DefaultAzureCredential(),
    )
-   # The Foundry IQ knowledge base you built in task 4 is a project Index resource;
-   # fetch it to get the asset id the search tool grounds on.
-   kb = project.indexes.get(
-       name=os.environ["AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME"], version="1",
-   )
+   connection_id = project.connections.get(
+       os.environ["AZURE_SEARCH_CONNECTION_NAME"]
+   ).id
 
    instructions = (
        "You are Northfield University's student services assistant. Answer ONLY from the "
@@ -344,7 +345,8 @@ python activities/foundations/validate.py --step 3
            tools=[AzureAISearchTool(
                azure_ai_search=AzureAISearchToolResource(indexes=[
                    AISearchIndexResource(
-                       index_asset_id=kb.id,
+                       project_connection_id=connection_id,
+                       index_name=os.environ["AZURE_SEARCH_INDEX_NAME"],
                        query_type=AzureAISearchQueryType.SEMANTIC,
                        top_k=5,
                    ),
@@ -354,7 +356,7 @@ python activities/foundations/validate.py --step 3
    )
    print(f"Grounded {agent.name} version {agent.version}")
    ```
-6. Verify grounded answers with citations. Ask the grounded agent precise questions and confirm
+5. Verify grounded answers with citations. Ask the grounded agent precise questions and confirm
    the answers reference the corpus:
    ```python
    openai = project.get_openai_client()
@@ -369,7 +371,7 @@ python activities/foundations/validate.py --step 3
 
 **Success Criteria:**
 - [ ] An Azure AI Search index over the Northfield FAQ corpus exists and returns results for a test query.
-- [ ] A Foundry IQ knowledge base is built over the text index using `SEMANTIC` retrieval.
+- [ ] The agent uses the Azure AI Search project connection and the text index with `SEMANTIC` retrieval.
 - [ ] The `northfield-iq-assistant` agent has a new version with the AI Search tool attached.
 - [ ] The agent answers a precise question (e.g. FAFSA deadline + school code `041777`) with at least one citation to a source document.
 - [ ] A grounded vs. ungrounded comparison shows the grounded answer is more specific and sourced.
@@ -393,8 +395,8 @@ python activities/foundations/validate.py --all
 ```
 
 `--all` re-asserts every step: infra provisioned (Step 1), model deployment reachable (Step 2), the
-named versioned agent exists (Step 3), and the agent returns a cited answer from the knowledge
-base (Step 4). When this passes green, every Advanced activity is unblocked.
+named versioned agent exists (Step 3), and the agent returns a cited answer from Azure AI Search
+(Step 4). When this passes green, every Advanced activity is unblocked.
 
 ---
 

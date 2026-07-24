@@ -18,7 +18,7 @@ Auth (optional): if ACTION_API_KEY is set in the environment, every mutating req
 must send a matching `x-api-key` header. Leave it unset for open local workshops.
 
 Run:
-    uvicorn app:app --host 0.0.0.0 --port 8080     # base URL -> ACTION_API_URL
+    uvicorn app:app --host 127.0.0.1 --port 8080   # base URL -> ACTION_API_URL
 """
 from __future__ import annotations
 

@@ -16,32 +16,34 @@ a planner: small, sharp specialists beat one do-everything agent, and the manage
 
 None beyond Foundations. Confirm:
 
-- `agent-framework` installs on demand via `pip install agent-framework` (not pre-pinned).
-- DevUI launches locally.
+- Compatible current `agent-framework` and `agent-framework-foundry` packages install locally.
+- The current prerelease `agent-framework-devui` package launches locally.
 - The Action Tools backend is running (`ACTION_MCP_URL` reachable) — the Action sub-agent needs it.
 
 ## Search-Before-Implement (critical — MAF moves weekly)
 
-MAF's `ChatAgent` constructor and the Magentic builder API change often. Do not hand teams a fixed
-snippet. Point them at `microsoft-docs` + `foundry-mcp` via the `foundry-workflows` skill for the
-current surface. If a team is stuck on import/constructor errors, it's almost always a stale signature —
-re-query rather than guess.
+MAF's `Agent`, `FoundryChatClient`, and Magentic builder APIs change often. Do not hand teams a fixed
+snippet without checking their installed release. Point them at `microsoft-docs` + `foundry-mcp` via
+the `foundry-workflows` skill for the current surface. If a team is stuck on import/constructor errors,
+it's almost always a stale signature — re-query rather than guess.
 
 ## Reference shape (for your eyes — adapt to the live API)
 
 Four specialists, then a Magentic manager composing them:
 
 ```python
-# Illustrative ONLY — confirm current names via microsoft-docs before using.
-from agent_framework import ChatAgent  # name/path may differ in current SDK
+# Illustrative ONLY — verify exact imports and constructor options against the installed release.
+chat_client = FoundryChatClient(...)
+triage = Agent(chat_client=chat_client, name="Triage", instructions="Classify the request.")
+knowledge = Agent(chat_client=chat_client, name="Knowledge", instructions="Answer from the FAQ.", tools=[search_tool])
+action = Agent(chat_client=chat_client, name="Action", instructions="Execute approved operations.", tools=[mcp_action_tool])
+escalation = Agent(chat_client=chat_client, name="Escalation", instructions="Draft a human handoff.")
+manager = Agent(chat_client=chat_client, name="Manager", instructions="Plan specialist calls per task.")
 
-triage     = ChatAgent(name="Triage",     instructions="Classify the request; decide what is needed.")
-knowledge  = ChatAgent(name="Knowledge",  instructions="Answer ONLY from the Northfield FAQ.", tools=[search_tool])
-action     = ChatAgent(name="Action",     instructions="Execute the requested operation.", tools=[mcp_action_tool])
-escalation = ChatAgent(name="Escalation", instructions="Draft a human handoff when confidence is low.")
-
-# Magentic manager plans which specialist to call per task.
-workflow = MagenticBuilder().participants(triage, knowledge, action, escalation).build()
+workflow = MagenticBuilder(
+    participants=[triage, knowledge, action, escalation],
+    manager_agent=manager,
+).build()
 
 ```
 The point is the shape (4 specialists + planner), not these exact symbols.
@@ -64,8 +66,8 @@ The point is the shape (4 specialists + planner), not these exact symbols.
 - Optional automation: a learner-authored checker can assert that at least two specialists fire.
 
 ### Step 3 — DevUI
-- This is the demo. Green/purple nodes make the *live planning* visible — that's the "aha." Have them
-  screenshot a mid-run graph.
+- This is the demo. Live plan and execution events make the planning visible — that's the "aha."
+  Have them screenshot a mid-run graph. Do not rely on fixed DevUI colors.
 
 - The out-of-scope prompt ("change my final grade") must route to Escalation, proving the manager
   refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.

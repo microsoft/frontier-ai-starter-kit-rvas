@@ -18,7 +18,7 @@ Two processes:
 |---|---|---|---|
 | `ACTION_API_URL` | `http://localhost:8080` | MCP server, activity | Base URL of the FastAPI backend |
 | `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP server, stretch | Optional FastMCP endpoint for Rung (c) / preview explorations |
-| `ACTION_API_KEY` | *(empty)* | backend, MCP server | Optional `x-api-key` shared secret; empty = open/no-auth |
+| `ACTION_API_KEY` | *(empty)* | backend, MCP server | Optional `x-api-key` for REST mutations; the MCP server forwards it to the backend |
 
 > If you change a name here, change it in `.env.sample` and the activity content too.
 
@@ -34,7 +34,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 # 2. start the REST backend  -> ACTION_API_URL (http://localhost:8080)
-uvicorn app:app --host 0.0.0.0 --port 8080
+uvicorn app:app --host 127.0.0.1 --port 8080
 
 # 3. optional stretch: in a second terminal, start the MCP server -> ACTION_MCP_URL
 python mcp_server.py
@@ -93,10 +93,15 @@ See `activities/advanced-action-tools/` for the supported workshop implementatio
 
 ---
 
-## Notes
+## Security and deployment notes
 
 - **In-memory only** — state is lost on restart. That is intentional for a workshop.
-- For a public demo over the internet, front local port `8765` with a tunnel (for example a dev
-  tunnel) and set `ACTION_MCP_URL` to the advertised public URL. The server still binds locally to
-  `0.0.0.0:8765`; it never tries to bind to the public hostname.
+- Both provided processes bind to loopback by default for local development. `ACTION_MCP_URL` controls
+  the path exposed by the MCP server. For a loopback URL, a specified port is used by the local listener;
+  for an externally advertised tunnel/proxy URL, the server still listens on `127.0.0.1:8765`.
+- The provided FastMCP endpoint has **no incoming MCP authentication**. `ACTION_API_KEY` protects
+  mutating REST calls between the MCP server and `app.py`; it does not authenticate an MCP client.
+  Do not expose this workshop endpoint through a public tunnel. For remote use, deploy it behind an
+  MCP-compatible OAuth/token-validation layer (or configure FastMCP's documented HTTP auth provider)
+  and test client discovery and authorization before allowing write tools.
 - No secrets are committed. `ACTION_API_KEY` is read from the environment only.

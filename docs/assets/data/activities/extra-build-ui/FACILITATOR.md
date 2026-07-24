@@ -108,8 +108,9 @@ def chat_stream(body: ChatIn):
     return StreamingResponse(gen(), media_type="text/event-stream")
 
 ```
-Browser side: `const es = new EventSource('/api/chat/stream', ...)` (or `fetch` + `ReadableStream` for
-POST bodies), append `event.data` until `[DONE]`.
+Browser side: use `fetch('/api/chat/stream', { method: 'POST', ... })` and read
+`response.body` with a `ReadableStream` reader, appending each SSE `data:` frame until `[DONE]`.
+`EventSource` cannot send a POST body; reserve it for a separately designed GET stream endpoint.
 
 ### Common pitfalls
 - Buffering proxies eat SSE. If deployed behind something that buffers, streaming looks broken. Set
@@ -155,10 +156,9 @@ is the Action Tools Responses function-call loop surfaced in the browser.
 ### The shape
 
 The BFF detects `function_call` items in `response.output`, stores the response id and pending call,
-and returns the name + arguments to the page. On the user's click it creates a
-`FunctionCallOutput(call_id=..., output=...)` and resumes with `previous_response_id`. Reuse the
-approval logic from the Action Tools `solution.md`; this Extra moves the human decision from the
-terminal to a button.
+and returns the name + arguments to the page. On the user's click it submits the current SDK's
+`function_call_output` input item with `previous_response_id`. Reuse the approval logic from the
+Action Tools `solution.md`; this Extra moves the human decision from the terminal to a button.
 
 ### Common pitfalls
 - Auto-approving to "make it work." Defeats the entire point. The card must block on a human click.

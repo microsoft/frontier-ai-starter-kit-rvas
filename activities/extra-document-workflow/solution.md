@@ -1,54 +1,38 @@
 # Solution notes · Extra — Document Workflow
 
-This is the canonical implementation shape, not a substitute for the required live `microsoft-docs`
-MCP search. The TypeScript pattern below was verified against this project's
-`azure-ai-document-intelligence-ts` skill reference; confirm it again before implementation.
+This is the canonical Python implementation shape, not a substitute for the required live
+`microsoft-docs` MCP search. It aligns with the required learner artifact, `document_workflow.py`, and
+its validator. Confirm the installed SDK signature again before implementation.
 
 ## Keyless layout/OCR call
 
 Install the current packages shown by Docs:
 
 ```bash
-npm install @azure-rest/ai-document-intelligence @azure/identity
+python -m pip install azure-ai-documentintelligence azure-identity
 ```
 
-Set only the endpoint (for example, `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT`) and authenticate with `az login`
-locally or managed identity in Azure. Do not configure or store a Document Intelligence key.
+Set only the endpoint (for example, `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT`) and authenticate with
+`az login` locally or managed identity in Azure. The endpoint must be a custom subdomain because regional
+Document Intelligence endpoints do not support Microsoft Entra authentication. Do not configure or store
+a Document Intelligence key.
 
-```ts
-import { readFile } from "node:fs/promises";
-import DocumentIntelligence, {
-  getLongRunningPoller,
-  isUnexpected,
-} from "@azure-rest/ai-document-intelligence";
-import { DefaultAzureCredential } from "@azure/identity";
+```python
+import os
+from azure.ai.documentintelligence import DocumentIntelligenceClient
+from azure.identity import DefaultAzureCredential
 
-const endpoint = process.env.AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT;
-if (!endpoint) throw new Error("AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT is required");
+endpoint = os.environ["AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT"]
+client = DocumentIntelligenceClient(endpoint, DefaultAzureCredential())
 
-const client = DocumentIntelligence(endpoint, new DefaultAzureCredential());
-const base64Source = (await readFile("./fictional-northfield-application.pdf")).toString("base64");
-
-const initialResponse = await client
-  .path("/documentModels/{modelId}:analyze", "prebuilt-layout")
-  .post({
-    contentType: "application/json",
-    body: { base64Source },
-  });
-
-if (isUnexpected(initialResponse)) {
-  throw initialResponse.body.error;
-}
-
-const poller = getLongRunningPoller(client, initialResponse);
-const completed = await poller.pollUntilDone();
-const layout = completed.body.analyzeResult;
+with open("./fictional-northfield-application.pdf", "rb") as document:
+    poller = client.begin_analyze_document("prebuilt-layout", body=document)
+layout = poller.result()
 ```
 
-The important details are deliberate: `DocumentIntelligence(endpoint, new DefaultAzureCredential())`,
-`POST /documentModels/{modelId}:analyze` with `prebuilt-layout`, `isUnexpected`, a long-running
-poller followed by `pollUntilDone`, and `base64Source` for a local file. Do not replace this with a
-binary stream or an old key credential sample. Current Docs remains authoritative if it differs.
+The important details are deliberate: `DocumentIntelligenceClient` with `DefaultAzureCredential`,
+the `prebuilt-layout` model, and waiting for the long-running operation with `poller.result()`.
+Use the current Docs signature if it differs; do not substitute an old key-credential sample.
 
 ## Workflow logic
 
@@ -71,7 +55,7 @@ with known fields and report field accuracy, low-confidence review rate, reviewe
 false approvals. A successful run with low accuracy or a false approval is a failure signal, not a
 reason to lower the threshold.
 
-Run the supplied static check after writing the Python workflow:
+Run the supplied static check after writing `document_workflow.py`:
 
 ```bash
 python validate.py --all --path .

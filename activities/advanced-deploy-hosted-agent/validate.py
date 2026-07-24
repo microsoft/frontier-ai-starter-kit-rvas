@@ -200,10 +200,10 @@ def check_step3(env: dict, dry_run: bool, track: str) -> bool:
     try:
         from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-        token = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
+        token_provider = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
         prompt = "ping" if track == "customer" else "Where is the registrar?"
         authed = httpx.post(base, json={"input": prompt},
-                            headers={"Authorization": f"Bearer {token()}"}, timeout=30.0)
+                            headers={"Authorization": f"Bearer {token_provider()}"}, timeout=30.0)
         if authed.status_code != 200:
             return _fail("3", f"authenticated call returned {authed.status_code}; check the per-agent identity + roles")
     except Exception as exc:  # noqa: BLE001

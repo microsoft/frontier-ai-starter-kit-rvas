@@ -38,16 +38,19 @@ orchestrates the full duplex loop for you.
 **Goal:** Open a Voice Live session bound to your Northfield agent and confirm the handshake.
 
 **Tasks:**
-1. Install the client SDK (`pip install azure-ai-voicelive`) and confirm mic + speaker access on your
-   machine.
+1. Install the current client SDK release (`pip install azure-ai-voicelive`) and confirm mic + speaker
+   access on your machine. The current Python quickstart requires Python 3.10 or later.
 2. Using the `azure-ai` speech skill pattern, open a Voice Live session against your Foundry
    endpoint. Search before you implement: query `microsoft-docs` for the *current* `azure-ai-voicelive`
-   connect signature — this API is new and moves.
+   connect signature. The Python SDK is async-only, so run the session under an async event loop.
 3. Bind the session to your existing agent (`AZURE_FOUNDRY_AGENT_NAME`) so spoken turns run *through your
    grounded agent*, not a generic model. Configure a voice (e.g. a neural voice) and the audio formats.
 
-Env you'll use (authoritative names): `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_FOUNDRY_AGENT_NAME`,
-`AZURE_AI_MODEL_DEPLOYMENT_NAME`.
+The existing project contract provides `AZURE_AI_PROJECT_ENDPOINT`, `AZURE_FOUNDRY_AGENT_NAME`, and
+`AZURE_AI_MODEL_DEPLOYMENT_NAME`. Voice Live **agent mode** also requires Voice Live resource/project
+settings such as the Voice Live endpoint and project name, and may require an agent version. Keep these
+in your local, untracked configuration; do not add a Voice Live endpoint or credentials to the tracked
+root `.env.sample`. Agent mode uses Microsoft Entra ID authentication, not a Speech/API key.
 
 **Success Criteria:**
 - [ ] The client establishes a Voice Live session without auth errors.

@@ -32,10 +32,11 @@ customer’s access, ownership, licensing, and operating needs.
 
 ## Scenario contribution
 
-Scenarios live in [`scenarios/`](scenarios/) and are validated during `npm run build`. Read the
-[scenario contribution contract](scenarios/README.md) before proposing a scenario or lesson.
-Accelerators provision only the resources required for a safe demonstration; they never create an
-enterprise platform baseline.
+Scenarios live in [`scenarios/`](scenarios/). `npm run build` regenerates their static-site assets;
+run `npm run validate:scenarios` to validate scenario packs. Read the [scenario contribution
+contract](scenarios/README.md) before proposing a scenario or lesson.
+Accelerators are resource-free decision blueprints plus local demonstrations; they never create
+Azure resources or an enterprise platform baseline.
 
 ## Legacy technical reference
 
@@ -260,7 +261,7 @@ Clone or access this repo locally and navigate to the activity solution you need
 ## Resources
 
 - **[Microsoft Foundry Documentation](https://learn.microsoft.com/azure/foundry/)**: Official docs and tutorials
-- **[Azure AI Learning Path](https://learn.microsoft.com/training/paths/develop-generative-ai-solutions-azure-ai-foundry/)**: Structured training modules
+- **[Microsoft Foundry Training](https://learn.microsoft.com/training/azure/ai-foundry)**: Structured training modules
 - **[Microsoft AI Skills Navigator](https://microsoft.com/ai/skills)**: Browse AI and cloud certifications
 
 ---

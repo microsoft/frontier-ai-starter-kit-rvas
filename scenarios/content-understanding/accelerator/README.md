@@ -1,6 +1,6 @@
 # Content Understanding blueprint
 
-`main.bicep` is intentionally **blueprint-only**. It declares no Azure resources and never references an existing resource. A what-if or deployment of this template returns the planning object only; it is not provisioning guidance.
+`main.bicep` is intentionally **blueprint-only**. It declares no Azure resources and never references an existing resource. A what-if returns the planning object; a deployment also leaves an Azure Resource Manager deployment-history record. It is not provisioning guidance.
 
 ## Use it in the workshop
 

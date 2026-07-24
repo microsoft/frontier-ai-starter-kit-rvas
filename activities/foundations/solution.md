@@ -33,7 +33,8 @@ reuses the `az login` session).
 1. Confirm the team is in Codespaces / Dev Container: `python --version`, `az --version`, `azd version`.
 2. Both logins are required: `az login` **and** `azd auth login`. Then `az account set --subscription ...`.
 3. `azd up` provisions Foundry + project + model deployment + AI Search + Log Analytics + App Insights
-   via Bicep and writes `.env`. First runs take several minutes — let it finish before debugging.
+   via Bicep and writes outputs to the `azd` environment. Export them with
+   `azd env get-values > .env`. First runs take several minutes — let it finish before debugging.
 4. Verify the contract: `grep -E "AZURE_AI_PROJECT_ENDPOINT|AZURE_AI_MODEL_DEPLOYMENT_NAME|AZURE_SEARCH_ENDPOINT" .env`.
 
 ### Common pitfalls
@@ -119,9 +120,8 @@ and point the student to the right office rather than guessing.
 
 ### Expected questions
 - *"Which model should we pick?"* — Push them to justify from observed cost/latency/quality, not
-  reputation. `gpt-4o` (the model `azd up` provisions) is the carried-forward default — it's what
-  `AZURE_AI_MODEL_DEPLOYMENT_NAME` points at. If a team prefers a different model, update that env
-  var to its deployment name.
+  reputation. Start with the deployment named by `AZURE_AI_MODEL_DEPLOYMENT_NAME`; if a team prefers
+  a different deployment, update that environment variable before running the code samples.
 - *"MaaS vs MaaP?"* — MaaS is the fast managed route used here; MaaP gives more platform control in
   other scenarios. Don't rabbit-hole.
 
@@ -217,12 +217,15 @@ STYLE: Warm, clear, student-friendly. Give a direct answer first, then a next st
 
 ---
 
-## Step 4 — Knowledge Base: Index + Foundry IQ (END-STATE)
+## Step 4 — Knowledge Base: Azure AI Search grounding (END-STATE)
 
 ### What good looks like
-An AI Search index over the FAQ corpus; a Foundry IQ knowledge base using `SEMANTIC`; a
-new agent version with the AI Search tool attached; and a precise, **cited** answer (the FAFSA question
+A semantic AI Search index over the FAQ corpus; a new agent version with the AI Search tool attached;
+and a precise, **cited** answer (the FAFSA question
 is the canonical check). Grounded answers are specific and sourced; ungrounded ones are vague.
+
+> Foundry IQ is a separate managed knowledge workflow in **Build → Knowledge**. Do not represent
+> `project.indexes` assets or the Azure AI Search tool as Foundry IQ.
 
 ### Canonical verification question (use this for the Checkpoint)
 > "What is Northfield's FAFSA priority deadline and school code?"
@@ -248,9 +251,9 @@ project = AIProjectClient(
     endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
     credential=DefaultAzureCredential(),
 )
-kb = project.indexes.get(
-    name=os.environ["AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME"], version="1",
-)
+connection_id = project.connections.get(
+    os.environ["AZURE_SEARCH_CONNECTION_NAME"]
+).id
 
 instructions = (
     "You are Northfield University's student services assistant. Answer ONLY from the "
@@ -266,7 +269,8 @@ agent = project.agents.create_version(
         tools=[AzureAISearchTool(
             azure_ai_search=AzureAISearchToolResource(indexes=[
                 AISearchIndexResource(
-                    index_asset_id=kb.id,
+                    project_connection_id=connection_id,
+                    index_name=os.environ["AZURE_SEARCH_INDEX_NAME"],
                     query_type=AzureAISearchQueryType.SEMANTIC,
                     top_k=5,
                 ),
@@ -288,7 +292,8 @@ print(resp.output_text)
 - **Chunking**: ~500 tokens, ~15% overlap is a good baseline for FAQ-style content. Too large → noisy
   retrieval; too small → split policy details (deadlines, GPA, office hours) lose context.
 - **Fields**: keep a retrievable `content` field (used for the answer) and a retrievable `source` field
-  set to the file name (used for citations). Without a citation-source field, answers can't cite.
+  set to the file name (used for source citations). The Azure AI Search tool produces URL citations
+  only when you also index a retrievable source-URL field; use URLs that the intended users can access.
 - **Query type**: `SEMANTIC` matches the shipped text-only index and adds semantic reranking.
   Use a vector or hybrid mode only after adding embeddings, a vector field, and vector-search
   configuration to the index.
@@ -311,7 +316,7 @@ If a team is swapping in their own data:
   must match exactly (case-sensitive) what's in `.env` / the portal.
 - **Confusing retrieval quality with answer quality** — separate the two questions: *did it retrieve the
   right chunk?* vs *did it answer well from that chunk?* A bad answer can come from either stage.
-- **Indexing succeeds but ingestion fails later** — uploads can report success while embedding fails.
+- **Indexing succeeds but ingestion fails later** — uploads can report success while indexing fails.
   Confirm the index actually returns results for a test query before wiring it to the agent.
 
 The **librarian analogy** still helps: RAG doesn't make the model smarter; it hands the model the right
@@ -319,9 +324,9 @@ shelf before it answers.
 
 ### Timing
 - **0–25 min**: inspect corpus, build + populate the AI Search index, confirm a test query returns hits.
-- **25–45 min**: confirm RBAC; build the Foundry IQ knowledge base (`SEMANTIC`).
-- **45–75 min**: attach the tool as a new agent version; verify the cited FAFSA answer.
-- **75–90 min**: grounded vs. ungrounded comparison; `python activities/foundations/validate.py --step 4`.
+- **25–45 min**: confirm RBAC; attach the Search tool with `SEMANTIC` retrieval.
+- **45–60 min**: verify the cited FAFSA answer and compare grounded vs. ungrounded responses;
+  `python activities/foundations/validate.py --step 4`.
 
 This step often runs long because first-time indexing is slow. Budget accordingly.
 

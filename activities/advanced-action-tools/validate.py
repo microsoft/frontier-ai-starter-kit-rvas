@@ -115,8 +115,8 @@ def check_step3() -> bool:
         return _fail("3", "approval loop must inspect Responses function_call items")
     if "FunctionCallOutput" not in src:
         return _fail("3", "return each approval decision with FunctionCallOutput")
-    if "previous_response_id" not in src:
-        return _fail("3", "continue the tool-call turn with previous_response_id")
+    if "conversations.create" not in src or "conversation=conversation.id" not in src:
+        return _fail("3", "continue the tool-call turn in one Foundry conversation")
     if "agent_reference" not in src:
         return _fail("3", "route both Responses calls through the versioned prompt agent")
     if "Approve" not in src or "input(" not in src:
@@ -184,6 +184,10 @@ def check_step4() -> bool:
     class FakeOpenAI:
         def __init__(self):
             self.responses = FakeResponses()
+            self.conversations = SimpleNamespace(
+                create=lambda: SimpleNamespace(id="validation-conversation-1"),
+                delete=lambda **_kwargs: None,
+            )
 
     try:
         spec = importlib.util.spec_from_file_location("agent_with_actions_validation", WIRING)
@@ -207,9 +211,11 @@ def check_step4() -> bool:
         calls = fake_openai.responses.calls
         if len(calls) != 2:
             return _fail("4", f"approval loop made {len(calls)} Responses calls; expected 2")
+        if calls[0].get("conversation") != "validation-conversation-1":
+            return _fail("4", "initial request did not use the created conversation")
         continuation = calls[1]
-        if continuation.get("previous_response_id") != "validation-response-1":
-            return _fail("4", "approval loop did not continue with previous_response_id")
+        if continuation.get("conversation") != "validation-conversation-1":
+            return _fail("4", "approval loop did not continue in the created conversation")
         outputs = continuation.get("input") or []
         output_call_id = (
             outputs[0].get("call_id")

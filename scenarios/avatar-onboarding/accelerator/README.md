@@ -5,7 +5,7 @@ This accelerator is a small, vendor-neutral **approved-content pack and integrat
 ## Contents
 
 - `sample-data/` — complete fictional claims, approvals, script/storyboard, transcript, accessible HTML fallback, and aggregated feedback fixture.
-- `main.bicep` — resource-less deployment contract that exposes the integration settings; it deliberately creates no resources.
+- `main.bicep` — resource-less deployment contract that exposes the integration settings; it declares no platform resources, although Azure Resource Manager retains a deployment-history record when it is deployed.
 - `parameters.example.json` — safe placeholder values.
 - `mock_renderer.py` — standard-library-only local renderer that enforces the approval and claim gates.
 

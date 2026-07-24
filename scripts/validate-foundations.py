@@ -5,8 +5,7 @@ Asserts that the Foundations end-state exists and works:
 
   CHECK 1  .env contract is present and populated.
   CHECK 2  Azure AI Search index exists and has documents.
-  CHECK 3  The Foundry IQ knowledge base (project Index resource) AND the grounded
-           agent both exist.
+  CHECK 3  The grounded agent exists.
   CHECK 4  The agent answers a Northfield question with at least one citation,
            via the Foundry Responses/Conversations protocol.
 
@@ -24,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -70,7 +70,7 @@ def response_has_citation(response, text: str) -> bool:
             for annotation in getattr(content, "annotations", []) or []:
                 if "citation" in str(getattr(annotation, "type", "")).lower():
                     return True
-    return bool(text) and ("[" in text or "source" in text.lower() or ".md" in text.lower())
+    return bool(re.search(r"\b[\w-]+\.(?:md|txt)\b", text or "", re.IGNORECASE))
 
 
 def main() -> int:
@@ -136,9 +136,8 @@ def main() -> int:
         bad(f"Could not query Search ({e}). Check RBAC + 'az login'.")
         return 1
 
-    # ----- CHECK 3: Foundry IQ knowledge base + agent exist -------------------
-    info("\nCHECK 3 — Foundry IQ knowledge base and grounded agent exist")
-    kb_name = env.get("AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME", "northfield-faq-kb")
+    # ----- CHECK 3: grounded agent exists -------------------------------------
+    info("\nCHECK 3 — grounded agent exists")
     agent_name = env.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
     project_endpoint = env["AZURE_AI_PROJECT_ENDPOINT"]
 
@@ -149,16 +148,6 @@ def main() -> int:
         return 1
 
     project = AIProjectClient(endpoint=project_endpoint, credential=cred)
-
-    # KB (Index resource) must exist.
-    try:
-        kb = project.indexes.get(name=kb_name, version="1")
-        ok(f"Foundry IQ knowledge base '{kb_name}' (v1) exists "
-           f"(asset_id={getattr(kb, 'id', '?')}).")
-    except Exception as e:  # noqa: BLE001
-        bad(f"Foundry IQ knowledge base '{kb_name}' not found ({e}). "
-            f"Run ./scripts/setup-foundations.sh")
-        return 1
 
     # Agent must exist.
     agent_found = False
@@ -191,10 +180,10 @@ def main() -> int:
         elif has_citation:
             ok("Agent returned a grounded answer WITH a citation.")
         else:
-            bad("Agent answered but no citation detected — review KB grounding config.")
+            bad("Agent answered but no citation detected — review Azure AI Search grounding.")
             failures += 1
     except Exception as e:  # noqa: BLE001
-        bad(f"Agent invocation failed ({e}). Verify the agent + KB were created "
+        bad(f"Agent invocation failed ({e}). Verify the agent and search tool were created "
             f"and the model deployment is reachable.")
         failures += 1
 

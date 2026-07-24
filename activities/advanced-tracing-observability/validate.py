@@ -7,7 +7,7 @@ offline. The one live check (Step 2 — spans actually landed in App Insights)
 is GUARDED and degrades to a clear message when creds / the SDK / a workspace
 are unavailable. `--dry-run` forces the offline path everywhere (no network).
 
-    python validate.py --step 1     # trace_setup.py wires instrumentation (env flags BEFORE azure imports)
+    python validate.py --step 1     # trace_setup.py wires instrumentation (env flags before instrument())
     python validate.py --step 2     # traced_run.py emits a run / a GenAI span is queryable
     python validate.py --step 3     # message-content capture enabled (model+retrieval spans readable)
     python validate.py --step 4     # correlate.kql present and correlates one operation_Id end-to-end
@@ -72,13 +72,6 @@ def load_env() -> dict:
     return env
 
 
-def _first_azure_import_line(src: str) -> int | None:
-    for i, line in enumerate(src.splitlines()):
-        if re.match(r"\s*(from|import)\s+azure\.", line):
-            return i
-    return None
-
-
 def _flag_set_line(src: str, flag: str) -> int | None:
     for i, line in enumerate(src.splitlines()):
         if flag in line and "=" in line and "os.environ" in line:
@@ -87,7 +80,7 @@ def _flag_set_line(src: str, flag: str) -> int | None:
 
 
 # --------------------------------------------------------------------------- #
-# Step 1 — instrumentation wired, env flags set BEFORE the Azure imports       #
+# Step 1 — instrumentation wired, env flags set before instrument()            #
 # --------------------------------------------------------------------------- #
 def check_step1(env: dict, dry_run: bool) -> bool:
     if not TRACE_SETUP.exists():
@@ -97,16 +90,20 @@ def check_step1(env: dict, dry_run: bool) -> bool:
     capture_at = _flag_set_line(src, CAPTURE_FLAG)
     if enable_at is None or capture_at is None:
         return _fail("1", f"both {ENABLE_FLAG} and {CAPTURE_FLAG} must be set via os.environ in {TRACE_SETUP.name}")
-    azure_at = _first_azure_import_line(src)
-    if azure_at is not None and (enable_at > azure_at or capture_at > azure_at):
-        return _fail("1", "the two tracing env flags MUST be set ABOVE the first `azure.*` import "
-                          "(otherwise instrumentation ignores them)")
+    instrument_at = next(
+        (i for i, line in enumerate(src.splitlines()) if "AIProjectInstrumentor().instrument()" in line),
+        None,
+    )
+    if instrument_at is None:
+        return _fail("1", "enable client-side instrumentation with AIProjectInstrumentor().instrument()")
+    if enable_at > instrument_at or capture_at > instrument_at:
+        return _fail("1", "set both tracing flags before AIProjectInstrumentor().instrument()")
     if "configure_azure_monitor" not in src:
         return _fail("1", "wire spans to App Insights with configure_azure_monitor(...)")
     if not dry_run and not (env.get("APPLICATIONINSIGHTS_CONNECTION_STRING") or "get_application_insights_connection_string" in src):
         warn("APPLICATIONINSIGHTS_CONNECTION_STRING not in .env and no runtime resolve() found — "
              "the connection must be resolvable at run time")
-    ok("✅ Step 1 PASS — instrumentation wired, env flags set before the Azure imports")
+    ok("✅ Step 1 PASS — instrumentation wired, env flags set before instrument()")
     return True
 
 

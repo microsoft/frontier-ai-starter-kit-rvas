@@ -52,6 +52,7 @@ python activities/extra-visual-multimodal/validate.py --all
 ## Facilitation cues
 
 - Press teams to select the **minimum** features: normally `READ`, optionally `CAPTION` or `TAGS`.
+  Confirm regional availability for every selected feature, especially captions.
   More features cost more and enlarge the data footprint; people/face features have no role here.
 - If a team uses a Foundry multimodal model, ask them to show the current Docs/MCP result for the
   exact image-message and structured-output signature. Do not approve invented SDK code.

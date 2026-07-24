@@ -38,8 +38,8 @@ param principalId string = ''
 @description('Chat model to deploy in Foundry (model catalog name).')
 param chatModelName string = 'gpt-4o'
 
-@description('Chat model version. Leave empty to let Foundry pick the default for the model.')
-param chatModelVersion string = '2024-11-20'
+@description('Optional chat model version. Leave empty to use the model catalog default.')
+param chatModelVersion string = ''
 
 @description('Deployment (alias) name the agent + SDK reference. Becomes AZURE_AI_MODEL_DEPLOYMENT_NAME.')
 param chatModelDeploymentName string = 'gpt-4o'
@@ -94,7 +94,6 @@ output AZURE_AI_PROJECT_NAME string = resources.outputs.AZURE_AI_PROJECT_NAME
 output AZURE_OPENAI_ENDPOINT string = resources.outputs.AZURE_AI_FOUNDRY_ENDPOINT
 output AZURE_AI_MODEL_DEPLOYMENT_NAME string = resources.outputs.AZURE_AI_MODEL_DEPLOYMENT_NAME
 output AZURE_AI_MODEL_NAME string = resources.outputs.AZURE_AI_MODEL_NAME
-output AZURE_AI_API_VERSION string = resources.outputs.AZURE_AI_API_VERSION
 
 output AZURE_SEARCH_ENDPOINT string = resources.outputs.AZURE_SEARCH_ENDPOINT
 output AZURE_SEARCH_INDEX_NAME string = resources.outputs.AZURE_SEARCH_INDEX_NAME

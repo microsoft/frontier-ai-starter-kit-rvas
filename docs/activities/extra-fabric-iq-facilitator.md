@@ -21,25 +21,25 @@ question. The demo lands when the seat count changes between two asks with no re
 
 ## Infra to pre-provision (do this BEFORE the session)
 
-1. Fabric capacity — an F-SKU (F2 is enough) or a Fabric trial capacity assigned to a
+1. Fabric capacity — an appropriate Fabric capacity or trial capacity assigned to a
    workspace. This is the gate; without it the Extra is impossible.
 
 2. OneLake lakehouse (e.g. `northfield_ops`) with a `course_seats` table:
    `course_code, section, capacity, enrolled, seats_open, updated_at`. Seed a handful of rows incl.
    CS101 with a small `seats_open` (so you can drive it to 0 live for the demo).
 
-3. A Fabric data-agent / Fabric IQ connection the Foundry project can reach, plus the
-   connection string / endpoint to hand teams in Step 2.
-
-4. Confirm the Foundry project's managed identity (keyless) or the supplied connection has read access
-   to the lakehouse.
+3. A Fabric IQ data agent configured for the OneLake source, and a facilitator who can complete the
+   current Foundry server-side-tool and user OAuth/sign-in setup.
+4. Confirm each invoking user has the required Fabric license and Fabric permissions. Fabric IQ requests
+   run in the signed-in user's context and honor Fabric governance; a Foundry project managed identity
+   alone does not grant table access.
 
 > **Cost/capacity flag for the coordinator:** Fabric F-SKU bills while running — pause the capacity
 > when the session ends. A single shared capacity can serve all teams; they only need read access.
 
 ## Search-Before-Implement (mandatory here)
 
-The Fabric tool class + constructor are preview and rename frequently. Tell teams to query
+Foundry's Fabric IQ integration is preview and can change frequently. Tell teams to query
 `foundry-mcp` and `microsoft-docs` (the `foundry-toolboxes` skill) for the current Fabric tool
 signature before coding. Do not hand them a hard-coded class name — it will likely be stale by event
 day. That's the doctrine the whole curriculum teaches; this Extra is where it bites hardest.
@@ -47,8 +47,8 @@ day. That's the doctrine the whole curriculum teaches; this Extra is where it bi
 ## Per-step facilitation
 
 ### Step 1 — see the live row
-- If a team can't preview the table, it's almost always a capacity not running or no read access
-  problem. Check the capacity is *on* and the project identity is granted on the lakehouse.
+- If a team can't preview the table, it's often a capacity not running, missing Fabric license, or
+  missing user access problem. Check the capacity is on and the signed-in user is entitled to the item.
 
 ### Step 2 — attach the tool
 - **Pitfall:** teams drop the AI Search tool when adding Fabric. They must keep both — the routing
@@ -78,5 +78,5 @@ change showing the number moved, and (2) one policy answer still citing the FAQ 
 |---|---|---|
 | "Tool not found" at attach | stale/preview class name | re-query `foundry-mcp`/`microsoft-docs` for current signature |
 | Seat answer never changes | answered from FAQ index, not Fabric | tighten routing rule; confirm Fabric tool actually attached |
-| Can't preview table | capacity paused / no RBAC | start capacity; grant project MI read on lakehouse |
+| Can't preview table | capacity paused, missing license, or missing user access | start capacity; confirm Fabric license and user permissions |
 | Policy Q hits Fabric | over-broad routing rule | scope Fabric to availability/real-time keywords only |

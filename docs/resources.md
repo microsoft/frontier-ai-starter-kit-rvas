@@ -15,8 +15,8 @@ nav_order: 7
 |---|---|
 | Foundry platform docs | [Microsoft Foundry documentation](https://learn.microsoft.com/azure/foundry/) |
 | Foundry project SDK | [Azure AI Projects SDK for Python](https://learn.microsoft.com/python/api/overview/azure/ai-projects-readme) |
-| Agents | [Agents quickstart](https://learn.microsoft.com/azure/foundry/agents/quickstart) |
-| Model deployment | [Deploy models in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/deploy-models-openai) |
-| Knowledge/indexing | [Add data and build indexes in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/index-add) |
+| Agents | [Get started with the Microsoft Foundry SDK](https://learn.microsoft.com/azure/foundry/quickstarts/get-started-code) |
+| Model deployment | [Set up Foundry resources and deploy a model](https://learn.microsoft.com/azure/foundry/tutorials/quickstart-create-foundry-resources) |
+| Knowledge/indexing | [RAG and indexes in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/concepts/retrieval-augmented-generation) |
 | Evaluation | [Evaluate with Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/evaluate-generative-ai-app) |
 | Activity format | [Microsoft activity community](https://microsoft.github.io/WhatTheHack/) |

@@ -16,6 +16,10 @@ Start with the work decision, not a retrieval pattern. This workshop helps a cus
 
 “RAG” may describe an implementation technique; it is not the starting point for this customer conversation.
 
+## Foundry IQ availability gate
+
+Foundry IQ is not a single availability state. Current Microsoft documentation describes some features as generally available and others as preview; portal access to agentic retrieval remains preview-only. Before selecting it for a pilot, record the required knowledge sources, permission behavior, Azure AI Search REST API version, and whether the customer permits every required preview feature. A portal demonstration is not evidence that the production integration path is generally available.
+
 ## Workshop outputs
 
 - One outcome statement and non-goals

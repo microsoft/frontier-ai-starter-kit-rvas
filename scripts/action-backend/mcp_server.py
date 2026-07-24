@@ -11,7 +11,7 @@ Env contract (matches .env.sample — AUTHORITATIVE for the Action Tools activit
 
 Run (streamable-http transport on :8765/mcp):
     python mcp_server.py
-    # or:  fastmcp run mcp_server.py --transport http --host 0.0.0.0 --port 8765
+    # or:  fastmcp run mcp_server.py --transport http --host 127.0.0.1 --port 8765
 
 Attach in an agent (sketch):
     McpTool(server_label="northfield_actions", server_url=os.environ["ACTION_MCP_URL"])
@@ -27,6 +27,7 @@ from fastmcp import FastMCP
 ACTION_API_URL = os.environ.get("ACTION_API_URL", "http://localhost:8080").rstrip("/")
 ACTION_MCP_URL = os.environ.get("ACTION_MCP_URL", "http://localhost:8765/mcp")
 ACTION_API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
+DEFAULT_MCP_PORT = 8765
 
 mcp = FastMCP("northfield-action-tools")
 
@@ -93,5 +94,10 @@ def book_advising_slot(
 if __name__ == "__main__":
     parsed = urlparse(ACTION_MCP_URL)
     path = parsed.path or "/mcp"
-    print(f"Action Tools MCP server -> {ACTION_MCP_URL}  (local bind: 0.0.0.0:8765; backend: {ACTION_API_URL})")
-    mcp.run(transport="http", host="0.0.0.0", port=8765, path=path)
+    is_loopback_url = parsed.hostname in {"localhost", "127.0.0.1", "::1"}
+    port = parsed.port if is_loopback_url and parsed.port else DEFAULT_MCP_PORT
+    print(
+        f"Action Tools MCP server -> {ACTION_MCP_URL}  "
+        f"(local bind: 127.0.0.1:{port}; backend: {ACTION_API_URL})"
+    )
+    mcp.run(transport="http", host="127.0.0.1", port=port, path=path)

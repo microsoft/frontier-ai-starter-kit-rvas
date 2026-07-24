@@ -18,19 +18,18 @@ send them to `validate-foundations.py` before debugging tracing.
 
 ## The one thing that makes or breaks this activity
 
-**Set env before import.** 80% of failures are here. The two flags —
+**Set env before instrumentation.** The two flags —
 `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true` and `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true`
-— are read at SDK import time. If a student imports `azure.ai.projects` (directly or transitively via
-another module) *before* setting them, instrumentation initializes without message capture and the
-spans show up with empty prompt/response fields, or GenAI spans don't appear at all.
+— must be set before `AIProjectInstrumentor().instrument()`. Importing the SDK first is fine; setting
+the flags after instrumentation starts can leave message content out of client-side spans.
 
 Tell-tale signs and the fix:
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| Spans exist, prompt/answer fields blank | flags set after import | move `os.environ[...]` to the very top, above all `azure.ai.*` imports |
+| Client spans exist, prompt/answer fields blank | flags set after instrumentation | move `os.environ[...]` above `AIProjectInstrumentor().instrument()` |
 | No GenAI spans at all | `configure_azure_monitor` never called, or wrong conn string | confirm App Insights conn string resolves; check `enable_tracing()` actually ran |
-| `traced_run.py` blank fields but `trace_setup.py` fine | another import at top of `traced_run.py` pulled the SDK in first | ensure `from trace_setup import enable_tracing` is the **first** project import |
+| `traced_run.py` has no client spans | `enable_tracing()` was not called | call `enable_tracing()` before the Responses request |
 
 ## Step-by-step facilitation
 

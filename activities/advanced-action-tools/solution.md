@@ -16,7 +16,7 @@ requests an action, the human decides, and only then can application code execut
 
 > **SDK note for facilitators:** the current path is `azure-ai-projects` 2.x:
 > `agents.create_version(PromptAgentDefinition(...))`, Responses `function_call` items, and
-> `FunctionCallOutput` with `previous_response_id`. Do not steer teams to the retired
+> `FunctionCallOutput` in a Foundry conversation. Do not steer teams to the retired
 > `agents.threads` / `agents.runs` surface.
 
 ## Env contract (authoritative — keep in lockstep)
@@ -171,49 +171,54 @@ def build_action_tools():
 Reference completion of `run_with_approval()`:
 ```python
 def run_with_approval(openai, agent_name, prompt):
-    response = openai.responses.create(
-        input=prompt,
-        extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
-    )
-    while any(item.type == "function_call" for item in response.output):
-        outputs = []
-        for item in response.output:
-            if item.type != "function_call":
-                continue
-            args = json.loads(item.arguments)
-            print(f"\nAction requested: {item.name}\n  {item.arguments}")
-            approved = input("Approve this action? [y/N] ").strip().lower() == "y"
-            if approved:
-                fn_map = {
-                    "create_it_ticket": create_it_ticket,
-                    "place_course_hold": place_course_hold,
-                    "book_advising_slot": book_advising_slot,
-                }
-                fn = fn_map.get(item.name)
-                result = (
-                    fn(**args)
-                    if fn is not None
-                    else json.dumps({"error": f"Unknown action: {item.name}"})
-                )
-            else:
-                result = json.dumps({"denied": "Human operator declined."})
-            outputs.append(FunctionCallOutput(
-                type="function_call_output",
-                call_id=item.call_id,
-                output=result,
-            ))
+    conversation = openai.conversations.create()
+    try:
         response = openai.responses.create(
-            input=outputs,
-            previous_response_id=response.id,
+            input=prompt,
+            conversation=conversation.id,
             extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
         )
-    return response
+        while any(item.type == "function_call" for item in response.output):
+            outputs = []
+            for item in response.output:
+                if item.type != "function_call":
+                    continue
+                args = json.loads(item.arguments)
+                print(f"\nAction requested: {item.name}\n  {item.arguments}")
+                approved = input("Approve this action? [y/N] ").strip().lower() == "y"
+                if approved:
+                    fn_map = {
+                        "create_it_ticket": create_it_ticket,
+                        "place_course_hold": place_course_hold,
+                        "book_advising_slot": book_advising_slot,
+                    }
+                    fn = fn_map.get(item.name)
+                    result = (
+                        fn(**args)
+                        if fn is not None
+                        else json.dumps({"error": f"Unknown action: {item.name}"})
+                    )
+                else:
+                    result = json.dumps({"denied": "Human operator declined."})
+                outputs.append(FunctionCallOutput(
+                    type="function_call_output",
+                    call_id=item.call_id,
+                    output=result,
+                ))
+            response = openai.responses.create(
+                input=outputs,
+                conversation=conversation.id,
+                extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
+            )
+        return response
+    finally:
+        openai.conversations.delete(conversation_id=conversation.id)
 ```
 - **Teaching points:** (1) the application receives a requested function call and executes nothing
   until the human decides; (2) showing the function name + arguments to
   the human is the governance moment; (3) returning the denial JSON
   cleanly tells the agent "you were blocked" so it can report back gracefully.
-- **Pitfall:** forgetting `previous_response_id` loses the tool-call turn context.
+- **Pitfall:** omitting `conversation=conversation.id` on either call loses the tool-call turn context.
 - **Pitfall:** `item.arguments` is a **JSON string** — parse it with `json.loads` before
   unpacking as `**args`.
 
@@ -229,7 +234,7 @@ def run_with_approval(openai, agent_name, prompt):
 ## Common issues & fast unblocks
 - **`Step 1 FAIL — backend not reachable`** → backend not started / wrong `ACTION_API_URL`.
 - **Model never calls the tool** → function docstrings missing `:param` lines, or `FunctionTool` not passed to `tools=`.
-- **Agent loses context after approval** → missing `previous_response_id=response.id`.
+- **Agent loses context after approval** → pass the same `conversation=conversation.id` on both calls.
 - **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.
 - **Team wants to auto-approve everything** → push back; the whole activity is the approval gate.

@@ -23,7 +23,7 @@ and you can see none of it.
 
 In this activity you make every answer observable end to end. You enable OpenTelemetry (OTel)
 GenAI tracing, export the spans to Application Insights, and then read the same data two ways —
-the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
+the Foundry portal Traces view and a KQL query in App Insights. By the end you can take a single
 student question and reconstruct its entire journey: model → retrieval → tool, with token counts,
 latency per span, and the inputs/outputs at each hop.
 
@@ -42,7 +42,7 @@ you can watch it run.
         +--> retrieval span (knowledge-base query)
         +--> tool span (if Action Tools attached)
 
-  Foundry portal (Tracing tab) <-- App Insights (OTel exporter) --> KQL
+  Foundry portal (Traces view) <-- App Insights (OTel exporter) --> KQL
   (dependencies / traces / requests)
 
 ```
@@ -73,7 +73,8 @@ you can watch it run.
 
 1. Confirm your project has an App Insights connection. If `APPLICATIONINSIGHTS_CONNECTION_STRING` is
    not already in `.env`, fetch it from the project and add it (the portal shows it under
-   Monitoring → Application analytics, or read it via the SDK as shown below).
+   Agents → Traces or Project details → Connected resources, then read it via the SDK as shown
+   below).
 
 2. Create `activities/advanced-tracing-observability/trace_setup.py` that wires tracing in the exact
    order below. The two `os.environ[...]` lines MUST run before any `azure.ai.*` import — this is
@@ -212,14 +213,14 @@ python activities/advanced-tracing-observability/validate.py --step 2
 
 ---
 
-## Step 3 — Inspect the spans (portal Tracing tab)
+## Step 3 — Inspect the spans (portal Traces view)
 
-**Goal:** You can read a single run as a span tree in the Foundry Tracing tab and identify the
+**Goal:** You can read a single run as a span tree in the Foundry Traces view and identify the
 model, retrieval, and (if present) tool spans.
 
 **Tasks:**
 
-1. In the Foundry portal, open your project → Tracing (under Observability / Monitoring). Find the
+1. In the Foundry portal, open your project → Agents → Traces. Find the
    trace for the run you just made (sort by most recent; match the timestamp).
 
 2. Expand the trace into its span tree. Identify and note:
@@ -232,11 +233,11 @@ model, retrieval, and (if present) tool spans.
 
 **Success Criteria:**
 
-- [ ] The Tracing tab shows your run as a parent span with at least one child span.
+- [ ] The Traces view shows your run as a parent span with at least one child span.
 - [ ] You can name which child is the model call and which is the retrieval call.
 - [ ] You can read token counts and duration off the model span.
 
-**Checkpoint:** Portal state — the Tracing tab shows the run's span tree with an expandable
+**Checkpoint:** Portal state — the Traces view shows the run's span tree with an expandable
 model span exposing `gen_ai.usage.total_tokens`. Capture the trace's operation id for Step 4.
 
 ```bash
@@ -326,7 +327,7 @@ python activities/advanced-tracing-observability/validate.py --step 4
 
 ## Done — what you can now do
 
-- Every Northfield IQ answer is observable end to end, two ways: portal Tracing tab and KQL.
+- Every Northfield IQ answer is observable end to end, two ways: portal Traces view and KQL.
 - You can take one student question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 
@@ -341,7 +342,7 @@ Hosted Agent (the same tracing follows the agent to its live endpoint).
 
 ## Learning resources
 
-- [Trace AI agents with OpenTelemetry (Foundry)](https://learn.microsoft.com/azure/foundry/how-to/develop/trace-agents-sdk)
+- [Set up tracing for AI agents (Foundry)](https://learn.microsoft.com/azure/foundry/observability/how-to/trace-agent-setup)
 - [Azure Monitor OpenTelemetry for Python](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=python)
 - [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 - [Kusto Query Language (KQL) reference](https://learn.microsoft.com/azure/data-explorer/kusto/query/)

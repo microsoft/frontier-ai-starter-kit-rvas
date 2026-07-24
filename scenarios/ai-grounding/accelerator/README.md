@@ -2,7 +2,7 @@
 
 This is a **decision artifact**, not a tenant deployment. It has no Azure SDK code, tenant identifiers, connections, secrets, or runnable knowledge-source configuration.
 
-`main.bicep` is deliberately minimal: it can be used as a clean-subscription deployment record or a bring-your-own (BYO) existing-environment handoff, but creates no landing zone and no resource. This prevents a workshop template from inventing service resource APIs or changing a customer tenant.
+`main.bicep` is deliberately minimal: it can be used as a clean-subscription deployment record or a bring-your-own (BYO) existing-environment handoff, but declares no landing-zone or service resources. An Azure Resource Manager deployment still has a deployment-history record. This prevents a workshop template from inventing service resource APIs or changing a customer tenant.
 
 ## Two workshop paths
 
@@ -33,7 +33,7 @@ az deployment sub create \
   --parameters @parameters.example.json
 ```
 
-The command records chosen mode and supplied existing-environment identifiers in deployment outputs. It creates no resources.
+The command records chosen mode and supplied existing-environment identifiers in deployment outputs and Azure Resource Manager deployment history. The template declares no resources.
 
 ## Local-only corpus review
 
