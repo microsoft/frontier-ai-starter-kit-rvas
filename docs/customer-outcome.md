@@ -6,9 +6,11 @@ nav_order: 1
 
 # Customer Build · Define your outcome
 
-{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A scenario pack that defines the user, outcome, trusted data, safe action, success measure, and demo story." next="Use this scenario pack to run Foundations with your own data, or paste in the idea you selected from Idea Forge." %}
+{% include journey-status.html tone="customer" path="Customer Build Track" artifact="One evolving scenario record: outcome, owners, data, boundaries, evidence, and the next decision." next="Use this record throughout the journey. Each chapter adds evidence for the next customer decision." %}
 
-This is the first task in the Customer Build Track. Fill it out once, use it from Foundations through Capstone, and update it when the customer outcome changes.
+This is the first task in the Customer Build Track. Start it here, then update the same record
+from Foundations through deployment. It is not a compliance pack: it is the short shared record
+that lets the customer decide what is safe to build, test, pilot, and eventually operate.
 
 > First, what is "Northfield"? Throughout this track you'll see *Northfield* used as the
 > reference scenario: a student-services assistant for the fictional *Northfield University*,
@@ -26,14 +28,28 @@ If you arrived from [Idea Forge]({{ '/idea-forge' | relative_url }}), transfer t
 | Field | Prompt |
 |---|---|
 | Customer / business area | Which team, process, or account is this for? |
-| Target users | Who will use the assistant: employees, support agents, sellers, operators, students, citizens? |
+| Owners | Who owns the business outcome, the technical build, and the source data? Name people or roles. |
+| Target users and access | Who will use the assistant, and who should not? Note employees, customers, operators, or other audiences and any access assumptions. |
 | Business outcome | What should be faster, safer, cheaper, or more reliable after the prototype works? |
 | Top user tasks | What are the top 3 questions or workflows users need help with? |
-| Knowledge sources | Which safe documents, FAQs, policies, manuals, tickets, or pages can ground answers? *(see corpus prep guidance below)* |
-| Action candidates | What should the agent be allowed to do, and which actions require approval? |
-| Safety boundaries | What should the agent refuse, escalate, redact, or avoid automating? |
-| Success measures | What metrics or demo evidence would make stakeholders trust the prototype? |
-| Final demo story | What 2-minute scenario will show the outcome clearly? |
+| Knowledge sources and access | Which approved documents, FAQs, policies, manuals, tickets, or pages can ground answers? Who owns them, who may see them, and who keeps them current? *(See corpus prep guidance below.)* |
+| Action candidates | What may the agent do? For each meaningful action, who may request it, approve it, or must receive an escalation? |
+| Safety boundaries | What must the agent refuse, escalate, redact, or never automate? What failure would be unacceptable even if other results look good? |
+| Success measures | What evidence would make stakeholders trust the prototype? Separate useful quality measures from failures that must block a pilot. |
+| Operating assumptions | Where will it run, who can view traces or logs, and who investigates a bad answer or failed action? Record assumptions now; refine them in later chapters. |
+| Final demo and next decision | What short scenario proves the outcome, and what decision should the customer make after seeing the evidence: build, test, pilot, harden, or stop? |
+
+## Decision checkpoints
+
+Use these checkpoints to keep the engagement moving. A decision can be **yes**, **not yet**, or
+**change the scope**. Capture the reason in the scenario record; do not create a separate document.
+
+| Checkpoint | Decision | Evidence from the journey |
+|---|---|---|
+| Before building | Is the outcome bounded enough to build safely? | Owners, intended users, approved data, safety boundaries, and a narrow first outcome |
+| Before intended-user testing | Is the agent grounded and access-aware enough to test? | Cited answers, abstention behavior, source ownership, and data/access assumptions |
+| Before a controlled pilot | Is the action, behavior, and operating plan understood well enough to expose it? | Approval policy, evaluation and red-team results, trace-data decision, support owner, and known risks |
+| Before broader release | Should we launch, harden first, or remain demo-only? | Hosted deployment evidence, caller/agent permissions, rollback path, service signals, and residual gaps |
 
 ### Preparing your corpus for Foundations Step 4
 
@@ -45,6 +61,9 @@ When filling in Knowledge sources, use these guidelines to avoid the most common
 - Safe data only: no PII, unredacted customer data, confidential pricing, or legal content that
   has not been cleared for use in a demo environment. When in doubt, use public-facing or
   pre-approved summaries.
+- State the access assumption: who is allowed to read each source, whether the prototype can
+  enforce that boundary yet, and who approves a source change. A citation shows where an answer
+  came from; it does not prove every viewer was entitled to see the source.
 - Supported formats: the indexing step you'll build in Foundations Step 4 (following the
   Northfield reference, pointed at *your* files) reads Markdown (`.md`) and plain text (`.txt`)
   directly. For PDFs, extract text first — `pypdf` is fast enough for session use; Azure Document
@@ -84,15 +103,16 @@ Northfield gives you the reference shape:
 Keep the shape; swap the content. If the customer does not have safe data ready, run Northfield first
 and capture the customer scenario as follow-up work.
 
-## End-of-event deliverable
+## Engagement deliverable
 
-Each Customer Build team should leave with:
+By the end of the engagement, the scenario record should support one clear recommendation:
 
-1. A working grounded agent or hosted prototype.
-2. A 2-minute stakeholder demo using the final demo story.
-3. A short scorecard: what passed, what failed, and what still needs validation.
-4. A risk list covering data quality, permissions, safety, actions, and production readiness.
-5. A next-step backlog for pilot or production hardening.
+1. **Launch a controlled pilot** — the bounded use case, owners, evidence, and operating plan are sufficient.
+2. **Harden first** — the prototype is valuable, but named gaps must be closed before intended users rely on it.
+3. **Remain demo-only or stop** — the evidence does not yet support a pilot, or the use case should change.
+
+The supporting evidence stays lightweight: the grounded demo, scorecard, action-policy decisions,
+trace/operating notes, and a short list of residual risks and next actions.
 
 ## Facilitator prompts
 

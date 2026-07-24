@@ -17,6 +17,24 @@ This chapter adapts [Advanced · Deploy as a Hosted Agent](../activities/advance
 
 ---
 
+## Decision checkpoint — launch, harden, or remain demo-only
+
+Hosting an endpoint is not the same as being ready for broad production use. Before making the
+final recommendation, record these decisions in the [scenario record](../customer-outcome):
+
+- Which environment is this: demo, controlled pilot, or production? What data and users are
+  allowed in it?
+- Which callers may invoke the endpoint, and which permissions does the agent itself need?
+- Who approves a deployed change, who can roll it back, and what is the safe fallback if it fails?
+- Who supports the service, which signal tells them it is unhealthy, and what known hardening work
+  remains?
+
+**Decision:** choose one outcome explicitly: **launch a controlled pilot**, **harden first**, or
+**remain demo-only**. A hosted endpoint with managed identity is valuable evidence, but it does not
+replace the ownership, access, support, and change decisions above.
+
+---
+
 ## Step 1 — Package the hosted agent project
 
 **Why it matters for your app:** a hosted agent is a real artifact: manifest, container entrypoint, Dockerfile, endpoint protocol, and instructions under source control.

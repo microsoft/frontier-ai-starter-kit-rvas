@@ -40,6 +40,24 @@ Each step follows the same shape:
 
 ---
 
+## Decision checkpoint — data and access
+
+Before asking intended users to try the agent, add the following answers to your
+[scenario record](../customer-outcome):
+
+- Which sources are approved, who owns each one, and who updates or withdraws it?
+- Who may use the agent and see answers from those sources? What access boundary can the prototype
+  enforce today, and what is still an assumption?
+- What does a good citation look like for this audience, and what must the agent do when it lacks
+  an approved source?
+- Who decides whether the result is ready for intended-user testing?
+
+**Decision:** proceed to intended-user testing only when the grounded answer, abstention behavior,
+source ownership, and access assumptions are clear. A citation is evidence of provenance; it is not
+by itself proof that every viewer is entitled to the underlying information.
+
+---
+
 ## Step 1 — Provision Foundry + Search + observability
 
 **Why it matters for your app:** every later capability (grounding, actions, evals, tracing, deploy)
@@ -116,7 +134,7 @@ instructions; test that your specific refusals actually hold. → [Foundations S
 - `python activities/foundations/validate.py --track customer --step 3` — confirms your named agent (from `AZURE_FOUNDRY_AGENT_NAME`) exists and is versioned.
 - Checklist:
   - [ ] an in-scope question is answered well
-  - [ ] each safety boundary from your scenario pack is actually refused/escalated
+  - [ ] each safety boundary from your scenario record is actually refused/escalated
   - [ ] portal and code instructions match.
 
 **Stuck?** [Northfield Step 3](../activities/foundations#step-3--your-first-agent).

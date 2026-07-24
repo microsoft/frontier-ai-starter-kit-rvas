@@ -11,6 +11,23 @@ This chapter adapts [Advanced · Evaluation & Red Teaming](activity.html?id=adva
 
 ---
 
+## Decision checkpoint — controlled pilot
+
+Use the scorecard to support a decision, not to average away important failures. Add these short
+answers to the [scenario record](activity.html?id=customer-outcome):
+
+- Which failures block a pilot outright? Examples: exposing restricted information, making an
+  unapproved commitment, executing an action without approval, or failing a required refusal.
+- Which measures are advisory, and which have a threshold? Record why the threshold is appropriate
+  for this use case rather than copying a generic number.
+- Which rows need a person to review before the customer relies on the result?
+- What remains uncertain after testing, who owns it, and when will it be tested again?
+
+**Decision:** a controlled pilot is justified only when no blocking failure remains open, the
+scenario-specific evidence is understood by the named owners, and residual risks are explicit.
+
+---
+
 ## Step 1 — Build your quality dataset
 
 **Why it matters for your app:** an eval set turns “it sounded good” into row-level evidence against your own success measures.

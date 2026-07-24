@@ -10,6 +10,11 @@ Your job is to create momentum, not to become the team's keyboard. In session fa
 
 Facilitators for this event should focus on facilitation, pacing, and unblock strategy. Student-facing activity pages stay public; full solution guides remain in the repository so you can use them selectively when a team is truly stuck.
 
+For Customer Build, think beyond a single event. The build may span several weeks, and each chapter
+should help the customer make one useful decision: continue, narrow the scope, harden a gap, or
+start a controlled pilot. Keep the [scenario record]({{ '/customer-outcome' | relative_url }}) as
+the one shared record; do not ask teams to create separate governance paperwork.
+
 ## Event Day Checklist
 
 ### Pre-event
@@ -19,6 +24,7 @@ Facilitators for this event should focus on facilitation, pacing, and unblock st
 - Skim the activity sequence so you know where setup ends and AI work begins
 - Check the event’s escalation path for Azure subscription or portal issues
 - Run the opening triage below so each team starts from a route, not from a random activity page
+- For Customer Build, identify the business, technical, and data owners before the first build session
 
 ### During the event
 
@@ -28,13 +34,14 @@ Facilitators for this event should focus on facilitation, pacing, and unblock st
 - Keep teams time-boxed and encourage strategic skipping if the event clock gets tight
 - Use questions first, direct fixes second
 - Keep customer teams focused on the outcome: cited answers, one governed action, a trust scorecard, and a 2-minute demo
+- At each Customer Build checkpoint, ask for a decision and its reason, not a polished document
 
 ### Post-event
 
 - Help teams capture what they built and what they learned
 - Encourage cleanup of unused Azure resources if the event requires it
 - Share next-step learning resources for teams that want to keep building
-- For customer teams, capture the pilot backlog, risks, missing data, permissions, and production-readiness gaps
+- For customer teams, confirm whether the outcome is launch a controlled pilot, harden first, or remain demo-only; capture only the gaps that support that decision
 
 ## Opening triage
 
@@ -75,13 +82,27 @@ In Customer Build Mode, keep the team from building a generic chatbot. Useful fa
 - “What evidence will you show in the final two-minute demo?”
 - “What risk would block a pilot if you do not address it?”
 
+## Customer Build decision checkpoints
+
+Use these checkpoints across the engagement. They are conversation guides, not additional
+deliverables.
+
+| Point in the journey | Ask the customer | Useful outcome |
+|---|---|---|
+| Define | “Is this use case owned, bounded, and safe enough to build?” | Named owners, intended users, approved data, and a narrow first outcome |
+| Ground | “Can intended users safely test answers from these sources?” | Cited answers, abstention behavior, source ownership, and stated access assumptions |
+| Act | “Who can request, approve, deny, and investigate this side effect?” | A compact action policy and an appropriate draft/escalation path where needed |
+| Prove | “What failure would make a pilot unacceptable?” | Scenario-specific evaluation, red-team evidence, and explicit residual risks |
+| Operate | “Can we find and handle a bad run without exposing sensitive trace data?” | Trace-data choices, service signal, and a named investigation owner |
+| Ship | “Do we launch a controlled pilot, harden first, or remain demo-only?” | A clear recommendation, owner, and next action |
+
 ## Per-step / per-activity timing guide
 
-**Pre-event / opening session (~30 min):**
+**Customer Build kickoff:**
 
 | Activity | Expected Time | Note |
 |---|---|---|
-| Customer Build Step 0 review | 20–30 min | Every customer team should have its scenario pack before touching Step 1. Use this window to activity vague "knowledge sources" and help teams without a scenario run Customer Activity-Forge. Teams that skip Step 0 tend to drift during Advanced activities. |
+| Customer Build Step 0 review | 20–30 min | Every customer team should have its scenario record before touching Step 1. Clarify vague "knowledge sources," name owners, and agree the first decision. Teams that skip Step 0 tend to drift during Advanced activities. |
 
 **Tier 1 · Foundations** (one guided activity, four ordered steps):
 

@@ -13,7 +13,30 @@ description: Add one governed action to your grounded agent — the Customer Bui
 
 This chapter adapts [Advanced · Action Tools](../activities/advanced-action-tools): it uses the same approval-loop pattern and checkpoints, but the action belongs to *your* scenario from [Define your outcome](../customer-outcome). Use this page to decide what your agent may change; use the linked Northfield steps for exact mechanics.
 
-> Before you start this chapter: you need a grounded agent from [Ground your app](foundations) and at least one action candidate from your scenario pack.
+> Before you start this chapter: you need a grounded agent from [Ground your app](foundations) and at least one action candidate from your scenario record.
+
+---
+
+## Decision checkpoint — action policy
+
+Before wiring an action, write these answers in the [scenario record](../customer-outcome). Keep the
+policy to the action you are actually building:
+
+| Question | Decision to record |
+|---|---|
+| What changes? | The named side effect and the person, system, or budget affected by a mistake |
+| Who may ask? | The caller or role allowed to request it |
+| Who approves? | The person or role that can approve it, plus when it must be denied or escalated |
+| What is shown? | The exact user, record, amount, date, reason, and source evidence visible before approval |
+| What proves it? | The request, decision, approver, result, and safe way to retry or undo the action |
+
+The approval loop in this chapter is deliberately visible and suitable for a workshop. A production
+implementation must connect the same policy to authenticated requesters and approvers, durable
+records, and the target system's own safeguards. Do not present a terminal prompt as the production
+control.
+
+**Decision:** expose an action only when the side effect, decision-maker, denial path, and evidence
+are clear. Otherwise keep it as a draft, queue item, or escalation.
 
 ---
 

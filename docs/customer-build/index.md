@@ -7,25 +7,30 @@ description: Bring a customer outcome and build a grounded, evaluated Foundry ag
 
 <div class="hero-panel track-hero track-hero--customer">
   <span class="hero-kicker">Track 1 • Customer Build</span>
-  <h1>Turn a real outcome into a working agent prototype.</h1>
-  <p class="hero-tagline">Use Northfield as the reference shape, but swap in your customer-safe corpus, persona, workflow, trust tests, and final demo story.</p>
+  <h1>Turn a real outcome into an agent the customer can decide to pilot.</h1>
+  <p class="hero-tagline">Use Northfield as the reference shape, but make clear decisions about your customer data, actions, evidence, and operating plan as you build.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/customer-outcome' | relative_url }}">Define your outcome</a>
     <a class="btn btn-outline" href="{{ '/customer-build/foundations' | relative_url }}">Ground your app</a>
   </div>
 </div>
 
-{% include journey-status.html tone="customer" path="Customer Build Track" artifact="A customer-safe scenario pack plus one evolving Foundry agent prototype." next="Complete Define your outcome, then run Foundations with your own data and Northfield as the reference." %}
+{% include journey-status.html tone="customer" path="Customer Build Track" artifact="One evolving scenario record plus the evidence needed for the next customer decision." next="Complete Define your outcome, then ground the app with approved data and Northfield as the reference." %}
 
 ## The customer route
 
 <ol class="journey-map">
-  <li><span>0</span><strong>Define</strong><small>Outcome, users, corpus, action, safety</small></li>
-  <li><span>1</span><strong>Ground</strong><small>Foundations with customer-safe data</small></li>
-  <li><span>2</span><strong>Activate</strong><small>One approval-gated workflow</small></li>
-  <li><span>3</span><strong>Trust</strong><small>Eval, red-team, tracing</small></li>
-  <li><span>4</span><strong>Demo</strong><small>Hosted/UI artifact plus pilot backlog</small></li>
+  <li><span>0</span><strong>Define</strong><small>Outcome, owners, data, boundaries</small></li>
+  <li><span>1</span><strong>Ground</strong><small>Approved data and access assumptions</small></li>
+  <li><span>2</span><strong>Act</strong><small>One deliberately governed workflow</small></li>
+  <li><span>3</span><strong>Prove</strong><small>Quality, safety, and critical failures</small></li>
+  <li><span>4</span><strong>Operate</strong><small>Trace data, service signals, and ownership</small></li>
+  <li><span>5</span><strong>Decide</strong><small>Launch a pilot, harden first, or stop</small></li>
 </ol>
+
+This is a multi-week customer engagement, not a linear one-day checklist. Each chapter produces
+evidence for a decision in the same [scenario record]({{ '/customer-outcome' | relative_url }}).
+If a decision is “not yet,” narrow the outcome or close the named gap before moving on.
 
 ## What to swap from Northfield
 
@@ -42,15 +47,15 @@ Each chapter adapts a Northfield reference module. It keeps the same objective a
 but applies them to your app and asks whether the step is relevant. Make the decisions here; use
 the linked reference for exact commands.
 
-| Chapter | Reframes |
-|---|---|
-| [Define your outcome]({{ '/customer-outcome' | relative_url }}) | Scenario pack: user, corpus, action, safety, demo |
-| [Ground your app]({{ '/customer-build/foundations' | relative_url }}) | Foundations |
-| [Make it act]({{ '/customer-build/advanced-action-tools' | relative_url }}) | Action Tools |
-| [Prove it's safe]({{ '/customer-build/advanced-evaluation-redteam' | relative_url }}) | Evaluation & Red Teaming |
-| [See inside it]({{ '/customer-build/advanced-tracing-observability' | relative_url }}) | Tracing & Observability |
-| [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent |
-| [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone |
+| Chapter | Reframes | Customer decision |
+|---|---|---|
+| [Define your outcome]({{ '/customer-outcome' | relative_url }}) | Scenario record: user, data, action, safety, demo | Is this bounded and owned well enough to build? |
+| [Ground your app]({{ '/customer-build/foundations' | relative_url }}) | Foundations | Is it safe to test with intended users? |
+| [Make it act]({{ '/customer-build/advanced-action-tools' | relative_url }}) | Action Tools | Is the side effect governed well enough to expose? |
+| [Prove it's safe]({{ '/customer-build/advanced-evaluation-redteam' | relative_url }}) | Evaluation & Red Teaming | Is it safe for a controlled pilot? |
+| [See inside it]({{ '/customer-build/advanced-tracing-observability' | relative_url }}) | Tracing & Observability | Can the team investigate and operate it safely? |
+| [Ship it]({{ '/customer-build/advanced-deploy-hosted-agent' | relative_url }}) | Deploy as a Hosted Agent | Launch a pilot, harden first, or remain demo-only? |
+| [Grow it into a team]({{ '/customer-build/capstone-multi-agent' | relative_url }}) | Multi-Agent Capstone | Only add roles when they make the outcome clearer or safer. |
 
 Optional deepeners (do only if your scenario needs them):
 [Magentic Workflows]({{ '/customer-build/extra-magentic-workflows' | relative_url }}) ·
@@ -60,25 +65,25 @@ Optional deepeners (do only if your scenario needs them):
 [Give It a Voice]({{ '/customer-build/extra-voice-live' | relative_url }}) ·
 [Copilot-Assisted Build]({{ '/customer-build/extra-copilot-assisted' | relative_url }})
 
-## Build order for a one-day event
+## Build order for a customer engagement
 
 <div class="quick-grid">
   <div class="quick-card">
-    <span class="track-badge">Must do</span>
-    <h3>Define your outcome + Foundations</h3>
-    <p>Leave with a grounded assistant that answers customer-relevant questions with citations from trusted data.</p>
+    <span class="track-badge">Start here</span>
+    <h3>Define, then ground</h3>
+    <p>Agree the bounded outcome, owners, data, and access assumptions; then prove the agent can answer from trusted sources.</p>
   </div>
 
   <div class="quick-card">
-    <span class="track-badge">High value</span>
-    <h3>Action + Evaluation</h3>
-    <p>Add one governed workflow and a scorecard that shows accuracy, safety, and abstention behavior.</p>
+    <span class="track-badge">Build confidence</span>
+    <h3>Action + evaluation</h3>
+    <p>Only add a useful action when its request, approval, escalation, and evidence are clear; then prove quality, refusal, and safety behavior.</p>
   </div>
 
   <div class="quick-card">
-    <span class="track-badge">Demo polish</span>
-    <h3>Deploy or UI</h3>
-    <p>Give stakeholders a real endpoint, web face, citations panel, or approval card they can understand quickly.</p>
+    <span class="track-badge">Make a decision</span>
+    <h3>Operate + ship</h3>
+    <p>Decide how traces are handled, who investigates problems, and whether the evidence supports a controlled pilot, more hardening, or a demo-only result.</p>
   </div>
 </div>
 

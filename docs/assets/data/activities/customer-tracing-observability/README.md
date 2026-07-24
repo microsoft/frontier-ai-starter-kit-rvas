@@ -11,6 +11,24 @@ This chapter adapts [Advanced · Tracing & Observability](activity.html?id=advan
 
 ---
 
+## Decision checkpoint — operating safely
+
+Tracing helps a team investigate a real failure, but traces can also contain sensitive information.
+Record these practical choices in the [scenario record](activity.html?id=customer-outcome):
+
+- May prompts, answers, retrieved text, or tool arguments be captured? If not, what should be
+  minimized or redacted before tracing is enabled?
+- Who may view the traces, and how long should they remain available?
+- What single service signal matters first for this outcome: failed requests, unsafe denials,
+  latency, cost, or another customer-relevant measure?
+- Who investigates a bad answer, failed action, or trace-data concern, and how does a user reach
+  them?
+
+**Decision:** operate the prototype beyond a demo only when the team can find a representative run,
+handle its trace data appropriately, and name an owner for investigation.
+
+---
+
 ## Step 1 — Enable tracing before imports
 
 **Why it matters for your app:** without instrumentation, failures look like vibes. With traces, you can point to the model, retrieval, or tool span that caused the issue.
