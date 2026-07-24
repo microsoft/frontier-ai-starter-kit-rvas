@@ -762,7 +762,10 @@
             "copilot-studio",
             "foundry-agents",
             "governance"
-          ]
+          ],
+          "sequence": 1,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/01-outcome-and-access-boundary.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=outcome-and-access-boundary"
         },
         {
           "id": "decision-explorer-context",
@@ -772,7 +775,10 @@
             "copilot-studio",
             "foundry-agents",
             "fabric-iq"
-          ]
+          ],
+          "sequence": 2,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/02-decision-explorer-context.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=decision-explorer-context"
         },
         {
           "id": "source-and-iq-pattern-selection",
@@ -784,7 +790,10 @@
             "fabric-iq",
             "work-iq",
             "web-iq"
-          ]
+          ],
+          "sequence": 3,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/03-source-and-iq-pattern-selection.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=source-and-iq-pattern-selection"
         },
         {
           "id": "golden-dataset-and-evaluation",
@@ -794,7 +803,10 @@
             "agent-evaluation",
             "copilot-studio",
             "foundry-agents"
-          ]
+          ],
+          "sequence": 4,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/04-golden-dataset-and-evaluation.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=golden-dataset-and-evaluation"
         },
         {
           "id": "operating-evidence",
@@ -804,7 +816,10 @@
             "governance",
             "agent-evaluation",
             "operational-readiness"
-          ]
+          ],
+          "sequence": 5,
+          "content_path": "assets/data/scenarios/ai-grounding/lessons/05-operating-evidence.md",
+          "lesson_path": "lesson.html?scenario=ai-grounding&lesson=operating-evidence"
         }
       ],
       "asset_base": "assets/data/scenarios/ai-grounding/",
@@ -838,7 +853,10 @@
           "reused_with": [
             "policy communications",
             "knowledge-grounded experiences"
-          ]
+          ],
+          "sequence": 1,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/01-approved-content.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=approved-content"
         },
         {
           "id": "script-storyboard",
@@ -847,7 +865,10 @@
           "reused_with": [
             "learning content",
             "employee communications"
-          ]
+          ],
+          "sequence": 2,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/02-script-storyboard.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=script-storyboard"
         },
         {
           "id": "human-approval-selection",
@@ -856,7 +877,10 @@
           "reused_with": [
             "brand-governed generation",
             "vendor evaluation"
-          ]
+          ],
+          "sequence": 3,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/03-human-approval-and-selection.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=human-approval-selection"
         },
         {
           "id": "experience-evidence",
@@ -865,7 +889,10 @@
           "reused_with": [
             "employee experience",
             "operational measurement"
-          ]
+          ],
+          "sequence": 4,
+          "content_path": "assets/data/scenarios/avatar-enabled-onboarding/lessons/04-experience-evidence.md",
+          "lesson_path": "lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-evidence"
         }
       ],
       "asset_base": "assets/data/scenarios/avatar-enabled-onboarding/",
@@ -896,7 +923,10 @@
           "path": "lessons/01-outcome-and-readiness.md",
           "reused_with": [
             "document workflow discovery"
-          ]
+          ],
+          "sequence": 1,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/01-outcome-and-readiness.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=outcome-and-readiness"
         },
         {
           "id": "sme-studio-loop",
@@ -904,7 +934,10 @@
           "path": "lessons/02-sme-studio-loop.md",
           "reused_with": [
             "Content Understanding Studio"
-          ]
+          ],
+          "sequence": 2,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/02-sme-studio-loop.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=sme-studio-loop"
         },
         {
           "id": "secure-handoff-and-workflow",
@@ -912,7 +945,10 @@
           "path": "lessons/03-secure-handoff-and-workflow.md",
           "reused_with": [
             "SharePoint document ingestion"
-          ]
+          ],
+          "sequence": 3,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/03-secure-handoff-and-workflow.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=secure-handoff-and-workflow"
         },
         {
           "id": "review-evaluation-lifecycle",
@@ -920,7 +956,10 @@
           "path": "lessons/04-review-evaluation-lifecycle.md",
           "reused_with": [
             "responsible AI operations"
-          ]
+          ],
+          "sequence": 4,
+          "content_path": "assets/data/scenarios/content-understanding-document-workflow/lessons/04-review-evaluation-lifecycle.md",
+          "lesson_path": "lesson.html?scenario=content-understanding-document-workflow&lesson=review-evaluation-lifecycle"
         }
       ],
       "asset_base": "assets/data/scenarios/content-understanding-document-workflow/",

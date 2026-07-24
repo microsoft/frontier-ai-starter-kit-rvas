@@ -31,7 +31,7 @@
     document.getElementById('decisionPrompts').innerHTML = (scenario.decision_prompts || [])
       .map((prompt) => `<li>${FP.esc(prompt)}</li>`).join('');
     document.getElementById('lessonList').innerHTML = (scenario.lessons || [])
-      .map((lesson) => `<li><a href="${scenario.asset_base}${FP.esc(lesson.path)}">${FP.esc(lesson.title)}</a></li>`).join('');
+      .map((lesson) => `<li><a href="${FP.esc(lesson.lesson_path)}">Lesson ${lesson.sequence}: ${FP.esc(lesson.title)}</a></li>`).join('');
   }
 
   function showError(message) {

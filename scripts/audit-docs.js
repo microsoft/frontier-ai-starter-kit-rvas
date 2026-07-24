@@ -318,6 +318,49 @@ function auditGeneratedLinks(files, failures) {
   return checked;
 }
 
+function auditScenarioCourseRoutes(failures) {
+  const lessonPage = path.join(ROOT, 'docs', 'lesson.html');
+  const lessonScript = path.join(ROOT, 'docs', 'assets', 'js', 'lesson.js');
+  const platformPath = path.join(ROOT, 'docs', 'assets', 'data', 'platform.json');
+
+  if (!fs.existsSync(lessonPage)) failures.push('docs/lesson.html: customer lesson route is missing');
+  if (!fs.existsSync(lessonScript)) failures.push('docs/assets/js/lesson.js: customer lesson renderer is missing');
+  if (!fs.existsSync(platformPath)) {
+    failures.push('docs/assets/data/platform.json: generated course registry is missing; run npm run build');
+    return;
+  }
+
+  let platform;
+  try {
+    platform = JSON.parse(fs.readFileSync(platformPath, 'utf8'));
+  } catch (error) {
+    failures.push(`docs/assets/data/platform.json: invalid JSON (${error.message})`);
+    return;
+  }
+
+  for (const scenario of platform.scenarios || []) {
+    const readme = path.join(ROOT, 'docs', 'assets', 'data', 'scenarios', scenario.id, 'README.md');
+    if (!fs.existsSync(readme)) {
+      failures.push(`scenario ${scenario.id}: generated playbook is missing`);
+      continue;
+    }
+    const playbook = fs.readFileSync(readme, 'utf8');
+    if (/\]\(lessons\/[^)#]+\.md(?:#[^)]+)?\)/u.test(playbook)) {
+      failures.push(`scenario ${scenario.id}: generated playbook links directly to a raw lesson Markdown file`);
+    }
+    for (const lesson of scenario.lessons || []) {
+      if (!lesson.lesson_path || !lesson.content_path) {
+        failures.push(`scenario ${scenario.id} lesson ${lesson.id}: missing in-site lesson route metadata`);
+        continue;
+      }
+      const source = path.join(ROOT, 'docs', lesson.content_path);
+      if (!fs.existsSync(source)) {
+        failures.push(`scenario ${scenario.id} lesson ${lesson.id}: generated lesson source is missing`);
+      }
+    }
+  }
+}
+
 function main() {
   const args = new Set(process.argv.slice(2));
   const runSource = args.size === 0 || args.has('--source');
@@ -339,6 +382,7 @@ function main() {
     auditCharacters(docs, failures);
     referenceCount += auditScriptReferences(docs, failures);
     referenceCount += auditGeneratedLinks(docs, failures);
+    auditScenarioCourseRoutes(failures);
     console.log(`Audited ${docs.length} generated documentation files.`);
   }
 

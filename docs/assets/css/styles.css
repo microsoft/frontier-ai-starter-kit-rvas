@@ -903,20 +903,50 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   border-color: color-mix(in srgb, var(--c-gold) 42%, var(--c-line));
 }
 
-/* ── Scenario delivery kit: editorial decision workspace ───────────────── */
-.decision-page,
-.scenario-page {
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Aptos', 'Segoe UI', sans-serif;
-  --font-mono: 'DM Mono', 'JetBrains Mono', monospace;
+/* ── Scenario delivery kit ───────────────────────────────────────────── */
+.decision-hero,
+.scenario-hero,
+.course-hero {
+  padding: 80px 0 64px;
+  background: var(--hero-grad);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 }
+.decision-hero::after,
+.scenario-hero::after,
+.course-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+.decision-hero > .wrap,
+.scenario-hero > .wrap,
+.course-hero > .wrap { position: relative; z-index: 1; }
+.decision-hero .eyebrow,
+.scenario-hero .eyebrow,
+.course-hero .eyebrow { color: rgba(255, 255, 255, 0.72); }
+.decision-hero .eyebrow::before,
+.scenario-hero .eyebrow::before,
+.course-hero .eyebrow::before { background: rgba(255, 255, 255, 0.5); }
+.decision-hero h1,
+.scenario-hero h1,
+.course-hero h1 { color: #fff; }
+.decision-hero p,
+.scenario-hero p,
+.course-hero .lede { color: rgba(255, 255, 255, 0.82); }
+.decision-hero h1 em { color: #bfdbfe; }
+.scenario-hero .back-link,
+.course-hero .back-link { color: rgba(255, 255, 255, 0.82); }
+.scenario-hero .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, 0.45); }
+.scenario-hero .btn-ghost:hover { background: rgba(255, 255, 255, 0.12); }
+.course-hero .lede { margin: 18px 0 0; max-width: 60ch; }
 .decision-hero,
 .scenario-hero {
-  padding: 86px 0 62px;
-  background:
-    linear-gradient(118deg, rgba(20, 134, 138, .12), transparent 48%),
-    linear-gradient(300deg, rgba(80, 64, 146, .12), transparent 50%);
-  border-bottom: 1px solid var(--c-line);
+  border-bottom: none;
 }
 .decision-hero-grid {
   display: grid;
@@ -926,11 +956,10 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 }
 .decision-hero h1,
 .scenario-hero h1 { margin-top: 20px; max-width: 12ch; }
-.decision-hero h1 em { color: var(--c-ghas); font-style: italic; }
 .decision-hero p,
-.scenario-hero p { font-size: 1.1rem; max-width: 58ch; color: var(--c-dim); }
+.scenario-hero p { font-size: 1.1rem; max-width: 58ch; }
 .decision-principle {
-  border-left: 3px solid var(--c-ghas);
+  border-left: 3px solid #bfdbfe;
   padding: 16px 0 16px 22px;
   display: grid;
   gap: 8px;
@@ -941,7 +970,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   font: 500 .72rem var(--font-mono);
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--c-ghas);
+  color: var(--c-gold);
 }
 .decision-principle strong { font: 600 1.35rem/1.25 var(--font-display); }
 .decision-principle small { color: var(--c-dim); }
@@ -955,14 +984,14 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   display: grid;
   gap: 24px;
   padding: 28px;
-  background: color-mix(in srgb, var(--c-850) 88%, var(--c-ghas));
+  background: var(--c-850);
   border: 1px solid var(--c-line);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-card);
 }
 .explorer-form fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 9px; }
 .explorer-form legend { font: 600 1.05rem var(--font-display); margin-bottom: 10px; }
-.explorer-form legend span { color: var(--c-ghas); font: 500 .72rem var(--font-mono); margin-right: 8px; }
+.explorer-form legend span { color: var(--c-gold); font: 500 .72rem var(--font-mono); margin-right: 8px; }
 .explorer-form label {
   display: flex;
   gap: 9px;
@@ -973,7 +1002,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   cursor: pointer;
 }
 .explorer-form label:hover { background: var(--c-line-soft); color: var(--c-fg); }
-.explorer-form input { accent-color: var(--c-ghas); }
+.explorer-form input { accent-color: var(--c-gold); }
 .explorer-result { min-height: 540px; padding: 24px 0 0; }
 .explorer-result h2 { margin: 12px 0; color: var(--c-fg); }
 .explorer-result > p { color: var(--c-dim); max-width: 62ch; }
@@ -995,19 +1024,31 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .back-link { display: inline-block; margin-bottom: 32px; color: var(--c-dim); font-size: .9rem; }
 .scenario-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .scenario-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); gap: 52px; }
+.lesson-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); gap: 52px; }
 .scenario-sidebar { display: grid; gap: 14px; align-content: start; }
+.lesson-sidebar { display: grid; gap: 14px; align-content: start; }
 .scenario-panel { padding: 18px; background: var(--c-850); border: 1px solid var(--c-line); border-radius: var(--r); }
 .scenario-panel p { margin: 8px 0 0; color: var(--c-dim); }
 .scenario-panel ul,
 .scenario-panel ol { margin: 10px 0 0; padding-left: 20px; color: var(--c-dim); }
 .scenario-panel li + li { margin-top: 7px; }
 .scenario-panel a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
+.course-progress { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.course-progress a { display: flex; gap: 9px; align-items: baseline; text-decoration: none; color: var(--c-dim); font-size: .875rem; }
+.course-progress a:hover { color: var(--c-gold); text-decoration: underline; }
+.course-progress span { color: var(--c-faint); font-family: var(--font-mono); font-size: .72rem; }
+.course-progress .is-current a { color: var(--c-heading); font-weight: 700; }
+.course-progress .is-current span { color: var(--c-gold); }
+.lesson-pager { display: grid; gap: 9px; }
+.lesson-pager .btn { justify-content: flex-start; text-align: left; }
 @media (max-width: 800px) {
   .decision-hero-grid,
   .explorer-layout,
-  .scenario-layout { grid-template-columns: 1fr; gap: 28px; }
+  .scenario-layout,
+  .lesson-layout { grid-template-columns: 1fr; gap: 28px; }
   .decision-hero,
-  .scenario-hero { padding: 58px 0 42px; }
+  .scenario-hero,
+  .course-hero { padding: 58px 0 42px; }
   .explorer-result { min-height: auto; }
 }
 

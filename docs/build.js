@@ -682,6 +682,20 @@ function copyScenarioAssets(scenarios) {
     fs.rmSync(outputRoot, { recursive: true, force: true });
     for (const scenario of scenarios) {
       fs.cpSync(scenario.root, path.join(outputRoot, scenario.id), { recursive: true });
+      const readmePath = path.join(outputRoot, scenario.id, 'README.md');
+      if (fs.existsSync(readmePath)) {
+        const lessonByPath = new Map((scenario.lessons || []).map((lesson) => [lesson.path, lesson]));
+        const rewritten = fs.readFileSync(readmePath, 'utf8').replace(
+          /\]\((lessons\/[^)#]+\.md)(#[^)]+)?\)/g,
+          (match, lessonPath, hash = '') => {
+            const lesson = lessonByPath.get(lessonPath);
+            return lesson
+              ? `](../../../../lesson.html?scenario=${encodeURIComponent(scenario.id)}&lesson=${encodeURIComponent(lesson.id)}${hash})`
+              : match;
+          },
+        );
+        fs.writeFileSync(readmePath, rewritten);
+      }
     }
 }
 
@@ -695,7 +709,12 @@ function scenarioOutput(scenario) {
       maturity: scenario.maturity || 'initial',
       owner: scenario.owner || 'Unassigned',
       decision_prompts: scenario.decision_prompts || [],
-      lessons: scenario.lessons,
+      lessons: (scenario.lessons || []).map((lesson, index) => ({
+        ...lesson,
+        sequence: index + 1,
+        content_path: `${assetBase}${lesson.path}`,
+        lesson_path: `lesson.html?scenario=${encodeURIComponent(scenario.id)}&lesson=${encodeURIComponent(lesson.id)}`,
+      })),
       asset_base: assetBase,
       readme_path: `${assetBase}README.md`,
       slides_path: `${assetBase}${scenario.slides}`,
