@@ -18,10 +18,13 @@ The outcome is a reviewed decision package: business outcome, SME schema/test re
 
 | Module | Time | Outcome |
 | --- | ---: | --- |
-| [1. Outcome and data readiness](lessons/01-outcome-and-readiness.md) | 35 min | decision/readiness statement |
-| [2. SME Studio loop](lessons/02-sme-studio-loop.md) | 45 min | schema/test-observation log |
-| [3. Secure handoff and workflow](lessons/03-secure-handoff-and-workflow.md) | 40 min | handoff contract and workflow trace |
-| [4. Review, evaluation, and lifecycle](lessons/04-review-evaluation-lifecycle.md) | 45 min | review policy and release decision |
+| [1. Provision the shared Foundry foundation](lessons/01-provision-foundation.md) | 25 min | foundation and region decision |
+| [2. Connect an approved document source](lessons/02-document-source.md) | 25 min | source ownership and access contract |
+| [3. Select the extraction capability](lessons/03-extraction-selection.md) | 25 min | Content Understanding / Document Intelligence decision |
+| [4. Implement typed extraction with evidence](lessons/04-typed-extraction.md) | 35 min | typed output and evidence record |
+| [5. Build review, correction, and handoff](lessons/05-human-review.md) | 30 min | review workflow and handoff contract |
+| [6. Evaluate and trace the workflow](lessons/06-prove-and-observe.md) | 25 min | evaluation and trace evidence |
+| [7. Deploy the reviewable workflow](lessons/07-deploy.md) | 25 min | controlled deployment decision |
 
 Allow 5-minute breaks between modules if the session runs longer than two hours.
 

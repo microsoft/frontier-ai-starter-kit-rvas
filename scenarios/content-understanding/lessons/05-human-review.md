@@ -4,6 +4,8 @@ Module 4 raises exceptions; this module resolves them. A reviewer sees the low-c
 fields, corrects them, and approves — and every correction is retained as evidence, so it never
 silently overwrites the extraction and it feeds the evaluation in module 6.
 
+![Human review handoff](../diagrams/05-human-review-handoff.png)
+
 ## What you build
 
 1. A review queue: exceptions routed to a named reviewer with the document, the extracted fields, and

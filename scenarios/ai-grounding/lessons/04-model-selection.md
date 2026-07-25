@@ -3,6 +3,8 @@
 You now have a real corpus and a real golden question set. That is the only honest basis for
 choosing models. Public benchmarks measure a different workload than yours.
 
+![Model comparison tradeoffs](../diagrams/04-model-comparison-tradeoffs.png)
+
 ## What you build
 
 1. A comparison harness that runs the same golden questions through candidate chat deployments and

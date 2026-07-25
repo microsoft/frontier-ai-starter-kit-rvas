@@ -83,7 +83,7 @@ that later triggers withdrawal (Module 6).
 
 ## 4. Build the grounded assistant (Module 4)
 
-Follow [Foundations Steps 3–4](../../activities/foundations/README.md) to build the grounded,
+Follow [Foundations Steps 3–4](../../../activities/foundations/README.md) to build the grounded,
 citing agent. The onboarding contract: on-claim asks return the **exact approved wording** and the
 `claim_id`; off-claim asks return `NO_APPROVED_CLAIM` plus a human-help path. The assistant provides
 interactive help; it must **not** silently add claims to a published script.

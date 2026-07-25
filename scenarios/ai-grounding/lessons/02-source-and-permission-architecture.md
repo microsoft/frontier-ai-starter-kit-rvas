@@ -3,6 +3,8 @@
 This is the module that decides whether your pilot is safe. Retrieval quality can be fixed later;
 a wrong permission boundary is discovered by the wrong person.
 
+![Source and permission decision](../diagrams/02-source-permission-decision.png)
+
 ## What you build
 
 1. A source decision: for each fact the assistant must know, which system is authoritative.

@@ -5,6 +5,8 @@ Intelligence are **Foundry Tools on a Microsoft Foundry (AIServices) resource** 
 that hosts your model deployments. Get the identity model and region right now and modules 2–7 are
 configuration; get it wrong and you redeploy.
 
+![Shared document workflow foundation](../diagrams/01-shared-foundation.png)
+
 ## What you build
 
 A resource group containing:

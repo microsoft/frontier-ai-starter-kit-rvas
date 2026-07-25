@@ -3,6 +3,8 @@
 Every later module writes into the footprint you create here. Get the identity model right now and
 modules 2–7 are configuration; get it wrong and you will redeploy.
 
+![Grounding foundation footprint](../diagrams/01-foundation-footprint.png)
+
 ## What you build
 
 A resource group containing:

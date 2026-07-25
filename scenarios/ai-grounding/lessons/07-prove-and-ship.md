@@ -3,6 +3,8 @@
 This is where the pilot stops being a demo. You produce numbers, adversarial evidence, traces that
 explain a bad answer, a deployment, and a release decision that a risk owner can sign.
 
+![Operating evidence gate](../diagrams/07-operating-gate.png)
+
 ## What you build
 
 1. An evaluation run over the golden set with a threshold gate that fails a bad build.

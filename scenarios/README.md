@@ -6,13 +6,11 @@ conversation, reusable lessons, source-controlled slides, and a deliberately sma
 ## Required files
 
 ```text
-scenarios/<scenario-id>/
+scenarios/<folder-name>/
   manifest.json
   README.md
   FACILITATOR.md
   slides.md
-  local-demo.md
-  validate.py
   lessons/
   accelerator/
     README.md
@@ -21,7 +19,7 @@ scenarios/<scenario-id>/
     sample-data/
 ```
 
-`manifest.json` must include:
+`manifest.json` is authoritative for public IDs and non-standard guide paths. It must include:
 
 ```json
 {
@@ -52,8 +50,8 @@ scenarios/<scenario-id>/
 
 - The scenario starts from a customer outcome, not a product.
 - Every lesson names the decision, inputs, proof, and next decision.
-- Every lesson includes duration, facilitator preparation, a timed participant activity, an
-  artifact template, expected output, validation, debrief, and next decision.
+- Every lesson follows the practical build-module contract: visible inputs, implementation steps,
+  expected evidence, local or service validation, and the next customer decision.
 - Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important
   visual information the learner should understand or retain; include zero when a diagram would be
   decorative or redundant.

@@ -4,6 +4,8 @@ The workflow passed the gate; now ship it without losing anything that made it s
 where keyless auth, monitoring, and rollback stop being slideware and become the difference between a
 pilot you can operate and one you cannot.
 
+![Controlled deployment boundary](../diagrams/07-controlled-deployment.png)
+
 ## What you build
 
 An authenticated endpoint running the reviewed workflow with a managed identity, Application Insights

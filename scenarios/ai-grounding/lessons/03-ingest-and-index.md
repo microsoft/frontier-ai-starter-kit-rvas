@@ -6,6 +6,8 @@ that makes an answer auditable and the refresh behaviour that keeps it from goin
 The failure this module prevents is the expensive one: a confident, well-cited answer quoting a
 policy that was superseded three months ago.
 
+![Ingestion lineage](../diagrams/03-ingestion-lineage.png)
+
 ## What you build
 
 1. An ingestion path from the approved source into a retrievable store.

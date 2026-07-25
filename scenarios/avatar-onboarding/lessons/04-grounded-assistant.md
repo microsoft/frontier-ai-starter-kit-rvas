@@ -9,6 +9,8 @@ This module is the [Foundations activity](../../../activities/foundations/README
 applied to onboarding — build it there for the mechanics, and apply the onboarding-specific rules
 below. Prompt Flow is not part of this curriculum; use agents + tools + retrieval.
 
+![Grounded assistant boundary](../diagrams/04-grounded-assistant-boundary.png)
+
 ## What you build
 
 1. A grounded generation path (model-with-retrieval **or** a Foundry agent) that produces script

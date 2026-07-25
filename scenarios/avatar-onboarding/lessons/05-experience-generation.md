@@ -7,6 +7,8 @@ incident, not a demo.
 
 Speech facts verified on learn.microsoft.com on **2026-07-24**.
 
+![Accessible experience generation](../diagrams/05-accessible-generation.png)
+
 ## What you build
 
 1. The rendered experience (a talking-avatar video, a real-time stream, a Voice Live session, or

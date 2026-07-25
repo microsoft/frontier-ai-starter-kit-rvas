@@ -7,6 +7,8 @@ HR/onboarding content reaches the experience**, as a typed, versioned, owned, tr
 Retrieval quality can be improved later; a wrong or expired claim published on a synthetic face is
 the failure that ends the pilot.
 
+![Governed content pipeline](../diagrams/03-governed-content-pipeline.png)
+
 ## What you build
 
 1. A **claim set**: every fact the experience may state, as an atomic claim with a stable id, the

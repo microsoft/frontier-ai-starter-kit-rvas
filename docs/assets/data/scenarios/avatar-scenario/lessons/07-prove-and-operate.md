@@ -8,6 +8,8 @@ decision.
 This module is the [Evaluation & Red Teaming activity](../../../activities/advanced-evaluation-redteam/README.md)
 applied to onboarding. Set the tracing switches **before importing** the Foundry SDK.
 
+![Avatar experience operating loop](../diagrams/07-operate-avatar-experience.png)
+
 ## What you build
 
 1. An **evaluation** of grounding, disclosure presence, accessibility, and refusal behaviour against

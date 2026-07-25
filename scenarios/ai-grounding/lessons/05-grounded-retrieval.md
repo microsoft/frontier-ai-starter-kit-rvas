@@ -6,6 +6,8 @@ retrieval does not fix weak retrieval; it makes the failure fluent and harder to
 So this module ships a working grounded answer path — citations, abstention, access-denied
 behaviour, freshness — with **no agent**. If it does not work here, an agent will not save it.
 
+![Retrieval before agent orchestration](../diagrams/05-retrieval-before-agent.png)
+
 ## What you build
 
 1. A retrieval call that returns passages with citations.

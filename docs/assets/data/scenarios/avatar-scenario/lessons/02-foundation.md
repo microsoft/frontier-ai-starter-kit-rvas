@@ -7,6 +7,8 @@ model right now and modules 3–7 are configuration.
 
 Verified against the kit's working `infra/resources.bicep` and learn.microsoft.com on **2026-07-24**.
 
+![Foundry and Speech foundation](../diagrams/02-foundry-speech-foundation.png)
+
 ## What you build
 
 | Resource | Why this scenario needs it |

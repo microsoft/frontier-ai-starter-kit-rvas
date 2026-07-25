@@ -717,10 +717,6 @@ function copyScenarioAssets(scenarios) {
           /\]\(\.\.\/\.\.\/activities\/([^/)#]+)\/(?:README|FACILITATOR)\.md(#[^)]+)?\)/g,
           (_match, activityId, hash = '') => `](activity.html?id=${encodeURIComponent(activityId)}${hash})`,
         );
-        rewritten = rewritten.replace(
-          /\]\(((?:accelerator|evidence|lessons)\/[^)#]+\.md)(#[^)]+)?\)/g,
-          (_match, localPath, hash = '') => `](assets/data/scenarios/${scenario.id}/${localPath}${hash})`,
-        );
         fs.writeFileSync(readmePath, rewritten);
       }
     }

@@ -4,6 +4,8 @@ Before this workflow touches a real decision, prove it. "It worked on the demo d
 evidence. This module measures the workflow against a gate on representative cases and makes every
 run traceable, so a failure is diagnosable instead of mysterious.
 
+![Evaluation and trace loop](../diagrams/06-eval-trace-loop.png)
+
 ## What you build
 
 1. A labeled evaluation set built from the module-1 fixtures **and** the module-5 corrections

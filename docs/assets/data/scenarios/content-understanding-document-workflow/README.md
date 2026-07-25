@@ -7,7 +7,7 @@ default, shows how to build **every** option, and ends in a machine-checkable ch
 
 The quality bar and reference format are the [Foundations activity](activity.html?id=foundations)
 and the AI Grounding scenario lessons. The complete reference implementation lives in
-[`accelerator/solution.md`](assets/data/scenarios/content-understanding-document-workflow/accelerator/solution.md).
+[`accelerator/solution.md`](accelerator/solution.md).
 
 ## The seven modules
 
@@ -53,11 +53,11 @@ python3 scripts/validate_local_pack.py
 ```
 
 Verified API facts (API versions, model ids, SDK packages) were fetched from learn.microsoft.com on
-**2026-07-24** and are cited inline in each lesson and in [`accelerator/solution.md`](assets/data/scenarios/content-understanding-document-workflow/accelerator/solution.md).
+**2026-07-24** and are cited inline in each lesson and in [`accelerator/solution.md`](accelerator/solution.md).
 
 ## Non-negotiable boundaries
 
-- **Synthetic data only.** The fixtures under [`accelerator/sample-data/README.md`](assets/data/scenarios/content-understanding-document-workflow/accelerator/sample-data/README.md)
+- **Synthetic data only.** The fixtures under [`accelerator/sample-data/README.md`](accelerator/sample-data/README.md)
   are fictional. Real deployable infrastructure is fine; real customer documents are not, until a
   source owner, security owner, and retention policy approve a separate path.
 - **Keyless-first.** `DefaultAzureCredential` + managed identity + Entra RBAC. No keys in code, `.env`,

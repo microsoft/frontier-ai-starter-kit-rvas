@@ -4,6 +4,8 @@ This module decides which documents are allowed to enter the workflow and how th
 version, and permissions travel with them. Extraction quality can be tuned later; letting an
 unapproved document in is discovered by the wrong person.
 
+![Document intake boundary](../diagrams/02-document-intake-boundary.png)
+
 ## What you build
 
 1. A source decision: which system is authoritative for the documents you extract.

@@ -3,6 +3,8 @@
 Module 5 produced a working grounded answer. An agent is not the next step by default; it is a step
 you take when you can name what it adds. This module makes you name it, then builds it properly.
 
+![Routing boundaries](../diagrams/06-routing-boundaries.png)
+
 ## What you build
 
 1. A written justification — or a decision not to build an agent, which is a legitimate outcome.

@@ -8,6 +8,8 @@ Choose wrong and modules 2–7 are rework.
 All Microsoft facts below were verified on **learn.microsoft.com on 2026-07-24**. Speech features
 move fast and several are preview or limited-access; re-verify before you commit.
 
+![Experience capability decision](../diagrams/01-experience-capability-choice.png)
+
 ## What you build
 
 A dated, evidence-backed **capability decision record** (`accelerator/sample-data/capability-decision.json`

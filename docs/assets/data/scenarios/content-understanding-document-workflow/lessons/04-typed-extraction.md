@@ -4,6 +4,8 @@ A demo that prints fields is not a workflow. This module turns whichever capabil
 module 3 into **one validated result contract**: every value carries a confidence and grounding
 evidence, low-confidence and missing fields route to review, and the model never invents a value.
 
+![Typed extraction with evidence](../diagrams/04-typed-extraction-evidence.png)
+
 ## What you build
 
 A normalizer that maps your capability's raw output into the typed result contract and enforces four

@@ -5,6 +5,8 @@ every new hire. So nothing publishes without **named human sign-off**, and anyth
 **withdrawn** the moment its source changes. This module makes the approval gate real and tests that
 it actually blocks.
 
+![Publication approval gate](../diagrams/06-publication-gate.png)
+
 ## What you build
 
 1. A versioned **approval record** tying named humans to the exact script id + version they signed.

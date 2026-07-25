@@ -5,6 +5,8 @@ each wins in a different place. Choosing wrong is expensive: a deterministic mod
 documents misses fields; an LLM on stable forms burns tokens and invents values. Decide on the
 record, with a fallback.
 
+![Extraction capability choice](../diagrams/03-extraction-capability-choice.png)
+
 ## What you build
 
 A recorded extraction decision: the capability, the concrete model or analyzer id, the API version, a

@@ -8,8 +8,8 @@ can be withdrawn the moment its source changes.
 
 This is a **build** course, not a survey. Each module makes one high-stakes decision, shows how to
 implement **every** viable Microsoft option (not just the default), and ends in a runnable
-checkpoint. The reference implementation is in [`solution.md`](assets/data/scenarios/avatar-scenario/accelerator/solution.md); the deployable
-infrastructure is in [`accelerator/README.md`](assets/data/scenarios/avatar-scenario/accelerator/README.md).
+checkpoint. The reference implementation is in [`solution.md`](accelerator/solution.md); the deployable
+infrastructure is in [`accelerator/README.md`](accelerator/README.md).
 
 > **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository. **Keyless-first:**
@@ -62,7 +62,7 @@ rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
 ```
 
 The mock renderer produces a deterministic JSON record; it is not a media generator and makes no
-service calls. The full reference implementation, end-to-end, is in [`solution.md`](assets/data/scenarios/avatar-scenario/accelerator/solution.md).
+service calls. The full reference implementation, end-to-end, is in [`solution.md`](accelerator/solution.md).
 
 ## Responsible AI
 
