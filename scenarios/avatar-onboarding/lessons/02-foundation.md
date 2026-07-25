@@ -5,7 +5,7 @@ module writes into: Foundry + models, Azure AI Search, the Speech data plane (sa
 account), storage for approved content and rendered output, and observability. Get the identity
 model right now and modules 3–7 are configuration.
 
-Verified against the kit's working `infra/resources.bicep` and learn.microsoft.com on **2026-07-24**.
+This module follows the kit's working `infra/resources.bicep` and current Microsoft Learn guidance.
 
 ![Foundry and Speech foundation](../diagrams/02-foundry-speech-foundation.png)
 
@@ -51,7 +51,7 @@ Check both **before** deploying:
 az cognitiveservices account list-skus --location westus2 --kind AIServices -o table
 ```
 
-- Avatar/Voice Live region support (verified 2026-07-24):
+- Avatar/Voice Live region support:
   <https://learn.microsoft.com/azure/ai-services/speech-service/regions?tabs=ttsavatar>
 - Real-time avatar requires the **Standard S0** Speech tier.
 

@@ -58,7 +58,7 @@ Answer these four questions before writing any code. They determine everything d
 
 ### Option A — Foundry IQ knowledge base
 
-Verified against Microsoft Learn on **2026-07-24**.
+Use the current Microsoft Learn guidance for the active knowledge-base surface.
 
 **Pick your knowledge source kinds.** A knowledge base references one or more sources; retrieval
 queries all of them in one request and merges results through a single ranking pipeline.

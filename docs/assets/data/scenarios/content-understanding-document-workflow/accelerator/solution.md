@@ -1,8 +1,8 @@
 # Content Understanding document workflow — reference implementation
 
-This is the complete, keyless reference for the seven modules. Every API version, model
-id, and package below was verified against Microsoft Learn on **2026-07-24**. The lessons
-under [`../lessons/`](../lessons/) walk through the decisions; this file is the code you land on.
+This is the complete, keyless reference for the seven modules. API versions, model ids, and packages
+are called out where they matter. The lessons under [`../lessons/`](../lessons/) walk through the
+decisions; this file is the code you land on.
 
 > Keyless-first throughout: `DefaultAzureCredential` + managed identity + Entra RBAC. No keys
 > appear in code, `.env`, or Bicep. Run `az login` for local development.

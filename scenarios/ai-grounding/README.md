@@ -10,9 +10,8 @@ and learn the evidence a risk owner would need before a customer pilot.
 ## Before you start
 
 **Verify the API surface before you write code.** Foundry and Azure AI Search move fast and several
-capabilities used here are preview. Every verified fact in these lessons carries its Microsoft Learn
-URL and a fetch date. Re-check them against the current docs; do not infer a signature from this
-course or from memory.
+capabilities used here are preview. Re-check current Microsoft Learn guidance before writing SDK
+code; do not infer a signature from this course or from memory.
 
 **Fictional data only.** The corpus in `accelerator/sample-data/` is a synthetic returns-policy set
 for a fictional retailer. Never copy customer content into this repository.

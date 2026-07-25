@@ -40,7 +40,7 @@ paraphrase. Nearly every real corpus needs both.
 **D is not a whole solution**, but it is the right tool for one job: looking up a known identifier.
 `RET-POL-2026-01` should be found by matching, not by embedding similarity.
 
-**Reasoning effort is a real dial**, verified 2026-07-24: `minimal` skips query planning and issues
+**Reasoning effort is a real dial**: `minimal` skips query planning and issues
 queries directly, `low` is the default, `medium` plans harder. Start at `low`, and only move to
 `medium` if the golden set shows compound questions failing. `minimal` is for latency-critical paths
 where questions are simple and singular.
@@ -51,7 +51,7 @@ module 7.
 
 ## Implementation
 
-Verified against Microsoft Learn on **2026-07-24**.
+Use the current Microsoft Learn guidance for the active retrieval surface.
 
 ### Option A — Knowledge base retrieval with answer synthesis
 

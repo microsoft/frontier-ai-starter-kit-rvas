@@ -65,8 +65,9 @@ python3 accelerator/scripts/verify_document_source.py --offline
 python3 scripts/validate_local_pack.py
 ```
 
-Verified API facts (API versions, model ids, SDK packages) were fetched from learn.microsoft.com on
-**2026-07-24** and are cited inline in each lesson and in [`accelerator/solution.md`](accelerator/solution.md).
+API facts (API versions, model ids, SDK packages) are cited inline in each lesson and in
+[`accelerator/solution.md`](accelerator/solution.md). Re-check current Microsoft Learn guidance
+before writing SDK code.
 
 ## Non-negotiable boundaries
 

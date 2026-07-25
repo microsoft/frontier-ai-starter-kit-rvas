@@ -8,7 +8,6 @@
   "runners_up": ["speech-tts-audio-only", "voice-live-realtime-avatar"],
   "verification": {
     "source": "learn.microsoft.com",
-    "fetched_on": "2026-07-24",
     "docs": [
       "https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/what-is-text-to-speech-avatar",
       "https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar",

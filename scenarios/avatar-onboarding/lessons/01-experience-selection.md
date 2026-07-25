@@ -5,8 +5,8 @@ API surface, region list, cost model, latency envelope, accessibility obligation
 teams skip — the **responsible-AI gating** that can add weeks of registration before you can ship.
 Choose wrong and modules 2–7 are rework.
 
-All Microsoft facts below were verified on **learn.microsoft.com on 2026-07-24**. Speech features
-move fast and several are preview or limited-access; re-verify before you commit.
+Speech features move fast and several are preview or limited-access; re-check current Microsoft
+Learn guidance before you commit.
 
 ![Experience capability decision](../diagrams/01-experience-capability-choice.png)
 

@@ -31,7 +31,7 @@ most of the work. Teams routinely overpay for a frontier model to summarise a pa
 index already found. Measure before you upgrade — and if you upgrade, know which specific golden
 questions justified it.
 
-Query planning inside a knowledge base has its own supported list, verified 2026-07-24: `gpt-4o`,
+Query planning inside a knowledge base has its own supported list: `gpt-4o`,
 `gpt-4o-mini`, `gpt-4.1`, `gpt-4.1-mini`, `gpt-4.1-nano`, `gpt-5`, `gpt-5-mini`, `gpt-5-nano` on both
 `2025-11-01-preview` and `2026-05-01-preview`; plus `gpt-5.1`, `gpt-5.2`, `gpt-5.4`, `gpt-5.4-mini`,
 `gpt-5.4-nano` on `2026-05-01-preview` only.

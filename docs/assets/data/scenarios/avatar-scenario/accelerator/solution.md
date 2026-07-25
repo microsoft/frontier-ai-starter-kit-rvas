@@ -40,7 +40,7 @@ python3 scenarios/avatar-onboarding/accelerator/scripts/verify_capability.py
 The default decision — **standard batch avatar** — avoids the Azure limited-access registration
 required for *custom* avatar / *custom* neural voice, while still requiring synthetic-media
 disclosure. See `lessons/01-experience-selection.md` for the full option comparison and the
-responsible-AI gates (verified against Microsoft Learn, 2026-07-24).
+responsible-AI gates.
 
 ## 2. Provision the foundation (Module 2)
 
@@ -97,7 +97,7 @@ python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py
 python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py --submit
 ```
 
-Batch synthesis (verified, Learn 2026-07-24):
+Batch synthesis endpoint:
 
 ```
 PUT  https://{resource}.cognitiveservices.azure.com/avatar/batchsyntheses/{id}?api-version=2024-08-01
@@ -158,7 +158,7 @@ python3 scenarios/avatar-onboarding/accelerator/mock_renderer.py \
 rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
 ```
 
-## Responsible-AI gates before production (verified, Learn 2026-07-24)
+## Responsible-AI gates before production
 
 - **Standard** avatar + **standard** neural voice: no registration, but synthetic-media **disclosure
   to users and a feedback channel are required**.

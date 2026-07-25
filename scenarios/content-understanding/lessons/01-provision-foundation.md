@@ -48,12 +48,12 @@ in the region you pick. Check both **before** deploying:
 az cognitiveservices account list-skus --location eastus2 --kind AIServices -o table
 ```
 
-- Content Understanding region support (verified 2026-07-24):
+- Content Understanding region support:
   <https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support>
 - Document Intelligence region availability:
   <https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/>
 
-> **API versions to pin (verified 2026-07-24).** Content Understanding GA is **`2025-11-01`** (the
+> **API versions to pin.** Content Understanding GA is **`2025-11-01`** (the
 > `2024-12-01-preview` / `2025-05-01-preview` previews retire 2026-07-15). Document Intelligence GA
 > is **v4.0 `2024-11-30`**. Content Understanding needs default model deployments — `gpt-4.1-mini`
 > works today, but the GPT-4.1 family retires October 2026, so plan to migrate to `gpt-5.2`.

@@ -56,7 +56,7 @@ trace a request that already happened.
 
 ## Implementation
 
-Verified against this repo's validator-backed activities and Microsoft Learn on **2026-07-24**.
+Use this repo's validator-backed activities and current Microsoft Learn guidance.
 
 ### Enable tracing — and mind the ordering
 

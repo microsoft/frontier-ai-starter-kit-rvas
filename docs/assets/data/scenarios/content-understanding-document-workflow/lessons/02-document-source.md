@@ -93,7 +93,7 @@ redesign to group-based permissions. Reference:
 
 Do not copy the documents. Connect the SharePoint library and let M365 keep enforcing permissions,
 evaluated as the signed-in user. As a knowledge source, SharePoint is available **indexed** (ingested
-before query time) or **remote** (fetched at query time) — both preview as of 2026-07-24. For a
+before query time) or **remote** (fetched at query time). For a
 document-extraction workflow you typically pull a specific file via Microsoft Graph and hand its
 bytes or a short-lived URL to the analyzer.
 

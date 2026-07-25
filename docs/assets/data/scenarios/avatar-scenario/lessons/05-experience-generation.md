@@ -5,7 +5,7 @@ accessibility and disclosure guarantees a synthetic presenter legally and ethica
 avatar with no transcript, no caption, no disclosure, and no non-avatar path is a compliance
 incident, not a demo.
 
-Speech facts verified on learn.microsoft.com on **2026-07-24**.
+Current Speech guidance is cited inline where the implementation depends on service behavior.
 
 ![Accessible experience generation](../diagrams/05-accessible-generation.png)
 

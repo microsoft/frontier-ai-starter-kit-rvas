@@ -50,7 +50,7 @@ exit code as "done" — the version provisions asynchronously, so Step 2's check
 
 - The MAF server host (`AzureAIAgentServerHost` or the equivalent in the current `agent-framework`
   release) implements the Responses contract for them. Teams that try to hand-roll a Flask `/responses`
-  route can do it, but it's a time sink — steer them to the framework host. Verified reference:
+  route can do it, but it's a time sink — steer them to the framework host. Reference:
   `foundry-samples/samples/python/hosted-agents/agent-framework/responses/`.
 
 - Local smoke test before deployment: run `azd ai agent run` from `hosted/` and use the opened

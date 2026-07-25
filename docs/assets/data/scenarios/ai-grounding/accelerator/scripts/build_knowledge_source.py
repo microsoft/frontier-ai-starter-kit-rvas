@@ -5,7 +5,7 @@ Managed ingestion: the blob knowledge source generates its own data source, skil
 indexer, and index. ACL carry-forward is enabled so module 2's permission boundary can be
 enforced at query time.
 
-API surface verified against Microsoft Learn on 2026-07-24:
+Current Microsoft Learn guidance:
   https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview
   https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base
 

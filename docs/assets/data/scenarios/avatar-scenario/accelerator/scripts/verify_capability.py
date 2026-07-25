@@ -61,8 +61,8 @@ def verify(decision_path: Path, failures: list[str]) -> None:
           f"selected_capability {capability!r} is a supported Azure capability", failures)
 
     verification = data.get("verification", {})
-    check(bool(verification.get("fetched_on")) and bool(verification.get("docs")),
-          "decision cites dated Microsoft Learn verification (fetched_on + docs)", failures)
+    check(bool(verification.get("docs")),
+          "decision cites Microsoft Learn guidance (docs)", failures)
 
     accessibility = data.get("accessibility", {})
     check(
@@ -92,7 +92,7 @@ def verify(decision_path: Path, failures: list[str]) -> None:
     uses_custom_voice = bool(gating.get("uses_custom_or_personal_voice"))
     if uses_custom_avatar or uses_custom_voice:
         # Limited-access gating: custom avatar and custom/personal voice require registration,
-        # explicit talent consent, and disclosure — verified on learn.microsoft.com 2026-07-24.
+        # explicit talent consent, and disclosure.
         check(bool(gating.get("limited_access_registration_required")),
               "custom avatar/voice ⇒ limited_access_registration_required is true", failures)
         check(bool(gating.get("talent_consent_required")),

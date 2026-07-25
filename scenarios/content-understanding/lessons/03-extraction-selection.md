@@ -15,7 +15,7 @@ Captured in [`accelerator/sample-data/workflow/extraction-decision.json`](../acc
 
 ## Choose your path
 
-Verified against Microsoft Learn on **2026-07-24**:
+Use the current Microsoft Learn guidance when choosing the capability:
 <https://learn.microsoft.com/azure/ai-services/content-understanding/choosing-right-ai-tool>
 
 | Option | What it is | Confidence + grounding | Labels needed | Wins when | Fails when |

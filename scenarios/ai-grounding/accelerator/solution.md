@@ -3,9 +3,8 @@
 The complete build, end to end, for facilitators and for anyone who gets stuck. Every command here
 is the one the lessons ask you to run; nothing in this file is a shortcut around a decision.
 
-> All API surface referenced here was verified against learn.microsoft.com on **2026-07-24**.
-> `/azure/ai-foundry/...` now redirects to `/azure/foundry/...`. Re-verify before you build —
-> several capabilities used here are preview and move quickly.
+> Re-check current Microsoft Learn guidance before you build. Several capabilities used here are
+> preview and move quickly.
 
 ## Prerequisites
 

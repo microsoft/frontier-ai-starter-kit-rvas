@@ -66,7 +66,7 @@ Whatever option you pick, every retrievable chunk needs these, or the answer is 
 
 ## Implementation
 
-Verified against Microsoft Learn on **2026-07-24**.
+Use the current Microsoft Learn guidance for the active ingestion and indexing surface.
 
 Seed the approved container with the scenario's fictional corpus first. It is deliberately small and
 contains a superseded notice and a restricted document, so it exercises both freshness and

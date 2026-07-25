@@ -49,7 +49,7 @@ A/C → D is a redesign and a re-baseline of every metric.
 
 ## Implementation
 
-Verified against the repo's validator-backed activity code and Microsoft Learn on **2026-07-24**.
+Use the repo's validator-backed activity code and current Microsoft Learn guidance.
 
 ### Option A — Foundry agent with a knowledge tool
 

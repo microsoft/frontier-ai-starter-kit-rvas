@@ -31,8 +31,8 @@ from mock_renderer import PackRejectedError, build_artifact, validate_pack  # no
 DEFAULT_DATA_DIR = ACCELERATOR / "sample-data"
 ENV_FILE = ACCELERATOR / ".env"
 
-# Verified on learn.microsoft.com 2026-07-24: batch synthesis is PUT/GET
-# avatar/batchsyntheses/{id}?api-version=2024-08-01 on {resource}.cognitiveservices.azure.com.
+# Batch synthesis uses PUT/GET at avatar/batchsyntheses/{id} on
+# {resource}.cognitiveservices.azure.com.
 BATCH_API_VERSION = "2024-08-01"
 DEFAULT_AVATAR_CHARACTER = "lisa"
 DEFAULT_AVATAR_STYLE = "casual-sitting"
