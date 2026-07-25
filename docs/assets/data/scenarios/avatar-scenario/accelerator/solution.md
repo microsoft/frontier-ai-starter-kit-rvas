@@ -1,4 +1,4 @@
-# Solution — Avatar-enabled Onboarding reference implementation
+# Solution — Avatar Scenario reference implementation
 
 This is the complete reference build for the scenario. It is the "answer key": the exact files,
 commands, and checkpoints that satisfy all seven modules. The lessons teach *how to choose and

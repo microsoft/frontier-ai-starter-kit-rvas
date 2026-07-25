@@ -6,9 +6,8 @@ description: Capture the lightweight evidence that turns a customer need into th
 
 # Customer outcome record
 
-Use this as a working record beside the [Decision Explorer]({{ '/decision-explorer.html' | relative_url }}).
-It is intentionally small: capture only what the customer needs to decide whether to demonstrate,
-test, pilot, harden, or stop.
+Use this as a working record beside the selected scenario playbook. It is intentionally small:
+capture only what the customer needs to decide whether to demonstrate, test, pilot, harden, or stop.
 
 | Field | Capture |
 |---|---|
@@ -25,6 +24,6 @@ test, pilot, harden, or stop.
 
 Choose [AI Grounding / IQ]({{ '/scenario.html?id=ai-grounding' | relative_url }}),
 [Content Understanding and Document Workflow]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}),
-or [Avatar-enabled Onboarding]({{ '/scenario.html?id=avatar-enabled-onboarding' | relative_url }}).
+or [Avatar Scenario]({{ '/scenario.html?id=avatar-scenario' | relative_url }}).
 The playbook supplies the customer questions, slides, lessons, minimal accelerator, and
 bring-your-own-environment path appropriate to that direction.

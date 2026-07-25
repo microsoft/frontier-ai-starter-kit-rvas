@@ -1,14 +1,15 @@
-# Avatar-enabled Onboarding — technical build course
+# Avatar Scenario — technical build course
 
-Build a governed, accessible, avatar-led employee onboarding pilot on Azure and Microsoft Foundry —
-where every published statement traces to approved content, named human approvals, a synthetic-media
-disclosure, and operational evidence, and where any published revision can be withdrawn the moment
-its source changes.
+Build a governed, accessible, avatar-led experience on Azure and Microsoft Foundry. The sample
+challenge uses employee onboarding, but the pattern applies to approved learning, communications,
+and support experiences where every published statement traces to approved content, named human
+approvals, a synthetic-media disclosure, and operational evidence, and where any published revision
+can be withdrawn the moment its source changes.
 
 This is a **build** course, not a survey. Each module makes one high-stakes decision, shows how to
 implement **every** viable Microsoft option (not just the default), and ends in a runnable
-checkpoint. The reference implementation is in [`solution.md`](assets/data/scenarios/avatar-enabled-onboarding/accelerator/solution.md); the deployable
-infrastructure is in [`accelerator/README.md`](assets/data/scenarios/avatar-enabled-onboarding/accelerator/README.md).
+checkpoint. The reference implementation is in [`solution.md`](assets/data/scenarios/avatar-scenario/accelerator/solution.md); the deployable
+infrastructure is in [`accelerator/README.md`](assets/data/scenarios/avatar-scenario/accelerator/README.md).
 
 > **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository. **Keyless-first:**
@@ -18,13 +19,13 @@ infrastructure is in [`accelerator/README.md`](assets/data/scenarios/avatar-enab
 
 | Module | You build | Default path | Canonical activity |
 | --- | --- | --- | --- |
-| [1 — Select the experience capability](lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-selection) | A dated, evidence-backed capability decision (batch avatar vs real-time vs Voice Live vs video translation vs audio) | Speech **batch avatar**, standard voice | Current Microsoft docs |
-| [2 — Provision the foundation](lesson.html?scenario=avatar-enabled-onboarding&lesson=foundation) | Keyless Foundry + model + Search + Speech data plane + observability | `azd`/Bicep, managed identity | [Foundations](activity.html?id=foundations) |
-| [3 — Governed content pipeline](lesson.html?scenario=avatar-enabled-onboarding&lesson=content-pipeline) | Versioned claims with owner/version/expiry that gate everything downstream | Blob + typed claim set | This scenario's accelerator |
-| [4 — Grounded assistant](lesson.html?scenario=avatar-enabled-onboarding&lesson=grounded-assistant) | A citing assistant that refuses on unapproved claims and hands off | Foundry agent grounded on approved content | [Foundations, Steps 3–4](activity.html?id=foundations) |
-| [5 — Generate the accessible experience](lesson.html?scenario=avatar-enabled-onboarding&lesson=experience-generation) | Avatar render from an approved revision with disclosure, captions, transcript, fallback | Batch synthesis + accessibility outputs | [Voice & Live](activity.html?id=extra-voice-live) |
-| [6 — Gate publication behind human approval](lesson.html?scenario=avatar-enabled-onboarding&lesson=approval-gating) | A versioned four-role approval gate and a withdrawal path | Signed record enforced in code | This scenario's accelerator |
-| [7 — Evaluate, red-team, trace, operate](lesson.html?scenario=avatar-enabled-onboarding&lesson=prove-and-operate) | Evaluation + red-team + tracing + release scorecard | Foundry evaluations + AI Red Teaming Agent | [Evaluation](activity.html?id=advanced-evaluation-redteam) |
+| [1 — Select the experience capability](lesson.html?scenario=avatar-scenario&lesson=experience-selection) | A dated, evidence-backed capability decision (batch avatar vs real-time vs Voice Live vs video translation vs audio) | Speech **batch avatar**, standard voice | Current Microsoft docs |
+| [2 — Provision the foundation](lesson.html?scenario=avatar-scenario&lesson=foundation) | Keyless Foundry + model + Search + Speech data plane + observability | `azd`/Bicep, managed identity | [Foundations](activity.html?id=foundations) |
+| [3 — Governed content pipeline](lesson.html?scenario=avatar-scenario&lesson=content-pipeline) | Versioned claims with owner/version/expiry that gate everything downstream | Blob + typed claim set | This scenario's accelerator |
+| [4 — Grounded assistant](lesson.html?scenario=avatar-scenario&lesson=grounded-assistant) | A citing assistant that refuses on unapproved claims and hands off | Foundry agent grounded on approved content | [Foundations, Steps 3–4](activity.html?id=foundations) |
+| [5 — Generate the accessible experience](lesson.html?scenario=avatar-scenario&lesson=experience-generation) | Avatar render from an approved revision with disclosure, captions, transcript, fallback | Batch synthesis + accessibility outputs | [Voice & Live](activity.html?id=extra-voice-live) |
+| [6 — Gate publication behind human approval](lesson.html?scenario=avatar-scenario&lesson=approval-gating) | A versioned four-role approval gate and a withdrawal path | Signed record enforced in code | This scenario's accelerator |
+| [7 — Evaluate, red-team, trace, operate](lesson.html?scenario=avatar-scenario&lesson=prove-and-operate) | Evaluation + red-team + tracing + release scorecard | Foundry evaluations + AI Red Teaming Agent | [Evaluation](activity.html?id=advanced-evaluation-redteam) |
 
 Work the modules in order — Module 1 is the highest-stakes decision and every later module depends
 on it.
@@ -61,7 +62,7 @@ rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
 ```
 
 The mock renderer produces a deterministic JSON record; it is not a media generator and makes no
-service calls. The full reference implementation, end-to-end, is in [`solution.md`](assets/data/scenarios/avatar-enabled-onboarding/accelerator/solution.md).
+service calls. The full reference implementation, end-to-end, is in [`solution.md`](assets/data/scenarios/avatar-scenario/accelerator/solution.md).
 
 ## Responsible AI
 

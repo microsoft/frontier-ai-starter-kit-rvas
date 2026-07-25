@@ -1,4 +1,4 @@
-# Avatar-enabled Onboarding Accelerator
+# Avatar Scenario Accelerator
 
 This accelerator is a small, vendor-neutral **approved-content pack and integration seam**. It supports a clean workshop demo and a BYO environment without provisioning a landing zone, choosing an avatar platform, or assuming service APIs.
 

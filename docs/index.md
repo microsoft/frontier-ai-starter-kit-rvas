@@ -7,9 +7,9 @@ description: Shape a customer AI engagement, choose a scenario, and reuse the le
 <div class="hero-panel home-hero">
   <span class="hero-kicker">RVAS • AI Starter Kit</span>
   <h1>Turn a customer conversation into a useful AI start.</h1>
-  <p class="hero-tagline">Use Idea Forge when the opportunity is unclear. Otherwise, use the Decision Explorer and one of three scenario playbooks to choose the next useful decision, slide, lesson, and demonstrator.</p>
+  <p class="hero-tagline">Use Idea Forge when the opportunity is unclear. Otherwise, choose one of three scenario playbooks to reach the next useful decision, slide, lesson, and demonstrator.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/decision-explorer.html' | relative_url }}">Open Decision Explorer</a>
+    <a class="btn btn-primary" href="{{ '/#outcomes' | relative_url }}">See the scenarios</a>
     <a class="btn btn-outline" href="{{ '/idea-forge' | relative_url }}">Need an idea?</a>
   </div>
 </div>
@@ -29,7 +29,7 @@ description: Shape a customer AI engagement, choose a scenario, and reuse the le
 |---|---|---|
 | AI Grounding / IQ | People need trusted answers from the right combination of enterprise knowledge and operational context. | [Open AI Grounding / IQ]({{ '/scenario.html?id=ai-grounding' | relative_url }}) |
 | Content Understanding and Document Workflow | Business content must become AI-ready, be understood by an SME, and enter a reviewable process. | [Open Content Understanding]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}) |
-| Avatar-enabled Onboarding | Approved training or onboarding content needs a governed, accessible semi-automated experience. | [Open Avatar-enabled Onboarding]({{ '/scenario.html?id=avatar-enabled-onboarding' | relative_url }}) |
+| Avatar Scenario | Approved learning, communications, onboarding, or support content needs a governed, accessible semi-automated avatar-led experience. | [Open Avatar Scenario]({{ '/scenario.html?id=avatar-scenario' | relative_url }}) |
 
 Each scenario is a playbook, not a fixed course. Select only the lessons that support the current
 customer decision. Every playbook includes customer-facing Markdown slides that can be printed or

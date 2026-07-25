@@ -1,6 +1,6 @@
 ---
 name: customer-activity-forge
-description: "Research a customer and industry from public sources, then generate ranked AI-application ideas mapped to the Decision Explorer and the three customer-delivery scenario playbooks."
+description: "Research a customer and industry from public sources, then generate ranked AI-application ideas mapped to the three customer-delivery scenario playbooks."
 argument-hint: "Company name and industry are required. Optional: region/segment and known pain points."
 ---
 
@@ -8,12 +8,11 @@ argument-hint: "Company name and industry are required. Optional: region/segment
 
 Use this skill when a participant has a customer or industry but no bounded AI opportunity. It
 bridges “we should do something with AI” and a useful customer conversation: research public facts,
-propose approximately ten achievable ideas, and map the best candidates to the Decision Explorer
-and a scenario playbook.
+propose approximately ten achievable ideas, and map the best candidates to a scenario playbook.
 
-This is an intake tool, not an architecture approval. The next step after choosing an idea is the
-Decision Explorer, which validates source ownership, access, environment, operating model, and the
-evidence needed for the next decision.
+This is an intake tool, not an architecture approval. The next step after choosing an idea is a
+scenario playbook conversation that validates source ownership, access, environment, operating
+model, and the evidence needed for the next decision.
 
 ## Input
 
@@ -54,7 +53,7 @@ Every idea must be tied to the research, safe enough for a first demonstration, 
 | **Target user** | The role benefiting from the result |
 | **Business outcome** | What becomes faster, safer, cheaper, or more reliable |
 | **Scenario direction** | One primary playbook plus any relevant secondary capability |
-| **First decision** | The question to take into the Decision Explorer |
+| **First decision** | The question to take into the selected scenario playbook |
 | **Effort** | `Starter`, `Core`, or `Stretch` |
 | **Research fit** | Why the idea fits this customer, with citation |
 | **Safe representative context** | Candidate documents, data product, approved content, or sample to use in a demonstration |
@@ -66,7 +65,7 @@ Use these exact primary scenario labels:
 |---|---|
 | **AI Grounding / IQ** | Trusted answers require the right mix of enterprise knowledge and operational context. This can include Foundry IQ, Fabric IQ, Work IQ, Web IQ, SharePoint, or a Copilot Studio discussion. |
 | **Content Understanding and Document Workflow** | Business content needs SME-authored understanding, extraction, review, and handoff into a process. |
-| **Avatar-enabled Onboarding** | Approved learning or onboarding content needs an accessible, governed semi-automated presentation. |
+| **Avatar Scenario** | Approved learning, communications, onboarding, or support content needs an accessible, governed semi-automated avatar-led presentation. |
 
 Visual input, structured data, actions, evaluation, tracing, and deployment are capabilities—not
 competing top-level scenarios. Mention them only when they are necessary to the proposed proof.
@@ -113,11 +112,11 @@ Give all ten fields from step 2 for every idea.
 
 Name the top three and give a one-sentence reason for each.
 
-#### Part E — Decision Explorer handoff
+#### Part E — Scenario handoff
 
 For the top idea, pre-fill this handoff. Clearly mark information the customer must confirm.
 
-| Decision Explorer input | Pre-filled direction |
+| Scenario input | Pre-filled direction |
 |---|---|
 | Customer outcome | … |
 | Target users and access boundary | … |
@@ -132,7 +131,7 @@ End with the recommended scenario-playbook URL:
 
 - `docs/scenario.html?id=ai-grounding`
 - `docs/scenario.html?id=content-understanding-document-workflow`
-- `docs/scenario.html?id=avatar-enabled-onboarding`
+- `docs/scenario.html?id=avatar-scenario`
 
 ## Anti-patterns
 

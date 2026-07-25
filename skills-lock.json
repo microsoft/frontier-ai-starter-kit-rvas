@@ -13,6 +13,12 @@
       "skillPath": "skills/azure-aigateway/SKILL.md",
       "computedHash": "ce4fbc6e2e04fa6fa0b83ee206d87fdf7320c06cc126374c029d7d7c56fa10c8"
     },
+    "excalidraw-diagram": {
+      "source": "coleam00/excalidraw-diagram-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "fc91249969c7c1adc1f810ddfe10f18e206b78609467bb4955248e9138932e8a"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",

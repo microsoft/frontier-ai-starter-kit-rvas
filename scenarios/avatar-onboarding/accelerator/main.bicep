@@ -1,5 +1,5 @@
 // ============================================================================
-// Avatar-enabled Onboarding scenario — deployable experience footprint.
+// Avatar Scenario — deployable experience footprint.
 //
 // Provisions the resources a governed, avatar-led onboarding experience needs:
 //   • Microsoft Foundry account (Cognitive Services kind=AIServices) + project.

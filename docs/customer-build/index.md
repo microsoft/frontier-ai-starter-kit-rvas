@@ -6,9 +6,8 @@ description: Archived route-based curriculum retained as technical reference.
 
 # Customer Build Track (archived)
 
-This route-based curriculum has been replaced by the customer-delivery starter kit. Start with the
-[Decision Explorer]({{ '/decision-explorer.html' | relative_url }}), select one of the three scenario
-playbooks, and use only the relevant reusable lessons.
+This route-based curriculum has been replaced by the customer-delivery starter kit. Start with one
+of the three scenario playbooks and use only the relevant reusable lessons.
 
 The older application paths remain available through the [legacy reference catalog]({{ '/catalog.html' | relative_url }})
 for existing links and implementation research. They are no longer a primary route or a prerequisite

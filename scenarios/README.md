@@ -54,6 +54,9 @@ scenarios/<scenario-id>/
 - Every lesson names the decision, inputs, proof, and next decision.
 - Every lesson includes duration, facilitator preparation, a timed participant activity, an
   artifact template, expected output, validation, debrief, and next decision.
+- Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important
+  visual information the learner should understand or retain; include zero when a diagram would be
+  decorative or redundant.
 - Slides can be used with a customer without exposing internal implementation detail.
 - Slides use Marp-compatible Markdown. Open them through `docs/slides.html?id=<scenario-id>` and
   use the browser's **Print / save as PDF** action for a customer-deck export.

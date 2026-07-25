@@ -1,13 +1,13 @@
 {
-  "id": "avatar-enabled-onboarding",
-  "name": "Avatar-enabled Onboarding",
-  "tagline": "Build approved, accessible, avatar-led onboarding with accountable human oversight on Azure.",
-  "customer_outcome": "New employees receive a clear, inclusive onboarding experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
+  "id": "avatar-scenario",
+  "name": "Avatar Scenario",
+  "tagline": "Build approved, accessible, avatar-led experiences with accountable human oversight on Azure.",
+  "customer_outcome": "Audiences receive a clear, inclusive avatar-led experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
   "maturity": "initial",
   "owner": "RVAS field team",
   "decision_prompts": [
     "Which Azure/Microsoft experience capability (Speech avatar batch, real-time avatar, Voice Live, video translation, or plain audio) fits the pilot's consent, accessibility, latency, language, and cost requirements?",
-    "Which onboarding moment, cohort, locale, and channel should the pilot serve first?",
+    "Which communication, learning, or support moment, audience, locale, and channel should the pilot serve first?",
     "Which approved sources and named owners may support the script, and when do they expire?",
     "Who must approve factual accuracy, legal/compliance, brand, and accessibility before anything is published?",
     "How will the experience disclose synthetic/AI assistance, offer human help, and avoid deceptive representation?",
@@ -67,7 +67,7 @@
     {
       "id": "foundation",
       "title": "Provision the shared Foundry + Speech foundation",
-      "summary": "Deploy the keyless Foundry, model, Azure AI Search, Speech data plane, and observability baseline the onboarding application uses, with managed-identity RBAC and no secrets.",
+      "summary": "Deploy the keyless Foundry, model, Azure AI Search, Speech data plane, and observability baseline the avatar experience uses, with managed-identity RBAC and no secrets.",
       "activity_id": "foundations",
       "implementation_paths": ["accelerator/main.bicep", "accelerator/scripts/deploy.sh", "accelerator/scripts/verify_foundation.py"],
       "checkpoint": "Foundations Steps 1 and 2 plus a keyless .env contract"
@@ -75,7 +75,7 @@
     {
       "id": "content-pipeline",
       "title": "Build the governed content pipeline",
-      "summary": "Connect approved onboarding source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
+      "summary": "Connect approved source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
       "implementation_paths": ["accelerator/scripts/verify_content_pipeline.py", "accelerator/sample-data"],
       "checkpoint": "Versioned claim set with authoritative sources, owners, and expiry"
     },

@@ -4,7 +4,7 @@
   "parameters": {
     "location": { "value": "westus2" },
     "resourceToken": { "value": "avonb001" },
-    "tags": { "value": { "scenario": "avatar-enabled-onboarding", "env": "pilot" } },
+    "tags": { "value": { "scenario": "avatar-scenario", "env": "pilot" } },
     "chatModelName": { "value": "gpt-4.1-mini" },
     "chatModelDeploymentName": { "value": "chat" },
     "chatModelCapacity": { "value": 30 },

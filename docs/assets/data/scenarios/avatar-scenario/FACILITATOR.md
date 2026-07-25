@@ -1,4 +1,4 @@
-# Avatar-enabled Onboarding Facilitator Guide
+# Avatar Scenario Facilitator Guide
 
 ## Workshop objective
 

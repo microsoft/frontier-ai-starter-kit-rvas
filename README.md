@@ -16,12 +16,12 @@ lessons, customer-facing slides, and a deliberately minimal accelerator.
 
 1. Use [Customer Activity-Forge](.github/skills/customer-activity-forge/) when the customer
    opportunity is unclear.
-2. Use the [Decision Explorer](docs/decision-explorer.html) to discuss outcome, data reality,
-   existing environment, ownership, and evidence without pretending a file count decides architecture.
+2. Discuss outcome, data reality, existing environment, ownership, and evidence without pretending
+   a file count decides architecture.
 3. Choose one equal-priority scenario:
    - [AI Grounding / IQ](docs/scenario.html?id=ai-grounding)
    - [Content Understanding and Document Workflow](docs/scenario.html?id=content-understanding-document-workflow)
-   - [Avatar-enabled Onboarding](docs/scenario.html?id=avatar-enabled-onboarding)
+   - [Avatar Scenario](docs/scenario.html?id=avatar-scenario)
 4. Select only the lessons required to prove the next decision. Each scenario includes
    source-controlled slides that can be printed or saved as a PDF, a safe minimal demonstrator,
    and a bring-your-own-environment path.
@@ -105,10 +105,10 @@ Follow the prompts to sign in with your Azure account. This connects your worksp
 
 ### 3. Start the customer-delivery journey
 
-Open the [Decision Explorer](docs/decision-explorer.html) with the customer and select the
-recommended scenario playbook. Use its lessons, printable customer slides, and either the minimal
-accelerator or the bring-your-own-environment path. The remaining activity material below is an
-archived implementation reference, not a prerequisite or a competing event mode.
+Open the scenario playbook that matches the customer outcome. Use its lessons, printable customer
+slides, and either the minimal accelerator or the bring-your-own-environment path. The remaining
+activity material below is an archived implementation reference, not a prerequisite or a competing
+event mode.
 
 **Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
 

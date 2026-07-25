@@ -1,47 +1,37 @@
 # GitHub Copilot — Workspace Instructions
 
-> AI Starter Kit · *Build Intelligent Agents with Microsoft Foundry*.
-> Copilot is your always-available pair-programmer here. It does **not** hand you answers —
-> it walks the **same path the activities teach**, using fresh API signatures from MCP and
-> proven patterns from the Foundry skills.
-
 ## The golden rule: Search Before Implement
 
-Before writing **any** Azure / Microsoft Foundry SDK code:
+Before writing **any** Azure / Microsoft Foundry SDK code, or before describing a fast-moving
+Azure / Foundry capability:
 
-1. **Search** the `microsoft-docs` MCP server (and `foundry-mcp` for Foundry-native ops) for the
-   **current** API surface. Foundry features here are fast-moving and many are **preview** — never
-   rely on memorized signatures.
+1. **Search Microsoft Learn through the `microsoft-docs` MCP server** (the MS Learn MCP server) for
+   the **current** API surface, SDK syntax, and product guidance. Use `foundry-mcp` as well for
+   Foundry-native operations such as model catalog, agents, toolboxes, knowledge bases, and evals.
+   Foundry features here are fast-moving and many are **preview** — never rely on memorized
+   signatures.
 2. **Load** the matching skill from `.github/skills/` for the proven pattern.
 3. **Implement** against the verified signature.
 4. **Validate** with the activity's `validate.py` / checkpoint.
 
-> **MCP = fresh information. Skills = proven patterns.** Use both, in that order.
+> **Microsoft Learn MCP = current facts. Skills = proven patterns.** Use both, in that order.
 
-## MCP servers (configured in `.vscode/mcp.json`)
+## Scenario and writing philosophy
 
-| Server | Use it for |
-|---|---|
-| `azure` | Azure resource management, deployments, RBAC, quota (`@azure/mcp`). |
-| `foundry-mcp` | Foundry-native ops: model catalog, agents, toolboxes, knowledge bases, evals. |
-| `microsoft-docs` | Real-time Microsoft Learn search — current SDK syntax before you code. |
-
-## Skills in this repo (`.github/skills/`)
-
-Each folder is a **minimal stub** that points at the upstream
-[`microsoft/skills`](https://github.com/microsoft/skills) source. Install the full skill on demand
-with `npx skills add microsoft/skills --skill <name>` rather than vendoring everything (loading all
-skills causes "context rot").
-
-| Skill | Maps to |
-|---|---|
-| `foundry-projects-resources` | Foundations · Step 1 (provision Foundry + project + connections) |
-| `foundry-models` | Foundations · Step 2 (deploy/compare models, capacity, quota) |
-| `foundry-iq-knowledge-bases` | Foundations · Step 4 (Index + Foundry IQ knowledge base) |
-| `foundry-toolboxes` | Advanced · Action Tools (bundle MCP/Search/Code Interpreter tools) |
-| `foundry-observability` | Advanced · Tracing & Observability + Evaluation & Red Teaming |
-| `foundry-hosted-agents` | Advanced · Deploy as a Hosted Agent (`azd ai agent`, `agent.yaml`) |
-| `foundry-workflows` | Extras · Magentic / MAF multi-agent workflows |
+- Lead with clarity and simplicity. Use correct technical terms where they help, then explain them
+  in plain language so customers can follow and act.
+- Avoid product-first jargon, over-specific architecture labels, and unnecessary complexity. Start
+  from the customer outcome, the decision they need to make, and the evidence they need to trust it.
+- Treat each scenario track as a starter kit for an AI scenario. A customer should be able to pick a
+  track, run the guided path, and adapt the result to their environment.
+- Do not bake a complete solution for the customer. Provide reusable building blocks, safe defaults,
+  validation, and clear seams so teams can compose their own outcome.
+- For each lesson, consider whether one or more beautiful Excalidraw diagrams would make an
+  important concept easier to understand or remember. Include diagrams when they add visual
+  information that text alone does not carry; use zero diagrams when they would be decorative or
+  redundant.
+- Assume more scenario tracks will be added. Keep language, folders, validators, and lesson patterns
+  reusable across tracks instead of hard-coding one journey.
 
 ## Project conventions
 

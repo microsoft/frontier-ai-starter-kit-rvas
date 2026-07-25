@@ -1,19 +1,19 @@
 ---
 marp: true
-title: Avatar-enabled Onboarding Workshop
+title: Avatar Scenario Workshop
 paginate: true
 ---
 
-# Avatar-enabled Onboarding
+# Avatar Scenario
 ## Customer workshop · v0.1.0
 
-A governed employee experience, not merely a generated video.
+A governed avatar-led experience, not merely a generated video.
 
 ---
 
 # Why this scenario
 
-- Make onboarding clearer and easier to revisit
+- Make approved content clearer and easier to revisit
 - Serve languages, channels, and accessibility needs
 - Preserve accountable human ownership
 - Learn from employee feedback and operating evidence

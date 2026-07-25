@@ -1,9 +1,10 @@
-# Avatar-enabled Onboarding — technical build course
+# Avatar Scenario — technical build course
 
-Build a governed, accessible, avatar-led employee onboarding pilot on Azure and Microsoft Foundry —
-where every published statement traces to approved content, named human approvals, a synthetic-media
-disclosure, and operational evidence, and where any published revision can be withdrawn the moment
-its source changes.
+Build a governed, accessible, avatar-led experience on Azure and Microsoft Foundry. The sample
+challenge uses employee onboarding, but the pattern applies to approved learning, communications,
+and support experiences where every published statement traces to approved content, named human
+approvals, a synthetic-media disclosure, and operational evidence, and where any published revision
+can be withdrawn the moment its source changes.
 
 This is a **build** course, not a survey. Each module makes one high-stakes decision, shows how to
 implement **every** viable Microsoft option (not just the default), and ends in a runnable
