@@ -130,18 +130,6 @@
         .join('');
     }
 
-    // Facilitator resource
-    const facilitatorPanel = document.getElementById('facilitatorResourcePanel');
-    const facilitatorLink = document.getElementById('facilitatorResourceLink');
-    if (facilitatorPanel && facilitatorLink) {
-      if (!c.has_facilitator_guide) {
-        facilitatorPanel.hidden = true;
-      } else {
-        facilitatorPanel.hidden = false;
-        facilitatorLink.innerHTML = `<a href="guide.html?activity=${encodeURIComponent(c.id)}&guide=facilitator">Open facilitator notes</a>`;
-      }
-    }
-
     // References
     const refPanel = document.getElementById('refPanel');
     const refList  = document.getElementById('refList');

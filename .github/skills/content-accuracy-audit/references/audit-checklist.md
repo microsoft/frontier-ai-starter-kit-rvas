@@ -64,7 +64,7 @@ claim you confirm or refute.
 
 - [ ] Each activity states prerequisites and learning objectives.
 - [ ] Difficulty progresses without unexplained jumps; new concepts are introduced before use.
-- [ ] Facilitator (`*-facilitator.md`) notes align with the learner-facing version (no contradictions).
+- [ ] Scenario lessons and activity guides carry the information a participant needs; no parallel facilitator-only content is required.
 - [ ] Time/effort estimates (if present) are plausible for the stated steps.
 
 ## Severity reference

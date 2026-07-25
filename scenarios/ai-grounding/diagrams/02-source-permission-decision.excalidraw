@@ -132,7 +132,12 @@
       "version": 1,
       "versionNonce": 1545,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_start_decision"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -175,10 +180,10 @@
     {
       "id": "a_start_decision",
       "type": "arrow",
-      "x": 292,
-      "y": 320,
-      "width": 138,
-      "height": 0,
+      "x": 292.0,
+      "y": 320.0,
+      "width": 136.0,
+      "height": 0.0,
       "angle": 0,
       "strokeColor": "#c2410c",
       "backgroundColor": "transparent",
@@ -200,16 +205,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          138,
-          0
+          136.0,
+          0.0
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "start_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -235,7 +248,32 @@
       "version": 1,
       "versionNonce": 1596,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_start_decision"
+        },
+        {
+          "type": "arrow",
+          "id": "a_option_0"
+        },
+        {
+          "type": "arrow",
+          "id": "a_option_1"
+        },
+        {
+          "type": "arrow",
+          "id": "a_option_2"
+        },
+        {
+          "type": "arrow",
+          "id": "a_option_3"
+        },
+        {
+          "type": "arrow",
+          "id": "a_decision_outcome"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -299,7 +337,12 @@
       "version": 1,
       "versionNonce": 1630,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_option_0"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -342,10 +385,10 @@
     {
       "id": "a_option_0",
       "type": "arrow",
-      "x": 620,
-      "y": 320,
-      "width": 100,
-      "height": -106,
+      "x": 621.757,
+      "y": 267.404,
+      "width": 116.372,
+      "height": -8.485,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -367,16 +410,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          100,
-          -106
+          116.372,
+          -8.485
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "option_0_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -404,7 +455,12 @@
       "version": 1,
       "versionNonce": 1681,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_option_1"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -447,10 +503,10 @@
     {
       "id": "a_option_1",
       "type": "arrow",
-      "x": 620,
-      "y": 275,
-      "width": 350,
-      "height": -61,
+      "x": 621.584,
+      "y": 245.493,
+      "width": 453.416,
+      "height": -77.493,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -472,24 +528,32 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          80,
-          -90
+          78.416,
+          -100.493
         ],
         [
-          350,
-          -90
+          453.416,
+          -100.493
         ],
         [
-          350,
-          -61
+          453.416,
+          -77.493
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "option_1_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -517,7 +581,12 @@
       "version": 1,
       "versionNonce": 1732,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_option_2"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -560,10 +629,10 @@
     {
       "id": "a_option_2",
       "type": "arrow",
-      "x": 620,
-      "y": 320,
-      "width": 100,
-      "height": 94,
+      "x": 621.802,
+      "y": 366.663,
+      "width": 105.423,
+      "height": 2.503,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -585,16 +654,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          100,
-          94
+          105.423,
+          2.503
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "option_2_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -622,7 +699,12 @@
       "version": 1,
       "versionNonce": 1783,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_option_3"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -665,10 +747,10 @@
     {
       "id": "a_option_3",
       "type": "arrow",
-      "x": 620,
-      "y": 365,
-      "width": 455,
-      "height": 93,
+      "x": 621.904,
+      "y": 351.148,
+      "width": 453.096,
+      "height": 108.852,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -690,28 +772,36 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          45,
-          0
+          43.096,
+          13.852
         ],
         [
-          45,
-          140
+          43.096,
+          153.852
         ],
         [
-          455,
-          140
+          453.096,
+          153.852
         ],
         [
-          455,
-          93
+          453.096,
+          108.852
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "option_3_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -737,7 +827,12 @@
       "version": 1,
       "versionNonce": 1834,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_decision_outcome"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -780,10 +875,10 @@
     {
       "id": "a_decision_outcome",
       "type": "arrow",
-      "x": 525,
-      "y": 410,
-      "width": 35,
-      "height": 110,
+      "x": 541.095,
+      "y": 411.97,
+      "width": 30.187,
+      "height": 107.123,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -805,16 +900,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          35,
-          110
+          30.187,
+          107.123
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "decision_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "outcome_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     }

@@ -66,7 +66,7 @@ You're ready to facilitate if you:
 - Are familiar with Microsoft Foundry model and agent concepts, and prompt engineering
 - Enjoy helping teams think through problems (instead of giving direct answers)
 - Can spend 6–8 hours supporting 2–3 teams
-- Have access to the [Facilitator Hub](docs/facilitator-hub.md) and solution materials in this repo
+- Know where the learner-facing activities, scenario lessons, and solution materials live in this repo
 - Can help teams translate a business scenario into data, tools, evals, and a demoable outcome
 
 ---
@@ -236,13 +236,7 @@ Each activity folder contains:
 
 ---
 
-## For Facilitators
-
-### Getting Started
-
-Visit the [Facilitator Hub](docs/facilitator-hub.md) for tips on facilitating the event and working with your teams.
-
-### Solution Guides
+## Solution Guides
 
 Solution guides for each activity are included in this repo under `activities/*/solution.md`. These are **for facilitators only**; share judiciously to encourage discovery over answers.
 

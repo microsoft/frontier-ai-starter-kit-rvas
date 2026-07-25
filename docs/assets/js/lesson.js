@@ -81,7 +81,8 @@
 
     const scenarioId = encodeURIComponent(scenario.id);
     target.innerHTML = [
-      ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
+      ['Scenario overview', `scenario.html?id=${scenarioId}`],
+      ['Accelerator guide', scenarioGuideUrl(scenario.id, 'accelerator')],
     ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
   }
 

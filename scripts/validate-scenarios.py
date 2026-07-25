@@ -43,10 +43,6 @@ def main() -> int:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         scenario_id = manifest["id"]
         print(f"\n{scenario_id}")
-        for field in ("facilitator",):
-            value = manifest.get(field)
-            check(bool(value and (scenario_root / value).is_file()), f"{field} exists", failures)
-
         blueprint = scenario_root / "accelerator" / "main.bicep"
         source = blueprint.read_text(encoding="utf-8") if blueprint.is_file() else ""
         check(blueprint.is_file(), "Bicep blueprint exists", failures)

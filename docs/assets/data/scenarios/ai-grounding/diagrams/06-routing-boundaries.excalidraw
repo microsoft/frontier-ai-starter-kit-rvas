@@ -132,7 +132,20 @@
       "version": 1,
       "versionNonce": 3211,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_route_0"
+        },
+        {
+          "type": "arrow",
+          "id": "a_route_1"
+        },
+        {
+          "type": "arrow",
+          "id": "a_route_2"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -196,7 +209,12 @@
       "version": 1,
       "versionNonce": 3245,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_route_0"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -239,10 +257,10 @@
     {
       "id": "a_route_0",
       "type": "arrow",
-      "x": 500,
-      "y": 340,
-      "width": -145,
-      "height": -129,
+      "x": 498.0,
+      "y": 340.0,
+      "width": -141.0,
+      "height": -129.0,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -264,24 +282,32 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          -60,
-          0
+          -58.0,
+          0.0
         ],
         [
-          -60,
-          -129
+          -58.0,
+          -129.0
         ],
         [
-          -145,
-          -129
+          -141.0,
+          -129.0
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "router_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "route_0_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -309,7 +335,12 @@
       "version": 1,
       "versionNonce": 3296,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_route_1"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -352,10 +383,10 @@
     {
       "id": "a_route_1",
       "type": "arrow",
-      "x": 720,
-      "y": 340,
-      "width": 165,
-      "height": -129,
+      "x": 722.0,
+      "y": 340.0,
+      "width": 161.0,
+      "height": -129.0,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -377,24 +408,32 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          60,
-          0
+          58.0,
+          0.0
         ],
         [
-          60,
-          -129
+          58.0,
+          -129.0
         ],
         [
-          165,
-          -129
+          161.0,
+          -129.0
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "router_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "route_1_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -422,7 +461,12 @@
       "version": 1,
       "versionNonce": 3347,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_route_2"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -465,10 +509,10 @@
     {
       "id": "a_route_2",
       "type": "arrow",
-      "x": 610,
-      "y": 435,
-      "width": 0,
-      "height": 70,
+      "x": 610.0,
+      "y": 437.0,
+      "width": 5.863,
+      "height": 66.007,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -490,16 +534,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          0,
-          70
+          5.863,
+          66.007
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "router_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "route_2_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },

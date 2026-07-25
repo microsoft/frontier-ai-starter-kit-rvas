@@ -4,7 +4,7 @@
  *
  * This mirrors the frontier-agentic-devops-session structure: source Markdown
  * stays in the repo, this script emits browser-consumable JSON plus copied
- * participant/facilitator guides under docs/assets/data/.
+ * participant guides under docs/assets/data/.
  */
 'use strict';
 
@@ -142,7 +142,6 @@ const ACTIVITIES = [
     tags: ['foundations', 'agent', 'knowledge', 'citations'],
     outcomes: ['reference'],
     participant: 'activities/foundations/README.md',
-    facilitator: 'docs/activities/foundations-facilitator.md',
   },
   {
     id: 'advanced-action-tools',
@@ -155,7 +154,6 @@ const ACTIVITIES = [
     tags: ['tools', 'mcp', 'actions', 'approval'],
     outcomes: ['reference'],
     participant: 'activities/advanced-action-tools/README.md',
-    facilitator: 'docs/activities/advanced-action-tools-facilitator.md',
   },
   {
     id: 'advanced-evaluation-redteam',
@@ -168,7 +166,6 @@ const ACTIVITIES = [
     tags: ['evaluation', 'red-team', 'safety', 'quality'],
     outcomes: ['reference'],
     participant: 'activities/advanced-evaluation-redteam/README.md',
-    facilitator: 'docs/activities/advanced-evaluation-redteam-facilitator.md',
   },
   {
     id: 'advanced-tracing-observability',
@@ -181,7 +178,6 @@ const ACTIVITIES = [
     tags: ['observability', 'tracing', 'app-insights', 'debugging'],
     outcomes: ['reference'],
     participant: 'activities/advanced-tracing-observability/README.md',
-    facilitator: 'docs/activities/advanced-tracing-observability-facilitator.md',
   },
   {
     id: 'advanced-deploy-hosted-agent',
@@ -194,7 +190,6 @@ const ACTIVITIES = [
     tags: ['deployment', 'hosted-agent', 'container'],
     outcomes: ['reference'],
     participant: 'activities/advanced-deploy-hosted-agent/README.md',
-    facilitator: 'docs/activities/advanced-deploy-hosted-agent-facilitator.md',
   },
   {
     id: 'extra-build-ui',
@@ -207,7 +202,6 @@ const ACTIVITIES = [
     tags: ['ui', 'demo', 'frontend'],
     outcomes: ['reference'],
     participant: 'activities/extra-build-ui/README.md',
-    facilitator: 'docs/activities/extra-build-ui-facilitator.md',
   },
   {
     id: 'extra-voice-live',
@@ -220,7 +214,6 @@ const ACTIVITIES = [
     tags: ['voice', 'realtime', 'interface'],
     outcomes: ['reference'],
     participant: 'activities/extra-voice-live/README.md',
-    facilitator: 'docs/activities/extra-voice-live-facilitator.md',
   },
   {
     id: 'extra-fabric-iq',
@@ -233,7 +226,6 @@ const ACTIVITIES = [
     tags: ['fabric', 'knowledge', 'data'],
     outcomes: ['reference'],
     participant: 'activities/extra-fabric-iq/README.md',
-    facilitator: 'docs/activities/extra-fabric-iq-facilitator.md',
   },
   {
     id: 'extra-document-workflow',
@@ -246,7 +238,6 @@ const ACTIVITIES = [
     tags: ['documents', 'document-intelligence', 'human-review', 'workflow'],
     outcomes: ['reference'],
     participant: 'activities/extra-document-workflow/README.md',
-    facilitator: 'docs/activities/extra-document-workflow-facilitator.md',
   },
   {
     id: 'extra-visual-multimodal',
@@ -259,7 +250,6 @@ const ACTIVITIES = [
     tags: ['vision', 'multimodal', 'structured-output', 'human-review'],
     outcomes: ['reference'],
     participant: 'activities/extra-visual-multimodal/README.md',
-    facilitator: 'docs/activities/extra-visual-multimodal-facilitator.md',
   },
   {
     id: 'extra-governed-data-copilot',
@@ -272,7 +262,6 @@ const ACTIVITIES = [
     tags: ['data', 'governance', 'structured-data', 'provenance'],
     outcomes: ['reference'],
     participant: 'activities/extra-governed-data-copilot/README.md',
-    facilitator: 'docs/activities/extra-governed-data-copilot-facilitator.md',
   },
   {
     id: 'extra-copilot-assisted',
@@ -284,7 +273,6 @@ const ACTIVITIES = [
     tags: ['copilot', 'skills', 'mcp'],
     outcomes: ['reference'],
     participant: 'activities/extra-copilot-assisted/README.md',
-    facilitator: 'docs/activities/extra-copilot-assisted-facilitator.md',
   },
   {
     id: 'extra-magentic-workflows',
@@ -297,7 +285,6 @@ const ACTIVITIES = [
     tags: ['multi-agent', 'orchestration', 'magentic'],
     outcomes: ['reference'],
     participant: 'activities/extra-magentic-workflows/README.md',
-    facilitator: 'docs/activities/extra-magentic-workflows-facilitator.md',
   },
   {
     id: 'extra-hosted-longrunning',
@@ -310,7 +297,6 @@ const ACTIVITIES = [
     tags: ['hosted-agent', 'long-running', 'workflow'],
     outcomes: ['reference'],
     participant: 'activities/extra-hosted-longrunning/README.md',
-    facilitator: 'docs/activities/extra-hosted-longrunning-facilitator.md',
   },
   {
     id: 'capstone-multi-agent',
@@ -323,7 +309,6 @@ const ACTIVITIES = [
     tags: ['capstone', 'multi-agent', 'router'],
     outcomes: ['reference'],
     participant: 'activities/capstone-multi-agent/README.md',
-    facilitator: 'docs/activities/capstone-multi-agent-facilitator.md',
   },
 ];
 
@@ -386,20 +371,17 @@ function transformMarkdown(markdown, activity) {
     .replace(/\]\(\.\.\/\.\.\/docs\//g, `](${repoBlob('docs/')}`);
 }
 
-function writeGuide(activity, kind) {
+function writeGuide(activity) {
   const guideDir = path.join(OUT_GUIDES_DIR, activity.id);
   fs.mkdirSync(guideDir, { recursive: true });
 
-  const outName = kind === 'facilitator' ? 'FACILITATOR.md' : 'README.md';
-  const configured = kind === 'facilitator' ? activity.facilitator : activity.participant;
-  const fallback = kind === 'facilitator'
-    ? `# Facilitator guide\n\nFacilitator-specific notes are not available for this item. Use the participant guide and the success criteria in the sidebar.`
-    : `# ${activity.title}\n\nGuide content is not available yet.`;
+  const configured = activity.participant;
+  const fallback = `# ${activity.title}\n\nGuide content is not available yet.`;
 
   const raw = configured ? readIfExists(configured) : null;
-  fs.writeFileSync(path.join(guideDir, outName), transformMarkdown(raw || fallback, activity));
+  fs.writeFileSync(path.join(guideDir, 'README.md'), transformMarkdown(raw || fallback, activity));
 
-  if (kind === 'participant' && activity.participant && activity.participant.startsWith('activities/')) {
+  if (activity.participant && activity.participant.startsWith('activities/')) {
     const srcDir = path.join(ROOT, path.dirname(activity.participant));
     const srcAssets = path.join(srcDir, 'assets');
     if (fs.existsSync(srcAssets)) {
@@ -465,7 +447,6 @@ function detectScenarioProblems(scenarios) {
       if (!scenarioPathExists(scenario, 'README.md')) problems.push(`${scenario.id} scenario is missing README.md`);
       if (!scenarioPathExists(scenario, scenario.slides)) problems.push(`${scenario.id} scenario slides ${scenario.slides} missing`);
       if (!scenarioPathExists(scenario, scenario.accelerator)) problems.push(`${scenario.id} scenario accelerator ${scenario.accelerator} missing`);
-      if (!scenarioPathExists(scenario, scenario.facilitator)) problems.push(`${scenario.id} scenario facilitator guide missing`);
       if (!Array.isArray(scenario.lessons) || !scenario.lessons.length) {
         problems.push(`${scenario.id} scenario needs at least one lesson`);
         continue;
@@ -556,7 +537,6 @@ function scenarioOutput(scenario) {
       readme_path: `${assetBase}README.md`,
       slides_path: `${assetBase}${scenario.slides}`,
       accelerator_path: `${assetBase}${scenario.accelerator}`,
-      facilitator_path: `${assetBase}${scenario.facilitator}`,
     };
 }
 
@@ -584,8 +564,6 @@ function activityOutput(activity, outcomeIds) {
     source_path: activity.participant || '',
     license: 'MIT',
     participant_path: `assets/data/activities/${activity.id}/README.md`,
-    facilitator_path: `assets/data/activities/${activity.id}/FACILITATOR.md`,
-    has_facilitator_guide: Boolean(activity.facilitator),
   };
 }
 
@@ -624,8 +602,7 @@ function main() {
   copyScenarioAssets(scenarios);
 
   for (const activity of ACTIVITIES) {
-    writeGuide(activity, 'participant');
-    writeGuide(activity, 'facilitator');
+    writeGuide(activity);
   }
 
   const outputActivities = ACTIVITIES.map((activity) => {

@@ -134,7 +134,12 @@
       "version": 1,
       "versionNonce": 5115,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_input_evidence"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -177,10 +182,10 @@
     {
       "id": "a_input_evidence",
       "type": "arrow",
-      "x": 315,
-      "y": 308,
-      "width": 125,
-      "height": 0,
+      "x": 312.0,
+      "y": 307.733,
+      "width": 126.003,
+      "height": -6.738,
       "angle": 0,
       "strokeColor": "#c2410c",
       "backgroundColor": "transparent",
@@ -202,16 +207,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          125,
-          0
+          126.003,
+          -6.738
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "input_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "evidence_box",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -239,7 +252,16 @@
       "version": 1,
       "versionNonce": 5166,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_input_evidence"
+        },
+        {
+          "type": "arrow",
+          "id": "a_evidence_output"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -422,10 +444,10 @@
     {
       "id": "a_evidence_output",
       "type": "arrow",
-      "x": 885,
-      "y": 308,
-      "width": 105,
-      "height": 0,
+      "x": 911.996,
+      "y": 302.924,
+      "width": 76.004,
+      "height": 4.831,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -447,16 +469,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          105,
-          0
+          76.004,
+          4.831
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "evidence_box",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "output_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
@@ -484,7 +514,12 @@
       "version": 1,
       "versionNonce": 5285,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_evidence_output"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false

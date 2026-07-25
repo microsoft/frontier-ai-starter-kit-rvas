@@ -84,7 +84,6 @@
     if (!target) return;
 
     target.innerHTML = [
-      ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
       ['Accelerator guide', scenarioGuideUrl(scenario.id, 'accelerator')],
     ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
   }

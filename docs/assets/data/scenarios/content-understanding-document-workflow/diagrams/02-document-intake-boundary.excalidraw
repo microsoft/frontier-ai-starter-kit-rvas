@@ -206,7 +206,12 @@
       "version": 1,
       "versionNonce": 4384,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_lane_0"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -342,7 +347,16 @@
       "version": 1,
       "versionNonce": 4469,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_lane_0"
+        },
+        {
+          "type": "arrow",
+          "id": "a_lane_1"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -478,7 +492,16 @@
       "version": 1,
       "versionNonce": 4554,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_lane_1"
+        },
+        {
+          "type": "arrow",
+          "id": "a_lane_2"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -614,7 +637,12 @@
       "version": 1,
       "versionNonce": 4639,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [
+        {
+          "type": "arrow",
+          "id": "a_lane_2"
+        }
+      ],
       "updated": 1,
       "link": null,
       "locked": false
@@ -657,10 +685,10 @@
     {
       "id": "a_lane_0",
       "type": "arrow",
-      "x": 435,
-      "y": 247,
-      "width": 180,
-      "height": 29,
+      "x": 529.897,
+      "y": 247.632,
+      "width": -3.969,
+      "height": 31.698,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -682,26 +710,34 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          180,
-          29
+          -3.969,
+          31.698
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "flow_0_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "flow_1_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
     {
       "id": "a_lane_1",
       "type": "arrow",
-      "x": 615,
-      "y": 342,
-      "width": 180,
-      "height": 29,
+      "x": 709.897,
+      "y": 342.632,
+      "width": -3.969,
+      "height": 31.698,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -723,26 +759,34 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          180,
-          29
+          -3.969,
+          31.698
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "flow_1_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "flow_2_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     },
     {
       "id": "a_lane_2",
       "type": "arrow",
-      "x": 795,
-      "y": 437,
-      "width": 180,
-      "height": 29,
+      "x": 889.897,
+      "y": 437.632,
+      "width": -3.969,
+      "height": 31.698,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -764,16 +808,24 @@
       "locked": false,
       "points": [
         [
-          0,
-          0
+          0.0,
+          0.0
         ],
         [
-          180,
-          29
+          -3.969,
+          31.698
         ]
       ],
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "flow_2_shape",
+        "focus": 0,
+        "gap": 2
+      },
+      "endBinding": {
+        "elementId": "flow_3_shape",
+        "focus": 0,
+        "gap": 2
+      },
       "startArrowhead": null,
       "endArrowhead": "arrow"
     }

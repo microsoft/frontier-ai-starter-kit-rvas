@@ -9,7 +9,6 @@ conversation, reusable lessons, source-controlled slides, and a deliberately sma
 scenarios/<folder-name>/
   manifest.json
   README.md
-  FACILITATOR.md
   slides.md
   lessons/
   accelerator/
@@ -43,8 +42,7 @@ scenarios/<folder-name>/
     }
   ],
   "slides": "slides.md",
-  "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md"
+  "accelerator": "accelerator/README.md"
 }
 ```
 
@@ -84,9 +82,9 @@ module is done. It appears on the scenario and lesson pages.
   scenario deck with lesson sections, not separate lesson decks.
 - Slides use Marp-compatible Markdown. Open the full deck through `docs/slides.html?id=<scenario-id>`
   and use the browser's **Print / save as PDF** action for a customer-deck export.
-- Each lesson section has three facilitator slides: why the decision matters, options/trade-offs to
-  discuss, and the evidence the practical activity must produce. Add stable slide
-  markers before those slides so lesson pages can link directly into the deck:
+- Each lesson section has three customer-facing slides: why the decision matters, options/trade-offs
+  to discuss, and the evidence the practical activity must produce. Add stable slide markers before
+  those slides so lesson pages can link directly into the deck:
   `<!-- slide:id=lesson-<lesson-id>-context -->`,
   `<!-- slide:id=lesson-<lesson-id>-choices -->`, and
   `<!-- slide:id=lesson-<lesson-id>-evidence -->`.

@@ -150,6 +150,5 @@
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md",
   "solution": "accelerator/solution.md"
 }

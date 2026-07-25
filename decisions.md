@@ -121,7 +121,6 @@ for learners who need it — it is repositioned as a scaffold, not the destinati
 | `docs/index.md` | Hero tagline outcome-first; mode table reordered; "Which path is right for you?" section added; Customer Activity-Forge callout added; CTA buttons reordered |
 | `docs/customer-outcome.md` | Intro repositioned as DEFAULT path; mode table reordered (Customer Build first); "Don't have a customer or idea yet?" section added with Activity-Forge → canvas mapping |
 | `README.md` | "What is AI Starter Kit?" defaults to participant's own application; Northfield as guided fallback; section heading updated; mode table reordered; Getting Started step 3 reordered with Activity-Forge pointer |
-| `docs/facilitator-hub.md` | Pre-event checklist: three-branch decision tree (scenario → canvas; no idea → Activity-Forge → canvas; pure upskill → Northfield); "During the event" starts from team outcome; "Anchor customer work" section expanded with Activity-Forge facilitation steps |
 
 ---
 
@@ -160,7 +159,6 @@ Files changed:
 |------|------------------|
 | `docs/index.md` | 2 |
 | `docs/customer-outcome.md` | 1 |
-| `docs/facilitator-hub.md` | 2 |
 
 Note: `README.md` uses the same relative path (`.github/skills/customer-activity-forge/`) — this
 is **correct** in README context (rendered from the repo root on GitHub UI) and was **not** changed.

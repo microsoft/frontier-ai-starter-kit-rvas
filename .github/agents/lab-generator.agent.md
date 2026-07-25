@@ -1,6 +1,6 @@
 ---
 name: Lab Generator
-description: "Scaffolds a fresh vertical from the reskin contract — a new KB corpus, 2–3 specialist agents, an eval + adversarial dataset, and a facilitator guide — on the SAME Northfield skeleton so every validate.py stays byte-reusable."
+description: "Scaffolds a fresh vertical from the reskin contract — a new KB corpus, 2–3 specialist agents, and an eval + adversarial dataset — on the SAME Northfield skeleton so every validate.py stays byte-reusable."
 tools: ["codebase", "search", "editFiles", "microsoft-docs", "foundry-mcp"]
 handoff:
   - to: scenario-template.md
@@ -86,8 +86,7 @@ and a `verticals/<slug>/` working area) so the Northfield originals stay intact:
    #2), mapped 1:1 to create-a-ticket / place-a-hold / book-a-slot.
 4. **Eval + adversarial dataset** — `<slug>-eval.jsonl` + `<slug>-adversarial-seed.jsonl`
    (swap surface #4); preserve the jailbreak / harmful / injection categories.
-5. **Facilitator guide** — per-activity timing, reconvene points, and common errors
-   for the new domain (the thing [FWH §5] promises but never ships).
+5. **Learner-facing guidance updates** — put timing, reconvene points, and common errors in the activity guide or solution path instead of a parallel facilitator-only file.
 
 ---
 
@@ -100,7 +99,7 @@ and a `verticals/<slug>/` working area) so the Northfield originals stay intact:
 3. **Generate each swap surface** into the new subtree, mirroring structure exactly.
 4. **Self-check the invariants**: 3 tools (no more/fewer), `.env` names untouched,
    no edits to backbone/`validate.py`, eval categories preserved.
-5. **Emit the facilitator guide** and a short "what to run to validate" note —
+5. **Emit the learner-facing guide updates** and a short "what to run to validate" note
    pointing at the **existing** `validate.py` (which must still pass unchanged).
 6. If anything required a new `.env` variable, output a single
    `TODO: Bicep-output (Livingston)` line instead of editing `.env.sample`.

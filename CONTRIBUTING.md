@@ -23,5 +23,5 @@ npm run build
 
 The build audits first-party documentation for broken script references, invalid invocation flags,
 ambiguous checklist glyphs, invalid UTF-8, likely mojibake, and fragile text icons in the site chrome.
-It then regenerates and audits the participant and facilitator guides under `docs/assets/data/`.
+It then regenerates and audits the participant guides under `docs/assets/data/`.
 Generated guides must be committed with their source changes.

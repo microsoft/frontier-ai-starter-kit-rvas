@@ -143,6 +143,5 @@
     }
   ],
   "slides": "slides.md",
-  "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md"
+  "accelerator": "accelerator/README.md"
 }

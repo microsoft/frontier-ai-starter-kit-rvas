@@ -1,6 +1,6 @@
 ---
 name: content-accuracy-audit
-description: 'Audit session content (activity guides, facilitator notes, READMEs, validate.py, solution.md, the rendered _site/, docs/, skills, infra, scripts) for correctness, currency, hallucinations, broken cross-references, and pacing. Cross-checks every Azure / Microsoft Foundry SDK signature, CLI command, env var, and API surface against official Microsoft Learn docs via the microsoft-docs MCP and the live web. USE WHEN: review content for errors, fact-check the docs, find hallucinations, check if the docs are up to date, verify API signatures, validate activity instructions, spot outdated SDK calls, check pacing/difficulty, audit the site, find broken links or stale references. Produces a ranked findings report and applies safe fixes.'
+description: 'Audit session content (activity guides, scenario lessons, READMEs, validate.py, solution.md, the rendered _site/, docs/, skills, infra, scripts) for correctness, currency, hallucinations, broken cross-references, and pacing. Cross-checks every Azure / Microsoft Foundry SDK signature, CLI command, env var, and API surface against official Microsoft Learn docs via the microsoft-docs MCP and the live web. USE WHEN: review content for errors, fact-check the docs, find hallucinations, check if the docs are up to date, verify API signatures, validate activity instructions, spot outdated SDK calls, check pacing/difficulty, audit the site, find broken links or stale references. Produces a ranked findings report and applies safe fixes.'
 argument-hint: '[optional: path or area to audit, e.g. activities/foundations or docs/]'
 disable-model-invocation: true
 user-invocable: true
@@ -33,7 +33,7 @@ SDK call, CLI command, env var, and preview-feature claim must be verified again
 
 | Area | What to check |
 |---|---|
-| `docs/activities/*.md` (+ `*-facilitator.md`) | Instructions, code snippets, env vars, pacing, learning objectives |
+| `docs/activities/*.md` | Instructions, code snippets, env vars, pacing, learning objectives |
 | `activities/*/README.md`, `solution.md` | Steps match the validator; solution actually satisfies `validate.py` |
 | `activities/*/validate.py`, `*.py` | Imports/signatures exist; checks match the stated steps |
 | `_site/` and `docs/_site/` | **Generated** — flag drift vs source `docs/`, do NOT hand-edit (see Pitfalls) |
