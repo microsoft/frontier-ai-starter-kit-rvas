@@ -93,11 +93,19 @@
       if (activityMatch && activityIds.has(activityMatch[1])) {
         link.href = FP.activityUrl(activityMatch[1]) + (hash ? `#${hash}` : '');
         link.dataset.route = 'activity';
+        markReferenceActivityLink(link);
         return;
       }
 
       if (/\.md$/i.test(path)) link.classList.add('is-source-link');
     });
+  }
+
+  function markReferenceActivityLink(link) {
+    link.classList.add('reference-activity-link');
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.title = link.title || 'Open reference activity in a new tab';
   }
 
   function rewriteLessonImages(container, scenario, lesson) {

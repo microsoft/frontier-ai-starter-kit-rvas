@@ -1238,6 +1238,15 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 }
 .guide-body a { color: var(--c-gold); text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
 .guide-body a:hover { text-decoration-color: var(--c-gold); }
+.guide-body a.reference-activity-link {
+  font-weight: 700;
+  text-decoration-color: color-mix(in srgb, var(--c-gold) 60%, transparent);
+}
+.guide-body a.reference-activity-link::after {
+  content: " [new tab]";
+  font-size: .76em;
+  text-decoration: none;
+}
 .guide-body a.btn,
 .guide-body a.btn:hover {
   text-decoration: none;
