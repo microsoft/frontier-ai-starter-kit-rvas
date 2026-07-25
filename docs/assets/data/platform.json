@@ -743,11 +743,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "setup",
-        "codespaces",
-        "azure"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -773,11 +768,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "cleanup",
-        "cost",
-        "azure"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -803,11 +793,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "ideation",
-        "customer",
-        "scenario"
-      ],
       "outcomes": [
         "idea-forge"
       ],
@@ -833,11 +818,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "scenario",
-        "planning",
-        "handoff"
-      ],
       "outcomes": [
         "reference",
         "idea-forge"
@@ -864,12 +844,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "foundations",
-        "agent",
-        "knowledge",
-        "citations"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -897,12 +871,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "tools",
-        "mcp",
-        "actions",
-        "approval"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -930,12 +898,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "evaluation",
-        "red-team",
-        "safety",
-        "quality"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -963,12 +925,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "observability",
-        "tracing",
-        "app-insights",
-        "debugging"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -996,11 +952,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "deployment",
-        "hosted-agent",
-        "container"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1028,11 +979,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "ui",
-        "demo",
-        "frontend"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1060,11 +1006,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "voice",
-        "realtime",
-        "interface"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1092,11 +1033,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "fabric",
-        "knowledge",
-        "data"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1124,12 +1060,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "documents",
-        "document-intelligence",
-        "human-review",
-        "workflow"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1157,12 +1087,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "vision",
-        "multimodal",
-        "structured-output",
-        "human-review"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1190,12 +1114,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "data",
-        "governance",
-        "structured-data",
-        "provenance"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1221,11 +1139,6 @@
       "prerequisites": [],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "copilot",
-        "skills",
-        "mcp"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1253,11 +1166,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "multi-agent",
-        "orchestration",
-        "magentic"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1285,11 +1193,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "hosted-agent",
-        "long-running",
-        "workflow"
-      ],
       "outcomes": [
         "reference"
       ],
@@ -1317,11 +1220,6 @@
       ],
       "prerequisite_capabilities": [],
       "success_criteria": [],
-      "tags": [
-        "capstone",
-        "multi-agent",
-        "router"
-      ],
       "outcomes": [
         "reference"
       ],

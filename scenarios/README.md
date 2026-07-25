@@ -78,6 +78,10 @@ module is done. It appears on the scenario and lesson pages.
 - Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important
   visual information the learner should understand or retain; include zero when a diagram would be
   decorative or redundant.
+- Diagrams must pass `npm run validate:diagrams`. Arrows that visibly connect two shapes should
+  stop outside each shape, use a small gap (2px is the house default), and avoid crossing through
+  unrelated boxes or ellipses. Clean straight-line diagrams may retain unbound arrows, but arrows
+  must not pierce a shape, point at nothing, overlap unrelated boxes, or leave text clipped.
 - Slides can be used with a customer without exposing internal implementation detail. Use one
   scenario deck with lesson sections, not separate lesson decks.
 - Slides use Marp-compatible Markdown. Open the full deck through `docs/slides.html?id=<scenario-id>`

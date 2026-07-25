@@ -148,7 +148,7 @@
     if (_activeDiff && c.difficulty !== _activeDiff) return false;
     if (!_query) return true;
     const capability = _capabilities.find((candidate) => candidate.id === c.track);
-    const hay = [c.title, c.description, ...(c.tags || []), capability?.name || '', c.module, c.track]
+    const hay = [c.title, c.description, capability?.name || '', c.module, c.track]
       .join(' ').toLowerCase();
     return hay.includes(_query);
   }
@@ -225,7 +225,6 @@
         <div class="ch-footer">
           ${FP.diffBadge(c.difficulty)}
           ${FP.durBadge(c.duration_minutes)}
-          <div class="ch-tags">${FP.tagBadges(c.tags, 3)}</div>
         </div>
       </a>`;
   }

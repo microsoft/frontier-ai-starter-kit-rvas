@@ -684,16 +684,6 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   margin-top: auto;
   min-width: 0;
 }
-.ch-tags {
-  display: flex;
-  gap: 5px;
-  flex: 1 1 100%;
-  flex-wrap: wrap;
-  min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
-}
-
 /* ═══════════════════════════ BADGES ════════════════════════════════ */
 .badge {
   display: inline-flex;

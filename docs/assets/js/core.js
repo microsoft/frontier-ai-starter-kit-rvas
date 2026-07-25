@@ -65,12 +65,6 @@
     return `<span class="badge badge-level-${FP.esc(normalized)}">${FP.esc(formatLabel(normalized))}</span>`;
   };
 
-  FP.tagBadges = function (tags, limit) {
-    if (!Array.isArray(tags) || !tags.length) return '';
-    const show = limit ? tags.slice(0, limit) : tags;
-    return show.map((t) => `<span class="badge badge-tag">${FP.esc(t)}</span>`).join('');
-  };
-
   function formatLabel(value) {
     return String(value || '').replace(/[-_]+/g, ' ');
   }

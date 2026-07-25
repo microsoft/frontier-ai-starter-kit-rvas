@@ -84,8 +84,7 @@
         ${FP.diffBadge(c.difficulty)}
         ${FP.durBadge(c.duration_minutes)}
         ${c.tier && c.tier !== 'core' ? `<span class="badge badge-app">${FP.esc(c.tier)}</span>` : ''}
-        ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">App: ${FP.esc(c.app_dependency)}</span>` : ''}
-        <span class="badge-tag badge" style="color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
+        ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">App: ${FP.esc(c.app_dependency)}</span>` : ''}`;
     }
 
   }
@@ -176,14 +175,15 @@
     const relGrid  = document.getElementById('relatedGrid');
     if (!relPanel || !relGrid) return;
 
-    const myTags = new Set(c.tags || []);
     const related = allActivities
-      .filter((x) => x.id !== c.id && (x.tags || []).some((t) => myTags.has(t)))
+      .filter((x) => x.id !== c.id)
+      .map((x) => ({ item: x, score: relatedScore(c, x) }))
+      .filter((entry) => entry.score > 0)
       .sort((a, b) => {
-        const aMatch = (a.tags || []).filter((t) => myTags.has(t)).length;
-        const bMatch = (b.tags || []).filter((t) => myTags.has(t)).length;
-        return bMatch - aMatch;
+        if (b.score !== a.score) return b.score - a.score;
+        return String(a.item.title || '').localeCompare(String(b.item.title || ''));
       })
+      .map((entry) => entry.item)
       .slice(0, 5);
 
     if (!related.length) { relPanel.style.display = 'none'; return; }
@@ -197,6 +197,17 @@
           <span class="badge badge-tag" style="color:${color};flex-shrink:0">${FP.esc(r.module)}</span>
         </a>`;
     }).join('');
+  }
+
+  function relatedScore(current, candidate) {
+    let score = 0;
+    if (candidate.track && candidate.track === current.track) score += 3;
+    if (candidate.module && candidate.module === current.module) score += 2;
+    if ((candidate.prerequisites || []).includes(current.id)) score += 4;
+    if ((current.prerequisites || []).includes(candidate.id)) score += 4;
+    const currentOutcomes = new Set(current.outcomes || []);
+    if ((candidate.outcomes || []).some((outcome) => currentOutcomes.has(outcome))) score += 1;
+    return score;
   }
 
   async function loadGuide(c, allActivities) {
