@@ -60,6 +60,7 @@
     if (!response.ok) throw new Error(`Could not load lesson (${response.status})`);
     FP.renderMd(await response.text(), target);
     rewriteLessonLinks(target, scenario, lesson, activities);
+    rewriteLessonImages(target, scenario, lesson);
   }
 
   function resolveRelative(basePath, href) {
@@ -96,6 +97,17 @@
       }
 
       if (/\.md$/i.test(path)) link.classList.add('is-source-link');
+    });
+  }
+
+  function rewriteLessonImages(container, scenario, lesson) {
+    container.querySelectorAll('img[src]').forEach((image) => {
+      const raw = image.getAttribute('src') || '';
+      if (!raw || raw.startsWith('#') || raw.startsWith('/') || /^[a-z][a-z0-9+.-]*:/i.test(raw)) return;
+
+      const [path, hash] = raw.split('#');
+      const resolved = resolveRelative(lesson.path, path);
+      image.src = `${scenario.asset_base || ''}${resolved}${hash ? `#${hash}` : ''}`;
     });
   }
 

@@ -215,10 +215,10 @@ Open-ended: no single right answer.
 ---
 
 ## Learning Resources
-- [Built-in evaluation metrics](https://learn.microsoft.com/azure/foundry/concepts/evaluation-metrics-built-in)
+- [Built-in evaluators](https://learn.microsoft.com/azure/foundry/concepts/built-in-evaluators)
 - [Evaluate generative AI apps](https://learn.microsoft.com/azure/foundry/how-to/evaluate-generative-ai-app)
 - [AI Red Teaming Agent](https://learn.microsoft.com/azure/foundry/how-to/develop/run-scans-ai-red-teaming-agent)
-- [Custom evaluators](https://learn.microsoft.com/azure/foundry/how-to/develop/evaluate-sdk)
+- [Custom evaluators](https://learn.microsoft.com/azure/foundry/concepts/evaluation-evaluators/custom-evaluators)
 - [Protect against indirect prompt injection](https://learn.microsoft.com/azure/ai-services/content-safety/concepts/jailbreak-detection)
 
 ## Tips
