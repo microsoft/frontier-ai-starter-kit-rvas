@@ -1352,9 +1352,6 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   top: 72px;
   min-width: 0;
   align-self: start;
-  max-height: calc(100vh - 92px);
-  overflow: auto;
-  padding-right: 4px;
 }
 .panel {
   background: var(--c-800);
@@ -1378,18 +1375,6 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.fact-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--c-line-soft);
-  font-size: 0.82rem;
-}
-.fact-row:last-child { border-bottom: none; padding-bottom: 0; }
-.fact-key { color: var(--c-faint); flex-shrink: 0; }
-.fact-val { text-align: right; color: var(--c-dim); word-break: break-word; }
 #tagsList,
 #refList { min-width: 0; max-width: 100%; }
 #refList a {

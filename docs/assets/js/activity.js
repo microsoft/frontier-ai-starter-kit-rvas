@@ -132,26 +132,6 @@
       }
     }
 
-    // Fact rows
-    const factRows = document.getElementById('factRows');
-    if (factRows) {
-      const rows = [
-        ['Difficulty', FP.diffBadge(c.difficulty)],
-        ['Duration', FP.durBadge(c.duration_minutes) || '—'],
-        ['Reference', referenceLink(c)],
-        ['Track', FP.esc(c.track || '—')],
-        ['Tier', FP.esc(c.tier || 'core')],
-        ['App', c.app_dependency && c.app_dependency !== 'none' ? FP.esc(c.app_dependency) : 'none'],
-      ];
-      factRows.innerHTML = rows.map(([k, v]) =>
-        `<div class="fact-row"><span class="fact-key">${k}</span><span class="fact-val">${v}</span></div>`
-      ).join('');
-    }
-
-    function referenceLink(c) {
-      return `<a href="${FP.referenceUrl(c.track)}" class="badge badge-outcome">${FP.esc(c.track || 'reference')}</a>`;
-    }
-
     // Tags
     const tagsList = document.getElementById('tagsList');
     if (tagsList) {
@@ -217,7 +197,7 @@
     try {
       const res = await fetch(path, { cache: 'no-cache' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      const md = await res.text();
+      const md = stripRedundantActivityMetadata(await res.text());
       FP.renderMd(md, body);
       ensureGuideAnchors(body);
       removeDuplicateGuideTitle(body, c);
@@ -228,6 +208,34 @@
     } catch (e) {
       body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Could not load guide: ${FP.esc(e.message)}</p>`;
       renderActivityPager(body, c, allActivities);
+    }
+
+    function stripRedundantActivityMetadata(markdown) {
+      const lines = String(markdown || '').split(/\r?\n/);
+      const output = [];
+      for (let index = 0; index < lines.length;) {
+        if (!lines[index].startsWith('>')) {
+          output.push(lines[index]);
+          index += 1;
+          continue;
+        }
+
+        const block = [];
+        while (index < lines.length && lines[index].startsWith('>')) {
+          block.push(lines[index]);
+          index += 1;
+        }
+
+        const text = block
+          .map((line) => line.replace(/^>\s?/, '').trim())
+          .join(' ');
+        const isRepeatedMetadata =
+          /(?:Guided|Build-from-scratch|Prereqs?:|⭐|⏱|🛠)/u.test(text) ||
+          /^Tier\s+\d+\s*[·-]/i.test(text);
+
+        if (!isRepeatedMetadata) output.push(...block);
+      }
+      return output.join('\n');
     }
 
     function ensureGuideAnchors(container) {
