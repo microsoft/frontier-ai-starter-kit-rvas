@@ -39,7 +39,6 @@
     document.getElementById('customerOutcome').textContent = scenario.customer_outcome;
     document.getElementById('slidesLink').href = `slides.html?id=${encodeURIComponent(scenario.id)}`;
     document.getElementById('acceleratorLink').href = scenarioGuideUrl(scenario.id, 'accelerator');
-    document.getElementById('localDemoLink').href = scenarioGuideUrl(scenario.id, 'demo');
     document.getElementById('decisionPrompts').innerHTML = (scenario.decision_prompts || [])
       .map((prompt) => `<li>${FP.esc(prompt)}</li>`).join('');
     document.getElementById('buildModuleList').innerHTML = (scenario.build_modules || [])

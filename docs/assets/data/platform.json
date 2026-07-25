@@ -285,7 +285,6 @@
           "summary": "Connect the selected source, preserve source/version metadata and access controls, then prove retrieval with a seeded corpus.",
           "implementation_paths": [
             "accelerator/sample-data",
-            "accelerator/scripts/prepare_local_corpus.py",
             "accelerator/scripts/build_knowledge_source.py",
             "accelerator/scripts/verify_retrieval.py"
           ],
@@ -362,7 +361,6 @@
       "slides_path": "assets/data/scenarios/ai-grounding/slides.md",
       "accelerator_path": "assets/data/scenarios/ai-grounding/accelerator/README.md",
       "facilitator_path": "assets/data/scenarios/ai-grounding/FACILITATOR.md",
-      "local_demo_path": "assets/data/scenarios/ai-grounding/accelerator/LOCAL-DEMO.md",
       "validator_path": "assets/data/scenarios/ai-grounding/accelerator/validate.py"
     },
     {
@@ -521,7 +519,7 @@
           "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
           "activity_id": "extra-voice-live",
           "implementation_paths": [
-            "accelerator/mock_renderer.py",
+            "accelerator/content_pack.py",
             "accelerator/scripts/verify_experience.py"
           ],
           "checkpoint": "Accessible experience generated from an approved revision, with disclosure and fallback",
@@ -559,7 +557,6 @@
       "slides_path": "assets/data/scenarios/avatar-scenario/slides.md",
       "accelerator_path": "assets/data/scenarios/avatar-scenario/accelerator/README.md",
       "facilitator_path": "assets/data/scenarios/avatar-scenario/FACILITATOR.md",
-      "local_demo_path": "assets/data/scenarios/avatar-scenario/local-demo.md",
       "validator_path": "assets/data/scenarios/avatar-scenario/validate.py"
     },
     {
@@ -764,8 +761,7 @@
       "slides_path": "assets/data/scenarios/content-understanding-document-workflow/slides.md",
       "accelerator_path": "assets/data/scenarios/content-understanding-document-workflow/accelerator/README.md",
       "facilitator_path": "assets/data/scenarios/content-understanding-document-workflow/FACILITATOR.md",
-      "local_demo_path": "assets/data/scenarios/content-understanding-document-workflow/LOCAL_DEMO.md",
-      "validator_path": "assets/data/scenarios/content-understanding-document-workflow/scripts/validate_local_pack.py"
+      "validator_path": "assets/data/scenarios/content-understanding-document-workflow/validate.py"
     }
   ],
   "aliases": {},

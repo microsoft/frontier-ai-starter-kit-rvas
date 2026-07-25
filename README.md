@@ -35,7 +35,7 @@ customer’s access, ownership, licensing, and operating needs.
 Scenarios live in [`scenarios/`](scenarios/). `npm run build` regenerates their static-site assets;
 run `npm run validate:scenarios` to validate scenario packs. Read the [scenario contribution
 contract](scenarios/README.md) before proposing a scenario or lesson.
-Accelerators are resource-free decision blueprints plus local demonstrations; they never create
+Accelerators are resource-free decision blueprints plus offline module checkpoints; they never create
 Azure resources or an enterprise platform baseline.
 
 ## Legacy technical reference

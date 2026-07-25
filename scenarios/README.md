@@ -44,7 +44,6 @@ scenarios/<folder-name>/
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
   "facilitator": "FACILITATOR.md",
-  "local_demo": "local-demo.md",
   "validator": "validate.py"
 }
 ```
@@ -88,6 +87,6 @@ existing checkpoint metadata.
 - Preview and fast-moving services instruct the reader to search current Microsoft documentation
   and MCP tools before writing SDK code.
 - Data ownership, access, evaluation, and operating evidence are explicit from the first lesson.
-- Synthetic sample data, expected outputs, and a local no-credential demo are present for every
+- Synthetic sample data, expected outputs, and offline module checkpoints are present for every
   scenario; each is clearly replaceable by approved customer data.
 - A named owner and maturity label are present; update the scenario changelog when material changes.

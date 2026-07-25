@@ -239,8 +239,8 @@ is the right answer, and indexing it instead is the most common serious mistake 
 Retrieval must be proven before an agent is anywhere near it:
 
 ```bash
-# Offline: corpus structure, metadata completeness, and deterministic local retrieval
-python3 scenarios/ai-grounding/accelerator/scripts/prepare_local_corpus.py
+# Offline: corpus structure, metadata completeness, and golden-set shape
+python3 scenarios/ai-grounding/accelerator/scripts/verify_retrieval.py --offline
 
 # Live: query the knowledge base with the golden questions
 python3 scenarios/ai-grounding/accelerator/scripts/verify_retrieval.py \

@@ -18,4 +18,4 @@ model, and invocation surface in current Microsoft documentation. Then decide wh
 optional Bicep foundation, an existing customer environment, or a different approved deployment
 pattern.
 
-Use the scenario's [local demo runbook](../LOCAL_DEMO.md) to validate the synthetic pack and expected structured results.
+Use the scenario validator (`python3 validate.py`) to check the synthetic pack and expected structured results.

@@ -56,7 +56,7 @@ def main() -> int:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         scenario_id = manifest["id"]
         print(f"\n{scenario_id}")
-        for field in ("facilitator", "local_demo", "validator"):
+        for field in ("facilitator", "validator"):
             value = manifest.get(field)
             check(bool(value and (scenario_root / value).is_file()), f"{field} exists", failures)
 

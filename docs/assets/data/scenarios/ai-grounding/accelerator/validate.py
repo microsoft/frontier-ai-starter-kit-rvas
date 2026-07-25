@@ -116,23 +116,24 @@ def check_manifest_alignment() -> None:
                 fail(f"build module {module['id']} references a missing path: {path}")
 
 
-def check_evidence() -> None:
-    result = subprocess.run(
-        [sys.executable, str(SCRIPTS / "prepare_local_corpus.py")],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode:
-        fail(f"local simulation failed:\n{result.stdout}{result.stderr}")
-    evidence = json.loads((ROOT / "evidence" / "local-retrieval-evidence.json").read_text(encoding="utf-8"))
-    if not evidence["deterministic"] or evidence["summary"]["failed_case_ids"]:
-        fail("evidence must be deterministic and all golden cases must pass")
-    for case in evidence["cases"]:
-        if not case["passed"]:
-            fail(f"golden case failed: {case['id']}")
-        if case["expected_behavior"] == "refuse" and case["outcome"]["citations"]:
-            fail(f"refusal case cited a source: {case['id']}")
+def check_golden_questions() -> None:
+    """The golden set is the scenario's evidence contract, so it must stay well-formed."""
+    cases = json.loads((ROOT / "golden-questions.json").read_text(encoding="utf-8"))["cases"]
+    if not cases:
+        fail("golden-questions.json must define at least one case")
+    case_ids = set()
+    for case in cases:
+        case_id = case.get("id")
+        if not case_id:
+            fail("every golden case needs an id")
+        if case_id in case_ids:
+            fail(f"duplicate golden case ID: {case_id}")
+        case_ids.add(case_id)
+        for required in ("question", "expected_behavior"):
+            if not case.get(required):
+                fail(f"golden case {case_id} is missing {required!r}")
+        if case["expected_behavior"] == "refuse" and case.get("expected_citations"):
+            fail(f"refusal case must expect no citations: {case_id}")
 
 
 def check_module_checkpoints() -> None:
@@ -161,7 +162,7 @@ def main() -> int:
     check_blueprint()
     check_lessons()
     check_manifest_alignment()
-    check_evidence()
+    check_golden_questions()
 
     if args.all:
         check_module_checkpoints()

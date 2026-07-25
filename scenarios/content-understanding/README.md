@@ -61,8 +61,8 @@ python3 accelerator/scripts/verify_foundation.py --offline
 python3 accelerator/scripts/verify_document_source.py --offline
 # ... through verify_deploy.py
 
-# 3. Validate the synthetic pack end-to-end, no network
-python3 scripts/validate_local_pack.py
+# 3. Validate the whole scenario contract and synthetic pack, no network
+python3 validate.py
 ```
 
 API facts (API versions, model ids, SDK packages) are cited inline in each lesson and in

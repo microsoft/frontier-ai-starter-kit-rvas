@@ -125,7 +125,6 @@
       "summary": "Connect the selected source, preserve source/version metadata and access controls, then prove retrieval with a seeded corpus.",
       "implementation_paths": [
         "accelerator/sample-data",
-        "accelerator/scripts/prepare_local_corpus.py",
         "accelerator/scripts/build_knowledge_source.py",
         "accelerator/scripts/verify_retrieval.py"
       ],
@@ -176,7 +175,7 @@
     {
       "id": "deploy-and-surface",
       "title": "Deploy and surface it to users",
-      "summary": "Choose where users meet the agent — your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI — then pin the version, re-prove the permission boundary, and sign the release.",
+      "summary": "Choose where users meet the agent \u2014 your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI \u2014 then pin the version, re-prove the permission boundary, and sign the release.",
       "activity_id": "advanced-deploy-hosted-agent",
       "checkpoint": "Surface release contract complete and the unauthenticated caller refused",
       "implementation_paths": [
@@ -188,6 +187,5 @@
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
   "facilitator": "FACILITATOR.md",
-  "local_demo": "accelerator/LOCAL-DEMO.md",
   "validator": "accelerator/validate.py"
 }

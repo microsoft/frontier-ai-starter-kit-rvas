@@ -11,4 +11,4 @@ This complete, non-production fixture is deliberately synthetic. It has no emplo
 | `accessible-fallback.html` | Semantic, keyboard-friendly non-avatar alternative. |
 | `feedback-fixture.json` | Aggregated synthetic pilot evidence, without identifiers. |
 
-`../mock_renderer.py` accepts this pack only when every script segment exactly matches its linked approved claim and all required human approvals are present. It writes a deterministic traceable JSON artifact; it does not render media or call a service.
+`../content_pack.py` accepts this pack only when every script segment exactly matches its linked approved claim and all required human approvals are present. It writes a deterministic traceable JSON artifact; it does not render media or call a service.

@@ -18,10 +18,10 @@ Current Speech guidance is cited inline where the implementation depends on serv
    carry the same approved content.
 4. **Locale handling** so the right voice/language is used per cohort.
 
-The renderer is [`accelerator/mock_renderer.py`](../accelerator/mock_renderer.py): a deterministic,
-offline stand-in that validates the approved pack and emits a traceable artifact **without calling a
-paid service or embedding any real likeness**. It is how you rehearse the pipeline safely; the real
-Speech call is the same shape.
+The pack contract is [`accelerator/content_pack.py`](../accelerator/content_pack.py): a deterministic,
+offline module that validates the approved pack and builds a traceable artifact record **without
+calling a paid service or embedding any real likeness**. It is how you rehearse the pipeline safely;
+the real Speech call is the same shape.
 
 ## Choose your path
 
@@ -46,16 +46,14 @@ client). Any → D is trivial. Do not skip D "for now" — it is the accessible 
 
 ### Option A — Batch avatar synthesis (default)
 
-**Render locally first (safe, deterministic, keyless-free).** This validates approval + accessibility
-and builds the exact request body — no Azure call, no likeness:
+**Validate the pack first (safe, deterministic, keyless-free).** This validates approval +
+accessibility and builds the exact request body — no Azure call, no likeness:
 
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/mock_renderer.py \
-  --data-dir scenarios/avatar-onboarding/accelerator/sample-data \
-  --output-dir scenarios/avatar-onboarding/accelerator/generated-artifacts
+python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py
 ```
 
-The renderer **rejects** the pack unless every script segment's spoken text is an exact approved
+The pack contract **rejects** the pack unless every script segment's spoken text is an exact approved
 claim, all required approvals are present, and the disclosure appears in both the transcript and the
 HTML fallback. That is the accessibility + grounding gate in code.
 

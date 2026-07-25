@@ -173,11 +173,11 @@ python3 scripts/verify_deploy.py --offline
 
 Canonical activity: [Deploy as a Hosted Agent](../../../activities/advanced-deploy-hosted-agent/README.md).
 
-## Local, no-Azure validation pack
+## Offline validation pack
 
 The synthetic fixtures and the offline result contract are validated end-to-end by the scenario
 validator, which needs no network:
 
 ```bash
-python3 ../scripts/validate_local_pack.py
+python3 ../validate.py
 ```

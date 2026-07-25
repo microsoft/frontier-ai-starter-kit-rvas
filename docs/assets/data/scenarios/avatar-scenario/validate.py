@@ -5,7 +5,7 @@ Checks (all offline, no Azure calls):
 - manifest wiring (required files, 7 lessons mapped 1:1 to 7 build modules in order);
 - every lesson uses the new 7-section technical-build contract;
 - the accelerator Bicep is parameterised, deployable, and free of inline secrets;
-- the fictional sample-data pack is internally consistent (via mock_renderer);
+- the fictional sample-data pack is internally consistent (via content_pack);
 - each offline verification script passes on the shipped fixtures.
 """
 
@@ -20,12 +20,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "accelerator"))
-from mock_renderer import PackRejectedError, validate_pack  # noqa: E402
+from content_pack import PackRejectedError, validate_pack  # noqa: E402
 
 
 REQUIRED_MANIFEST_FIELDS = {
     "facilitator": "FACILITATOR.md",
-    "local_demo": "local-demo.md",
     "validator": "validate.py",
     "solution": "accelerator/solution.md",
 }
@@ -182,7 +181,7 @@ def validate() -> list[str]:
     if manifest:
         _validate_lessons(manifest, errors)
     _validate_bicep(errors)
-    for relative_path in ("FACILITATOR.md", "local-demo.md", "accelerator/solution.md"):
+    for relative_path in ("FACILITATOR.md", "accelerator/solution.md"):
         if not (ROOT / relative_path).is_file():
             errors.append(f"missing {relative_path}")
     _validate_pack(errors)

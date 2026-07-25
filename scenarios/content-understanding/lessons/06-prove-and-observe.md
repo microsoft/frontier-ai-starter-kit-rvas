@@ -52,11 +52,12 @@ Emit the metrics into an `eval-report.json` shaped like the fixture so the check
 ### Option B — Custom offline harness
 
 Compare extracted fields to expected results with no network — deterministic, CI-friendly. The
-scenario ships one you can run today over the synthetic golden set:
+scenario's `accelerator/sample-data/expected/` records and
+[`result-contract.json`](../accelerator/sample-data/result-contract.json) give you the shape to
+compare against, and the module checkpoint grades the golden set today:
 
 ```bash
-python3 scenarios/content-understanding/scripts/validate_local_pack.py \
-  --actual-dir <dir-of-your-result-json>
+python3 scenarios/content-understanding/accelerator/scripts/verify_prove_and_observe.py --offline
 ```
 
 It checks each result against the expected values and the golden cases, and confirms the correction

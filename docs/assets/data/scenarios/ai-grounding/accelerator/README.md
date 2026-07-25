@@ -1,6 +1,6 @@
 # AI Grounding / IQ accelerator
 
-This accelerator has two parts: a synthetic local retrieval pack for workshop validation and an
+This accelerator has two parts: a synthetic corpus with offline module checkpoints and an
 optional Bicep foundation for a clean Azure demo subscription. It is not a landing zone and it is
 not production approval.
 
@@ -42,9 +42,12 @@ az deployment group create \
 
 The command creates demo resources and emits the `.env` contract consumed by later scripts.
 
-## Local-only corpus review
+## Offline structural gate
 
-`LOCAL-DEMO.md` runs a standard-library-only simulation over the fictional sample corpus. It produces `evidence/local-retrieval-evidence.json`, a reviewable record of source metadata, access groups, golden-question citations, and refusal/access cases. It is a transparent workshop check, not an Azure, Foundry IQ, or authorization implementation.
+Every module checkpoint has an `--offline` mode, and `validate.py` runs them all without an Azure
+subscription. Use it to check corpus metadata, golden-set shape, and module wiring before you
+provision anything. It is a structural check, not an Azure, Foundry IQ, or authorization
+implementation.
 
 ## Sample-data swaps
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Render a deterministic, traceable local onboarding artifact from an approved pack."""
+"""Approved-content pack contract: validate a pack and build its traceable artifact record.
+
+Imported by the module verification scripts and the scenario validator. It performs no media
+generation, vendor SDK call, identity integration, or network call.
+"""
 
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -233,49 +235,6 @@ def build_artifact(pack: dict[str, Any]) -> dict[str, Any]:
         artifact, sort_keys=True, separators=(",", ":"), ensure_ascii=False
     ).encode("utf-8")
     digest = hashlib.sha256(canonical).hexdigest()
-    artifact["artifact_id"] = f"mock-onboarding-{digest[:16]}"
+    artifact["artifact_id"] = f"onboarding-artifact-{digest[:16]}"
     artifact["trace_sha256"] = digest
     return artifact
-
-
-def render(data_dir: Path, output_dir: Path) -> Path:
-    """Validate first, then write one traceable artifact."""
-
-    artifact = build_artifact(validate_pack(data_dir))
-    output_dir.mkdir(parents=True, exist_ok=True)
-    artifact_path = output_dir / "mock-rendered-onboarding.json"
-    artifact_path.write_text(
-        json.dumps(artifact, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-    return artifact_path
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Render a deterministic local artifact from an approved fictional pack."
-    )
-    parser.add_argument(
-        "--data-dir",
-        type=Path,
-        default=Path(__file__).parent / "sample-data",
-        help="directory containing the approved-content fixture",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=Path(__file__).parent / "generated-artifacts",
-        help="directory for the traceable JSON artifact",
-    )
-    args = parser.parse_args()
-    try:
-        artifact_path = render(args.data_dir, args.output_dir)
-    except (OSError, PackRejectedError) as error:
-        print(f"REJECTED: {error}", file=sys.stderr)
-        return 2
-    print(f"Rendered traceable mock artifact: {artifact_path}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

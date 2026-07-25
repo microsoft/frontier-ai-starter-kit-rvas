@@ -461,7 +461,6 @@ function detectScenarioProblems(scenarios) {
       if (!scenarioPathExists(scenario, scenario.slides)) problems.push(`${scenario.id} scenario slides ${scenario.slides} missing`);
       if (!scenarioPathExists(scenario, scenario.accelerator)) problems.push(`${scenario.id} scenario accelerator ${scenario.accelerator} missing`);
       if (!scenarioPathExists(scenario, scenario.facilitator)) problems.push(`${scenario.id} scenario facilitator guide missing`);
-      if (!scenarioPathExists(scenario, scenario.local_demo)) problems.push(`${scenario.id} scenario local demo guide missing`);
       if (!scenarioPathExists(scenario, scenario.validator)) problems.push(`${scenario.id} scenario validator missing`);
       if (!Array.isArray(scenario.lessons) || !scenario.lessons.length) {
         problems.push(`${scenario.id} scenario needs at least one lesson`);
@@ -553,7 +552,6 @@ function scenarioOutput(scenario) {
       slides_path: `${assetBase}${scenario.slides}`,
       accelerator_path: `${assetBase}${scenario.accelerator}`,
       facilitator_path: `${assetBase}${scenario.facilitator}`,
-      local_demo_path: `${assetBase}${scenario.local_demo}`,
       validator_path: `${assetBase}${scenario.validator}`,
     };
 }

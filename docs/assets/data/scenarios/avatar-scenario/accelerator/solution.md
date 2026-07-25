@@ -17,7 +17,7 @@ here is runnable from the repository root.
 | Content pipeline | Versioned claims in `sample-data/claims.json`, approved-content blob container, owner/version/expiry metadata | 3 |
 | Grounded assistant | Foundry agent grounded on approved content; refuses with `NO_APPROVED_CLAIM` | 4 |
 | Experience generation | Batch avatar synthesis from an approved script revision + disclosure, captions, transcript, non-avatar fallback | 5 |
-| Approval gate | Versioned approval record enforced by `mock_renderer.py`; withdrawal on source change | 6 |
+| Approval gate | Versioned approval record enforced by `content_pack.py`; withdrawal on source change | 6 |
 | Prove & operate | Foundry evaluations + AI Red Teaming Agent, GenAI tracing, aggregate-only telemetry, release scorecard | 7 |
 
 ## 0. Prerequisites
@@ -150,12 +150,6 @@ bicep lint  scenarios/avatar-onboarding/accelerator/main.bicep
 
 # All offline module checkpoints + scenario contract:
 python3 scenarios/avatar-onboarding/validate.py
-
-# Deterministic render, inspect, clean up:
-python3 scenarios/avatar-onboarding/accelerator/mock_renderer.py \
-  --data-dir scenarios/avatar-onboarding/accelerator/sample-data \
-  --output-dir scenarios/avatar-onboarding/accelerator/demo-artifacts
-rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
 ```
 
 ## Responsible-AI gates before production

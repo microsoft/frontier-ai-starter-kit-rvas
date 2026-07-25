@@ -11,6 +11,6 @@ The `.md`, `.txt`, and `.html` files are **local teaching fixtures** that make t
 - `expected/` — structured JSON expected outcomes, including a SHA-256 binding to each source fixture.
 - `golden-cases.json` — holdout membership and intent.
 - `corrections/` — a separate reviewer correction record for `invoice-2002`; it deliberately preserves the original expected outcome.
-- `manifest.json` and `result-contract.json` — the deterministic local validator's input contract.
+- `manifest.json` and `result-contract.json` — the scenario validator's input contract.
 
-Run `python3 ../../scripts/validate_local_pack.py` from this directory, or follow [the local demo runbook](../../LOCAL_DEMO.md). The validator uses Python's standard library only and makes no network or Azure calls.
+Run `python3 validate.py` from the scenario folder to check this pack. The validator uses Python's standard library only and makes no network or Azure calls.

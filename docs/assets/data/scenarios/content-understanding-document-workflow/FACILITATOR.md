@@ -8,7 +8,7 @@ The outcome is a reviewed decision package: business outcome, SME schema/test re
 
 ## Before participants arrive
 
-1. Read [LOCAL_DEMO.md](LOCAL_DEMO.md) and run the validator from the repository root.
+1. Run `python3 validate.py` from the scenario folder and confirm it passes.
 2. Confirm that every exercise will use only the four synthetic fixtures.
 3. Invite a business SME, process owner, source/workflow owner, product owner, engineering lead, and security/platform representative.
 4. Prepare a shared space for the seven module artifacts and a release-decision record.
@@ -42,7 +42,7 @@ Allow 5-minute breaks between modules if the session runs longer than two hours.
 2. Versioned SME schema and test-observation log.
 3. Secret-free handoff contract and source-to-review workflow trace.
 4. Review-policy table, golden-case evaluation record, correction-retention rule, and approve/defer/rollback decision.
-5. `evidence/local-validation.json` showing a passing fixture-pack validation.
+5. A passing `validate.py` run covering the synthetic fixture pack and every module checkpoint.
 
 ## Safety and escalation
 
