@@ -305,25 +305,25 @@ Routing is ready when the team can show:
 **Checkpoint decision:** the agent can be evaluated as a controlled router, not a black box.
 
 ---
-<!-- slide:id=lesson-prove-and-ship-context -->
+<!-- slide:id=lesson-evaluate-and-trace-context -->
 
-# Lesson 7 context: evaluate, trace, deploy, and operate
+# Lesson 7 context: evaluate and trace
 
-The pilot should ship only when evidence supports a responsible release decision.
+One question on the table: is the assistant good enough to put in front of real people?
 
 Discuss:
 
 - Which golden questions represent normal, edge, stale, restricted, and adversarial cases?
 - Who reviews correctness, citations, access behavior, and business usefulness?
-- What traces are needed to investigate failures without exposing unnecessary sensitive content?
-- What operating rhythm keeps source, model, and permission changes under control?
+- What traces are needed to investigate a failure without exposing unnecessary sensitive content?
+- Who signs off that the evidence is enough?
 
-**Operating mindset:** grounded AI is a service with evidence, owners, and change management.
+**Operating mindset:** an evaluation you look at is a report; one that blocks a release is a control.
 
 ---
-<!-- slide:id=lesson-prove-and-ship-choices -->
+<!-- slide:id=lesson-evaluate-and-trace-choices -->
 
-# Lesson 7 choices: release gate and operating evidence
+# Lesson 7 choices: how much evidence is enough
 
 | Decision | Customer trade-off |
 |---|---|
@@ -334,22 +334,67 @@ Discuss:
 | Manual review | Higher judgment quality, but limited scale |
 | Automated checks | Better repeatability, but must be calibrated against human review |
 
-Do not treat launch as the finish line; source changes can break grounding after release.
+Generic quality metrics miss the three things that matter here: correct refusal, current citation, and silence about restricted content.
 
 ---
-<!-- slide:id=lesson-prove-and-ship-evidence -->
+<!-- slide:id=lesson-evaluate-and-trace-evidence -->
 
-# Lesson 7 evidence/checkpoint: pilot release decision
+# Lesson 7 evidence/checkpoint: the assistant is good enough
 
-A release decision should include:
+Evidence to produce:
 
 - Golden-set results for correctness, citation, abstention, and access behavior
-- Adversarial and prompt-injection cases with expected safe responses
-- Trace evidence for failed or borderline examples
-- Named owners for source quality, service health, evaluation, and security review
-- Expansion criteria and rollback triggers
+- Adversarial cases including prompt injection hidden in retrieved content, with the mitigation re-tested
+- One request traced end to end, so a wrong answer can be explained rather than guessed at
+- The permission probe re-run against the agent
 
-**Checkpoint decision:** ship the pilot only with operating evidence the customer can review and repeat.
+**Checkpoint decision:** the evidence supports putting this in front of real people — or names what has to change first.
+
+---
+<!-- slide:id=lesson-deploy-and-surface-context -->
+
+# Lesson 8 context: deploy and surface it to users
+
+Where do people meet the assistant, and who runs it once they do?
+
+Discuss:
+
+- Where does this audience already work — Teams, an existing app, or somewhere new?
+- Who is in the pilot, and how is access granted and revoked?
+- Who triages a wrong answer, and how does a user report one?
+- What ends the pilot?
+
+**Operating mindset:** the agent is already deployed. You are choosing a doorway, not building a system.
+
+---
+<!-- slide:id=lesson-deploy-and-surface-choices -->
+
+# Lesson 8 choices: pick the doorway, keep the rules
+
+| Surface | Where users meet it | When it wins |
+|---|---|---|
+| Your own app or API | An existing front end | Pilots with one consumer |
+| Publish to Teams and M365 Copilot | Teams, Copilot app | Users already work there; no new app to adopt |
+| Copilot Studio | Teams, Copilot app | Only if the source decision was SharePoint and M365 |
+| Foundry hosted agent | A dedicated endpoint | Other teams consume it, or you need runtime control |
+| Custom web UI | A purpose-built app | Demo, custom auth, or a required response contract |
+
+Five rules do not move: no keys, the permission boundary still applies, tracing carries into the runtime, pin the version, rollback is a repoint.
+
+---
+<!-- slide:id=lesson-deploy-and-surface-evidence -->
+
+# Lesson 8 evidence/checkpoint: safe to hand to real users
+
+The release contract records:
+
+- The surface, why it was chosen, and who can use it
+- A pinned agent version and a rollback measured in minutes
+- The permission probe re-run against the surface itself, not just the agent
+- A named triage owner, a review cadence, and how users report a bad answer
+- A pilot exit criterion with a date, and a signed release decision
+
+**Checkpoint decision:** ship, ship with conditions, or stop — and "stop" in writing is a valuable result.
 
 ---
 <!-- slide:id=scenario-next-session -->

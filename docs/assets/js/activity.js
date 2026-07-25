@@ -29,10 +29,20 @@
     _route = resolveRoute(activity);
 
     document.title = activity.title + ' — AI Starter Kit';
-    applyModuleColor(activity.module);
-    renderHero(activity, mod);
-    renderFacts(activity, mod, allActivities, data.outcomes || []);
-    renderRelated(activity, allActivities);
+
+    // A render error used to reject silently and leave the page frozen on its
+    // placeholders, which reads as a slow network rather than a bug. Surface it.
+    try {
+      applyModuleColor(activity.module);
+      renderHero(activity, mod);
+      renderFacts(activity, mod, allActivities, data.outcomes || []);
+      renderRelated(activity, allActivities);
+    } catch (e) {
+      console.error('activity page render failed', e);
+      showError('This page failed to render: ' + e.message);
+      return;
+    }
+
     loadGuide(activity, allActivities);
   }
 
@@ -143,34 +153,34 @@
           `<a href="${FP.esc(r)}" target="_blank" rel="noopener" class="attribution" style="display:block;margin-bottom:5px">${FP.esc(r.replace('https://', ''))}</a>`
         ).join('');
       }
-
-      function successCriteriaFor(c) {
-        if (c.success_criteria && c.success_criteria.length) return c.success_criteria;
-
-        const criteria = [];
-        if (c.description) criteria.push(c.description);
-
-        if (c.id === 'setup') {
-          criteria.push('Your local or cloud workspace can authenticate to Azure and run the repository validation commands.');
-        } else if (c.id === 'cleanup') {
-          criteria.push('You can identify the resources created for the session and remove or stop them safely.');
-        } else if (c.track === 'define') {
-          criteria.push('You leave with a scenario decision or handoff artifact that a customer team can review.');
-        } else if (c.track === 'foundations') {
-          criteria.push('The resulting agent or project can answer a test question using the approved sample grounding path.');
-        } else if (c.track === 'actions') {
-          criteria.push('A governed action path proves the agent can call a tool without bypassing approval or safety boundaries.');
-        } else if (c.track === 'trust') {
-          criteria.push('The activity produces evidence a facilitator can use to accept, reject, or improve the agent behavior.');
-        } else if (c.track === 'deploy') {
-          criteria.push('The result can be invoked outside the notebook or local script through the intended deployment surface.');
-        } else {
-          criteria.push('The reusable artifact is ready to adapt inside a customer scenario without changing the scenario journey.');
-        }
-
-        return [...new Set(criteria)];
-      }
     }
+  }
+
+  function successCriteriaFor(c) {
+    if (c.success_criteria && c.success_criteria.length) return c.success_criteria;
+
+    const criteria = [];
+    if (c.description) criteria.push(c.description);
+
+    if (c.id === 'setup') {
+      criteria.push('Your local or cloud workspace can authenticate to Azure and run the repository validation commands.');
+    } else if (c.id === 'cleanup') {
+      criteria.push('You can identify the resources created for the session and remove or stop them safely.');
+    } else if (c.track === 'define') {
+      criteria.push('You leave with a scenario decision or handoff artifact that a customer team can review.');
+    } else if (c.track === 'foundations') {
+      criteria.push('The resulting agent or project can answer a test question using the approved sample grounding path.');
+    } else if (c.track === 'actions') {
+      criteria.push('A governed action path proves the agent can call a tool without bypassing approval or safety boundaries.');
+    } else if (c.track === 'trust') {
+      criteria.push('The activity produces evidence a facilitator can use to accept, reject, or improve the agent behavior.');
+    } else if (c.track === 'deploy') {
+      criteria.push('The result can be invoked outside the notebook or local script through the intended deployment surface.');
+    } else {
+      criteria.push('The reusable artifact is ready to adapt inside a customer scenario without changing the scenario journey.');
+    }
+
+    return [...new Set(criteria)];
   }
 
   function renderRelated(c, allActivities) {
@@ -358,5 +368,10 @@
     if (el) el.textContent = val;
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', () => {
+    init().catch((e) => {
+      console.error('activity page failed to initialise', e);
+      showError('This page failed to load: ' + e.message);
+    });
+  });
 })();

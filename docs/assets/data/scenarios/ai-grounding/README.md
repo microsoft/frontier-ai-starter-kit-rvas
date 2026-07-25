@@ -2,7 +2,7 @@
 
 Build a grounded, permission-aware assistant over approved content, and prove it before it ships.
 
-Seven modules, one lesson each. Every module ends with a runnable checkpoint, and every module
+Eight modules, one lesson each. Every module ends with a runnable checkpoint, and every module
 offers real options with an opinionated default and the migration cost of changing your mind. You
 can deploy real Azure resources for a clean demo, index a synthetic corpus, compare model behavior,
 and learn the evidence a risk owner would need before a customer pilot.
@@ -29,10 +29,13 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 | [4. Compare chat and embedding choices](lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | `compare_models.py` |
 | [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | `grounded_answer.py` |
 | [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | `verify_routing.py` |
-| [7. Evaluate, trace, deploy, and operate](lesson.html?scenario=ai-grounding&lesson=prove-and-ship) | Evaluation gate, red-team evidence, end-to-end traces, deployment, release decision | `validate.py --all` |
+| [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | `validate.py --all` |
+| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | The surface decision, a pinned version, a rollback, an owner, and a signed release | `verify_surface.py` |
 
 Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
 retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
+Module 8 catches the fourth: shipping to a surface that quietly loses the permission boundary
+everything else was built to protect.
 
 ## Decision gates to carry into the customer conversation
 
@@ -79,7 +82,8 @@ These lessons compose the kit's canonical activities rather than duplicating the
 - [Action Tools](activity.html?id=advanced-action-tools) and
   [Fabric IQ](activity.html?id=extra-fabric-iq) — live-data and action routing in module 6
 - [Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent) — the hosted
-  deployment option in module 7
+  endpoint option in module 8
+- [Build a UI](activity.html?id=extra-build-ui) — the custom surface option in module 8
 
 ## Non-negotiables
 

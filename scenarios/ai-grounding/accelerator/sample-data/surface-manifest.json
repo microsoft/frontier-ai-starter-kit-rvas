@@ -1,0 +1,58 @@
+{
+  "pilot": "returns-policy-assistant",
+  "decided_on": "2026-02-18",
+  "surface": {
+    "option": "m365-and-teams",
+    "why": "Coordinators already answer returns questions in Teams. A separate web app would need adoption we have no budget to drive during a pilot.",
+    "who_can_use": "The 12 named returns coordinators in the Alpine District pilot group.",
+    "publish_scope": "shared"
+  },
+  "agent": {
+    "name": "grounding-assistant",
+    "pinned_version": "3",
+    "version_selection": "fixed",
+    "endpoint_is_stable": true
+  },
+  "auth": {
+    "mode": "entra-user",
+    "anonymous_access": false,
+    "keys_in_config": false
+  },
+  "permissions": {
+    "identity_evaluated_at_query_time": "signed-in user",
+    "reprobed_at_surface": true,
+    "access_denied_behavior": "Returns the abstention string with no title, snippet, or existence signal for the restricted document."
+  },
+  "observability": {
+    "tracing_enabled": true,
+    "destination": "Application Insights (rvas-grounding-ai)",
+    "captures_message_content": true
+  },
+  "rollback": {
+    "mechanism": "Repoint the agent version selector to the previous version; the published surface and endpoint URL are unchanged.",
+    "previous_version": "2",
+    "time_to_rollback_minutes": 5
+  },
+  "operations": {
+    "triage_owner": "Dana Okafor, Returns Operations",
+    "how_users_report_a_bad_answer": "The 'Report an answer' link in the agent's welcome message files a ticket to the Returns Ops queue with the conversation id.",
+    "review_cadence": "Weekly for the first month, then monthly."
+  },
+  "pilot_exit": {
+    "criterion": "Either coordinators resolve 60% of policy lookups without escalating to a supervisor by week 6, or the pilot stops and we write up why.",
+    "review_date": "2026-04-01",
+    "decision_owner": "Priya Raman, Risk and Compliance"
+  },
+  "evidence": [
+    "Module 7 evaluation run 2026-02-17, gate 3.5, passed",
+    "Module 7 red-team results across jailbreak, harmful content, and indirect injection, with the retrieved-content mitigation applied and re-tested",
+    "Module 7 traced request 8f2c1ad4 showing model, retrieval, and tool spans",
+    "Module 2 permission probe re-run against the published surface on 2026-02-18",
+    "Eight decision records, one per module"
+  ],
+  "release_decision": {
+    "outcome": "ship-with-conditions",
+    "conditions": "Pilot group stays at 12 named users until the week-4 review.",
+    "approver": "Priya Raman, Risk and Compliance"
+  }
+}

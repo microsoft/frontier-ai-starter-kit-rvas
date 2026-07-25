@@ -107,25 +107,6 @@
     return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
   }
 
-  /* ─────────────────────────── Nav ──────────────────────────────── */
-  FP.initNav = function () {
-    const toggle = document.querySelector('.nav-toggle');
-    const links  = document.querySelector('.nav-links');
-    if (toggle && links) {
-      toggle.addEventListener('click', () => {
-        const open = links.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
-      // Close on Esc
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && links.classList.contains('open')) {
-          links.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
-  };
-
   /* ─────────────────────────── Reveal ───────────────────────────── */
   FP.initReveal = function () {
     if (!('IntersectionObserver' in window)) {
@@ -330,10 +311,10 @@
   }
 
   /* ─────────────────────────── Init ─────────────────────────────── */
+  // Nav and boot-time reveal are owned by shell.js; page scripts call
+  // FP.initReveal() themselves after injecting content.
   document.addEventListener('DOMContentLoaded', () => {
     FP.initTheme();
-    FP.applyKiosk();
-    FP.initReveal();
   });
 
 })();

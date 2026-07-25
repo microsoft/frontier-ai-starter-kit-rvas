@@ -9,9 +9,9 @@ Use only the fictional Northstar Outdoor Supply fixtures. Do not request, paste,
 ## Before the workshop
 
 - Invite a business decision owner, frontline representative, source owner, platform architect, security/privacy reviewer, evaluator, and operations lead.
-- Share `README.md`, the seven lesson files, and `accelerator/sample-data/README.md`.
+- Share `README.md`, the eight lesson files, and `accelerator/sample-data/README.md`.
 - Run the local simulation and validator in `accelerator/LOCAL-DEMO.md`; use the resulting evidence artifact to show how citations and refusal tests are reviewed.
-- Arrange a shared canvas with seven sections matching the scenario modules.
+- Arrange a shared canvas with eight sections matching the scenario modules.
 
 ## Agenda
 

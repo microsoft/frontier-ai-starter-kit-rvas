@@ -48,6 +48,7 @@ MODULE_CHECKPOINTS = (
     "compare_models.py",
     "grounded_answer.py",
     "verify_routing.py",
+    "verify_surface.py",
 )
 
 
@@ -88,8 +89,8 @@ def check_blueprint() -> None:
 
 def check_lessons() -> None:
     lessons = sorted((SCENARIO / "lessons").glob("*.md"))
-    if len(lessons) != 7:
-        fail(f"expected 7 lessons, one per build module, found {len(lessons)}")
+    if len(lessons) != 8:
+        fail(f"expected 8 lessons, one per build module, found {len(lessons)}")
     for lesson in lessons:
         text = lesson.read_text(encoding="utf-8")
         missing = [field for field in REQUIRED_LESSON_SECTIONS if f"## {field}" not in text]
@@ -164,7 +165,7 @@ def main() -> int:
 
     if args.all:
         check_module_checkpoints()
-        print("AI Grounding validation passed — structure and all 7 module checkpoints.")
+        print("AI Grounding validation passed — structure and all 8 module checkpoints.")
     else:
         print("AI Grounding accelerator validation passed.")
     return 0

@@ -5,14 +5,15 @@
   "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
   "maturity": "initial",
   "level": "guided",
-  "duration_minutes": 420,
+  "duration_minutes": 480,
   "stage": "customer-build",
   "owner": "RVAS field team",
   "decision_prompts": [
     "Which user decision or action will trusted context improve?",
     "What access boundary, source owner, and system of record apply?",
     "Should the experience lead with Copilot Studio + SharePoint, Foundry IQ, Fabric IQ, Work IQ, or Web IQ?",
-    "What golden dataset and operating evidence will prove the pilot is safe and useful?"
+    "What golden dataset and operating evidence will prove the pilot is safe and useful?",
+    "Where will users meet the assistant, and who operates it once they do?"
   ],
   "lessons": [
     {
@@ -76,12 +77,21 @@
       ]
     },
     {
-      "id": "prove-and-ship",
-      "title": "Evaluate, trace, deploy, and operate",
-      "path": "lessons/07-prove-and-ship.md",
+      "id": "evaluate-and-trace",
+      "title": "Evaluate and trace",
+      "path": "lessons/07-evaluate-and-trace.md",
       "reused_with": [
         "agent-evaluation",
-        "observability",
+        "observability"
+      ]
+    },
+    {
+      "id": "deploy-and-surface",
+      "title": "Deploy and surface it to users",
+      "path": "lessons/08-deploy-and-surface.md",
+      "reused_with": [
+        "foundry-agents",
+        "copilot-studio",
         "operational-readiness"
       ]
     }
@@ -153,14 +163,25 @@
       ]
     },
     {
-      "id": "prove-and-ship",
-      "title": "Evaluate, trace, deploy, and operate",
-      "summary": "Prove citation, access, injection, and stale-source behavior; trace failures; then deploy an approved pilot endpoint.",
+      "id": "evaluate-and-trace",
+      "title": "Evaluate and trace",
+      "summary": "Prove citation, access, injection, and stale-source behavior against a gate, and trace one request end to end so a bad answer can be explained.",
       "activity_id": "advanced-evaluation-redteam",
-      "checkpoint": "Evaluation gate, trace evidence, and pilot release decision",
+      "checkpoint": "Evaluation gate passed with trace and red-team evidence",
       "implementation_paths": [
         "accelerator/validate.py",
         "accelerator/golden-questions.json"
+      ]
+    },
+    {
+      "id": "deploy-and-surface",
+      "title": "Deploy and surface it to users",
+      "summary": "Choose where users meet the agent — your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI — then pin the version, re-prove the permission boundary, and sign the release.",
+      "activity_id": "advanced-deploy-hosted-agent",
+      "checkpoint": "Surface release contract complete and the unauthenticated caller refused",
+      "implementation_paths": [
+        "accelerator/sample-data/surface-manifest.json",
+        "accelerator/scripts/verify_surface.py"
       ]
     }
   ],

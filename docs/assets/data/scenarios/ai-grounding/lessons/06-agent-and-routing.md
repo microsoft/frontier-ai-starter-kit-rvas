@@ -232,5 +232,5 @@ the human approval sits; and the re-measured `recall@5`.
 
 ## Next module
 
-[Module 7 — Evaluate, trace, deploy, and operate](07-prove-and-ship.md) proves the whole thing with
+[Module 7 — Evaluate and trace](07-evaluate-and-trace.md) proves the whole thing with
 numbers, red-teams it, makes it observable, and decides whether it ships.
