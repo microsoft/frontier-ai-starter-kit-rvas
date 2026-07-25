@@ -47,7 +47,7 @@ const OUTCOMES = [
     personas: ['builder', 'facilitator', 'account-team'],
     adoption_stage: ['ideate', 'define'],
     business_value: ['find-buildable-use-cases', 'reduce-scope-risk'],
-    activity_ids: ['idea-forge', 'customer-outcome'],
+    activity_ids: ['idea-forge'],
     success_metrics: [
       'A selected idea has an outcome, users, data sources, tier guidance, and risk notes.',
       'The chosen idea transfers cleanly into the Customer Build scenario pack.',
@@ -62,8 +62,6 @@ const OUTCOMES = [
     adoption_stage: ['build', 'prove', 'demo'],
     business_value: ['reuse-building-blocks', 'reduce-implementation-risk'],
     activity_ids: [
-      'customer-outcome',
-      'setup',
       'foundations',
       'advanced-action-tools',
       'advanced-evaluation-redteam',
@@ -78,7 +76,6 @@ const OUTCOMES = [
       'extra-magentic-workflows',
       'extra-hosted-longrunning',
       'capstone-multi-agent',
-      'cleanup',
     ],
     success_metrics: [
       'Teams can find the implementation mechanics that support a chosen scenario.',
@@ -89,26 +86,6 @@ const OUTCOMES = [
 
 const ACTIVITIES = [
   {
-    id: 'setup',
-    title: 'Getting Started',
-    track: 'define',
-    difficulty: 'beginner',
-    duration_minutes: 30,
-    description: 'Prepare Codespaces, Azure sign-in, and local tooling before running activity validators.',
-    outcomes: ['reference'],
-    participant: 'docs/setup.md',
-  },
-  {
-    id: 'cleanup',
-    title: 'Cleanup and cost hygiene',
-    track: 'extras',
-    difficulty: 'beginner',
-    duration_minutes: 10,
-    description: 'Review teardown targets, stop local processes, and remove event resources safely.',
-    outcomes: ['reference'],
-    participant: 'docs/activities/cleanup.md',
-  },
-  {
     id: 'idea-forge',
     title: 'Idea Forge',
     track: 'define',
@@ -117,16 +94,6 @@ const ACTIVITIES = [
     description: 'Generate and select a buildable customer AI application idea before starting Customer Build.',
     outcomes: ['idea-forge'],
     participant: 'docs/idea-forge.md',
-  },
-  {
-    id: 'customer-outcome',
-    title: 'Define your outcome',
-    track: 'define',
-    difficulty: 'beginner',
-    duration_minutes: 45,
-    description: 'Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.',
-    outcomes: ['reference', 'idea-forge'],
-    participant: 'docs/customer-outcome.md',
   },
   {
     id: 'foundations',
@@ -323,17 +290,12 @@ function transformMarkdown(markdown, activity) {
     .replace(/\{% include journey-status\.html[^%]*%\}/g, '')
     .replace(/\{% include module-lens\.html[^%]*%\}/g, '')
     .replace(/\{%[^%]*%\}/g, '')
-    .replace(/\{\{\s*'\/customer-outcome'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=customer-outcome')
     .replace(/\{\{\s*'\/idea-forge'\s*\|\s*relative_url\s*\}\}/g, 'idea-forge.html')
-    .replace(/\{\{\s*'\/setup'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=setup')
     .replace(/\{\{\s*'\/activities\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => activityUrl(slug, hash))
-    .replace(/\]\(\.\.\/\.\.\/docs\/customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
     .replace(/\]\(\.\.\/activities\/([^)#]+)(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(slug, hash)})`)
-    .replace(/\]\(\.\.\/customer-outcome(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('customer-outcome', hash)})`)
     .replace(/\]\(\.\.\/idea-forge(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('idea-forge', hash)})`)
     .replace(/\]\(\.\.\/\.\.\/resources\//g, '](resources/')
     .replace(/\]\(\.\.\/\.\.\/docs\/activities\/([^)]+)\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
-    .replace(/\]\((?:\.\.\/)*customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
     .replace(/\]\(\.\.\/([a-z0-9-]+)\/README\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
     .replace(/\]\(assets\//g, `](${activityAssetBase}`)
     .replace(/\]\(([^):?#]+\.(?:py|sh|js|mjs|cjs|ps1))(#[^)]+)?\)/g, (_m, target, hash = '') => {

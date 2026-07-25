@@ -35,8 +35,10 @@ things this scenario's risk owner actually cares about. Write the evaluator that
 
 ### Observability
 
-Not a choice. Turn it on. `activities/advanced-tracing-observability` is the reference, and the
-tracing env flags are already written into your `.env` by module 1's deploy script.
+Not a choice. Turn it on. The
+[Tracing & Observability activity](../../../activities/advanced-tracing-observability/README.md) is
+the reference, and the tracing env flags are already written into your `.env` by module 1's deploy
+script.
 
 **Migration cost.** Portal → code evaluation is cheap. Retrofitting tracing after an incident is
 where the cost lands — you cannot trace a request that already happened.

@@ -11,7 +11,7 @@
           "id": "define",
           "name": "Define",
           "description": "Shape the outcome, users, corpus, safety boundaries, and demo story.",
-          "activity_count": 3
+          "activity_count": 1
         },
         {
           "id": "foundations",
@@ -47,10 +47,10 @@
           "id": "extras",
           "name": "Extras",
           "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
-          "activity_count": 7
+          "activity_count": 6
         }
       ],
-      "activity_count": 19
+      "activity_count": 16
     }
   ],
   "outcomes": [
@@ -73,15 +73,14 @@
         "reduce-scope-risk"
       ],
       "activity_ids": [
-        "idea-forge",
-        "customer-outcome"
+        "idea-forge"
       ],
       "success_metrics": [
         "A selected idea has an outcome, users, data sources, tier guidance, and risk notes.",
         "The chosen idea transfers cleanly into the Customer Build scenario pack."
       ],
-      "activity_count": 2,
-      "duration_minutes": 65
+      "activity_count": 1,
+      "duration_minutes": 20
     },
     {
       "id": "reference",
@@ -103,8 +102,6 @@
         "reduce-implementation-risk"
       ],
       "activity_ids": [
-        "customer-outcome",
-        "setup",
         "foundations",
         "advanced-action-tools",
         "advanced-evaluation-redteam",
@@ -118,15 +115,14 @@
         "extra-governed-data-copilot",
         "extra-magentic-workflows",
         "extra-hosted-longrunning",
-        "capstone-multi-agent",
-        "cleanup"
+        "capstone-multi-agent"
       ],
       "success_metrics": [
         "Teams can find the implementation mechanics that support a chosen scenario.",
         "Reference activities stay reusable and do not become a separate customer journey."
       ],
-      "activity_count": 17,
-      "duration_minutes": 1420
+      "activity_count": 14,
+      "duration_minutes": 1335
     }
   ],
   "scenarios": [
@@ -733,56 +729,6 @@
   "aliases": {},
   "activities": [
     {
-      "id": "setup",
-      "title": "Getting Started",
-      "module": "foundry",
-      "track": "define",
-      "difficulty": "beginner",
-      "duration_minutes": 30,
-      "description": "Prepare Codespaces, Azure sign-in, and local tooling before running activity validators.",
-      "prerequisites": [],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "outcomes": [
-        "reference"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/setup.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/setup/README.md"
-    },
-    {
-      "id": "cleanup",
-      "title": "Cleanup and cost hygiene",
-      "module": "foundry",
-      "track": "extras",
-      "difficulty": "beginner",
-      "duration_minutes": 10,
-      "description": "Review teardown targets, stop local processes, and remove event resources safely.",
-      "prerequisites": [],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "outcomes": [
-        "reference"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "extra",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/activities/cleanup.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/cleanup/README.md"
-    },
-    {
       "id": "idea-forge",
       "title": "Idea Forge",
       "module": "foundry",
@@ -806,32 +752,6 @@
       "source_path": "docs/idea-forge.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/idea-forge/README.md"
-    },
-    {
-      "id": "customer-outcome",
-      "title": "Define your outcome",
-      "module": "foundry",
-      "track": "define",
-      "difficulty": "beginner",
-      "duration_minutes": 45,
-      "description": "Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.",
-      "prerequisites": [],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "outcomes": [
-        "reference",
-        "idea-forge"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "docs/customer-outcome.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/customer-outcome/README.md"
     },
     {
       "id": "foundations",

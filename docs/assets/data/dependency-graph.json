@@ -1,29 +1,8 @@
 {
   "nodes": [
     {
-      "id": "setup",
-      "title": "Getting Started",
-      "module": "foundry",
-      "track": "define",
-      "tier": "core"
-    },
-    {
-      "id": "cleanup",
-      "title": "Cleanup and cost hygiene",
-      "module": "foundry",
-      "track": "extras",
-      "tier": "extra"
-    },
-    {
       "id": "idea-forge",
       "title": "Idea Forge",
-      "module": "foundry",
-      "track": "define",
-      "tier": "core"
-    },
-    {
-      "id": "customer-outcome",
-      "title": "Define your outcome",
       "module": "foundry",
       "track": "define",
       "tier": "core"
