@@ -4,6 +4,9 @@
   "tagline": "Choose trusted knowledge and operational context for one customer decision.",
   "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
   "maturity": "initial",
+  "level": "guided",
+  "duration_minutes": 420,
+  "stage": "customer-build",
   "owner": "RVAS field team",
   "decision_prompts": [
     "Which user decision or action will trusted context improve?",

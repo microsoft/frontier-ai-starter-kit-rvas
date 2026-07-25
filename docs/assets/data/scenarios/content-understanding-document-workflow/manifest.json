@@ -4,6 +4,9 @@
   "tagline": "Move from SME-tested document understanding to a governed business workflow.",
   "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
   "maturity": "initial",
+  "level": "guided",
+  "duration_minutes": 420,
+  "stage": "customer-build",
   "owner": "RVAS field team",
   "decision_prompts": [
     "Which document decision creates measurable value when it is faster and more consistent?",

@@ -534,6 +534,9 @@ function scenarioOutput(scenario) {
       tagline: scenario.tagline,
       customer_outcome: scenario.customer_outcome,
       maturity: scenario.maturity || 'initial',
+      level: scenario.level || 'guided',
+      duration_minutes: scenario.duration_minutes || 0,
+      stage: scenario.stage || '',
       owner: scenario.owner || 'Unassigned',
       decision_prompts: scenario.decision_prompts || [],
       lessons: (scenario.lessons || []).map((lesson, index) => ({

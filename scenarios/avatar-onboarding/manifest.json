@@ -4,6 +4,9 @@
   "tagline": "Build approved, accessible, avatar-led experiences with accountable human oversight on Azure.",
   "customer_outcome": "Audiences receive a clear, inclusive avatar-led experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
   "maturity": "initial",
+  "level": "guided",
+  "duration_minutes": 420,
+  "stage": "customer-build",
   "owner": "RVAS field team",
   "decision_prompts": [
     "Which Azure/Microsoft experience capability (Speech avatar batch, real-time avatar, Voice Live, video translation, or plain audio) fits the pilot's consent, accessibility, latency, language, and cost requirements?",

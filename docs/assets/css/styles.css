@@ -716,10 +716,18 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .badge-difficulty-beginner   { background: rgba(74, 222, 128, 0.12); color: var(--c-beginner); border-color: rgba(74, 222, 128, 0.2); }
 .badge-difficulty-intermediate { background: rgba(250, 204, 21, 0.12); color: var(--c-intermediate); border-color: rgba(250, 204, 21, 0.2); }
 .badge-difficulty-advanced   { background: rgba(248, 113, 113, 0.12); color: var(--c-advanced); border-color: rgba(248, 113, 113, 0.2); }
+.badge-level-guided { background: rgba(74, 222, 128, 0.12); color: var(--c-beginner); border-color: rgba(74, 222, 128, 0.2); }
+.badge-level-intermediate { background: rgba(250, 204, 21, 0.12); color: var(--c-intermediate); border-color: rgba(250, 204, 21, 0.2); }
+.badge-level-advanced { background: rgba(248, 113, 113, 0.12); color: var(--c-advanced); border-color: rgba(248, 113, 113, 0.2); }
 .badge-duration {
   background: var(--c-700);
   color: var(--c-dim);
   border-color: var(--c-line);
+}
+.badge-stage {
+  background: rgba(96, 165, 250, 0.10);
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.20);
 }
 .badge-emu {
   background: rgba(74, 222, 128, 0.08);

@@ -28,6 +28,9 @@ scenarios/<folder-name>/
   "tagline": "One outcome-focused sentence",
   "customer_outcome": "What becomes faster, safer, cheaper, or more reliable",
   "maturity": "initial",
+  "level": "guided",
+  "duration_minutes": 420,
+  "stage": "customer-build",
   "owner": "Named team or role",
   "decision_prompts": ["Question to ask with the customer"],
   "lessons": [
@@ -45,6 +48,18 @@ scenarios/<folder-name>/
   "validator": "validate.py"
 }
 ```
+
+The compact scenario and lesson headers use activity-style labels to orient customers before they
+start building:
+
+- `level`: customer-facing build level such as `guided`, `intermediate`, or `advanced`.
+- `duration_minutes`: expected guided time for the scenario path.
+- `stage`: customer-facing stage/type such as `ideate`, `define`, `build`, `prove`, `pilot`, or
+  `customer-build`.
+
+Build modules may also define optional `level`, `duration_minutes`, and `stage` values when a lesson
+needs more specific labels. If omitted, lesson pages fall back to the scenario-level labels and the
+existing checkpoint metadata.
 
 ## Acceptance checklist
 

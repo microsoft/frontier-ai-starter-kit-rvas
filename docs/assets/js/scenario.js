@@ -32,8 +32,9 @@
       <span aria-hidden="true">/</span>
       <span>${FP.esc(scenario.name)}</span>`;
     document.getElementById('scenarioMeta').innerHTML = `
-      <span class="badge badge-tag">${FP.esc(scenario.maturity)} maturity</span>
-      <span class="badge badge-tag">Scenario playbook</span>
+      ${FP.levelBadge(scenario.level || 'guided')}
+      ${FP.durBadge(scenario.duration_minutes)}
+      ${stageBadge(scenario.stage || scenario.maturity)}
       <span class="badge badge-tag">${(scenario.lessons || []).length} lessons</span>`;
     document.getElementById('customerOutcome').textContent = scenario.customer_outcome;
     document.getElementById('slidesLink').href = `slides.html?id=${encodeURIComponent(scenario.id)}`;
@@ -90,6 +91,10 @@
       ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
       ['Local validator', scenarioGuideUrl(scenario.id, 'validator')],
     ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
+  }
+
+  function stageBadge(stage) {
+    return stage ? `<span class="badge badge-stage">${FP.esc(String(stage).replace(/[-_]+/g, ' '))}</span>` : '';
   }
 
   function resolveRelative(basePath, href) {

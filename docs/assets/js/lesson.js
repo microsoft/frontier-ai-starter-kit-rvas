@@ -43,7 +43,9 @@
       <span>Lesson ${FP.esc(lesson.sequence)}</span>`;
     document.getElementById('lessonMeta').innerHTML = `
       <span class="badge badge-tag">Lesson ${FP.esc(lesson.sequence)}</span>
-      <span class="badge badge-tag">${FP.esc(scenario.name)}</span>
+      ${FP.levelBadge(currentModule?.level || scenario.level || 'guided')}
+      ${FP.durBadge(currentModule?.duration_minutes || lesson.duration_minutes)}
+      ${stageBadge(currentModule?.stage || lesson.stage || scenario.stage)}
       ${currentModule && currentModule.checkpoint ? `<span class="badge badge-tag">Checkpoint: ${FP.esc(currentModule.checkpoint)}</span>` : ''}`;
     renderLessonHeaderActions(scenario, lesson, playbookUrl);
     document.getElementById('currentModuleTitle').textContent = currentModule
@@ -73,6 +75,10 @@
     document.getElementById('lessonSlidesLink').href = `slides.html?id=${scenarioId}#${lessonHash}`;
     document.getElementById('lessonFullDeckLink').href = `slides.html?id=${scenarioId}`;
     document.getElementById('lessonPlaybookLink').href = playbookUrl;
+  }
+
+  function stageBadge(stage) {
+    return stage ? `<span class="badge badge-stage">${FP.esc(String(stage).replace(/[-_]+/g, ' '))}</span>` : '';
   }
 
   function renderLessonResources(scenario, lesson) {

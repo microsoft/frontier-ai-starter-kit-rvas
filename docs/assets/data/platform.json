@@ -137,6 +137,9 @@
       "tagline": "Choose trusted knowledge and operational context for one customer decision.",
       "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
       "maturity": "initial",
+      "level": "guided",
+      "duration_minutes": 420,
+      "stage": "customer-build",
       "owner": "RVAS field team",
       "decision_prompts": [
         "Which user decision or action will trusted context improve?",
@@ -343,6 +346,9 @@
       "tagline": "Build approved, accessible, avatar-led experiences with accountable human oversight on Azure.",
       "customer_outcome": "Audiences receive a clear, inclusive avatar-led experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
       "maturity": "initial",
+      "level": "guided",
+      "duration_minutes": 420,
+      "stage": "customer-build",
       "owner": "RVAS field team",
       "decision_prompts": [
         "Which Azure/Microsoft experience capability (Speech avatar batch, real-time avatar, Voice Live, video translation, or plain audio) fits the pilot's consent, accessibility, latency, language, and cost requirements?",
@@ -537,6 +543,9 @@
       "tagline": "Move from SME-tested document understanding to a governed business workflow.",
       "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
       "maturity": "initial",
+      "level": "guided",
+      "duration_minutes": 420,
+      "stage": "customer-build",
       "owner": "RVAS field team",
       "decision_prompts": [
         "Which document decision creates measurable value when it is faster and more consistent?",
