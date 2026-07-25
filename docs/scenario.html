@@ -42,28 +42,26 @@
     </section>
     <section class="section-tight">
       <div class="wrap scenario-layout">
-        <article id="scenarioBody" class="guide-body"><p class="text-dim">Loading playbook…</p></article>
-        <aside class="scenario-sidebar">
-          <section class="scenario-panel">
-            <span class="panel-label">Scenario roadmap</span>
-            <ol id="buildModuleList"></ol>
+        <div class="journey-content">
+          <article id="scenarioBody" class="guide-body"><p class="text-dim">Loading playbook…</p></article>
+          <nav id="scenarioPager" class="journey-pager" aria-label="Scenario navigation"></nav>
+        </div>
+        <aside class="scenario-sidebar journey-rail" aria-label="Scenario journey">
+          <section class="scenario-panel journey-panel-primary">
+            <span class="panel-label">Journey map</span>
+            <ol id="buildModuleList" class="journey-steps"></ol>
           </section>
           <section class="scenario-panel">
-            <span class="panel-label">Customer outcome</span>
+            <span class="panel-label">Outcome to prove</span>
             <p id="customerOutcome"></p>
           </section>
           <section class="scenario-panel">
-            <span class="panel-label">Questions to take to the customer</span>
+            <span class="panel-label">Customer decisions</span>
             <ul id="decisionPrompts"></ul>
           </section>
           <section class="scenario-panel">
-            <span class="panel-label">Reusable lessons</span>
-            <ol id="lessonList"></ol>
-          </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Workshop delivery</span>
-            <p><a id="facilitatorLink" href="#">Facilitator guide</a></p>
-            <p><a id="validatorLink" href="#">Local validator</a></p>
+            <span class="panel-label">Delivery resources</span>
+            <div id="scenarioDeliveryLinks" class="rail-action-list"></div>
           </section>
         </aside>
       </div>

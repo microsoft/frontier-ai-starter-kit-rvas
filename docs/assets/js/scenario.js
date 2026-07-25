@@ -29,14 +29,12 @@
     document.getElementById('slidesLink').href = `slides.html?id=${encodeURIComponent(scenario.id)}`;
     document.getElementById('acceleratorLink').href = scenarioGuideUrl(scenario.id, 'accelerator');
     document.getElementById('localDemoLink').href = scenarioGuideUrl(scenario.id, 'demo');
-    document.getElementById('facilitatorLink').href = scenarioGuideUrl(scenario.id, 'facilitator');
-    document.getElementById('validatorLink').href = scenarioGuideUrl(scenario.id, 'validator');
     document.getElementById('decisionPrompts').innerHTML = (scenario.decision_prompts || [])
       .map((prompt) => `<li>${FP.esc(prompt)}</li>`).join('');
     document.getElementById('buildModuleList').innerHTML = (scenario.build_modules || [])
       .map((module) => roadmapItem(module, scenario.lessons || [])).join('');
-    document.getElementById('lessonList').innerHTML = (scenario.lessons || [])
-      .map((lesson) => `<li><a href="${FP.esc(lesson.lesson_path)}">Lesson ${lesson.sequence}: ${FP.esc(lesson.title)}</a></li>`).join('');
+    renderScenarioPager(scenario);
+    renderDeliveryLinks(scenario);
   }
 
   function roadmapItem(module, lessons) {
@@ -47,6 +45,41 @@
       <span>${FP.esc(module.summary)}</span>
       <small>Checkpoint: ${FP.esc(module.checkpoint)}</small>
     </li>`;
+  }
+
+  function renderScenarioPager(scenario) {
+    const firstLesson = (scenario.lessons || [])[0];
+    const pager = document.getElementById('scenarioPager');
+    if (!pager) return;
+
+    pager.innerHTML = `
+      <a class="journey-pager-link" href="index.html#outcomes">
+        <span>Back</span>
+        <strong>See all scenarios</strong>
+      </a>
+      ${firstLesson ? `
+        <a class="journey-pager-link next" href="${FP.esc(firstLesson.lesson_path)}">
+          <span>Start</span>
+          <strong>Lesson ${FP.esc(firstLesson.sequence)}: ${FP.esc(firstLesson.title)}</strong>
+        </a>` : `
+        <span class="journey-pager-link is-disabled" aria-disabled="true">
+          <span>Start</span>
+          <strong>No lessons available</strong>
+        </span>`}
+    `;
+  }
+
+  function renderDeliveryLinks(scenario) {
+    const target = document.getElementById('scenarioDeliveryLinks');
+    if (!target) return;
+
+    target.innerHTML = [
+      ['Customer slides', `slides.html?id=${encodeURIComponent(scenario.id)}`],
+      ['Minimal accelerator', scenarioGuideUrl(scenario.id, 'accelerator')],
+      ['Local demo', scenarioGuideUrl(scenario.id, 'demo')],
+      ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
+      ['Local validator', scenarioGuideUrl(scenario.id, 'validator')],
+    ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
   }
 
   function resolveRelative(basePath, href) {

@@ -24,6 +24,7 @@
     const index = lessons.findIndex((item) => item.id === lesson.id);
     const previous = lessons[index - 1];
     const next = lessons[index + 1];
+    const currentModule = (scenario.build_modules || []).find((module) => module.id === lesson.id);
 
     document.title = `${lesson.title} — ${scenario.name} — AI Starter Kit`;
     document.getElementById('lessonTitle').textContent = lesson.title;
@@ -32,12 +33,15 @@
       'Make one customer decision, capture the evidence, and use the result to decide the next engagement move.';
     document.getElementById('lessonOutcome').textContent = scenario.customer_outcome;
     ['playbookBack', 'playbookNav'].forEach((id) => { document.getElementById(id).href = playbookUrl; });
-    document.getElementById('lessonBuildModules').innerHTML = (scenario.build_modules || []).map((module) => `
-      <li>
-        <strong>${module.sequence}. ${FP.esc(module.title)}</strong>
-        <span>${FP.esc(module.summary)}</span>
-        <small>Checkpoint: ${FP.esc(module.checkpoint)}</small>
-      </li>`).join('');
+    document.getElementById('currentModuleTitle').textContent = currentModule
+      ? `${currentModule.sequence}. ${currentModule.title}`
+      : `Lesson ${lesson.sequence}: ${lesson.title}`;
+    document.getElementById('currentModuleSummary').textContent = currentModule
+      ? currentModule.summary
+      : 'Work this lesson, capture the decision, and use it to move through the scenario.';
+    document.getElementById('currentModuleCheckpoint').textContent = currentModule && currentModule.checkpoint
+      ? `Checkpoint: ${currentModule.checkpoint}`
+      : '';
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `
       <li class="${item.id === lesson.id ? 'is-current' : ''}">
@@ -46,10 +50,32 @@
         </a>
       </li>`).join('');
 
-    document.getElementById('lessonPager').innerHTML = `
-      ${previous ? `<a class="btn btn-ghost" href="${FP.esc(previous.lesson_path)}">Previous: ${FP.esc(previous.title)}</a>` : ''}
-      ${next ? `<a class="btn btn-primary" href="${FP.esc(next.lesson_path)}">Next: ${FP.esc(next.title)}</a>` : ''}
-      ${!next ? `<a class="btn btn-primary" href="${playbookUrl}">Return to playbook</a>` : ''}
+    renderLessonPager(previous, next, playbookUrl);
+  }
+
+  function renderLessonPager(previous, next, playbookUrl) {
+    const pager = document.getElementById('lessonBottomPager');
+    if (!pager) return;
+
+    pager.innerHTML = `
+      ${previous ? `
+        <a class="journey-pager-link" href="${FP.esc(previous.lesson_path)}">
+          <span>Previous lesson</span>
+          <strong>${FP.esc(previous.title)}</strong>
+        </a>` : `
+        <a class="journey-pager-link" href="${FP.esc(playbookUrl)}">
+          <span>Back</span>
+          <strong>Scenario playbook</strong>
+        </a>`}
+      ${next ? `
+        <a class="journey-pager-link next" href="${FP.esc(next.lesson_path)}">
+          <span>Next lesson</span>
+          <strong>${FP.esc(next.title)}</strong>
+        </a>` : `
+        <a class="journey-pager-link next" href="${FP.esc(playbookUrl)}">
+          <span>Complete</span>
+          <strong>Return to scenario playbook</strong>
+        </a>`}
     `;
   }
 

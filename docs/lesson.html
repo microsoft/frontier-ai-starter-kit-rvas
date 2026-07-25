@@ -45,23 +45,27 @@
     </section>
     <section class="section-tight" aria-label="Lesson content">
       <div class="wrap lesson-layout">
-        <article id="lessonBody" class="guide-body" aria-live="polite">
-          <p class="text-dim">Loading lesson...</p>
-        </article>
-        <aside class="lesson-sidebar" aria-label="Lesson progress and resources">
-          <section class="scenario-panel">
-            <span class="panel-label">Scenario roadmap</span>
-            <ol id="lessonBuildModules"></ol>
+        <div class="journey-content">
+          <article id="lessonBody" class="guide-body" aria-live="polite">
+            <p class="text-dim">Loading lesson...</p>
+          </article>
+          <nav id="lessonBottomPager" class="journey-pager" aria-label="Lesson navigation"></nav>
+        </div>
+        <aside class="lesson-sidebar journey-rail" aria-label="Lesson progress and resources">
+          <section class="scenario-panel journey-panel-primary">
+            <span class="panel-label">Current step</span>
+            <strong id="currentModuleTitle" class="rail-title"></strong>
+            <p id="currentModuleSummary"></p>
+            <small id="currentModuleCheckpoint" class="rail-checkpoint"></small>
           </section>
           <section class="scenario-panel">
-            <span class="panel-label">Course progress</span>
+            <span class="panel-label">Scenario progress</span>
             <ol id="lessonProgress" class="course-progress"></ol>
           </section>
           <section class="scenario-panel">
             <span class="panel-label">Engagement outcome</span>
             <p id="lessonOutcome"></p>
           </section>
-          <nav id="lessonPager" class="lesson-pager" aria-label="Lesson navigation"></nav>
         </aside>
       </div>
     </section>

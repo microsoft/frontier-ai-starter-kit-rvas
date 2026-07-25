@@ -34,17 +34,3 @@ Azure / Foundry capability:
   reusable across tracks instead of hard-coding one journey.
 - In content, do not add "Verified on <date>" or "Tested on <date>" statements. The content is
   expected to be evergreen and continuously updated.
-
-## Project conventions
-
-- **Provisioning** is `azd up` + Bicep (`infra/`); `scripts/deploy.sh` is the Bash fallback. Outputs
-  become the `.env` contract — see `.env.sample`. **Never commit a real `.env`** or any secret.
-- **Auth is keyless-first**: prefer `DefaultAzureCredential` over keys. Run `az login` for local dev.
-- **Tracing**: set `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true` and
-  `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` **before importing** the Foundry SDK.
-- **Action Tools** env names are authoritative in `.env.sample`: `ACTION_API_URL`, `ACTION_MCP_URL`,
-  `ACTION_API_KEY`. Match them everywhere.
-- **Prompt Flow is removed** from this curriculum. Do not suggest `promptflow`, `.flow.dag`, or any
-  Prompt Flow construct — use **agents + tools + MCP** instead.
-- Python pins live in `requirements.txt`; the Action Tools backend has its own
-  `scripts/action-backend/requirements.txt`.
