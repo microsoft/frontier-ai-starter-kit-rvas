@@ -35,8 +35,8 @@ Each scenario is a playbook, not a fixed course. Select only the lessons that su
 customer decision. Every playbook includes customer-facing Markdown slides that can be printed or
 saved as a PDF, a minimal accelerator, and a bring-your-own-environment path.
 
-## Technical reference archive
+## Reference Library
 
-The original Northfield activities remain available as a technical reference while this kit evolves.
-They are not the primary customer journey. Use the [legacy reference catalog]({{ '/catalog.html' | relative_url }})
-only when a scenario lesson points to a specific implementation pattern.
+Reusable implementation activities remain available as a technical reference. They are not the
+primary customer journey. Use the [Reference Library]({{ '/reference.html' | relative_url }}) only
+when a scenario lesson points to a specific implementation pattern.

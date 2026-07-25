@@ -1,11 +1,11 @@
-# Foundations — Build the Northfield University IQ Assistant
+# Foundations — Build the sample organization IQ Assistant
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
 > Tier 1 · Foundations — the guided, linear activity everyone completes.
 > One evolving artifact, four ordered steps. By the end you will have a deployed, grounded
-> Northfield University "IQ" Assistant — an agent that answers student-services questions from
-> Northfield's own FAQ corpus, with citations.
+> sample organization "IQ" Assistant — an agent that answers student-services questions from
+> sample organization's own FAQ corpus, with citations.
 
 ## How this session is structured (read first)
 
@@ -25,13 +25,12 @@ The curriculum has three tiers:
 Completing Step 4 = the Foundations end-state. It is the prerequisite for the entire Advanced
 tier. If you only do one thing today, finish all four steps below.
 
-> Building your own app instead? This is the Northfield reference path. If your event is tied
-> to a customer or your own scenario, follow the [Customer Build Track](../../docs/customer-build.md)
-> — it reframes each step below as decisions for your own app and links back here for the mechanics.
+> Building your own app instead? Start with the scenario playbook and use this activity only for the
+> shared implementation mechanics.
 
 ### The default scenario
 
-You are building the Northfield University IQ Assistant, a student-services agent. It grows
+You are building the sample organization IQ Assistant, a student-services agent. It grows
 across the four steps:
 
 | Step | What the assistant can do afterward |
@@ -39,7 +38,7 @@ across the four steps:
 | 1 · Setup | Nothing yet — your infrastructure is live and authenticated |
 | 2 · Model & Playground | Answer generic questions with a model and system instructions you chose |
 | 3 · First Agent | Run as a named, versioned agent with a persona and guardrails |
-| 4 · Knowledge Base | Answer from Northfield's real FAQ corpus, with citations ← end-state |
+| 4 · Knowledge Base | Answer from sample organization's real FAQ corpus, with citations ← end-state |
 
 ### What you need before you start
 
@@ -129,11 +128,11 @@ python activities/foundations/validate.py --step 1
 2. Open the Chat Playground, select that deployment, and set a starting system
    instruction for the assistant:
    ```text
-   You are Northfield University's student services assistant. Answer in a warm, clear,
+   You are sample organization's student services assistant. Answer in a warm, clear,
    student-friendly tone. If you are unsure or the information is missing, say so plainly
    and point the student to the right office.
    ```
-   Send a few Northfield questions and note tone, structure, and accuracy:
+   Send a few sample organization questions and note tone, structure, and accuracy:
    - "How do I apply for scholarships?"
    - "What computer science programs do you offer?"
    - "Can I register late for classes?"
@@ -173,7 +172,7 @@ python activities/foundations/validate.py --step 1
    response = openai.responses.create(
        model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
        instructions=system_instructions,
-       input="How do I apply for scholarships at Northfield?",
+       input="How do I apply for scholarships at sample organization?",
    )
    print(response.output_text)
    ```
@@ -200,13 +199,13 @@ python activities/foundations/validate.py --step 2
 **Tasks:**
 1. Decide the agent's identity. Build on your Step 2 system instructions, adding guardrails and
    refusal behavior. A strong agent definition covers:
-   - Persona — "Northfield University Student Services Assistant."
+   - Persona — "sample organization Student Services Assistant."
    - Scope — answers admissions, financial aid, housing, registration, academics, student support.
    - Uncertainty — says what information is missing instead of inventing facts.
    - Refusals — declines off-topic, harmful, or academic-integrity-violating requests, and redirects to the right office.
    - Format — concise, student-friendly; offers a next action or contact when relevant.
 2. Create the agent in the portal: open Build → Agents → New agent, name it
-   `northfield-iq-assistant`, select the deployment from `AZURE_AI_MODEL_DEPLOYMENT_NAME`, paste
+   `sample-iq-assistant`, select the deployment from `AZURE_AI_MODEL_DEPLOYMENT_NAME`, paste
    your instructions, and save.
    Test it on a few questions in the agent Playground surface.
 3. Create the same agent in code as a versioned resource. Create
@@ -231,7 +230,7 @@ python activities/foundations/validate.py --step 2
        instructions = f.read()
 
    agent = project.agents.create_version(
-       agent_name="northfield-iq-assistant",
+       agent_name="sample-iq-assistant",
        definition=PromptAgentDefinition(
            model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
            instructions=instructions,
@@ -252,13 +251,13 @@ python activities/foundations/validate.py --step 2
    ]:
        resp = openai.responses.create(
            input=question,
-           extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+           extra_body={"agent_reference": {"name": "sample-iq-assistant", "type": "agent_reference"}},
        )
        print(f"\nQ: {question}\nA: {resp.output_text}")
    ```
 
 **Success Criteria:**
-- [ ] An agent named `northfield-iq-assistant` exists in the portal Agents list with a persona + guardrails.
+- [ ] An agent named `sample-iq-assistant` exists in the portal Agents list with a persona + guardrails.
 - [ ] `python activities/foundations/app/step3_agent.py` creates (or versions) the agent via `agents.create_version(PromptAgentDefinition(...))` and prints a version number.
 - [ ] The agent answers an in-scope question and refuses the cheating request and the out-of-scope request.
 - [ ] The same instructions exist in both the portal and code (code↔portal parity).
@@ -273,7 +272,7 @@ python activities/foundations/validate.py --step 3
 
 ## Step 4 — Knowledge Base: Azure AI Search grounding  *(← Foundations end-state)*
 
-**Goal:** Ground the agent in Northfield's own data — index the FAQ corpus into Azure AI Search,
+**Goal:** Ground the agent in sample organization's own data — index the FAQ corpus into Azure AI Search,
 attach that index to the agent, and verify answers come back with source citations.
 
 **Tasks:**
@@ -296,7 +295,7 @@ attach that index to the agent, and verify answers come back with source citatio
    ```
    Aim for moderate chunks with light overlap so policy details (deadlines, GPA thresholds,
    office hours) are not split awkwardly. Keep a retrievable `content` field and a `source` field so
-   the agent can cite where each answer came from. The local Northfield corpus uses filenames as
+   the agent can cite where each answer came from. The local sample organization corpus uses filenames as
    citations. For clickable URL citations, index a retrievable source-URL field that points to
    documents your users are authorized to access.
 3. Confirm keyless RBAC. For the agent's managed identity to read the index without keys, the
@@ -310,7 +309,7 @@ attach that index to the agent, and verify answers come back with source citatio
    > Azure AI Search tool directly.
 4. Attach the Azure AI Search index to the agent and require citations. Create
    `activities/foundations/app/step4_ground.py` — add the Azure AI Search tool to a new
-   version of `northfield-iq-assistant` and update the instructions to demand sources:
+   version of `sample-iq-assistant` and update the instructions to demand sources:
    ```python
    import os
    from azure.ai.projects import AIProjectClient
@@ -332,13 +331,13 @@ attach that index to the agent, and verify answers come back with source citatio
    ).id
 
    instructions = (
-       "You are Northfield University's student services assistant. Answer ONLY from the "
+       "You are sample organization's student services assistant. Answer ONLY from the "
        "knowledge base. If the answer is not in the documents, say so. Always cite your "
        "sources as [source]."
    )
 
    agent = project.agents.create_version(
-       agent_name="northfield-iq-assistant",
+       agent_name="sample-iq-assistant",
        definition=PromptAgentDefinition(
            model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
            instructions=instructions,
@@ -361,8 +360,8 @@ attach that index to the agent, and verify answers come back with source citatio
    ```python
    openai = project.get_openai_client()
    resp = openai.responses.create(
-       input="What is Northfield's FAFSA priority deadline and school code?",
-       extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+       input="What is sample organization's FAFSA priority deadline and school code?",
+       extra_body={"agent_reference": {"name": "sample-iq-assistant", "type": "agent_reference"}},
    )
    print(resp.output_text)   # expect: March 1 priority deadline, school code 041777, with a citation
    ```
@@ -370,9 +369,9 @@ attach that index to the agent, and verify answers come back with source citatio
    one should be specific and sourced; the ungrounded one vague or invented.
 
 **Success Criteria:**
-- [ ] An Azure AI Search index over the Northfield FAQ corpus exists and returns results for a test query.
+- [ ] An Azure AI Search index over the sample organization FAQ corpus exists and returns results for a test query.
 - [ ] The agent uses the Azure AI Search project connection and the text index with `SEMANTIC` retrieval.
-- [ ] The `northfield-iq-assistant` agent has a new version with the AI Search tool attached.
+- [ ] The `sample-iq-assistant` agent has a new version with the AI Search tool attached.
 - [ ] The agent answers a precise question (e.g. FAFSA deadline + school code `041777`) with at least one citation to a source document.
 - [ ] A grounded vs. ungrounded comparison shows the grounded answer is more specific and sourced.
 
@@ -386,12 +385,12 @@ python activities/foundations/validate.py --step 4
 
 ## End-state Checkpoint
 
-You have reached the Foundations end-state: a deployed, grounded Northfield University IQ
+You have reached the Foundations end-state: a deployed, grounded sample organization IQ
 Assistant that answers from the FAQ corpus with citations. Confirm the whole thing end-to-end:
 
 ```bash
 python activities/foundations/validate.py --all
-# expected: "✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live"
+# expected: "✅ Foundations end-state PASS — grounded sample IQ assistant is live"
 ```
 
 `--all` re-asserts every step: infra provisioned (Step 1), model deployment reachable (Step 2), the

@@ -69,8 +69,8 @@
   FP.activityUrl = function (id) {
     return 'activity.html?id=' + encodeURIComponent(id);
   };
-  FP.catalogOutcomeUrl = function (id) {
-    return 'catalog.html?outcome=' + encodeURIComponent(id);
+  FP.referenceUrl = function (capability) {
+    return capability ? 'reference.html?capability=' + encodeURIComponent(capability) : 'reference.html';
   };
   FP.outcomeName = function (outcomeId, outcomes) {
     const o = (outcomes || []).find((x) => x.id === outcomeId);

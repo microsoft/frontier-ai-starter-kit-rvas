@@ -152,7 +152,7 @@ az cognitiveservices account deployment create -g "$RG" -n "$FOUNDRY" \
 info "Creating Foundry project..."
 az rest --method put \
   --url "${ARM}/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RG}/providers/Microsoft.CognitiveServices/accounts/${FOUNDRY}/projects/${PROJECT}?api-version=${API}" \
-  --body "{\"location\":\"${LOCATION}\",\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Northfield IQ Assistant\"}}" \
+  --body "{\"location\":\"${LOCATION}\",\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"sample IQ assistant\"}}" \
   -o none || warn "Project create returned non-zero (may already exist)."
 
 PROJECT_ENDPOINT="https://${FOUNDRY}.services.ai.azure.com/api/projects/${PROJECT}"
@@ -274,8 +274,8 @@ AZURE_AI_API_VERSION=${API}
 AZURE_SEARCH_ENDPOINT=${SEARCH_ENDPOINT}
 AZURE_SEARCH_INDEX_NAME=${SEARCH_INDEX_NAME}
 AZURE_SEARCH_CONNECTION_NAME=search
-AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME=northfield-faq-kb
-AZURE_FOUNDRY_AGENT_NAME=northfield-iq-assistant
+AZURE_FOUNDRY_KNOWLEDGE_BASE_NAME=sample-faq-kb
+AZURE_FOUNDRY_AGENT_NAME=sample-iq-assistant
 
 APPLICATIONINSIGHTS_CONNECTION_STRING=${APPI_CONN}
 AZURE_LOG_ANALYTICS_WORKSPACE_ID=${LAW_ID}

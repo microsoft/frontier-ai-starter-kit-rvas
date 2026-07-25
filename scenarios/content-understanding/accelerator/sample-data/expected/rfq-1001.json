@@ -5,7 +5,7 @@
   "requires_human_review": false,
   "review_reasons": [],
   "fields": {
-    "buyer": "Northwind Workshop Supplies",
+    "buyer": "sample organization Workshop Supplies",
     "request_id": "RFQ-1001",
     "requested_delivery_date": "2030-06-15",
     "supplier": "Fabrikam Components"

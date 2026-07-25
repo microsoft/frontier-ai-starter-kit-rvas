@@ -3,13 +3,11 @@
   'use strict';
 
   let _route = null;
-  let _path = null;
 
   function cUrl(id) {
     const q = new URLSearchParams();
     q.set('id', id);
     if (_route) q.set('outcome', _route);
-    if (_path) q.set('path', _path);
     return 'activity.html?' + q.toString();
   }
 
@@ -28,14 +26,12 @@
 
     const mod = (data.modules || []).find((m) => m.id === activity.module);
     const allActivities = data.activities || [];
-    _path = resolvePath(activity, data.paths || [], alias);
     _route = resolveRoute(activity);
 
     document.title = activity.title + ' — AI Starter Kit';
     applyModuleColor(activity.module);
     renderHero(activity, mod);
     renderFacts(activity, mod, allActivities, data.outcomes || []);
-    renderPathContext(activity, data.paths || []);
     renderRelated(activity, allActivities);
     initViewSwitch(activity, allActivities);
     loadGuide('participant', activity, allActivities);
@@ -58,7 +54,7 @@
       crumbs.innerHTML = `
         <a href="index.html">Home</a>
         <span aria-hidden="true">/</span>
-        <a href="catalog.html">Catalog</a>
+        <a href="reference.html">Reference Library</a>
         <span aria-hidden="true">/</span>
         <span style="color:${color}">${FP.esc(c.track || c.module)}</span>
         <span aria-hidden="true">/</span>
@@ -126,7 +122,7 @@
       const rows = [
         ['Difficulty', FP.diffBadge(c.difficulty)],
         ['Duration', FP.durBadge(c.duration_minutes) || '—'],
-        ['Outcomes', outcomeLinks(c, outcomes)],
+        ['Reference', referenceLink(c)],
         ['Track', FP.esc(c.track || '—')],
         ['Tier', FP.esc(c.tier || 'core')],
         ['App', c.app_dependency && c.app_dependency !== 'none' ? FP.esc(c.app_dependency) : 'none'],
@@ -136,11 +132,8 @@
       ).join('');
     }
 
-    function outcomeLinks(c, outcomes) {
-      if (!c.outcomes || !c.outcomes.length) return '—';
-      return c.outcomes.map((id) =>
-        `<a href="${FP.catalogOutcomeUrl(id)}" class="badge badge-outcome">${FP.esc(FP.outcomeName(id, outcomes))}</a>`
-      ).join(' ');
+    function referenceLink(c) {
+      return `<a href="${FP.referenceUrl(c.track)}" class="badge badge-outcome">${FP.esc(c.track || 'reference')}</a>`;
     }
 
     // Tags
@@ -163,34 +156,6 @@
         ).join('');
       }
     }
-  }
-
-  function renderPathContext(activity, paths) {
-    const panel = document.getElementById('pathPanel');
-    const list = document.getElementById('pathList');
-    if (!panel || !list) return;
-
-    const usedBy = paths.filter((path) =>
-      (path.sessions || []).some((session) => session.activity_id === activity.id)
-    );
-    if (!usedBy.length) {
-      panel.style.display = 'none';
-      return;
-    }
-
-    const selectedPath = paths.find((path) => path.id === _path);
-    const selectedSession = selectedPath && selectedPath.sessions.find((session) => session.activity_id === activity.id);
-    if (selectedPath && selectedSession) {
-      list.innerHTML = `
-        <p><strong>${FP.esc(selectedPath.name)}</strong></p>
-        <p class="text-dim">${FP.esc(selectedSession.status)} — ${FP.esc(selectedSession.note || '')}</p>
-        <a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(selectedPath.id)}">View this path</a>`;
-      return;
-    }
-
-    list.innerHTML = usedBy.map((path) =>
-      `<a href="catalog.html?outcome=customer-build&path=${encodeURIComponent(path.id)}" style="display:block;margin-bottom:6px">${FP.esc(path.name)}</a>`
-    ).join('');
   }
 
   function renderRelated(c, allActivities) {
@@ -324,40 +289,16 @@
   }
 
   function activitySequence(allActivities, current) {
-    if (_path) {
-      // Paths own their order; shared activities must not inherit a generic catalog order.
-      return _pathSessions(allActivities);
-    }
     const route = _route || (current.outcomes || [])[0];
     if (!route) return allActivities;
     return allActivities.filter((c) => (c.outcomes || []).includes(route));
   }
 
-  function _pathSessions(allActivities) {
-    const path = _pathData;
-    if (!path) return allActivities;
-    return path.sessions
-      .map((session) => allActivities.find((activity) => activity.id === session.activity_id))
-      .filter(Boolean);
-  }
-
   function resolveRoute(activity) {
-    if (_path) return 'customer-build';
     const routes = activity.outcomes || [];
     const requested = FP.qp('outcome');
     if (requested && routes.includes(requested)) return requested;
     return routes[0] || null;
-  }
-
-  let _pathData = null;
-
-  function resolvePath(activity, paths, alias) {
-    const requested = FP.qp('path') || (alias && alias.path);
-    const path = paths.find((candidate) =>
-      candidate.id === requested && (candidate.sessions || []).some((session) => session.activity_id === activity.id)
-    );
-    _pathData = path || null;
-    return path ? path.id : null;
   }
 
   function pagerItem(activity, direction, label) {

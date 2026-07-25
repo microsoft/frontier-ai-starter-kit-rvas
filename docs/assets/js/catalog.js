@@ -1,12 +1,10 @@
-/* AI Starter Kit — path catalog: choose one route, then filter chapters. */
+/* AI Starter Kit — reference library: reusable implementation building blocks. */
 (function () {
   'use strict';
 
   let _all = [];
-  let _outcomes = [];
-  let _paths = [];
-  let _activeOutcome = null;
-  let _activePath = null;
+  let _capabilities = [];
+  let _activeCapability = null;
   let _activeDiff = null;
   let _query = '';
 
@@ -16,11 +14,9 @@
     catch (e) { FP.renderError('grid', e.message); return; }
 
     _all = data.activities || [];
-    _outcomes = data.outcomes || [];
-    _paths = data.paths || [];
+    _capabilities = capabilityList(data.modules || []);
 
-    buildPathChips();
-    buildOutcomeChips();
+    buildCapabilityChips();
     buildDiffChips();
     initSearch();
     applyUrlState();
@@ -29,16 +25,12 @@
 
   const DIFFS = ['beginner', 'intermediate', 'advanced'];
 
-  /* Seed filter state from the URL query string (?outcome=&difficulty=&q=) and
+  /* Seed filter state from the URL query string (?capability=&difficulty=&q=) and
      reflect it on the chips + search input before the first render. Invalid
      values are ignored rather than applied. */
   function applyUrlState() {
-    const outcome = FP.qp('outcome');
-    if (outcome && _outcomes.some((o) => o.id === outcome)) _activeOutcome = outcome;
-    if (!_activeOutcome) _activeOutcome = defaultOutcomeId();
-
-    const path = FP.qp('path');
-    if (path && _paths.some((p) => p.id === path)) _activePath = path;
+    const capability = FP.qp('capability');
+    if (capability && _capabilities.some((c) => c.id === capability)) _activeCapability = capability;
 
     const diff = FP.qp('difficulty');
     if (diff && DIFFS.indexOf(diff) !== -1) _activeDiff = diff;
@@ -56,13 +48,8 @@
 
   /* Reflect active filters onto the rendered chips. */
   function syncChipState() {
-    document.querySelectorAll('#outcomeChips .chip').forEach((b) => {
-      const on = b.dataset.outcome === _activeOutcome;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-pressed', String(on));
-    });
-    document.querySelectorAll('#pathChips .chip').forEach((b) => {
-      const on = b.dataset.path === _activePath;
+    document.querySelectorAll('#capabilityChips .chip').forEach((b) => {
+      const on = b.dataset.capability === _activeCapability;
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', String(on));
     });
@@ -77,8 +64,7 @@
      shareable. replaceState avoids polluting back/forward history. */
   function syncUrl() {
     const q = new URLSearchParams();
-    q.set('outcome', _activeOutcome || defaultOutcomeId());
-    if (_activePath) q.set('path', _activePath);
+    if (_activeCapability) q.set('capability', _activeCapability);
     if (_activeDiff) q.set('difficulty', _activeDiff);
     if (_query) q.set('q', _query);
     const qs = q.toString();
@@ -86,42 +72,20 @@
     window.history.replaceState(null, '', url);
   }
 
-  function buildPathChips() {
-    const container = document.getElementById('pathChips');
-    if (!container || !_paths.length) return;
-    container.innerHTML = _paths.map((p) =>
-      `<button class="chip chip-path" data-path="${FP.esc(p.id)}"
-         aria-pressed="false" type="button" title="${FP.esc(p.description)}">
-         ${FP.esc(p.name)}
-       </button>`
-    ).join('');
-
-    container.querySelectorAll('.chip').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.path;
-        _activePath = _activePath === id ? null : id;
-        if (_activePath) _activeOutcome = 'customer-build';
-        syncChipState();
-        syncUrl();
-        render();
-      });
-    });
-  }
-
-  function buildOutcomeChips() {
-    const container = document.getElementById('outcomeChips');
+  function buildCapabilityChips() {
+    const container = document.getElementById('capabilityChips');
     if (!container) return;
-    container.innerHTML = _outcomes.map((o) =>
-      `<button class="chip chip-outcome" data-outcome="${FP.esc(o.id)}"
-         aria-pressed="false" type="button">
-         ${FP.esc(o.name)}
+    container.innerHTML = _capabilities.map((c) =>
+      `<button class="chip" data-capability="${FP.esc(c.id)}"
+         aria-pressed="false" type="button" title="${FP.esc(c.description || '')}">
+         ${FP.esc(c.name)}
        </button>`
     ).join('');
 
     container.querySelectorAll('.chip').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const id = btn.dataset.outcome;
-        _activeOutcome = id;
+        const id = btn.dataset.capability;
+        _activeCapability = _activeCapability === id ? null : id;
         syncChipState();
         syncUrl();
         render();
@@ -165,8 +129,7 @@
       clearBtn.addEventListener('click', () => {
         _query = '';
         input.value = '';
-        _activeOutcome = defaultOutcomeId();
-        _activePath = null;
+        _activeCapability = null;
         _activeDiff = null;
         syncChipState();
         syncUrl();
@@ -176,33 +139,28 @@
   }
 
   function filtered() {
-    if (_activePath) {
-      const path = _paths.find((candidate) => candidate.id === _activePath);
-      if (!path) return [];
-      return (path.sessions || [])
-        .map((session) => {
-          const activity = _all.find((candidate) => candidate.id === session.activity_id);
-          return activity ? { ...activity, path_session: session } : null;
-        })
-        .filter(Boolean)
-        .filter(matchesFilters);
-    }
-
     return _all.filter(matchesFilters);
   }
 
   function matchesFilters(c) {
-    if (!_activePath && (!_activeOutcome || !(c.outcomes || []).includes(_activeOutcome))) return false;
+    if (c.id === 'idea-forge') return false;
+    if (_activeCapability && c.track !== _activeCapability) return false;
     if (_activeDiff && c.difficulty !== _activeDiff) return false;
     if (!_query) return true;
-    const outcomeNames = (c.outcomes || []).map((id) => FP.outcomeName(id, _outcomes));
-    const hay = [c.title, c.description, ...(c.tags || []), ...outcomeNames, c.module, c.track]
+    const capability = _capabilities.find((candidate) => candidate.id === c.track);
+    const hay = [c.title, c.description, ...(c.tags || []), capability?.name || '', c.module, c.track]
       .join(' ').toLowerCase();
     return hay.includes(_query);
   }
 
-  function defaultOutcomeId() {
-    return _outcomes.length ? _outcomes[0].id : '';
+  function capabilityList(modules) {
+    const tracks = modules.flatMap((mod) => mod.tracks || []);
+    const seen = new Set();
+    return tracks.filter((track) => {
+      if (seen.has(track.id)) return false;
+      seen.add(track.id);
+      return true;
+    });
   }
 
   function render() {
@@ -212,17 +170,45 @@
 
     const items = filtered();
 
-    if (countEl) countEl.textContent = items.length + ' activity' + (items.length === 1 ? '' : 's');
+    if (countEl) countEl.textContent = items.length + ' building block' + (items.length === 1 ? '' : 's');
 
     if (!items.length) {
-      grid.innerHTML = '<div class="no-results">No activities match those filters. <button class="btn btn-ghost btn-sm" id="inlineClrBtn" type="button">Clear filters</button></div>';
+      grid.innerHTML = '<div class="no-results">No building blocks match those filters. <button class="btn btn-ghost btn-sm" id="inlineClrBtn" type="button">Clear filters</button></div>';
       const b = document.getElementById('inlineClrBtn');
       if (b) b.addEventListener('click', () => document.getElementById('clearBtn')?.click());
       return;
     }
 
-    grid.innerHTML = `<div class="activity-grid">${items.map((c) => activityCard(c)).join('')}</div>`;
+    const groups = groupedByCapability(items);
+    grid.innerHTML = groups.map((group) => `
+      <section class="reference-group reveal" aria-labelledby="ref-${FP.esc(group.id)}">
+        <div class="shead" style="margin-bottom:16px">
+          <div>
+            <span class="eyebrow">Capability</span>
+            <h2 id="ref-${FP.esc(group.id)}" style="margin-top:10px">${FP.esc(group.name)}</h2>
+            <p>${FP.esc(group.description || '')}</p>
+          </div>
+        </div>
+        <div class="activity-grid">${group.items.map((c) => activityCard(c)).join('')}</div>
+      </section>
+    `).join('');
     FP.initReveal();
+  }
+
+  function groupedByCapability(items) {
+    const order = new Map(_capabilities.map((cap, index) => [cap.id, index]));
+    const byTrack = new Map();
+    items.forEach((item) => {
+      const key = item.track || 'extras';
+      if (!byTrack.has(key)) byTrack.set(key, []);
+      byTrack.get(key).push(item);
+    });
+    return [...byTrack.entries()]
+      .sort(([a], [b]) => (order.get(a) ?? 999) - (order.get(b) ?? 999))
+      .map(([track, groupItems]) => {
+        const cap = _capabilities.find((candidate) => candidate.id === track) || { id: track, name: track };
+        return { ...cap, items: groupItems };
+      });
   }
 
   function activityCard(c) {
@@ -248,9 +234,7 @@
   function activityUrl(c) {
     const q = new URLSearchParams();
     q.set('id', c.id);
-    q.set('outcome', _activeOutcome);
-    if (_activePath) q.set('path', _activePath);
-    return 'activity.html?' + q.toString() + ((c.path_session && c.path_session.anchor) || '');
+    return 'activity.html?' + q.toString();
   }
 
   document.addEventListener('DOMContentLoaded', init);

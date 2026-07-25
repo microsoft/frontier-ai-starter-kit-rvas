@@ -41,7 +41,7 @@ WIRING = HERE / "agent_with_actions.py"
 API_URL = os.environ.get("ACTION_API_URL", "http://localhost:8080").rstrip("/")
 API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
 PLACEHOLDER = re.compile(r"<\s*PLACEHOLDER", re.IGNORECASE)
-TRACK = "upskill"
+TRACK = "reference"
 
 
 def _fail(step: str, msg: str) -> bool:
@@ -77,7 +77,7 @@ def check_step2() -> bool:
     if not WIRING.exists():
         return _fail("2", f"missing wiring file {WIRING.name}")
     src = WIRING.read_text(encoding="utf-8")
-    northfield_actions = ("create_it_ticket", "place_course_hold", "book_advising_slot")
+    sample_actions = ("create_it_ticket", "place_course_hold", "book_advising_slot")
     try:
         tree = ast.parse(src)
     except SyntaxError as exc:
@@ -93,16 +93,16 @@ def check_step2() -> bool:
         and isinstance(keyword.value, ast.Constant)
         and isinstance(keyword.value.value, str)
     }
-    missing = [fn for fn in northfield_actions if fn not in tool_names]
-    if TRACK == "upskill" and missing:
+    missing = [fn for fn in sample_actions if fn not in tool_names]
+    if TRACK == "reference" and missing:
         return _fail("2", f"declare explicit FunctionTool schemas for: {', '.join(missing)}")
-    if TRACK == "customer" and tool_names.issuperset(northfield_actions):
-        print("⚠  --track customer: default Northfield action names are still present; replace/adapt them for your workflow before demo.")
+    if TRACK == "customer" and tool_names.issuperset(sample_actions):
+        print("⚠  --track customer: default sample organization action names are still present; replace/adapt them for your workflow before demo.")
     if "ACTION_API_URL" not in src:
         return _fail("2", "wire tool execution to ACTION_API_URL (the provided REST backend)")
     if PLACEHOLDER.search(src.split("def run_with_approval")[0]):
         return _fail("2", "tool-definition section still has a < PLACEHOLDER > — finish build_action_tools")
-    label = "northfield actions" if TRACK == "upskill" else "customer action tools"
+    label = "sample actions" if TRACK == "reference" else "customer action tools"
     print(f"✅ Step 2 PASS — action FunctionTool defined ({label} @ ACTION_API_URL)")
     return True
 
@@ -202,7 +202,7 @@ def check_step4() -> bool:
         try:
             module.run_with_approval(
                 fake_openai,
-                "northfield-iq-actions",
+                "sample-iq-actions",
                 "Open a low-priority checkpoint ticket for validate_py.",
             )
         finally:
@@ -255,16 +255,16 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no REST calls).")
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     args = parser.parse_args()
     DRY_RUN = args.dry_run
     TRACK = args.track
     if DRY_RUN:
         print("(dry-run: offline structural checks only — no REST calls)\n")
     if TRACK == "customer":
-        print("(track: customer — validating YOUR scenario, not Northfield)\n")
+        print("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     if args.all:
         ok = all(check() for check in (CHECKS[s] for s in sorted(CHECKS)))

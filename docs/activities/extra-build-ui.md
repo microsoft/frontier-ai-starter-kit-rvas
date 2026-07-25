@@ -8,7 +8,7 @@ nav_order: 24
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Demo UI" artifact="A stakeholder-facing chat UI with streaming answers, citations, and optional approval cards." next="Scaffold a secret-free browser plus backend-for-frontend that calls the hosted agent." %}
 
-{% include module-lens.html upskill="Build a student-facing Northfield chat UI to practice safe browser/BFF integration." %}
+{% include module-lens.html reference="Build a student-facing sample organization chat UI to practice safe browser/BFF integration." %}
 
 {% include activity-prereq.html text="Foundations end-state plus Advanced · Deploy as a Hosted Agent. For the approval panel, also complete Advanced · Action Tools." skip_path="false" %}
 
@@ -20,7 +20,7 @@ nav_order: 24
 ## Why this activity
 
 Everything so far has been driven from a notebook, a script, or `curl`. That's right for building —
-but no student is going to `POST /responses` from a terminal. To make the Northfield IQ Assistant feel
+but no student is going to `POST /responses` from a terminal. To make the sample IQ assistant feel
 real, it needs a web UI: a chat window that streams answers, a citations panel that shows which
 FAQ document each answer came from, and an action-approval prompt so a human stays in the loop
 before the agent does anything with consequences.
@@ -51,7 +51,7 @@ you deploy the whole thing — static front-end + BFF — to Azure and wire CORS
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
-  - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
   - `ACTION_API_URL` — the Action Tools REST backend base URL (only if you did Action Tools, for Step 4)
 - The hosted agent endpoint from the Deploy activity (the agent answers authenticated Responses
   calls).
@@ -90,7 +90,7 @@ credential ever reaches the browser.
    app = FastAPI()
    _token_provider = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
    _base = os.environ["AZURE_AI_PROJECT_ENDPOINT"].rstrip("/")
-   _agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
+   _agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "sample-iq-assistant")
 
    class ChatIn(BaseModel):
        message: str
@@ -151,7 +151,7 @@ credential ever reaches the browser.
 
 ## Step 3 — Render the citations panel
 
-**Goal:** Every grounded answer shows which Northfield FAQ documents it came from, beside the chat.
+**Goal:** Every grounded answer shows which sample organization FAQ documents it came from, beside the chat.
 
 **Tasks:**
 
@@ -163,7 +163,7 @@ credential ever reaches the browser.
    `financial-aid.md`) and the quoted snippet, as a numbered list that maps to the `[source]` markers
    in the answer text.
 
-3. Ask the canonical grounded question — *"What is Northfield's FAFSA priority deadline and school
+3. Ask the canonical grounded question — *"What is sample organization's FAFSA priority deadline and school
    code?"* — and confirm the panel lists the financial-aid source the answer cites.
 
 **Success Criteria:**
@@ -172,7 +172,7 @@ credential ever reaches the browser.
 - [ ] An answer with no grounding (or an abstention) shows an empty/"no sources" panel — it never
       fabricates a citation.
 
-**Checkpoint:** *Live demo* — ask *"What is Northfield's FAFSA priority deadline and school code?"* and the citations panel lists the real financial-aid source; an ungrounded answer shows an empty panel and never fabricates a citation.
+**Checkpoint:** *Live demo* — ask *"What is sample organization's FAFSA priority deadline and school code?"* and the citations panel lists the real financial-aid source; an ungrounded answer shows an empty panel and never fabricates a citation.
 
 > _Facilitator note: see solution.md._
 
@@ -249,7 +249,7 @@ BFF's identity is a managed identity and CORS is origin-scoped.
 
 ## Done — what you shipped
 
-- A real web UI for the Northfield IQ Assistant: streaming chat, a citations panel, and a
+- A real web UI for the sample IQ assistant: streaming chat, a citations panel, and a
   human action-approval card.
 
 - A secret-free browser — the credential lives only in the BFF — deployed to Azure with a managed

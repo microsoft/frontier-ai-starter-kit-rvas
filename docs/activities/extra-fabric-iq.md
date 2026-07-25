@@ -26,7 +26,7 @@ nav_order: 20
 
 ## Why this activity
 
-Your Foundations assistant is grounded in documents — the Northfield FAQ corpus indexed in Azure AI
+Your Foundations assistant is grounded in documents — the sample organization FAQ corpus indexed in Azure AI
 Search. Documents are perfect for policy, deadlines, and how-to answers, but they go stale: an
 indexed PDF can't tell a student that CS101 just dropped from 3 open seats to 0 five minutes ago.
 
@@ -39,7 +39,7 @@ right-now question → Fabric IQ*.
    student question
       |
       v
-   Northfield IQ Assistant
+   sample IQ assistant
       |
       +--> AI Search knowledge base (static: policy, deadlines)
       +--> Fabric IQ tool --> OneLake (live: seats, capacity, ETAs)
@@ -54,7 +54,7 @@ right-now question → Fabric IQ*.
 
 **Tasks:**
 
-1. Open the Fabric workspace your facilitator provisioned and find the lakehouse (e.g. `northfield_ops`).
+1. Open the Fabric workspace your facilitator provisioned and find the lakehouse (e.g. `sample_ops`).
 2. Locate the live table — for this Extra, `course_seats` with columns
    `course_code, section, capacity, enrolled, seats_open, updated_at`.
 
@@ -74,7 +74,7 @@ right-now question → Fabric IQ*.
 
 ## Step 2 — Wire the Fabric IQ tool to your agent
 
-**Goal:** Attach Fabric IQ to the Northfield IQ Assistant as a second grounding tool.
+**Goal:** Attach Fabric IQ to the sample IQ assistant as a second grounding tool.
 
 **Tasks:**
 

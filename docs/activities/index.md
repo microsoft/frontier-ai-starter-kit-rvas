@@ -6,26 +6,24 @@ has_children: true
 
 # Build Modules
 
-{% include journey-status.html tone="shared" path="Build Modules" artifact="The Northfield reference build modules — the known-good hands-on guides." next="Choose the capability your prototype needs next, then open the hands-on guide." %}
+{% include journey-status.html tone="shared" path="Build Modules" artifact="Reusable hands-on implementation guides." next="Choose the capability your prototype needs next, then open the hands-on guide." %}
 
-These are the Northfield reference modules — the known-good, hands-on guides. Upskill teams use
-the Northfield assets exactly as written. Building your own app? Follow the
-[Customer Build Track]({{ '/customer-build' | relative_url }}) instead: it reframes each module below
-as decisions for your scenario and links back here for the mechanics.
+These are reusable implementation modules. Start from a scenario playbook, then open only the
+building blocks needed for the current customer decision.
 
 ## Primary build spine
 
 <div class="activity-card" markdown="1">
 
-| Capability | What you build with Northfield | Hands-on guide |
+| Capability | What you build | Hands-on guide |
 |---|---|---|
-| Ground | Build Northfield IQ with FAQ citations. | [Ground: Foundations](foundations) |
+| Ground | Build a grounded assistant with citations. | [Ground: Foundations](foundations) |
 | Act | Use ticket, hold, and advising actions. | [Act: Action Tools](advanced-action-tools) |
-| Prove | Run the Northfield eval and red-team set. | [Prove: Evaluation & Red Teaming](advanced-evaluation-redteam) |
-| Debug | Inspect Northfield runs in Foundry and App Insights. | [Debug: Tracing & Observability](advanced-tracing-observability) |
-| Deploy | Host the Northfield agent. | [Deploy: Hosted Agent](advanced-deploy-hosted-agent) |
-| Demo UI | Build a student-facing Northfield chat demo. | [Demo UI: Build a UI](extra-build-ui) |
-| Orchestrate | Turn Northfield into a student-services agent team. | [Orchestrate: Multi-Agent Capstone](capstone-multi-agent) |
+| Prove | Run evaluation and red-team sets. | [Prove: Evaluation & Red Teaming](advanced-evaluation-redteam) |
+| Debug | Inspect runs in Foundry and App Insights. | [Debug: Tracing & Observability](advanced-tracing-observability) |
+| Deploy | Host the agent. | [Deploy: Hosted Agent](advanced-deploy-hosted-agent) |
+| Demo UI | Build a stakeholder-facing chat demo. | [Demo UI: Build a UI](extra-build-ui) |
+| Orchestrate | Turn the agent into a specialist team. | [Orchestrate: Multi-Agent Capstone](capstone-multi-agent) |
 
 </div>
 
@@ -81,18 +79,18 @@ as decisions for your scenario and links back here for the mechanics.
   </div>
 </div>
 
-## Choosing modules by route
+## Choosing modules
 
 <div class="quick-grid">
   <div class="quick-card">
-    <span class="track-badge">Building your own app?</span>
-    <h3><a href="{{ '/customer-build' | relative_url }}">Use the Customer Build Track</a></h3>
-    <p>It sequences these same capabilities as chapters with decision gates for your scenario, and links back to each module here.</p>
+    <span class="track-badge">Scenario first</span>
+    <h3><a href="{{ '/#outcomes' | relative_url }}">Choose a scenario playbook</a></h3>
+    <p>The playbook decides which capabilities matter and when to open a reference module.</p>
   </div>
 
   <div class="quick-card">
-    <span class="track-badge">Upskill</span>
-    <h3>Learn the full spine</h3>
-    <p>Move through Ground, Act, Prove, Debug, and Deploy to practice the core Foundry lifecycle with Northfield.</p>
+    <span class="track-badge">Reference Library</span>
+    <h3><a href="{{ '/reference.html' | relative_url }}">Browse building blocks</a></h3>
+    <p>Use capability filters when you already know which implementation mechanic you need.</p>
   </div>
 </div>

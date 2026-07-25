@@ -26,6 +26,18 @@ Each lesson follows the same contract: **What you build · Choose your path · I
 Troubleshooting · Decision record · Next module.** Modules build on the previous one — module N's
 checkpoint is module N+1's prerequisite.
 
+## Decision gates to carry into the customer conversation
+
+Use these gates before opening reference-library mechanics:
+
+| Gate | Decide before building |
+|---|---|
+| Document boundary | Which document types are approved, who owns them, and what retention/access rules apply? |
+| Extraction boundary | Which fields need evidence, confidence, normalization, and missing-value behavior? |
+| Review boundary | Who corrects low-confidence or conflicting values, and what evidence must they see? |
+| Handoff boundary | Which downstream action is allowed, approval-gated, queued, or explicitly out of scope? |
+| Trust boundary | Which extraction, prompt-injection, review-routing, and deployment-access failures block a pilot? |
+
 ## Canonical activities
 
 The scenario supplies document-specific decisions, contracts, and evidence gates, and **links** to the

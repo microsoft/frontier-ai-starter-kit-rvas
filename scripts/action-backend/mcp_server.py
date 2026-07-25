@@ -14,7 +14,7 @@ Run (streamable-http transport on :8765/mcp):
     # or:  fastmcp run mcp_server.py --transport http --host 127.0.0.1 --port 8765
 
 Attach in an agent (sketch):
-    McpTool(server_label="northfield_actions", server_url=os.environ["ACTION_MCP_URL"])
+    McpTool(server_label="sample_actions", server_url=os.environ["ACTION_MCP_URL"])
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ ACTION_MCP_URL = os.environ.get("ACTION_MCP_URL", "http://localhost:8765/mcp")
 ACTION_API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
 DEFAULT_MCP_PORT = 8765
 
-mcp = FastMCP("northfield-action-tools")
+mcp = FastMCP("sample-action-tools")
 
 
 def _headers() -> dict:

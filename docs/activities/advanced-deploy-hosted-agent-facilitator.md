@@ -21,7 +21,7 @@ nav_exclude: true
 
 ## What this activity proves
 
-A team finishes when the Northfield IQ Assistant runs as a hosted, containerized agent with its own
+A team finishes when the sample IQ assistant runs as a hosted, containerized agent with its own
 endpoint, its own version, and a per-agent managed identity, and they can invoke it over the
 production Responses protocol with auth enforced and runs visible in App Insights. This is the "ship
 it" capstone — real container deployment, not the "next steps only" hand-wave the reference labs stop at.

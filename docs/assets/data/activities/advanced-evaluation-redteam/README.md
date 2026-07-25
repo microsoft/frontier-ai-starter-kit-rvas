@@ -5,30 +5,30 @@
 > ⏱ Guided ~1.25 hr · 🛠 Build-from-scratch ~2 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ
+> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
 > Assistant). Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 Shipping an assistant that *sounds* good is not the same as shipping one that is accurate and
 safe. In this activity you prove both: you measure answer quality with NLP/LLM-judge metrics,
-build a Northfield-specific evaluator, then red-team the agent with adversarial prompts —
+build a sample organization-specific evaluator, then red-team the agent with adversarial prompts —
 jailbreaks, harmful-content requests, and prompt-injection hidden inside retrieved documents — and
 finally wire a score gate so a bad build can fail CI.
 
-Why now: a Northfield assistant that sounds confident but invents a financial-aid deadline — or
+Why now: a sample assistant that sounds confident but invents a financial-aid deadline — or
 quietly follows an instruction smuggled inside a retrieved document — does real harm to a real
 student. This is where you stop trusting vibes and start proving accuracy and safety with numbers,
 so a regressed build fails *before* it reaches a student, not after.
 
 What you'll produce
-- An evaluation run (portal and code) over a real Northfield dataset with Groundedness,
+- An evaluation run (portal and code) over a real sample organization dataset with Groundedness,
   Relevance, Coherence, and Fluency scores.
 - A custom domain evaluator that rewards grounded contacts and correct abstention.
 - Documented red-team results across ≥ 3 attack categories.
 - A `python activities/advanced-evaluation-redteam/evaluate.py --gate <threshold>` invocation that exits non-zero on regression.
 
 Assets shipped with this activity
-- [`assets/northfield-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/northfield-eval.jsonl) — 36 grounded Q/A rows derived from the
+- [`assets/sample-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/sample-eval.jsonl) — 36 grounded Q/A rows derived from the
   university-FAQ corpus (factual, edge, and abstain cases). Use and extend it.
 - [`assets/adversarial-seed.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/adversarial-seed.jsonl) — labeled attack objectives to seed
   the red-team step.
@@ -51,10 +51,10 @@ only the datasets + the contract · (c) Stretch goals go open-ended.
 
 **Tasks:**
 1. Open your project in the Foundry portal (`ai.azure.com`) → Assess and Improve → Evaluation → Create evaluation.
-2. Upload [`assets/northfield-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/northfield-eval.jsonl). Map `query` → query column and
+2. Upload [`assets/sample-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/sample-eval.jsonl). Map `query` → query column and
    `ground_truth` → ground-truth column; `context` is your grounding column.
 3. Select the Groundedness, Relevance, Coherence, Fluency evaluators and pick your deployed chat
-   model as the judge. Run it against the Northfield IQ Assistant's answers.
+   model as the judge. Run it against the sample IQ assistant's answers.
 4. Open the result: read per-row scores, then the aggregate. Note the two weakest metrics.
 
 **Success Criteria:**
@@ -81,7 +81,7 @@ python activities/advanced-evaluation-redteam/validate.py --step 1
 3. Smoke-test offline first (no quota): `python activities/advanced-evaluation-redteam/evaluate.py --dry-run --custom-only`.
    For a saved regression fixture that already contains a `response` field, use
    `--use-dataset-responses --custom-only`.
-4. Run the real thing against your agent: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl`.
+4. Run the real thing against your agent: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/sample-eval.jsonl`.
 
 **Success Criteria:**
 - [ ] `evaluate.py` prints an aggregate score table for all four built-in metrics.
@@ -107,20 +107,20 @@ python activities/advanced-evaluation-redteam/validate.py --step 2
 
 ## Step 3 — Build a custom domain evaluator
 
-**Goal:** Measure something the generic metrics miss — Northfield-specific correctness.
+**Goal:** Measure something the generic metrics miss — sample organization-specific correctness.
 
 **Tasks:**
-1. In [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py), study `NorthfieldDomainEvaluator`. It returns a 1–5 score and
-   rewards: (a) surfacing a real `*@northfield.edu` / `(555)` contact when the ground truth has one,
+1. In [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py), study `sample organizationDomainEvaluator`. It returns a 1–5 score and
+   rewards: (a) surfacing a real `*@sample.edu` / `(555)` contact when the ground truth has one,
    and (b) correctly abstaining on `category: "abstain"` rows — while penalizing any
    hallucinated/foreign email.
 2. Extend it with one rule of your own — e.g. penalize answers that quote a deadline date not
    present in the row's `context` (a groundedness proxy), or reward citing the correct office name.
-3. Re-run: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl --custom-only` and confirm the
+3. Re-run: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/sample-eval.jsonl --custom-only` and confirm the
    custom metric appears alongside the built-ins.
 
 **Success Criteria:**
-- [ ] The custom evaluator scores every row and reports a `northfield_domain` aggregate.
+- [ ] The custom evaluator scores every row and reports a `sample_domain` aggregate.
 - [ ] Your added rule changes the score on at least one row (show the before/after).
 
 **Checkpoint:** The evaluator discriminates good from fabricated answers.
@@ -168,7 +168,7 @@ python activities/advanced-evaluation-redteam/validate.py --step 4
 **Goal:** Turn evaluation into a guardrail — a regressed build should fail, not ship.
 
 **Tasks:**
-1. Run with a gate: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/northfield-eval.jsonl --gate 3.5`. The script
+1. Run with a gate: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/sample-eval.jsonl --gate 3.5`. The script
    exits non-zero if any metric mean drops below the threshold.
 2. Apply your Step 4 mitigation to the agent's system prompt, then re-run and compare. Improve one
    variable at a time so the before/after is credible.
@@ -198,7 +198,7 @@ Your contract:
 > Groundedness/Relevance/Coherence/Fluency with `azure-ai-evaluation`, add a custom 1–5 domain
 > evaluator, and exit non-zero below `--gate`.
 
-You get [`assets/northfield-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/northfield-eval.jsonl) and
+You get [`assets/sample-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/sample-eval.jsonl) and
 [`assets/adversarial-seed.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/adversarial-seed.jsonl) — author the loader, the built-in
 evaluators, your custom evaluator, and the gate yourself, then run `python activities/advanced-evaluation-redteam/validate.py --all`.
 

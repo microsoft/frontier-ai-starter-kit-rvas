@@ -256,7 +256,7 @@ With the backend running and `agent_with_actions.py` completed:
 ```text
 python activities/advanced-action-tools/validate.py --all
 # ✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080
-# ✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)
+# ✅ Step 2 PASS — action FunctionTool defined (sample actions @ ACTION_API_URL)
 # ✅ Step 3 PASS — human tool-approval loop implemented
 # ✅ Step 4 PASS — approval loop created backend ticket ...
 # ✅ ALL CHECKPOINTS PASS

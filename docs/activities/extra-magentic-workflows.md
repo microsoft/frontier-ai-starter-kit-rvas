@@ -130,5 +130,5 @@ Escalation route.
 
 ## What you built
 
-A multi-agent Northfield assistant where a Magentic manager plans the route at runtime across
+A multi-agent sample assistant where a Magentic manager plans the route at runtime across
 four specialists — dynamic orchestration you can *watch* in DevUI, not a brittle hand-coded pipeline.

@@ -74,7 +74,7 @@ def execute_governed_query(query_id: str, parameters: dict) -> GovernedResult:
     retrieved_at = datetime.now(timezone.utc).isoformat()
     provenance = {
         "query_id": query_id,
-        "semantic_model": "NorthfieldServiceOperations",
+        "semantic_model": "sample organizationServiceOperations",
         "semantic_model_version": raw.model_version,
         "approved_fields": sorted(spec["fields"]),
         "parameters": parameters,

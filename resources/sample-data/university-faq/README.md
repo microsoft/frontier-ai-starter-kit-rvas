@@ -1,6 +1,6 @@
-# Northfield University FAQ Corpus
+# Sample University FAQ Corpus
 
-This folder contains a fictional document corpus for **Northfield University**, a tech-focused university used throughout the session. The files are designed for retrieval-augmented generation (RAG) practice in later activities.
+This folder contains a fictional document corpus for **Sample University**, a tech-focused university used throughout the session. The files are designed for retrieval-augmented generation (RAG) practice in later activities.
 
 ## What is in this corpus?
 The corpus includes 12 Markdown files covering common student support topics:
@@ -29,6 +29,6 @@ You can use this corpus to:
 - Evaluate whether a University Q&A Assistant gives grounded answers
 
 ## Notes for facilitators
-- Northfield University is fictional.
+- Sample University is fictional.
 - Dates, policies, and contact addresses are invented for learning purposes.
 - The content is intentionally broad enough to support varied student questions, including edge cases about deadlines, support services, and policy boundaries.

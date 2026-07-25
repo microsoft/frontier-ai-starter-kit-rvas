@@ -3,8 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lesson — AI Starter Kit</title>
-  <meta name="description" content="Customer scenario lesson in the RVAS AI Starter Kit." />
+  <script>
+    (function () {
+      try {
+        var k = 'fp-theme';
+        var saved = localStorage.getItem(k);
+        var pref = 'light';
+        document.documentElement.setAttribute('data-theme', saved || pref);
+      } catch (e) {}
+    })();
+  </script>
+  <title>Idea Forge — AI Starter Kit</title>
+  <meta name="description" content="Generate a buildable customer AI use case, then hand it into a scenario playbook." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -13,7 +23,8 @@
   <link rel="icon" href="assets/img/logo-mark.png" />
   <script src="assets/js/marked.min.js"></script>
 </head>
-<body class="lesson-page">
+<body>
+
   <header class="nav" role="banner">
     <div class="nav-inner">
       <a class="brand" href="index.html" aria-label="Real Value Acceleration Program — Home">
@@ -21,11 +32,10 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="index.html#outcomes">Scenarios</a>
-        <a href="idea-forge.html">Idea Forge</a>
+        <a href="idea-forge.html" aria-current="page">Idea Forge</a>
         <a href="reference.html">Reference Library</a>
         <a href="guide.html?guide=facilitator-hub">Facilitator Hub</a>
-        <a id="playbookNav" href="scenario.html">Scenario playbook</a>
-        <a class="gh" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas" target="_blank" rel="noopener">GitHub</a>
+        <a class="gh" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas" target="_blank" rel="noopener" aria-label="View source on GitHub">GitHub</a>
       </nav>
       <div class="nav-actions">
         <button class="icon-btn nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
@@ -34,38 +44,33 @@
       </div>
     </div>
   </header>
+
   <main id="mainContent">
-    <section class="course-hero">
+    <section class="ch-detail-hero" aria-labelledby="ideaForgeTitle">
       <div class="wrap">
-        <a id="playbookBack" class="back-link" href="scenario.html">Back to scenario playbook</a>
-        <span id="lessonEyebrow" class="eyebrow">Customer lesson</span>
-        <h1 id="lessonTitle">Loading lesson...</h1>
-        <p id="lessonSummary" class="lede"></p>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Idea Forge</span>
+        </nav>
+        <h1 id="ideaForgeTitle">Forge a buildable AI idea.</h1>
+        <p class="lede">Use this when the customer wants AI value but has not yet picked a clear, safe, demonstrable scenario.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md">Open Activity Forge →</a>
+          <a class="btn btn-ghost" href="activity.html?id=customer-outcome">Open the outcome record</a>
+        </div>
       </div>
     </section>
-    <section class="section-tight" aria-label="Lesson content">
-      <div class="wrap lesson-layout">
-        <article id="lessonBody" class="guide-body" aria-live="polite">
-          <p class="text-dim">Loading lesson...</p>
+
+    <section class="section-tight" aria-label="Idea Forge content">
+      <div class="wrap">
+        <article class="guide-body" id="ideaForgeBody" aria-live="polite">
+          <p class="mono" style="color:var(--c-faint)">Loading Idea Forge…</p>
         </article>
-        <aside class="lesson-sidebar" aria-label="Lesson progress and resources">
-          <section class="scenario-panel">
-            <span class="panel-label">Technical build roadmap</span>
-            <ol id="lessonBuildModules"></ol>
-          </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Course progress</span>
-            <ol id="lessonProgress" class="course-progress"></ol>
-          </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Engagement outcome</span>
-            <p id="lessonOutcome"></p>
-          </section>
-          <nav id="lessonPager" class="lesson-pager" aria-label="Lesson navigation"></nav>
-        </aside>
       </div>
     </section>
   </main>
+
   <footer class="footer" role="contentinfo">
     <div class="wrap footer-inner">
       <a class="brand" href="index.html" aria-label="Real Value Acceleration Program — Home">
@@ -74,13 +79,13 @@
       <p>AI Starter Kit.</p>
       <nav class="footer-links" aria-label="Footer">
         <a href="index.html#outcomes">Scenarios</a>
-        <a href="idea-forge.html">Idea Forge</a>
         <a href="reference.html">Reference Library</a>
       </nav>
     </div>
   </footer>
+
   <script src="assets/js/core.js"></script>
-  <script src="assets/js/lesson.js"></script>
+  <script src="assets/js/idea-forge.js"></script>
   <script src="assets/js/shell.js"></script>
 </body>
 </html>

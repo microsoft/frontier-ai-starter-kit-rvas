@@ -47,7 +47,7 @@ from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 app = FastAPI()
 _token_provider = get_bearer_token_provider(DefaultAzureCredential(), "https://ai.azure.com/.default")
 _base = os.environ["AZURE_AI_PROJECT_ENDPOINT"].rstrip("/")
-_agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
+_agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "sample-iq-assistant")
 
 def _client() -> OpenAI:
     return OpenAI(

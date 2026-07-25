@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checkpoints for the Tier 3 Capstone · Northfield IQ, the Team (MAF).
+"""Structural checkpoints for the Tier 3 Capstone · sample IQ, the Team (MAF).
 
     python validate.py --all                 # all required structural checks
     python validate.py --all --path ./mycap  # point at the learner's capstone dir
@@ -43,7 +43,7 @@ KB_RE = re.compile(
 )
 APPROVAL_RE = re.compile(
     r"function_call|FunctionCallOutput|previous_response_id|agent_reference|"
-    r"ACTION_MCP_URL|ACTION_API_URL|northfield_actions|McpTool|FunctionTool|approval",
+    r"ACTION_MCP_URL|ACTION_API_URL|sample_actions|McpTool|FunctionTool|approval",
     re.IGNORECASE,
 )
 PYDANTIC_RE = re.compile(r"BaseModel|pydantic", re.IGNORECASE)
@@ -295,8 +295,8 @@ def advise_reuse(scan: Scan, track: str) -> None:
     if track == "customer":
         print(f"  {kb_mark} Knowledge specialist reuses your grounded retrieval (AI Search / Foundry IQ)")
         print(f"  {ap_mark} Action specialist reuses your governed action loop (FunctionTool/MCP + approval)")
-        if "northfield" in scan.text.lower() or "university-faq" in scan.text.lower():
-            print("  ⚠ --track customer: Northfield defaults still appear in source; adapt roles/corpus before demo")
+        if "sample" in scan.text.lower() or "university-faq" in scan.text.lower():
+            print("  ⚠ --track customer: sample organization defaults still appear in source; adapt roles/corpus before demo")
     else:
         print(f"  {kb_mark} Knowledge specialist reuses Foundations KB (AI Search / Foundry IQ)")
         print(f"  {ap_mark} Action specialist reuses Action Tools approval loop (FunctionTool + approval)")
@@ -340,18 +340,18 @@ def main() -> int:
         "--path", default=str(HERE),
         help="Path or dir of the learner's capstone source (default: this activity dir).",
     )
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     args = parser.parse_args()
 
     if args.list:
         if args.track == "customer":
-            print("(track: customer — validating YOUR scenario, not Northfield)\n")
+            print("(track: customer — validating YOUR scenario, not sample organization)\n")
         print(LIST_TEXT)
         return 0
     if args.track == "customer":
-        print("(track: customer — validating YOUR scenario, not Northfield)\n")
+        print("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     path = Path(args.path).expanduser().resolve()
     if not path.exists():

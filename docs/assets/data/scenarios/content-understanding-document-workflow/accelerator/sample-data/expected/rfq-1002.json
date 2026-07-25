@@ -7,7 +7,7 @@
     "missing_requested_delivery_date"
   ],
   "fields": {
-    "buyer": "Northwind Workshop Supplies",
+    "buyer": "sample organization Workshop Supplies",
     "request_id": "RFQ-1002",
     "requested_delivery_date": null,
     "supplier": "Adventure Works Demo Fabrication"

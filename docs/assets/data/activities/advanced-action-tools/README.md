@@ -5,7 +5,7 @@
 > ⏱ Guided ~45 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ
+> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
 > Assistant). Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
@@ -124,7 +124,7 @@ python activities/advanced-action-tools/validate.py --step 1
 **Checkpoint:** The wiring file defines the action tools correctly.
 ```text
 python activities/advanced-action-tools/validate.py --step 2
-# expected: "✅ Step 2 PASS — action FunctionTool defined (northfield actions @ ACTION_API_URL)"
+# expected: "✅ Step 2 PASS — action FunctionTool defined (sample actions @ ACTION_API_URL)"
 ```
 
 ---

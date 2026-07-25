@@ -3,7 +3,7 @@
 > **Command context:** Run the bootstrap command from the repository root.
 
 > Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
-> Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ Assistant).
+> Prerequisite: the Foundations end-state (a deployed, grounded sample IQ assistant).
 > Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >

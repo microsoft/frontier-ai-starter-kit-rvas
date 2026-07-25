@@ -13,7 +13,7 @@
 2. A current documentation check through `microsoft-docs` MCP before coding. Image Analysis and
    Foundry multimodal signatures change; have teams confirm current client, image input, and
    structured-output APIs rather than copying a preview call.
-3. One approved generic Northfield campus wayfinding/accessibility image per team, or a shared
+3. One approved generic sample organization campus wayfinding/accessibility image per team, or a shared
    staged/openly licensed image. The room should know the approved retention and trace policy.
 
 ## Safe image rules

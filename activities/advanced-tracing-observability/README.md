@@ -5,13 +5,13 @@
 > ⏱ Guided ~1 hr · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ
+> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
 > Assistant). Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
-Your Northfield IQ Assistant answers grounded questions today — but when a student gets a slow,
+Your sample IQ assistant answers grounded questions today — but when a student gets a slow,
 wrong, or uncited answer, can you explain why? Right now the agent is a black box: a model call,
 a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
 and you can see none of it.
@@ -47,7 +47,7 @@ you can watch it run.
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
-  - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
 - An Application Insights resource linked to your Foundry project. Foundations provisions one;
   its connection string lands in `.env` as `APPLICATIONINSIGHTS_CONNECTION_STRING`. If that variable
   is missing, see Step 1 — you will fetch it from the project.
@@ -152,7 +152,7 @@ plus a tool span if Action Tools is attached).
 **Tasks:**
 
 1. Create `activities/advanced-tracing-observability/traced_run.py`. Import and call
-   `enable_tracing()` from Step 1 first, then ask the Northfield IQ Assistant a grounded question
+   `enable_tracing()` from Step 1 first, then ask the sample IQ assistant a grounded question
    that forces a knowledge-base lookup — e.g. *"What documents do I need for financial aid?"*
 2. Drive the agent through the Responses API against your `AZURE_FOUNDRY_AGENT_NAME`. Print the answer and
    the trace/operation id so you can find the run later.
@@ -167,7 +167,7 @@ from trace_setup import enable_tracing
 project = enable_tracing()
 client = project.get_openai_client()
 
-QUESTION = "What documents do I need to apply for financial aid at Northfield?"
+QUESTION = "What documents do I need to apply for financial aid at sample organization?"
 
 response = client.responses.create(
     input=QUESTION,
@@ -194,7 +194,7 @@ Path(__file__).with_name(".last-response-id").write_text(response.id, encoding="
 
 Your run should look like this:
 ```text
-Q: What documents do I need to apply for financial aid at Northfield?
+Q: What documents do I need to apply for financial aid at sample organization?
 A: You'll need your FAFSA (school code 041777), prior-year tax returns, W-2s, and ...
 response id: resp_01J8X...   ← use this to find the trace
 ✅ GenAI tracing enabled; spans will export to Application Insights.
@@ -342,7 +342,7 @@ tokens, latency-per-span, which span retrieved, an estimated cost, and the slowe
 
 ## Done — what you can now do
 
-- Every Northfield IQ answer is observable end to end, two ways: portal Tracing tab and KQL.
+- Every sample IQ answer is observable end to end, two ways: portal Tracing tab and KQL.
 - You can take one student question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 
@@ -354,7 +354,7 @@ Hosted Agent (the same tracing follows the agent to its live endpoint).
 Open-ended: no single right answer.
 
 1. 3-tier `TelemetryManager` + a custom business metric. Ship a small `TelemetryManager` and emit
-   one custom metric (e.g. `northfield.answers.uncited`) on every run, then chart it in a Workbook.
+   one custom metric (e.g. `sample.answers.uncited`) on every run, then chart it in a Workbook.
 2. Batch-run + dashboard. Fire 20 questions through the agent and build a KQL timechart of
    token cost across the run.
 

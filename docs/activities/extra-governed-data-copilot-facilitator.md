@@ -21,7 +21,7 @@ practice named query allowlists, approved fields, typed inputs, platform-enforce
 provenance, and human review. The key learning is **deny by default**: natural language is not a
 data-access policy.
 
-The Northfield demo uses aggregate advising service-queue status. It deliberately excludes student
+The sample organization demo uses aggregate advising service-queue status. It deliberately excludes student
 identity, free-text notes, appointment details, and staff-performance information.
 
 ## Prerequisites and pre-session setup
@@ -29,7 +29,7 @@ identity, free-text notes, appointment details, and staff-performance informatio
 1. A Foundry project and an Entra-authenticated learner/workload identity. Learners need local
    `az login`; deployed demos should use a managed identity.
 2. A read-only semantic model or structured-data endpoint containing an aggregate-only
-   `NorthfieldServiceOperations` view. Seed fields: `service_area`, `waiting_count`,
+   `sample organizationServiceOperations` view. Seed fields: `service_area`, `waiting_count`,
    `median_wait_minutes`, `capacity_status`, and `snapshot_at`.
 3. Platform configuration that enforces tenant/workspace access, RLS, and column masking. Test the
    learner identity: it must not be able to retrieve student-level fields even if it changes a client

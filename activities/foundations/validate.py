@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Checkpoints for Tier 1 · Foundations — the Northfield University IQ Assistant.
+"""Checkpoints for Tier 1 · Foundations — the sample organization IQ Assistant.
 
 Each step ends with `python validate.py --step N`; `--all` re-asserts the whole
 end-state. The checks inspect your **live** Azure resources, but every Azure call
@@ -41,7 +41,7 @@ REPO_ROOT = HERE.parents[1]
 CORPUS_DIR = REPO_ROOT / "resources" / "sample-data" / "university-faq"
 PLACEHOLDER = "<"
 
-DEFAULT_QUESTION = "What is Northfield's FAFSA priority deadline and school code?"
+DEFAULT_QUESTION = "What is sample organization's FAFSA priority deadline and school code?"
 
 
 def ok(m: str) -> None:
@@ -160,7 +160,7 @@ def _find_agent(project, agent_name: str):
 
 
 def check_step3(env: dict, dry_run: bool) -> bool:
-    agent_name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "northfield-iq-assistant").strip()
+    agent_name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "sample-iq-assistant").strip()
     if dry_run:
         if _present(env, ["AZURE_AI_PROJECT_ENDPOINT"]):
             return _fail("3", "AZURE_AI_PROJECT_ENDPOINT missing/placeholder in .env")
@@ -194,29 +194,29 @@ def _has_citation(text: str, response=None) -> bool:
     return bool(re.search(r"\b[\w-]+\.(?:md|txt)\b", text or "", re.IGNORECASE))
 
 
-def check_step4(env: dict, dry_run: bool, question: str, track: str = "upskill") -> bool:
+def check_step4(env: dict, dry_run: bool, question: str, track: str = "reference") -> bool:
     # Customer Build teams ground their OWN corpus, so the grounded answer must be checked
-    # against a scenario question they supply — the Northfield default won't match their data.
+    # against a scenario question they supply — the sample organization default won't match their data.
     if track == "customer" and question == DEFAULT_QUESTION:
         warn("--track customer: pass your own scenario question with --question "
-             '"<your question>" — the Northfield default will not match your corpus')
+             '"<your question>" — the sample organization default will not match your corpus')
 
     if dry_run:
         missing = _present(env, ["AZURE_SEARCH_INDEX_NAME", "AZURE_SEARCH_CONNECTION_NAME"])
         if missing:
             return _fail("4", f".env missing/placeholder vars: {', '.join(missing)}")
-        # Only the upskill track ships a fixed Northfield corpus on disk; Customer Build teams
+        # Only the reference library track ships a fixed sample organization corpus on disk; Customer Build teams
         # bring their own (possibly indexed straight from the portal), so skip the corpus check.
-        if track == "upskill" and (not CORPUS_DIR.is_dir() or not any(CORPUS_DIR.glob("*.md"))):
+        if track == "reference" and (not CORPUS_DIR.is_dir() or not any(CORPUS_DIR.glob("*.md"))):
             return _fail("4", f"FAQ corpus not found at {CORPUS_DIR}")
         ok("✅ Step 4 PASS (dry-run) — search/agent grounding contract present"
-           + ("" if track == "customer" else " + Northfield corpus"))
+           + ("" if track == "customer" else " + sample organization corpus"))
         return True
 
     if _present(env, ["AZURE_AI_PROJECT_ENDPOINT", "AZURE_SEARCH_ENDPOINT", "AZURE_SEARCH_INDEX_NAME"]):
         return _fail("4", "missing AZURE_AI_PROJECT_ENDPOINT / AZURE_SEARCH_ENDPOINT / AZURE_SEARCH_INDEX_NAME")
 
-    agent_name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "northfield-iq-assistant").strip()
+    agent_name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "sample-iq-assistant").strip()
     try:
         cred = _credential()
     except Exception as exc:  # noqa: BLE001
@@ -252,9 +252,9 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no Azure calls, no quota).")
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     parser.add_argument("--question", default=DEFAULT_QUESTION,
                         help="Grounded question used for the Step 4 citation check.")
     args = parser.parse_args()
@@ -263,7 +263,7 @@ def main() -> int:
     if args.dry_run:
         info("(dry-run: offline structural checks only — no Azure calls)\n")
     if args.track == "customer":
-        info("(track: customer — validating YOUR scenario, not Northfield)\n")
+        info("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     checks = {
         1: lambda: check_step1(env, args.dry_run),
@@ -277,7 +277,7 @@ def main() -> int:
         for n in (1, 2, 3, 4):
             results.append(checks[n]())
         if all(results):
-            ok("\n✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live"
+            ok("\n✅ Foundations end-state PASS — grounded sample IQ assistant is live"
                + (" (dry-run)" if args.dry_run else ""))
             return 0
         print(f"{RED}\n❌ Foundations end-state NOT READY — see the failing step(s) above{RESET}")

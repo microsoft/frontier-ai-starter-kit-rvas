@@ -50,6 +50,9 @@ scenarios/<folder-name>/
 
 - The scenario starts from a customer outcome, not a product.
 - Every lesson names the decision, inputs, proof, and next decision.
+- Every scenario names the decision gates that determine which reference-library mechanics are
+  needed. Do not revive legacy application paths; extract only the source, access, action, trust,
+  operating, and deployment decisions that help the customer choose what to build next.
 - Every lesson follows the practical build-module contract: visible inputs, implementation steps,
   expected evidence, local or service validation, and the next customer decision.
 - Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important

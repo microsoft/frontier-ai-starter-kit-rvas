@@ -67,9 +67,9 @@ def load_env() -> dict:
 
 
 def _agent_name(env: dict, track: str) -> str:
-    name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "northfield-iq-assistant").strip()
-    if track == "customer" and name == "northfield-iq-assistant":
-        warn("--track customer: AZURE_FOUNDRY_AGENT_NAME is not set, so the Northfield default is being used.")
+    name = (env.get("AZURE_FOUNDRY_AGENT_NAME") or "sample-iq-assistant").strip()
+    if track == "customer" and name == "sample-iq-assistant":
+        warn("--track customer: AZURE_FOUNDRY_AGENT_NAME is not set, so the sample organization default is being used.")
     return name
 
 
@@ -129,8 +129,8 @@ def check_step1(env: dict, dry_run: bool, track: str) -> bool:
         if missing:
             return _fail("1", f"azure.yaml is missing current hosted-agent fields: {', '.join(missing)}")
 
-    if track == "customer" and "northfield" in raw.lower():
-        warn("--track customer: hosted/azure.yaml still contains Northfield text; adapt the agent before demo.")
+    if track == "customer" and "sample" in raw.lower():
+        warn("--track customer: hosted/azure.yaml still contains sample organization text; adapt the agent before demo.")
     ok("✅ Step 1 PASS — azure.yaml + hosted Responses service + source project present and valid")
     return True
 
@@ -254,16 +254,16 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no Azure calls).")
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     args = parser.parse_args()
 
     env = load_env()
     if args.dry_run:
         info("(dry-run: offline structural checks only — no Azure calls)\n")
     if args.track == "customer":
-        info("(track: customer — validating YOUR scenario, not Northfield)\n")
+        info("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     checks = {
         1: lambda: check_step1(env, args.dry_run, args.track),

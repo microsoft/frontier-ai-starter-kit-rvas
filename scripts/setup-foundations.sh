@@ -6,7 +6,7 @@
 # the Foundations end-state so Advanced teams can skip the guided steps:
 #
 #   1. Create the Azure AI Search index over resources/sample-data/university-faq/
-#   2. Create the "northfield-iq-assistant" agent with an Azure AI Search tool
+#   2. Create the "sample-iq-assistant" agent with an Azure AI Search tool
 #
 # Idempotent: re-running updates in place. Expected runtime ~10–15 min (mostly indexing).
 # Verify afterwards with:  python scripts/validate-foundations.py
@@ -43,7 +43,7 @@ fi
 : "${AZURE_AI_PROJECT_ENDPOINT:?AZURE_AI_PROJECT_ENDPOINT missing from .env — provisioning incomplete}"
 : "${AZURE_AI_MODEL_DEPLOYMENT_NAME:?AZURE_AI_MODEL_DEPLOYMENT_NAME missing from .env}"
 SEARCH_INDEX_NAME="${AZURE_SEARCH_INDEX_NAME:-university-faq}"
-AGENT_NAME="${AZURE_FOUNDRY_AGENT_NAME:-northfield-iq-assistant}"
+AGENT_NAME="${AZURE_FOUNDRY_AGENT_NAME:-sample-iq-assistant}"
 CORPUS_DIR="${REPO_ROOT}/resources/sample-data/university-faq"
 
 command -v python3 >/dev/null 2>&1 || fail "python3 not found."
@@ -163,7 +163,7 @@ search_conn      = os.environ.get("AZURE_SEARCH_CONNECTION_NAME", "search")
 agent_name       = os.environ["AGENT_NAME"]
 
 INSTRUCTIONS = (
-    "You are the Northfield University Student Services Assistant. Answer student "
+    "You are the sample organization Student Services Assistant. Answer student "
     "questions about admissions, financial aid, housing, registration, IT support, and "
     "campus life using ONLY the grounded knowledge base. Always cite the source document. "
     "If the answer is not in the knowledge base, say so and point the student to the right office."

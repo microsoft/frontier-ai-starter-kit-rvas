@@ -41,7 +41,7 @@ The Python SDK is async-only; use an async event loop rather than trying to wrap
 - **Pitfall:** configuring only the three shared Foundry variables. The agent quickstart also needs
   Voice Live resource/project context; verify its current environment list and keep those values local.
 - **Pitfall:** binding to a bare model instead of the agent → spoken answers lose persona/grounding.
-  They must pass the Northfield agent name so turns run through the Northfield agent.
+  They must pass the sample organization agent name so turns run through the sample organization agent.
 - Auth errors here are usually region/access, not code. Check the resource supports Voice Live.
 
 ### Step 2 — duplex loop

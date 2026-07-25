@@ -10,7 +10,7 @@ nav_exclude: true
 > **Command context:** Run commands from the repository root.
 
 This is an auditable document **intake** exercise, not an automated admissions workflow. Use only
-fictional Northfield applications supplied or invented for the workshop. Do not collect, upload, or
+fictional sample organization applications supplied or invented for the workshop. Do not collect, upload, or
 display real applicant records.
 
 ## Prerequisites

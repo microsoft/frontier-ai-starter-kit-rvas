@@ -32,7 +32,7 @@ result = client.analyze(
 Use the current Docs result model to extract visible text and captions. Request only the features
 needed for the chosen task: `READ` for a directional sign, `CAPTION` for a concise scene
 description, and `TAGS` only if tags materially help. Confirm regional availability first, especially
-for caption features. Do not request people/face-related features for the Northfield demo.
+for caption features. Do not request people/face-related features for the sample organization demo.
 
 For multimodal reasoning beyond those features, select a currently supported Foundry multimodal
 deployment and follow the exact message/image and structured-output syntax returned by

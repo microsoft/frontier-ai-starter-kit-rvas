@@ -5,7 +5,7 @@
 > Tier 2 · Extra — modular. Start after Foundations, or use the repository bootstrap path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
-Build a small, **human-reviewed** accessibility and wayfinding assistant for a generic Northfield
+Build a small, **human-reviewed** accessibility and wayfinding assistant for a generic sample organization
 campus image. It can extract visible sign text and describe observable route cues; it must not
 identify people, infer disability or other sensitive traits, or decide whether a route is safe or
 accessible.
@@ -28,7 +28,7 @@ or image URLs containing SAS tokens in source control.
 
 ## Demo boundary and safe input
 
-Use only a generic, non-sensitive Northfield campus accessibility/wayfinding image: for example,
+Use only a generic, non-sensitive sample organization campus accessibility/wayfinding image: for example,
 an empty exterior path leading to a building entrance, with a visible directional sign and no
 recognizable people, vehicles, IDs, screens, or student work. A staged or openly licensed image is
 fine. Do not upload photos of people, classrooms, medical aids, access badges, private spaces, or
@@ -47,7 +47,7 @@ Your `visual_multimodal.py` must:
 Write the task as an observable question:
 
 > “What directional text is visibly readable, and what route or entrance cues are observable in
-> this generic Northfield campus image?”
+> this generic sample organization campus image?”
 
 Choose the smallest capability that answers it:
 
@@ -133,7 +133,7 @@ python activities/extra-visual-multimodal/validate.py --all --dry-run
 
 ## What you built
 
-A keyless, bounded visual observation workflow for a safe Northfield wayfinding demo: safe image
+A keyless, bounded visual observation workflow for a safe sample organization wayfinding demo: safe image
 intake → minimum-capability analysis → structured confidence-aware output → human review and
 evaluation evidence. It is an assistive observation aid, not a replacement for campus accessibility
 inspection or human judgment.

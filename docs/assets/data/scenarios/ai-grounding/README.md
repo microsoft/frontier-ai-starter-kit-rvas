@@ -35,6 +35,18 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
 retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
 
+## Decision gates to carry into the customer conversation
+
+Use these gates before opening reference-library mechanics:
+
+| Gate | Decide before building |
+|---|---|
+| Knowledge boundary | Which approved sources may be cited, who owns them, and what version/freshness is acceptable? |
+| Permission boundary | Which identity is evaluated at query time, and what should access-denied retrieval return? |
+| Live-data boundary | Which questions require a live system/tool instead of an indexed document snapshot? |
+| Trust boundary | Which cited-answer, abstention, stale-data, and restricted-source failures block a pilot? |
+| Operating boundary | Who can see traces, who investigates a bad answer, and what rollback or pause action exists? |
+
 ## Deploy the foundation
 
 ```bash

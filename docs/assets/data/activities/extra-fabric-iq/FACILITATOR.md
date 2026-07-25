@@ -18,7 +18,7 @@ question. The demo lands when the seat count changes between two asks with no re
 1. Fabric capacity — an appropriate Fabric capacity or trial capacity assigned to a
    workspace. This is the gate; without it the Extra is impossible.
 
-2. OneLake lakehouse (e.g. `northfield_ops`) with a `course_seats` table:
+2. OneLake lakehouse (e.g. `sample_ops`) with a `course_seats` table:
    `course_code, section, capacity, enrolled, seats_open, updated_at`. Seed a handful of rows incl.
    CS101 with a small `seats_open` (so you can drive it to 0 live for the demo).
 

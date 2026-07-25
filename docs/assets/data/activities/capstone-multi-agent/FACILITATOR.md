@@ -1,5 +1,5 @@
 
-# Facilitator Guide · Capstone — Northfield IQ, the Team
+# Facilitator Guide · Capstone — sample IQ, the Team
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 

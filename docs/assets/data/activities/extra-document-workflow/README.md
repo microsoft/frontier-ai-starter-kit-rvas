@@ -1,7 +1,7 @@
 # Extra · Document Workflow
 
 > Tier 2 · Extra. Prerequisite: a deployed Foundry/Azure project and an identity that can use its
-> Document Intelligence resource. This lab uses **fictional Northfield admissions documents only**;
+> Document Intelligence resource. This lab uses **fictional sample organization admissions documents only**;
 > do not upload real applicant records.
 
 Build a reviewable intake workflow, not an automatic admissions decision:
@@ -27,7 +27,7 @@ put a key, connection string, or applicant data in source or trace logs.
 ## Build `document_workflow.py`
 
 Create this learner-owned file in this activity directory (or pass its directory with `--path`).
-Use a harmless fictional PDF/image, such as a Northfield admission application containing invented
+Use a harmless fictional PDF/image, such as a sample organization admission application containing invented
 name, program, and consent fields.
 
 ### Step 1 — Intake and layout/OCR
@@ -90,5 +90,5 @@ human approval, or safe handling of real records.
 
 ## What you built
 
-A keyless, auditable document-intake path for a safe Northfield demo: OCR/layout informs a structured
+A keyless, auditable document-intake path for a safe sample organization demo: OCR/layout informs a structured
 record, uncertainty reaches a person, and traces/evaluations show whether the workflow deserves trust.

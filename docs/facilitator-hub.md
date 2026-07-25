@@ -49,7 +49,7 @@ the one shared record; do not ask teams to create separate governance paperwork.
 |---|---|
 | Has a customer scenario or business outcome | Send them to [Customer Build Step 0]({{ '/customer-outcome' | relative_url }}) before Foundations. |
 | Has a customer or industry, but no idea | Run [Customer Activity-Forge](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md), pick one idea, then fill the canvas. |
-| Wants pure upskilling | Send them through the [Upskill Track]({{ '/upskill' | relative_url }}) with Northfield. |
+| Needs implementation mechanics | Send them to the [Reference Library]({{ '/reference.html' | relative_url }}) for the specific building block they need. |
 
 ## Facilitation Principles
 
@@ -72,7 +72,8 @@ Call out good debugging, clear prompt design, and smart teamwork. Teams gain ene
 
 ### Anchor customer work in outcomes
 
-Every team — whether they have a real customer or are following the Northfield path — should work toward a defined outcome. The default for teams with a scenario is **Customer Build Mode**; Northfield is the **safe fallback** for pure upskilling.
+Every team should work toward a defined outcome. The scenario playbooks are the primary route; the
+sample organization artifacts are only safe fixtures for implementation mechanics.
 
 In Customer Build Mode, keep the team from building a generic chatbot. Useful facilitation questions:
 

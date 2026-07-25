@@ -5,13 +5,13 @@
 > ⏱ Guided ~60–90 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
 > Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded Northfield IQ
+> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
 > Assistant). Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
-So far your Northfield IQ Assistant lives inside your project as a prompt agent — you invoke it
+So far your sample IQ assistant lives inside your project as a prompt agent — you invoke it
 from a notebook or script through the Responses API. That's perfect for building, but it isn't a thing
 you can hand to the IT helpdesk or a student-portal team. They need a real endpoint: a URL with its
 own identity, its own scaling, and its own run history, independent of your dev environment.
@@ -28,8 +28,8 @@ This activity deploys the grounded assistant as a containerized service.
                 │
                 ▼  azd deploy
    ┌──────────────────────────────────────────────┐
-   │  container image ──▶ ACR ──▶ hosted agent     │
-   │                        (per-agent identity)   │
+   │  container image ──▶ ACR ──▶ hosted agent   │
+   │                        (per-agent identity)  │
    └───────────────────────┬──────────────────────┘
                            │  /protocols/openai/responses
                            ▼
@@ -46,7 +46,7 @@ This activity deploys the grounded assistant as a containerized service.
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment the agent uses
-  - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
 - CLI tooling (in the devcontainer): `az`, `azd` (Azure Developer CLI), and `docker`. You can build
   the image without local Docker using ACR cloud build (shown in Step 2).
 - Logged in: `az login` and `azd auth login`, with the subscription set to your event subscription.
@@ -84,7 +84,7 @@ gives you only the deploy contract + the gotcha list · (c) Stretch goals go ope
    azd ai agent init \
      -m https://github.com/microsoft-foundry/foundry-samples/blob/main/samples/python/hosted-agents/agent-framework/responses/01-basic/azure.yaml \
      --deploy-mode code \
-     --agent-name northfield-iq-assistant
+     --agent-name sample-iq-assistant
    ```
 
 2. Inspect the generated `azure.yaml`. The `azure.ai.agent` service is the deploy contract and must
@@ -189,7 +189,7 @@ its own Entra identity, not your user credentials.
    token_provider = get_bearer_token_provider(
        DefaultAzureCredential(), "https://ai.azure.com/.default"
    )
-   agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
+   agent = os.environ.get("AZURE_FOUNDRY_AGENT_NAME", "sample-iq-assistant")
    base = os.environ["AZURE_AI_PROJECT_ENDPOINT"].rstrip("/")
 
    client = OpenAI(
@@ -216,7 +216,7 @@ its own Entra identity, not your user credentials.
 Your run should look like this:
 ```text
 $ python invoke_hosted.py
-To place a registration hold, contact the Registrar's Office (registrar@northfield.edu) ...
+To place a registration hold, contact the Registrar's Office (registrar@sample.edu) ...
 
 $ curl -s -o /dev/null -w "%{http_code}" <endpoint>/responses   # no token
 403
@@ -252,7 +252,7 @@ the same OTel traces you learned to read in the Tracing activity.
    ```kusto
    dependencies
    | where timestamp > ago(30m)
-   | where cloud_RoleName has "northfield-iq-assistant"
+   | where cloud_RoleName has "sample-iq-assistant"
    | project timestamp, operation_Id, name, duration,
              total_tokens = toint(customDimensions["gen_ai.usage.total_tokens"])
    | order by timestamp desc
@@ -296,7 +296,7 @@ The gotchas you get (everything else you design):
 
 ## Done — what you shipped
 
-- The Northfield IQ Assistant runs as a hosted Foundry agent with its own endpoint, version, and
+- The sample IQ assistant runs as a hosted Foundry agent with its own endpoint, version, and
   per-agent managed identity.
 - It's invocable over the production Responses protocol, enforces auth, and every run is observable in
   run history and App Insights.

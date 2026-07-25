@@ -6,7 +6,7 @@ Asserts that the Foundations end-state exists and works:
   CHECK 1  .env contract is present and populated.
   CHECK 2  Azure AI Search index exists and has documents.
   CHECK 3  The grounded agent exists.
-  CHECK 4  The agent answers a Northfield question with at least one citation,
+  CHECK 4  The agent answers a sample organization question with at least one citation,
            via the Foundry Responses/Conversations protocol.
 
 Exit code 0 = green (Path B teams may start Advanced activities).
@@ -77,7 +77,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Validate the Foundations end-state.")
     parser.add_argument(
         "--question",
-        default="How do I apply for financial aid at Northfield?",
+        default="How do I apply for financial aid at sample organization?",
         help="Grounded question used for the citation check.",
     )
     args = parser.parse_args()
@@ -138,7 +138,7 @@ def main() -> int:
 
     # ----- CHECK 3: grounded agent exists -------------------------------------
     info("\nCHECK 3 — grounded agent exists")
-    agent_name = env.get("AZURE_FOUNDRY_AGENT_NAME", "northfield-iq-assistant")
+    agent_name = env.get("AZURE_FOUNDRY_AGENT_NAME", "sample-iq-assistant")
     project_endpoint = env["AZURE_AI_PROJECT_ENDPOINT"]
 
     try:

@@ -9,7 +9,7 @@
 ## Overview
 
 Foundations is one guided, linear activity with four ordered steps. The end-state — a deployed,
-grounded Northfield IQ Assistant that cites its sources — is the prerequisite for every Advanced
+grounded sample IQ assistant that cites its sources — is the prerequisite for every Advanced
 activity. Your job is to keep teams moving step-to-step: each Checkpoint (`python activities/foundations/validate.py --step N`)
 must pass before they advance, because Step N's output is Step N+1's input.
 
@@ -96,7 +96,7 @@ with open("assets/system-instructions.txt", encoding="utf-8") as f:
 response = openai.responses.create(
     model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
     instructions=system_instructions,
-    input="How do I apply for scholarships at Northfield?",
+    input="How do I apply for scholarships at sample organization?",
 )
 print(response.output_text)
 
@@ -105,7 +105,7 @@ print(response.output_text)
 ### A solid reference system instruction (Step 2 baseline)
 
 ```text
-You are Northfield University's student services assistant. Answer in a warm, clear,
+You are sample organization's student services assistant. Answer in a warm, clear,
 student-friendly tone. Keep answers concise: a direct 2–3 sentence answer, then any next
 step or office to contact. If you are unsure or the information is missing, say so plainly
 and point the student to the right office rather than guessing.
@@ -145,7 +145,7 @@ and point the student to the right office rather than guessing.
 
 ### What good looks like
 
-A named agent `northfield-iq-assistant` exists in the portal and via SDK (code↔portal parity),
+A named agent `sample-iq-assistant` exists in the portal and via SDK (code↔portal parity),
 created with `agents.create_version(PromptAgentDefinition(...))`, with a persona + guardrails. It
 answers in-scope questions and refuses the cheating and out-of-scope prompts.
 
@@ -169,7 +169,7 @@ with open("assets/system-instructions.txt", encoding="utf-8") as f:
     instructions = f.read()
 
 agent = project.agents.create_version(
-    agent_name="northfield-iq-assistant",
+    agent_name="sample-iq-assistant",
     definition=PromptAgentDefinition(
         model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
         instructions=instructions,
@@ -185,7 +185,7 @@ for question in [
 ]:
     resp = openai.responses.create(
         input=question,
-        extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+        extra_body={"agent_reference": {"name": "sample-iq-assistant", "type": "agent_reference"}},
     )
     print(f"\nQ: {question}\nA: {resp.output_text}")
 
@@ -194,14 +194,14 @@ for question in [
 ### A strong reference agent instruction (persona + guardrails)
 
 ```text
-You are the Northfield University Student Services Assistant.
+You are the sample organization Student Services Assistant.
 
-SCOPE: You help current and prospective Northfield students with admissions, financial aid,
+SCOPE: You help current and prospective sample organization students with admissions, financial aid,
 housing, course registration, academic programs, and student support. You only answer
-Northfield student-services questions.
+sample organization student-services questions.
 
 UNCERTAINTY: If you do not know or the information is not available to you, say so and direct
-the student to the relevant office (for example, finaid@northfield.edu for aid questions).
+the student to the relevant office (for example, finaid@sample.edu for aid questions).
 Never invent deadlines, amounts, GPAs, or contacts.
 
 REFUSALS: Politely decline and redirect if a request is off-topic (e.g. general trivia, news,
@@ -249,7 +249,7 @@ and `SEMANTIC` query type attached; and a precise, cited answer (the FAFSA quest
 is the canonical check). Grounded answers are specific and sourced; ungrounded ones are vague.
 
 ### Canonical verification question (use this for the Checkpoint)
-> "What is Northfield's FAFSA priority deadline and school code?"
+> "What is sample organization's FAFSA priority deadline and school code?"
 
 Expected grounded answer references March 1 priority deadline and school code 041777 (both are
 in `resources/sample-data/university-faq/financial-aid.md`), with a citation to that source. The
@@ -278,13 +278,13 @@ search_connection = project.connections.get(
 )
 
 instructions = (
-    "You are Northfield University's student services assistant. Answer ONLY from the "
+    "You are sample organization's student services assistant. Answer ONLY from the "
     "knowledge base. If the answer is not in the documents, say so. Always cite your "
     "sources as [source]."
 )
 
 agent = project.agents.create_version(
-    agent_name="northfield-iq-assistant",
+    agent_name="sample-iq-assistant",
     definition=PromptAgentDefinition(
         model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
         instructions=instructions,
@@ -304,8 +304,8 @@ print(f"Grounded {agent.name} version {agent.version}")
 
 openai = project.get_openai_client()
 resp = openai.responses.create(
-    input="What is Northfield's FAFSA priority deadline and school code?",
-    extra_body={"agent_reference": {"name": "northfield-iq-assistant", "type": "agent_reference"}},
+    input="What is sample organization's FAFSA priority deadline and school code?",
+    extra_body={"agent_reference": {"name": "sample-iq-assistant", "type": "agent_reference"}},
 )
 print(resp.output_text)
 
@@ -328,7 +328,7 @@ If a team is swapping in their own data:
 - Safe data only: no PII, unredacted customer data, or legal/financial content not pre-cleared. Guide teams toward public-facing or pre-approved summaries.
 - Formats: `step4_index.py` handles `.txt` and `.md` natively. PDFs need text extraction first (suggest `pypdf` for quick session use, or Azure Document Intelligence for production quality).
 - PDFs / SharePoint: the Foundry portal's Build → Indexes → Add data ingests PDFs and SharePoint pages directly — point portal-path teams here first.
-- Northfield as fallback: if customer data is not ready or not cleared, run Foundations with the Northfield corpus and log the corpus swap as a follow-up. The architecture is identical.
+- sample organization as fallback: if customer data is not ready or not cleared, run Foundations with the sample organization corpus and log the corpus swap as a follow-up. The architecture is identical.
 
 ### Common pitfalls
 - 401/403 querying the index — the Foundry project managed identity is missing
@@ -371,7 +371,7 @@ This step often runs long because first-time indexing is slow. Budget accordingl
 ## End-state Checkpoint (`--all`)
 
 When `python activities/foundations/validate.py --all` prints
-`✅ Foundations end-state PASS — grounded Northfield IQ Assistant is live`, the team has the prerequisite
+`✅ Foundations end-state PASS — grounded sample IQ assistant is live`, the team has the prerequisite
 for every Advanced activity. `--all` re-asserts infra (Step 1), model reachability (Step 2), the
 named versioned agent (Step 3), and a cited grounded answer (Step 4).
 
@@ -386,7 +386,7 @@ These are the exact commands the README promises; `validate.py` must implement t
 |---|---|
 | `python activities/foundations/validate.py --step 1` | Foundry + AI Search + App Insights provisioned; `.env` populated; keyless auth works |
 | `python activities/foundations/validate.py --step 2` | Two model deployments reachable; `responses.create()` SDK call succeeds |
-| `python activities/foundations/validate.py --step 3` | Named agent `northfield-iq-assistant` exists as a version; responds via Responses API; guardrails refuse |
+| `python activities/foundations/validate.py --step 3` | Named agent `sample-iq-assistant` exists as a version; responds via Responses API; guardrails refuse |
 | `python activities/foundations/validate.py --step 4` | AI Search index exists; knowledge base attached to agent; agent returns a cited answer |
 | `python activities/foundations/validate.py --all` | All of the above — the full Foundations end-state |
 

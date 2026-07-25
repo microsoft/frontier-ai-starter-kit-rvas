@@ -35,8 +35,8 @@ $link-color: #0f5ed8;
   --track-customer-soft: #dffaf5;
   --track-idea: #b4630a;
   --track-idea-soft: #fff2d8;
-  --track-upskill: #3457d5;
-  --track-upskill-soft: #e8eeff;
+  --track-reference: #3457d5;
+  --track-reference-soft: #e8eeff;
 }
 
 body,
@@ -312,7 +312,7 @@ body,
     linear-gradient(130deg, #3a1f06 0%, #8d4b08 50%, #d99019 100%);
 }
 
-.track-hero--upskill {
+.track-hero--reference {
   background:
     radial-gradient(circle at 76% 10%, rgba(167, 188, 255, 0.46), transparent 42%),
     radial-gradient(circle at 6% 112%, rgba(99, 215, 255, 0.25), transparent 48%),
@@ -371,8 +371,8 @@ body,
     linear-gradient(180deg, #ffffff 0%, #fff9ed 100%);
 }
 
-.track-card--upskill {
-  --card-accent: var(--track-upskill);
+.track-card--reference {
+  --card-accent: var(--track-reference);
   background:
     radial-gradient(circle at 92% 8%, rgba(52, 87, 213, 0.13), transparent 35%),
     linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
@@ -419,8 +419,8 @@ body,
   --status-accent: var(--track-idea);
 }
 
-.journey-status--upskill {
-  --status-accent: var(--track-upskill);
+.journey-status--reference {
+  --status-accent: var(--track-reference);
 }
 
 .journey-status__eyebrow,
@@ -502,9 +502,9 @@ body,
   background: linear-gradient(180deg, #ffffff 0%, var(--track-customer-soft) 100%);
 }
 
-.module-lens__card--upskill {
-  --card-accent: var(--track-upskill);
-  background: linear-gradient(180deg, #ffffff 0%, var(--track-upskill-soft) 100%);
+.module-lens__card--reference {
+  --card-accent: var(--track-reference);
+  background: linear-gradient(180deg, #ffffff 0%, var(--track-reference-soft) 100%);
 }
 
 .journey-map {

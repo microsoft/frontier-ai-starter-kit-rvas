@@ -26,7 +26,7 @@ question → intent / query ID → allowlist + parameter validation → semantic
 answer ← human-review decision ← provenance-rich result ←──────────────┘
 ```
 
-The safe Northfield scenario is the **advising service queue**. The copilot can report operational
+The safe sample organization scenario is the **advising service queue**. The copilot can report operational
 aggregates; it cannot retrieve student names, IDs, case notes, or individual appointments.
 
 ## Before you code: research the current surface
@@ -42,14 +42,14 @@ Connector and Foundry tool APIs change quickly. **Do this before writing integra
 
 The validator deliberately checks your governance boundary, not an SDK class name.
 
-## Northfield governance contract
+## sample organization governance contract
 
 Use this contract for the demo, then replace it with an owner-approved contract for a customer
 scenario.
 
 | Item | Approved value |
 |---|---|
-| Semantic model | `NorthfieldServiceOperations` |
+| Semantic model | `sample organizationServiceOperations` |
 | Model version | A published version or refresh identifier returned by the platform |
 | Allowed fields | `service_area`, `waiting_count`, `median_wait_minutes`, `capacity_status`, `snapshot_at` |
 | Forbidden fields | student/person identifiers, contact details, appointment records, free-text notes, staff performance data |

@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_DATASET = HERE / "assets" / "northfield-eval.jsonl"
+DEFAULT_DATASET = HERE / "assets" / "sample-eval.jsonl"
 DEFAULT_ADVERSARIAL = HERE / "assets" / "adversarial-seed.jsonl"
 EVALUATE = HERE / "evaluate.py"
 MIN_ROWS = 25
@@ -45,7 +45,7 @@ def _fail(step: str, msg: str) -> bool:
 
 def _warn_customer_default(track: str, path: Path, default: Path, artifact: str) -> None:
     if track == "customer" and path.resolve() == default.resolve():
-        print(f"⚠  --track customer: pass your own {artifact}; the Northfield default is only a shape check.")
+        print(f"⚠  --track customer: pass your own {artifact}; the sample organization default is only a shape check.")
 
 
 def check_step1(dataset: Path, track: str) -> bool:
@@ -87,25 +87,25 @@ def check_step2(dataset: Path, track: str) -> bool:
 def check_step3(track: str) -> bool:
     sys.path.insert(0, str(HERE))
     try:
-        from evaluate import NorthfieldDomainEvaluator
+        from evaluate import sample organizationDomainEvaluator
     except Exception as exc:
         if track == "customer" and EVALUATE.exists():
             src = EVALUATE.read_text(encoding="utf-8")
             if re.search(r"class\s+\w*Evaluator\b", src) and "score" in src.lower():
                 print("✅ Step 3 PASS — custom evaluator structure present (customer scenario; manual discrimination proof required)")
                 return True
-        return _fail("3", f"cannot import NorthfieldDomainEvaluator: {exc}")
+        return _fail("3", f"cannot import sample organizationDomainEvaluator: {exc}")
     if track == "customer":
-        print("⚠  --track customer: default NorthfieldDomainEvaluator is still present; adapt the evaluator rules to your domain before demo.")
-    ev = NorthfieldDomainEvaluator()
-    good = ev(query="contact?", response="Email finaid@northfield.edu.",
-              ground_truth="Email finaid@northfield.edu.", category="factual")
+        print("⚠  --track customer: default sample organizationDomainEvaluator is still present; adapt the evaluator rules to your domain before demo.")
+    ev = sample organizationDomainEvaluator()
+    good = ev(query="contact?", response="Email finaid@sample.edu.",
+              ground_truth="Email finaid@sample.edu.", category="factual")
     bad = ev(query="parking fee?", response="The fee is $200.",
              ground_truth="I don't have that info.", category="abstain")
-    if good["northfield_domain_score"] <= bad["northfield_domain_score"]:
+    if good["sample_domain_score"] <= bad["sample_domain_score"]:
         return _fail("3", "custom evaluator does not reward grounded/abstained answers over fabricated ones")
     print(f"✅ Step 3 PASS — custom evaluator discriminates "
-          f"(grounded={good['northfield_domain_score']:.1f} > fabricated={bad['northfield_domain_score']:.1f})")
+          f"(grounded={good['sample_domain_score']:.1f} > fabricated={bad['sample_domain_score']:.1f})")
     return True
 
 
@@ -132,16 +132,16 @@ def main() -> int:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--step", type=int, choices=(1, 2, 3, 4))
     group.add_argument("--all", action="store_true")
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     parser.add_argument("--dataset", default=DEFAULT_DATASET, type=Path,
                         help="Evaluation JSONL to validate (customer track: your scenario dataset).")
     parser.add_argument("--adversarial", default=DEFAULT_ADVERSARIAL, type=Path,
                         help="Adversarial JSONL to validate (customer track: your scenario attacks).")
     args = parser.parse_args()
     if args.track == "customer":
-        print("(track: customer — validating YOUR scenario, not Northfield)\n")
+        print("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     checks = {
         1: lambda: check_step1(args.dataset, args.track),

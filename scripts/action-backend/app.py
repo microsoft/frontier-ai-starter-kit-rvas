@@ -33,7 +33,7 @@ from pydantic import BaseModel, Field
 API_KEY = os.environ.get("ACTION_API_KEY", "").strip()
 
 app = FastAPI(
-    title="Northfield University — Action Tools API",
+    title="sample organization — Action Tools API",
     description="Provided backend for the Advanced: Action Tools activity.",
     version="1.0.0",
 )

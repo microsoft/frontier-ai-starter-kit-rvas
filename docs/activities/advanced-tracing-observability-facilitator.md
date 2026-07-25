@@ -19,7 +19,7 @@ retrieval span, optional tool span, with tokens, latency, and an estimated cost 
 (portal Traces view + KQL). The pedagogy is deliberately FrontierWeekHack's "same data, two lenses"
 pattern: the portal teaches the *shape* of a trace, KQL teaches *querying* it.
 
-The activity assumes the Foundations end-state (a deployed, grounded Northfield IQ Assistant) or
+The activity assumes the Foundations end-state (a deployed, grounded sample IQ assistant) or
 the bootstrap skip-path. If a team can't get a grounded answer at all, that's a Foundations problem —
 send them to `validate-foundations.py` before debugging tracing.
 

@@ -77,7 +77,7 @@ The three MCP servers (from [`.vscode/mcp.json`](https://github.com/microsoft/fr
 
 2. Prompt Copilot to build it, explicitly asking it to search first, e.g.:
    *"Using the `foundry-projects-resources` skill, and after checking `microsoft-docs` for the current
-   `azure-ai-projects` agent-create API, write code to create the Northfield IQ agent against
+   `azure-ai-projects` agent-create API, write code to create the sample IQ agent against
    `AZURE_AI_PROJECT_ENDPOINT` with deployment `AZURE_AI_MODEL_DEPLOYMENT_NAME`."*
 
 3. When prompted this way, Copilot will typically call `microsoft-docs` / `foundry-mcp` first, then

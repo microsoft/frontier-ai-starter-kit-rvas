@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Code-driven evaluation for the Northfield IQ Assistant.
+"""Code-driven evaluation for the sample IQ assistant.
 
 Runs the built-in Azure AI quality evaluators (Groundedness, Relevance,
-Coherence, Fluency) plus a custom Northfield domain evaluator over a JSONL
+Coherence, Fluency) plus a custom sample organization domain evaluator over a JSONL
 dataset, prints per-row and aggregate scores, and exits non-zero when the
 mean of any gated metric falls below a threshold (the CI-gate concept).
 
@@ -47,9 +47,9 @@ HERE = Path(__file__).resolve().parent
 
 # --------------------------------------------------------------------------- #
 # Custom domain evaluator — runs locally, no LLM judge, no Azure calls.        #
-# Checks Northfield-specific quality signals the generic metrics miss.         #
+# Checks sample organization-specific quality signals the generic metrics miss.         #
 # --------------------------------------------------------------------------- #
-NORTHFIELD_CONTACT = re.compile(r"[a-z]+@northfield\.edu", re.IGNORECASE)
+SAMPLE_CONTACT = re.compile(r"[a-z]+@sample\.edu", re.IGNORECASE)
 ABSTAIN_PHRASES = (
     "don't have",
     "do not have",
@@ -60,15 +60,15 @@ ABSTAIN_PHRASES = (
 )
 
 
-class NorthfieldDomainEvaluator:
+class sample organizationDomainEvaluator:
     """Custom evaluator: rewards grounded contact info and correct abstention.
 
     Score is 1.0-5.0 so it sits on the same scale as the built-in evaluators.
-    - +contact: answer surfaces a *@northfield.edu address or campus phone when
+    - +contact: answer surfaces a *@sample.edu address or campus phone when
       the ground truth contains one.
     - +abstain: for `category == "abstain"` rows, the answer must decline / defer
       rather than fabricate an answer.
-    - -hallucinated_email: penalize any email that is NOT @northfield.edu.
+    - -hallucinated_email: penalize any email that is NOT @sample.edu.
     """
 
     def __call__(self, *, query: str, response: str, ground_truth: str = "", category: str = "", **_):
@@ -88,9 +88,9 @@ class NorthfieldDomainEvaluator:
             score += 1.0
             reasons.append("matches grounded answer content")
 
-        gt_wants_contact = bool(NORTHFIELD_CONTACT.search(ground_truth)) or "(555)" in ground_truth
+        gt_wants_contact = bool(SAMPLE_CONTACT.search(ground_truth)) or "(555)" in ground_truth
         if gt_wants_contact:
-            if NORTHFIELD_CONTACT.search(response) or "(555)" in response:
+            if SAMPLE_CONTACT.search(response) or "(555)" in response:
                 score += 1.0
                 reasons.append("included grounded contact")
             else:
@@ -107,14 +107,14 @@ class NorthfieldDomainEvaluator:
 
         foreign_emails = [
             e for e in re.findall(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", response)
-            if "northfield.edu" not in e.lower()
+            if "sample.edu" not in e.lower()
         ]
         if foreign_emails:
             score -= 2.0
             reasons.append(f"hallucinated/foreign contact: {foreign_emails}")
 
         score = max(1.0, min(5.0, score))
-        return {"northfield_domain_score": score, "northfield_reason": "; ".join(reasons) or "baseline"}
+        return {"sample_domain_score": score, "sample_reason": "; ".join(reasons) or "baseline"}
 
 
 # --------------------------------------------------------------------------- #
@@ -123,7 +123,7 @@ class NorthfieldDomainEvaluator:
 # runnable before the agent exists (useful for wiring/CI smoke tests).         #
 # --------------------------------------------------------------------------- #
 def get_agent_response(openai_client, agent_name: str, query: str) -> str:
-    """Run one query against the grounded Northfield agent and return its text."""
+    """Run one query against the grounded sample organization agent and return its text."""
     response = openai_client.responses.create(
         input=query,
         extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
@@ -193,12 +193,12 @@ def run_builtin_evaluators(rows: list[dict]) -> dict[str, list[float]]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Evaluate the Northfield IQ Assistant.")
-    parser.add_argument("--dataset", default=HERE / "assets" / "northfield-eval.jsonl", type=Path)
+    parser = argparse.ArgumentParser(description="Evaluate the sample IQ assistant.")
+    parser.add_argument("--dataset", default=HERE / "assets" / "sample-eval.jsonl", type=Path)
     parser.add_argument("--gate", type=float, default=None,
                         help="Fail (exit 1) if any gated metric mean < this value (1-5).")
     parser.add_argument("--custom-only", action="store_true",
-                        help="Run only the custom Northfield evaluator (no LLM-judge cost).")
+                        help="Run only the custom sample organization evaluator (no LLM-judge cost).")
     parser.add_argument("--dry-run", action="store_true",
                         help="Use ground_truth as the response instead of calling the agent.")
     parser.add_argument(
@@ -255,12 +255,12 @@ def main() -> int:
           + (" (using dataset responses)" if args.use_dataset_responses else ""))
 
     # Custom evaluator (always runs — cheap, local).
-    custom = NorthfieldDomainEvaluator()
+    custom = sample organizationDomainEvaluator()
     custom_scores = []
     for row in rows:
         out = custom(**row)
-        custom_scores.append(out["northfield_domain_score"])
-    all_scores: dict[str, list[float]] = {"northfield_domain": custom_scores}
+        custom_scores.append(out["sample_domain_score"])
+    all_scores: dict[str, list[float]] = {"sample_domain": custom_scores}
 
     # Built-in LLM-judge evaluators.
     if not args.custom_only:

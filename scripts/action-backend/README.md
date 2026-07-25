@@ -1,7 +1,7 @@
 # Action Tools Backend + MCP Server
 
 > **Provided infrastructure for the Advanced activity "Action Tools — Make the Agent Do Work."**
-> Teams **wire** this into their agent; they do **not** build it. It gives the Northfield IQ
+> Teams **wire** this into their agent; they do **not** build it. It gives the sample IQ
 > Assistant *hands*: create an IT ticket, place a course hold, and book an advising slot.
 
 Two processes:

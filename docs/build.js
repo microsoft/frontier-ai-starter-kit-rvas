@@ -17,32 +17,7 @@ const OUT_DATA_DIR = path.join(__dirname, 'assets', 'data');
 const OUT_GUIDES_DIR = path.join(OUT_DATA_DIR, 'activities');
 const OUT_RESOURCES_DIR = path.join(__dirname, 'resources');
 
-const CUSTOMER_CHAPTER_IDS = {
-  foundations: 'foundations',
-  'advanced-action-tools': 'advanced-action-tools',
-  'advanced-evaluation-redteam': 'advanced-evaluation-redteam',
-  'advanced-tracing-observability': 'advanced-tracing-observability',
-  'advanced-deploy-hosted-agent': 'advanced-deploy-hosted-agent',
-  'extra-build-ui': 'extra-build-ui',
-  'extra-fabric-iq': 'extra-fabric-iq',
-  'extra-voice-live': 'extra-voice-live',
-  'extra-magentic-workflows': 'extra-magentic-workflows',
-  'extra-hosted-longrunning': 'extra-hosted-longrunning',
-  'extra-document-workflow': 'extra-document-workflow',
-  'extra-visual-multimodal': 'extra-visual-multimodal',
-  'extra-governed-data-copilot': 'extra-governed-data-copilot',
-  'capstone-multi-agent': 'capstone-multi-agent',
-};
-
-const LEGACY_ACTIVITY_ALIASES = {
-  'customer-foundations': { id: 'foundations', path: 'knowledge-assistant' },
-  'customer-action-tools': { id: 'advanced-action-tools', path: 'governed-workflow-agent' },
-  'customer-evaluation-redteam': { id: 'advanced-evaluation-redteam' },
-  'customer-tracing-observability': { id: 'advanced-tracing-observability' },
-  'customer-deploy-hosted-agent': { id: 'advanced-deploy-hosted-agent' },
-  'customer-build-ui': { id: 'extra-build-ui' },
-  'customer-capstone-multi-agent': { id: 'capstone-multi-agent', path: 'orchestrated-workflow' },
-};
+const LEGACY_ACTIVITY_ALIASES = {};
 
 const MODULES = [
   {
@@ -79,45 +54,13 @@ const OUTCOMES = [
     ],
   },
   {
-    id: 'upskill',
-    name: 'Learn with Northfield',
-    tagline: 'Practice the full Foundry path with the known-good Northfield University reference scenario.',
-    description: 'Build the Northfield IQ Assistant, then reuse the same architecture for customer work later.',
-    personas: ['participant', 'facilitator', 'developer'],
-    adoption_stage: ['learn', 'practice', 'extend'],
-    business_value: ['learn-foundry-patterns', 'create-repeatable-reference'],
-    activity_ids: [
-      'setup',
-      'foundations',
-      'advanced-action-tools',
-      'advanced-evaluation-redteam',
-      'advanced-tracing-observability',
-      'advanced-deploy-hosted-agent',
-      'extra-build-ui',
-      'extra-voice-live',
-      'extra-fabric-iq',
-      'extra-document-workflow',
-      'extra-visual-multimodal',
-      'extra-governed-data-copilot',
-      'extra-copilot-assisted',
-      'extra-magentic-workflows',
-      'extra-hosted-longrunning',
-      'capstone-multi-agent',
-      'cleanup',
-    ],
-    success_metrics: [
-      'The Northfield assistant is grounded, action-capable, evaluated, observable, and deployable.',
-      'Participants can identify what to swap when moving from Northfield to a customer scenario.',
-    ],
-  },
-  {
-    id: 'customer-build',
-    name: 'Bring your own customer outcome',
-    tagline: 'Turn a real customer-safe scenario into a grounded, evaluated Foundry agent prototype.',
-    description: 'Define the outcome, swap in your own corpus and persona, add one governed action, prove trust, and demo the result.',
-    personas: ['builder', 'solution-architect', 'account-team', 'customer-engineer'],
-    adoption_stage: ['define', 'build', 'prove', 'demo'],
-    business_value: ['accelerate-prototyping', 'de-risk-ai-adoption', 'prove-customer-value'],
+    id: 'reference',
+    name: 'Reference Library',
+    tagline: 'Reusable implementation building blocks for scenario playbooks.',
+    description: 'Open these activities only when a scenario calls for the specific capability.',
+    personas: ['builder', 'facilitator', 'developer'],
+    adoption_stage: ['build', 'prove', 'demo'],
+    business_value: ['reuse-building-blocks', 'reduce-implementation-risk'],
     activity_ids: [
       'customer-outcome',
       'setup',
@@ -138,8 +81,8 @@ const OUTCOMES = [
       'cleanup',
     ],
     success_metrics: [
-      'The team can explain the target users, corpus, action, safety boundaries, and demo story.',
-      'The prototype answers with citations, acts only through governed tools, and has a trust scorecard.',
+      'Teams can find the implementation mechanics that support a chosen scenario.',
+      'Reference activities stay reusable and do not become a separate customer journey.',
     ],
   },
 ];
@@ -153,7 +96,7 @@ const ACTIVITIES = [
     duration_minutes: 30,
     description: 'Prepare Codespaces, Azure sign-in, and local tooling before running activity validators.',
     tags: ['setup', 'codespaces', 'azure'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'docs/setup.md',
   },
   {
@@ -164,7 +107,7 @@ const ACTIVITIES = [
     duration_minutes: 10,
     description: 'Review teardown targets, stop local processes, and remove event resources safely.',
     tags: ['cleanup', 'cost', 'azure'],
-    outcomes: ['customer-build', 'upskill'],
+    outcomes: ['reference'],
     participant: 'docs/activities/cleanup.md',
   },
   {
@@ -185,8 +128,8 @@ const ACTIVITIES = [
     difficulty: 'beginner',
     duration_minutes: 45,
     description: 'Create the scenario pack: users, outcome, corpus, safe action, success measures, and demo story.',
-    tags: ['customer-build', 'scenario', 'planning'],
-    outcomes: ['customer-build', 'idea-forge'],
+    tags: ['scenario', 'planning', 'handoff'],
+    outcomes: ['reference', 'idea-forge'],
     participant: 'docs/customer-outcome.md',
   },
   {
@@ -195,9 +138,9 @@ const ACTIVITIES = [
     track: 'foundations',
     difficulty: 'beginner',
     duration_minutes: 210,
-    description: 'Provision Foundry, choose a model, create an agent, and ground it with the Northfield FAQ corpus.',
+    description: 'Provision Foundry, choose a model, create an agent, and ground it with an approved sample corpus.',
     tags: ['foundations', 'agent', 'knowledge', 'citations'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/foundations/README.md',
     facilitator: 'docs/activities/foundations-facilitator.md',
   },
@@ -210,7 +153,7 @@ const ACTIVITIES = [
     description: 'Attach governed tools and approval-gated actions to your Foundry agent.',
     prerequisites: ['foundations'],
     tags: ['tools', 'mcp', 'actions', 'approval'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/advanced-action-tools/README.md',
     facilitator: 'docs/activities/advanced-action-tools-facilitator.md',
   },
@@ -223,7 +166,7 @@ const ACTIVITIES = [
     description: 'Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.',
     prerequisites: ['foundations'],
     tags: ['evaluation', 'red-team', 'safety', 'quality'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/advanced-evaluation-redteam/README.md',
     facilitator: 'docs/activities/advanced-evaluation-redteam-facilitator.md',
   },
@@ -236,7 +179,7 @@ const ACTIVITIES = [
     description: 'Trace model calls, retrieval, tool use, and failures in Application Insights.',
     prerequisites: ['foundations'],
     tags: ['observability', 'tracing', 'app-insights', 'debugging'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/advanced-tracing-observability/README.md',
     facilitator: 'docs/activities/advanced-tracing-observability-facilitator.md',
   },
@@ -249,7 +192,7 @@ const ACTIVITIES = [
     description: 'Package and deploy your agent as a hosted endpoint with the unified azure.yaml contract.',
     prerequisites: ['foundations'],
     tags: ['deployment', 'hosted-agent', 'container'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/advanced-deploy-hosted-agent/README.md',
     facilitator: 'docs/activities/advanced-deploy-hosted-agent-facilitator.md',
   },
@@ -262,7 +205,7 @@ const ACTIVITIES = [
     description: 'Create a stakeholder-facing chat or demo UI for the Foundry agent.',
     prerequisites: ['foundations'],
     tags: ['ui', 'demo', 'frontend'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-build-ui/README.md',
     facilitator: 'docs/activities/extra-build-ui-facilitator.md',
   },
@@ -275,7 +218,7 @@ const ACTIVITIES = [
     description: 'Add a spoken interaction path for contact-center, accessibility, or demo scenarios.',
     prerequisites: ['foundations'],
     tags: ['voice', 'realtime', 'interface'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-voice-live/README.md',
     facilitator: 'docs/activities/extra-voice-live-facilitator.md',
   },
@@ -288,7 +231,7 @@ const ACTIVITIES = [
     description: 'Ground answers in operational or analytical data when static documents are not enough.',
     prerequisites: ['foundations'],
     tags: ['fabric', 'knowledge', 'data'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-fabric-iq/README.md',
     facilitator: 'docs/activities/extra-fabric-iq-facilitator.md',
   },
@@ -301,7 +244,7 @@ const ACTIVITIES = [
     description: 'Extract, validate, review, and route document data with a keyless, human-governed workflow.',
     prerequisites: ['foundations'],
     tags: ['documents', 'document-intelligence', 'human-review', 'workflow'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-document-workflow/README.md',
     facilitator: 'docs/activities/extra-document-workflow-facilitator.md',
   },
@@ -314,7 +257,7 @@ const ACTIVITIES = [
     description: 'Analyze safe image inputs with structured results, uncertainty handling, and human review boundaries.',
     prerequisites: ['foundations'],
     tags: ['vision', 'multimodal', 'structured-output', 'human-review'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-visual-multimodal/README.md',
     facilitator: 'docs/activities/extra-visual-multimodal-facilitator.md',
   },
@@ -327,7 +270,7 @@ const ACTIVITIES = [
     description: 'Query approved structured data through explicit access, field, and result-provenance controls.',
     prerequisites: ['foundations'],
     tags: ['data', 'governance', 'structured-data', 'provenance'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-governed-data-copilot/README.md',
     facilitator: 'docs/activities/extra-governed-data-copilot-facilitator.md',
   },
@@ -339,7 +282,7 @@ const ACTIVITIES = [
     duration_minutes: 45,
     description: 'Use skills and MCP deliberately instead of guessing fast-moving Foundry APIs.',
     tags: ['copilot', 'skills', 'mcp'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-copilot-assisted/README.md',
     facilitator: 'docs/activities/extra-copilot-assisted-facilitator.md',
   },
@@ -352,7 +295,7 @@ const ACTIVITIES = [
     description: 'Explore manager/planner orchestration with Microsoft Agent Framework patterns.',
     prerequisites: ['foundations'],
     tags: ['multi-agent', 'orchestration', 'magentic'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-magentic-workflows/README.md',
     facilitator: 'docs/activities/extra-magentic-workflows-facilitator.md',
   },
@@ -365,7 +308,7 @@ const ACTIVITIES = [
     description: 'Use background run patterns for workflows that outlive a browser session.',
     prerequisites: ['foundations'],
     tags: ['hosted-agent', 'long-running', 'workflow'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/extra-hosted-longrunning/README.md',
     facilitator: 'docs/activities/extra-hosted-longrunning-facilitator.md',
   },
@@ -378,138 +321,13 @@ const ACTIVITIES = [
     description: 'Split the assistant into a router and specialist agents for a realistic customer journey.',
     prerequisites: ['foundations'],
     tags: ['capstone', 'multi-agent', 'router'],
-    outcomes: ['upskill'],
+    outcomes: ['reference'],
     participant: 'activities/capstone-multi-agent/README.md',
     facilitator: 'docs/activities/capstone-multi-agent-facilitator.md',
   },
 ];
 
-const APP_PATHS = [
-  {
-    id: 'knowledge-assistant',
-    name: 'Knowledge and policy assistant',
-    tagline: 'Answer from trusted, approved sources with clear citations and abstention.',
-    description: 'Choose this path when the primary customer value is reliable answers about policies, manuals, FAQs, or other governed knowledge.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define users, approved sources, access assumptions, and abstention boundaries.' },
-      { activity_id: 'foundations', status: 'required', label: 'Build the agent and knowledge base', note: 'Complete Steps 1-4, including Foundry IQ grounding.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test cited answers, abstention, and domain-specific safety.' },
-      { activity_id: 'advanced-tracing-observability', status: 'recommended', note: 'Show retrieval, latency, and failure paths.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Expose a controlled endpoint for stakeholder testing.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Use only when a visible citations experience strengthens the demo.' },
-      { activity_id: 'advanced-action-tools', status: 'optional', note: 'Add only a clearly governed side effect; knowledge alone is enough for this path.' },
-    ],
-  },
-  {
-    id: 'governed-workflow-agent',
-    name: 'Governed action and workflow agent',
-    tagline: 'Turn an approved request into one safe, reviewable workflow action.',
-    description: 'Choose this path when value comes from creating, changing, routing, or escalating work rather than answering from a document corpus.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define the side effect, requester, approver, escalation, and evidence.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. Knowledge-base Step 4 is optional unless the action needs policy context.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'advanced-action-tools', status: 'required', note: 'Implement one small approval-gated action or safe draft/queue equivalent.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Evaluate call, deny, escalate, and refusal behavior.' },
-      { activity_id: 'advanced-tracing-observability', status: 'required', note: 'Trace tool calls and approval decisions end to end.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host the controlled workflow for stakeholder testing.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Add when users need an approval card or workflow status surface.' },
-      { activity_id: 'extra-hosted-longrunning', status: 'optional', note: 'Use for work that must survive the request or browser session.' },
-    ],
-  },
-  {
-    id: 'document-workflow',
-    name: 'Document workflow',
-    tagline: 'Extract, validate, review, and route structured work from documents.',
-    description: 'Choose this path when documents begin a business process and a human must be able to see, correct, and approve the extracted result.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define approved document types, retention, reviewers, unacceptable extraction errors, and the route after review.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. A knowledge base is optional unless the workflow needs policy context.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-document-workflow', status: 'required', note: 'Build extraction, confidence validation, review, and structured handoff for one safe document type.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test extraction quality, low-confidence handling, prompt injection in documents, and review routing.' },
-      { activity_id: 'advanced-tracing-observability', status: 'required', note: 'Trace document processing, validation, and reviewer decisions.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host the controlled workflow only after document and reviewer access are understood.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Add a review surface only when it makes correction and approval clearer.' },
-    ],
-  },
-  {
-    id: 'live-data-copilot',
-    name: 'Live data and insights copilot',
-    tagline: 'Answer right-now operational questions from a governed live data source.',
-    description: 'Choose this path when the customer needs current state, capacity, inventory, queue, SLA, or metric insight rather than static policy retrieval.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define the source of truth, allowed fields, freshness expectation, and access boundary.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. Add a static knowledge base only when policy context is also needed.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-fabric-iq', status: 'required', note: 'Connect the approved operational data path and prove source routing.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test factuality, access boundaries, and safe handling of missing or stale data.' },
-      { activity_id: 'advanced-tracing-observability', status: 'required', note: 'Trace live-data tool selection and latency.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host the copilot for a controlled user trial.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Use when a data-oriented stakeholder experience improves the proof point.' },
-    ],
-  },
-  {
-    id: 'voice-multimodal-assistant',
-    name: 'Voice assistant',
-    tagline: 'Deliver a low-friction spoken interaction without weakening the agent contract.',
-    description: 'Choose this path when voice, accessibility, hands-free use, or a live conversational experience is central to the customer outcome.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define audience, language, accessibility needs, handoff behavior, and the safe spoken demo.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. Grounding is optional unless spoken answers need trusted source citations.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-voice-live', status: 'required', note: 'Bind Voice Live to the scenario agent and tune turn-taking.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test safety, refusal, and task completion in the spoken experience.' },
-      { activity_id: 'advanced-tracing-observability', status: 'recommended', note: 'Make latency and failed interaction paths visible.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host the agent for a repeatable voice demo.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Add a companion transcript or handoff surface when it helps the user journey.' },
-    ],
-  },
-  {
-    id: 'visual-multimodal-assistant',
-    name: 'Visual multimodal assistant',
-    tagline: 'Turn safe image inputs into structured, reviewable assistance.',
-    description: 'Choose this path when a user needs help understanding an image and the outcome can be bounded with explicit uncertainty and review behavior.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define allowed image classes, privacy boundaries, unsupported cases, reviewers, and the safe proof scenario.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3; add document grounding only if the image result needs policy context.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-visual-multimodal', status: 'required', note: 'Build structured image analysis with uncertainty and human-review boundaries.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test correct interpretation, uncertainty, unsafe inputs, and escalation.' },
-      { activity_id: 'advanced-tracing-observability', status: 'recommended', note: 'Trace image processing and failure paths without exposing unsafe content.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host only the approved, access-controlled experience.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Use when the result needs a clear, reviewable visual interface.' },
-    ],
-  },
-  {
-    id: 'governed-data-copilot',
-    name: 'Governed data copilot',
-    tagline: 'Answer structured-data questions through explicit access, field, and provenance controls.',
-    description: 'Choose this path when operational insight needs more governance than a generic live-data lookup: approved fields, query rules, access assumptions, and explainable results.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define the data owner, approved fields, requester access, unacceptable disclosures, and a trustworthy result proof.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. Static knowledge is optional and may supply policy context.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-governed-data-copilot', status: 'required', note: 'Implement allowlisted structured-data access, query validation, provenance, and sensitive-result review.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Test access denial, unsafe query attempts, unsupported questions, and result correctness.' },
-      { activity_id: 'advanced-tracing-observability', status: 'required', note: 'Trace the governed query path and inspect denied or escalated requests.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Expose only after caller identity and data-platform permissions are decided.' },
-      { activity_id: 'extra-build-ui', status: 'optional', note: 'Use when results need a visible provenance and approval surface.' },
-      { activity_id: 'extra-fabric-iq', status: 'optional', note: 'Use Fabric IQ when the governed source is a supported Fabric/OneLake workload.' },
-    ],
-  },
-  {
-    id: 'orchestrated-workflow',
-    name: 'Orchestrated or long-running workflow',
-    tagline: 'Coordinate specialist work when a single agent or one chat turn is not enough.',
-    description: 'Choose this path when the outcome has real handoffs, specialist roles, durable jobs, or an auditable multi-step process.',
-    sessions: [
-      { activity_id: 'customer-outcome', status: 'required', note: 'Define role boundaries, handoffs, ownership, and the smallest valuable end-to-end process.' },
-      { activity_id: 'foundations', status: 'required', label: 'Provision and define the agent', note: 'Complete Steps 1-3. Add grounding only to specialists that need trusted documents.', anchor: '#step-1-setup-provisioning-foundry-ai-search' },
-      { activity_id: 'extra-magentic-workflows', status: 'required', note: 'Model the manager/planner workflow before adding concurrency.' },
-      { activity_id: 'capstone-multi-agent', status: 'required', note: 'Build the smallest router and specialist team that proves the outcome.' },
-      { activity_id: 'advanced-evaluation-redteam', status: 'required', note: 'Evaluate routing, handoffs, refusals, and final task completion.' },
-      { activity_id: 'advanced-tracing-observability', status: 'required', note: 'Trace handoffs and investigate failed paths.' },
-      { activity_id: 'advanced-action-tools', status: 'recommended', note: 'Add only if a specialist must safely change a downstream system.' },
-      { activity_id: 'extra-hosted-longrunning', status: 'optional', note: 'Use when the workflow must continue after the initiating request ends.' },
-      { activity_id: 'advanced-deploy-hosted-agent', status: 'recommended', note: 'Host the workflow behind a controlled endpoint.' },
-    ],
-  },
-];
+const APP_PATHS = [];
 
 function readIfExists(relPath) {
   const abs = path.join(ROOT, relPath);
@@ -529,10 +347,6 @@ function repoBlob(pathPart) {
   return `https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/${pathPart}`;
 }
 
-function customerChapterId(slug) {
-  return CUSTOMER_CHAPTER_IDS[slug] || slug;
-}
-
 function activityUrl(id, hash = '') {
   return `activity.html?id=${id}${hash || ''}`;
 }
@@ -540,33 +354,23 @@ function activityUrl(id, hash = '') {
 function transformMarkdown(markdown, activity) {
   const activityAssetBase = `assets/data/activities/${activity.id}/assets/`;
   const sourceDir = sourceDirFor(activity);
-  const isCustomerChapter = sourceDir === 'docs/customer-build';
 
   return stripFrontMatter(markdown)
     .replace(/\{% include journey-status\.html[^%]*%\}/g, '')
     .replace(/\{% include module-lens\.html[^%]*%\}/g, '')
     .replace(/\{%[^%]*%\}/g, '')
-    .replace(/\{\{\s*'\/customer-build'\s*\|\s*relative_url\s*\}\}/g, 'catalog.html?outcome=customer-build')
     .replace(/\{\{\s*'\/customer-outcome'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=customer-outcome')
-    .replace(/\{\{\s*'\/idea-forge'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=idea-forge')
-    .replace(/\{\{\s*'\/upskill'\s*\|\s*relative_url\s*\}\}/g, 'catalog.html?outcome=upskill')
+    .replace(/\{\{\s*'\/idea-forge'\s*\|\s*relative_url\s*\}\}/g, 'idea-forge.html')
     .replace(/\{\{\s*'\/setup'\s*\|\s*relative_url\s*\}\}/g, 'activity.html?id=setup')
     .replace(/\{\{\s*'\/activities\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => activityUrl(slug, hash))
-    .replace(/\{\{\s*'\/customer-build\/([^'#]+)(#[^']*)?'\s*\|\s*relative_url\s*\}\}/g, (_m, slug, hash = '') => activityUrl(customerChapterId(slug), hash))
-    .replace(/\]\(\.\.\/\.\.\/docs\/customer-build\.md\)/g, '](catalog.html?outcome=customer-build)')
-    .replace(/\]\(\.\.\/\.\.\/docs\/customer-build\/([^).#]+)\.md(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(customerChapterId(slug), hash)})`)
     .replace(/\]\(\.\.\/\.\.\/docs\/customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
     .replace(/\]\(\.\.\/activities\/([^)#]+)(#[^)]+)?\)/g, (_m, slug, hash = '') => `](${activityUrl(slug, hash)})`)
     .replace(/\]\(\.\.\/customer-outcome(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('customer-outcome', hash)})`)
     .replace(/\]\(\.\.\/idea-forge(#[^)]+)?\)/g, (_m, hash = '') => `](${activityUrl('idea-forge', hash)})`)
-    .replace(/\]\(\.\.\/customer-build\)/g, '](catalog.html?outcome=customer-build)')
     .replace(/\]\(\.\.\/\.\.\/resources\//g, '](resources/')
     .replace(/\]\(\.\.\/\.\.\/docs\/activities\/([^)]+)\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
-    .replace(/\]\((?:\.\.\/)*customer-build\.md\)/g, '](catalog.html?outcome=customer-build)')
     .replace(/\]\((?:\.\.\/)*customer-outcome\.md\)/g, '](activity.html?id=customer-outcome)')
     .replace(/\]\(\.\.\/([a-z0-9-]+)\/README\.md\)/g, (_m, slug) => `](activity.html?id=${slug})`)
-    .replace(/\]\((foundations|advanced-action-tools|advanced-evaluation-redteam|advanced-tracing-observability|advanced-deploy-hosted-agent|extra-build-ui|capstone-multi-agent)(#[^)]+)?\)/g,
-      (_m, slug, hash = '') => isCustomerChapter ? `](${activityUrl(customerChapterId(slug), hash)})` : _m)
     .replace(/\]\(assets\//g, `](${activityAssetBase}`)
     .replace(/\]\(([^):?#]+\.(?:py|sh|js|mjs|cjs|ps1))(#[^)]+)?\)/g, (_m, target, hash = '') => {
       if (!sourceDir) return _m;

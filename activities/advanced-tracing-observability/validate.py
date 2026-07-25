@@ -196,16 +196,16 @@ def main() -> int:
     group.add_argument("--all", action="store_true")
     parser.add_argument("--dry-run", action="store_true",
                         help="Offline structural smoke test (no Azure calls).")
-    parser.add_argument("--track", choices=("upskill", "customer"), default="upskill",
-                        help="upskill = Northfield reference; customer = your own scenario "
-                             "(relaxes the Northfield corpus assumption, expects --question).")
+    parser.add_argument("--track", choices=("reference", "customer"), default="reference",
+                        help="reference = sample organization reference; customer = your own scenario "
+                             "(relaxes the sample organization corpus assumption, expects --question).")
     args = parser.parse_args()
 
     env = load_env()
     if args.dry_run:
         info("(dry-run: offline structural checks only — no Azure calls)\n")
     if args.track == "customer":
-        info("(track: customer — validating YOUR scenario, not Northfield)\n")
+        info("(track: customer — validating YOUR scenario, not sample organization)\n")
 
     checks = {
         1: lambda: check_step1(env, args.dry_run),

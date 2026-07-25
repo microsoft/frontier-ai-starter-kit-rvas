@@ -25,7 +25,7 @@ from azure.identity import DefaultAzureCredential
 endpoint = os.environ["AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT"]
 client = DocumentIntelligenceClient(endpoint, DefaultAzureCredential())
 
-with open("./fictional-northfield-application.pdf", "rb") as document:
+with open("./fictional-sample-application.pdf", "rb") as document:
     poller = client.begin_analyze_document("prebuilt-layout", body=document)
 layout = poller.result()
 ```

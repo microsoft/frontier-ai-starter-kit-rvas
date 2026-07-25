@@ -30,6 +30,18 @@ the deployable foundation is in [`accelerator/README.md`](accelerator/README.md)
 Work the modules in order — Module 1 is the highest-stakes decision and every later module depends
 on it.
 
+## Decision gates to carry into the customer conversation
+
+Use these gates before opening reference-library mechanics:
+
+| Gate | Decide before building |
+|---|---|
+| Experience boundary | Why does avatar, voice, audio, or video improve the outcome compared with a typed experience? |
+| Content boundary | Which claims are approved, versioned, owned, expirable, and traceable to source evidence? |
+| Consent boundary | Which likeness, voice, disclosure, accessibility, and fallback rules apply before generation? |
+| Approval boundary | Which roles approve factual accuracy, compliance, brand, and source ownership for each revision? |
+| Operating boundary | What evaluation, red-team, trace, feedback, and withdrawal evidence is required before release? |
+
 ## Working contract
 
 - **Approved content is the publishing boundary.** A grounded assistant may cite permitted sources

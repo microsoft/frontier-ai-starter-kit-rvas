@@ -1,11 +1,11 @@
 ---
-title: "Capstone: Northfield IQ, the Team · Facilitator"
+title: "Capstone: sample IQ, the Team · Facilitator"
 parent: Build Modules
 nav_order: 130
 nav_exclude: true
 ---
 
-# Facilitator Guide · Capstone — Northfield IQ, the Team
+# Facilitator Guide · Capstone — sample IQ, the Team
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 

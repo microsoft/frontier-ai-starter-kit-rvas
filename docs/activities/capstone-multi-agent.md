@@ -4,13 +4,13 @@ parent: Build Modules
 nav_order: 30
 ---
 
-# Capstone · Northfield IQ, the Team — Multi-Agent Orchestration with MAF
+# Capstone · sample IQ, the Team — Multi-Agent Orchestration with MAF
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Orchestrate" artifact="A router plus specialist agents that handle a realistic journey as a team." next="Start from the monolithic assistant, define the agent org chart, then wire the MAF workflow." %}
 
-{% include module-lens.html upskill="Turn Northfield into a student-services team with knowledge, action, and escalation specialists." %}
+{% include module-lens.html reference="Turn sample organization into a student-services team with knowledge, action, and escalation specialists." %}
 
 > Tier 3 · Capstone. ⏱ Core 2–2.5 hr (sequential + fan-out + DevUI + trace) ·
 > +1 hr Magentic manager stretch · +1.5 hr hosted long-running deploy variant.
@@ -18,7 +18,7 @@ nav_order: 30
 
 {% include activity-prereq.html text="Foundations end-state plus Advanced · Action Tools. Tracing & Observability is strongly recommended; Deploy as a Hosted Agent is required only for the hosted variant." skip_path="false" %}
 
-You have built one Northfield IQ Assistant: it knows things (Foundations KB), it does things
+You have built one sample IQ assistant: it knows things (Foundations KB), it does things
 (Action Tools), you can prove it safe (Eval), watch it (Tracing), and ship it (Deploy). This capstone
 asks the question every real deployment eventually hits: what happens when one agent isn't enough?
 
@@ -63,7 +63,7 @@ By the end, your team can:
 
 ## The agent org-chart (role-as-agent)
 
-The single Northfield IQ Assistant becomes a student-services desk team. Every box is a real role on
+The single sample IQ assistant becomes a student-services desk team. Every box is a real role on
 a real help desk — that is what makes "multi-agent orchestration" click. Each specialist reuses an
 artifact you already built; the triage and escalation agents are new, small, tool-less reasoners.
 
@@ -165,8 +165,8 @@ specialist's output, and for the final synthesized answer. This is a graded crit
 The agent-graph shape here is identical for almost any help-desk-shaped domain — only the corpus,
 the specialist prompts, the action tools, and the eval set change. Reskinning the capstone
 for your own domain (insurance, factory ops, retail, …) is exactly what the
-[Customer Build Track — Grow It Into a Team]({{ '/customer-build/capstone-multi-agent' | relative_url }})
-chapter walks you through, decision by decision. Build the Northfield version here first; it is the
+[Reference Library]({{ '/reference.html' | relative_url }})
+chapter walks you through, decision by decision. Build the sample organization version here first; it is the
 known-good reference that chapter links back to.
 
 ---

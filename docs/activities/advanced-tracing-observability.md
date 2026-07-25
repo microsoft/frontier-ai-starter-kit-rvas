@@ -10,13 +10,13 @@ nav_order: 12
 
 {% include journey-status.html tone="shared" path="Build Modules &rarr; Debug" artifact="End-to-end GenAI traces in Foundry and Application Insights for model, retrieval, and tool calls." next="Enable instrumentation before SDK imports, run a traced question, then inspect spans." %}
 
-{% include module-lens.html upskill="Trace Northfield runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
+{% include module-lens.html reference="Trace sample organization runs to learn how model, retrieval, and tool spans appear in Foundry and App Insights." %}
 
 {% include activity-prereq.html %}
 
 ## Why this activity
 
-Your Northfield IQ Assistant answers grounded questions today — but when a student gets a slow,
+Your sample IQ assistant answers grounded questions today — but when a student gets a slow,
 wrong, or uncited answer, can you explain why? Right now the agent is a black box: a model call,
 a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
 and you can see none of it.
@@ -52,7 +52,7 @@ you can watch it run.
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
-  - `AZURE_FOUNDRY_AGENT_NAME` — the Northfield IQ Assistant agent name (e.g. `northfield-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
 - An Application Insights resource linked to your Foundry project. Foundations provisions one;
   its connection string lands in `.env` as `APPLICATIONINSIGHTS_CONNECTION_STRING`. If that variable
   is missing, see Step 1 — you will fetch it from the project.
@@ -158,7 +158,7 @@ plus a tool span if Action Tools is attached).
 **Tasks:**
 
 1. Create `activities/advanced-tracing-observability/traced_run.py`. Import and call
-   `enable_tracing()` from Step 1 first, then ask the Northfield IQ Assistant a grounded question
+   `enable_tracing()` from Step 1 first, then ask the sample IQ assistant a grounded question
    that forces a knowledge-base lookup — e.g. *"What documents do I need for financial aid?"*
 
 2. Drive the agent through the Responses API against your `AZURE_FOUNDRY_AGENT_NAME`. Print the answer and
@@ -175,7 +175,7 @@ from trace_setup import enable_tracing   # importing this runs the env-first set
 project = enable_tracing()
 client = project.get_openai_client()
 
-QUESTION = "What documents do I need to apply for financial aid at Northfield?"
+QUESTION = "What documents do I need to apply for financial aid at sample organization?"
 
 response = client.responses.create(
     input=QUESTION,
@@ -327,7 +327,7 @@ python activities/advanced-tracing-observability/validate.py --step 4
 
 ## Done — what you can now do
 
-- Every Northfield IQ answer is observable end to end, two ways: portal Traces view and KQL.
+- Every sample IQ answer is observable end to end, two ways: portal Traces view and KQL.
 - You can take one student question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 

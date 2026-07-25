@@ -18,7 +18,7 @@ This page gives you three environment options. The fastest route is GitHub Codes
 
 ## Choose your setup path
 
-The setup flow is identical for Customer Build and Upskill teams.
+The setup flow is identical for Customer Build and reference teams.
 
 ### 1. GitHub Codespaces (recommended)
 
