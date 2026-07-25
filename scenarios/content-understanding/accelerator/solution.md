@@ -11,10 +11,10 @@ decisions; this file is the code you land on.
 
 ```bash
 ./scripts/deploy.sh rg-content-understanding eastus2
-# writes accelerator/.env, then confirm the account is reachable keylessly:
-az cognitiveservices account show \
-  --name "$AZURE_AI_SERVICES_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
-  --query "properties.endpoint" -o tsv
+# writes accelerator/.env, then confirm the endpoint answers your Entra identity:
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT"
 ```
 
 The `.env` contract (no secrets):

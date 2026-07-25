@@ -111,26 +111,53 @@ and keep the withdrawal path from module 6 one action away.
 
 ## Verify
 
+Prove the release gate rests on evidence you can see, not on a good demo. Check each against your own
+resources and records.
+
+**1. Traces actually reached Application Insights.** You set the GenAI tracing switches before
+importing the SDK, so a drafting or synthesis run should have emitted spans. Query the resource
+module 2 provisioned:
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_operate.py
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+az extension add -n application-insights 2>/dev/null
+az monitor app-insights query --ids "$APPLICATIONINSIGHTS_RESOURCE_ID" \
+  --analytics-query "dependencies | where timestamp > ago(1d) | where customDimensions has 'gen_ai' | count" \
+  -o table
 ```
 
-Expected:
+A non-zero count means a failure will be diagnosable end to end. Zero rows after you have run the
+assistant means the switches were set *after* the SDK import, a common mistake: export
+`AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` and
+`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` before importing Foundry, then re-run.
 
-```
-== Module 7 checkpoint: prove and operate ==
-PASS  release declares a scorecard and thresholds
-PASS  a trace was reviewed
-PASS  ship-pilot decision only when every gate is green
-PASS  feedback fixture is a synthetic aggregate
-...
-✅ Module 7 checkpoint PASS — release gates are green, trace reviewed, feedback privacy-safe
+**2. `ship-pilot` is only recorded when every gate meets its threshold.** Read your own release
+record and check the scorecard against the thresholds:
+
+```bash
+jq -e '.decision != "ship-pilot" or (
+  .scorecard.grounding_pass_rate            >= .thresholds.min_grounding_pass_rate and
+  .scorecard.accessibility_defects          <= .thresholds.max_accessibility_defects and
+  .scorecard.redteam_high_severity_findings <= .thresholds.max_redteam_high_severity_findings and
+  .scorecard.unapproved_claim_leaks         <= .thresholds.max_unapproved_claim_leaks and
+  .trace_reviewed == true)' \
+  scenarios/avatar-onboarding/accelerator/sample-data/release-decision.json
 ```
 
-A `ship-pilot` decision with any gate below threshold **fails**; a feedback fixture containing an
-email or free-text field **fails**. For the managed evaluation checkpoint, use
-`python activities/advanced-evaluation-redteam/validate.py`
-([Evaluation & Red Teaming activity](../../../activities/advanced-evaluation-redteam/README.md)).
+`true` is the result you want. `false` means you recorded a ship decision with a red gate: an
+unapproved-claim leak or an unresolved red-team finding riding out to a real cohort on a synthetic
+face.
+
+**3. The feedback you collect carries no identifiers.** Onboarding measurement must be aggregate.
+Scan your fixture for anything shaped like an email or per-person record:
+
+```bash
+jq -e '[.. | strings] | any(test("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"; "i")) | not' \
+  scenarios/avatar-onboarding/accelerator/sample-data/feedback-fixture.json
+```
+
+`true` means no address-shaped strings are present. Any match means you are tracking individuals on
+an onboarding tool. Drop to counts only.
 
 ## Troubleshooting
 
@@ -141,7 +168,7 @@ email or free-text field **fails**. For the managed evaluation checkpoint, use
 | Red-team finds impersonation | Prompt allows role-play as real people | Forbid impersonation; keep disclosure mandatory in the system prompt |
 | Accessibility defect slips to pilot | Fallback/transcript not evaluated | Gate on captions + transcript + fallback presence (module 5) |
 | Feedback contains PII | Collecting per-user events/free-text | Aggregate only; the check fails on identifiers/emails/free-text |
-| Ship decision recorded despite a red gate | Thresholds not enforced | The checkpoint blocks `ship-pilot` unless every gate is green |
+| Ship decision recorded despite a red gate | Thresholds not enforced | The release check blocks `ship-pilot` unless every gate is green |
 
 ## Decision record
 

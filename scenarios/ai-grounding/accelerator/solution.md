@@ -25,7 +25,7 @@ answer synthesis. The GA API version (`2026-04-01`) provides minimal extractive 
 
 # Confirm both deployments landed
 az cognitiveservices account deployment list \
-  --name "$AZURE_AI_SERVICES_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --name "$AZURE_AI_FOUNDRY_ACCOUNT_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
   --query "[].name" -o tsv
 ```
 

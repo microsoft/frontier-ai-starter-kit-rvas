@@ -196,7 +196,7 @@ resources.
 
 ```bash
 az cognitiveservices account deployment list \
-  --name "$AZURE_AI_SERVICES_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --name "$AZURE_AI_FOUNDRY_ACCOUNT_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
   --query "[].name" -o tsv
 ```
 

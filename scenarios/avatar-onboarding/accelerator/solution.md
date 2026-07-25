@@ -46,10 +46,10 @@ responsible-AI gates.
 ```bash
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 
-# Confirm the Speech resource is reachable with your Entra identity
-az cognitiveservices account show \
-  --name "$AZURE_SPEECH_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
-  --query "properties.endpoint" -o tsv
+# Confirm the Speech endpoint answers your Entra identity
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SPEECH_ENDPOINT"
 ```
 
 `deploy.sh` deploys `accelerator/main.bicep` and writes a **keyless** `.env` contract from the
@@ -78,7 +78,7 @@ Upload approved content and produce the versioned claim set:
 # List what is actually in the approved-content container
 az storage blob list --auth-mode login \
   --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
-  --container-name "$AZURE_APPROVED_CONTENT_CONTAINER" \
+  --container-name "$AZURE_STORAGE_CONTAINER_NAME" \
   --query "[].name" -o tsv
 ```
 

@@ -69,24 +69,55 @@ more hop.
 
 ## Verify
 
+Check the deployed endpoint the way an attacker and an operator would: try it without a token, confirm
+it runs as an identity and not a key, and confirm it is still traced.
+
+**1. The endpoint refuses an unauthenticated caller.**
+
 ```bash
-# Structure only
-python3 scenarios/content-understanding/accelerator/scripts/verify_deploy.py --offline
-
-# Live: confirm the deployed endpoint rejects an unauthenticated call
-python3 scenarios/content-understanding/accelerator/scripts/verify_deploy.py \
-  --endpoint https://<your-endpoint>
+curl -s -o /dev/null -w '%{http_code}\n' https://<your-endpoint>/<route>
 ```
 
-Expected:
+You want `401` or `403`. A `200` means the workflow is exposed anonymously — anyone who finds the URL
+can push documents through it and read extracted results. Then confirm an authenticated call still
+works so you know you tested the right route:
 
-```
-✅ Module 7 checkpoint PASS — the deployment manifest contract is complete
+```bash
+TOKEN=$(az account get-access-token --resource https://ai.azure.com --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" https://<your-endpoint>/<route>
 ```
 
-The offline check asserts Entra auth with a managed identity and no keys, an authenticated endpoint,
-Application Insights with GenAI tracing on, a defined rollback strategy, module-6 gate status, and
-retained evidence references. The live probe expects a `401`/`403` from an unauthenticated request.
+**2. The runtime runs as a managed identity, with no keys.**
+
+```bash
+grep -riE '(api[_-]?key|account[_-]?key|connection[_-]?string|sharedaccesskey)' deploy-manifest.json
+```
+
+No output is what you want. Then confirm the deployment identity actually holds the roles it needs —
+absent them, the endpoint authenticates callers but cannot reach its own models or storage:
+
+```bash
+az role assignment list --assignee "<deployment-managed-identity-object-id>" \
+  --query "[].roleDefinitionName" -o tsv
+```
+
+Expect **Cognitive Services User** and **Storage Blob Data Reader**. A key in the config or a missing
+role is how key-based auth quietly creeps back in at the last step.
+
+**3. The deployed runtime still emits traces.**
+
+Send one authenticated request, then query the workspace behind `APPLICATIONINSIGHTS_RESOURCE_ID`:
+
+```kusto
+dependencies
+| where timestamp > ago(15m)
+| where customDimensions has "gen_ai"
+| project timestamp, name, duration, operation_Id
+| order by timestamp desc
+```
+
+Rows for your request mean tracing survived the deployment. No rows means the GenAI env vars were not
+carried into the runtime, and you shipped a workflow you cannot observe in production.
 
 ## Troubleshooting
 
