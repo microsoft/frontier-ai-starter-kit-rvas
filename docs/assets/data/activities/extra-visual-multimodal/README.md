@@ -2,11 +2,11 @@
 
 > **Command context:** Run all commands from the repository root.
 
-> Tier 2 · Extra — modular. Start after Foundations, or use the repository bootstrap path:
+> Reusable visual-analysis module. Start after your scenario foundation, or use the repository bootstrap path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
-Build a small, **human-reviewed** accessibility and wayfinding assistant for a generic sample organization
-campus image. It can extract visible sign text and describe observable route cues; it must not
+Build a small, **human-reviewed** visual-observation assistant for a generic sample image. It can
+extract visible sign text and describe observable route cues; it must not
 identify people, infer disability or other sensitive traits, or decide whether a route is safe or
 accessible.
 
@@ -28,11 +28,10 @@ or image URLs containing SAS tokens in source control.
 
 ## Demo boundary and safe input
 
-Use only a generic, non-sensitive sample organization campus accessibility/wayfinding image: for example,
+Use only a generic, non-sensitive accessibility/wayfinding image: for example,
 an empty exterior path leading to a building entrance, with a visible directional sign and no
-recognizable people, vehicles, IDs, screens, or student work. A staged or openly licensed image is
-fine. Do not upload photos of people, classrooms, medical aids, access badges, private spaces, or
-real students.
+recognizable people, vehicles, IDs, screens, or private work. A staged or openly licensed image is
+fine. Do not upload photos of people, classrooms, medical aids, access badges, or private spaces.
 
 Your `visual_multimodal.py` must:
 
@@ -47,7 +46,7 @@ Your `visual_multimodal.py` must:
 Write the task as an observable question:
 
 > “What directional text is visibly readable, and what route or entrance cues are observable in
-> this generic sample organization campus image?”
+> this generic sample image?”
 
 Choose the smallest capability that answers it:
 
@@ -61,7 +60,7 @@ optionally `CAPTION` or `TAGS`). Caption availability varies by region, so confi
 resource supports every requested feature before building the demo. More features increase processing,
 cost, and data exposure. Do not enable people/face analysis for this activity.
 
-**Checkpoint:** Explain why your selected model/task needs only those features.
+**Verify:** Explain why your selected model/task needs only those features.
 
 ## Step 2 — Implement keyless image analysis
 
@@ -102,7 +101,7 @@ Use service confidence where it is available. If text is missing, low-confidence
 or the image quality prevents a reliable observation, say so and set `review_required=True`.
 Never fill gaps with a guess.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/extra-visual-multimodal/validate.py --step 4
@@ -111,7 +110,7 @@ python activities/extra-visual-multimodal/validate.py --step 5
 
 ## Step 4 — Make the human boundary explicit
 
-Escalate to a trained human/campus accessibility contact when the result could affect a person's
+Escalate to a trained human reviewer when the result could affect a person's
 route choice or accommodation: an unclear curb cut, obstructed path, unreadable sign, entrance
 availability, or a request to certify compliance. The tool may summarize what it can see; it
 must not approve a route or make an accommodation decision.
@@ -122,7 +121,7 @@ Capture evidence safely:
   structured output, and review outcome;
 - keep the original image out of traces and evaluation artifacts unless its approved retention
   policy explicitly permits it;
-- evaluate only approved synthetic/staged campus images with expected sign text, route cues, and
+- evaluate only approved synthetic/staged images with expected sign text, route cues, and
   escalation cases; inspect traces to confirm the selected feature set and the review decision.
 
 ```bash
@@ -133,9 +132,9 @@ python activities/extra-visual-multimodal/validate.py --all --dry-run
 
 ## What you built
 
-A keyless, bounded visual observation workflow for a safe sample organization wayfinding demo: safe image
+A keyless, bounded visual observation workflow for a safe wayfinding demo: safe image
 intake → minimum-capability analysis → structured confidence-aware output → human review and
-evaluation evidence. It is an assistive observation aid, not a replacement for campus accessibility
+evaluation evidence. It is an assistive observation aid, not a replacement for accessibility
 inspection or human judgment.
 
 See [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/extra-visual-multimodal/solution.md) for the known Image Analysis pattern and the limits of the

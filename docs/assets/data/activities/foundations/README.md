@@ -1,51 +1,47 @@
-# Foundations — Build the sample organization IQ Assistant
+# Foundations — Reusable Foundry mechanics reference
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-> Tier 1 · Foundations — the guided, linear activity everyone completes.
-> One evolving artifact, four ordered steps. By the end you will have a deployed, grounded
-> sample organization "IQ" Assistant — an agent that answers student-services questions from
-> sample organization's own FAQ corpus, with citations.
+> Reference module for the shared Foundry mechanics used by the scenario tracks: provision a
+> keyless project, compare models, create a named agent, and ground that agent with Azure AI Search.
+> Use the sample organization corpus only as a replaceable placeholder when your scenario does not
+> already provide approved data.
 
-## How this session is structured (read first)
+## How to use this reference
 
-The curriculum has three tiers:
+This module is not a parallel scenario track. Scenario lessons own the customer decision record and
+the order of work. Use the steps below only when a scenario points you to the reusable mechanics:
 
-- Tier 1 · Foundations (this activity) — a single guided path, broken into four ordered
-  steps. Everyone does it. Each step ends in a Checkpoint you can verify before moving on.
-  Step N's Checkpoint is the prerequisite for Step N+1.
-- Tier 2 · Advanced — modular, self-contained activities you can attempt in any order
-  (Action Tools, Evaluation & Red Teaming, Tracing & Observability, Deploy as a Hosted Agent, plus
-  Extras). Every Advanced activity assumes the Foundations end-state — the grounded assistant
-  you build here.
-Completing Step 4 = the Foundations end-state. It is the prerequisite for the entire Advanced
-tier. If you only do one thing today, finish all four steps below.
+- **Step 1** — provision the keyless Foundry + AI Search foundation and export the `.env` contract.
+- **Step 2** — compare model deployments and reproduce the selected behavior in code.
+- **Step 3** — create a named, versioned prompt agent.
+- **Step 4** — attach an Azure AI Search grounding source and require citations.
 
-> Building your own app instead? Start with the scenario playbook and use this activity only for the
-> shared implementation mechanics.
+If your scenario already has a dedicated foundation lesson, follow that lesson first and use this
+module as the mechanics reference for commands, environment names, and verification shape.
 
-### The default scenario
+### Replaceable sample path
 
-You are building the sample organization IQ Assistant, a student-services agent. It grows
-across the four steps:
+The examples use a fictional sample organization IQ assistant so the commands have concrete payloads.
+Replace the assistant name, instructions, questions, and corpus with the approved data from your
+scenario or customer build.
 
 | Step | What the assistant can do afterward |
 |---|---|
 | 1 · Setup | Nothing yet — your infrastructure is live and authenticated |
 | 2 · Model & Playground | Answer generic questions with a model and system instructions you chose |
 | 3 · First Agent | Run as a named, versioned agent with a persona and guardrails |
-| 4 · Knowledge Base | Answer from sample organization's real FAQ corpus, with citations ← end-state |
+| 4 · Knowledge Base | Answer from an approved corpus, with citations |
 
 ### What you need before you start
 
 - The repo open in GitHub Codespaces or a local Dev Container (Python + Azure CLI + `azd`).
 - An Azure subscription where you can create AI resources.
-- About 3–3.5 hours for the full guided path.
+- Enough time to complete the specific mechanics your scenario references.
 
-> Checkpoints are machine-checkable. Each step ends with `python activities/foundations/validate.py --step N`. The
-> validator (provided in this folder) inspects your live Azure resources and prints
-> `✅ Step N PASS` or a specific failure. The final `python activities/foundations/validate.py --all` asserts the complete
-> end-state.
+> Verification is machine-checkable when you use the provided sample assets. Each step ends with
+> `python activities/foundations/validate.py --step N`; the final
+> `python activities/foundations/validate.py --all` asserts the complete grounded-agent mechanics.
 
 ---
 
@@ -103,10 +99,9 @@ across the four steps:
 - [ ] Your project appears in the Foundry portal and the model catalog opens under Discover → Models.
 - [ ] No API keys are pasted anywhere — auth flows through `DefaultAzureCredential`.
 
-**Checkpoint:** Provisioning and auth are verified programmatically.
+**Verify:** Provisioning and auth are verified programmatically.
 ```bash
 python activities/foundations/validate.py --step 1
-# expected: "✅ Step 1 PASS"
 ```
 
 ---
@@ -124,16 +119,16 @@ python activities/foundations/validate.py --step 1
 2. Open the Chat Playground, select that deployment, and set a starting system
    instruction for the assistant:
    ```text
-   You are sample organization's student services assistant. Answer in a warm, clear,
-   student-friendly tone. If you are unsure or the information is missing, say so plainly
-   and point the student to the right office.
+   You are the approved scenario assistant. Answer in a warm, clear tone for the intended
+   audience. If you are unsure or the information is missing, say so plainly and point the
+   user to the right owner rather than guessing.
    ```
-   Send a few sample organization questions and note tone, structure, and accuracy:
+   Send a few scenario-specific questions and note tone, structure, and accuracy:
    - "How do I apply for scholarships?"
    - "What computer science programs do you offer?"
    - "Can I register late for classes?"
 3. Switch the Playground to your second model and run the same prompts. Compare on four axes:
-   answer detail, latency, tone, and suitability for a student-services assistant. Change only the
+   answer detail, latency, tone, and suitability for the scenario assistant. Change only the
    model between runs so the comparison is fair.
 4. Iterate on the system instruction until the smaller model behaves well: define audience, tone,
    how to handle missing information, and what is out of scope. Save your best version to
@@ -168,7 +163,7 @@ python activities/foundations/validate.py --step 1
    response = openai.responses.create(
        model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
        instructions=system_instructions,
-       input="How do I apply for scholarships at sample organization?",
+       input="How do I apply for scholarships at the sample organization?",
    )
    print(response.output_text)
    ```
@@ -180,10 +175,9 @@ python activities/foundations/validate.py --step 1
 - [ ] A tuned system instruction is saved to `assets/system-instructions.txt`.
 - [ ] `python activities/foundations/app/step2_chat.py` prints an on-tone answer using `responses.create()` and `DefaultAzureCredential` (no API key).
 
-**Checkpoint:** The deployments exist and the SDK call succeeds.
+**Verify:** The deployments exist and the SDK call succeeds.
 ```bash
 python activities/foundations/validate.py --step 2
-# expected: "✅ Step 2 PASS"
 ```
 
 ---
@@ -195,11 +189,11 @@ python activities/foundations/validate.py --step 2
 **Tasks:**
 1. Decide the agent's identity. Build on your Step 2 system instructions, adding guardrails and
    refusal behavior. A strong agent definition covers:
-   - Persona — "sample organization Student Services Assistant."
-   - Scope — answers admissions, financial aid, housing, registration, academics, student support.
+   - Persona — the assistant role for your scenario.
+   - Scope — the topics this assistant is allowed to answer.
    - Uncertainty — says what information is missing instead of inventing facts.
    - Refusals — declines off-topic, harmful, or academic-integrity-violating requests, and redirects to the right office.
-   - Format — concise, student-friendly; offers a next action or contact when relevant.
+   - Format — concise and audience-appropriate; offers a next action or contact when relevant.
 2. Create the agent in the portal: open Build → Agents → New agent, name it
    `sample-iq-assistant`, select the deployment from `AZURE_AI_MODEL_DEPLOYMENT_NAME`, paste
    your instructions, and save.
@@ -258,18 +252,17 @@ python activities/foundations/validate.py --step 2
 - [ ] The agent answers an in-scope question and refuses the cheating request and the out-of-scope request.
 - [ ] The same instructions exist in both the portal and code (code↔portal parity).
 
-**Checkpoint:** The named, versioned agent exists and responds through the Responses API.
+**Verify:** The named, versioned agent exists and responds through the Responses API.
 ```bash
 python activities/foundations/validate.py --step 3
-# expected: "✅ Step 3 PASS"
 ```
 
 ---
 
-## Step 4 — Knowledge Base: Azure AI Search grounding  *(← Foundations end-state)*
+## Step 4 — Knowledge Base: Azure AI Search grounding
 
-**Goal:** Ground the agent in sample organization's own data — index the FAQ corpus into Azure AI Search,
-attach that index to the agent, and verify answers come back with source citations.
+**Goal:** Ground the agent in approved data — index the corpus into Azure AI Search, attach that
+index to the agent, and verify answers come back with source citations.
 
 **Tasks:**
 1. Inspect the corpus. The source data lives in
@@ -291,8 +284,8 @@ attach that index to the agent, and verify answers come back with source citatio
    ```
    Aim for moderate chunks with light overlap so policy details (deadlines, GPA thresholds,
    office hours) are not split awkwardly. Keep a retrievable `content` field and a `source` field so
-   the agent can cite where each answer came from. The local sample organization corpus uses filenames as
-   citations. For clickable URL citations, index a retrievable source-URL field that points to
+   the agent can cite where each answer came from. The sample corpus uses filenames as citations.
+   For clickable URL citations, index a retrievable source-URL field that points to
    documents your users are authorized to access.
 3. Confirm keyless RBAC. For the agent's managed identity to read the index without keys, the
    Foundry project managed identity needs two roles on the AI Search resource:
@@ -327,7 +320,7 @@ attach that index to the agent, and verify answers come back with source citatio
    ).id
 
    instructions = (
-       "You are sample organization's student services assistant. Answer ONLY from the "
+       "You are the approved scenario assistant. Answer ONLY from the "
        "knowledge base. If the answer is not in the documents, say so. Always cite your "
        "sources as [source]."
    )
@@ -356,7 +349,7 @@ attach that index to the agent, and verify answers come back with source citatio
    ```python
    openai = project.get_openai_client()
    resp = openai.responses.create(
-       input="What is sample organization's FAFSA priority deadline and school code?",
+       input="What is the sample organization's FAFSA priority deadline and school code?",
        extra_body={"agent_reference": {"name": "sample-iq-assistant", "type": "agent_reference"}},
    )
    print(resp.output_text)   # expect: March 1 priority deadline, school code 041777, with a citation
@@ -365,49 +358,44 @@ attach that index to the agent, and verify answers come back with source citatio
    one should be specific and sourced; the ungrounded one vague or invented.
 
 **Success Criteria:**
-- [ ] An Azure AI Search index over the sample organization FAQ corpus exists and returns results for a test query.
+- [ ] An Azure AI Search index over the approved or sample corpus exists and returns results for a test query.
 - [ ] The agent uses the Azure AI Search project connection and the text index with `SEMANTIC` retrieval.
 - [ ] The `sample-iq-assistant` agent has a new version with the AI Search tool attached.
 - [ ] The agent answers a precise question (e.g. FAFSA deadline + school code `041777`) with at least one citation to a source document.
 - [ ] A grounded vs. ungrounded comparison shows the grounded answer is more specific and sourced.
 
-**Checkpoint:** The grounded agent returns a cited answer — this is the Foundations end-state.
+**Verify:** The grounded agent returns a cited answer.
 ```bash
 python activities/foundations/validate.py --step 4
-# expected: "✅ Step 4 PASS"
 ```
 
 ---
 
-## End-state Checkpoint
+## End-state verification
 
-You have reached the Foundations end-state: a deployed, grounded sample organization IQ
-Assistant that answers from the FAQ corpus with citations. Confirm the whole thing end-to-end:
+You have a deployed, grounded assistant that answers from the selected corpus with citations.
+Confirm the mechanics end-to-end:
 
 ```bash
 python activities/foundations/validate.py --all
-# expected: "✅ Foundations end-state PASS — grounded sample IQ assistant is live"
 ```
 
 `--all` re-asserts every step: infra provisioned (Step 1), model deployment reachable (Step 2), the
 named versioned agent exists (Step 3), and the agent returns a cited answer from Azure AI Search
-(Step 4). When this passes green, every Advanced activity is unblocked.
+(Step 4).
 
 ---
 
-## What's next — the Advanced tier
+## What this unlocks
 
-Pick any of these, in any order. Each one extends the same assistant and assumes the
-Foundations end-state you just built (or the bootstrap skip-path:
-`azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`).
+These reusable modules build on the same mechanics. Pick the ones your scenario earns:
 
 | Advanced activity | What it adds to your assistant |
 |---|---|
-| Action Tools — Make the Agent Do Work | Hands: create an IT ticket / place a registration hold / book advising via an MCP tool, with a human-approval loop |
+| Action Tools — Make the Agent Do Work | Attach governed actions via an MCP tool, with a human-approval loop |
 | Evaluation & Red Teaming | Proof it's accurate and safe — groundedness metrics plus adversarial / jailbreak results on record |
 | Tracing & Observability | Every answer observable end-to-end in Application Insights (model, retrieval, and tool spans) |
 | Deploy as a Hosted Agent | Ship it as a containerized hosted agent with its own endpoint and identity |
-| Extras (Fabric IQ · Voice Live · Magentic Workflows · Hosted Long-Running · Build a UI) | Live data, a voice, multi-agent workflows, a polished UI, and more |
+| Extras (Fabric IQ · Voice Live · Magentic Workflows · Hosted Long-Running · Build a UI) | Live data, voice, multi-agent workflows, a UI, and long-running jobs |
 
-> See the `activities/advanced-*` folders for each modular activity. Facilitators: the facilitation
-> guide for these four steps lives in [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/foundations/solution.md).
+Implementation details for adapting these mechanics live in [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/foundations/solution.md).

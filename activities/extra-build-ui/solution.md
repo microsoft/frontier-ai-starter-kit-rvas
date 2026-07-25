@@ -1,26 +1,24 @@
-# Facilitator Guide · Extra — Build a UI (Wrap the Assistant in a Web App)
+# Implementation notes — Build a UI
 
-> **Facilitator-facing.** Facilitation, pitfalls, timing, and reference snippets for the Build-a-UI Extra.
-> **Do not paste this into the student README** — answers live here only.
+Use these notes to adapt the reusable browser surface pattern: credential-holding backend-for-frontend
+(BFF), streaming responses, citations, action approval UI, and deployment.
 
 ## Overview
 
-This Extra is the "make it real" activity: students put a browser front-end on the **hosted agent**
-they shipped in **Deploy as a Hosted Agent**. The graded substance is three UI affordances —
+This Extra is the "make it real" activity: put a browser front-end on a **hosted agent** or prompt
+agent endpoint. The reusable substance is three UI affordances —
 **streaming chat**, a **citations panel**, and a **human action-approval card** — plus the one
 non-negotiable security property: **no credential ever reaches the browser**. Everything talks to the
 agent through a thin **backend-for-frontend (BFF)** that holds `DefaultAzureCredential`.
 
-It is deliberately framework-agnostic. Don't let a team burn the session bootstrapping React/Vite if
-plain HTML + `fetch` gets them to the three affordances faster. Steps 1–4 are local; Step 5 is the
+It is deliberately framework-agnostic. Plain HTML + `fetch` is enough to prove the pattern. Steps
+1–4 are local; Step 5 is the
 Azure deploy (Container Apps **or** SWA + Functions) with managed identity + scoped CORS.
 
-**Hard prerequisite:** the Deploy activity's live endpoint must answer authenticated Responses calls.
-If a team hasn't done Deploy, they can point the BFF at the **prompt-agent** Responses route instead
-(same `agent_reference` call they used in Foundations) — the UI work is identical; only the backend URL
-changes. Step 4 (approval) additionally needs the Action Tools backend running (`ACTION_API_URL`).
-
-Total time: about **1.5–2 hours** if Deploy is done; longer if they also build a polished front-end.
+**Default prerequisite:** a live hosted-agent endpoint that answers authenticated Responses calls.
+For local mechanics, the BFF can point at the **prompt-agent** Responses route instead (same
+`agent_reference` call used in Foundations); only the backend URL changes. Step 4 additionally needs
+the Action Tools backend running (`ACTION_API_URL`) or a scenario-specific approval backend.
 
 ---
 
@@ -66,14 +64,14 @@ app.mount("/", StaticFiles(directory="web", html=True), name="web")
 Run: `uvicorn server.app:app --port 5000` and open `http://localhost:5000`.
 
 ### Common pitfalls
-- **Calling the model from the browser.** The #1 mistake — students put the endpoint + token in JS.
+- **Calling the model from the browser.** The #1 mistake is putting the endpoint + token in JS.
   That's a leaked credential. Force the proxy pattern: the browser only ever sees `/api/*`.
 - **CORS confusion locally.** Serving `web/` from the **same** FastAPI app (StaticFiles mount) sidesteps
   CORS entirely for Steps 1–4; save CORS for the Step 5 deploy where origins actually differ.
 - **Wrong Responses route.** It's
   `{AZURE_AI_PROJECT_ENDPOINT}/agents/{agent}/endpoint/protocols/openai` as the `base_url`, then
   `.responses.create(...)`. A trailing slash on the endpoint env var double-slashes the path — `rstrip("/")`.
-- **No Deploy done.** Fall back to the prompt-agent route with
+- **No hosted endpoint yet.** Fall back to the prompt-agent route with
   `extra_body={"agent_reference": {"name": _agent, "type": "agent_reference"}}` — works against the Foundations agent.
 
 ---
@@ -113,8 +111,8 @@ Browser side: use `fetch('/api/chat/stream', { method: 'POST', ... })` and read
 ## Step 3 — Citations panel
 
 ### What good looks like
-A grounded answer (FAFSA question) populates the panel with the real source doc (`financial-aid.md`);
-an ungrounded/abstain answer shows "no sources" — never a fabricated citation.
+A grounded scenario answer populates the panel with source documents; an ungrounded/abstain answer
+shows "no sources" — never a fabricated citation.
 
 ### Where the citations live
 The grounded agent attaches knowledge-base sources as **annotations** on the response output. Have
@@ -175,7 +173,7 @@ origin.
 
 ---
 
-## Optional checkpoint automation contract
+## Optional verification automation contract
 
 No `validate.py` ships with this activity. If a team chooses to create one, it can implement:
 
@@ -187,15 +185,5 @@ No `validate.py` ships with this activity. If a team chooses to create one, it c
 | Browser Step 4 check | A Responses `function_call` surfaces before execution; approve creates, deny cancels |
 | `python validate.py --all` | All of the above |
 
-> Step 5 (Azure deploy) is portal/URL-verified — no programmatic checkpoint is required, but a facilitator
-> should see the public URL chat, cite, and gate an action.
-
-## Facilitation notes
-
-- Keep teams off the framework rabbit hole. The grade is the **three affordances + secret-free browser**,
-  not the CSS.
-- The strongest demo is the **approval card** — it visibly ties together grounding (citations) and
-  governance (human-in-the-loop) from the earlier Advanced activities. Encourage teams to show a
-  **deny** as well as an approve.
-- If short on time, Steps 1, 3, 4 (chat + citations + approval) are the must-haves; streaming (Step 2)
-  and the Azure deploy (Step 5) are the polish.
+> Step 5 is URL-verified: the public surface should chat, cite, and gate an action without exposing
+> credentials to the browser.

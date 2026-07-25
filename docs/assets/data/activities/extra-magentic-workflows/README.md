@@ -2,8 +2,8 @@
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
-> Prerequisite: the Foundations end-state (a deployed, grounded sample IQ assistant).
+> Reusable orchestration module. Use it only when a scenario earns dynamic multi-agent routing.
+> Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
@@ -64,7 +64,7 @@ You'll build four specialists and let the manager coordinate them:
 - [ ] Four distinct agents instantiate, each with single-responsibility instructions.
 - [ ] Knowledge is grounded in the FAQ corpus; Action holds the MCP tool.
 
-**Checkpoint:** *Self-check* — four distinct agents instantiate (Triage, Knowledge, Action, Escalation), each with single-responsibility instructions; Knowledge is grounded in the FAQ corpus and Action holds the MCP tool.
+**Verify:** *Self-check* — four distinct agents instantiate (Triage, Knowledge, Action, Escalation), each with single-responsibility instructions; Knowledge is grounded in the scenario corpus and Action holds the MCP tool.
 
 ---
 
@@ -84,7 +84,7 @@ You'll build four specialists and let the manager coordinate them:
 - [ ] The manager invokes more than one specialist for a composite request.
 - [ ] The Action path still respects the human-approval loop from Action Tools.
 
-**Checkpoint:** *Self-check* — on the composite request the manager invokes more than one specialist, and the Action path still respects the human-approval loop.
+**Verify:** *Self-check* — on the composite request the manager invokes more than one specialist, and the Action path still respects the human-approval loop.
 
 ---
 
@@ -103,7 +103,7 @@ You'll build four specialists and let the manager coordinate them:
 - [ ] DevUI renders the plan with live execution state per sub-agent.
 - [ ] An out-of-scope request is routed to Escalation, not actioned.
 
-**Checkpoint:** *DevUI state* — screenshot the plan graph mid-run (a running + a completed node) and the
+**Verify:** *DevUI state* — screenshot the plan graph mid-run (a running + a completed node) and the
 Escalation route.
 
 > _No `validate.py` ships here — Steps 1–2 are observable from the run output and Step 3 is a DevUI visual. solution.md lists what a headless checker would assert if your team wants to script Steps 1–2._

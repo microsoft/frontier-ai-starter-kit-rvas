@@ -4,24 +4,23 @@
 
 > ⏱ Guided ~1.25 hr · 🛠 Build-from-scratch ~2 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
-> Assistant). Complete Foundations, or run the bootstrap skip-path:
+> Reusable mechanics module. Use it when a scenario needs quality evaluation, adversarial testing,
+> and a release gate. Prerequisite: a deployed agent from your scenario or the Foundations mechanics
+> reference. Complete the required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 Shipping an assistant that *sounds* good is not the same as shipping one that is accurate and
 safe. In this activity you prove both: you measure answer quality with NLP/LLM-judge metrics,
-build a sample organization-specific evaluator, then red-team the agent with adversarial prompts —
+build a scenario-specific evaluator, then red-team the agent with adversarial prompts —
 jailbreaks, harmful-content requests, and prompt-injection hidden inside retrieved documents — and
 finally wire a score gate so a bad build can fail CI.
 
-Why now: a sample assistant that sounds confident but invents a financial-aid deadline — or
-quietly follows an instruction smuggled inside a retrieved document — does real harm to a real
-student. This is where you stop trusting vibes and start proving accuracy and safety with numbers,
-so a regressed build fails *before* it reaches a student, not after.
+Why now: an assistant that sounds confident but invents facts — or quietly follows an instruction
+smuggled inside a retrieved document — can do real harm. This is where you stop trusting vibes and
+start proving accuracy and safety with numbers, so a regressed build fails before users see it.
 
 What you'll produce
-- An evaluation run (portal and code) over a real sample organization dataset with Groundedness,
+- An evaluation run (portal and code) over a scenario or sample dataset with Groundedness,
   Relevance, Coherence, and Fluency scores.
 - A custom domain evaluator that rewards grounded contacts and correct abstention.
 - Documented red-team results across ≥ 3 attack categories.
@@ -33,7 +32,7 @@ Assets shipped with this activity
 - [`assets/adversarial-seed.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/adversarial-seed.jsonl) — labeled attack objectives to seed
   the red-team step.
 - [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py) — the code-driven harness (built-in + custom evaluators + CI gate).
-- [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/validate.py) — the Checkpoints below.
+- [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/validate.py) — the Verify checks below.
 
 This activity ships three rungs off the same backbone — the same `validate.py` grades all
 three. (a) Guided path (below) walks the 5 steps · (b) Build-from-scratch path hands you
@@ -54,17 +53,16 @@ only the datasets + the contract · (c) Stretch goals go open-ended.
 2. Upload [`assets/sample-eval.jsonl`](assets/data/activities/advanced-evaluation-redteam/assets/sample-eval.jsonl). Map `query` → query column and
    `ground_truth` → ground-truth column; `context` is your grounding column.
 3. Select the Groundedness, Relevance, Coherence, Fluency evaluators and pick your deployed chat
-   model as the judge. Run it against the sample IQ assistant's answers.
+   model as the judge. Run it against the scenario assistant's answers.
 4. Open the result: read per-row scores, then the aggregate. Note the two weakest metrics.
 
 **Success Criteria:**
 - [ ] An evaluation run appears in the portal with all four metrics scored.
 - [ ] You can name the two lowest-scoring metrics and one row that dragged a metric down.
 
-**Checkpoint:** The dataset is valid and large enough to evaluate (no tiny 10-row set).
+**Verify:** The dataset is valid and large enough to evaluate (no tiny 10-row set).
 ```text
 python activities/advanced-evaluation-redteam/validate.py --step 1
-# expected: "✅ Step 1 PASS — 36 rows, 13 topics, abstain cases present"
 ```
 
 ---
@@ -97,20 +95,19 @@ fluency         4.80   4.0   5.0
 — 36 rows scored · 2 below gate (3.5) on groundedness
 ```
 
-**Checkpoint:** The harness runs end-to-end (validated offline so facilitators don't burn quota).
+**Verify:** The harness runs end-to-end in offline mode before you spend evaluation quota.
 ```text
 python activities/advanced-evaluation-redteam/validate.py --step 2
-# expected: "✅ Step 2 PASS — evaluate.py runs and reports aggregate scores"
 ```
 
 ---
 
 ## Step 3 — Build a custom domain evaluator
 
-**Goal:** Measure something the generic metrics miss — sample organization-specific correctness.
+**Goal:** Measure something the generic metrics miss — scenario-specific correctness.
 
 **Tasks:**
-1. In [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py), study `sample organizationDomainEvaluator`. It returns a 1–5 score and
+1. In [`evaluate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/evaluate.py), study the sample domain evaluator. It returns a 1–5 score and
    rewards: (a) surfacing a real `*@sample.edu` / `(555)` contact when the ground truth has one,
    and (b) correctly abstaining on `category: "abstain"` rows — while penalizing any
    hallucinated/foreign email.
@@ -123,10 +120,9 @@ python activities/advanced-evaluation-redteam/validate.py --step 2
 - [ ] The custom evaluator scores every row and reports a `sample_domain` aggregate.
 - [ ] Your added rule changes the score on at least one row (show the before/after).
 
-**Checkpoint:** The evaluator discriminates good from fabricated answers.
+**Verify:** The evaluator discriminates good from fabricated answers.
 ```text
 python activities/advanced-evaluation-redteam/validate.py --step 3
-# expected: "✅ Step 3 PASS — custom evaluator discriminates (grounded > fabricated)"
 ```
 
 ---
@@ -155,10 +151,9 @@ python activities/advanced-evaluation-redteam/validate.py --step 3
 - [ ] You tested ≥ 3 attack categories and recorded actual vs. expected behavior for each.
 - [ ] At least one prompt-injection-via-document case is covered, with a stated mitigation.
 
-**Checkpoint:** The adversarial seed set is present, labeled, and includes an injection case.
+**Verify:** The adversarial seed set is present, labeled, and includes an injection case.
 ```text
 python activities/advanced-evaluation-redteam/validate.py --step 4
-# expected: "✅ Step 4 PASS — N adversarial prompts across M categories, injection case present"
 ```
 
 ---
@@ -179,10 +174,9 @@ python activities/advanced-evaluation-redteam/validate.py --step 4
 - [ ] A gated run passes; an intentionally-degraded prompt makes it fail (exit code 1).
 - [ ] You can show a before/after where one change moved an aggregate score.
 
-**Checkpoint:** End-to-end — all prior checkpoints pass together.
+**Verify:** End-to-end — all prior checks pass together.
 ```text
 python activities/advanced-evaluation-redteam/validate.py --all
-# expected: "✅ ALL CHECKPOINTS PASS"
 ```
 
 ---

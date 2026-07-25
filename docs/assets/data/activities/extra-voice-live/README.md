@@ -2,32 +2,32 @@
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
-> Prerequisite: the Foundations end-state (a deployed, grounded sample IQ assistant).
+> Reusable interface module for realtime spoken interaction. Use it only when a scenario chooses a
+> live voice branch. Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: Foundations Step 3 (a working agent). It works on the Step 3 agent; it's
 > *better* on the Step 4 grounded agent (spoken answers gain citations).
 
-> ⚙️ Infra prerequisite (facilitator must pre-provision): Voice Live API access (Azure AI
+> Infra prerequisite: Voice Live API access (Azure AI
 > Speech / Foundry voice) in a supported region, and a microphone-capable client machine (laptop
 > mic + speakers, or headset). See [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/extra-voice-live/solution.md) → *Infra to pre-provision*. Confirm
-> regional availability before the event.
+> regional availability before the session.
 >
-> 🎤 Demo wow-factor: a literal talking campus assistant — speak a question, hear it answer in a
+> Sample demo: speak a question, hear it answer in a
 > natural voice with sub-second latency. The single strongest crowd demo of the event.
 
 ## Why this activity
 
-Every activity so far has been typed. But a student walking across campus doesn't want to type —
-they want to *ask*. The Voice Live API turns your text assistant into a spoken one: it streams
+Most activities so far have been typed. When the scenario earns a spoken interface, the user may
+want to *ask*. The Voice Live API turns your text assistant into a spoken one: it streams
 mic audio in, runs your agent, and streams synthesized speech back out, all over a single low-latency
 WebSocket. No stitching together separate speech-to-text, agent, and text-to-speech calls — Voice Live
 orchestrates the full duplex loop for you.
 
 ```text
-   🎤 mic ──▶ Voice Live (STT) ──▶ sample IQ assistant ──▶ Voice Live (TTS) ──▶ 🔊 speaker
+   mic ──▶ Voice Live (STT) ──▶ scenario assistant ──▶ Voice Live (TTS) ──▶ speaker
               └────────────────── one low-latency streaming session ──────────────────┘
 ```
 
@@ -35,7 +35,7 @@ orchestrates the full duplex loop for you.
 
 ## Step 1 — Connect a Voice Live session to your agent
 
-**Goal:** Open a Voice Live session bound to your sample organization agent and confirm the handshake.
+**Goal:** Open a Voice Live session bound to your scenario agent and confirm the handshake.
 
 **Tasks:**
 1. Install the current client SDK release (`pip install azure-ai-voicelive`) and confirm mic + speaker
@@ -54,9 +54,9 @@ root `.env.sample`. Agent mode uses Microsoft Entra ID authentication, not a Spe
 
 **Success Criteria:**
 - [ ] The client establishes a Voice Live session without auth errors.
-- [ ] The session is bound to your sample organization agent (not a bare model).
+- [ ] The session is bound to your scenario agent (not a bare model).
 
-**Checkpoint:** *Console state* — the client prints `session.created` (or equivalent) and a chosen voice id.
+**Verify:** *Console state* — the client prints `session.created` (or equivalent) and a chosen voice id.
 
 ---
 
@@ -75,7 +75,7 @@ root `.env.sample`. Agent mode uses Microsoft Entra ID authentication, not a Spe
 - [ ] Speaking a question produces an audible spoken answer.
 - [ ] Audio plays back incrementally (you hear it start before the full answer is computed).
 
-**Checkpoint:** *Live demo* — speak a sample organization question and the assistant answers out loud. Capture a
+**Verify:** *Live demo* — speak a scenario question and the assistant answers out loud. Capture a
 short screen+audio recording for the readout.
 
 ---
@@ -96,12 +96,11 @@ short screen+audio recording for the readout.
 - [ ] You can interrupt (barge-in) mid-answer and it yields.
 - [ ] (Grounded agent) a spoken answer reflects FAQ-corpus content.
 
-**Checkpoint:** *Live demo* — a multi-turn spoken conversation with at least one barge-in, confirmed with
-your facilitator.
+**Verify:** *Live demo* — a multi-turn spoken conversation with at least one barge-in.
 
 ---
 
 ## What you built
 
-A hands-free, spoken sample IQ assistant. Same grounded brain, new interface — the agent now
+A hands-free, spoken scenario assistant. Same grounded brain, new interface — the agent now
 listens and talks back in real time, which is the demo people remember.

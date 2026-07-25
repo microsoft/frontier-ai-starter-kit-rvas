@@ -122,7 +122,6 @@
       "id": "experience-generation",
       "title": "Generate the accessible avatar experience",
       "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
-      "activity_id": "extra-voice-live",
       "implementation_paths": [
         "accelerator/content_pack.py"
       ],

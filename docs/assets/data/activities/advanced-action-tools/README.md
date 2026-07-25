@@ -4,21 +4,21 @@
 
 > ⏱ Guided ~45 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
-> Assistant). Complete Foundations, or run the bootstrap skip-path:
+> Reusable mechanics module. Use it when a scenario needs a governed action seam. Prerequisite: a
+> deployed Foundry agent from your scenario or the Foundations mechanics reference. Complete the
+> required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 So far your assistant knows things — it retrieves from the knowledge base and answers. In this
-activity it learns to do things: open an IT ticket, place a course-registration hold, or book an
-advising slot. The difference matters. A knowledge tool reads; an action tool changes the world.
+activity it learns to do things: open a ticket, place a hold, book a slot, start a workflow, or call
+another approved system. The difference matters. A knowledge tool reads; an action tool changes the
+world.
 Because actions have consequences, you'll also implement a human-approval loop so the agent *asks
 before it acts*.
 
-Why now: an assistant that only retrieves can't help the student who needs a hold lifted or a
-ticket opened — but the moment it can *act*, a wrong move has real consequences (a wrongful course
-hold blocks a student's registration). This is where your agent earns the right to touch the real
-world, and where you build the guardrail that makes that safe.
+Why now: an assistant that only retrieves cannot complete a task. But the moment it can *act*, a
+wrong move has real consequences. This is where your agent earns the right to touch the real world,
+and where you build the approval guardrail that makes that safe.
 
 You will wire a provided backend — you do not build it. The Action Tools REST API ships in
 [`scripts/action-backend/`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/README.md) and exposes three action
@@ -26,9 +26,9 @@ endpoints your `FunctionTool` callables hit directly:
 
 | Action function | Does | Key arguments |
 |---|---|---|
-| `create_it_ticket` | Opens an IT support ticket | `student_id, summary, category, priority` |
-| `place_course_hold` | Places a registration hold | `student_id, course_code, reason` |
-| `book_advising_slot` | Books an advising appointment | `student_id, advisor, iso_datetime, topic` |
+| `create_it_ticket` | Opens a support ticket | `student_id, summary, category, priority` |
+| `place_course_hold` | Places a sample hold | `student_id, course_code, reason` |
+| `book_advising_slot` | Books an appointment | `student_id, advisor, iso_datetime, topic` |
 
 > Note: The backend also ships an optional FastMCP server (`mcp_server.py`) on `:8765/mcp`. That
 > server is a preview/stretch asset — it is not part of this guided path. See Rung (c) stretch
@@ -48,7 +48,7 @@ Env contract (authoritative — matches `.env.sample` and the backend):
 
 Files in this activity
 - [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
-- [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/validate.py) — the Checkpoints below.
+- [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/validate.py) — the Verify checks below.
 
 This activity ships three rungs off the same backbone — pick your depth. The same
 `validate.py` grades all three, so you can climb as far as you like: (a) Guided path (below)
@@ -76,10 +76,9 @@ walks you through a starter file · (b) Build-from-scratch path hands you only t
 **Success Criteria:**
 - [ ] `GET /health` returns 200.
 
-**Checkpoint:** The provided backend answers over REST.
+**Verify:** The provided backend answers over REST.
 ```text
 python activities/advanced-action-tools/validate.py --step 1
-# expected: "✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080"
 ```
 
 ---
@@ -92,13 +91,14 @@ python activities/advanced-action-tools/validate.py --step 1
 1. Compare: your Foundations RAG tool *reads* the FAQ; `create_it_ticket` *writes* a ticket that pages
    a human. One is safe to auto-run; the other is not.
 2. List, for each of the three provided tools, the side effect and who is affected if the agent
-   fires it incorrectly (e.g. a wrongful course hold blocks a student's registration).
+   fires it incorrectly.
 3. Decide your approval policy: which tools always require human approval? (For this activity: all.)
 
 **Success Criteria:**
 - [ ] You can name the side effect of each action tool and justify requiring approval.
 
-**Checkpoint:** Conceptual — confirmed verbally with your facilitator; no script.
+**Verify:** You can explain the side effect and approval boundary for each action. No script is
+needed for this conceptual check.
 
 ---
 
@@ -121,10 +121,9 @@ python activities/advanced-action-tools/validate.py --step 1
 - [ ] The three action functions call the backend and return JSON strings.
 - [ ] `build_action_tools()` returns three `FunctionTool` definitions; no `< PLACEHOLDER >` remains before `run_with_approval`.
 
-**Checkpoint:** The wiring file defines the action tools correctly.
+**Verify:** The wiring file defines the action tools correctly.
 ```text
 python activities/advanced-action-tools/validate.py --step 2
-# expected: "✅ Step 2 PASS — action FunctionTool defined (sample actions @ ACTION_API_URL)"
 ```
 
 ---
@@ -151,10 +150,9 @@ python activities/advanced-action-tools/validate.py --step 2
 - [ ] Denying a call returns a denial result to the agent without performing the action.
 - [ ] No `< PLACEHOLDER >` remains.
 
-**Checkpoint:** The approval loop is implemented.
+**Verify:** The approval loop is implemented.
 ```text
 python activities/advanced-action-tools/validate.py --step 3
-# expected: "✅ Step 3 PASS — human tool-approval loop implemented"
 ```
 
 ---
@@ -165,7 +163,7 @@ python activities/advanced-action-tools/validate.py --step 3
 
 **Tasks:**
 1. Run `python activities/advanced-action-tools/agent_with_actions.py`. The seeded prompt asks to open a high-priority WiFi ticket for
-   `s1029384`. Approve when prompted.
+   sample user. Approve when prompted.
 2. Confirm the agent reports the new `ticket_id`, then verify the record exists in the backend:
    `curl http://localhost:8080/it-tickets`.
 3. Try a denial: re-run, deny the approval, and confirm no ticket is created.
@@ -178,21 +176,19 @@ python activities/advanced-action-tools/validate.py --step 3
 Your run should look like this:
 ```text
 🔧 Action requested: create_it_ticket
-   student_id=s1029384  category=wifi  priority=high  summary="WiFi down in Cedar Hall"
+   student_id=s1029384  category=wifi  priority=high  summary="WiFi down in the sample site"
 Approve this action? [y/N]: y
 ✅ Agent: I've opened ticket IT-10428 (high priority) for the Cedar Hall WiFi outage.
 ```
 
-**Checkpoint:** An action round-trips through the provided backend.
+**Verify:** An action round-trips through the provided backend.
 ```text
 python activities/advanced-action-tools/validate.py --step 4
-# expected: "✅ Step 4 PASS — approval loop created backend ticket ..."
 ```
 
 Full run:
 ```text
 python activities/advanced-action-tools/validate.py --all
-# expected: "✅ ALL CHECKPOINTS PASS"
 ```
 
 ---

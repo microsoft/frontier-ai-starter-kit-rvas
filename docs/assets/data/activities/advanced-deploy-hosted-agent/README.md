@@ -4,16 +4,16 @@
 
 > ⏱ Guided ~60–90 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
-> Assistant). Complete Foundations, or run the bootstrap skip-path:
+> Reusable mechanics module. Use it when a scenario needs a hosted, authenticated endpoint.
+> Prerequisite: a local scenario agent or the Foundations mechanics reference. Complete the required
+> foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
-So far your sample IQ assistant lives inside your project as a prompt agent — you invoke it
-from a notebook or script through the Responses API. That's perfect for building, but it isn't a thing
-you can hand to the IT helpdesk or a student-portal team. They need a real endpoint: a URL with its
+So far your assistant lives inside your project as a prompt agent — you invoke it from a notebook or
+script through the Responses API. That's perfect for building, but it is not a surface another team
+can depend on. They need a real endpoint: a URL with its
 own identity, its own scaling, and its own run history, independent of your dev environment.
 
 In this activity you ship the artifact. You containerize the assistant, deploy it as a hosted
@@ -46,7 +46,7 @@ This activity deploys the grounded assistant as a containerized service.
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment the agent uses
-  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the scenario agent name (for example, `sample-iq-assistant`)
 - CLI tooling (in the devcontainer): `az`, `azd` (Azure Developer CLI), and `docker`. You can build
   the image without local Docker using ACR cloud build (shown in Step 2).
 - Logged in: `az login` and `azd auth login`, with the subscription set to your event subscription.
@@ -113,14 +113,11 @@ gives you only the deploy contract + the gotcha list · (c) Stretch goals go ope
 - [ ] Its `project:` directory and configured entry point exist under `hosted/src/`.
 - [ ] `azd ai agent run` starts the local agent and the inspector receives an answer.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-deploy-hosted-agent/validate.py --step 1
-# expected: "✅ Step 1 PASS — azure.yaml + hosted Responses service + source project present and valid"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -159,14 +156,11 @@ version and per-agent managed identity.
 - [ ] `azd deploy` completes and reports the agent endpoint/playground.
 - [ ] `azd ai agent invoke` returns an answer from the deployed agent.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-deploy-hosted-agent/validate.py --step 2
-# expected: "✅ Step 2 PASS — hosted endpoint exists and requires authentication"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -222,15 +216,12 @@ $ curl -s -o /dev/null -w "%{http_code}" <endpoint>/responses   # no token
 403
 ```
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-deploy-hosted-agent/invoke_hosted.py
 python activities/advanced-deploy-hosted-agent/validate.py --step 3
-# expected: "✅ Step 3 PASS — live endpoint answers authenticated calls, rejects anonymous"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -264,14 +255,11 @@ the same OTel traces you learned to read in the Tracing activity.
 - [ ] A hosted run appears as a trace in App Insights / the Tracing tab.
 - [ ] A KQL query scoped to the hosted agent returns its runs with token + latency.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-deploy-hosted-agent/validate.py --step 4
-# expected: "✅ Step 4 PASS — hosted run visible in run history and App Insights traces"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -296,7 +284,7 @@ The gotchas you get (everything else you design):
 
 ## Done — what you shipped
 
-- The sample IQ assistant runs as a hosted Foundry agent with its own endpoint, version, and
+- The scenario assistant runs as a hosted Foundry agent with its own endpoint, version, and
   per-agent managed identity.
 - It's invocable over the production Responses protocol, enforces auth, and every run is observable in
   run history and App Insights.

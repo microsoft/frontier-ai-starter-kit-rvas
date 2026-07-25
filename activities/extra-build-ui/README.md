@@ -2,16 +2,16 @@
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
-> Prerequisite: the Foundations end-state (a deployed, grounded sample IQ assistant).
-> Complete Foundations, or run the bootstrap skip-path:
+> Reusable surface module. Use it when a scenario needs a browser UI over a hosted or prompt agent.
+> Prerequisite: a deployed scenario agent or the Foundations mechanics reference. Complete the
+> required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: the Advanced · Deploy as a Hosted Agent activity — this Extra puts a
 > browser front-end on the live Responses endpoint you shipped there. For the action-approval
 > panel (Step 4), also complete Advanced · Action Tools (`ACTION_API_URL`).
 
-> 🎤 Demo wow-factor: a student types *"What's the FAFSA deadline?"* into a real chat window and
+> Sample demo: a user types a grounded question into a real chat window and
 > watches the answer stream in with a citations panel beside it — then asks the agent to *open an
 > IT ticket* and has to click Approve before anything happens. The same grounded, governed agent,
 > now with a face.
@@ -19,7 +19,7 @@
 ## Why this activity
 
 Everything so far has been driven from a notebook, a script, or `curl`. That's right for building —
-but no student is going to `POST /responses` from a terminal. To make the sample IQ assistant feel
+but no end user is going to `POST /responses` from a terminal. To make the scenario assistant feel
 real, it needs a web UI: a chat window that streams answers, a citations panel that shows which
 FAQ document each answer came from, and an action-approval prompt so a human stays in the loop
 before the agent does anything with consequences.
@@ -43,7 +43,7 @@ you deploy the whole thing — static front-end + BFF — to Azure and wire CORS
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
-  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the scenario agent name (for example, `sample-iq-assistant`)
   - `ACTION_API_URL` — the Action Tools REST backend base URL (only if you did Action Tools, for Step 4)
 - The hosted agent endpoint from the Deploy activity (the agent answers authenticated Responses
   calls).
@@ -101,9 +101,7 @@ credential ever reaches the browser.
       DevTools → Sources / Network).
 - [ ] The BFF authenticates with `DefaultAzureCredential` — no API key is pasted.
 
-**Checkpoint:** *Live demo* — type a question in the page and get the agent's answer back; in DevTools → Sources/Network confirm no bearer token, key, or `AZURE_*` secret is delivered to the browser.
-
-> _Facilitator note: see solution.md._
+**Verify:** *Live demo* — type a question in the page and get the agent's answer back; in DevTools → Sources/Network confirm no bearer token, key, or `AZURE_*` secret is delivered to the browser.
 
 ---
 
@@ -124,15 +122,13 @@ credential ever reaches the browser.
 - [ ] The answer renders progressively (visible deltas), not in a single late dump.
 - [ ] The send button is disabled while a response is streaming and re-enabled when it completes.
 
-**Checkpoint:** *Live demo* — the answer renders progressively (visible deltas), not in one late dump; the send button disables mid-stream and re-enables when the stream closes.
-
-> _Facilitator note: see solution.md._
+**Verify:** *Live demo* — the answer renders progressively (visible deltas), not in one late dump; the send button disables mid-stream and re-enables when the stream closes.
 
 ---
 
 ## Step 3 — Render the citations panel
 
-**Goal:** Every grounded answer shows which sample organization FAQ documents it came from, beside the chat.
+**Goal:** Every grounded answer shows which scenario source documents it came from, beside the chat.
 
 **Tasks:**
 1. In the BFF, pull the citations / source annotations out of the Responses payload (the grounded
@@ -141,17 +137,14 @@ credential ever reaches the browser.
 2. In the page, render each source in the citations panel: the document name (e.g.
    `financial-aid.md`) and the quoted snippet, as a numbered list that maps to the `[source]` markers
    in the answer text.
-3. Ask the canonical grounded question — *"What is sample organization's FAFSA priority deadline and school
-   code?"* — and confirm the panel lists the financial-aid source the answer cites.
+3. Ask a canonical grounded scenario question and confirm the panel lists the expected source.
 
 **Success Criteria:**
 - [ ] A grounded answer populates the citations panel with at least one real source document name.
 - [ ] An answer with no grounding (or an abstention) shows an empty/"no sources" panel — it never
       fabricates a citation.
 
-**Checkpoint:** *Live demo* — ask *"What is sample organization's FAFSA priority deadline and school code?"* and the citations panel lists the real financial-aid source; an ungrounded answer shows an empty panel and never fabricates a citation.
-
-> _Facilitator note: see solution.md._
+**Verify:** *Live demo* — ask a grounded scenario question and confirm the citations panel lists the real source; an ungrounded answer shows an empty panel and never fabricates a citation.
 
 ---
 
@@ -164,7 +157,7 @@ or deny — the Action Tools governance loop, now with a button.
 1. When the Responses API returns a `function_call` item, have the BFF persist the response id and
    return the pending tool call — name + arguments — instead of executing it.
 2. In the page, render an approval card: show the tool (`create_it_ticket`), its arguments
-   (`student_id`, `summary`, …), and Approve / Deny buttons. Nothing runs until the user clicks.
+   (`user_id`, `summary`, …), and Approve / Deny buttons. Nothing runs until the user clicks.
 3. On the click, `POST /api/chat/approve` with the decision; the BFF submits the current client's
    `function_call_output` input item, resumes with `previous_response_id`, and streams the final result
    (the new `ticket_id`, or a clean "no action taken" on deny). Confirm the exact item model and
@@ -175,11 +168,9 @@ or deny — the Action Tools governance loop, now with a button.
       arguments before anything is created.
 - [ ] Approve creates the record (visible via the Action Tools backend); Deny creates nothing.
 
-**Checkpoint:** *Live demo* — ask to *"open a high-priority WiFi ticket"*; the UI shows an approval card with the tool name and arguments before anything runs. Approve creates the record (visible in the Action Tools backend); Deny creates nothing.
+**Verify:** *Live demo* — ask for an approved sample action; the UI shows an approval card with the tool name and arguments before anything runs. Approve creates the record; Deny creates nothing.
 
-> _No `validate.py` ships here — the deliverable is a running UI, so each checkpoint is a browser/DevTools self-check. solution.md lists the same checks as a spec if your team wants to script them._
-
-> _Facilitator note: see solution.md._
+> _No `validate.py` ships here — the deliverable is a running UI, so each check is a browser/DevTools self-check. solution.md lists the same checks as a spec if your team wants to script them._
 
 ---
 
@@ -206,16 +197,14 @@ and CORS is scoped — not wildcarded.
       project.
 - [ ] CORS allows only the front-end origin; a request from an unlisted origin is rejected.
 
-**Checkpoint:** *Portal/URL state* — the public app answers, cites, and shows the approval card; the
+**Verify:** *Portal/URL state* — the public app answers, cites, and shows the approval card; the
 BFF's identity is a managed identity and CORS is origin-scoped.
-
-> _Facilitator note: see solution.md._
 
 ---
 
 ## Done — what you shipped
 
-- A real web UI for the sample IQ assistant: streaming chat, a citations panel, and a
+- A real web UI for the scenario assistant: streaming chat, a citations panel, and a
   human action-approval card.
 - A secret-free browser — the credential lives only in the BFF — deployed to Azure with a managed
   identity and origin-scoped CORS.

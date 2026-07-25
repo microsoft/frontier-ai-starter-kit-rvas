@@ -1,8 +1,8 @@
-# Facilitator Guide · Extra — Magentic Workflows (MAF)
+# Implementation notes — Magentic Workflows
 
-> **Facilitator-only.** Hardest Extra conceptually (⭐⭐⭐⭐⭐), but **no extra Azure infra** — it all runs
-> locally on `agent-framework` + DevUI. The gate is the **Action Tools** prereq (the Action sub-agent
-> reuses that MCP wiring) and the team's comfort with the fast-moving MAF API.
+Use these notes when a scenario branch has earned dynamic multi-agent orchestration. No extra Azure
+infra is required beyond the project and any tools the specialists need. The Action specialist can
+reuse the Action Tools MCP wiring when the workflow performs writes.
 
 ## What this activity is really teaching
 
@@ -11,7 +11,7 @@
 a Magentic pattern — this is the differentiator. The keeper insight is **single-responsibility agents +
 a planner**: small, sharp specialists beat one do-everything agent, and the manager composes them.
 
-## Infra to pre-provision
+## Runtime prerequisites
 
 None beyond Foundations. Confirm:
 - Compatible current `agent-framework` and `agent-framework-foundry` packages install locally.
@@ -25,7 +25,7 @@ snippet without checking their installed release.** Point them at `microsoft-doc
 the `foundry-workflows` skill for the current surface. If a team is stuck on import/constructor errors,
 it's almost always a stale signature — re-query rather than guess.
 
-## Reference shape (for your eyes — adapt to the live API)
+## Reference shape
 
 Four specialists, then a Magentic manager composing them:
 ```python
@@ -45,7 +45,7 @@ workflow = MagenticBuilder(
 ```
 The point is the **shape** (4 specialists + planner), not these exact symbols.
 
-## Per-step facilitation
+## Implementation notes by step
 
 ### Step 1 — four specialists
 - **Pitfall:** instructions too broad → agents overlap and the manager can't route cleanly. Push for
@@ -60,12 +60,12 @@ The point is the **shape** (4 specialists + planner), not these exact symbols.
 - Optional automation: a learner-authored checker can assert that at least two specialists fire.
 
 ### Step 3 — DevUI
-- This is the demo. Live plan and execution events make the planning visible — that's the "aha."
-  Have them screenshot a mid-run graph. Do not rely on fixed DevUI colors.
+- Live plan and execution events make the planning visible. Capture a mid-run graph if you need a
+  review artifact. Do not rely on fixed DevUI colors.
 - The out-of-scope prompt ("change my final grade") must route to **Escalation**, proving the manager
   refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.
 
-## Optional validator scope
+## Optional verification scope
 
 No `validate.py` ships with this activity. Steps 1–2 are suitable for a learner-authored headless
 checker (agents defined; routing fans to at least two specialists). Step 3 remains a **DevUI visual**

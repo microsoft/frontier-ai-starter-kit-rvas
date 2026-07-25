@@ -315,10 +315,9 @@
           "id": "agent-routing",
           "title": "Add agent and live-data routing only when justified",
           "summary": "Create an agent with explicit source-routing rules and add a verified live-data tool only for a real-time requirement.",
-          "activity_id": "extra-fabric-iq",
           "outcome": "Policy and live-data questions route to the correct source",
           "sequence": 6,
-          "activity_path": "activity.html?id=extra-fabric-iq"
+          "activity_path": ""
         },
         {
           "id": "evaluate-and-trace",
@@ -687,13 +686,12 @@
           "id": "experience-generation",
           "title": "Generate the accessible avatar experience",
           "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
-          "activity_id": "extra-voice-live",
           "implementation_paths": [
             "accelerator/content_pack.py"
           ],
           "outcome": "Accessible experience generated from an approved revision, with disclosure and fallback",
           "sequence": 5,
-          "activity_path": "activity.html?id=extra-voice-live"
+          "activity_path": ""
         },
         {
           "id": "approval-gating",

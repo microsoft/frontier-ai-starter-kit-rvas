@@ -1,8 +1,8 @@
-# Facilitator Guide · Extra — MAF + Hosted Long-Running Agents
+# Implementation notes — Hosted long-running agents
 
-> **Facilitator-only.** The **most prereq-heavy** Extra: it needs **both** Deploy-as-a-Hosted-Agent **and**
-> Extra C (Magentic). Don't let a team start it cold — they'll be assembling deploy plumbing and MAF at
-> once. Best run only after the team has completed the hosted-agent and Magentic workflow paths.
+Use these notes when a scenario needs work that outlives a browser request. The pattern is general:
+submit a background job, keep a platform handle, retrieve the result later, and trace the run.
+Magentic Workflows are one useful example, not a required prerequisite.
 
 ## What this activity is really teaching
 
@@ -11,7 +11,7 @@ introduces `background=True`: submit → get a handle → work continues → pol
 that a long-running agent **decouples** the caller's session from the work, and observability
 (App Insights) is what makes async work *trustworthy* — you can prove what happened after the fact.
 
-## Infra to pre-provision
+## Runtime prerequisites
 
 All already created by `azd up` (Foundations/Deploy), but **verify**:
 1. **ACR** exists and the team can push (or use ACR **cloud build** — no local Docker needed).
@@ -19,12 +19,8 @@ All already created by `azd up` (Foundations/Deploy), but **verify**:
    Managed hosted agents are generally available; verify regional availability and the current `azd` surface.
 3. **App Insights** wired. Hosted Agent Service provides observability configuration to the running
    container; do not bake a connection string into an image or source file.
-4. The **Action Tools backend** reachable from the *hosted* environment — `localhost` won't resolve from a
+4. Any tool backend reachable from the *hosted* environment — `localhost` won't resolve from a
    container. Use an authenticated remote endpoint, not an unauthenticated public tunnel.
-
-> **Flag for the coordinator:** the localhost→container gap is the #1 deploy-time surprise. If the Action
-> tool is local, the hosted workflow can't reach it — deploy it behind MCP-compatible authentication or
-> use an approved authenticated integration.
 
 ## Search-Before-Implement
 
@@ -32,27 +28,26 @@ Hosted Agent Service is generally available, but the Python Agent Framework host
 prerelease and its APIs can move. The Responses `background=True` submission/retrieval flow also evolves.
 Send teams to `microsoft-docs` / `foundry-mcp` for current signatures rather than guessing.
 
-## Per-step facilitation
+## Implementation notes by step
 
-### Step 1 — containerize the workflow
-- This is the Deploy activity applied to the *workflow* instead of the single agent. If they did Deploy,
-  it's mostly reuse. **Pitfall:** forgetting to include `agent-framework` in the container
-  `requirements.txt` → the workflow won't start in the image.
-- **Pitfall:** `ACTION_MCP_URL` still pointing at localhost → Action specialist fails remotely. Fix the URL.
+### Step 1 — containerize the worker
+- This is the Deploy activity applied to a long-running worker instead of a short request/response
+  agent. If the worker uses MAF, include `agent-framework` in the container `requirements.txt`.
+- **Pitfall:** tool URLs still pointing at localhost → hosted worker fails remotely. Fix the URL.
 
 ### Step 2 — background run
 - The teaching beat: the submit call must **return immediately**. If they're blocking on completion, they
   haven't actually used the background path — they've just deployed a slow synchronous agent.
-- A good batch task: loop the Action sub-agent over a list of enrollment requests. Keep the list small for
-  the demo (3–5) so it completes within the session but is visibly "a batch."
+- A good batch task loops over a small list of items so it visibly outlives a request but completes
+  quickly enough to inspect.
 
 ### Step 3 — poll + trace
 - The "close the tab, come back" demo: have them submit in one terminal, kill it, then **poll from a fresh
   process** with only the run id. Retrieving the result proves durability.
-- App Insights closes the loop: the background run's span tree (manager → specialists → actions) is the
-  evidence. Reuse the Tracing activity's KQL muscle — list spans by duration.
+- App Insights closes the loop: the background run's span tree is the evidence. Reuse the Tracing
+  activity's KQL muscle — list spans by duration.
 
-## Why no `validate.py`
+## Verification
 
 The deliverables are a **deployed endpoint**, an **async run that outlives a process**, and **App Insights
 traces** — all portal/live state, not statically checkable. Verify via: hosted agent in the project with

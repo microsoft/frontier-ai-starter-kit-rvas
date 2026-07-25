@@ -1,20 +1,20 @@
-# Facilitator Guide — Advanced: Tracing & Observability
+# Implementation notes — Advanced Tracing & Observability
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-> **Facilitator-only.** Do not share with students. This guide holds the verified answers, the pitfalls
-> teams hit, and the facilitation arc. The student `README.md` deliberately stops at the gotcha box.
+These notes capture the reusable tracing mechanics: instrumentation order, span emission, portal
+inspection, and KQL correlation.
 
 ## What this activity proves
 
-By the end a team can take **one** student question and account for its full execution: model span,
+By the end a team can take **one** user question and account for its full execution: model span,
 retrieval span, optional tool span, with tokens, latency, and an estimated cost — read **two ways**
 (portal Tracing tab + KQL). The pedagogy is deliberately FrontierWeekHack's "same data, two lenses"
 pattern: the portal teaches the *shape* of a trace, KQL teaches *querying* it.
 
 The activity assumes the Foundations end-state (a deployed, grounded sample IQ assistant) **or**
 the bootstrap skip-path. If a team can't get a grounded answer at all, that's a Foundations problem —
-send them to `validate-foundations.py` before debugging tracing.
+fix that before debugging tracing.
 
 ## The one thing that makes or breaks this activity
 
@@ -31,7 +31,7 @@ Tell-tale signs and the fix:
 | No GenAI spans at all | `configure_azure_monitor` never called, or wrong conn string | confirm App Insights conn string resolves; check `enable_tracing()` actually ran |
 | `traced_run.py` has no client spans | `enable_tracing()` was not called | call `enable_tracing()` before the Responses request |
 
-## Step-by-step facilitation
+## Implementation notes by step
 
 ### Step 1 — Enable instrumentation
 
@@ -65,7 +65,7 @@ Tell-tale signs and the fix:
 - Token attributes to point at: `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`,
   `gen_ai.usage.total_tokens`. Latency = the span `duration`.
 - This step's checkpoint is portal-state; `python activities/advanced-tracing-observability/validate.py --step 3` confirms via App Insights that a
-  multi-span trace exists for a recent run (it can't read the portal UI directly).
+  multi-span trace exists for a recent run (it cannot read the portal UI directly).
 
 ### Step 4 — KQL correlation (the answers)
 
@@ -73,7 +73,7 @@ The README ships three queries as scaffolding. The graded artifact is `correlate
 end-to-end correlation for one `operation_Id`. A complete, correct answer looks like:
 
 ```kusto
-// correlate.kql — end-to-end trace for one student question, with token/latency/cost rollup
+// correlate.kql — end-to-end trace for one user question, with token/latency/cost rollup
 let opId = "abc123def456...";            // the run's operation_Id
 let price_per_1k = 0.005;                // model $ / 1K tokens
 let spans =
@@ -93,7 +93,7 @@ spans
 | extend est_cost_usd = round(total_tokens / 1000.0 * price_per_1k, 6)
 ```
 
-Facilitation notes:
+Implementation notes:
 
 - **`dependencies` vs `traces` vs `requests`:** OTel spans map to `dependencies` (outbound calls like
   model/retrieval) and `requests` (the inbound agent invocation); `traces` holds log events. The
@@ -104,26 +104,7 @@ Facilitation notes:
 - **Cost is a calculation, not a lookup.** Any sane per-1K rate passes; the learning objective is
   deriving cost from token telemetry, not knowing the exact price.
 
-## Timing (60 min)
-
-- 0–15 min: Step 1 instrumentation (most of the budget goes to the env-before-import gotcha).
-- 15–30 min: Step 2 run + the 1–3 min export wait.
-- 30–45 min: Step 3 portal span tree.
-- 45–60 min: Step 4 KQL correlation + save `correlate.kql`.
-
-If time is tight, prioritize Steps 1–2 (instrumentation working) and the **starter** KQL query over
-the full cost rollup.
-
-## Expected questions
-
-- **"Why are my prompt/answer fields empty?"** → set-env-before-import. Walk the file top-down.
-- **"Nothing shows in App Insights."** → wait 1–3 min; verify the conn string; verify
-  `configure_azure_monitor` ran. Check they didn't point at a different App Insights resource.
-- **"Which table has the tokens?"** → `dependencies`, in `customDimensions["gen_ai.usage.*"]`.
-- **"Do I need the tool span?"** → no; it only exists if they did Action Tools. The activity is
-  complete with model + retrieval spans.
-
-## Success definition
+## Verification
 
 A team is done when `python activities/advanced-tracing-observability/validate.py --step 4` passes, `correlate.kql` returns all spans for one run, and
 they can verbally walk the trace from question → model → retrieval → answer with tokens and latency.

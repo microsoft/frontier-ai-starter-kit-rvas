@@ -1,18 +1,17 @@
-# Facilitator Guide · Extra — Give It a Voice (Voice Live API)
+# Implementation notes — Voice Live
 
-> **Facilitator-only.** Highest *wow-per-effort* Extra and the best demo-day closer, but it has two hard
-> dependencies that fail silently: **regional API access** and **a working mic/speaker on the client**.
-> Verify both before anyone starts.
+Use these notes when the scenario branch needs realtime spoken interaction. Voice Live is branch-only;
+it is not the default batch avatar/video path for the Avatar scenario.
 
 ## What this activity is really teaching
 
-That the agent and the **interface** are separable. Students have only ever typed; Voice Live shows the
-*same grounded agent* behind a real-time speech channel. The conceptual win is **full-duplex streaming**
+The agent and the **interface** are separable. Voice Live shows the same grounded agent behind a
+real-time speech channel. The conceptual win is **full-duplex streaming**
 (incremental audio in *and* out) versus the naive STT → agent → TTS pipeline — that's where the
 sub-second latency and barge-in come from. Don't let teams build three separate calls; Voice Live is one
 session.
 
-## Infra to pre-provision (do this BEFORE the session)
+## Runtime prerequisites
 
 1. **Voice Live API access** on a Microsoft Foundry resource in a **supported region** —
    confirm availability for your event subscription/region *weeks ahead*; it's newer and not everywhere.
@@ -25,9 +24,6 @@ session.
    each team's local, untracked configuration. They are additional agent-mode prerequisites; the three
    shared Foundry variables alone are insufficient.
 
-> **Flag for the coordinator:** if the venue is loud, headsets or a quiet breakout corner make or break
-> the demo. Echo cancellation only goes so far.
-
 ## Search-Before-Implement
 
 `azure-ai-voicelive` connect/session signatures are **new and changing**. Send teams to `microsoft-docs`
@@ -35,13 +31,13 @@ for the current connect call and event names before coding. The event names in S
 (`session.created`, response audio deltas, response-done) are illustrative — confirm the live ones.
 The Python SDK is async-only; use an async event loop rather than trying to wrap it in synchronous calls.
 
-## Per-step facilitation
+## Implementation notes by step
 
 ### Step 1 — connect
 - **Pitfall:** configuring only the three shared Foundry variables. The agent quickstart also needs
   Voice Live resource/project context; verify its current environment list and keep those values local.
 - **Pitfall:** binding to a bare model instead of the agent → spoken answers lose persona/grounding.
-  They must pass the sample organization agent name so turns run through the sample organization agent.
+  Bind the session to the scenario agent so turns use the same instructions and tools.
 - Auth errors here are usually region/access, not code. Check the resource supports Voice Live.
 
 ### Step 2 — duplex loop
@@ -55,7 +51,7 @@ The Python SDK is async-only; use an async event loop rather than trying to wrap
 - On the **Step 4 grounded** agent, confirm the spoken answer is actually grounded (cite-worthy content),
   proving the voice path didn't bypass the knowledge base.
 
-## Why no `validate.py`
+## Verification
 
 The deliverable is **audio** — inherently a live/portal demo. Verify by watching/hearing a spoken
 multi-turn conversation with one barge-in. A short screen+audio recording is the artifact for the readout.

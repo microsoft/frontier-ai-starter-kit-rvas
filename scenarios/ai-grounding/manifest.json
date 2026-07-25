@@ -154,7 +154,6 @@
       "id": "agent-routing",
       "title": "Add agent and live-data routing only when justified",
       "summary": "Create an agent with explicit source-routing rules and add a verified live-data tool only for a real-time requirement.",
-      "activity_id": "extra-fabric-iq",
       "outcome": "Policy and live-data questions route to the correct source"
     },
     {

@@ -1,8 +1,8 @@
 # Extra · Document Workflow
 
-> Tier 2 · Extra. Prerequisite: a deployed Foundry/Azure project and an identity that can use its
-> Document Intelligence resource. This lab uses **fictional sample organization admissions documents only**;
-> do not upload real applicant records.
+> Reusable implementation mechanics. Prerequisite: a deployed Foundry/Azure project and an identity
+> that can use its Document Intelligence or Content Understanding resource. Use only fictional,
+> synthetic, or approved documents; do not upload real applicant/customer records.
 
 Build a reviewable intake workflow, not an automatic admissions decision:
 
@@ -27,7 +27,7 @@ put a key, connection string, or applicant data in source or trace logs.
 ## Build `document_workflow.py`
 
 Create this learner-owned file in this activity directory (or pass its directory with `--path`).
-Use a harmless fictional PDF/image, such as a sample organization admission application containing invented
+Use a harmless fictional PDF/image, such as a sample application containing invented
 name, program, and consent fields.
 
 ### Step 1 — Intake and layout/OCR
@@ -37,7 +37,7 @@ name, program, and consent fields.
 3. Preserve page, line/table, and bounding-region references needed for a reviewer; do not log raw
    document content.
 
-**Checkpoint:** a fictional application produces extracted layout text/tables with source references.
+**Verify:** a fictional application produces extracted layout text/tables with source references.
 
 ### Step 2 — Confidence and validation
 
@@ -47,7 +47,7 @@ name, program, and consent fields.
 3. Treat a missing field, invalid format, or low confidence as **needs review**. Never infer missing
    data or make an admissions decision.
 
-**Checkpoint:** deliberately blur or omit a fictional field and show that it is held for review.
+**Verify:** deliberately blur or omit a fictional field and show that it is held for review.
 
 ### Step 3 — Human review and approval
 
@@ -55,7 +55,7 @@ Route held items to a named human-review/approval queue with the reason and sour
 reviewer must be able to correct a field and explicitly approve or reject the intake record. The
 workflow may prepare a record; it must not approve an applicant automatically.
 
-**Checkpoint:** demonstrate one low-confidence document routed to review and one reviewer-approved
+**Verify:** demonstrate one low-confidence document routed to review and one reviewer-approved
 fictional record.
 
 ### Step 4 — Structured result and proof
@@ -90,5 +90,5 @@ human approval, or safe handling of real records.
 
 ## What you built
 
-A keyless, auditable document-intake path for a safe sample organization demo: OCR/layout informs a structured
+A keyless, auditable document-intake path for a safe document workflow: OCR/layout informs a structured
 record, uncertainty reaches a person, and traces/evaluations show whether the workflow deserves trust.

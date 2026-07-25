@@ -1,9 +1,9 @@
-# Facilitator Guide — Advanced: Deploy as a Hosted Agent
+# Implementation notes — Advanced Deploy as a Hosted Agent
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-> **Facilitator-only.** Do not share with students. This guide holds the verified deployment path, the
-> failure modes teams hit with `azd ai agent`, and the facilitation arc.
+These notes capture the reusable hosted-agent deployment mechanics: project shape, container build,
+authenticated invocation, managed identity, and run history.
 
 > ⚠️ **This activity was rewritten away from Prompt Flow.** The old version deployed a Prompt Flow to
 > a managed online endpoint and bolted on a Flask app. **All of that is gone.** If a team is following
@@ -30,7 +30,7 @@ mistake is treating a successful `azd deploy`
 exit code as "done" — the version provisions **asynchronously**, so Step 2's checkpoint waits for
 `status == active`.
 
-## Step-by-step facilitation
+## Implementation notes by step
 
 ### Step 1 — unified azure.yaml + entrypoint
 
@@ -79,34 +79,12 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 - If a team skipped the Tracing activity, they can still pass Step 4 via the portal **Run history** +
   **Tracing** tab; the `correlate.kql` reuse is the richer path but not required.
 
-## Timing (60 min)
-
-- 0–20 min: Step 1 — `azd ai agent init`, adapt source, local agent smoke test.
-- 20–40 min: Step 2 — `azd provision` + `azd deploy` + wait for `active`.
-- 40–50 min: Step 3 — invoke + identity/auth verification.
-- 50–60 min: Step 4 — run history + traces.
-
-If time is tight, prioritize a **working authenticated invoke** (Steps 1–3). Step 4 can be a quick
-portal walkthrough.
-
-## Expected questions
-
-- **"`azd deploy` succeeded but invoke returns 424."** → version still provisioning. Wait for
-  `status == active`.
-- **"`azd ai agent init` generated another project."** → run it in the empty `hosted/` directory and
-  select the existing Foundations project in the wizard.
-- **"403 on an authenticated call."** → caller missing `Foundry User` (formerly `Azure AI User`) role on the project.
-- **"Where's the Flask app / managed endpoint from the old activity?"** → removed. This is a hosted
-  agent now; a UI is the separate *Build a UI* extra.
-- **"Container deploys but never goes healthy."** → not listening on `0.0.0.0:8088`, or wrong protocol
-  in `azure.yaml`.
-
 ## Cleanup discipline
 
 Remove the hosted version from the portal after the event. Do not run `azd down` against a project
 connected to the shared Foundations resource group, because it can delete the whole workshop footprint.
 
-## Success definition
+## Verification
 
 `python activities/advanced-deploy-hosted-agent/validate.py --step 4` passes; the agent has an `active` hosted version; an authenticated Responses call
 returns a grounded answer; an anonymous call is rejected; and the team can point to the run in both run

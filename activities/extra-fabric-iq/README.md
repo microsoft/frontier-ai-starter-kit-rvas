@@ -2,19 +2,19 @@
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Tier 2 · Extra — modular. You can attempt this in any order with the other Extras.
-> Prerequisite: the Foundations end-state (a deployed, grounded sample IQ assistant).
+> Reusable live-data module. Use it when a scenario needs Fabric/OneLake grounding through a Fabric
+> IQ data agent. Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: Foundations Step 4 (the AI Search knowledge base) — this Extra adds a
 > *second*, live source alongside it.
 
-> ⚙️ Infra prerequisite (facilitator must pre-provision): a Microsoft Fabric capacity
+> Infra prerequisite: a Microsoft Fabric capacity
 > (F-SKU or Fabric trial) with a OneLake lakehouse holding a live operational table, plus a
 > Fabric IQ data agent that users can access. See
-> [solution.md](solution.md) → *Infra to pre-provision* for the exact setup. Gate this Extra behind
-> facilitator availability — without Fabric capacity it cannot be completed.
+> [solution.md](solution.md) → *Runtime prerequisites* for the exact setup. Without Fabric capacity it
+> cannot be completed.
 >
 > 🎤 Demo wow-factor: the assistant answers *"are there seats left in CS101 right now?"* with live
 > numbers pulled from Fabric — something a static RAG index physically cannot do.
@@ -25,9 +25,9 @@
 
 ## Why this activity
 
-Your Foundations assistant is grounded in documents — the sample organization FAQ corpus indexed in Azure AI
+Your scenario assistant may be grounded in documents — for example, a FAQ corpus indexed in Azure AI
 Search. Documents are perfect for policy, deadlines, and how-to answers, but they go stale: an
-indexed PDF can't tell a student that CS101 just dropped from 3 open seats to 0 five minutes ago.
+indexed PDF cannot tell a user that an operational value changed five minutes ago.
 
 Fabric IQ closes that gap. It exposes live operational data sitting in OneLake (course-seat
 availability, dining-hall capacity, shuttle ETAs) to your agent as a tool, right next to the static
@@ -35,10 +35,10 @@ knowledge base. The agent learns to pick the right source: *policy question → 
 right-now question → Fabric IQ*.
 
 ```text
-   student question
+   user question
         │
         ▼
-   sample IQ assistant ──┬──▶ AI Search knowledge base   (static: policy, deadlines)
+   scenario assistant ──┬──▶ AI Search knowledge base   (static: policy, deadlines)
                              └──▶ Fabric IQ tool  ──▶ OneLake (LIVE: seats, capacity, ETAs)
 ```
 
@@ -49,7 +49,7 @@ right-now question → Fabric IQ*.
 **Goal:** You can see a live operational table in OneLake that the agent will query.
 
 **Tasks:**
-1. Open the Fabric workspace your facilitator provisioned and find the lakehouse (e.g. `sample_ops`).
+1. Open the Fabric workspace prepared for the activity and find the lakehouse (e.g. `sample_ops`).
 2. Locate the live table — for this Extra, `course_seats` with columns
    `course_code, section, capacity, enrolled, seats_open, updated_at`.
 3. Run a quick SQL/Spark preview in Fabric: `SELECT course_code, seats_open FROM course_seats WHERE course_code = 'CS101'`.
@@ -59,7 +59,7 @@ right-now question → Fabric IQ*.
 - [ ] You can read at least one row of live data and record its current `seats_open` value.
 - [ ] You know the lakehouse + table name your agent will be pointed at.
 
-**Checkpoint:** *Portal state* — the Fabric SQL/Spark preview returns a `seats_open` value for CS101.
+**Verify:** *Portal state* — the Fabric SQL/Spark preview returns a live value for the sample row.
 
 > _The number changing between runs is the point — that's the live-ness you'll demo._
 
@@ -67,11 +67,11 @@ right-now question → Fabric IQ*.
 
 ## Step 2 — Wire the Fabric IQ tool to your agent
 
-**Goal:** Attach Fabric IQ to the sample IQ assistant as a second grounding tool.
+**Goal:** Attach Fabric IQ to the scenario assistant as a second grounding tool.
 
 **Tasks:**
 1. In your Foundry project, register the Fabric IQ server-side tool using the current Foundry setup
-   flow. Your facilitator supplies the Fabric workspace/data-agent details and handles the required
+   flow. Use the prepared Fabric workspace/data-agent details and complete the required
    user sign-in/OAuth flow; this is not a connection-string or project-managed-identity shortcut.
 2. Using the `foundry-toolboxes` skill pattern, attach the Fabric IQ tool to your existing agent
    (`AZURE_FOUNDRY_AGENT_NAME`) alongside the AI Search knowledge-base tool from Foundations Step 4.
@@ -84,7 +84,7 @@ right-now question → Fabric IQ*.
 - [ ] The agent lists two grounding tools: the AI Search knowledge base and the Fabric IQ tool.
 - [ ] The system instructions contain an explicit source-routing rule.
 
-**Checkpoint:** *Portal state* — the agent's Tools panel shows both the knowledge base and the Fabric
+**Verify:** *Portal state* — the agent's Tools panel shows both the knowledge base and the Fabric
 tool attached; a Playground test run invokes the Fabric tool for a "right now" question.
 
 ---
@@ -96,7 +96,7 @@ tool attached; a Playground test run invokes the Fabric tool for a "right now" q
 **Tasks:**
 1. In the Playground (or via the Responses API), ask: "Are there any seats left in CS101 right now?"
 2. Confirm the answer's number matches the `seats_open` you read in Step 1.
-3. Mutate the data (have your facilitator update `course_seats`, or run an UPDATE in Fabric), then ask
+3. Mutate the data (for example, update `course_seats` in Fabric), then ask
    again — the agent's answer should change without re-indexing anything.
 4. Ask a policy question ("What's the add/drop deadline?") and confirm it still routes to the FAQ
    knowledge base, not Fabric.
@@ -106,11 +106,11 @@ tool attached; a Playground test run invokes the Fabric tool for a "right now" q
 - [ ] After mutating the table, a re-ask returns the new number with no re-index step.
 - [ ] A policy question still cites the FAQ knowledge base (correct source routing).
 
-**Checkpoint:** *Portal/transcript state* — capture two transcripts of the CS101 question across a data
+**Verify:** *Portal/transcript state* — capture two transcripts of the sample live-data question across a data
 change showing the number moved; capture one policy answer still citing the FAQ corpus.
 
-> _Facilitator verifies the contrast verbally: static RAG would have returned the stale indexed number both
-> times; Fabric IQ tracks the source of truth._
+> _The contrast: static RAG would have returned the stale indexed number both times; Fabric IQ tracks
+> the source of truth._
 
 ---
 

@@ -1,10 +1,9 @@
-# Facilitator Guide · Advanced — Action Tools
+# Implementation notes — Advanced Action Tools
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-> **Facilitator-only.** The full reference implementation of the approval loop is below. Do **not** paste it
-> into the student channel — the starter `agent_with_actions.py` deliberately leaves the FunctionTool
-> and approval loop as `< PLACEHOLDER >` gaps (the ATA "single-line completion moment" pattern).
+These notes capture the reusable implementation mechanics behind the activity. Use them to adapt the
+approval-loop pattern to a scenario-specific action backend.
 
 ## What this activity is really teaching
 
@@ -14,10 +13,10 @@ this activity adds the **human-in-the-loop approval** that real deployments requ
 core is the application-owned `function_call → approve/deny → FunctionCallOutput` loop: the model
 requests an action, the human decides, and only then can application code execute it.
 
-> **SDK note for facilitators:** the current path is `azure-ai-projects` 2.x:
+> **SDK note:** the current path is `azure-ai-projects` 2.x:
 > `agents.create_version(PromptAgentDefinition(...))`, Responses `function_call` items, and
-> `FunctionCallOutput` in a Foundry conversation. Do not steer teams to the retired
-> `agents.threads` / `agents.runs` surface.
+> `FunctionCallOutput` in a Foundry conversation. Do not use retired `agents.threads` /
+> `agents.runs` examples for this pattern.
 
 ## Env contract (authoritative — keep in lockstep)
 
@@ -31,7 +30,7 @@ We **ship the backend** so teams stay on the approval-loop objective instead of 
 It lives in `scripts/action-backend/` (FastAPI `app.py` + FastMCP `mcp_server.py`) and exposes three
 REST endpoints (`/it-tickets`, `/course-holds`, `/advising-slots`) that the FunctionTool callables hit.
 
-## Setup the team needs
+## Runtime setup
 
 ```bash
 # provided backend (REST — required)
@@ -43,16 +42,16 @@ az login                                        # keyless DefaultAzureCredential
 # .env: AZURE_AI_PROJECT_ENDPOINT, AZURE_AI_MODEL_DEPLOYMENT_NAME, ACTION_API_URL
 ```
 
-## Per-step facilitation
+## Implementation notes by step
 
-### Step 0 / Step 1 checkpoint — backend reachable
+### Step 0 / Step 1 — backend reachable
 - `python activities/advanced-action-tools/validate.py --step 1` hits `GET /health` over REST. If it fails, the backend isn't running or
-  `ACTION_API_URL` is wrong. This is the #1 blocker — check it first for any stuck team.
+  `ACTION_API_URL` is wrong.
 
 ### Step 1 — knowledge vs action
-- Answer key: side effects — `create_it_ticket` pages IT; `place_course_hold` **blocks a student's
-  registration** (highest-stakes — a wrongful hold is real harm); `book_advising_slot` consumes an
-  advisor's calendar. All three warrant approval. The registration hold is the one to dwell on.
+- Side effects change the risk boundary. The sample actions open a ticket, place a hold, and book a
+  slot; replace them with the scenario's approved actions. Any action that changes state, spends
+  money, exposes data, or affects a user's access should require approval.
 
 ### Step 2 — define the action FunctionTool
 Reference completion of `build_action_tools()` and the three action stubs:
@@ -214,9 +213,9 @@ def run_with_approval(openai, agent_name, prompt):
     finally:
         openai.conversations.delete(conversation_id=conversation.id)
 ```
-- **Teaching points:** (1) the application receives a requested function call and executes nothing
-  until the human decides; (2) showing the function name + arguments to
-  the human is the governance moment; (3) returning the denial JSON
+- **Implementation points:** (1) the application receives a requested function call and executes
+  nothing until the human decides; (2) showing the function name + arguments to the human is the
+  governance moment; (3) returning the denial JSON
   cleanly tells the agent "you were blocked" so it can report back gracefully.
 - **Pitfall:** omitting `conversation=conversation.id` on either call loses the tool-call turn context.
 - **Pitfall:** `item.arguments` is a **JSON string** — parse it with `json.loads` before
@@ -227,7 +226,7 @@ def run_with_approval(openai, agent_name, prompt):
   `run_with_approval()`, supplies a deterministic fake Responses function call, approves it, and
   verifies the real backend record. This catches broken dispatch and continuation wiring without
   consuming model quota.
-- The real proof for the team is: NL prompt → approve → agent reports a `ticket_id` → `curl
+- The real proof is: natural-language prompt → approve → agent reports a `ticket_id` → `curl
   /it-tickets` shows it. Then the **denial** path: deny → nothing created. Make every team run the
   denial — it's where the governance lesson lands.
 
@@ -237,30 +236,16 @@ def run_with_approval(openai, agent_name, prompt):
 - **Agent loses context after approval** → pass the same `conversation=conversation.id` on both calls.
 - **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.
-- **Team wants to auto-approve everything** → push back; the whole activity is the approval gate.
+- **Auto-approve everything** → out of scope for this activity; the approval gate is the point.
 
-## Timing (75 min)
-- 0–10: Step 0 start backend + Step 1 conceptual
-- 10–30: Step 2 define FunctionTool (fill function stubs + build_action_tools)
-- 30–60: Step 3 approval loop (spend the time here)
-- 60–75: Step 4 end-to-end approve + deny, debrief
+## Verification
 
-## Debrief questions
-- "Which of the three actions is most dangerous to auto-run, and why?"
-- "Walk me through the function-call item at the moment the application asks for approval."
-- "Show me the denial path — what did the agent do, what did the backend store?"
-- "How does an action tool change your threat model vs. a knowledge tool?" (bridge to Red Teaming)
+With the backend running and `agent_with_actions.py` completed, run:
 
-## Checkpoint answer key
-With the backend running and `agent_with_actions.py` completed:
-```text
+```bash
 python activities/advanced-action-tools/validate.py --all
-# ✅ Step 1 PASS — Action Tools backend reachable at http://localhost:8080
-# ✅ Step 2 PASS — action FunctionTool defined (sample actions @ ACTION_API_URL)
-# ✅ Step 3 PASS — human tool-approval loop implemented
-# ✅ Step 4 PASS — approval loop created backend ticket ...
-# ✅ ALL CHECKPOINTS PASS
 ```
-Steps 1 & 4 require the provided backend running; Step 4 also executes the completed approval loop
-against a deterministic fake Responses client. Steps 2 & 3 are structural checks.
-Before completion, Steps 2/3 correctly FAIL on the unfilled `< PLACEHOLDER >` markers.
+
+Steps 1 and 4 require the provided backend. Step 4 executes the completed approval loop against a
+deterministic fake Responses client, then verifies the backend record. Steps 2 and 3 are structural
+checks that catch missing tool definitions and unfinished approval-loop wiring.

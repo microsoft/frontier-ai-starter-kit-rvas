@@ -1,13 +1,13 @@
-# Facilitator Guide · Extra — Fabric IQ (Real-Time Data Grounding)
+# Implementation notes — Fabric IQ real-time grounding
 
-> **Facilitator-only.** This Extra has the **heaviest infra dependency** of any Extra. If Fabric capacity
-> isn't provisioned, **do not start it** — redirect the team to Voice Live or Magentic. The whole point
-> is *live* data, which you cannot fake with the static index.
+Use these notes when a scenario branch needs live Fabric/OneLake grounding through a Fabric IQ data
+agent. This is distinct from Governed Data Copilot: Fabric IQ is about live Fabric source routing;
+Governed Data Copilot is about allowlisted structured-data access and provenance.
 
 ## What this activity is really teaching
 
-The limit of document RAG. Students who've only done Foundations Step 4 believe "grounding = search an
-index." This Extra reframes grounding as **"connect the agent to the right source of truth"** — and for
+The limit of document RAG. This Extra reframes grounding as **"connect the agent to the right source
+of truth"** — and for
 *right-now* questions that source is a live operational store (OneLake), not a re-indexed document. The
 keeper insight is **source routing**: the agent must choose FAQ-knowledge-base vs Fabric-tool per
 question. The demo lands when the seat count changes between two asks with **no re-index**.
@@ -15,18 +15,17 @@ question. The demo lands when the seat count changes between two asks with **no 
 ## Infra to pre-provision (do this BEFORE the session)
 
 1. **Fabric capacity** — an appropriate Fabric capacity or trial capacity assigned to a
-   workspace. This is the gate; without it the Extra is impossible.
+   workspace. This is the gate; without it the module is impossible.
 2. **OneLake lakehouse** (e.g. `sample_ops`) with a **`course_seats`** table:
    `course_code, section, capacity, enrolled, seats_open, updated_at`. Seed a handful of rows incl.
    **CS101** with a small `seats_open` (so you can drive it to 0 live for the demo).
-3. A **Fabric IQ data agent** configured for the OneLake source, and a facilitator who can complete the
-   current Foundry server-side-tool and user OAuth/sign-in setup.
+3. A **Fabric IQ data agent** configured for the OneLake source, plus the current Foundry
+   server-side-tool and user OAuth/sign-in setup.
 4. Confirm each invoking user has the required Fabric license and Fabric permissions. Fabric IQ requests
    run in the signed-in user's context and honor Fabric governance; a Foundry project managed identity
    alone does not grant table access.
 
-> **Cost/capacity flag for the coordinator:** Fabric F-SKU bills while running — **pause the capacity**
-> when the session ends. A single shared capacity can serve all teams; they only need read access.
+Fabric F-SKU bills while running. Pause the capacity when the session ends.
 
 ## Search-Before-Implement (mandatory here)
 
@@ -35,7 +34,7 @@ Foundry's Fabric IQ integration is **preview** and can change frequently. Tell t
 signature before coding. Do **not** hand them a hard-coded class name — it will likely be stale by event
 day. That's the doctrine the whole curriculum teaches; this Extra is where it bites hardest.
 
-## Per-step facilitation
+## Implementation notes by step
 
 ### Step 1 — see the live row
 - If a team can't preview the table, it's often a **capacity not running**, missing Fabric license, or
@@ -55,7 +54,7 @@ day. That's the doctrine the whole curriculum teaches; this Extra is where it bi
 - Verify the policy question still cites the **FAQ corpus** — if it routes to Fabric, the instructions
   need tightening.
 
-## Why no `validate.py`
+## Verification
 
 Grounding correctness here depends on **live, mutating** external data and a preview tool surface, so a
 portal/transcript checkpoint is the honest check. Verify by: (1) two CS101 transcripts straddling a data

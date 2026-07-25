@@ -4,14 +4,14 @@
 
 > ⏱ Guided ~1 hr · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Tier 2 · Advanced — modular. You can attempt this in any order with the other Advanced
-> activities. Prerequisite: the Foundations end-state (a deployed, grounded sample IQ
-> Assistant). Complete Foundations, or run the bootstrap skip-path:
+> Reusable mechanics module. Use it when a scenario needs GenAI traces, span correlation, and
+> production-debug evidence. Prerequisite: a deployed scenario agent or the Foundations mechanics
+> reference. Complete the required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
-Your sample IQ assistant answers grounded questions today — but when a student gets a slow,
+Your assistant answers grounded questions today — but when a user gets a slow,
 wrong, or uncited answer, can you explain why? Right now the agent is a black box: a model call,
 a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
 and you can see none of it.
@@ -19,7 +19,7 @@ and you can see none of it.
 Foundry records agent-service traces after the project is connected to Application Insights. In this
 activity you also enable OpenTelemetry (OTel) in your client process, then read the telemetry two
 ways — the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
-student question and reconstruct its entire journey: model → retrieval → tool, with token counts,
+user question and reconstruct its entire journey: model → retrieval → tool, with token counts,
 latency per span, and the inputs/outputs at each hop.
 
 This is the observability layer that the Evaluation and Deploy activities both build on: evals become
@@ -27,7 +27,7 @@ trustworthy when you can trace the row that failed, and a hosted agent is only p
 you can watch it run.
 
 ```text
-  student question
+  user question
         │
         ▼
   ┌───────────── one request (operation_Id) ─────────────┐
@@ -47,7 +47,7 @@ you can watch it run.
 - The Foundations `.env` (or bootstrap `.env`) with at least:
   - `AZURE_AI_PROJECT_ENDPOINT` — your Foundry project endpoint
   - `AZURE_AI_MODEL_DEPLOYMENT_NAME` — the chat model deployment
-  - `AZURE_FOUNDRY_AGENT_NAME` — the sample IQ assistant agent name (e.g. `sample-iq-assistant`)
+  - `AZURE_FOUNDRY_AGENT_NAME` — the scenario agent name (for example, `sample-iq-assistant`)
 - An Application Insights resource linked to your Foundry project. Foundations provisions one;
   its connection string lands in `.env` as `APPLICATIONINSIGHTS_CONNECTION_STRING`. If that variable
   is missing, see Step 1 — you will fetch it from the project.
@@ -133,26 +133,23 @@ if __name__ == "__main__":
 - [ ] Running `trace_setup.py` prints `✅ GenAI tracing enabled` with no import error.
 - [ ] The two tracing env flags are set before `AIProjectInstrumentor().instrument()` in the file.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-tracing-observability/validate.py --step 1
-# expected: "✅ Step 1 PASS — instrumentation wired, App Insights connection resolved"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
 ## Step 2 — Run the agent and emit spans
 
-**Goal:** A real student question flows through the agent and produces a trace (model + retrieval,
+**Goal:** A real user question flows through the agent and produces a trace (model + retrieval,
 plus a tool span if Action Tools is attached).
 
 **Tasks:**
 
 1. Create `activities/advanced-tracing-observability/traced_run.py`. Import and call
-   `enable_tracing()` from Step 1 first, then ask the sample IQ assistant a grounded question
+   `enable_tracing()` from Step 1 first, then ask the scenario assistant a grounded question
    that forces a knowledge-base lookup — e.g. *"What documents do I need for financial aid?"*
 2. Drive the agent through the Responses API against your `AZURE_FOUNDRY_AGENT_NAME`. Print the answer and
    the trace/operation id so you can find the run later.
@@ -167,7 +164,7 @@ from trace_setup import enable_tracing
 project = enable_tracing()
 client = project.get_openai_client()
 
-QUESTION = "What documents do I need to apply for financial aid at sample organization?"
+QUESTION = "What documents do I need to apply for financial aid?"
 
 response = client.responses.create(
     input=QUESTION,
@@ -194,21 +191,18 @@ Path(__file__).with_name(".last-response-id").write_text(response.id, encoding="
 
 Your run should look like this:
 ```text
-Q: What documents do I need to apply for financial aid at sample organization?
-A: You'll need your FAFSA (school code 041777), prior-year tax returns, W-2s, and ...
+Q: What documents do I need to apply for financial aid?
+A: You'll need the required financial-aid documents listed in the approved source, with citations.
 response id: resp_01J8X...   ← use this to find the trace
 ✅ GenAI tracing enabled; spans will export to Application Insights.
 ```
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-tracing-observability/traced_run.py
 python activities/advanced-tracing-observability/validate.py --step 2
-# expected: "✅ Step 2 PASS — span(s) found for response ..."
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -235,21 +229,18 @@ model, retrieval, and (if present) tool spans.
 - [ ] You can name which child is the model call and which is the retrieval call.
 - [ ] You can read token counts and duration off the model span.
 
-**Checkpoint:** Portal state — the Tracing tab shows the run's span tree with an expandable
+**Verify:** Portal state — the Tracing tab shows the run's span tree with an expandable
 model span exposing `gen_ai.usage.total_tokens`. Capture the trace's operation id for Step 4.
 
 ```bash
 python activities/advanced-tracing-observability/validate.py --step 3
-# expected: "✅ Step 3 PASS — span tree present with model + retrieval spans"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
 ## Step 4 — Correlate one question end-to-end with KQL
 
-**Goal:** Read the same run as data — write a KQL query that pulls every span for one student
+**Goal:** Read the same run as data — write a KQL query that pulls every span for one user
 question and surfaces token, latency, and cost signals.
 
 **Tasks:**
@@ -271,7 +262,7 @@ question and surfaces token, latency, and cost signals.
    to reconstruct the whole request as an ordered timeline (model + retrieval + tool):
 
    ```kusto
-   // End-to-end: one student question, every span, in order
+   // End-to-end: one user question, every span, in order
    let opId = "<paste-your-operation_Id>";
    union dependencies, requests, traces
    | where operation_Id == opId
@@ -306,14 +297,11 @@ question and surfaces token, latency, and cost signals.
 - [ ] You save your final correlation query to
       `activities/advanced-tracing-observability/correlate.kql`.
 
-**Checkpoint:**
+**Verify:**
 
 ```bash
 python activities/advanced-tracing-observability/validate.py --step 4
-# expected: "✅ Step 4 PASS — correlate.kql correlates one operation_Id across the span tables"
 ```
-
-> _Facilitator note: see solution.md._
 
 ---
 
@@ -342,8 +330,8 @@ tokens, latency-per-span, which span retrieved, an estimated cost, and the slowe
 
 ## Done — what you can now do
 
-- Every sample IQ answer is observable end to end, two ways: portal Tracing tab and KQL.
-- You can take one student question and account for its model, retrieval, and tool spans, with tokens,
+- Every scenario answer is observable end to end, two ways: portal Tracing tab and KQL.
+- You can take one user question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 
 This unlocks: Evaluation & Red Teaming (trace the exact row that failed an eval) and Deploy as a
