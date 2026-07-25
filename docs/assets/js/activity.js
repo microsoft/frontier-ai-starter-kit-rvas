@@ -132,14 +132,6 @@
       }
     }
 
-    // Tags
-    const tagsList = document.getElementById('tagsList');
-    if (tagsList) {
-      tagsList.innerHTML = (c.tags || [])
-        .map((t) => `<span class="badge badge-tag">${FP.esc(t)}</span>`)
-        .join('') || '<span class="text-dim" style="font-size:0.8rem">No tags</span>';
-    }
-
     // References
     const refPanel = document.getElementById('refPanel');
     const refList  = document.getElementById('refList');

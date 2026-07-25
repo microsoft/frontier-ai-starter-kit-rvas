@@ -1360,7 +1360,6 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   min-width: 0;
   overflow-wrap: anywhere;
 }
-#tagsList,
 #refList { min-width: 0; max-width: 100%; }
 #refList a {
   max-width: 100%;
