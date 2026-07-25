@@ -48,7 +48,7 @@ Assets shipped with this activity
 
 **Tasks:**
 
-1. Open your project in the Foundry portal (`ai.azure.com`) → Evaluations → Create evaluation.
+1. Open your project in the Foundry portal (`ai.azure.com`) → Assess and Improve → Evaluation → Create evaluation.
 2. Upload [`assets/northfield-eval.jsonl`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-evaluation-redteam/assets/northfield-eval.jsonl). Map `query` → query column and
    `ground_truth` → ground-truth column; `context` is your grounding column.
 

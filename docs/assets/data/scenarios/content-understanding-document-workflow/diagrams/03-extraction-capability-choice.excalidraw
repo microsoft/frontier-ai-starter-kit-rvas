@@ -343,9 +343,9 @@
       "id": "a_option_0",
       "type": "arrow",
       "x": 620,
-      "y": 320,
+      "y": 275,
       "width": 100,
-      "height": -106,
+      "height": -61,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -371,8 +371,16 @@
           0
         ],
         [
+          45,
+          0
+        ],
+        [
+          45,
+          -61
+        ],
+        [
           100,
-          -106
+          -61
         ]
       ],
       "startBinding": null,
@@ -448,9 +456,9 @@
       "id": "a_option_1",
       "type": "arrow",
       "x": 620,
-      "y": 320,
+      "y": 275,
       "width": 350,
-      "height": -106,
+      "height": -61,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -476,8 +484,16 @@
           0
         ],
         [
+          80,
+          -90
+        ],
+        [
           350,
-          -106
+          -90
+        ],
+        [
+          350,
+          -61
         ]
       ],
       "startBinding": null,

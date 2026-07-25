@@ -239,9 +239,9 @@
     {
       "id": "a_route_0",
       "type": "arrow",
-      "x": 610,
+      "x": 500,
       "y": 340,
-      "width": -385,
+      "width": -145,
       "height": -129,
       "angle": 0,
       "strokeColor": "#b45309",
@@ -268,7 +268,15 @@
           0
         ],
         [
-          -385,
+          -60,
+          0
+        ],
+        [
+          -60,
+          -129
+        ],
+        [
+          -145,
           -129
         ]
       ],
@@ -344,9 +352,9 @@
     {
       "id": "a_route_1",
       "type": "arrow",
-      "x": 610,
+      "x": 720,
       "y": 340,
-      "width": 405,
+      "width": 165,
       "height": -129,
       "angle": 0,
       "strokeColor": "#b45309",
@@ -373,7 +381,15 @@
           0
         ],
         [
-          405,
+          60,
+          0
+        ],
+        [
+          60,
+          -129
+        ],
+        [
+          165,
           -129
         ]
       ],
@@ -450,9 +466,9 @@
       "id": "a_route_2",
       "type": "arrow",
       "x": 610,
-      "y": 340,
-      "width": 10,
-      "height": 211,
+      "y": 435,
+      "width": 0,
+      "height": 70,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "transparent",
@@ -478,8 +494,8 @@
           0
         ],
         [
-          10,
-          211
+          0,
+          70
         ]
       ],
       "startBinding": null,
@@ -491,7 +507,7 @@
       "id": "evidence_box",
       "type": "rectangle",
       "x": 390,
-      "y": 145,
+      "y": 620,
       "width": 470,
       "height": 155,
       "angle": 0,
@@ -520,7 +536,7 @@
       "id": "evidence_title",
       "type": "text",
       "x": 408,
-      "y": 159,
+      "y": 634,
       "width": 390,
       "height": 24,
       "angle": 0,
@@ -555,7 +571,7 @@
       "id": "evidence_0",
       "type": "text",
       "x": 412,
-      "y": 189,
+      "y": 664,
       "width": 425,
       "height": 24,
       "angle": 0,
@@ -590,7 +606,7 @@
       "id": "evidence_1",
       "type": "text",
       "x": 412,
-      "y": 216,
+      "y": 691,
       "width": 425,
       "height": 24,
       "angle": 0,
@@ -625,7 +641,7 @@
       "id": "evidence_2",
       "type": "text",
       "x": 412,
-      "y": 243,
+      "y": 718,
       "width": 425,
       "height": 24,
       "angle": 0,

@@ -866,8 +866,8 @@
     {
       "id": "outcome_shape",
       "type": "ellipse",
-      "x": 920,
-      "y": 330,
+      "x": 1060,
+      "y": 360,
       "width": 230,
       "height": 120,
       "angle": 0,
@@ -893,8 +893,8 @@
     {
       "id": "outcome_text",
       "type": "text",
-      "x": 934,
-      "y": 348,
+      "x": 1074,
+      "y": 378,
       "width": 202,
       "height": 45,
       "angle": 0,
@@ -928,10 +928,10 @@
     {
       "id": "a_matrix_outcome",
       "type": "arrow",
-      "x": 805,
+      "x": 1035,
       "y": 385,
-      "width": 113,
-      "height": 5,
+      "width": 25,
+      "height": 35,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -957,8 +957,8 @@
           0
         ],
         [
-          113,
-          5
+          25,
+          35
         ]
       ],
       "startBinding": null,

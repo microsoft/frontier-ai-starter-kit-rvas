@@ -175,10 +175,10 @@
     {
       "id": "a_cycle_0",
       "type": "arrow",
-      "x": 625,
-      "y": 205,
-      "width": 240,
-      "height": 110,
+      "x": 680,
+      "y": 225,
+      "width": 125,
+      "height": 60,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -204,8 +204,12 @@
           0
         ],
         [
-          240,
-          110
+          85,
+          15
+        ],
+        [
+          125,
+          60
         ]
       ],
       "startBinding": null,
@@ -278,10 +282,10 @@
     {
       "id": "a_cycle_1",
       "type": "arrow",
-      "x": 865,
-      "y": 315,
-      "width": -90,
-      "height": 230,
+      "x": 900,
+      "y": 345,
+      "width": -95,
+      "height": 160,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -307,8 +311,12 @@
           0
         ],
         [
-          -90,
-          230
+          0,
+          105
+        ],
+        [
+          -95,
+          160
         ]
       ],
       "startBinding": null,
@@ -381,9 +389,9 @@
     {
       "id": "a_cycle_2",
       "type": "arrow",
-      "x": 775,
-      "y": 545,
-      "width": -300,
+      "x": 715,
+      "y": 570,
+      "width": -180,
       "height": 0,
       "angle": 0,
       "strokeColor": "#1e3a5f",
@@ -410,7 +418,11 @@
           0
         ],
         [
-          -300,
+          -90,
+          60
+        ],
+        [
+          -180,
           0
         ]
       ],
@@ -484,10 +496,10 @@
     {
       "id": "a_cycle_3",
       "type": "arrow",
-      "x": 475,
-      "y": 545,
-      "width": -90,
-      "height": -230,
+      "x": 405,
+      "y": 510,
+      "width": -45,
+      "height": -155,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -513,8 +525,12 @@
           0
         ],
         [
-          -90,
-          -230
+          -70,
+          -70
+        ],
+        [
+          -45,
+          -155
         ]
       ],
       "startBinding": null,
@@ -587,10 +603,10 @@
     {
       "id": "a_cycle_4",
       "type": "arrow",
-      "x": 385,
-      "y": 315,
-      "width": 240,
-      "height": -110,
+      "x": 425,
+      "y": 285,
+      "width": 115,
+      "height": -80,
       "angle": 0,
       "strokeColor": "#1e3a5f",
       "backgroundColor": "transparent",
@@ -616,8 +632,12 @@
           0
         ],
         [
-          240,
-          -110
+          55,
+          -80
+        ],
+        [
+          115,
+          -80
         ]
       ],
       "startBinding": null,

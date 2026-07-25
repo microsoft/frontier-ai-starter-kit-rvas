@@ -179,7 +179,7 @@
       "type": "arrow",
       "x": 228,
       "y": 315,
-      "width": 54,
+      "width": 42,
       "height": 0,
       "angle": 0,
       "strokeColor": "#1e3a5f",
@@ -206,7 +206,7 @@
           0
         ],
         [
-          54,
+          42,
           0
         ]
       ],
@@ -218,10 +218,10 @@
     {
       "id": "step_1_shape",
       "type": "diamond",
-      "x": 285,
-      "y": 238,
-      "width": 160,
-      "height": 150,
+      "x": 270,
+      "y": 230,
+      "width": 190,
+      "height": 170,
       "angle": 0,
       "strokeColor": "#b45309",
       "backgroundColor": "#fef3c7",
@@ -245,10 +245,10 @@
     {
       "id": "step_1_text",
       "type": "text",
-      "x": 321,
-      "y": 278,
-      "width": 88,
-      "height": 45,
+      "x": 306,
+      "y": 273,
+      "width": 118,
+      "height": 42,
       "angle": 0,
       "strokeColor": "#374151",
       "backgroundColor": "transparent",
@@ -270,7 +270,7 @@
       "locked": false,
       "text": "Gate:\nlow confidence?",
       "originalText": "Gate:\nlow confidence?",
-      "fontSize": 18,
+      "fontSize": 16,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "middle",
@@ -280,9 +280,9 @@
     {
       "id": "a_flow_1",
       "type": "arrow",
-      "x": 453,
+      "x": 460,
       "y": 315,
-      "width": 54,
+      "width": 50,
       "height": 0,
       "angle": 0,
       "strokeColor": "#1e3a5f",
@@ -309,7 +309,7 @@
           0
         ],
         [
-          54,
+          50,
           0
         ]
       ],
