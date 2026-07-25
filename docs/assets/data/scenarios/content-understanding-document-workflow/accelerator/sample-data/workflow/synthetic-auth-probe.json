@@ -1,0 +1,6 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "cu-synthetic-auth-probe-v1",
+  "unauthenticated_status": 401,
+  "notes": "Fixture proving the manifest names retained auth evidence; replace with a live endpoint probe result."
+}

@@ -11,7 +11,7 @@ The outcome is a reviewed decision package: business outcome, SME schema/test re
 1. Read [LOCAL_DEMO.md](LOCAL_DEMO.md) and run the validator from the repository root.
 2. Confirm that every exercise will use only the four synthetic fixtures.
 3. Invite a business SME, process owner, source/workflow owner, product owner, engineering lead, and security/platform representative.
-4. Prepare a shared space for the four lesson artifacts and a release-decision record.
+4. Prepare a shared space for the seven module artifacts and a release-decision record.
 5. Do not request endpoints, keys, tenant identifiers, screenshots of customer documents, or live service access.
 
 ## Agenda

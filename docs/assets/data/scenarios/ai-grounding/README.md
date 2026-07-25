@@ -4,8 +4,8 @@ Build a grounded, permission-aware assistant over approved content, and prove it
 
 Seven modules, one lesson each. Every module ends with a runnable checkpoint, and every module
 offers real options with an opinionated default and the migration cost of changing your mind. You
-will deploy real Azure resources, index a real corpus, measure real models, and produce evidence a
-risk owner can sign.
+can deploy real Azure resources for a clean demo, index a synthetic corpus, compare model behavior,
+and learn the evidence a risk owner would need before a customer pilot.
 
 ## Before you start
 
@@ -46,9 +46,10 @@ python3 scenarios/ai-grounding/accelerator/scripts/verify_foundation.py
 The deployment writes `accelerator/.env` from the template outputs. That file is the environment
 contract every later module depends on — keep it local and uncommitted.
 
-## Run the whole gate locally
+## Run the structural gate locally
 
-No Azure subscription needed; every checkpoint has an offline mode that validates structure:
+No Azure subscription needed; every checkpoint has an offline mode that validates structure and
+fixture integrity. This is not live proof of retrieval, identity, routing, tracing, or deployment:
 
 ```bash
 python3 scenarios/ai-grounding/accelerator/validate.py --all

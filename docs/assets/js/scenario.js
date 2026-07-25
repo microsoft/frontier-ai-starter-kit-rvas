@@ -14,6 +14,7 @@
       const body = document.getElementById('scenarioBody');
       FP.renderMd(await response.text(), body);
       rewriteScenarioLinks(body, scenario, data.activities || []);
+      FP.initDiagramZoom(body);
     } catch (error) {
       showError(error.message);
     }

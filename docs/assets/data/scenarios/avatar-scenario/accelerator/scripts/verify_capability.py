@@ -75,6 +75,17 @@ def verify(decision_path: Path, failures: list[str]) -> None:
 
     check(bool(str(data.get("disclosure_statement", "")).strip()),
           "decision includes a synthetic-media disclosure statement", failures)
+    feedback = data.get("feedback_channel", {})
+    check(
+        isinstance(feedback, dict)
+        and bool(feedback.get("type"))
+        and bool(feedback.get("owner"))
+        and bool(feedback.get("contact")),
+        "decision records a feedback channel with type, owner, and contact",
+        failures,
+    )
+    check(bool(str(data.get("responsible_ai_contact", "")).strip()),
+          "decision records a responsible-AI contact", failures)
 
     gating = data.get("consent_and_gating", {})
     uses_custom_avatar = bool(gating.get("uses_custom_avatar"))

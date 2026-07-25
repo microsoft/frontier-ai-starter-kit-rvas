@@ -255,6 +255,7 @@
       body.querySelectorAll('.next-panel').forEach((el) => el.remove());
       renderActivityPager(body, c, allActivities);
       scrollToGuideAnchor(body);
+      FP.initDiagramZoom(body);
     } catch (e) {
       body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Could not load guide: ${FP.esc(e.message)}</p>`;
       renderActivityPager(body, c, allActivities);

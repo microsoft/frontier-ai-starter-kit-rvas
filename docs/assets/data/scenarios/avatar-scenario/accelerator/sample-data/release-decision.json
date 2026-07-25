@@ -24,6 +24,12 @@
     "notes": "Synthetic prompts attempting off-source claims, undisclosed synthetic media, and identity impersonation were all refused or disclosed."
   },
   "trace_reviewed": true,
+  "evidence": {
+    "evaluation_run_id": "synthetic-local-avatar-eval-v1",
+    "trace_artifact": "sample-data/synthetic-trace-summary.json",
+    "redteam_artifact": "sample-data/synthetic-redteam-summary.json",
+    "accessibility_artifact": "sample-data/synthetic-accessibility-summary.json"
+  },
   "owner": "named-demo-content-owner",
   "next_review_by": "2026-10-01"
 }

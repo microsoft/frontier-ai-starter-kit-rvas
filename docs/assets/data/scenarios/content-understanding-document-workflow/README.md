@@ -3,10 +3,11 @@
 Build a controlled document-to-decision path for invoices, RFQs, or specifications: a typed,
 evidence-backed, human-reviewed result — not an autonomous business decision and not a generic OCR
 demo. This is a practical, opinionated build course. Each module names the Microsoft options, picks a
-default, shows how to build **every** option, and ends in a machine-checkable checkpoint.
+default, implements the default path or contract, and names the seam for swapping to another
+approved option.
 
 The quality bar and reference format are the [Foundations activity](activity.html?id=foundations)
-and the AI Grounding scenario lessons. The complete reference implementation lives in
+and the AI Grounding scenario lessons. The scenario reference contract lives in
 [`accelerator/solution.md`](accelerator/solution.md).
 
 ## The seven modules
@@ -40,7 +41,7 @@ canonical activities for shared mechanics rather than duplicating them:
 ## Get started
 
 ```bash
-# 1. Provision (real, deployable Bicep — no inline secrets, keyless)
+# 1. Provision the optional clean-subscription foundation (no inline secrets, keyless-first)
 ./accelerator/scripts/deploy.sh rg-content-understanding eastus2
 
 # 2. Work through the modules; each has an offline checkpoint you can run now

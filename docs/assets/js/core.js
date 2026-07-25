@@ -155,6 +155,102 @@
     }
   };
 
+  /* ─────────────────────────── Diagram zoom ─────────────────────── */
+  FP.initDiagramZoom = function (container) {
+    if (!container) return;
+    container.querySelectorAll('img[src]').forEach((image) => {
+      if (image.dataset.diagramZoomReady === 'true') return;
+      if (!isDiagramImage(image)) return;
+
+      image.dataset.diagramZoomReady = 'true';
+      image.classList.add('diagram-zoomable');
+      image.setAttribute('role', 'button');
+      image.setAttribute('tabindex', '0');
+      image.setAttribute('aria-label', zoomLabel(image));
+      if (!image.getAttribute('title')) image.setAttribute('title', 'Click to zoom');
+
+      image.addEventListener('click', () => openDiagramZoom(image));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openDiagramZoom(image);
+        }
+      });
+    });
+  };
+
+  function isDiagramImage(image) {
+    const src = `${image.getAttribute('src') || ''} ${image.currentSrc || ''} ${image.src || ''}`.toLowerCase();
+    const text = `${image.getAttribute('alt') || ''} ${image.getAttribute('title') || ''}`.toLowerCase();
+    return src.includes('/diagrams/') || src.includes('diagrams/') || /\bdiagram\b/.test(text);
+  }
+
+  function zoomLabel(image) {
+    const alt = (image.getAttribute('alt') || '').trim();
+    return alt ? `Zoom diagram: ${alt}` : 'Zoom diagram';
+  }
+
+  function openDiagramZoom(sourceImage) {
+    const modal = ensureDiagramZoomModal();
+    const image = modal.querySelector('[data-diagram-lightbox-image]');
+    const caption = modal.querySelector('[data-diagram-lightbox-caption]');
+    const close = modal.querySelector('[data-diagram-lightbox-close]');
+    const alt = (sourceImage.getAttribute('alt') || '').trim();
+
+    modal._returnFocus = sourceImage;
+    image.src = sourceImage.currentSrc || sourceImage.src;
+    image.alt = alt || 'Zoomed diagram';
+    caption.textContent = alt || '';
+    caption.hidden = !alt;
+
+    modal.hidden = false;
+    document.body.classList.add('diagram-lightbox-open');
+    close.focus({ preventScroll: true });
+  }
+
+  function closeDiagramZoom() {
+    const modal = document.querySelector('[data-diagram-lightbox]');
+    if (!modal || modal.hidden) return;
+
+    const image = modal.querySelector('[data-diagram-lightbox-image]');
+    modal.hidden = true;
+    document.body.classList.remove('diagram-lightbox-open');
+    image.removeAttribute('src');
+
+    if (modal._returnFocus && typeof modal._returnFocus.focus === 'function') {
+      modal._returnFocus.focus({ preventScroll: true });
+    }
+    modal._returnFocus = null;
+  }
+
+  function ensureDiagramZoomModal() {
+    let modal = document.querySelector('[data-diagram-lightbox]');
+    if (modal) return modal;
+
+    modal = document.createElement('div');
+    modal.className = 'diagram-lightbox';
+    modal.hidden = true;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Diagram preview');
+    modal.setAttribute('data-diagram-lightbox', '');
+    modal.innerHTML = `
+      <button class="diagram-lightbox__backdrop" type="button" aria-label="Close diagram preview" data-diagram-lightbox-backdrop></button>
+      <figure class="diagram-lightbox__panel">
+        <button class="diagram-lightbox__close" type="button" aria-label="Close diagram preview" data-diagram-lightbox-close>&times;</button>
+        <img class="diagram-lightbox__image" alt="" data-diagram-lightbox-image>
+        <figcaption class="diagram-lightbox__caption" data-diagram-lightbox-caption></figcaption>
+      </figure>`;
+    document.body.appendChild(modal);
+
+    modal.querySelector('[data-diagram-lightbox-backdrop]').addEventListener('click', closeDiagramZoom);
+    modal.querySelector('[data-diagram-lightbox-close]').addEventListener('click', closeDiagramZoom);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeDiagramZoom();
+    });
+    return modal;
+  }
+
   FP.renderInlineMd = function (rawMd) {
     if (rawMd == null || rawMd === '') return '';
     if (!window.marked || typeof window.marked.parseInline !== 'function') return FP.esc(rawMd);

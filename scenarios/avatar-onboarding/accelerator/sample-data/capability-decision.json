@@ -28,6 +28,13 @@
     "transcript": true,
     "non_avatar_fallback": true
   },
+  "feedback_channel": {
+    "type": "support-handoff",
+    "owner": "named-demo-support-owner",
+    "contact": "fictional-support-queue",
+    "response_sla": "next-business-day"
+  },
+  "responsible_ai_contact": "named-demo-content-owner",
   "content_safety": "Azure AI Content Safety on generated script text before synthesis; RAI policy Microsoft.DefaultV2 on the chat model.",
   "consent_and_gating": {
     "uses_standard_avatar": true,

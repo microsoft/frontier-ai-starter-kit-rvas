@@ -29,6 +29,7 @@
         <span class="slide-number">${String(index + 1).padStart(2, '0')}</span>
         <div class="slide-content">${window.marked.parse(slide, { breaks: false, gfm: true })}</div>
       </article>`).join('');
+    FP.initDiagramZoom(deck);
   }
 
   function showError(message) {

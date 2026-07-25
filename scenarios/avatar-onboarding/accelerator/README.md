@@ -1,11 +1,13 @@
 # Avatar Scenario Accelerator
 
-This accelerator is a small, vendor-neutral **approved-content pack and integration seam**. It supports a clean workshop demo and a BYO environment without provisioning a landing zone, choosing an avatar platform, or assuming service APIs.
+This accelerator has two parts: a small, vendor-neutral **approved-content pack and integration seam**
+for local workshops, and an optional Bicep foundation for a clean Azure demo subscription. It does
+not choose an avatar platform, provision a landing zone, or implement a production channel adapter.
 
 ## Contents
 
 - `sample-data/` — complete fictional claims, approvals, script/storyboard, transcript, accessible HTML fallback, and aggregated feedback fixture.
-- `main.bicep` — resource-less deployment contract that exposes the integration settings; it declares no platform resources, although Azure Resource Manager retains a deployment-history record when it is deployed.
+- `main.bicep` — optional deployable foundation for Foundry, Search, Storage, Speech data-plane access, and observability. It is not a landing zone or production channel implementation.
 - `parameters.example.json` — safe placeholder values.
 - `mock_renderer.py` — standard-library-only local renderer that enforces the approval and claim gates.
 

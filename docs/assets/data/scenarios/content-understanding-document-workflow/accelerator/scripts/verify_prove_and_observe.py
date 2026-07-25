@@ -8,7 +8,9 @@ Validates the evaluation report (sample-data/workflow/eval-report.json):
   * every metric meets its gate (min thresholds are floors, max thresholds are
     ceilings). A single breach fails the module.
 
-Offline only — it grades a report you produce from a real evaluation run.
+Offline mode validates the report contract and evidence references. It does not prove that a live
+Foundry evaluation or tracing run occurred unless you point the evidence references to retained
+trace/evaluation artifacts from your environment.
 
 Run (passing report):
     python3 .../verify_prove_and_observe.py --offline
@@ -33,14 +35,36 @@ GATES = {
 }
 
 
+def evidence_path_exists(value: object) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    path = Path(value)
+    if not path.is_absolute():
+        path = WORKFLOW.parent.parent / path
+    return path.is_file()
+
+
 def verify_report(report: dict, failures: list[str]) -> None:
     if not isinstance(report, dict):
         check(False, "report is a JSON object", failures)
         return
     thresholds = report.get("thresholds", {})
     metrics = report.get("metrics", {})
+    evidence = report.get("evidence", {})
     check(isinstance(thresholds, dict) and isinstance(metrics, dict),
           "report declares thresholds and metrics objects", failures)
+    check(
+        isinstance(evidence, dict)
+        and bool(evidence.get("evaluation_run_id"))
+        and bool(evidence.get("trace_artifact"))
+        and bool(evidence.get("case_result_artifact")),
+        "report records evaluation_run_id, trace_artifact, and case_result_artifact",
+        failures,
+    )
+    check(evidence_path_exists(evidence.get("trace_artifact")),
+          "trace_artifact points to a retained evidence file", failures)
+    check(evidence_path_exists(evidence.get("case_result_artifact")),
+          "case_result_artifact points to a retained evidence file", failures)
     check(isinstance(report.get("case_count"), int) and report["case_count"] > 0,
           "report covers at least one case", failures)
 
@@ -66,8 +90,8 @@ def main() -> int:
     report = load_json(args.report, failures)
     if report is not None:
         verify_report(report, failures)
-    print("\n(offline mode: grades a report from your evaluation run, no Azure calls)")
-    return finish(6, "the evaluation gate passed and traces are reviewable", failures)
+    print("\n(offline mode: validates report contract and evidence references, no Azure calls)")
+    return finish(6, "the evaluation report contract is complete and gates pass", failures)
 
 
 if __name__ == "__main__":

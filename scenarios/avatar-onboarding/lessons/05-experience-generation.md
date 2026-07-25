@@ -79,8 +79,9 @@ PUT https://{resource}.cognitiveservices.azure.com/avatar/batchsyntheses/{Synthe
 ```
 
 Poll `GET …/batchsyntheses/{id}` until `status` is `Succeeded`, then download `outputs.result`
-(the mp4). Keyless: send `Authorization: Bearer <entra-token>` (works because module 2 set the custom
-subdomain). Limits: payload ≤ 500 KB, ≤ 200 concurrent jobs, ≤ 20-minute output.
+(the mp4). Keyless: send an Entra bearer token in the `Authorization` header; redact the token in
+logs and docs. This works only when module 2 set the custom subdomain. Limits: payload ≤ 500 KB,
+≤ 200 concurrent jobs, ≤ 20-minute output.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
 `subtitleType: soft_embedded` gives you captions in the video; you still ship the standalone

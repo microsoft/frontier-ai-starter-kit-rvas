@@ -1607,6 +1607,89 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .attribution a { color: var(--c-gold); }
 .attribution a:hover { text-decoration: underline; }
 
+/* Zoomable diagrams in markdown-rendered pages. */
+.diagram-zoomable {
+  cursor: zoom-in;
+  border-radius: var(--r-sm);
+  box-shadow: 0 0 0 1px var(--c-line);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease), filter 0.18s var(--ease);
+}
+.diagram-zoomable:hover {
+  filter: saturate(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -20px rgba(3, 34, 84, 0.35), 0 0 0 2px var(--c-accent, var(--c-gold));
+}
+.diagram-zoomable:focus-visible {
+  outline: 3px solid var(--c-accent, var(--c-gold));
+  outline-offset: 4px;
+}
+
+body.diagram-lightbox-open { overflow: hidden; }
+.diagram-lightbox[hidden] { display: none; }
+.diagram-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 400);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+.diagram-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(3, 15, 37, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.diagram-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1400px);
+  max-height: 92vh;
+  margin: 0;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: var(--r-lg);
+  background: #fff;
+  box-shadow: 0 30px 90px -24px rgba(0, 0, 0, 0.55);
+}
+.diagram-lightbox__image {
+  width: 100%;
+  max-height: calc(92vh - 7rem);
+  object-fit: contain;
+  border-radius: var(--r);
+  background: #fff;
+}
+.diagram-lightbox__caption {
+  margin-top: 0.75rem;
+  color: #324155;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.diagram-lightbox__caption[hidden] { display: none; }
+.diagram-lightbox__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid rgba(3, 34, 84, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #16243a;
+  font-size: 1.8rem;
+  line-height: 1;
+  box-shadow: var(--shadow-card);
+}
+.diagram-lightbox__close:hover,
+.diagram-lightbox__close:focus-visible {
+  background: var(--c-accent, var(--c-gold));
+  color: #fff;
+  outline: none;
+}
+
 /* Customer slide decks are source-controlled Markdown and browser-exportable. */
 .slides-page { background: #eef2f7; color: #16233a; }
 .slides-toolbar {

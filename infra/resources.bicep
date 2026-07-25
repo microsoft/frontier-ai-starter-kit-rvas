@@ -80,9 +80,8 @@ resource search 'Microsoft.Search/searchServices@2024-06-01-preview' = {
     partitionCount: 1
     hostingMode: 'default'
     semanticSearch: 'standard'
-    // Keyless-first: prefer RBAC, but keep key auth available as a fallback for the workshop.
     authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerChallenge' } }
-    disableLocalAuth: false
+    disableLocalAuth: true
   }
 }
 
@@ -114,7 +113,7 @@ resource foundry 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
     allowProjectManagement: true
     customSubDomainName: 'aif-${resourceToken}'
     publicNetworkAccess: 'Enabled'
-    disableLocalAuth: false
+    disableLocalAuth: true
   }
 }
 

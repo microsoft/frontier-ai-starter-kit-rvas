@@ -8,8 +8,9 @@ Validates the deploy manifest (sample-data/workflow/deploy-manifest.json):
   * a rollback strategy, and
   * the module-6 evaluation gate has passed.
 
-Offline validates the manifest. Live mode (--endpoint) confirms the deployed
-endpoint rejects an unauthenticated request (expects 401/403).
+Offline validates the deployment manifest contract and evidence references; it is not live proof.
+Live mode (--endpoint) confirms the deployed endpoint rejects an unauthenticated request (expects
+401/403).
 
 Run offline:
     python3 .../verify_deploy.py --offline
@@ -24,6 +25,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cu_common import WORKFLOW, check, finish, load_json  # noqa: E402
+
+
+def evidence_path_exists(value: object) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    path = Path(value)
+    if not path.is_absolute():
+        path = WORKFLOW.parent.parent / path
+    return path.is_file()
 
 
 def verify_manifest(manifest: dict, failures: list[str]) -> None:
@@ -42,6 +52,19 @@ def verify_manifest(manifest: dict, failures: list[str]) -> None:
     rollback = manifest.get("rollback", {})
     check(isinstance(rollback, dict) and bool(rollback.get("strategy")), "a rollback strategy is defined", failures)
     check(manifest.get("evaluation_gate_passed") is True, "the module-6 evaluation gate has passed", failures)
+    evidence = manifest.get("evidence", {})
+    check(
+        isinstance(evidence, dict)
+        and bool(evidence.get("deployment_artifact"))
+        and bool(evidence.get("auth_probe"))
+        and bool(evidence.get("monitoring_query")),
+        "manifest records deployment_artifact, auth_probe, and monitoring_query evidence",
+        failures,
+    )
+    check(evidence_path_exists(evidence.get("deployment_artifact")),
+          "deployment_artifact points to a retained evidence file", failures)
+    check(evidence_path_exists(evidence.get("auth_probe")),
+          "auth_probe points to a retained evidence file", failures)
 
 
 def verify_live(endpoint: str, failures: list[str]) -> None:
@@ -74,11 +97,11 @@ def main() -> int:
         verify_manifest(manifest, failures)
 
     if args.offline or not args.endpoint:
-        print("\n(offline mode: manifest validated, no Azure calls)")
+        print("\n(offline mode: manifest contract and evidence references validated, no Azure calls)")
     elif not failures:
         verify_live(args.endpoint, failures)
 
-    return finish(7, "the pilot is authenticated, monitored, and rollback-ready", failures)
+    return finish(7, "the deployment manifest contract is complete", failures)
 
 
 if __name__ == "__main__":

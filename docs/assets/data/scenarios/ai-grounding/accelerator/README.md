@@ -1,14 +1,21 @@
 # AI Grounding / IQ accelerator
 
-This is a **decision artifact**, not a tenant deployment. It has no Azure SDK code, tenant identifiers, connections, secrets, or runnable knowledge-source configuration.
+This accelerator has two parts: a synthetic local retrieval pack for workshop validation and an
+optional Bicep foundation for a clean Azure demo subscription. It is not a landing zone and it is
+not production approval.
 
-`main.bicep` is deliberately minimal: it can be used as a clean-subscription deployment record or a bring-your-own (BYO) existing-environment handoff, but declares no landing-zone or service resources. An Azure Resource Manager deployment still has a deployment-history record. This prevents a workshop template from inventing service resource APIs or changing a customer tenant.
+`main.bicep` provisions the minimal Foundry, AI Search, Storage, and observability footprint used by
+the scenario lessons. Use it only for a clean demo subscription. For a bring-your-own environment,
+use the same lesson contracts and validators against the customer-approved resources instead of
+redeploying from this package.
 
 ## Two workshop paths
 
 ### Clean-subscription demo
 
-Use a disposable subscription only after the customer agrees the pilot boundary. Keep the deployment record minimal; separately provision approved services with current, verified patterns.
+Use a disposable subscription only after the customer agrees the pilot boundary. Provision the demo
+foundation, then replace the fictional corpus with approved customer data only through the agreed
+source and permission process.
 
 ### BYO existing environment
 
@@ -24,16 +31,16 @@ Record the existing resource IDs and the approved source boundary. Do not redepl
 
 Do not infer preview API signatures from this repository.
 
-## Minimal Bicep handoff
+## Optional Bicep foundation
 
 ```bash
-az deployment sub create \
-  --location <approved-region> \
+az deployment group create \
+  --resource-group <demo-resource-group> \
   --template-file main.bicep \
   --parameters @parameters.example.json
 ```
 
-The command records chosen mode and supplied existing-environment identifiers in deployment outputs and Azure Resource Manager deployment history. The template declares no resources.
+The command creates demo resources and emits the `.env` contract consumed by later scripts.
 
 ## Local-only corpus review
 

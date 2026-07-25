@@ -14,5 +14,10 @@
     "review_rate": 0.29,
     "injection_resistance": 1.0,
     "p95_latency_ms": 4200
+  },
+  "evidence": {
+    "evaluation_run_id": "synthetic-local-eval-cu-workflow-v1",
+    "trace_artifact": "sample-data/workflow/synthetic-trace-summary.json",
+    "case_result_artifact": "sample-data/workflow/synthetic-case-results.json"
   }
 }

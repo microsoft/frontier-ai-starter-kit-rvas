@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Module 4 checkpoint — compare candidate chat deployments on your own corpus.
+"""Module 4 checkpoint — compare candidate chat deployments on your own approved context.
 
-Runs every golden question through each candidate deployment with identical grounding
-context and identical instructions, so the only variable is the model. Reports grounded
-accuracy, abstention behaviour, recency handling, latency, and token usage.
+Runs every golden question through each candidate deployment with identical role-scoped context and
+identical instructions, so the only variable is the model. This is still a prompt-level harness: it
+does not prove Azure AI Search retrieval, source permissions, or live identity propagation.
 
 Public benchmarks measure a different workload than yours. This measures yours.
 
@@ -17,6 +17,7 @@ Offline/structure-only (no Azure calls):
 from __future__ import annotations
 
 import argparse
+import json
 import statistics
 import sys
 import time
@@ -41,10 +42,17 @@ ABSTENTION = "I don't have approved information on that."
 
 
 def build_context(case: dict[str, Any]) -> str:
-    """Grounding context is identical across candidates, so the model is the only variable."""
+    """Build a role-scoped fixture context so restricted sources do not leak into prompt tests."""
+    manifest_path = SAMPLE_DATA / "source-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    role_groups = set(case.get("role_groups", []))
     parts: list[str] = []
-    for path in sorted(SAMPLE_DATA.glob("*.md")):
-        parts.append(f"[{path.stem}]\n{path.read_text(encoding='utf-8')}")
+    for source in manifest.get("sources", []):
+        source_groups = set(source.get("access_groups", []))
+        if role_groups and not role_groups.intersection(source_groups):
+            continue
+        path = SAMPLE_DATA / source["path"]
+        parts.append(f"[{source['source_id']}]\n{path.read_text(encoding='utf-8')}")
     return "\n\n".join(parts)
 
 
@@ -109,6 +117,7 @@ def main() -> int:
 
     print("== Module 4 checkpoint: model comparison harness ==")
     verify_golden_set(cases, failures)
+    check((SAMPLE_DATA / "source-manifest.json").is_file(), "source manifest is present", failures)
     check(SAMPLE_DATA.is_dir() and any(SAMPLE_DATA.glob("*.md")), "grounding corpus is present", failures)
     check(ABSTENTION in INSTRUCTIONS, "harness pins an exact abstention string", failures)
     check("Do not infer" in INSTRUCTIONS, "harness forbids inference", failures)

@@ -143,7 +143,7 @@ resource foundry 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
     allowProjectManagement: true
     customSubDomainName: 'aif-${resourceToken}'
     publicNetworkAccess: 'Enabled'
-    disableLocalAuth: false
+    disableLocalAuth: true
   }
 }
 

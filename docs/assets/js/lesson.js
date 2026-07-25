@@ -61,6 +61,7 @@
     FP.renderMd(await response.text(), target);
     rewriteLessonLinks(target, scenario, lesson, activities);
     rewriteLessonImages(target, scenario, lesson);
+    FP.initDiagramZoom(target);
   }
 
   function resolveRelative(basePath, href) {

@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "cu-synthetic-trace-summary-v1",
+  "trace_count": 24,
+  "required_spans_present": ["document_intake", "extract_fields", "human_review", "handoff"],
+  "notes": "Fixture proving the offline report names retained trace evidence; replace with exported Application Insights trace references for a real pilot."
+}

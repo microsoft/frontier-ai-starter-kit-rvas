@@ -157,7 +157,7 @@ resource search 'Microsoft.Search/searchServices@2024-06-01-preview' = {
     hostingMode: 'default'
     semanticSearch: 'standard'
     authOptions: { aadOrApiKey: { aadAuthFailureMode: 'http401WithBearerChallenge' } }
-    disableLocalAuth: false
+    disableLocalAuth: true
   }
 }
 
@@ -176,7 +176,7 @@ resource foundry 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
     // A custom subdomain is required for Microsoft Entra token auth on the Speech data plane.
     customSubDomainName: 'aif-${resourceToken}'
     publicNetworkAccess: 'Enabled'
-    disableLocalAuth: false
+    disableLocalAuth: true
   }
 }
 

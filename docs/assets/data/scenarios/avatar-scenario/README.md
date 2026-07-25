@@ -6,10 +6,10 @@ and support experiences where every published statement traces to approved conte
 approvals, a synthetic-media disclosure, and operational evidence, and where any published revision
 can be withdrawn the moment its source changes.
 
-This is a **build** course, not a survey. Each module makes one high-stakes decision, shows how to
-implement **every** viable Microsoft option (not just the default), and ends in a runnable
-checkpoint. The reference implementation is in [`solution.md`](accelerator/solution.md); the deployable
-infrastructure is in [`accelerator/README.md`](accelerator/README.md).
+This is a **build** course, not a survey. Each module makes one high-stakes decision, compares the
+viable Microsoft options, fully implements the default path, and names the seam for swapping in a
+different approved platform. The reference implementation is in [`solution.md`](accelerator/solution.md);
+the deployable foundation is in [`accelerator/README.md`](accelerator/README.md).
 
 > **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository. **Keyless-first:**

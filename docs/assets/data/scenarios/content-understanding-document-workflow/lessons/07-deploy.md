@@ -81,12 +81,12 @@ python3 scenarios/content-understanding/accelerator/scripts/verify_deploy.py \
 Expected:
 
 ```
-✅ Module 7 checkpoint PASS — the pilot is authenticated, monitored, and rollback-ready
+✅ Module 7 checkpoint PASS — the deployment manifest contract is complete
 ```
 
-The check asserts Entra auth with a managed identity and no keys, an authenticated endpoint,
-Application Insights with GenAI tracing on, a defined rollback strategy, and that the module-6
-evaluation gate passed. The live probe expects a `401`/`403` from an unauthenticated request.
+The offline check asserts Entra auth with a managed identity and no keys, an authenticated endpoint,
+Application Insights with GenAI tracing on, a defined rollback strategy, module-6 gate status, and
+retained evidence references. The live probe expects a `401`/`403` from an unauthenticated request.
 
 ## Troubleshooting
 

@@ -25,6 +25,15 @@ DEFAULT_RELEASE = SAMPLE_DATA / "release-decision.json"
 DEFAULT_FEEDBACK = SAMPLE_DATA / "feedback-fixture.json"
 
 
+def evidence_path_exists(value: object) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    path = Path(value)
+    if not path.is_absolute():
+        path = ACCELERATOR / path
+    return path.is_file()
+
+
 def check(passed: bool, message: str, failures: list[str]) -> None:
     print(f"{'PASS ' if passed else 'FAIL '} {message}")
     if not passed:
@@ -40,6 +49,18 @@ def verify_release(release_path: Path, failures: list[str]) -> None:
     thresholds = release.get("thresholds", {})
     check(bool(scorecard) and bool(thresholds), "release declares a scorecard and thresholds", failures)
     check(release.get("trace_reviewed") is True, "a trace was reviewed", failures)
+    evidence = release.get("evidence", {})
+    check(
+        isinstance(evidence, dict)
+        and bool(evidence.get("evaluation_run_id"))
+        and bool(evidence.get("trace_artifact"))
+        and bool(evidence.get("redteam_artifact"))
+        and bool(evidence.get("accessibility_artifact")),
+        "release records evaluation, trace, red-team, and accessibility evidence artifacts",
+        failures,
+    )
+    for key in ("trace_artifact", "redteam_artifact", "accessibility_artifact"):
+        check(evidence_path_exists(evidence.get(key)), f"{key} points to a retained evidence file", failures)
 
     gates_green = (
         scorecard.get("grounding_pass_rate", 0) >= thresholds.get("min_grounding_pass_rate", 1)

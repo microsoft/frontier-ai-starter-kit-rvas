@@ -2,23 +2,31 @@
 
 ## Workshop objective
 
-In 90 minutes, help a cross-functional team turn one onboarding moment into a controlled pilot decision. The workshop produces a grounded script, an approval record, an accessible experience plan, and a measurable pilot—not a vendor commitment or a production publication.
+In 90 minutes, help a cross-functional team turn one avatar-led learning, communications, onboarding,
+or support moment into a controlled pilot decision. The onboarding fixture is only the sample pack.
+The workshop produces a source/claim boundary, approval record, accessible experience plan, and
+evidence plan—not a vendor commitment or a production publication.
 
 ## Participants and preparation
 
-Invite an onboarding lead, content owner, SME, legal/compliance representative, brand/communications representative, accessibility lead, support or operations owner, and a decision maker. Ask them to bring one sanitized source, its owner and review date, a candidate pilot cohort, and current official information for any delivery platforms under consideration.
+Invite the business owner for the selected moment, content owner, SME, legal/compliance
+representative, brand/communications representative, accessibility lead, support or operations
+owner, and a decision maker. Ask them to bring one sanitized source, its owner and review date, a
+candidate pilot audience, and current official information for any delivery platforms under
+consideration.
 
-Prepare `slides.md`, the four lesson files, and the fictional fixture in `accelerator/sample-data/`. State that the fixture contains no customer policy and must not be treated as authority.
+Prepare `slides.md`, the seven lesson files, and the fictional fixture in `accelerator/sample-data/`.
+State that the fixture contains no customer policy and must not be treated as authority.
 
 ## 90-minute agenda
 
 | Time | Facilitator action | Outcome |
 | --- | --- | --- |
-| 0–10 min | Set the boundary: the goal is a governed employee experience. Review disclosure, consent, accessibility, and the right to stop. | Shared scope and one onboarding moment. |
-| 10–30 min | Facilitate Lesson 1. Challenge unsupported statements and insist on named owners and source versions. | Approved-claims list. |
-| 30–55 min | Facilitate Lesson 2. Have a participant experience the transcript and fallback before discussing an avatar. | Script/storyboard and accessibility plan. |
-| 55–75 min | Facilitate Lesson 3. Run the approval simulation and capability comparison. | Approval record and conditional delivery decision. |
-| 75–90 min | Facilitate Lesson 4. Define a limited pilot, evidence review, and withdrawal owner. | Pilot decision and review date. |
+| 0–10 min | Set the boundary: the goal is a governed avatar-led experience. Review disclosure, consent, accessibility, and the right to stop. | Shared scope and one selected moment. |
+| 10–25 min | Use Lessons 1–2 to pick the experience capability and required foundation. | Capability decision and environment assumptions. |
+| 25–45 min | Use Lessons 3–4 to define approved claims and the grounded assistant boundary. | Source/claim contract and refusal rule. |
+| 45–65 min | Use Lessons 5–6 to test transcript/fallback first, then approval gating. | Accessible script/storyboard and approval record. |
+| 65–90 min | Use Lesson 7 to define evidence, feedback, withdrawal, and expansion gates. | Pilot decision, feedback channel, and review date. |
 
 ## Facilitation prompts
 

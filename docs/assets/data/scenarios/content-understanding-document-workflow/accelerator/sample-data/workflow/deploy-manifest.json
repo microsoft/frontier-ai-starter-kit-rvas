@@ -14,5 +14,10 @@
     "strategy": "previous_revision",
     "revision_pinning": true
   },
-  "evaluation_gate_passed": true
+  "evaluation_gate_passed": true,
+  "evidence": {
+    "deployment_artifact": "sample-data/workflow/synthetic-deployment-record.json",
+    "auth_probe": "sample-data/workflow/synthetic-auth-probe.json",
+    "monitoring_query": "requests | where cloud_RoleName == 'content-understanding-review'"
+  }
 }
