@@ -1631,15 +1631,19 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .mod-ghaw        { --mod-color: var(--c-ghaw); }
 .mod-agentic-devops { --mod-color: var(--c-agentic); }
 
-/* Activity detail page hero */
+/* Compact detail page hero */
 .ch-detail-hero {
   padding: 52px 0 40px;
   border-bottom: 1px solid var(--c-line);
 }
-.ch-detail-hero h1 { margin-top: 14px; font-size: clamp(1.6rem, 3.5vw + 0.5rem, 2.8rem); }
+.ch-detail-hero h1 {
+  margin-top: 12px;
+  max-width: 24ch;
+  font-size: clamp(1.6rem, 3.5vw + 0.5rem, 2.8rem);
+}
 .ch-detail-hero .lede,
 .ch-detail-hero #tagline {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   max-width: 68ch;
   color: var(--c-dim);
   font-size: 1.02rem;
@@ -1650,13 +1654,13 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 .detail-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 .detail-hero-actions .btn {
   min-height: 38px;
@@ -1667,7 +1671,7 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--c-faint);
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .attribution a { color: var(--c-gold); }
 .attribution a:hover { text-decoration: underline; }

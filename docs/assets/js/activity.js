@@ -62,6 +62,11 @@
 
     _setText('activityTitle', c.title);
     _setText('activityId', c.id);
+    _setText('activityEyebrow', `Reference activity · ${c.track || c.module || 'Reusable capability'}`);
+    _setText(
+      'activitySummary',
+      c.description || 'Use this reusable build activity to prove a specific capability before adapting it to your scenario.'
+    );
 
     const meta = document.getElementById('activityMeta');
     if (meta) {
@@ -70,7 +75,7 @@
         ${FP.durBadge(c.duration_minutes)}
         ${c.tier && c.tier !== 'core' ? `<span class="badge badge-app">${FP.esc(c.tier)}</span>` : ''}
         ${c.app_dependency && c.app_dependency !== 'none' ? `<span class="badge badge-app">App: ${FP.esc(c.app_dependency)}</span>` : ''}
-        <span class="badge-tag badge" style="margin-left:auto;color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
+        <span class="badge-tag badge" style="color:${color}">${FP.esc(c.module)} · ${FP.esc(c.track || '')}</span>`;
     }
 
   }
