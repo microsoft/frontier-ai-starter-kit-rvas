@@ -65,16 +65,11 @@ scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding w
 
 # 2. Run the scenario's offline contract + all module checkpoints:
 python3 scenarios/avatar-onboarding/validate.py
-
-# 3. Deterministic render of the fictional pack (no service calls); inspect, then clean up:
-python3 scenarios/avatar-onboarding/accelerator/mock_renderer.py \
-  --data-dir scenarios/avatar-onboarding/accelerator/sample-data \
-  --output-dir scenarios/avatar-onboarding/accelerator/demo-artifacts
-rm -rf scenarios/avatar-onboarding/accelerator/demo-artifacts
 ```
 
-The mock renderer produces a deterministic JSON record; it is not a media generator and makes no
-service calls. The full reference implementation, end-to-end, is in [`solution.md`](accelerator/solution.md).
+The offline checkpoints validate the fictional pack and its approval gates deterministically; they
+are not media generators and make no service calls. The full reference implementation, end-to-end,
+is in [`solution.md`](accelerator/solution.md).
 
 ## Responsible AI
 

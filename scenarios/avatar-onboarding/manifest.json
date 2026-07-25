@@ -19,45 +19,68 @@
   "lessons": [
     {
       "id": "experience-selection",
-      "title": "Module 1 — Select the avatar/experience capability",
+      "title": "Module 1 \u2014 Select the avatar/experience capability",
       "path": "lessons/01-experience-selection.md",
-      "reused_with": ["policy communications", "learning content", "multilingual video"]
+      "reused_with": [
+        "policy communications",
+        "learning content",
+        "multilingual video"
+      ]
     },
     {
       "id": "foundation",
-      "title": "Module 2 — Provision the Foundry + Speech foundation",
+      "title": "Module 2 \u2014 Provision the Foundry + Speech foundation",
       "path": "lessons/02-foundation.md",
-      "reused_with": ["any Foundry app", "speech experiences"]
+      "reused_with": [
+        "any Foundry app",
+        "speech experiences"
+      ]
     },
     {
       "id": "content-pipeline",
-      "title": "Module 3 — Build the governed content pipeline",
+      "title": "Module 3 \u2014 Build the governed content pipeline",
       "path": "lessons/03-content-pipeline.md",
-      "reused_with": ["policy communications", "knowledge-grounded experiences"]
+      "reused_with": [
+        "policy communications",
+        "knowledge-grounded experiences"
+      ]
     },
     {
       "id": "grounded-assistant",
-      "title": "Module 4 — Build the grounded assistant behind the experience",
+      "title": "Module 4 \u2014 Build the grounded assistant behind the experience",
       "path": "lessons/04-grounded-assistant.md",
-      "reused_with": ["employee help desk", "grounded chat"]
+      "reused_with": [
+        "employee help desk",
+        "grounded chat"
+      ]
     },
     {
       "id": "experience-generation",
-      "title": "Module 5 — Generate the accessible avatar experience",
+      "title": "Module 5 \u2014 Generate the accessible avatar experience",
       "path": "lessons/05-experience-generation.md",
-      "reused_with": ["learning content", "employee communications", "multilingual video"]
+      "reused_with": [
+        "learning content",
+        "employee communications",
+        "multilingual video"
+      ]
     },
     {
       "id": "approval-gating",
-      "title": "Module 6 — Gate publication behind human approval",
+      "title": "Module 6 \u2014 Gate publication behind human approval",
       "path": "lessons/06-approval-gating.md",
-      "reused_with": ["brand-governed generation", "regulated communications"]
+      "reused_with": [
+        "brand-governed generation",
+        "regulated communications"
+      ]
     },
     {
       "id": "prove-and-operate",
-      "title": "Module 7 — Evaluate, red-team, trace, and operate",
+      "title": "Module 7 \u2014 Evaluate, red-team, trace, and operate",
       "path": "lessons/07-prove-and-operate.md",
-      "reused_with": ["employee experience", "operational measurement"]
+      "reused_with": [
+        "employee experience",
+        "operational measurement"
+      ]
     }
   ],
   "build_modules": [
@@ -72,14 +95,21 @@
       "title": "Provision the shared Foundry + Speech foundation",
       "summary": "Deploy the keyless Foundry, model, Azure AI Search, Speech data plane, and observability baseline the avatar experience uses, with managed-identity RBAC and no secrets.",
       "activity_id": "foundations",
-      "implementation_paths": ["accelerator/main.bicep", "accelerator/scripts/deploy.sh", "accelerator/scripts/verify_foundation.py"],
+      "implementation_paths": [
+        "accelerator/main.bicep",
+        "accelerator/scripts/deploy.sh",
+        "accelerator/scripts/verify_foundation.py"
+      ],
       "checkpoint": "Foundations Steps 1 and 2 plus a keyless .env contract"
     },
     {
       "id": "content-pipeline",
       "title": "Build the governed content pipeline",
       "summary": "Connect approved source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
-      "implementation_paths": ["accelerator/scripts/verify_content_pipeline.py", "accelerator/sample-data"],
+      "implementation_paths": [
+        "accelerator/scripts/verify_content_pipeline.py",
+        "accelerator/sample-data"
+      ],
       "checkpoint": "Versioned claim set with authoritative sources, owners, and expiry"
     },
     {
@@ -87,21 +117,27 @@
       "title": "Build the grounded assistant behind the experience",
       "summary": "Build the model or Foundry agent path for cited drafting, refusal on unapproved claims, human escalation, and approved-content retrieval that feeds the script.",
       "activity_id": "foundations",
-      "checkpoint": "Foundations Steps 3 and 4 — grounded, citing, refusing agent"
+      "checkpoint": "Foundations Steps 3 and 4 \u2014 grounded, citing, refusing agent"
     },
     {
       "id": "experience-generation",
       "title": "Generate the accessible avatar experience",
       "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
       "activity_id": "extra-voice-live",
-      "implementation_paths": ["accelerator/mock_renderer.py", "accelerator/scripts/verify_experience.py"],
+      "implementation_paths": [
+        "accelerator/content_pack.py",
+        "accelerator/scripts/verify_experience.py"
+      ],
       "checkpoint": "Accessible experience generated from an approved revision, with disclosure and fallback"
     },
     {
       "id": "approval-gating",
       "title": "Gate publication behind human approval",
       "summary": "Version output, collect factual, legal, brand, and accessibility approvals, and implement pause or withdrawal when a source changes.",
-      "implementation_paths": ["accelerator/scripts/verify_approval.py", "accelerator/sample-data/approvals.json"],
+      "implementation_paths": [
+        "accelerator/scripts/verify_approval.py",
+        "accelerator/sample-data/approvals.json"
+      ],
       "checkpoint": "Approved publication and withdrawal record with a full trace"
     },
     {
@@ -109,14 +145,16 @@
       "title": "Evaluate, red-team, trace, and operate",
       "summary": "Measure grounding, disclosure, accessibility, handoff, and defect behaviour; red-team the experience; trace it; and deploy a controlled pilot with a scorecard and release decision.",
       "activity_id": "advanced-evaluation-redteam",
-      "implementation_paths": ["accelerator/scripts/verify_operate.py", "accelerator/sample-data/feedback-fixture.json"],
+      "implementation_paths": [
+        "accelerator/scripts/verify_operate.py",
+        "accelerator/sample-data/feedback-fixture.json"
+      ],
       "checkpoint": "Pilot scorecard, red-team result, trace review, and release decision"
     }
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
   "facilitator": "FACILITATOR.md",
-  "local_demo": "local-demo.md",
   "solution": "accelerator/solution.md",
   "validator": "validate.py"
 }

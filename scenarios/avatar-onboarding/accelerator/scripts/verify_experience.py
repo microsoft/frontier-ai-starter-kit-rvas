@@ -2,7 +2,7 @@
 """Module 5 checkpoint — the generated experience is accessible and rendered from an approval.
 
 Offline (default): validate the approved pack, render the deterministic local artifact via
-``mock_renderer``, and assert the experience carries the required synthetic-media disclosure,
+``content_pack``, and assert the experience carries the required synthetic-media disclosure,
 captions, a transcript, and a non-avatar fallback — and that every rendered segment traces to an
 approved claim. It also builds the exact Speech avatar *batch synthesis* request body that the
 approved script would produce, without calling Azure.
@@ -26,7 +26,7 @@ from pathlib import Path
 
 ACCELERATOR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ACCELERATOR))
-from mock_renderer import PackRejectedError, build_artifact, validate_pack  # noqa: E402
+from content_pack import PackRejectedError, build_artifact, validate_pack  # noqa: E402
 
 DEFAULT_DATA_DIR = ACCELERATOR / "sample-data"
 ENV_FILE = ACCELERATOR / ".env"

@@ -20,7 +20,7 @@ from pathlib import Path
 
 ACCELERATOR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ACCELERATOR))
-from mock_renderer import (  # noqa: E402
+from content_pack import (  # noqa: E402
     REQUIRED_APPROVER_ROLES,
     PackRejectedError,
     validate_pack,

@@ -9,11 +9,11 @@ not choose an avatar platform, provision a landing zone, or implement a producti
 - `sample-data/` — complete fictional claims, approvals, script/storyboard, transcript, accessible HTML fallback, and aggregated feedback fixture.
 - `main.bicep` — optional deployable foundation for Foundry, Search, Storage, Speech data-plane access, and observability. It is not a landing zone or production channel implementation.
 - `parameters.example.json` — safe placeholder values.
-- `mock_renderer.py` — standard-library-only local renderer that enforces the approval and claim gates.
+- `content_pack.py` — standard-library-only pack contract that enforces the approval and claim gates.
 
 ## Clean demo
 
-1. Run `../validate.py`, then run `mock_renderer.py` as described in `../local-demo.md`.
+1. Run `../validate.py`, which validates the approved-content pack through `content_pack.py` and runs every module checkpoint offline.
 2. Use the fictional claims as the only source of scripted claims.
 3. Display the traceable artifact, source links, approval record, disclosure, transcript, and non-avatar alternative.
 4. Record feedback only as aggregated example operational evidence; do not treat it as production employee data.

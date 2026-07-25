@@ -16,7 +16,7 @@ it actually blocks.
 
 The approval record template is
 [`accelerator/sample-data/approvals.json`](../accelerator/sample-data/approvals.json), enforced by
-[`mock_renderer.py`](../accelerator/mock_renderer.py).
+[`content_pack.py`](../accelerator/content_pack.py).
 
 ## Choose your path
 

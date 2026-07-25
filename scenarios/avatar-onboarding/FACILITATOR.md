@@ -38,7 +38,7 @@ State that the fixture contains no customer policy and must not be treated as au
 
 ## Demonstration
 
-Run `local-demo.md` only with the supplied synthetic fixture. Show the generated artifact's claim links, source references, approval record, disclosure, transcript, fallback, and input hashes. Explain that the local mock deliberately has no media generation, vendor SDK, identity integration, or network call.
+Run `validate.py` only with the supplied synthetic fixture. Show the validated artifact record's claim links, source references, approval record, disclosure, transcript, fallback, and input hashes. Explain that the offline checkpoints deliberately have no media generation, vendor SDK, identity integration, or network call.
 
 ## Guardrails
 
