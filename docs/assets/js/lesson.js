@@ -42,6 +42,7 @@
     document.getElementById('currentModuleCheckpoint').textContent = currentModule && currentModule.checkpoint
       ? `Checkpoint: ${currentModule.checkpoint}`
       : '';
+    renderLessonResources(scenario, lesson);
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `
       <li class="${item.id === lesson.id ? 'is-current' : ''}">
@@ -51,6 +52,19 @@
       </li>`).join('');
 
     renderLessonPager(previous, next, playbookUrl);
+  }
+
+  function renderLessonResources(scenario, lesson) {
+    const target = document.getElementById('lessonResourceLinks');
+    if (!target) return;
+
+    const scenarioId = encodeURIComponent(scenario.id);
+    const lessonHash = `lesson-${lesson.id}`;
+    target.innerHTML = [
+      ['Facilitator slides', `slides.html?id=${scenarioId}#${lessonHash}`],
+      ['Full scenario deck', `slides.html?id=${scenarioId}`],
+      ['Scenario playbook', `scenario.html?id=${scenarioId}`],
+    ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
   }
 
   function renderLessonPager(previous, next, playbookUrl) {

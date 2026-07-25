@@ -58,9 +58,16 @@ scenarios/<folder-name>/
 - Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important
   visual information the learner should understand or retain; include zero when a diagram would be
   decorative or redundant.
-- Slides can be used with a customer without exposing internal implementation detail.
-- Slides use Marp-compatible Markdown. Open them through `docs/slides.html?id=<scenario-id>` and
-  use the browser's **Print / save as PDF** action for a customer-deck export.
+- Slides can be used with a customer without exposing internal implementation detail. Use one
+  scenario deck with lesson sections, not separate lesson decks.
+- Slides use Marp-compatible Markdown. Open the full deck through `docs/slides.html?id=<scenario-id>`
+  and use the browser's **Print / save as PDF** action for a customer-deck export.
+- Each lesson section has three facilitator slides: why the decision matters, options/trade-offs to
+  discuss, and the evidence or checkpoint the practical activity must produce. Add stable slide
+  markers before those slides so lesson pages can link directly into the deck:
+  `<!-- slide:id=lesson-<lesson-id>-context -->`,
+  `<!-- slide:id=lesson-<lesson-id>-choices -->`, and
+  `<!-- slide:id=lesson-<lesson-id>-evidence -->`.
 - The accelerator has a minimal safe-demo path and a bring-your-own-environment path.
 - No accelerator provisions an enterprise landing zone.
 - Preview and fast-moving services instruct the reader to search current Microsoft documentation

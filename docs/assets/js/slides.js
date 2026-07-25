@@ -24,12 +24,38 @@
   function renderDeck(source, deck) {
     const content = source.replace(/^---\s*\n[\s\S]*?\n---\s*\n/mu, '').trim();
     const slides = content.split(/\n---\s*\n/gu).filter(Boolean);
-    deck.innerHTML = slides.map((slide, index) => `
-      <article class="customer-slide">
+    deck.innerHTML = slides.map((slide, index) => {
+      const { id, markdown } = parseSlide(slide, index);
+      return `
+      <article class="customer-slide" id="${FP.esc(id)}" tabindex="-1">
         <span class="slide-number">${String(index + 1).padStart(2, '0')}</span>
-        <div class="slide-content">${window.marked.parse(slide, { breaks: false, gfm: true })}</div>
-      </article>`).join('');
+        <div class="slide-content">${window.marked.parse(markdown, { breaks: false, gfm: true })}</div>
+      </article>`;
+    }).join('');
     FP.initDiagramZoom(deck);
+    focusRequestedSlide(deck);
+  }
+
+  function parseSlide(slide, index) {
+    const match = slide.match(/^\s*<!--\s*slide:id=([a-z0-9-]+)\s*-->\s*/i);
+    if (!match) return { id: `slide-${index + 1}`, markdown: slide };
+    return {
+      id: match[1].toLowerCase(),
+      markdown: slide.slice(match[0].length).trimStart(),
+    };
+  }
+
+  function focusRequestedSlide(deck) {
+    const requested = decodeURIComponent((window.location.hash || '').replace(/^#/, '')).toLowerCase();
+    if (!requested) return;
+
+    const exact = document.getElementById(requested);
+    const target = exact || Array.from(deck.querySelectorAll('.customer-slide'))
+      .find((slide) => slide.id.startsWith(`${requested}-`));
+    if (!target) return;
+
+    target.scrollIntoView({ block: 'start' });
+    target.focus({ preventScroll: true });
   }
 
   function showError(message) {
