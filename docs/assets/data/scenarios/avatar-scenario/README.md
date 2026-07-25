@@ -60,16 +60,13 @@ Use these gates before opening reference-library mechanics:
 ## Quick start
 
 ```bash
-# 1. Deploy the keyless foundation (writes accelerator/.env):
+# Deploy the keyless foundation (writes accelerator/.env):
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
-
-# 2. Run the scenario's offline contract + all module checkpoints:
-python3 scenarios/avatar-onboarding/validate.py
 ```
 
-The offline checkpoints validate the fictional pack and its approval gates deterministically; they
-are not media generators and make no service calls. The full reference implementation, end-to-end,
-is in [`solution.md`](accelerator/solution.md).
+Then work through the modules in order. Each lesson's **Verify** section lists the commands and the
+signals that tell you the module actually worked. The full reference implementation, end-to-end, is
+in [`solution.md`](accelerator/solution.md).
 
 ## Responsible AI
 

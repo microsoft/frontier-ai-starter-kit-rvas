@@ -259,11 +259,10 @@
           "title": "Provision Foundry, AI Search, and observability",
           "summary": "Create the shared keyless foundation and verify its generated environment contract before adding customer data.",
           "activity_id": "foundations",
-          "checkpoint": "Foundations Step 1",
+          "outcome": "Foundations Step 1",
           "implementation_paths": [
             "accelerator/main.bicep",
-            "accelerator/scripts/deploy.sh",
-            "accelerator/scripts/verify_foundation.py"
+            "accelerator/scripts/deploy.sh"
           ],
           "sequence": 1,
           "activity_path": "activity.html?id=foundations"
@@ -272,7 +271,7 @@
           "id": "source-selection",
           "title": "Select the source and permission architecture",
           "summary": "Choose the approved source path: SharePoint/Copilot Studio, Azure AI Search, Foundry IQ, Fabric IQ, Work IQ, or Web IQ.",
-          "checkpoint": "Signed source, access, freshness, and system-of-record decision",
+          "outcome": "Signed source, access, freshness, and system-of-record decision",
           "implementation_paths": [
             "accelerator/permission-probe.json",
             "accelerator/scripts/probe_permissions.py"
@@ -286,10 +285,9 @@
           "summary": "Connect the selected source, preserve source/version metadata and access controls, then prove retrieval with a seeded corpus.",
           "implementation_paths": [
             "accelerator/sample-data",
-            "accelerator/scripts/build_knowledge_source.py",
-            "accelerator/scripts/verify_retrieval.py"
+            "accelerator/scripts/build_knowledge_source.py"
           ],
-          "checkpoint": "Approved documents are discoverable with source metadata",
+          "outcome": "Approved documents are discoverable with source metadata",
           "sequence": 3,
           "activity_path": ""
         },
@@ -298,7 +296,7 @@
           "title": "Compare chat and embedding choices",
           "summary": "Compare supported deployments for quality, latency, cost, regional capacity, and the grounded-answer behavior the pilot needs.",
           "activity_id": "foundations",
-          "checkpoint": "Foundations Step 2",
+          "outcome": "Foundations Step 2",
           "implementation_paths": [
             "accelerator/scripts/compare_models.py"
           ],
@@ -310,7 +308,7 @@
           "title": "Build retrieval before adding an agent",
           "summary": "Implement citations, abstention, access-denied behavior, and source freshness before deciding whether Foundry IQ or an agent adds value.",
           "activity_id": "foundations",
-          "checkpoint": "Foundations Step 4",
+          "outcome": "Foundations Step 4",
           "implementation_paths": [
             "accelerator/scripts/grounded_answer.py",
             "accelerator/golden-questions.json"
@@ -323,10 +321,7 @@
           "title": "Add agent and live-data routing only when justified",
           "summary": "Create an agent with explicit source-routing rules and add a verified live-data tool only for a real-time requirement.",
           "activity_id": "extra-fabric-iq",
-          "checkpoint": "Policy and live-data questions route to the correct source",
-          "implementation_paths": [
-            "accelerator/scripts/verify_routing.py"
-          ],
+          "outcome": "Policy and live-data questions route to the correct source",
           "sequence": 6,
           "activity_path": "activity.html?id=extra-fabric-iq"
         },
@@ -335,9 +330,8 @@
           "title": "Evaluate and trace",
           "summary": "Prove citation, access, injection, and stale-source behavior against a gate, and trace one request end to end so a bad answer can be explained.",
           "activity_id": "advanced-evaluation-redteam",
-          "checkpoint": "Evaluation gate passed with trace and red-team evidence",
+          "outcome": "Evaluation gate passed with trace and red-team evidence",
           "implementation_paths": [
-            "accelerator/validate.py",
             "accelerator/golden-questions.json"
           ],
           "sequence": 7,
@@ -348,10 +342,9 @@
           "title": "Deploy and surface it to users",
           "summary": "Choose where users meet the agent — your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI — then pin the version, re-prove the permission boundary, and sign the release.",
           "activity_id": "advanced-deploy-hosted-agent",
-          "checkpoint": "Surface release contract complete and the unauthenticated caller refused",
+          "outcome": "Surface release contract complete and the unauthenticated caller refused",
           "implementation_paths": [
-            "accelerator/sample-data/surface-manifest.json",
-            "accelerator/scripts/verify_surface.py"
+            "accelerator/sample-data/surface-manifest.json"
           ],
           "sequence": 8,
           "activity_path": "activity.html?id=advanced-deploy-hosted-agent"
@@ -361,8 +354,7 @@
       "readme_path": "assets/data/scenarios/ai-grounding/README.md",
       "slides_path": "assets/data/scenarios/ai-grounding/slides.md",
       "accelerator_path": "assets/data/scenarios/ai-grounding/accelerator/README.md",
-      "facilitator_path": "assets/data/scenarios/ai-grounding/FACILITATOR.md",
-      "validator_path": "assets/data/scenarios/ai-grounding/accelerator/validate.py"
+      "facilitator_path": "assets/data/scenarios/ai-grounding/FACILITATOR.md"
     },
     {
       "id": "content-understanding-document-workflow",
@@ -483,10 +475,9 @@
           "summary": "Create the keyless Foundry account, chat + embedding deployments, document storage, and observability baseline before adding document services or customer files.",
           "activity_id": "foundations",
           "implementation_paths": [
-            "accelerator/main.bicep",
-            "accelerator/scripts/verify_foundation.py"
+            "accelerator/main.bicep"
           ],
-          "checkpoint": "Foundations Step 1",
+          "outcome": "Foundations Step 1",
           "sequence": 1,
           "activity_path": "activity.html?id=foundations"
         },
@@ -494,10 +485,7 @@
           "id": "document-source",
           "title": "Connect an approved document source",
           "summary": "Choose Azure Blob, ADLS Gen2, SharePoint, or OneLake and preserve source identity, version, permissions, and quarantine controls.",
-          "implementation_paths": [
-            "accelerator/scripts/verify_document_source.py"
-          ],
-          "checkpoint": "Approved intake and document-retention design",
+          "outcome": "Approved intake and document-retention design",
           "sequence": 2,
           "activity_path": ""
         },
@@ -506,10 +494,7 @@
           "title": "Select the extraction capability",
           "summary": "Verify and choose the current Content Understanding analyzer, Document Intelligence model, LLM structured-output, or multimodal approach against schema, document quality, region, cost, and review needs.",
           "activity_id": "extra-document-workflow",
-          "implementation_paths": [
-            "accelerator/scripts/verify_extraction_selection.py"
-          ],
-          "checkpoint": "Document capability and implementation decision",
+          "outcome": "Document capability and implementation decision",
           "sequence": 3,
           "activity_path": "activity.html?id=extra-document-workflow"
         },
@@ -518,10 +503,7 @@
           "title": "Implement typed extraction with evidence",
           "summary": "Return a validated result with confidence, page references, missing-field handling, and no inferred values.",
           "activity_id": "extra-document-workflow",
-          "implementation_paths": [
-            "accelerator/scripts/verify_typed_extraction.py"
-          ],
-          "checkpoint": "Structured extraction result and low-confidence failure path",
+          "outcome": "Structured extraction result and low-confidence failure path",
           "sequence": 4,
           "activity_path": "activity.html?id=extra-document-workflow"
         },
@@ -530,10 +512,7 @@
           "title": "Build review, correction, and handoff",
           "summary": "Route exceptions to a named reviewer, retain corrections as evaluation evidence, and hand approved results to a governed downstream seam.",
           "activity_id": "advanced-action-tools",
-          "implementation_paths": [
-            "accelerator/scripts/verify_human_review.py"
-          ],
-          "checkpoint": "Reviewer correction and approval trace",
+          "outcome": "Reviewer correction and approval trace",
           "sequence": 5,
           "activity_path": "activity.html?id=advanced-action-tools"
         },
@@ -542,10 +521,7 @@
           "title": "Evaluate and trace the workflow",
           "summary": "Measure field accuracy, false approval, review rate, injection resistance, and workflow latency across representative document cases.",
           "activity_id": "advanced-evaluation-redteam",
-          "implementation_paths": [
-            "accelerator/scripts/verify_prove_and_observe.py"
-          ],
-          "checkpoint": "Scenario evaluation gate and trace review",
+          "outcome": "Scenario evaluation gate and trace review",
           "sequence": 6,
           "activity_path": "activity.html?id=advanced-evaluation-redteam"
         },
@@ -554,10 +530,7 @@
           "title": "Deploy the reviewable workflow",
           "summary": "Ship the approved workflow behind an authenticated endpoint with managed identity, application monitoring, and a rollback path.",
           "activity_id": "advanced-deploy-hosted-agent",
-          "implementation_paths": [
-            "accelerator/scripts/verify_deploy.py"
-          ],
-          "checkpoint": "Controlled pilot deployment",
+          "outcome": "Controlled pilot deployment",
           "sequence": 7,
           "activity_path": "activity.html?id=advanced-deploy-hosted-agent"
         }
@@ -566,8 +539,7 @@
       "readme_path": "assets/data/scenarios/content-understanding-document-workflow/README.md",
       "slides_path": "assets/data/scenarios/content-understanding-document-workflow/slides.md",
       "accelerator_path": "assets/data/scenarios/content-understanding-document-workflow/accelerator/README.md",
-      "facilitator_path": "assets/data/scenarios/content-understanding-document-workflow/FACILITATOR.md",
-      "validator_path": "assets/data/scenarios/content-understanding-document-workflow/validate.py"
+      "facilitator_path": "assets/data/scenarios/content-understanding-document-workflow/FACILITATOR.md"
     },
     {
       "id": "avatar-scenario",
@@ -681,7 +653,7 @@
           "id": "experience-selection",
           "title": "Verify and select the Azure experience capability",
           "summary": "Before implementation, use current Microsoft docs to confirm a supported Speech avatar (batch or real-time), Voice Live, video-translation, or plain-audio capability, and record its API, region, identity, pricing, accessibility, content-safety, consent, and responsible-AI gating contract.",
-          "checkpoint": "Dated, evidence-backed capability decision record covering service, API, region, identity, pricing, accessibility, disclosure, and limited-access gating",
+          "outcome": "Dated, evidence-backed capability decision record covering service, API, region, identity, pricing, accessibility, disclosure, and limited-access gating",
           "sequence": 1,
           "activity_path": ""
         },
@@ -692,10 +664,9 @@
           "activity_id": "foundations",
           "implementation_paths": [
             "accelerator/main.bicep",
-            "accelerator/scripts/deploy.sh",
-            "accelerator/scripts/verify_foundation.py"
+            "accelerator/scripts/deploy.sh"
           ],
-          "checkpoint": "Foundations Steps 1 and 2 plus a keyless .env contract",
+          "outcome": "Foundations Steps 1 and 2 plus a keyless .env contract",
           "sequence": 2,
           "activity_path": "activity.html?id=foundations"
         },
@@ -704,10 +675,9 @@
           "title": "Build the governed content pipeline",
           "summary": "Connect approved source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
           "implementation_paths": [
-            "accelerator/scripts/verify_content_pipeline.py",
             "accelerator/sample-data"
           ],
-          "checkpoint": "Versioned claim set with authoritative sources, owners, and expiry",
+          "outcome": "Versioned claim set with authoritative sources, owners, and expiry",
           "sequence": 3,
           "activity_path": ""
         },
@@ -716,7 +686,7 @@
           "title": "Build the grounded assistant behind the experience",
           "summary": "Build the model or Foundry agent path for cited drafting, refusal on unapproved claims, human escalation, and approved-content retrieval that feeds the script.",
           "activity_id": "foundations",
-          "checkpoint": "Foundations Steps 3 and 4 — grounded, citing, refusing agent",
+          "outcome": "Foundations Steps 3 and 4 — grounded, citing, refusing agent",
           "sequence": 4,
           "activity_path": "activity.html?id=foundations"
         },
@@ -726,10 +696,9 @@
           "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
           "activity_id": "extra-voice-live",
           "implementation_paths": [
-            "accelerator/content_pack.py",
-            "accelerator/scripts/verify_experience.py"
+            "accelerator/content_pack.py"
           ],
-          "checkpoint": "Accessible experience generated from an approved revision, with disclosure and fallback",
+          "outcome": "Accessible experience generated from an approved revision, with disclosure and fallback",
           "sequence": 5,
           "activity_path": "activity.html?id=extra-voice-live"
         },
@@ -738,10 +707,9 @@
           "title": "Gate publication behind human approval",
           "summary": "Version output, collect factual, legal, brand, and accessibility approvals, and implement pause or withdrawal when a source changes.",
           "implementation_paths": [
-            "accelerator/scripts/verify_approval.py",
             "accelerator/sample-data/approvals.json"
           ],
-          "checkpoint": "Approved publication and withdrawal record with a full trace",
+          "outcome": "Approved publication and withdrawal record with a full trace",
           "sequence": 6,
           "activity_path": ""
         },
@@ -751,10 +719,9 @@
           "summary": "Measure grounding, disclosure, accessibility, handoff, and defect behaviour; red-team the experience; trace it; and deploy a controlled pilot with a scorecard and release decision.",
           "activity_id": "advanced-evaluation-redteam",
           "implementation_paths": [
-            "accelerator/scripts/verify_operate.py",
             "accelerator/sample-data/feedback-fixture.json"
           ],
-          "checkpoint": "Pilot scorecard, red-team result, trace review, and release decision",
+          "outcome": "Pilot scorecard, red-team result, trace review, and release decision",
           "sequence": 7,
           "activity_path": "activity.html?id=advanced-evaluation-redteam"
         }
@@ -763,8 +730,7 @@
       "readme_path": "assets/data/scenarios/avatar-scenario/README.md",
       "slides_path": "assets/data/scenarios/avatar-scenario/slides.md",
       "accelerator_path": "assets/data/scenarios/avatar-scenario/accelerator/README.md",
-      "facilitator_path": "assets/data/scenarios/avatar-scenario/FACILITATOR.md",
-      "validator_path": "assets/data/scenarios/avatar-scenario/validate.py"
+      "facilitator_path": "assets/data/scenarios/avatar-scenario/FACILITATOR.md"
     }
   ],
   "aliases": {},

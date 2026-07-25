@@ -136,26 +136,39 @@ comparison you just ran is the thing that produces the number you would size it 
 
 ## Verify
 
+Public benchmarks measure a different workload than yours. The mistake is picking a model from a
+leaderboard and discovering in production that it guesses on your corpus or stalls at p95. Measure the
+candidates on your own golden set, side by side.
+
+**1. Both deployments you want to compare exist.**
+
 ```bash
-python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py --offline
+az cognitiveservices account deployment list \
+  --name "$AZURE_AI_FOUNDRY_ACCOUNT_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "[].name" -o tsv
 ```
 
-Expected:
+The two names you pass to `--deployments` must both appear. A missing name surfaces later as a
+deployment-not-found error that reads like a bug in the harness.
 
-```
-✅ Module 4 checkpoint PASS — comparison harness is well-formed and the golden set is loadable
-```
+**2. Run the comparison and read the table.**
 
-Live, expect a table like:
-
-```
-deployment        grounded  abstained  superseded  p50(ms)  p95(ms)  tok_in  tok_out
-chat                  6/6        1/1         1/1      820     1310    4,912     611
-chat-candidate        6/6        1/1         1/1     1640     2900    4,912     844
+```bash
+python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py \
+  --deployments chat chat-candidate
 ```
 
-Two candidates tied on quality and separated by 2× latency and 40% more output tokens is a decision,
-not a dilemma. Write down which one you picked and what evidence would change your mind.
+```
+deployment          grounded  abstained  p50(ms)  p95(ms)   tok_in  tok_out
+chat                     4/4        3/3      820     1310     4912      611
+chat-candidate           4/4        3/3     1640     2900     4912      844
+```
+
+`grounded` counts answerable questions that were cited correctly; `abstained` counts unanswerable
+ones the model correctly refused. Four of the seven golden questions are answerable. A model that
+grounds fewer than that is guessing; one that abstains less than 3/3 is answering questions the corpus
+cannot support. Two candidates tied on quality and separated by 2× latency and 40% more output tokens
+is a decision, not a dilemma. Write down which you picked and what evidence would change your mind.
 
 ## Troubleshooting
 

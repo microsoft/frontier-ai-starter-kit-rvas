@@ -183,32 +183,53 @@ single agent with two tools answers worse. If you cannot write it, you have your
 
 ## Verify
 
+The failure that bites here is an agent that reaches for a tool by reflex instead of abstaining, or
+answers a "what is happening now" question from a stale index. Route the four cases through the
+deployed agent and read what it actually did, then confirm the agent did not make retrieval worse.
+
+**1. Route the four cases and read the answers.** Send each through the deployed agent with the
+Responses API:
+
+```python
+import os
+from azure.ai.projects import AIProjectClient
+from azure.identity import DefaultAzureCredential
+
+project = AIProjectClient(endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
+                          credential=DefaultAzureCredential())
+openai = project.get_openai_client()
+
+cases = {
+    "policy":      "Can a coordinator approve an unused standard return on day 30?",
+    "live":        "What is the current status of order 44810?",
+    "mixed":       "Can I refund order 44810, and what does policy allow for its condition?",
+    "out-of-scope":"What is the office coffee order for next week?",
+}
+for label, q in cases.items():
+    resp = openai.responses.create(
+        input=q,
+        extra_body={"agent_reference": {"name": "grounding-assistant", "type": "agent_reference"}},
+    )
+    print(f"\n[{label}] {resp.output_text}")
+```
+
+The `out-of-scope` answer must be exactly `I don't have approved information on that.` — an agent that
+instead calls the tool and improvises is the reflexive-tool-call failure. The `live` answer must name
+the case id, not quote policy. The `mixed` answer must cite the policy document id and the case id
+separately, so a reader can tell which half is policy and which is live. The `policy` answer must cite
+a document id.
+
+**2. Confirm the agent did not lower recall.** Re-run the module 5 baseline against the same knowledge
+base:
+
 ```bash
-# Offline: routing rules, tool wiring, and the routing test plan
-python3 scenarios/ai-grounding/accelerator/scripts/verify_routing.py --offline
-
-# Live: route every routing case and assert which source answered
-python3 scenarios/ai-grounding/accelerator/scripts/verify_routing.py \
-  --agent grounding-assistant
+python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Expected:
-
-```
-✅ Module 6 checkpoint PASS — 4/4 routed correctly
-```
-
-The routing test needs all four cases, and the last two are the ones that find real bugs:
-
-| Case | Must route to | Catches |
-| --- | --- | --- |
-| Pure policy question | Knowledge | Baseline |
-| Pure live-data question | Tool | Answering "now" from an index |
-| Mixed question | Both, cited separately | Blended answers with untraceable provenance |
-| Out-of-scope question | Neither — abstain | Tool-calling as a nervous reflex |
-
-Re-run module 5's `recall@5` afterwards. If adding the agent lowered it, the agent's query rewriting
-is hurting retrieval — fix that before module 7 rather than discovering it in evaluation.
+The `recall@5` line must match what you recorded in module 5. If it dropped, the agent's query
+rewriting is hurting retrieval — fix that here, not in evaluation, where it will read as a quality
+regression with no obvious cause.
 
 ## Troubleshooting
 

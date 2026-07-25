@@ -179,19 +179,52 @@ az role assignment create --assignee "$(az ad signed-in-user show --query id -o 
 
 ## Verify
 
+Three things must be true before later modules write into this footprint. Check each against your
+own resources. Set `ACCOUNT` from the Speech endpoint and `RG` to the resource group you deployed to:
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_foundation.py
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+ACCOUNT=$(echo "$AZURE_SPEECH_ENDPOINT" | sed -E 's#https://([^.]+)\..*#\1#')
+RG=rg-avatar-onboarding   # the group you passed to deploy.sh
 ```
 
-Expected:
+**1. Both model deployments exist.**
 
-```
-✅ Module 2 checkpoint PASS — Foundry + Speech foundation is provisioned and keyless
+```bash
+az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group "$RG" \
+  --query "[].name" -o tsv
 ```
 
-The checkpoint asserts the `.env` contract is complete and secret-free, that Search answers with
-Entra ID, that both deployments exist, and that the **Speech avatar data plane answers with an Entra
-token** (the keyless proof). Run with `--offline` to check structure only.
+You should see the names in `AZURE_AI_MODEL_DEPLOYMENT_NAME` and
+`AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`. If either is missing, module 3 ingestion and module 4 drafting
+fail with a deployment-not-found error that looks like a code bug but is a provisioning gap.
+
+**2. The Speech avatar data plane answers your Entra identity, with no key.** This is the keyless
+proof for this scenario: the batch-synthesis endpoint accepts an Entra token only when the account
+has a custom subdomain. List synthesis jobs with a token, not a key:
+
+```bash
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' \
+  -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses?api-version=2024-08-01"
+```
+
+`200` means keyless Speech works end to end. `401` means the account has no custom subdomain, so
+Entra auth is rejected: redeploy Option A, which sets `customSubDomainName`. `403` means your
+identity is missing **Cognitive Services Speech User** (`f2dc8367-1007-4938-bd23-fe263f013447`);
+grant that role rather than falling back to a Speech key, or you carry the key to production.
+<https://learn.microsoft.com/azure/ai-services/speech-service/role-based-access-control>
+
+**3. The environment contract holds no secrets.**
+
+```bash
+grep -iE 'api_key|account_key|connection_string|sas_token|subscription_key' \
+  scenarios/avatar-onboarding/accelerator/.env
+```
+
+No output is the result you want. Any match means something handed you a key and the keyless chain
+is already broken.
 
 ## Troubleshooting
 

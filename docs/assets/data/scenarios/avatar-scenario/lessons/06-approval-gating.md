@@ -31,7 +31,7 @@ Where does the approval gate live and who enforces it?
 
 **Default: Option A.** A signed, versioned record that the renderer enforces is the smallest gate
 that is also auditable and portable: the approval travels with the artifact, and the enforcement is
-in code you can test (this module's checkpoint literally proves the gate blocks). Graduate to **B/C/D**
+in code you can test (this module's Verify literally proves the gate blocks). Graduate to **B/C/D**
 when the customer's existing release, collaboration, or change-control process must own the sign-off —
 but keep the same **four required roles** and the **withdrawal** semantics.
 
@@ -105,28 +105,63 @@ customer's governance demands formal change management.
 
 ## Verify
 
+A gate that never blocks proves nothing. Verify this one by trying to break it, and by confirming
+the approval binds to the exact revision. Check both against your own records.
+
+**1. Removing a required approval, or withdrawing the record, blocks publication.** Exercise the real
+enforcement code against a working copy so you never mutate the signed record:
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_approval.py
+python3 - <<'PY'
+import json, shutil, sys, tempfile
+from pathlib import Path
+sys.path.insert(0, "scenarios/avatar-onboarding/accelerator")
+from content_pack import validate_pack, PackRejectedError
+
+src = Path("scenarios/avatar-onboarding/accelerator/sample-data")
+work = Path(tempfile.mkdtemp(prefix="verify-gate-"))/"pack"
+shutil.rmtree(work, ignore_errors=True); shutil.copytree(src, work)
+
+validate_pack(work); print("fully-approved pack: PUBLISHES")
+
+appr = json.loads((work / "approvals.json").read_text())
+appr["approvals"] = [a for a in appr["approvals"] if a["role"] != "legal-compliance"]
+(work / "approvals.json").write_text(json.dumps(appr))
+try:
+    validate_pack(work); print("PROBLEM: published without legal-compliance")
+except PackRejectedError as e:
+    print("missing legal-compliance -> BLOCKED:", e)
+
+shutil.copy(src / "approvals.json", work / "approvals.json")
+appr = json.loads((work / "approvals.json").read_text())
+appr["approval_status"] = "withdrawn"
+(work / "approvals.json").write_text(json.dumps(appr))
+try:
+    validate_pack(work); print("PROBLEM: withdrawn pack still published")
+except PackRejectedError as e:
+    print("withdrawn status -> BLOCKED:", e)
+
+shutil.rmtree(work, ignore_errors=True)
+PY
 ```
 
-Expected:
+Good output: the full pack publishes, then both the missing-role and withdrawn cases print
+`BLOCKED`. If either prints `PROBLEM`, an unapproved or withdrawn synthetic likeness can reach real
+new hires. That is the exact failure the gate exists to stop.
 
+**2. The approval is bound to this script id and version.** Approving `0.1.0` must not approve a later
+edit:
+
+```bash
+jq -n \
+  --slurpfile a scenarios/avatar-onboarding/accelerator/sample-data/approvals.json \
+  --slurpfile s scenarios/avatar-onboarding/accelerator/sample-data/storyboard-script.json \
+  '($a[0].script_id == $s[0].script_id) and ($a[0].script_version == $s[0].script_version)'
 ```
-== Module 6 checkpoint: human approval gate ==
-PASS  all required approver roles present (missing: none)
-PASS  fully-approved pack is accepted (publication is allowed)
-PASS  removing the 'SME' approval blocks publication
-PASS  removing the 'brand-communications' approval blocks publication
-PASS  removing the 'content-owner' approval blocks publication
-PASS  removing the 'legal-compliance' approval blocks publication
-PASS  withdrawing the approval status blocks publication
 
-✅ Module 6 checkpoint PASS — publication requires approval and withdrawal blocks it
-```
-
-The check proves the gate **negatively**: it removes each required approval in turn and confirms
-publication is blocked, then confirms that withdrawing the status blocks a fully-signed pack. A gate
-that never blocks proves nothing — this one is tested by trying to break it.
+`true` means the sign-off matches the artifact being published. `false` means the record approves a
+different revision than the one you are about to render, so a policy edit could ship without a fresh
+human decision. Re-approve every revision.
 
 ## Troubleshooting
 

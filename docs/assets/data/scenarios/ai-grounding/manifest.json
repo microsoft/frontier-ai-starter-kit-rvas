@@ -103,18 +103,17 @@
       "title": "Provision Foundry, AI Search, and observability",
       "summary": "Create the shared keyless foundation and verify its generated environment contract before adding customer data.",
       "activity_id": "foundations",
-      "checkpoint": "Foundations Step 1",
+      "outcome": "Foundations Step 1",
       "implementation_paths": [
         "accelerator/main.bicep",
-        "accelerator/scripts/deploy.sh",
-        "accelerator/scripts/verify_foundation.py"
+        "accelerator/scripts/deploy.sh"
       ]
     },
     {
       "id": "source-selection",
       "title": "Select the source and permission architecture",
       "summary": "Choose the approved source path: SharePoint/Copilot Studio, Azure AI Search, Foundry IQ, Fabric IQ, Work IQ, or Web IQ.",
-      "checkpoint": "Signed source, access, freshness, and system-of-record decision",
+      "outcome": "Signed source, access, freshness, and system-of-record decision",
       "implementation_paths": [
         "accelerator/permission-probe.json",
         "accelerator/scripts/probe_permissions.py"
@@ -126,17 +125,16 @@
       "summary": "Connect the selected source, preserve source/version metadata and access controls, then prove retrieval with a seeded corpus.",
       "implementation_paths": [
         "accelerator/sample-data",
-        "accelerator/scripts/build_knowledge_source.py",
-        "accelerator/scripts/verify_retrieval.py"
+        "accelerator/scripts/build_knowledge_source.py"
       ],
-      "checkpoint": "Approved documents are discoverable with source metadata"
+      "outcome": "Approved documents are discoverable with source metadata"
     },
     {
       "id": "model-selection",
       "title": "Compare chat and embedding choices",
       "summary": "Compare supported deployments for quality, latency, cost, regional capacity, and the grounded-answer behavior the pilot needs.",
       "activity_id": "foundations",
-      "checkpoint": "Foundations Step 2",
+      "outcome": "Foundations Step 2",
       "implementation_paths": [
         "accelerator/scripts/compare_models.py"
       ]
@@ -146,7 +144,7 @@
       "title": "Build retrieval before adding an agent",
       "summary": "Implement citations, abstention, access-denied behavior, and source freshness before deciding whether Foundry IQ or an agent adds value.",
       "activity_id": "foundations",
-      "checkpoint": "Foundations Step 4",
+      "outcome": "Foundations Step 4",
       "implementation_paths": [
         "accelerator/scripts/grounded_answer.py",
         "accelerator/golden-questions.json"
@@ -157,36 +155,30 @@
       "title": "Add agent and live-data routing only when justified",
       "summary": "Create an agent with explicit source-routing rules and add a verified live-data tool only for a real-time requirement.",
       "activity_id": "extra-fabric-iq",
-      "checkpoint": "Policy and live-data questions route to the correct source",
-      "implementation_paths": [
-        "accelerator/scripts/verify_routing.py"
-      ]
+      "outcome": "Policy and live-data questions route to the correct source"
     },
     {
       "id": "evaluate-and-trace",
       "title": "Evaluate and trace",
       "summary": "Prove citation, access, injection, and stale-source behavior against a gate, and trace one request end to end so a bad answer can be explained.",
       "activity_id": "advanced-evaluation-redteam",
-      "checkpoint": "Evaluation gate passed with trace and red-team evidence",
+      "outcome": "Evaluation gate passed with trace and red-team evidence",
       "implementation_paths": [
-        "accelerator/validate.py",
         "accelerator/golden-questions.json"
       ]
     },
     {
       "id": "deploy-and-surface",
       "title": "Deploy and surface it to users",
-      "summary": "Choose where users meet the agent \u2014 your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI \u2014 then pin the version, re-prove the permission boundary, and sign the release.",
+      "summary": "Choose where users meet the agent — your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI — then pin the version, re-prove the permission boundary, and sign the release.",
       "activity_id": "advanced-deploy-hosted-agent",
-      "checkpoint": "Surface release contract complete and the unauthenticated caller refused",
+      "outcome": "Surface release contract complete and the unauthenticated caller refused",
       "implementation_paths": [
-        "accelerator/sample-data/surface-manifest.json",
-        "accelerator/scripts/verify_surface.py"
+        "accelerator/sample-data/surface-manifest.json"
       ]
     }
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md",
-  "validator": "accelerator/validate.py"
+  "facilitator": "FACILITATOR.md"
 }

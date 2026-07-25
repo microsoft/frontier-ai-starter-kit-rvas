@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Module 3 — create the Foundry IQ knowledge source and knowledge base.
+"""Create the Foundry IQ knowledge source and knowledge base.
 
 Managed ingestion: the blob knowledge source generates its own data source, skillset,
-indexer, and index. ACL carry-forward is enabled so module 2's permission boundary can be
-enforced at query time.
+indexer, and index. ACL carry-forward is enabled so the permission boundary you designed
+can be enforced at query time.
 
 Current Microsoft Learn guidance:
   https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview
@@ -14,9 +14,6 @@ Requires the preview package for ACL carry-forward, query planning, and answer s
 
 Run:
     python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
-
-Offline/structure-only (no Azure calls):
-    python3 .../build_knowledge_source.py --offline
 """
 from __future__ import annotations
 
@@ -76,26 +73,6 @@ def check(passed: bool, message: str, failures: list[str]) -> bool:
     if not passed:
         failures.append(message)
     return passed
-
-
-def verify_structure(env: dict[str, str], failures: list[str], require_env: bool) -> None:
-    if require_env:
-        for key in REQUIRED_ENV:
-            check(bool(env.get(key)), f"{key} is set", failures)
-
-    # The two instruction blocks are the answer contract module 5 asserts against.
-    check("cite the document id" in ANSWER_INSTRUCTIONS, "answer instructions require citations", failures)
-    check("Do not infer" in ANSWER_INSTRUCTIONS, "answer instructions forbid inference", failures)
-    check(
-        "I don't have approved information on that." in ANSWER_INSTRUCTIONS,
-        "answer instructions specify an exact abstention string",
-        failures,
-    )
-    check(
-        "most recent effective date" in RETRIEVAL_INSTRUCTIONS,
-        "retrieval instructions state a recency preference",
-        failures,
-    )
 
 
 def build(env: dict[str, str], source_name: str, base_name: str, failures: list[str]) -> None:
@@ -191,7 +168,6 @@ def build(env: dict[str, str], source_name: str, base_name: str, failures: list[
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--offline", action="store_true", help="Structure checks only; no Azure calls.")
     parser.add_argument("--knowledge-source", default=DEFAULT_KNOWLEDGE_SOURCE)
     parser.add_argument("--knowledge-base", default=os.environ.get("AZURE_KNOWLEDGE_BASE_NAME", DEFAULT_KNOWLEDGE_BASE))
     args = parser.parse_args()
@@ -199,25 +175,28 @@ def main() -> int:
     failures: list[str] = []
     env = load_env()
 
-    print("== Module 3: build the knowledge source and knowledge base ==")
-    verify_structure(env, failures, require_env=not args.offline)
+    print("== Building the knowledge source and knowledge base ==")
+    for key in REQUIRED_ENV:
+        check(bool(env.get(key)), f"{key} is set", failures)
+    for key in ("AZURE_SUBSCRIPTION_ID", "AZURE_RESOURCE_GROUP"):
+        if not env.get(key):
+            env[key] = os.environ.get(key, "")
+        check(bool(env[key]), f"{key} is set (needed for the keyless blob connection)", failures)
+    if failures:
+        print("\nComplete the environment contract before running this against Azure.")
+        return 1
 
-    if args.offline:
-        print("\n(offline mode: skipped environment checks and Azure calls)")
-    elif failures:
-        print("\nSkipping Azure calls until the environment contract is complete.")
-    else:
-        for key in ("AZURE_SUBSCRIPTION_ID", "AZURE_RESOURCE_GROUP"):
-            if not env.get(key):
-                env[key] = os.environ.get(key, "")
-                check(bool(env[key]), f"{key} is set (needed for the keyless blob connection)", failures)
-        if not failures:
-            build(env, args.knowledge_source, args.knowledge_base, failures)
+    build(env, args.knowledge_source, args.knowledge_base, failures)
 
     if failures:
-        print(f"\n❌ Module 3 build FAILED ({len(failures)} issue(s))")
+        print(f"\nBuild failed ({len(failures)} issue(s)):")
+        for failure in failures:
+            print(f"  - {failure}")
         return 1
-    print("\n✅ Module 3 build OK — knowledge source and knowledge base are configured")
+    print(
+        f"\nKnowledge source '{args.knowledge_source}' and knowledge base '{args.knowledge_base}' are configured.\n"
+        "Ingestion runs asynchronously — give the indexer a few minutes before you query."
+    )
     return 0
 
 

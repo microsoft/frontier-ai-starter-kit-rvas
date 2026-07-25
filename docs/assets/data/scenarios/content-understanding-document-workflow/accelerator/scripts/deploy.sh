@@ -73,4 +73,4 @@ with open(env_path, "w", encoding="utf-8") as handle:
 print(f"wrote {len(lines)} lines to {env_path}")
 PY
 
-echo "==> Done. Verify with: python3 ${SCRIPT_DIR}/verify_foundation.py"
+echo "==> Done. Next: follow the Verify steps in lessons/01-provision-foundation.md"

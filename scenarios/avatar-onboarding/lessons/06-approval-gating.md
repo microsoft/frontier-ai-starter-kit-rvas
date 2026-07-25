@@ -113,13 +113,13 @@ enforcement code against a working copy so you never mutate the signed record:
 
 ```bash
 python3 - <<'PY'
-import json, shutil, sys
+import json, shutil, sys, tempfile
 from pathlib import Path
 sys.path.insert(0, "scenarios/avatar-onboarding/accelerator")
 from content_pack import validate_pack, PackRejectedError
 
 src = Path("scenarios/avatar-onboarding/accelerator/sample-data")
-work = Path("scenarios/avatar-onboarding/accelerator/.verify-gate")
+work = Path(tempfile.mkdtemp(prefix="verify-gate-"))/"pack"
 shutil.rmtree(work, ignore_errors=True); shutil.copytree(src, work)
 
 validate_pack(work); print("fully-approved pack: PUBLISHES")

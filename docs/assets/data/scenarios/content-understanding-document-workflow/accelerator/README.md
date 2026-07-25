@@ -18,4 +18,4 @@ model, and invocation surface in current Microsoft documentation. Then decide wh
 optional Bicep foundation, an existing customer environment, or a different approved deployment
 pattern.
 
-Use the scenario validator (`python3 validate.py`) to check the synthetic pack and expected structured results.
+Compare the extracted results against the synthetic source documents field by field — that comparison, not a passing script, is what tells you the extraction is trustworthy.

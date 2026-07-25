@@ -26,7 +26,7 @@ For each lesson, discuss three questions:
 
 - **Context:** Why this step matters to the business outcome.
 - **Choices and trade-offs:** Which path fits the customer environment.
-- **Evidence and checkpoint:** What must be true before moving forward.
+- **Evidence:** What must be true before moving forward.
 
 The practical steps live in the lesson and activity pages.
 
@@ -63,7 +63,7 @@ Trade-off to name explicitly: speed of setup should not hide production controls
 ---
 <!-- slide:id=lesson-foundation-evidence -->
 
-## Foundation evidence and checkpoint
+## Foundation evidence
 
 Before the team proceeds, confirm:
 
@@ -73,7 +73,7 @@ Before the team proceeds, confirm:
 - Required outputs can be handed to later lessons without copying secrets into notes or code.
 - The team knows what still needs security, networking, or operations review.
 
-Checkpoint question: **Can engineering safely build on this foundation without re-deciding basic platform controls each lesson?**
+Decision question: **Can engineering safely build on this foundation without re-deciding basic platform controls each lesson?**
 
 ---
 <!-- slide:id=lesson-document-source-context -->
@@ -108,7 +108,7 @@ Trade-off to name explicitly: faster intake is not worth losing provenance or au
 ---
 <!-- slide:id=lesson-document-source-evidence -->
 
-## Document source evidence and checkpoint
+## Document source evidence
 
 Before moving forward, confirm:
 
@@ -118,7 +118,7 @@ Before moving forward, confirm:
 - The team has a clear path for quarantine, deletion, and exception handling.
 - Access boundaries are enforceable, not just assumed.
 
-Checkpoint question: **Can every document used by the workflow be explained, traced, and governed?**
+Decision question: **Can every document used by the workflow be explained, traced, and governed?**
 
 ---
 <!-- slide:id=lesson-extraction-selection-context -->
@@ -153,7 +153,7 @@ Trade-off to name explicitly: more flexible extraction can increase validation, 
 ---
 <!-- slide:id=lesson-extraction-selection-evidence -->
 
-## Extraction selection evidence and checkpoint
+## Extraction selection evidence
 
 Before implementation, confirm:
 
@@ -163,7 +163,7 @@ Before implementation, confirm:
 - The team has agreed when a field must be empty rather than inferred.
 - Human review rules are part of the extraction decision, not added later.
 
-Checkpoint question: **Can the team explain why this capability is the right fit for the first controlled workflow?**
+Decision question: **Can the team explain why this capability is the right fit for the first controlled workflow?**
 
 ---
 <!-- slide:id=lesson-typed-extraction-context -->
@@ -198,7 +198,7 @@ Trade-off to name explicitly: automation value depends on trustworthy uncertaint
 ---
 <!-- slide:id=lesson-typed-extraction-evidence -->
 
-## Typed extraction evidence and checkpoint
+## Typed extraction evidence
 
 Before the workflow can use extracted results, confirm:
 
@@ -208,7 +208,7 @@ Before the workflow can use extracted results, confirm:
 - Unsupported values are not invented to satisfy the schema.
 - Reviewers can see enough source context to challenge or confirm a value.
 
-Checkpoint question: **Would a business reviewer understand what was extracted, why it was trusted, and what still needs attention?**
+Decision question: **Would a business reviewer understand what was extracted, why it was trusted, and what still needs attention?**
 
 ---
 <!-- slide:id=lesson-human-review-context -->
@@ -243,7 +243,7 @@ Trade-off to name explicitly: reducing reviewer effort must not erase accountabi
 ---
 <!-- slide:id=lesson-human-review-evidence -->
 
-## Review evidence and checkpoint
+## Review evidence
 
 Before handoff is trusted, confirm:
 
@@ -253,7 +253,7 @@ Before handoff is trusted, confirm:
 - Approved results are handed off through a controlled interface.
 - Exceptions have an owner and a resolution path.
 
-Checkpoint question: **Can the customer prove who approved a result, what changed, and why it was sent downstream?**
+Decision question: **Can the customer prove who approved a result, what changed, and why it was sent downstream?**
 
 ---
 <!-- slide:id=lesson-prove-and-observe-context -->
@@ -288,7 +288,7 @@ Trade-off to name explicitly: more automation without measurement increases hidd
 ---
 <!-- slide:id=lesson-prove-and-observe-evidence -->
 
-## Evaluation evidence and checkpoint
+## Evaluation evidence
 
 Before promotion, confirm:
 
@@ -298,7 +298,7 @@ Before promotion, confirm:
 - Failures have named causes and owners.
 - The release decision includes rollback and monitoring expectations.
 
-Checkpoint question: **Can the team defend the workflow with evidence rather than a successful demo?**
+Decision question: **Can the team defend the workflow with evidence rather than a successful demo?**
 
 ---
 <!-- slide:id=lesson-deploy-context -->
@@ -333,7 +333,7 @@ Trade-off to name explicitly: broad rollout before operational readiness can cre
 ---
 <!-- slide:id=lesson-deploy-evidence -->
 
-## Deployment evidence and checkpoint
+## Deployment evidence
 
 Before controlled rollout, confirm:
 
@@ -343,7 +343,7 @@ Before controlled rollout, confirm:
 - Review and correction data remain available after deployment.
 - The pilot owner can decide whether to expand, pause, or revise the workflow.
 
-Checkpoint question: **Is the workflow ready to serve a bounded real use case with accountable controls?**
+Decision question: **Is the workflow ready to serve a bounded real use case with accountable controls?**
 
 ---
 <!-- slide:id=scenario-next-session -->

@@ -46,16 +46,22 @@ client). Any → D is trivial. Do not skip D "for now" — it is the accessible 
 
 ### Option A — Batch avatar synthesis (default)
 
-**Validate the pack first (safe, deterministic, keyless-free).** This validates approval +
-accessibility and builds the exact request body — no Azure call, no likeness:
+**Build the request from an approved pack, not free text.** The pack contract in
+[`content_pack.py`](../accelerator/content_pack.py) rejects the pack unless every script segment's
+spoken text is an exact approved claim, all required approvals are present, and the disclosure
+appears in both the transcript and the HTML fallback. Use it to turn the approved artifact into the
+synthesis request body, with no Azure call and no likeness:
 
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py
+python3 -c "import sys; from pathlib import Path; \
+sys.path.insert(0, 'scenarios/avatar-onboarding/accelerator'); \
+from content_pack import validate_pack, build_artifact; \
+pack = validate_pack(Path('scenarios/avatar-onboarding/accelerator/sample-data')); \
+print(build_artifact(pack))"
 ```
 
-The pack contract **rejects** the pack unless every script segment's spoken text is an exact approved
-claim, all required approvals are present, and the disclosure appears in both the transcript and the
-HTML fallback. That is the accessibility + grounding gate in code.
+A pack whose spoken text is not an exact approved claim raises `PackRejectedError`. That is the
+accessibility + grounding gate in code, before any Azure call.
 
 **Submit the real batch job (verified API).** The approved artifact becomes an SSML batch request:
 
@@ -122,27 +128,55 @@ anyone who opts out of the avatar receives. The sample fallback is
 
 ## Verify
 
+Render one approved segment for real, then confirm the experience ships the disclosure and
+accessibility artifacts a synthetic presenter requires.
+
+**1. Submit a batch synthesis job with your Entra token and watch the result.** This proves keyless
+Speech and gives you an artifact to inspect. Submit one approved claim as SSML:
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+JOB=onb-verify-001
+
+curl -s -X PUT -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses/$JOB?api-version=2024-08-01" \
+  -d '{
+    "inputKind": "SSML",
+    "inputs": [{"content": "<speak version=\"1.0\" xml:lang=\"en-US\"><voice name=\"en-US-AvaMultilingualNeural\">Complete your benefits selection in the employee portal during your first week.</voice></speak>"}],
+    "avatarConfig": {"talkingAvatarCharacter": "lisa", "talkingAvatarStyle": "casual-sitting", "videoFormat": "Mp4", "subtitleType": "soft_embedded"}
+  }' | jq '{id, status}'
+
+# Poll until Succeeded, then read the output URL:
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses/$JOB?api-version=2024-08-01" | jq -r '.status, .outputs.result'
 ```
 
-Expected:
+`status` moves `NotStarted → Running → Succeeded`. Download `outputs.result` (a time-limited SAS
+URL) and play the mp4. What "good" looks like: the standard `lisa` avatar speaking the exact
+approved wording, with soft-embedded captions. A `401` means no custom subdomain (module 2); a `403`
+means you lack **Cognitive Services Speech User**, so grant the role rather than using a Speech key.
+If you see a real person's face, stop: that is a custom-avatar path that needs limited-access
+approval and talent consent (module 1).
+<https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
-```
-== Module 5 checkpoint: accessible experience generation ==
-PASS  approved pack accepted by the renderer
-PASS  experience carries a synthetic-media disclosure
-PASS  captions enabled
-PASS  transcript attached
-PASS  non-avatar fallback attached
-...
-✅ Module 5 checkpoint PASS — accessible experience rendered from an approved revision
+**2. The experience carries a disclosure, and the non-avatar fallback carries the same content.** A
+video with no disclosure and no accessible path is a compliance incident, not a demo:
+
+```bash
+jq -e '.disclosure | length > 0' \
+  scenarios/avatar-onboarding/accelerator/sample-data/storyboard-script.json
+
+grep -qi 'avatar-generated or AI-assisted' scenarios/avatar-onboarding/accelerator/sample-data/transcript.txt \
+  && grep -qi 'benefits selection' scenarios/avatar-onboarding/accelerator/sample-data/accessible-fallback.html \
+  && grep -qi 'lang=' scenarios/avatar-onboarding/accelerator/sample-data/accessible-fallback.html \
+  && echo "disclosure + fallback carry the approved content"
 ```
 
-Offline (default) it validates the pack, renders the artifact, asserts disclosure + captions +
-transcript + fallback, and prints the exact batch-synthesis request the approved script produces.
-Add `--submit` to send that request to the real Speech avatar API and poll for the mp4. A pack
-missing the disclosure or the fallback **fails**.
+Both must succeed. A missing disclosure means an undisclosed synthetic presenter reaches users; a
+fallback that omits the approved wording or a `lang` attribute excludes screen-reader and
+low-bandwidth users. Ship captions, a transcript, and the non-avatar page for every option.
+<https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 
 ## Troubleshooting
 

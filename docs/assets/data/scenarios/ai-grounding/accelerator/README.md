@@ -1,8 +1,8 @@
 # AI Grounding / IQ accelerator
 
-This accelerator has two parts: a synthetic corpus with offline module checkpoints and an
-optional Bicep foundation for a clean Azure demo subscription. It is not a landing zone and it is
-not production approval.
+This accelerator has two parts: a synthetic corpus with scripts that run against your own Azure
+resources, and an optional Bicep foundation for a clean Azure demo subscription. It is not a landing
+zone and it is not production approval.
 
 `main.bicep` provisions the minimal Foundry, AI Search, Storage, and observability footprint used by
 the scenario lessons. Use it only for a clean demo subscription. For a bring-your-own environment,
@@ -42,12 +42,14 @@ az deployment group create \
 
 The command creates demo resources and emits the `.env` contract consumed by later scripts.
 
-## Offline structural gate
+## Scripts
 
-Every module checkpoint has an `--offline` mode, and `validate.py` runs them all without an Azure
-subscription. Use it to check corpus metadata, golden-set shape, and module wiring before you
-provision anything. It is a structural check, not an Azure, Foundry IQ, or authorization
-implementation.
+Four scripts do real work against your own resources: `build_knowledge_source.py` creates the
+knowledge source and knowledge base, `probe_permissions.py` checks the permission boundary with a
+second lower-privileged identity, `compare_models.py` prints a comparison table across candidate
+deployments, and `grounded_answer.py` runs the golden questions and reports citations, abstention,
+and recall. All four need a subscription and the `.env` contract. Each lesson's **Verify** section
+says which to run and what its output should tell you.
 
 ## Sample-data swaps
 

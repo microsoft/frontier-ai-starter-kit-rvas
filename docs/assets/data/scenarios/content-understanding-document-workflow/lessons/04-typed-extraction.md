@@ -9,7 +9,7 @@ evidence, low-confidence and missing fields route to review, and the model never
 ## What you build
 
 A normalizer that maps your capability's raw output into the typed result contract and enforces four
-invariants, plus a checkpoint that rejects a result violating any of them. The reference result is
+invariants, plus a validation step that rejects a result violating any of them. The reference result is
 [`accelerator/sample-data/workflow/typed-result.json`](../accelerator/sample-data/workflow/typed-result.json);
 the deliberately broken one is
 [`typed-result-invalid.json`](../accelerator/sample-data/workflow/typed-result-invalid.json).
@@ -111,7 +111,7 @@ def validate_llm_field(name, value, quoted_span, document_text, review_reasons):
             "evidence": {"page": 1, "spans": [{"offset": offset, "length": len(quoted_span)}]}}
 ```
 
-Any field that reaches `spans: []` fails the checkpoint — which is the point: without grounding you
+Any field that reaches `spans: []` must route to review — which is the point: without grounding you
 cannot claim the value came from the document.
 
 Modules 3 and 4 are the canonical
@@ -119,29 +119,52 @@ Modules 3 and 4 are the canonical
 
 ## Verify
 
+Run your normalizer on a real extraction result and check the invariants against the source document,
+not against a fixture. Write the contract your normalizer produces to `result.json` and inspect it.
+
+**1. No value carries an empty evidence set, and routing agrees with the flags.**
+
 ```bash
-# Passing result
-python3 scenarios/content-understanding/accelerator/scripts/verify_typed_extraction.py --offline
+jq '[.fields | to_entries[]
+     | select(.value.value != null and ((.value.evidence.spans // []) | length) == 0) | .key]' result.json
 
-# Fail path — inferred value + unflagged low confidence
-python3 scenarios/content-understanding/accelerator/scripts/verify_typed_extraction.py \
-  --offline --result scenarios/content-understanding/accelerator/sample-data/workflow/typed-result-invalid.json
+jq 'if (.review_reasons | length) > 0
+     then (.requires_human_review == true and .routing_decision == "route_human_review")
+     else true end' result.json
 ```
 
-Expected (passing):
+The first query must return `[]`. Any field name it prints has a value with no grounding — an inferred
+value your normalizer let through, which invariant 1 forbids. The second must return `true`; `false`
+means the routing decision disagrees with the review reasons and something flagged for review would
+still auto-post.
 
-```
-✅ Module 4 checkpoint PASS — extraction is typed, evidence-backed, and fails safely
+**2. A high-value field's evidence actually points at the source.**
+
+Take the span for a field that moves money (invoice total, amount due), open the source document at
+that page, and read the characters at that offset.
+
+If the text there is not the value the model returned, you have accepted a field value without ever
+comparing it to the document. That is the failure this whole module exists to stop, and it is
+invisible until an auditor or a wrong payment finds it.
+
+**3. The review gate actually trips.**
+
+```bash
+jq '[.fields | to_entries[]
+     | select(.value.confidence != null and .value.confidence < .confidence_threshold) | .key] as $low
+    | {low_confidence_fields: $low, routing_decision: .routing_decision}' result.json
 ```
 
-The fail path prints exactly why it is unsafe — a field with a value but empty evidence, a
-low-confidence field not flagged, and a routing decision that would auto-post it.
+Run this on a messy document, not the clean sample. If `low_confidence_fields` is non-empty, the
+`routing_decision` must be `route_human_review`. If your documents never produce a single low-confidence
+field, the threshold is set so low that nothing will ever reach a human — calibrate it in module 6
+instead of leaving a gate that never fires.
 
 ## Troubleshooting
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Checkpoint fails on `no_evidence` | Mapped a value but dropped its span/region | Carry `spans`/`bounding_regions`; for LLM, require and verify a source span |
+| Validation fails on `no_evidence` | Mapped a value but dropped its span/region | Carry `spans`/`bounding_regions`; for LLM, require and verify a source span |
 | Everything routes to review | Threshold too high for this document class | Recalibrate the threshold per class; measure it in module 6, don't guess |
 | Low-confidence field auto-posts | Gate not applied, or `requires_human_review` hard-coded | Derive `requires_human_review` from `review_reasons`, never set it manually |
 | CU `source` is a polygon, not a page | Grounding is a region string `D(page, …)` | Parse the leading page index; keep the polygon as the span payload |

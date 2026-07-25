@@ -214,43 +214,44 @@ acceptable to cite to this customer's users.
 
 ## Verify
 
-Write the probe plan — [`accelerator/permission-probe.json`](../accelerator/permission-probe.json):
+The failure this module hides is retrieval that looks perfect in the demo because you ran it as an
+administrator, then leaks the day a real user with fewer permissions asks. Prove the boundary with a
+second, genuinely lower-privileged identity, not with your own account.
 
-```json
-{
-  "cases": [
-    {
-      "id": "supervisor-playbook-is-restricted",
-      "query": "What discretionary goodwill credit can a supervisor approve?",
-      "expect_visible": ["returns-supervisor-playbook"],
-      "expect_hidden": ["goodwill credit ceiling"]
-    }
-  ]
-}
-```
-
-`expect_visible` is asserted against the authorized identity; `expect_hidden` against the restricted
-one. A case with an empty `expect_hidden` is rejected — a probe that never expects a denial proves
-nothing.
+**1. The probe identity is actually restricted.** `probe_permissions.py` runs each query twice: once
+as you (`DefaultAzureCredential`) and once as the identity in
+`PROBE_TENANT_ID`/`PROBE_CLIENT_ID`/`PROBE_CLIENT_SECRET`. Confirm that second identity holds no
+broad data-plane role, or nothing will ever leak and the probe proves nothing.
 
 ```bash
-# Structure only, no Azure calls
-python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py --offline
+az role assignment list --assignee "$PROBE_CLIENT_ID" \
+  --all --query "[].roleDefinitionName" -o tsv
+```
 
-# Live, against a knowledge base
+You want to see either nothing or a role scoped away from the approved content. **Search Index Data
+Reader** or **Contributor** on the search service means this identity can see everything and the test
+is worthless.
+
+**2. The restricted identity comes back empty.** The plan is
+[`accelerator/permission-probe.json`](../accelerator/permission-probe.json); each case asserts
+`expect_visible` against your identity and `expect_hidden` against the restricted one. A case with an
+empty `expect_hidden` is rejected, because a probe that never expects a denial tests nothing.
+
+```bash
 export PROBE_TENANT_ID=... PROBE_CLIENT_ID=... PROBE_CLIENT_SECRET=...
 python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
-  --knowledge-base grounding-kb
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Expected:
+Read the per-case lines. `PASS  ...: restricted identity cannot see 'X'` is the result you want.
+Any `LEAK — restricted identity retrieved 'X'` means query-time trimming is off — usually the
+`x-ms-query-source-authorization` header is missing and you are querying as the application, so every
+caller sees everything the application can see.
 
-```
-✅ Module 2 checkpoint PASS — the permission boundary held
-```
-
-Include at least one **existence-signal** case: query for the restricted document by title and
-confirm the restricted identity gets no title, no snippet, and no count that reveals it exists.
+**3. A restricted document does not even reveal that it exists.** The plan includes a case that
+queries the supervisor playbook by title. Confirm the restricted identity gets no title, no snippet,
+and no count. An access-denied response has to be indistinguishable from "no such document" — a
+title or a hit count is itself a leak.
 
 ## Troubleshooting
 

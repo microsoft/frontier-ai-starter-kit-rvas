@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-"""Module 5 checkpoint — a grounded answer path with no agent.
+"""Run your golden questions against the knowledge base — a grounded answer path with no agent.
 
-Asserts the four behaviours that make grounding trustworthy:
-  * citations on every answerable case
-  * abstention on cases the corpus cannot answer
+Reports the four behaviours that decide whether grounding is trustworthy:
+  * citations on every answerable question
+  * abstention on questions the corpus cannot answer
   * the current service notice, not the superseded one
-  * recall@k over the golden set, recorded as the baseline modules 6 and 7 must not regress
+  * recall@k, which is the number to write down before you add an agent
+
+Point it at your own golden set in golden-questions.json.
 
 Run:
     python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
-        --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME" --all
-
-Offline/structure-only (no Azure calls):
-    python3 .../grounded_answer.py --offline
+        --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 """
 from __future__ import annotations
 
@@ -24,7 +23,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from _shared import check, load_env, load_golden_cases, verify_golden_set  # noqa: E402
+from _shared import check, load_env, load_golden_cases  # noqa: E402
 
 REQUIRED_ENV = ("AZURE_SEARCH_ENDPOINT",)
 ABSTENTION = "I don't have approved information on that."
@@ -121,8 +120,6 @@ def verify_live(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--offline", action="store_true", help="Structure checks only; no Azure calls.")
-    parser.add_argument("--all", action="store_true", help="Run every golden case (default).")
     parser.add_argument(
         "--knowledge-base",
         default=os.environ.get("AZURE_KNOWLEDGE_BASE_NAME", "grounding-kb"),
@@ -133,32 +130,29 @@ def main() -> int:
     env = load_env(REQUIRED_ENV)
     cases = load_golden_cases()
 
-    print("== Module 5 checkpoint: grounded answers, no agent ==")
-    verify_golden_set(cases, failures)
-    check(
-        any(case["id"] == "supervisor-playbook-denied" for case in cases),
-        "golden set includes the restricted-document case",
-        failures,
-    )
+    if not cases:
+        print("No golden questions found. Add them to golden-questions.json first.")
+        return 1
 
-    if args.offline:
-        print("\n(offline mode: skipped live retrieval)")
-    elif failures:
-        print("\nSkipping live checks until the golden set is complete.")
-    else:
-        for key in REQUIRED_ENV:
-            check(bool(env.get(key)), f"{key} is set", failures)
-        if not failures:
-            verify_live(env, args.knowledge_base, cases, os.environ.get("PROBE_USER_TOKEN"), failures)
+    print(f"== Grounded answers over {len(cases)} golden questions ==")
+    for key in REQUIRED_ENV:
+        check(bool(env.get(key)), f"{key} is set", failures)
+    if failures:
+        print("\nSet the environment contract before running this against Azure.")
+        return 1
+
+    verify_live(env, args.knowledge_base, cases, os.environ.get("PROBE_USER_TOKEN"), failures)
 
     if failures:
-        print(f"\n❌ Module 5 checkpoint FAILED ({len(failures)} issue(s))")
+        print(f"\n{len(failures)} question(s) did not behave as expected:")
+        for failure in failures:
+            print(f"  - {failure}")
         return 1
     answerable = sum(1 for case in cases if case.get("expected_behavior") == "answer")
     refusals = len(cases) - answerable
     print(
-        f"\n✅ Module 5 checkpoint PASS — {answerable}/{answerable} cited, "
-        f"{refusals}/{refusals} abstained, recall@{RECALL_K} baseline recorded"
+        f"\nAll {len(cases)} questions behaved as expected — {answerable} cited, "
+        f"{refusals} abstained. Write down the recall@{RECALL_K} above before you add an agent."
     )
     return 0
 

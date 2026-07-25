@@ -22,7 +22,11 @@ answer synthesis. The GA API version (`2026-04-01`) provides minimal extractive 
 
 ```bash
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
-python3 scenarios/ai-grounding/accelerator/scripts/verify_foundation.py
+
+# Confirm both deployments landed
+az cognitiveservices account deployment list \
+  --name "$AZURE_AI_FOUNDRY_ACCOUNT_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "[].name" -o tsv
 ```
 
 `deploy.sh` creates the resource group, validates `main.bicep`, deploys it, and writes
@@ -47,7 +51,7 @@ role assignments are skipped, so later modules fail with `403`. Pass the object 
 Decision first, then proof.
 
 ```bash
-python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py --offline
+python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py --knowledge-base grounding-kb
 ```
 
 Live, with two identities:
@@ -75,7 +79,7 @@ az storage blob upload-batch \
 
 export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
 python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
-python3 scenarios/ai-grounding/accelerator/scripts/verify_retrieval.py --knowledge-base grounding-kb
+python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py --knowledge-base grounding-kb
 ```
 
 `build_knowledge_source.py` creates the blob knowledge source with
@@ -138,9 +142,10 @@ agent = project.agents.create_version(
 )
 ```
 
-```bash
-python3 scenarios/ai-grounding/accelerator/scripts/verify_routing.py --agent grounding-assistant
-```
+Ask the agent one policy question, one live-data question, one mixed question, and one out-of-scope
+question. Read the trace for each: the policy question must not call the tool, the live-data question
+must not answer from the index, and the out-of-scope question must abstain rather than reach for a
+tool.
 
 Four routing cases: knowledge-only, tool-only, both, and neither. The "neither" case catches
 tool-calling as a nervous reflex; the "tool-only" case catches answering a live-data question from a
@@ -190,15 +195,13 @@ reaches users. Rollback is then a version repoint, not a redeploy, and the endpo
 Re-run the module 2 permission probe **against the surface**, not the agent. A UI that calls the
 agent with one service identity has silently deleted the boundary modules 2 through 6 protected.
 
-```bash
-python3 scenarios/ai-grounding/accelerator/scripts/verify_surface.py --offline
-```
-
-Full gate:
+Confirm the surface rejects an unauthenticated caller before you hand it to anyone:
 
 ```bash
-python3 scenarios/ai-grounding/accelerator/validate.py --all
+curl -s -o /dev/null -w '%{http_code}\n' "$SURFACE_ENDPOINT"
 ```
+
+A `401` or `403` is the answer you want. A `200` means the endpoint is open.
 
 ## Teardown
 

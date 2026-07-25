@@ -96,73 +96,53 @@
       "summary": "Create the keyless Foundry account, chat + embedding deployments, document storage, and observability baseline before adding document services or customer files.",
       "activity_id": "foundations",
       "implementation_paths": [
-        "accelerator/main.bicep",
-        "accelerator/scripts/verify_foundation.py"
+        "accelerator/main.bicep"
       ],
-      "checkpoint": "Foundations Step 1"
+      "outcome": "Foundations Step 1"
     },
     {
       "id": "document-source",
       "title": "Connect an approved document source",
       "summary": "Choose Azure Blob, ADLS Gen2, SharePoint, or OneLake and preserve source identity, version, permissions, and quarantine controls.",
-      "implementation_paths": [
-        "accelerator/scripts/verify_document_source.py"
-      ],
-      "checkpoint": "Approved intake and document-retention design"
+      "outcome": "Approved intake and document-retention design"
     },
     {
       "id": "extraction-selection",
       "title": "Select the extraction capability",
       "summary": "Verify and choose the current Content Understanding analyzer, Document Intelligence model, LLM structured-output, or multimodal approach against schema, document quality, region, cost, and review needs.",
       "activity_id": "extra-document-workflow",
-      "implementation_paths": [
-        "accelerator/scripts/verify_extraction_selection.py"
-      ],
-      "checkpoint": "Document capability and implementation decision"
+      "outcome": "Document capability and implementation decision"
     },
     {
       "id": "typed-extraction",
       "title": "Implement typed extraction with evidence",
       "summary": "Return a validated result with confidence, page references, missing-field handling, and no inferred values.",
       "activity_id": "extra-document-workflow",
-      "implementation_paths": [
-        "accelerator/scripts/verify_typed_extraction.py"
-      ],
-      "checkpoint": "Structured extraction result and low-confidence failure path"
+      "outcome": "Structured extraction result and low-confidence failure path"
     },
     {
       "id": "human-review",
       "title": "Build review, correction, and handoff",
       "summary": "Route exceptions to a named reviewer, retain corrections as evaluation evidence, and hand approved results to a governed downstream seam.",
       "activity_id": "advanced-action-tools",
-      "implementation_paths": [
-        "accelerator/scripts/verify_human_review.py"
-      ],
-      "checkpoint": "Reviewer correction and approval trace"
+      "outcome": "Reviewer correction and approval trace"
     },
     {
       "id": "prove-and-observe",
       "title": "Evaluate and trace the workflow",
       "summary": "Measure field accuracy, false approval, review rate, injection resistance, and workflow latency across representative document cases.",
       "activity_id": "advanced-evaluation-redteam",
-      "implementation_paths": [
-        "accelerator/scripts/verify_prove_and_observe.py"
-      ],
-      "checkpoint": "Scenario evaluation gate and trace review"
+      "outcome": "Scenario evaluation gate and trace review"
     },
     {
       "id": "deploy",
       "title": "Deploy the reviewable workflow",
       "summary": "Ship the approved workflow behind an authenticated endpoint with managed identity, application monitoring, and a rollback path.",
       "activity_id": "advanced-deploy-hosted-agent",
-      "implementation_paths": [
-        "accelerator/scripts/verify_deploy.py"
-      ],
-      "checkpoint": "Controlled pilot deployment"
+      "outcome": "Controlled pilot deployment"
     }
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md",
-  "validator": "validate.py"
+  "facilitator": "FACILITATOR.md"
 }

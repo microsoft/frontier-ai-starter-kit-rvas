@@ -140,8 +140,8 @@ def render(
         # Load the template
         page.goto(template_url)
 
-        # Wait for the ES module to load (imports from esm.sh)
-        page.wait_for_function("window.__moduleReady === true", timeout=30000)
+        # Wait for the vendored ES module to load.
+        page.wait_for_function("window.__moduleReady === true", timeout=180000)
 
         # Inject the diagram data and render
         json_str = json.dumps(data)
@@ -154,7 +154,7 @@ def render(
             sys.exit(1)
 
         # Wait for render completion signal
-        page.wait_for_function("window.__renderComplete === true", timeout=15000)
+        page.wait_for_function("window.__renderComplete === true", timeout=60000)
 
         # Screenshot the SVG element
         svg_el = page.query_selector("#root svg")

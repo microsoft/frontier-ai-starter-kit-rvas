@@ -11,8 +11,10 @@ decisions; this file is the code you land on.
 
 ```bash
 ./scripts/deploy.sh rg-content-understanding eastus2
-# writes accelerator/.env, then:
-python3 scripts/verify_foundation.py
+# writes accelerator/.env, then confirm the endpoint answers your Entra identity:
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT"
 ```
 
 The `.env` contract (no secrets):
@@ -127,13 +129,13 @@ Reference: <https://learn.microsoft.com/azure/foundry/openai/how-to/structured-o
 ## 4. Typed result contract with evidence
 
 Normalize every capability's output into one contract, then gate on confidence and evidence.
-See [`sample-data/workflow/typed-result.json`](sample-data/workflow/typed-result.json). The rule the
-checkpoint enforces: **a value without grounding evidence is an inferred value and is rejected**;
-any field below the threshold forces human review.
+See [`sample-data/workflow/typed-result.json`](sample-data/workflow/typed-result.json). The rule:
+**a value without grounding evidence is an inferred value and is rejected**; any field below the
+threshold forces human review.
 
-```bash
-python3 scripts/verify_typed_extraction.py --offline
-```
+Open the typed result next to the source document and check each field's span actually points at the
+text it claims. A field with a high confidence score and no usable span is the one that will burn
+you.
 
 ## 5. Human review, correction, and handoff
 
@@ -143,9 +145,8 @@ tool). Corrections are retained as evaluation evidence — they never overwrite 
 result. See [`../lessons/05-human-review.md`](../lessons/05-human-review.md) and the canonical
 [Action Tools activity](../../../activities/advanced-action-tools/README.md).
 
-```bash
-python3 scripts/verify_human_review.py --offline
-```
+Submit one document you know is ambiguous and confirm it lands in the review queue rather than
+passing straight through. If nothing ever routes to a human, the threshold is wrong, not the corpus.
 
 ## 6. Evaluate and trace
 
@@ -157,27 +158,27 @@ importing the Foundry SDK:
 ```bash
 export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
 export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
-python3 scripts/verify_prove_and_observe.py --offline
 ```
+
+Then confirm traces are arriving in Application Insights before you rely on them.
 
 Canonical activity: [Evaluation & Red Teaming](../../../activities/advanced-evaluation-redteam/README.md).
 
 ## 7. Deploy the reviewable workflow
 
 Ship behind an authenticated endpoint with managed identity, Application Insights, and a rollback
-path. The manifest is graded by:
+path. Confirm the endpoint refuses an unauthenticated caller:
 
 ```bash
-python3 scripts/verify_deploy.py --offline
+curl -s -o /dev/null -w '%{http_code}\n' "$WORKFLOW_ENDPOINT"
 ```
+
+A `401` or `403` is the answer you want.
 
 Canonical activity: [Deploy as a Hosted Agent](../../../activities/advanced-deploy-hosted-agent/README.md).
 
 ## Offline validation pack
 
-The synthetic fixtures and the offline result contract are validated end-to-end by the scenario
-validator, which needs no network:
-
-```bash
-python3 ../validate.py
-```
+Run the whole workflow over the synthetic fixtures and compare every extracted field against the
+source document. That comparison is the evidence — a workflow that runs without erroring is not the
+same as a workflow that extracts the right values.

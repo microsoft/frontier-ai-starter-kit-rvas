@@ -15,7 +15,7 @@ writing down who owns what happens behind it.
 2. A pinned agent version and a rollback that takes minutes, not a redeploy.
 3. The module 2 permission probe re-run against the surface itself.
 4. [`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json) —
-   the release contract, graded by the checkpoint.
+   the release contract you fill in.
 5. A named triage owner, a pilot exit criterion, and a signed release decision.
 
 ## Choose your path
@@ -54,7 +54,7 @@ not change where users meet the agent.
 
 **Migration cost is deliberately low.** A → B is a publish action, not a rewrite. A → D repackages
 the same agent behind a dedicated endpoint. In every case the agent, its grounding, and its
-evaluation gate are unchanged, and the checkpoint below grades the same manifest. The surface is a
+evaluation gate are unchanged, and the release contract below is the same manifest. The surface is a
 late, reversible decision — which is exactly why it belongs at module 8 and not module 1.
 
 ## Implementation
@@ -159,7 +159,7 @@ it is cheap to check and expensive to discover later.
 
 Record the decision in
 [`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json).
-The checkpoint grades it, and it is deliberately the same shape for all five options.
+You fill it in, and it is deliberately the same shape for all five options.
 
 Before you call it a pilot, have answers to these, because someone will ask:
 
@@ -177,45 +177,46 @@ unsupported infrastructure that nobody admits to owning.
 
 ## Verify
 
-```bash
-# Contract only
-python3 scenarios/ai-grounding/accelerator/scripts/verify_surface.py --offline
+The mistake that surfaces on day one is a doorway that either lets anyone in or calls the agent with
+one service identity, so every user sees everyone's documents. Prove the surface refuses anonymous
+callers and still trims per user.
 
-# Live: confirm the surface refuses an unauthenticated caller
-python3 scenarios/ai-grounding/accelerator/scripts/verify_surface.py \
-  --endpoint https://<your-endpoint>
-```
-
-Expected:
-
-```
-✅ Module 8 checkpoint PASS — the surface has an owner, a boundary, and a way back
-```
-
-The offline check asserts a declared surface, keyless Entra or managed-identity auth with no
-anonymous access, a pinned agent version, the permission boundary re-proven at the surface, tracing
-on in the deployed runtime, a rollback mechanism with a retained previous version, a named triage
-owner, a pilot exit criterion, and a signed release decision. It rejects `TBD` and placeholder text,
-because a manifest full of `TBD` passes a schema check and tells a risk owner nothing. The live probe
-expects `401` or `403`.
-
-Then the full gate:
+**1. An unauthenticated call is refused.** Hit the deployed surface with no credential:
 
 ```bash
-python3 scenarios/ai-grounding/accelerator/validate.py --all
+curl -s -o /dev/null -w "%{http_code}\n" https://<your-endpoint>
 ```
 
-The evidence pack that leaves with the customer:
+`401` or `403` is the result you want. A `200` means the doorway is open — require Entra auth on
+ingress before anyone else sees the URL.
 
-1. Evaluation results with per-metric means and the gate threshold *(module 7)*.
-2. Red-team findings per category, with mitigation and re-test *(module 7)*.
-3. One traced request, end to end *(module 7)*.
-4. The permission probe result against the deployed surface *(this module)*.
-5. Eight decision records, one per module.
-6. A signed release decision: ship, ship-with-conditions, or stop.
+**2. Per-user trimming survives the surface.** The corpus and the agent were proven in earlier
+modules, but the surface is new, and it is where per-user identity gets dropped. Re-run the module 2
+probe against the same knowledge base the surface serves:
 
-"Stop" is a valid, valuable result. A pilot that proves the corpus is too inconsistent to ground on
-has saved the customer a year — as long as it says so in writing.
+```bash
+export PROBE_TENANT_ID=... PROBE_CLIENT_ID=... PROBE_CLIENT_SECRET=...
+python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
+```
+
+Every restricted case must still come back empty. If the surface calls the agent as one service
+identity instead of passing the signed-in user through, this is where the leak shows up.
+
+**3. No key crept back in.** Confirm the deployed surface authenticates with a managed identity, not a
+key, and that its configuration carries no secrets:
+
+```bash
+az webapp identity show --name <surface-app> --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "type" -o tsv
+az webapp config appsettings list --name <surface-app> --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "[?contains(name, 'KEY') || contains(name, 'CONNECTION_STRING')].name" -o tsv
+```
+
+You want an identity `type` of `SystemAssigned` (or `UserAssigned`) and no output from the second
+command. A stored `*_KEY` or connection string means key-based auth crept back in — return to managed
+identity. Adjust the resource commands to the surface you actually deployed (Container Apps, Function
+App, or Bot Service).
 
 ## Troubleshooting
 

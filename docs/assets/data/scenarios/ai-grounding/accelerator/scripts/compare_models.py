@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
-"""Module 4 checkpoint — compare candidate chat deployments on your own approved context.
+"""Compare candidate chat deployments on your own approved context.
 
 Runs every golden question through each candidate deployment with identical role-scoped context and
-identical instructions, so the only variable is the model. This is still a prompt-level harness: it
-does not prove Azure AI Search retrieval, source permissions, or live identity propagation.
+identical instructions, so the only variable is the model. This is a prompt-level comparison: it
+does not exercise Azure AI Search retrieval, source permissions, or live identity propagation.
 
 Public benchmarks measure a different workload than yours. This measures yours.
 
 Run:
     python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py \
         --deployments chat chat-candidate
-
-Offline/structure-only (no Azure calls):
-    python3 .../compare_models.py --offline
 """
 from __future__ import annotations
 
@@ -26,7 +23,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from _shared import ACCELERATOR, check, load_env, load_golden_cases, verify_golden_set  # noqa: E402
+from _shared import ACCELERATOR, check, load_env, load_golden_cases  # noqa: E402
 
 REQUIRED_ENV = ("AZURE_AI_PROJECT_ENDPOINT",)
 SAMPLE_DATA = ACCELERATOR / "sample-data"
@@ -107,7 +104,6 @@ def run_candidate(project: Any, deployment: str, cases: list[dict[str, Any]]) ->
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--offline", action="store_true", help="Structure checks only; no Azure calls.")
     parser.add_argument("--deployments", nargs="*", default=[], help="Deployment names to compare.")
     args = parser.parse_args()
 
@@ -115,48 +111,47 @@ def main() -> int:
     env = load_env(REQUIRED_ENV)
     cases = load_golden_cases()
 
-    print("== Module 4 checkpoint: model comparison harness ==")
-    verify_golden_set(cases, failures)
-    check((SAMPLE_DATA / "source-manifest.json").is_file(), "source manifest is present", failures)
-    check(SAMPLE_DATA.is_dir() and any(SAMPLE_DATA.glob("*.md")), "grounding corpus is present", failures)
-    check(ABSTENTION in INSTRUCTIONS, "harness pins an exact abstention string", failures)
-    check("Do not infer" in INSTRUCTIONS, "harness forbids inference", failures)
-
-    if args.offline:
-        print("\n(offline mode: skipped live model calls)")
-    elif failures:
-        print("\nSkipping live comparison until the golden set is complete.")
-    else:
-        for key in REQUIRED_ENV:
-            check(bool(env.get(key)), f"{key} is set", failures)
-        candidates = args.deployments or [env.get("AZURE_AI_MODEL_DEPLOYMENT_NAME", "")]
-        check(all(candidates), "at least one deployment name was provided", failures)
-        if not failures:
-            try:
-                from azure.ai.projects import AIProjectClient
-                from azure.identity import DefaultAzureCredential
-
-                project = AIProjectClient(
-                    endpoint=env["AZURE_AI_PROJECT_ENDPOINT"],
-                    credential=DefaultAzureCredential(),
-                )
-                rows = [run_candidate(project, name, cases) for name in candidates]
-                header = f"{'deployment':<18}{'grounded':>10}{'abstained':>11}{'p50(ms)':>9}{'p95(ms)':>9}{'tok_in':>9}{'tok_out':>9}"
-                print("\n" + header)
-                for row in rows:
-                    print(
-                        f"{row['deployment']:<18}{row['grounded']:>10}{row['abstained']:>11}"
-                        f"{row['p50']:>9}{row['p95']:>9}{row['tok_in']:>9}{row['tok_out']:>9}"
-                    )
-            except ImportError as error:
-                check(False, f"SDK import failed ({error}); install azure-ai-projects", failures)
-            except Exception as error:  # noqa: BLE001
-                check(False, f"model comparison failed: {error}", failures)
-
-    if failures:
-        print(f"\n❌ Module 4 checkpoint FAILED ({len(failures)} issue(s))")
+    if not cases:
+        print("No golden questions found. Add them to golden-questions.json first.")
         return 1
-    print("\n✅ Module 4 checkpoint PASS — comparison harness is well-formed and the golden set is loadable")
+
+    for key in REQUIRED_ENV:
+        check(bool(env.get(key)), f"{key} is set", failures)
+    candidates = args.deployments or [env.get("AZURE_AI_MODEL_DEPLOYMENT_NAME", "")]
+    check(all(candidates), "at least one deployment name was provided", failures)
+    if failures:
+        print("\nSet the environment contract and name at least one deployment first.")
+        return 1
+
+    print(f"== Comparing {len(candidates)} deployment(s) over {len(cases)} golden questions ==")
+    try:
+        from azure.ai.projects import AIProjectClient
+        from azure.identity import DefaultAzureCredential
+
+        project = AIProjectClient(
+            endpoint=env["AZURE_AI_PROJECT_ENDPOINT"],
+            credential=DefaultAzureCredential(),
+        )
+        rows = [run_candidate(project, name, cases) for name in candidates]
+    except ImportError as error:
+        print(f"SDK import failed ({error}); install azure-ai-projects")
+        return 1
+    except Exception as error:  # noqa: BLE001
+        print(f"Model comparison failed: {error}")
+        return 1
+
+    header = f"{'deployment':<18}{'grounded':>10}{'abstained':>11}{'p50(ms)':>9}{'p95(ms)':>9}{'tok_in':>9}{'tok_out':>9}"
+    print("\n" + header)
+    for row in rows:
+        print(
+            f"{row['deployment']:<18}{row['grounded']:>10}{row['abstained']:>11}"
+            f"{row['p50']:>9}{row['p95']:>9}{row['tok_in']:>9}{row['tok_out']:>9}"
+        )
+    answerable = sum(1 for case in cases if case.get("expected_behavior") == "answer")
+    print(
+        f"\n{answerable} of {len(cases)} questions are answerable from the corpus. "
+        "A model that grounds fewer than that is guessing; one that abstains more is over-cautious."
+    )
     return 0
 
 

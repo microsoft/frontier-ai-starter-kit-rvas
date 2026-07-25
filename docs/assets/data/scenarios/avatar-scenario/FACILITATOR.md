@@ -38,7 +38,7 @@ State that the fixture contains no customer policy and must not be treated as au
 
 ## Demonstration
 
-Run `validate.py` only with the supplied synthetic fixture. Show the validated artifact record's claim links, source references, approval record, disclosure, transcript, fallback, and input hashes. Explain that the offline checkpoints deliberately have no media generation, vendor SDK, identity integration, or network call.
+Demonstrate with the supplied synthetic fixture only. Show the artifact record's claim links, source references, approval record, disclosure, transcript, fallback, and input hashes. Be explicit that this walkthrough generates no media and makes no vendor or identity calls — a real run needs the limited-access approval discussed in module 1.
 
 ## Guardrails
 

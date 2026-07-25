@@ -10,7 +10,7 @@ Use only the fictional Northstar Outdoor Supply fixtures. Do not request, paste,
 
 - Invite a business decision owner, frontline representative, source owner, platform architect, security/privacy reviewer, evaluator, and operations lead.
 - Share `README.md`, the eight lesson files, and `accelerator/sample-data/README.md`.
-- Run `python3 accelerator/validate.py --all`; use the module checkpoint output to show how citations and refusal tests are reviewed.
+- Run through module 1 yourself against a scratch subscription so you can show a live grounded answer with citations, and a refusal, rather than describing them.
 - Arrange a shared canvas with eight sections matching the scenario modules.
 
 ## Agenda

@@ -176,19 +176,55 @@ so modules 2–7 are identical across all four options.
 
 ## Verify
 
+Four things should be true before you build on this foundation. Check each against your own
+resources, not against anything in this repo.
+
+**1. Both model deployments exist.**
+
 ```bash
-python3 scenarios/content-understanding/accelerator/scripts/verify_foundation.py
+ACCOUNT=$(echo "$AZURE_AI_FOUNDRY_ENDPOINT" | sed -E 's#https?://([^.]+)\..*#\1#')
+RG=$(az cognitiveservices account list --query "[?name=='$ACCOUNT'].resourceGroup | [0]" -o tsv)
+az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group "$RG" \
+  --query "[].name" -o tsv
 ```
 
-Expected:
+You should see the names in `AZURE_AI_MODEL_DEPLOYMENT_NAME` and `AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`.
+Content Understanding calls both during analysis; if either is missing the later modules fail with a
+deployment-not-found error that reads like a code bug but isn't.
 
-```
-✅ Module 1 checkpoint PASS — foundation is provisioned and keyless
+**2. Content Understanding answers your Entra identity, with no key.**
+
+```bash
+CU=$(echo "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT" | sed 's:/*$::')
+TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" \
+  "$CU/contentunderstanding/analyzers?api-version=2025-11-01"
 ```
 
-The checkpoint asserts the contract is complete, contains **no** key/secret variables, that the chat
-and embedding deployments exist, and that both blob containers answer using Entra ID. Run it with
-`--offline` to check structure only, without calling Azure.
+A `200` means keyless data-plane access works. A `403` means your identity is missing **Cognitive
+Services User** on the account — grant the role rather than reaching for a key, or the key follows you
+to production. A `404` means the region does not expose Content Understanding; redeploy elsewhere.
+
+**3. The document containers are private and reachable without a key.**
+
+```bash
+az storage container show --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+  --name "$AZURE_DOCUMENTS_CONTAINER_NAME" --auth-mode login \
+  --query "properties.publicAccess" -o tsv
+```
+
+The command succeeding at all proves Entra data-plane access; empty output for `publicAccess` means
+no anonymous access. A value of `blob` or `container` means the inbound corpus is world-readable —
+fix it before you upload a single document.
+
+**4. The environment contract holds no secrets.**
+
+```bash
+grep -iE 'api_key|account_key|connection_string|sas_token' scenarios/content-understanding/accelerator/.env
+```
+
+No output is the result you want. Any match means something upstream handed you a key, and the
+keyless chain is already broken.
 
 ## Troubleshooting
 

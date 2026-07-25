@@ -189,19 +189,41 @@ outputs, so modules 2–7 are identical across all four options.
 
 ## Verify
 
+Three things should be true before you build on this foundation. Check each against your own
+resources.
+
+**1. Both model deployments exist.**
+
 ```bash
-python3 scenarios/ai-grounding/accelerator/scripts/verify_foundation.py
+az cognitiveservices account deployment list \
+  --name "$AZURE_AI_FOUNDRY_ACCOUNT_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "[].name" -o tsv
 ```
 
-Expected:
+You should see the names you set for `AZURE_AI_MODEL_DEPLOYMENT_NAME` and
+`AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`. If either is missing, the later modules will fail with a
+deployment-not-found error that looks like a code bug but isn't.
 
-```
-✅ Module 1 checkpoint PASS — grounding foundation is provisioned and keyless
+**2. Search answers your Entra identity, with no key anywhere.**
+
+```bash
+TOKEN=$(az account get-access-token --scope https://search.azure.com/.default --query accessToken -o tsv)
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SEARCH_ENDPOINT/indexes?api-version=2024-07-01" | head -c 200
 ```
 
-The checkpoint asserts the contract is complete, contains **no** key/secret variables, that Search
-answers using Entra ID, and that both the chat and embedding deployments exist. Run it with
-`--offline` to check structure only, without calling Azure.
+A `200` with a JSON body means role-based access is working. A `403` means your account is missing
+**Search Service Contributor** or **Search Index Data Contributor** — grant the role rather than
+falling back to an admin key, or you will carry that key all the way to production.
+
+**3. The environment contract holds no secrets.**
+
+```bash
+grep -iE 'api_key|account_key|connection_string|sas_token' scenarios/ai-grounding/accelerator/.env
+```
+
+No output is the result you want. Any match means something upstream handed you a key, and the
+keyless chain is already broken.
 
 ## Troubleshooting
 

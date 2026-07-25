@@ -337,21 +337,6 @@ const REQUIRED_LESSON_HEADINGS = [
   'next module',
 ];
 
-// Scenarios still on the pre-rebuild contract. Remove entries as each is migrated;
-// this set must be empty when the rebuild is finished.
-const LEGACY_CONTRACT_SCENARIOS = new Set([]);
-
-const LEGACY_LESSON_HEADINGS = [
-  'decision',
-  'prerequisites',
-  'build steps',
-  'files and commands',
-  'checkpoint',
-  'evidence',
-  'common failures',
-  'next module',
-];
-
 function resolveRelativePath(basePath, href) {
   const segments = basePath.split('/').slice(0, -1);
   for (const part of href.split('/')) {
@@ -380,10 +365,7 @@ function auditLessonRouting(scenario, lesson, activityIds, failures) {
 
   const headings = (body.match(/^#{1,6}\s+.*$/gmu) || []).map((line) =>
     line.replace(/^#{1,6}\s+/u, '').toLowerCase());
-  const requiredHeadings = LEGACY_CONTRACT_SCENARIOS.has(scenario.id)
-    ? LEGACY_LESSON_HEADINGS
-    : REQUIRED_LESSON_HEADINGS;
-  for (const required of requiredHeadings) {
+  for (const required of REQUIRED_LESSON_HEADINGS) {
     if (!headings.some((heading) => heading.includes(required))) {
       failures.push(`${label}: build-module contract is missing a "${required}" section`);
     }
@@ -416,7 +398,7 @@ function auditBuildModules(scenario, activityIds, failures) {
   const seen = new Set();
   for (const module of modules) {
     const label = `scenario ${scenario.id} build module ${module.id || '<missing id>'}`;
-    for (const field of ['id', 'title', 'summary', 'checkpoint', 'sequence']) {
+    for (const field of ['id', 'title', 'summary', 'outcome', 'sequence']) {
       if (!module[field]) failures.push(`${label}: missing "${field}"`);
     }
     if (module.id && seen.has(module.id)) failures.push(`${label}: duplicate module id`);

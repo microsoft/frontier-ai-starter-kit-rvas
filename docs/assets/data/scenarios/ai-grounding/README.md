@@ -2,10 +2,11 @@
 
 Build a grounded, permission-aware assistant over approved content, and prove it before it ships.
 
-Eight modules, one lesson each. Every module ends with a runnable checkpoint, and every module
-offers real options with an opinionated default and the migration cost of changing your mind. You
-can deploy real Azure resources for a clean demo, index a synthetic corpus, compare model behavior,
-and learn the evidence a risk owner would need before a customer pilot.
+Eight modules, one lesson each. Every module ends with something you can see working against your
+own resources, and every module offers real options with an opinionated default and the migration
+cost of changing your mind. You can deploy real Azure resources for a clean demo, index a synthetic
+corpus, compare model behavior, and learn the evidence a risk owner would need before a customer
+pilot.
 
 ## Before you start
 
@@ -21,16 +22,16 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 
 ## The build path
 
-| Module | What you build | Checkpoint |
+| Module | What you build | Outcome |
 |---|---|---|
-| [1. Provision the foundation](lesson.html?scenario=ai-grounding&lesson=foundation) | Foundry account and project, chat + embedding deployments, AI Search, storage, observability, and the `.env` contract | `verify_foundation.py` |
-| [2. Source and permission architecture](lesson.html?scenario=ai-grounding&lesson=source-selection) | The source decision, the identity evaluated at query time, and a probe proving a restricted identity retrieves nothing | `probe_permissions.py` |
-| [3. Ingest and index approved content](lesson.html?scenario=ai-grounding&lesson=ingestion) | Ingestion, chunking, citation metadata, ACL carry-forward, and a refresh schedule | `verify_retrieval.py` |
-| [4. Compare chat and embedding choices](lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | `compare_models.py` |
-| [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | `grounded_answer.py` |
-| [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | `verify_routing.py` |
-| [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | `validate.py --all` |
-| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | The surface decision, a pinned version, a rollback, an owner, and a signed release | `verify_surface.py` |
+| [1. Provision the foundation](lesson.html?scenario=ai-grounding&lesson=foundation) | Foundry account and project, chat + embedding deployments, AI Search, storage, observability, and the `.env` contract | Foundations Step 1 |
+| [2. Source and permission architecture](lesson.html?scenario=ai-grounding&lesson=source-selection) | The source decision, the identity evaluated at query time, and a probe proving a restricted identity retrieves nothing | Signed source, access, freshness, and system-of-record decision |
+| [3. Ingest and index approved content](lesson.html?scenario=ai-grounding&lesson=ingestion) | Ingestion, chunking, citation metadata, ACL carry-forward, and a refresh schedule | Approved documents are discoverable with source metadata |
+| [4. Compare chat and embedding choices](lesson.html?scenario=ai-grounding&lesson=model-selection) | A comparison harness over your own golden set: accuracy, abstention, latency, tokens | Foundations Step 2 |
+| [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | Foundations Step 4 |
+| [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | Policy and live-data questions route to the correct source |
+| [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | Evaluation gate passed with trace and red-team evidence |
+| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | The surface decision, a pinned version, a rollback, an owner, and a signed release | Surface release contract complete and the unauthenticated caller refused |
 
 Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
 retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
@@ -54,20 +55,32 @@ Use these gates before opening reference-library mechanics:
 ```bash
 az login
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
-python3 scenarios/ai-grounding/accelerator/scripts/verify_foundation.py
 ```
 
 The deployment writes `accelerator/.env` from the template outputs. That file is the environment
 contract every later module depends on — keep it local and uncommitted.
 
-## Run the structural gate locally
+## Run the scripts
 
-No Azure subscription needed; every checkpoint has an offline mode that validates structure and
-fixture integrity. This is not live proof of retrieval, identity, routing, tracing, or deployment:
+The accelerator ships four scripts that do real work against your own Azure resources. They need a
+subscription and the `.env` contract; there is no offline mode, because a script that passes without
+touching Azure tells you nothing about whether your grounding works.
 
 ```bash
-python3 scenarios/ai-grounding/accelerator/validate.py --all
+# Create the knowledge source and knowledge base
+python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
+
+# Check the permission boundary with a second, lower-privileged identity
+python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py --knowledge-base grounding-kb
+
+# Compare candidate models on your own golden questions
+python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py --deployments chat chat-candidate
+
+# Run the golden questions and read citations, abstention, and recall@5
+python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py --knowledge-base grounding-kb
 ```
+
+Each lesson's **Verify** section lists the specific commands and signals for that module.
 
 ## Reused activities
 
