@@ -225,7 +225,6 @@
         <div class="ch-footer">
           ${FP.diffBadge(c.difficulty)}
           ${FP.durBadge(c.duration_minutes)}
-          ${c.path_session ? `<span class="badge badge-outcome">${FP.esc(c.path_session.status)}</span>` : ''}
           <div class="ch-tags">${FP.tagBadges(c.tags, 3)}</div>
         </div>
       </a>`;

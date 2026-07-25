@@ -327,8 +327,6 @@ const ACTIVITIES = [
   },
 ];
 
-const APP_PATHS = [];
-
 function readIfExists(relPath) {
   const abs = path.join(ROOT, relPath);
   return fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : null;
@@ -560,7 +558,7 @@ function scenarioOutput(scenario) {
     };
 }
 
-function activityOutput(activity, pathIds, outcomeIds) {
+function activityOutput(activity, outcomeIds) {
   return {
     id: activity.id,
     title: activity.title,
@@ -574,7 +572,6 @@ function activityOutput(activity, pathIds, outcomeIds) {
     success_criteria: activity.success_criteria || [],
     tags: activity.tags || [],
     outcomes: [...new Set([...(activity.outcomes || []), ...outcomeIds])],
-    paths: pathIds,
     personas: activity.personas || [],
     business_value: activity.business_value || [],
     adoption_stage: activity.adoption_stage || '',
@@ -590,15 +587,7 @@ function activityOutput(activity, pathIds, outcomeIds) {
   };
 }
 
-function markdownHeadingId(heading) {
-  return heading
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w\s-]/gu, '')
-    .replace(/\s+/gu, '-');
-}
-
-function detectMissingReferences(activities, outcomes, paths, aliases, scenarios) {
+function detectMissingReferences(activities, outcomes, aliases, scenarios) {
   const ids = new Set(activities.map((c) => c.id));
   const missing = [];
   for (const activity of activities) {
@@ -611,29 +600,8 @@ function detectMissingReferences(activities, outcomes, paths, aliases, scenarios
       if (!ids.has(id)) missing.push(`${outcome.id} outcome activity ${id}`);
     }
   }
-  for (const path of paths) {
-    for (const session of path.sessions || []) {
-      const activity = activities.find((candidate) => candidate.id === session.activity_id);
-      if (!activity) {
-        missing.push(`${path.id} path session ${session.activity_id}`);
-        continue;
-      }
-      if (session.anchor) {
-        const source = readIfExists(activity.participant);
-        const anchors = source
-          ? [...source.matchAll(/^#{1,6}\s+(.+)$/gmu)].map((match) => markdownHeadingId(match[1]))
-          : [];
-        if (!anchors.includes(session.anchor.slice(1))) {
-          missing.push(`${path.id} path anchor ${session.anchor} for ${session.activity_id}`);
-        }
-      }
-    }
-  }
   for (const [legacyId, target] of Object.entries(aliases)) {
     if (!ids.has(target.id)) missing.push(`${legacyId} alias target ${target.id}`);
-    if (target.path && !paths.some((path) => path.id === target.path)) {
-      missing.push(`${legacyId} alias path ${target.path}`);
-    }
   }
   missing.push(...detectScenarioProblems(scenarios));
   return missing;
@@ -641,7 +609,7 @@ function detectMissingReferences(activities, outcomes, paths, aliases, scenarios
 
 function main() {
   const scenarios = loadScenarioRegistry();
-  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, APP_PATHS, LEGACY_ACTIVITY_ALIASES, scenarios);
+  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, LEGACY_ACTIVITY_ALIASES, scenarios);
   if (missing.length) {
     console.error('Build failed: missing references');
     missing.forEach((m) => console.error(`  - ${m}`));
@@ -658,20 +626,11 @@ function main() {
     writeGuide(activity, 'facilitator');
   }
 
-  const pathIdsByActivity = new Map();
-  for (const path of APP_PATHS) {
-    for (const session of path.sessions) {
-      const ids = pathIdsByActivity.get(session.activity_id) || [];
-      ids.push(path.id);
-      pathIdsByActivity.set(session.activity_id, ids);
-    }
-  }
-
   const outputActivities = ACTIVITIES.map((activity) => {
     const outcomeIds = OUTCOMES
       .filter((outcome) => (outcome.activity_ids || []).includes(activity.id))
       .map((outcome) => outcome.id);
-    return activityOutput(activity, pathIdsByActivity.get(activity.id) || [], outcomeIds);
+    return activityOutput(activity, outcomeIds);
   });
   const activityById = new Map(outputActivities.map((c) => [c.id, c]));
 
@@ -700,19 +659,6 @@ function main() {
     };
   });
 
-  const paths = APP_PATHS.map((path) => ({
-    ...path,
-    sessions: path.sessions.map((session) => {
-      const activity = activityById.get(session.activity_id);
-      return {
-        ...session,
-        title: activity.title,
-        description: activity.description,
-        duration_minutes: activity.duration_minutes,
-      };
-    }),
-  }));
-
   const graph = {
     nodes: outputActivities.map((c) => ({ id: c.id, title: c.title, module: c.module, track: c.track, tier: c.tier })),
     edges: outputActivities.flatMap((c) => (c.prerequisites || []).map((from) => ({ from, to: c.id }))),
@@ -723,7 +669,6 @@ function main() {
     JSON.stringify({
       modules,
       outcomes,
-      paths,
       scenarios: scenarios.map(scenarioOutput),
       aliases: LEGACY_ACTIVITY_ALIASES,
       activities: outputActivities,
