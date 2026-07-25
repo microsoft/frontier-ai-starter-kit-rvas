@@ -236,34 +236,54 @@ is the right answer, and indexing it instead is the most common serious mistake 
 
 ## Verify
 
-Retrieval must be proven before an agent is anywhere near it:
+The expensive mistake here is querying before asynchronous ingestion has finished. An empty result
+then looks like a retrieval bug and sends you debugging the wrong layer. Confirm the indexer actually
+completed before you trust any query.
+
+**1. The knowledge source and base were created.** `build_knowledge_source.py` prints one line per
+object it creates or updates.
 
 ```bash
-# Offline: corpus structure, metadata completeness, and golden-set shape
-python3 scenarios/ai-grounding/accelerator/scripts/verify_retrieval.py --offline
-
-# Live: query the knowledge base with the golden questions
-python3 scenarios/ai-grounding/accelerator/scripts/verify_retrieval.py \
-  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
+python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
 ```
 
-Expected:
+You want `knowledge source '...' created or updated` and `knowledge base '...' created or updated`.
+A `403` on the source means the deployer principal is missing **Search Service Contributor** or
+**Search Index Data Contributor**; a `403` once the source touches a model means the search service
+managed identity lacks **Cognitive Services User** on the Foundry account.
 
+**2. The auto-generated indexer finished, and processed every document.** The blob knowledge source
+generates its own indexer, named after the source. Read its status directly, keyless:
+
+```bash
+TOKEN=$(az account get-access-token --scope https://search.azure.com/.default --query accessToken -o tsv)
+
+# Find the generated indexer name (it is prefixed with the knowledge source name).
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SEARCH_ENDPOINT/indexers?api-version=2026-04-01&\$select=name" \
+  | python3 -c "import sys,json;[print(i['name']) for i in json.load(sys.stdin)['value']]"
+
+# Then read its execution status.
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SEARCH_ENDPOINT/indexers('<generated-indexer-name>')/search.status?api-version=2026-04-01" \
+  | python3 -c "import sys,json;r=json.load(sys.stdin)['lastResult'];print(r['status'], r['itemsProcessed'], 'processed', r['itemsFailed'], 'failed')"
 ```
-✅ Module 3 checkpoint PASS — 4/4 golden questions retrieved the expected source
+
+`success` with `itemsProcessed` equal to the number of approved documents and `0` failed is the
+signal to move on. `inProgress` means ingestion is still running — wait and re-read, do not query
+yet. This is the check that stops you from concluding "retrieval is broken" when ingestion simply had
+not finished.
+
+**3. The index actually holds documents.** A `success` status with zero documents means the indexer
+ran before the blobs were uploaded.
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "$AZURE_SEARCH_ENDPOINT/indexes('<generated-index-name>')/docs/\$count?api-version=2026-04-01"
 ```
 
-The golden set is [`accelerator/golden-questions.json`](../accelerator/golden-questions.json). It is
-deliberately built to catch the three real failures, not to look good:
-
-- **A superseded-document case.** The corpus contains both the 2026-01-28 and 2026-02-03 Alpine
-  District notices. Retrieval must surface the current one.
-- **An abstention case.** A question the corpus genuinely cannot answer must return nothing to
-  ground on, not a plausible paragraph.
-- **A restricted case.** The supervisor playbook must not appear for a coordinator identity.
-
-If retrieval cannot pass these, stop. Adding an agent on top of broken retrieval produces an
-articulate wrong answer instead of an obvious one.
+A non-zero count that matches your corpus is what you want. Zero after a successful run means re-run
+the indexer once content is in the container.
 
 ## Troubleshooting
 

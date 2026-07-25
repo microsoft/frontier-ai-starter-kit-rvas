@@ -2,7 +2,7 @@
   'use strict';
 
   const GUIDES = {
-    accelerator: { title: 'Accelerator guide', path: 'accelerator_path', summary: 'Deployable starter assets and module checkpoints.' },
+    accelerator: { title: 'Accelerator guide', path: 'accelerator_path', summary: 'Deployable starter assets and reusable scripts.' },
     facilitator: { title: 'Facilitator guide', path: 'facilitator_path', summary: 'Delivery notes, pacing, prompts, and facilitation guardrails.' },
     validator: { title: 'Local validator', path: 'validator_path', summary: 'Validator source and the checks it runs.' },
   };

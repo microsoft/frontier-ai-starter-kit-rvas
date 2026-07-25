@@ -66,8 +66,8 @@ The agent calls exactly one tool to post; it cannot write anywhere else.
 ### Option B — Human-in-the-loop review app
 
 Give reviewers the document with the grounding overlay and the fields, editable where flagged. On
-approve, the app writes the same correction record and calls the same handoff seam. Everything the
-checkpoint asserts — reviewer identity, timestamp, before/after, reason — is captured by the app, so
+approve, the app writes the same correction record and calls the same handoff seam. Everything you
+must retain — reviewer identity, timestamp, before/after, reason — is captured by the app, so
 the trace is identical to Option A. The difference is reviewer experience, not the contract.
 
 ### Option C — Multi-agent workflow handoff
@@ -81,19 +81,42 @@ on when the workflow ships.
 
 ## Verify
 
+Check the trace your review step actually wrote, then check who is allowed to trigger the handoff.
+Write the approval trace to `trace.json` and inspect it.
+
+**1. The correction is retained, not an overwrite.**
+
 ```bash
-python3 scenarios/content-understanding/accelerator/scripts/verify_human_review.py --offline
+jq 'select(.review_outcome == "approved_with_correction")
+    | {reviewer: .reviewer_id, at: .reviewed_at,
+       corrections: [.corrections[] | {field, original_value, corrected_value, reason}],
+       seam: .handoff.target_seam, approved: .handoff.approved}' trace.json
 ```
 
-Expected:
+Every correction must show a `reviewer_id`, a `reviewed_at`, a `reason`, and an `original_value` that
+differs from `corrected_value`. If `original_value` is absent or equal to the corrected one, the
+reviewer's change overwrote the extraction and the before/after evidence is gone — module 6 reads
+these records as test cases, so a silent overwrite also poisons your evaluation set.
 
-```
-✅ Module 5 checkpoint PASS — reviewer corrections and the approval trace are retained
+**2. The handoff refuses a caller who is not an approver.**
+
+Call the approved action-tool seam as an identity that lacks the approver role:
+
+```bash
+TOKEN=$(az account get-access-token --resource "$ACTION_API_URL" --query accessToken -o tsv)
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" \
+  -X POST "$ACTION_API_URL/post-approved-result" -d @trace.json -H "Content-Type: application/json"
 ```
 
-The check asserts a named reviewer and timestamp, a valid outcome, that an
-`approved_with_correction` carries at least one correction with field / original / corrected / reason
-that actually changes the value, and that an approved handoff names a downstream seam.
+A non-approver identity must get `401` or `403`. A `200` means anyone who can reach the seam can post
+an approved result to the downstream system — the review gate is decorative. Grant the approver role
+only to reviewer identities; never widen the seam to make a test pass.
+
+**3. The post is attributed to the workflow identity.**
+
+In the downstream system (or its Application Insights traces), confirm the approved result arrived
+once, stamped with the workflow identity and the `document_id`, not the reviewer's personal account.
+If the post shows up as the app's shared identity for every case, you cannot tell who approved what.
 
 ## Troubleshooting
 

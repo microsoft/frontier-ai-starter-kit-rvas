@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Module 2 checkpoint — prove the permission boundary is enforced at retrieval time.
+"""Check that the permission boundary is enforced at retrieval time.
 
 This catches the expensive failure: retrieval that looks perfect in a demo because the
 caller is an administrator, then leaks on day one of the pilot.
 
 The probe runs each query twice — once as an identity that *should* see the content, once
-as an identity that should *not* — and asserts the restricted identity gets nothing back:
+as an identity that should *not* — and checks the restricted identity gets nothing back:
 no content, no title, no snippet, no "this document exists" signal.
 
 Query-time ACL enforcement in Azure AI Search needs BOTH:
@@ -14,17 +14,15 @@ Query-time ACL enforcement in Azure AI Search needs BOTH:
 See https://learn.microsoft.com/azure/search/search-query-access-control-rbac-enforcement
 
 Usage:
-    # Validate the probe plan without calling Azure
-    python3 probe_permissions.py --offline
-
-    # Live probe against a Foundry IQ knowledge base
+    # Against a Foundry IQ knowledge base
     python3 probe_permissions.py --knowledge-base grounding-kb
 
-    # Live probe against a plain search index
+    # Against a plain search index
     python3 probe_permissions.py --index approved-content-index
 
-The restricted identity comes from PROBE_TENANT_ID / PROBE_CLIENT_ID / PROBE_CLIENT_SECRET
-(or the matching flags). Requires preview SDK packages:
+Describe your own cases in permission-probe.json. The restricted identity comes from
+PROBE_TENANT_ID / PROBE_CLIENT_ID / PROBE_CLIENT_SECRET (or the matching flags).
+Requires preview SDK packages:
     pip install --pre azure-search-documents azure-identity
 """
 from __future__ import annotations
@@ -56,7 +54,7 @@ def load_env() -> dict[str, str]:
 def load_plan(path: Path) -> dict:
     if not path.is_file():
         raise SystemExit(
-            f"No probe plan at {path}. Module 2 shows the schema: a list of cases, each with "
+            f"No probe plan at {path}. The schema is a list of cases, each with "
             "id, query, expect_visible, and expect_hidden."
         )
     return json.loads(path.read_text(encoding="utf-8"))
@@ -133,7 +131,7 @@ def run_live(plan: dict, env: dict[str, str], args) -> list[str]:
     if not (args.client_id and args.client_secret and args.tenant_id):
         raise SystemExit(
             "A permission probe needs a second, lower-privileged identity. Set "
-            "PROBE_TENANT_ID/PROBE_CLIENT_ID/PROBE_CLIENT_SECRET, or use --offline to validate the plan only."
+            "PROBE_TENANT_ID/PROBE_CLIENT_ID/PROBE_CLIENT_SECRET."
         )
 
     app_credential = DefaultAzureCredential()
@@ -184,34 +182,31 @@ def main() -> int:
     surface.add_argument("--knowledge-base", help="Foundry IQ / agentic retrieval knowledge base name.")
     surface.add_argument("--index", help="Azure AI Search index name.")
     parser.add_argument("--plan", type=Path, default=DEFAULT_PLAN)
-    parser.add_argument("--offline", action="store_true", help="Validate the probe plan only.")
     parser.add_argument("--tenant-id", default=os.environ.get("PROBE_TENANT_ID"))
     parser.add_argument("--client-id", default=os.environ.get("PROBE_CLIENT_ID"))
     parser.add_argument("--client-secret", default=os.environ.get("PROBE_CLIENT_SECRET"))
     args = parser.parse_args()
 
-    print("== Module 2 checkpoint: permission boundary ==")
     plan = load_plan(args.plan)
+    problems = validate_plan(plan)
+    if problems:
+        print("The probe plan is not usable yet:")
+        for problem in problems:
+            print(f"  - {problem}")
+        return 1
 
-    failures = validate_plan(plan)
-    for problem in failures:
-        print(f"FAIL  plan: {problem}")
-    if not failures:
-        print(f"PASS  probe plan is well formed ({len(plan['cases'])} case(s))")
+    if not (args.knowledge_base or args.index):
+        raise SystemExit("Pass --knowledge-base or --index to probe.")
 
-    if args.offline:
-        print("\n(offline mode: plan validated, no Azure calls)")
-    elif failures:
-        print("\nFix the probe plan before running it against Azure.")
-    else:
-        if not (args.knowledge_base or args.index):
-            raise SystemExit("Pass --knowledge-base or --index for a live probe.")
-        failures.extend(run_live(plan, load_env(), args))
+    print(f"== Probing the permission boundary with {len(plan['cases'])} case(s) ==")
+    failures = run_live(plan, load_env(), args)
 
     if failures:
-        print(f"\n❌ Module 2 checkpoint FAILED ({len(failures)} issue(s))")
+        print(f"\nThe permission boundary leaked in {len(failures)} case(s):")
+        for failure in failures:
+            print(f"  - {failure}")
         return 1
-    print("\n✅ Module 2 checkpoint PASS — the permission boundary held")
+    print("\nEvery restricted case came back empty — no content, no title, no existence signal.")
     return 0
 
 

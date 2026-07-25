@@ -44,8 +44,7 @@ scenarios/<folder-name>/
   ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md",
-  "facilitator": "FACILITATOR.md",
-  "validator": "validate.py"
+  "facilitator": "FACILITATOR.md"
 }
 ```
 
@@ -60,8 +59,10 @@ start building:
   listing. Scenarios without an `order` sort last, alphabetically by name.
 
 Build modules may also define optional `level`, `duration_minutes`, and `stage` values when a lesson
-needs more specific labels. If omitted, lesson pages fall back to the scenario-level labels and the
-existing checkpoint metadata.
+needs more specific labels. If omitted, lesson pages fall back to the scenario-level labels.
+
+Each build module declares an `outcome`: one short line naming what the reader should have once the
+module is done. It appears on the scenario and lesson pages.
 
 ## Acceptance checklist
 
@@ -71,7 +72,11 @@ existing checkpoint metadata.
   needed. Do not revive legacy application paths; extract only the source, access, action, trust,
   operating, and deployment decisions that help the customer choose what to build next.
 - Every lesson follows the practical build-module contract: visible inputs, implementation steps,
-  expected evidence, local or service validation, and the next customer decision.
+  expected evidence, an observable Verify step, and the next customer decision.
+- Every lesson's **Verify** section is observable against the reader's own resources: a real command,
+  a portal pane, a returned artifact, or a service response, plus what a specific failure means. Do
+  not add scripts whose only job is to assert that files in this repo are well-formed, and never
+  print a success banner for work that was not actually done.
 - Every lesson considers Excalidraw diagrams. Include one or more when a diagram conveys important
   visual information the learner should understand or retain; include zero when a diagram would be
   decorative or redundant.
@@ -80,7 +85,7 @@ existing checkpoint metadata.
 - Slides use Marp-compatible Markdown. Open the full deck through `docs/slides.html?id=<scenario-id>`
   and use the browser's **Print / save as PDF** action for a customer-deck export.
 - Each lesson section has three facilitator slides: why the decision matters, options/trade-offs to
-  discuss, and the evidence or checkpoint the practical activity must produce. Add stable slide
+  discuss, and the evidence the practical activity must produce. Add stable slide
   markers before those slides so lesson pages can link directly into the deck:
   `<!-- slide:id=lesson-<lesson-id>-context -->`,
   `<!-- slide:id=lesson-<lesson-id>-choices -->`, and
@@ -90,6 +95,6 @@ existing checkpoint metadata.
 - Preview and fast-moving services instruct the reader to search current Microsoft documentation
   and MCP tools before writing SDK code.
 - Data ownership, access, evaluation, and operating evidence are explicit from the first lesson.
-- Synthetic sample data, expected outputs, and offline module checkpoints are present for every
-  scenario; each is clearly replaceable by approved customer data.
+- Synthetic sample data and expected outputs are present for every scenario; each is clearly
+  replaceable by approved customer data.
 - A named owner and maturity label are present; update the scenario changelog when material changes.

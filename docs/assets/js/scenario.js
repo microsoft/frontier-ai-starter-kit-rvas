@@ -53,7 +53,7 @@
     return `<li>
       <strong>${lesson ? `<a href="${FP.esc(lesson.lesson_path)}">${FP.esc(title)}</a>` : FP.esc(title)}</strong>
       <span>${FP.esc(module.summary)}</span>
-      <small>Checkpoint: ${FP.esc(module.checkpoint)}</small>
+      <small>Outcome: ${FP.esc(module.outcome)}</small>
     </li>`;
   }
 

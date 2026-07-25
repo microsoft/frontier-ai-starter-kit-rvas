@@ -46,7 +46,7 @@
       ${FP.levelBadge(currentModule?.level || scenario.level || 'guided')}
       ${FP.durBadge(currentModule?.duration_minutes || lesson.duration_minutes)}
       ${stageBadge(currentModule?.stage || lesson.stage || scenario.stage)}
-      ${currentModule && currentModule.checkpoint ? `<span class="badge badge-tag">Checkpoint: ${FP.esc(currentModule.checkpoint)}</span>` : ''}`;
+      ${currentModule && currentModule.outcome ? `<span class="badge badge-tag">Outcome: ${FP.esc(currentModule.outcome)}</span>` : ''}`;
     renderLessonHeaderActions(scenario, lesson, playbookUrl);
     document.getElementById('currentModuleSummary').textContent = currentModule
       ? currentModule.summary

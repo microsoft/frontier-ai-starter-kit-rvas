@@ -156,28 +156,51 @@ run it a third time in module 8, against the surface users actually touch.
 
 ## Verify
 
+Groundedness can read high while the answer is wrong, because it measures faithfulness to whatever
+text was retrieved, not whether the right text was retrieved. Look at retrieval and traces together,
+not the quality score alone.
+
+**1. One request is traced end to end, with tokens and latency per span.** Give spans 1–3 minutes to
+land, then either open the Foundry portal (**Agents → Traces**, select a request, step through the
+spans) or query Application Insights directly:
+
 ```bash
-# Offline: gate config, custom evaluator, adversarial set, and trace wiring
-python3 scenarios/ai-grounding/accelerator/validate.py --offline
-
-# Every module checkpoint
-python3 scenarios/ai-grounding/accelerator/validate.py --all
+az monitor app-insights query \
+  --resource-group "$AZURE_RESOURCE_GROUP" --app <your-app-insights-resource> \
+  --analytics-query "dependencies | where timestamp > ago(1h) | where customDimensions has 'gen_ai' | project timestamp, operation_Id, name, duration, input_tokens = toint(customDimensions['gen_ai.usage.input_tokens']), output_tokens = toint(customDimensions['gen_ai.usage.output_tokens']) | order by timestamp desc | take 20"
 ```
 
-Expected:
+You want at least one `operation_Id` whose spans carry non-zero token counts and durations. No rows
+usually means the tracing env vars were set after the SDK was imported, so message content was never
+captured. An authorization error means you are missing **Log Analytics Reader** on the connected
+Application Insights resource — grant the role, do not switch to a key.
 
+**2. The evaluation gate blocks a regression, and recall sits beside groundedness.** Run the gated
+evaluation and check its exit code:
+
+```bash
+python3 activities/advanced-evaluation-redteam/evaluate.py \
+  --dataset scenarios/ai-grounding/accelerator/golden-questions.json \
+  --gate 3.5
+echo "exit: $?"
 ```
-AI Grounding validation passed — structure and all 8 module checkpoints.
+
+A non-zero exit on a below-threshold run is the control working — an evaluation you only read is a
+report, not a gate. Read the per-metric means, and keep the module 5 `recall@5` next to groundedness.
+High groundedness with low recall is the trap: faithful answers built on the wrong retrieved passage.
+
+**3. The indirect-injection case was actually tried, and the boundary still holds against the agent.**
+Confirm the adversarial run included a malicious instruction hidden in a retrieved document, that the
+assistant answered the real question and ignored the embedded command, and that the before/after is
+recorded. Then re-run the module 2 permission probe against the agent, not raw retrieval:
+
+```bash
+python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-What this module contributes to the evidence pack:
-
-1. Evaluation results with per-metric means and the gate threshold.
-2. Red-team findings per category, with the mitigation applied and the re-test result.
-3. One traced request, end to end, with token counts and latency per span.
-4. The permission probe result against the agent.
-
-Module 8 assembles those into a release decision.
+Every restricted case must still come back empty. The agent is new since module 2, so its permission
+behaviour is unproven until you re-run this.
 
 ## Troubleshooting
 

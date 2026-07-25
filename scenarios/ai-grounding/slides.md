@@ -65,7 +65,7 @@ Discuss identity, network boundaries, observability, and regional capacity befor
 ---
 <!-- slide:id=lesson-foundation-evidence -->
 
-# Lesson 1 evidence/checkpoint: foundation is ready for content
+# Lesson 1 — what must be true: foundation is ready for content
 
 Move forward when the team can show:
 
@@ -75,7 +75,7 @@ Move forward when the team can show:
 - Monitoring and trace destination identified before pilot traffic
 - Environment values documented as a reusable contract, without secrets
 
-**Checkpoint decision:** the foundation is safe enough to connect approved pilot content.
+**Decision:** the foundation is safe enough to connect approved pilot content.
 
 ---
 <!-- slide:id=lesson-source-selection-context -->
@@ -111,7 +111,7 @@ Ask the customer:
 ---
 <!-- slide:id=lesson-source-selection-evidence -->
 
-# Lesson 2 evidence/checkpoint: signed source and access decision
+# Lesson 2 — what must be true: signed source and access decision
 
 The source decision is ready when it records:
 
@@ -121,7 +121,7 @@ The source decision is ready when it records:
 - Citation, provenance, and audit expectations
 - Boundary between governed internal knowledge, live work data, analytics, and public information
 
-**Checkpoint decision:** the pilot has a defensible source architecture before anything is indexed.
+**Decision:** the pilot has a defensible source architecture before anything is indexed.
 
 ---
 <!-- slide:id=lesson-ingestion-context -->
@@ -157,7 +157,7 @@ Do not copy content just to make retrieval architecture look simpler.
 ---
 <!-- slide:id=lesson-ingestion-evidence -->
 
-# Lesson 3 evidence/checkpoint: approved documents are discoverable
+# Lesson 3 — what must be true: approved documents are discoverable
 
 Before moving on, reviewers should see:
 
@@ -167,7 +167,7 @@ Before moving on, reviewers should see:
 - Golden questions returning plausible source passages
 - Known stale or conflicting content labeled and handled
 
-**Checkpoint decision:** the knowledge layer can produce trustworthy retrieval evidence before answer generation is judged.
+**Decision:** the knowledge layer can produce trustworthy retrieval evidence before answer generation is judged.
 
 ---
 <!-- slide:id=lesson-model-selection-context -->
@@ -203,7 +203,7 @@ Keep access control and citation requirements out of the trade space; they are b
 ---
 <!-- slide:id=lesson-model-selection-evidence -->
 
-# Lesson 4 evidence/checkpoint: model decision supports grounded answers
+# Lesson 4 — what must be true: model decision supports grounded answers
 
 A model choice is ready when the team has compared:
 
@@ -213,7 +213,7 @@ A model choice is ready when the team has compared:
 - Region and quota feasibility
 - Failure behavior on ambiguous, stale, or restricted questions
 
-**Checkpoint decision:** the selected model and embedding path are good enough for the pilot’s decision quality and operating constraints.
+**Decision:** the selected model and embedding path are good enough for the pilot’s decision quality and operating constraints.
 
 ---
 <!-- slide:id=lesson-grounded-app-context -->
@@ -247,7 +247,7 @@ Discuss three required behaviors explicitly: cite when evidence exists, abstain 
 ---
 <!-- slide:id=lesson-grounded-app-evidence -->
 
-# Lesson 5 evidence/checkpoint: retrieval is trustworthy enough to use
+# Lesson 5 — what must be true: retrieval is trustworthy enough to use
 
 The grounded app is ready for the next step when:
 
@@ -257,7 +257,7 @@ The grounded app is ready for the next step when:
 - Stale-source cases trigger the agreed warning or refusal
 - Reviewers can explain why an answer was accepted or rejected
 
-**Checkpoint decision:** add an agent only if orchestration would solve a real customer need that retrieval alone does not.
+**Decision:** add an agent only if orchestration would solve a real customer need that retrieval alone does not.
 
 ---
 <!-- slide:id=lesson-agent-routing-context -->
@@ -292,7 +292,7 @@ Prefer the simplest route that preserves source authority and user trust.
 ---
 <!-- slide:id=lesson-agent-routing-evidence -->
 
-# Lesson 6 evidence/checkpoint: routing is explainable and controlled
+# Lesson 6 — what must be true: routing is explainable and controlled
 
 Routing is ready when the team can show:
 
@@ -302,7 +302,7 @@ Routing is ready when the team can show:
 - No live-data call without a justified real-time need
 - Trace or log evidence that shows which source answered
 
-**Checkpoint decision:** the agent can be evaluated as a controlled router, not a black box.
+**Decision:** the agent can be evaluated as a controlled router, not a black box.
 
 ---
 <!-- slide:id=lesson-evaluate-and-trace-context -->
@@ -339,7 +339,7 @@ Generic quality metrics miss the three things that matter here: correct refusal,
 ---
 <!-- slide:id=lesson-evaluate-and-trace-evidence -->
 
-# Lesson 7 evidence/checkpoint: the assistant is good enough
+# Lesson 7 — what must be true: the assistant is good enough
 
 Evidence to produce:
 
@@ -348,7 +348,7 @@ Evidence to produce:
 - One request traced end to end, so a wrong answer can be explained rather than guessed at
 - The permission probe re-run against the agent
 
-**Checkpoint decision:** the evidence supports putting this in front of real people — or names what has to change first.
+**Decision:** the evidence supports putting this in front of real people — or names what has to change first.
 
 ---
 <!-- slide:id=lesson-deploy-and-surface-context -->
@@ -384,7 +384,7 @@ Five rules do not move: no keys, the permission boundary still applies, tracing 
 ---
 <!-- slide:id=lesson-deploy-and-surface-evidence -->
 
-# Lesson 8 evidence/checkpoint: safe to hand to real users
+# Lesson 8 — what must be true: safe to hand to real users
 
 The release contract records:
 
@@ -394,7 +394,7 @@ The release contract records:
 - A named triage owner, a review cadence, and how users report a bad answer
 - A pilot exit criterion with a date, and a signed release decision
 
-**Checkpoint decision:** ship, ship with conditions, or stop — and "stop" in writing is a valuable result.
+**Decision:** ship, ship with conditions, or stop — and "stop" in writing is a valuable result.
 
 ---
 <!-- slide:id=scenario-next-session -->

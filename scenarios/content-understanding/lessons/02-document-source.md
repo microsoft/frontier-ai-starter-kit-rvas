@@ -109,23 +109,47 @@ copied into a separate store. Reference: <https://learn.microsoft.com/fabric/iq/
 
 ## Verify
 
+Check the source boundary against your own storage account, not against a plan file.
+
+**1. Both containers exist and neither is public.**
+
 ```bash
-# Structure only, no Azure calls
-python3 scenarios/content-understanding/accelerator/scripts/verify_document_source.py --offline
-
-# Live: confirm both containers exist, are reachable keyless, and are private
-python3 scenarios/content-understanding/accelerator/scripts/verify_document_source.py
+for C in "$AZURE_DOCUMENTS_CONTAINER_NAME" "$AZURE_QUARANTINE_CONTAINER_NAME"; do
+  az storage container show --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+    --name "$C" --auth-mode login --query "{name:name, public:properties.publicAccess}" -o tsv
+done
 ```
 
-Expected:
+You want both names back with an empty `public` column. A value of `blob` or `container` means the
+document corpus is anonymously readable. The command working at all confirms Entra data-plane access;
+an `AuthorizationFailure` means you are still missing **Storage Blob Data Contributor** on the account.
 
-```
-✅ Module 2 checkpoint PASS — the approved source and intake controls are defined
+**2. Intake metadata actually rode with the document.**
+
+```bash
+az storage blob metadata show --account-name "$AZURE_STORAGE_ACCOUNT_NAME" --auth-mode login \
+  --container-name "$AZURE_DOCUMENTS_CONTAINER_NAME" --name invoice-2002.pdf -o json
 ```
 
-The check asserts a supported `source_kind`, that source identity/version/permission metadata is
-retained, that inbound and quarantine containers are named, that quarantine rules and a retention
-window exist, and (live) that the containers are private and reachable without a key.
+You should see `source_uri`, `source_version`, `ingested_by`, and `sensitivity_label`. If they are
+missing, provenance was never captured — the document is in the pipeline with no way to trace where it
+came from or who let it in, which is exactly what the intake contract exists to prevent.
+
+**3. The analyzer identity can read inbound documents by URL.**
+
+```bash
+ACCOUNT=$(echo "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT" | sed -E 's#https?://([^.]+)\..*#\1#')
+MI=$(az cognitiveservices account show --name "$ACCOUNT" \
+  --resource-group "$(az cognitiveservices account list --query "[?name=='$ACCOUNT'].resourceGroup | [0]" -o tsv)" \
+  --query identity.principalId -o tsv)
+STORAGE_ID=$(az storage account show --name "$AZURE_STORAGE_ACCOUNT_NAME" --query id -o tsv)
+az role assignment list --assignee "$MI" --scope "$STORAGE_ID" \
+  --query "[].roleDefinitionName" -o tsv
+```
+
+You need **Storage Blob Data Reader** in that list. If it is absent, module 3's analyze-by-URL call
+returns a permission error against the blob — a failure that surfaces only once you start extracting,
+after the source looks fine.
 
 ## Troubleshooting
 

@@ -181,23 +181,26 @@ query time rather than hoping the ranker prefers recency — it does not.
 
 ## Verify
 
+The number you must not skip here is recall. If you never write it down, module 6's agent can quietly
+make retrieval worse and you will have no baseline to prove it.
+
+**1. Run the golden questions against the knowledge base and read every case.**
+
 ```bash
-# Offline: prompt contract, abstention rule, and golden-set structure
-python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py --offline
-
-# Live: every golden question, with citation, abstention, and recency assertions
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
-  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME" --all
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Expected:
+Each answerable question should print `PASS  ...: answer cites [...]`. The unanswerable questions
+should abstain rather than produce a plausible paragraph. The Alpine notice case should confirm the
+current notice is cited and the superseded `SVC-ALPINE-2026-01-28` is not. A `FAIL` on citations
+usually means a vector-only query missed an exact id — send `search_text` alongside the vector query.
+A `FAIL` on abstention means the answer prompt still permits inference.
 
-```
-✅ Module 5 checkpoint PASS — 4/4 cited, 3/3 abstained, recall@5 baseline recorded
-```
-
-Record `recall@5` as your baseline. Modules 6 and 7 must not regress it, and "we added an agent and
-retrieval got worse" is a real, common, and otherwise invisible outcome.
+**2. Record the recall line as your baseline.** The script prints, for example,
+`recall@5 = 1.00  (4/4)`. Write that number and the date into the decision record. Modules 6 and 7
+must not regress it. "We added an agent and retrieval got worse" is a real and otherwise invisible
+outcome, and this baseline is the only thing that makes it visible.
 
 ## Troubleshooting
 

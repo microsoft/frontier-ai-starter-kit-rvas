@@ -13,7 +13,7 @@ not choose an avatar platform, provision a landing zone, or implement a producti
 
 ## Clean demo
 
-1. Run `../validate.py`, which validates the approved-content pack through `content_pack.py` and runs every module checkpoint offline.
+1. Use `content_pack.py` to load the approved-content pack, which enforces the approval and claim gates.
 2. Use the fictional claims as the only source of scripted claims.
 3. Display the traceable artifact, source links, approval record, disclosure, transcript, and non-avatar alternative.
 4. Record feedback only as aggregated example operational evidence; do not treat it as production employee data.

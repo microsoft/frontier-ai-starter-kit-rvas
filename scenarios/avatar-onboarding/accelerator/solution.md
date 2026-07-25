@@ -1,7 +1,7 @@
 # Solution — Avatar Scenario reference implementation
 
 This is the complete reference build for the scenario. It is the "answer key": the exact files,
-commands, and checkpoints that satisfy all seven modules. The lessons teach *how to choose and
+commands, and artifacts that satisfy all seven modules. The lessons teach *how to choose and
 build*; this file is the shortest path a field engineer can follow to a green pilot. Every command
 here is runnable from the repository root.
 
@@ -34,7 +34,6 @@ Record a dated capability decision. The shipped fixture is the reference:
 
 ```bash
 cat scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_capability.py
 ```
 
 The default decision — **standard batch avatar** — avoids the Azure limited-access registration
@@ -46,7 +45,11 @@ responsible-AI gates.
 
 ```bash
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_foundation.py
+
+# Confirm the Speech resource is reachable with your Entra identity
+az cognitiveservices account show \
+  --name "$AZURE_SPEECH_NAME" --resource-group "$AZURE_RESOURCE_GROUP" \
+  --query "properties.endpoint" -o tsv
 ```
 
 `deploy.sh` deploys `accelerator/main.bicep` and writes a **keyless** `.env` contract from the
@@ -72,9 +75,11 @@ the template sets via `customSubDomainName`.
 Upload approved content and produce the versioned claim set:
 
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_content_pipeline.py
-# live blob check against the approved-content container:
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_content_pipeline.py --live
+# List what is actually in the approved-content container
+az storage blob list --auth-mode login \
+  --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+  --container-name "$AZURE_APPROVED_CONTENT_CONTAINER" \
+  --query "[].name" -o tsv
 ```
 
 Every claim carries `claim_id`, `source`, `owner`, `version`, and `review_by`. A claim past
@@ -92,10 +97,9 @@ interactive help; it must **not** silently add claims to a published script.
 
 Render deterministically first (no service calls), then submit the live batch job:
 
-```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_experience.py --submit
-```
+Watch the batch synthesis job to completion, then download and actually watch the result. A job that
+reports success can still produce an artifact with the wrong script, a missing disclosure, or audio
+that does not match the approved claims.
 
 Batch synthesis endpoint:
 
@@ -113,10 +117,6 @@ Body carries `inputKind` (`PlainText`|`SSML`), `inputs[].content`, and
 
 ## 6. Gate publication behind human approval (Module 6)
 
-```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_approval.py
-```
-
 Four named approvals bound to the exact `script_id`+`script_version` — `SME`, `legal-compliance`,
 `brand-communications`, `content-owner` (the renderer's `REQUIRED_APPROVER_ROLES`). Withdrawal:
 
@@ -132,7 +132,6 @@ p.write_text(json.dumps(r, indent=2))   # renderer now rejects the pack — publ
 ```bash
 export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
 export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true   # BEFORE importing the Foundry SDK
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_operate.py
 python  activities/advanced-evaluation-redteam/validate.py
 ```
 
@@ -147,10 +146,11 @@ Measure the pilot with **aggregate, identifier-free** telemetry only.
 # Deployable, secret-free infrastructure:
 bicep build scenarios/avatar-onboarding/accelerator/main.bicep --outfile scenarios/avatar-onboarding/accelerator/.build/main.json
 bicep lint  scenarios/avatar-onboarding/accelerator/main.bicep
-
-# All offline module checkpoints + scenario contract:
-python3 scenarios/avatar-onboarding/validate.py
 ```
+
+Then watch the published artifact end to end as a new joiner would: the disclosure appears before the
+persona speaks, every spoken claim traces to an approved source, and the non-avatar alternative is
+reachable.
 
 ## Responsible-AI gates before production
 

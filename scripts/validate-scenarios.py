@@ -17,19 +17,6 @@ REQUIRED_MODULE_SIGNALS = (
     "decision record",
     "next module",
 )
-# Scenarios still on the pre-rebuild contract. Remove entries as each is migrated;
-# this list must be empty when the rebuild is finished.
-LEGACY_CONTRACT_SCENARIOS: set[str] = set()
-LEGACY_MODULE_SIGNALS = (
-    "decision",
-    "prerequisites",
-    "build steps",
-    "files and commands",
-    "checkpoint",
-    "evidence",
-    "common failures",
-    "next module",
-)
 RETIRED_WORKSHOP_SIGNALS = (
     "## audience",
     "## preparation",
@@ -56,7 +43,7 @@ def main() -> int:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         scenario_id = manifest["id"]
         print(f"\n{scenario_id}")
-        for field in ("facilitator", "validator"):
+        for field in ("facilitator",):
             value = manifest.get(field)
             check(bool(value and (scenario_root / value).is_file()), f"{field} exists", failures)
 
@@ -79,16 +66,12 @@ def main() -> int:
         fixtures = [item for item in data_root.rglob("*") if item.is_file() and item.name != "README.md"]
         check(bool(fixtures), "synthetic sample fixtures exist", failures)
 
-        legacy = scenario_id in LEGACY_CONTRACT_SCENARIOS
-        required_signals = LEGACY_MODULE_SIGNALS if legacy else REQUIRED_MODULE_SIGNALS
-        contract_label = "legacy build-module" if legacy else "practical build-module"
-
         for lesson in manifest.get("lessons", []):
             lesson_path = scenario_root / lesson["path"]
             text = lesson_path.read_text(encoding="utf-8").lower() if lesson_path.is_file() else ""
             check(lesson_path.is_file(), f"lesson {lesson['id']} exists", failures)
-            missing = [signal for signal in required_signals if signal not in text]
-            check(not missing, f"lesson {lesson['id']} has the {contract_label} contract", failures)
+            missing = [signal for signal in REQUIRED_MODULE_SIGNALS if signal not in text]
+            check(not missing, f"lesson {lesson['id']} has the build-module contract", failures)
             retired = [signal for signal in RETIRED_WORKSHOP_SIGNALS if signal in text]
             check(not retired, f"lesson {lesson['id']} drops the retired workshop template", failures)
 
@@ -97,8 +80,8 @@ def main() -> int:
         module_ids: set[str] = set()
         for module in modules:
             module_id = module.get("id", "<missing>")
-            complete = all(module.get(field) for field in ("id", "title", "summary", "checkpoint"))
-            check(complete, f"build module {module_id} declares id, title, summary, and checkpoint", failures)
+            complete = all(module.get(field) for field in ("id", "title", "summary", "outcome"))
+            check(complete, f"build module {module_id} declares id, title, summary, and outcome", failures)
             check(module_id not in module_ids, f"build module {module_id} is unique", failures)
             module_ids.add(module_id)
             for implementation_path in module.get("implementation_paths", []):
@@ -108,13 +91,12 @@ def main() -> int:
                     failures,
                 )
 
-        if not legacy:
-            lesson_ids = [lesson["id"] for lesson in manifest.get("lessons", [])]
-            check(
-                len(lesson_ids) == len(modules),
-                f"one lesson per build module ({len(lesson_ids)} lessons, {len(modules)} modules)",
-                failures,
-            )
+        lesson_ids = [lesson["id"] for lesson in manifest.get("lessons", [])]
+        check(
+            len(lesson_ids) == len(modules),
+            f"one lesson per build module ({len(lesson_ids)} lessons, {len(modules)} modules)",
+            failures,
+        )
 
     print("\nSCENARIO VALIDATION PASSED" if not failures else f"\nSCENARIO VALIDATION FAILED ({len(failures)} issues)")
     return 0 if not failures else 1

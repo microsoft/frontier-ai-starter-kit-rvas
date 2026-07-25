@@ -46,7 +46,7 @@ The decision should include consent, likeness and voice rights, supported region
 ---
 <!-- slide:id=lesson-experience-selection-evidence -->
 
-# Module 1 — Evidence and checkpoint
+# Module 1 — What must be true
 ## A capability decision the sponsor can defend
 
 By the end of this module, the team should have a short decision record that explains:
@@ -56,7 +56,7 @@ By the end of this module, the team should have a short decision record that exp
 - consent, disclosure, accessibility, privacy, residency, and retention assumptions
 - operating owner, support path, and conditions that would stop or simplify the experience
 
-**Checkpoint discussion:** If the avatar option became unavailable tomorrow, could the onboarding outcome still be delivered safely?
+**Discussion:** If the avatar option became unavailable tomorrow, could the onboarding outcome still be delivered safely?
 
 ---
 <!-- slide:id=lesson-foundation-context -->
@@ -95,10 +95,10 @@ The goal is a foundation customers can adapt, not a locked architecture.
 ---
 <!-- slide:id=lesson-foundation-evidence -->
 
-# Module 2 — Evidence and checkpoint
+# Module 2 — What must be true
 ## A foundation ready for governed work
 
-The checkpoint is not “the services exist.” It is whether the foundation supports accountable operation:
+The bar is not “the services exist.” It is whether the foundation supports accountable operation:
 
 - required resources are provisioned with the intended identity model
 - environment settings are documented without exposing secrets
@@ -106,7 +106,7 @@ The checkpoint is not “the services exist.” It is whether the foundation sup
 - owners know where logs, traces, and configuration evidence will live
 - the platform team understands what must change for a real customer tenant
 
-**Checkpoint discussion:** Can the team explain who can access what, why, and how that access is reviewed?
+**Discussion:** Can the team explain who can access what, why, and how that access is reviewed?
 
 ---
 <!-- slide:id=lesson-content-pipeline-context -->
@@ -147,10 +147,10 @@ The trade-off is speed versus confidence. The practical answer is usually a smal
 ---
 <!-- slide:id=lesson-content-pipeline-evidence -->
 
-# Module 3 — Evidence and checkpoint
+# Module 3 — What must be true
 ## Versioned claims with named ownership
 
-The module checkpoint is a traceable claim set that downstream steps can rely on:
+What you should have is a traceable claim set that downstream steps can rely on:
 
 - each claim has an authoritative source and owner
 - versions and expiry rules are visible
@@ -158,7 +158,7 @@ The module checkpoint is a traceable claim set that downstream steps can rely on
 - unapproved or expired material is excluded from drafting
 - the source-to-script relationship can be shown to reviewers
 
-**Checkpoint discussion:** If an employee challenges a statement in the avatar experience, can the owner show where it came from and whether it was current?
+**Discussion:** If an employee challenges a statement in the avatar experience, can the owner show where it came from and whether it was current?
 
 ---
 <!-- slide:id=lesson-grounded-assistant-context -->
@@ -199,10 +199,10 @@ The safer pattern is to make the assistant excellent at grounded drafting, refus
 ---
 <!-- slide:id=lesson-grounded-assistant-evidence -->
 
-# Module 4 — Evidence and checkpoint
+# Module 4 — What must be true
 ## Cited drafts and visible refusals
 
-The checkpoint should show that the assistant supports accountable content work:
+The evidence should show that the assistant supports accountable content work:
 
 - draft segments include source links or claim references
 - unsupported requests are refused or routed for human help
@@ -210,7 +210,7 @@ The checkpoint should show that the assistant supports accountable content work:
 - sensitive policy questions trigger the expected escalation path
 - logs or traces help diagnose grounding failures without overexposing employee data
 
-**Checkpoint discussion:** Which answer would worry us more: “I don’t know” or a confident answer without a source?
+**Discussion:** Which answer would worry us more: “I don’t know” or a confident answer without a source?
 
 ---
 <!-- slide:id=lesson-experience-generation-context -->
@@ -250,10 +250,10 @@ The experience should never imply that a real person said something they did not
 ---
 <!-- slide:id=lesson-experience-generation-evidence -->
 
-# Module 5 — Evidence and checkpoint
+# Module 5 — What must be true
 ## Approved revision rendered accessibly
 
-The checkpoint is an experience package that can be reviewed before release:
+What you should have is an experience package that can be reviewed before release:
 
 - generated only from an approved script revision
 - includes disclosure, captions, transcript, and fallback
@@ -261,7 +261,7 @@ The checkpoint is an experience package that can be reviewed before release:
 - supports the selected audience, locale, and channel
 - identifies who can pause or withdraw the published version
 
-**Checkpoint discussion:** Could an employee understand that the media is synthetic, get the same message without the avatar, and find human help?
+**Discussion:** Could an employee understand that the media is synthetic, get the same message without the avatar, and find human help?
 
 ---
 <!-- slide:id=lesson-approval-gating-context -->
@@ -302,10 +302,10 @@ The approval gate should be simple enough to use and strong enough to stop unsaf
 ---
 <!-- slide:id=lesson-approval-gating-evidence -->
 
-# Module 6 — Evidence and checkpoint
+# Module 6 — What must be true
 ## Publication and withdrawal record
 
-The checkpoint is a release record that shows:
+What you should have is a release record that shows:
 
 - approved script revision and rendered experience
 - reviewer roles, decisions, and conditions
@@ -313,7 +313,7 @@ The checkpoint is a release record that shows:
 - publication channel, audience, and owner
 - pause, withdrawal, and replacement process
 
-**Checkpoint discussion:** If a source policy changes after launch, who knows, who acts, and what happens to the published experience?
+**Discussion:** If a source policy changes after launch, who knows, who acts, and what happens to the published experience?
 
 ---
 <!-- slide:id=lesson-prove-and-operate-context -->
@@ -353,10 +353,10 @@ Evidence should help owners improve the experience without making employees feel
 ---
 <!-- slide:id=lesson-prove-and-operate-evidence -->
 
-# Module 7 — Evidence and checkpoint
+# Module 7 — What must be true
 ## Pilot scorecard and release decision
 
-The final checkpoint is a decision package:
+The final artifact is a decision package:
 
 - pilot scorecard tied to the original onboarding outcome
 - known defects and remediation owners
@@ -364,7 +364,7 @@ The final checkpoint is a decision package:
 - trace review themes and operating improvements
 - recommendation to iterate, scale, pause, or withdraw
 
-**Checkpoint discussion:** What evidence would convince this customer to expand the pattern to another topic, locale, or audience?
+**Discussion:** What evidence would convince this customer to expand the pattern to another topic, locale, or audience?
 
 ---
 <!-- slide:id=scenario-next-session -->

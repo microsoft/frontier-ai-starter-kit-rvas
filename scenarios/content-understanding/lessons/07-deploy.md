@@ -11,7 +11,7 @@ pilot you can operate and one you cannot.
 An authenticated endpoint running the reviewed workflow with a managed identity, Application Insights
 monitoring with GenAI tracing on, and a rollback path — captured as
 [`accelerator/sample-data/workflow/deploy-manifest.json`](../accelerator/sample-data/workflow/deploy-manifest.json)
-and proven by a checkpoint that also confirms the endpoint rejects unauthenticated calls.
+and confirmed by observing that the endpoint rejects unauthenticated calls.
 
 ## Choose your path
 
@@ -31,7 +31,7 @@ and inherit its policies. All three keep the same rule: **no keys**, managed ide
 endpoint, monitoring on, rollback ready.
 
 **Migration cost.** A → B/C re-hosts the same container and identity model; the workflow, action-tool
-seam, and evaluation gate are unchanged. The manifest the checkpoint grades is identical across all
+seam, and evaluation gate are unchanged. The manifest you record is identical across all
 three — only the runtime line differs. That is deliberate: the deployment target is a late, reversible
 decision.
 
@@ -96,7 +96,7 @@ retained evidence references. The live probe expects a `401`/`403` from an unaut
 | Deployment can't reach models or storage | Managed identity missing roles | Re-assign **Cognitive Services User** / **Storage Blob Data Reader** to the deployment identity |
 | No traces after deploy | Tracing env not carried into the runtime | Set both GenAI env vars in the deployment, before the SDK loads |
 | Rollback means a full redeploy | No revision/slot retained | Keep the previous revision pinned; make rollback a swap |
-| Checkpoint fails on `evaluation_gate_passed` | Shipping before module 6 passed | Do not deploy until the gate is green; it is a release prerequisite |
+| Manifest still lists module 6 as not passed | Shipping before module 6 passed | Do not deploy until the gate is green; it is a release prerequisite |
 | Secrets appear in the deployment config | Key-based auth crept back in | Return to managed identity; scan config for `*_KEY` / connection strings |
 
 ## Decision record

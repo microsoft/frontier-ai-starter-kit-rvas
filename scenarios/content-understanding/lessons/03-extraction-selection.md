@@ -168,19 +168,42 @@ rather than duplicating its walkthrough.
 
 ## Verify
 
+Prove the capability you picked on a real document, then on a messy one. A decision file that names
+an analyzer is not evidence that the analyzer works on your documents.
+
+**1. The chosen analyzer returns typed fields with confidence and grounding.**
+
+For the Content Understanding default, analyze one real inbound document and read the result:
+
 ```bash
-python3 scenarios/content-understanding/accelerator/scripts/verify_extraction_selection.py --offline
+CU=$(echo "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT" | sed 's:/*$::')
+TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv)
+OP=$(curl -s -D - -o /dev/null -X POST \
+  "$CU/contentunderstanding/analyzers/prebuilt-invoice:analyze?api-version=2025-11-01" \
+  -H "Authorization: ******" -H "Content-Type: application/json" \
+  -d "{\"inputs\":[{\"url\":\"https://$AZURE_STORAGE_ACCOUNT_NAME.blob.core.windows.net/$AZURE_DOCUMENTS_CONTAINER_NAME/invoice-2002.pdf\"}]}" \
+  | tr -d '\r' | awk '/^Operation-Location:/{print $2}')
+
+# Poll until "status":"Succeeded", then inspect a field's confidence and source.
+curl -s -H "Authorization: ******" "$OP" \
+  | jq '.result.contents[0].fields | to_entries[0].value | {value: (.valueString // .valueNumber // .valueDate), confidence, source}'
 ```
 
-Expected:
+A `confidence` between 0 and 1 and a non-null `source` (the `D(page,...)` grounding polygon) is the
+signal that this capability hands you evidence for free. If `source` is null, you chose a path that
+does not ground its values — for Option E that is expected and you owe the evidence strategy yourself.
+For Document Intelligence, read `field.confidence` and `field.boundingRegions` from the SDK result
+instead.
 
-```
-✅ Module 3 checkpoint PASS — the extraction capability and fallback are recorded
-```
+**2. It survives a document outside your happy path.**
 
-The check asserts the selected capability is one of the six verified options, a concrete model/analyzer
-id and API version are named, evidence is required, the confidence threshold is in `(0, 1]`, and a
-distinct fallback with a trigger is recorded (and, for Option E, an explicit evidence strategy).
+Run the same call against a document with a different layout, a scan, or a vendor you did not design
+for. Compare the returned fields to what you can see in the source document.
+
+If fields you can read with your own eyes come back empty, or confidence collapses across the board,
+you have found the failure that costs money: extraction that passed on the three clean samples and
+falls over on the real corpus. That is the trigger for the fallback you recorded, not a reason to
+lower the threshold until it looks fine.
 
 ## Troubleshooting
 

@@ -116,32 +116,48 @@ final wording in module 6. The assistant speeds authoring; it does not grant pub
 
 ## Verify
 
-Ground-truth the two behaviours that matter with a tiny golden set (this seeds module 7):
+Test the two behaviours that decide whether this assistant is safe to put behind a face: it must
+**cite** on-claim answers and **refuse** off-claim ones. Run both against your own deployment, not a
+fixture. This grounded call uses your Entra identity, no key:
 
 ```bash
-python3 - <<'PY'
-# Offline contract check: refusal must fire for an off-claim question.
-import json
-from pathlib import Path
-claims = json.loads(Path("scenarios/avatar-onboarding/accelerator/sample-data/claims.json").read_text())
-ids = {c["claim_id"] for c in claims["claims"]}
-# Simulate: an on-claim ask maps to an id; an off-claim ask must return NO_APPROVED_CLAIM.
-assert "ONB-001" in ids, "approved claim present"
-print("PASS approved claim present:", sorted(ids))
-print("Contract: off-claim questions must return NO_APPROVED_CLAIM + a help_path")
-PY
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
+
+ask () {
+  CLAIMS=$(jq -r '.claims[] | "\(.claim_id): \(.approved_wording) (help: \(.help_path))"' \
+    scenarios/avatar-onboarding/accelerator/sample-data/claims.json)
+  jq -n --arg q "$1" --arg claims "$CLAIMS" '{
+    temperature: 0,
+    messages: [
+      {role:"system", content:"You draft onboarding script text. State only facts present in APPROVED CLAIMS and cite the claim_id you used. If no approved claim covers the request, reply exactly NO_APPROVED_CLAIM and name the help_path. Never invent benefits, dates, or amounts."},
+      {role:"user", content:("APPROVED CLAIMS:\n" + $claims + "\n\nDraft: " + $q)}
+    ]}' | curl -s -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d @- \
+    "$AZURE_AI_FOUNDRY_ENDPOINT/openai/deployments/$AZURE_AI_MODEL_DEPLOYMENT_NAME/chat/completions?api-version=2024-10-21" \
+    | jq -r '.choices[0].message.content'
+}
 ```
 
-Live, against your deployment, assert:
+**1. An on-claim question is answered from an approved claim and cites it.**
 
-- An **on-claim** question ("When do I select benefits?") returns text equal to an approved claim and
-  cites its `claim_id`.
-- An **off-claim** question ("How much is the parking subsidy?") returns `NO_APPROVED_CLAIM` and the
-  help path — **not** a plausible invented number.
+```bash
+ask "When do I select benefits?"
+```
 
-For the mechanics and the machine-checkable checkpoint, use
-`python activities/foundations/validate.py --step 4`
-([Foundations activity](../../../activities/foundations/README.md)).
+Good output states the approved wording and names `ONB-001`. If it paraphrases the policy or drops
+the citation, tighten the system prompt and keep `temperature` at 0. A paraphrased policy on a
+synthetic face is an unapproved claim.
+
+**2. An off-claim question is refused, not invented.**
+
+```bash
+ask "How much is the parking subsidy?"
+```
+
+The only acceptable output is `NO_APPROVED_CLAIM` and the help path. A plausible dollar figure here
+is the failure that matters most: a confident, replayable, made-up number spoken by a face. If you
+get one, the assistant is not safe to render, and a `401`/`403` instead means you are missing the
+**Cognitive Services OpenAI User** role on the account (grant it; stay keyless).
 
 ## Troubleshooting
 
@@ -149,7 +165,7 @@ For the mechanics and the machine-checkable checkpoint, use
 | --- | --- | --- |
 | Assistant invents a benefit/amount | Weak system prompt or content not constrained to claims | Enforce "approved claims only", `temperature=0`, and the exact refusal token |
 | Cites a claim id that doesn't exist | Model hallucinated a citation | Validate every returned `claim_id` against `claims.json`; drop unknown citations |
-| Refuses valid on-claim questions | Retrieval didn't surface the claim | Check embedding deployment + that content was uploaded (module 3 `--live`) |
+| Refuses valid on-claim questions | Retrieval didn't surface the claim | Check embedding deployment + that content was uploaded (module 3, confirm the blob list) |
 | `401`/`403` calling the model | Missing Cognitive Services OpenAI User role or wrong endpoint | Assign the role; use `AZURE_AI_FOUNDRY_ENDPOINT`; keyless via `DefaultAzureCredential` |
 | Agent answers from outside the corpus | Knowledge tool scope too broad | Scope the knowledge tool to the approved corpus only |
 | Paraphrased policy reaches the script | Free-text drafting | The renderer requires exact-claim spoken text; author claims, not prose |

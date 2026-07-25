@@ -150,30 +150,56 @@ This is the part that turns a two-day build into a two-month program if you miss
 - **Disclosure design** (how and when to tell users it's synthetic):
   <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 
-`verify_capability.py` enforces the consistency rule: if the record says you use a custom avatar or
+The consistency rule you enforce in Verify: if the record says you use a custom avatar or
 custom/personal voice, it must also record `limited_access_registration_required`,
-`talent_consent_required`, and the form URL — or it fails.
+`talent_consent_required`, and the form URL. A record that names a custom likeness without that
+gating is the failure that surfaces in legal review after the build.
 
 ## Verify
 
+You have not provisioned anything yet, so verify the decision record itself and the one external
+fact it depends on. Check each against your own record and Microsoft Learn.
+
+**1. The region you named actually offers the capability you chose.** Avatar and Voice Live are
+region-gated. Open the Speech regions table and find your region in the column for your capability
+(batch avatar, real-time avatar, or Voice Live):
+
+<https://learn.microsoft.com/azure/ai-services/speech-service/regions?tabs=ttsavatar>
+
+Your region must appear with a check in that column. If it does not, avatar pricing will not even
+display there and module 2 will fail to provision the feature, so change `region` in the record now.
+At the time of writing, batch and real-time avatar are offered in `westus2`, `eastus`, `eastus2`,
+`southcentralus`, `southeastasia`, `centralindia`, `westeurope`, `swedencentral`, `northeurope`,
+`italynorth`, and `francecentral` (limited capacity). Re-read the table; the list changes.
+
+**2. The responsible-AI gating in your record is internally consistent.** Read your own record and
+compare the likeness fields with the gating fields:
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_capability.py
+jq '.consent_and_gating |
+    {uses_custom_avatar, uses_custom_or_personal_voice,
+     limited_access_registration_required, talent_consent_required, limited_access_form}' \
+  scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
 ```
 
-Expected:
+If either `uses_custom_avatar` or `uses_custom_or_personal_voice` is `true`, the record must also
+show `limited_access_registration_required: true`, `talent_consent_required: true`, and the intake
+form `https://aka.ms/customneural`. A record that names a custom avatar or custom/personal voice but
+omits the limited-access path is the failure that surfaces in legal review after the build. Standard
+prebuilt avatar and voice need no registration.
+<https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/limited-access>
 
+**3. A disclosure statement is present even for a standard avatar.** Users must be told the presenter
+is synthetic whether or not a custom likeness is used:
+
+```bash
+jq -e '.disclosure_statement | length > 0' \
+  scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
 ```
-== Module 1 checkpoint: capability decision record ==
-PASS  decision declares 'selected_capability'
-...
-PASS  standard avatar/voice still requires user disclosure
 
-✅ Module 1 checkpoint PASS — capability decision is complete and RAI-consistent
-```
-
-The check is offline and structural. Point it at your own record with `--decision path/to/file.json`.
-A record that names a custom avatar but omits the limited-access gating **fails** — that is the whole
-point of the gate.
+`true` is the result you want. An empty or missing disclosure means an undisclosed synthetic persona
+could reach real employees, which the disclosure guidance forbids:
+<https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 
 ## Troubleshooting
 

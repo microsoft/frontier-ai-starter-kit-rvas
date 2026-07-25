@@ -476,8 +476,8 @@ function detectScenarioProblems(scenarios) {
       }
       const moduleIds = new Set();
       for (const module of scenario.build_modules || []) {
-        if (!module.id || !module.title || !module.summary || !module.checkpoint) {
-          problems.push(`${scenario.id} build module needs id, title, summary, and checkpoint`);
+        if (!module.id || !module.title || !module.summary || !module.outcome) {
+          problems.push(`${scenario.id} build module needs id, title, summary, and outcome`);
         }
         if (moduleIds.has(module.id)) problems.push(`${scenario.id} duplicate build module id ${module.id}`);
         moduleIds.add(module.id);

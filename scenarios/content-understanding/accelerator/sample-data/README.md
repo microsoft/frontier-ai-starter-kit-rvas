@@ -13,4 +13,4 @@ The `.md`, `.txt`, and `.html` files are **local teaching fixtures** that make t
 - `corrections/` — a separate reviewer correction record for `invoice-2002`; it deliberately preserves the original expected outcome.
 - `manifest.json` and `result-contract.json` — the scenario validator's input contract.
 
-Run `python3 validate.py` from the scenario folder to check this pack. The validator uses Python's standard library only and makes no network or Azure calls.
+Run the whole workflow over this pack and compare each extracted field against the source document. The comparison is the evidence.

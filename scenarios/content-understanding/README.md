@@ -12,19 +12,19 @@ and the AI Grounding scenario lessons. The scenario reference contract lives in
 
 ## The seven modules
 
-| # | Module | You decide | Checkpoint |
+| # | Module | You decide | Outcome |
 | --- | --- | --- | --- |
-| 1 | [Provision the foundation](lessons/01-provision-foundation.md) | How to stand up a keyless Foundry account with Content Understanding, Document Intelligence, models, and document storage | `verify_foundation.py` |
-| 2 | [Connect an approved source](lessons/02-document-source.md) | Azure Blob, ADLS Gen2, SharePoint, or OneLake — and the intake/quarantine controls | `verify_document_source.py` |
-| 3 | [Select the extraction capability](lessons/03-extraction-selection.md) | CU prebuilt/custom analyzer, DI prebuilt/custom model, LLM structured outputs, or multimodal | `verify_extraction_selection.py` |
-| 4 | [Typed extraction with evidence](lessons/04-typed-extraction.md) | How to normalize output into one validated contract with confidence + grounding | `verify_typed_extraction.py` |
-| 5 | [Review, correction, and handoff](lessons/05-human-review.md) | Action-tool handoff, a review app, or a workflow handoff | `verify_human_review.py` |
-| 6 | [Evaluate and trace](lessons/06-prove-and-observe.md) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | `verify_prove_and_observe.py` |
-| 7 | [Deploy the workflow](lessons/07-deploy.md) | Hosted agent, container app, or an API behind APIM | `verify_deploy.py` |
+| 1 | [Provision the foundation](lessons/01-provision-foundation.md) | How to stand up a keyless Foundry account with Content Understanding, Document Intelligence, models, and document storage | Foundations Step 1 |
+| 2 | [Connect an approved source](lessons/02-document-source.md) | Azure Blob, ADLS Gen2, SharePoint, or OneLake — and the intake/quarantine controls | Approved intake and document-retention design |
+| 3 | [Select the extraction capability](lessons/03-extraction-selection.md) | CU prebuilt/custom analyzer, DI prebuilt/custom model, LLM structured outputs, or multimodal | Document capability and implementation decision |
+| 4 | [Typed extraction with evidence](lessons/04-typed-extraction.md) | How to normalize output into one validated contract with confidence + grounding | Structured extraction result and low-confidence failure path |
+| 5 | [Review, correction, and handoff](lessons/05-human-review.md) | Action-tool handoff, a review app, or a workflow handoff | Reviewer correction and approval trace |
+| 6 | [Evaluate and trace](lessons/06-prove-and-observe.md) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | Scenario evaluation gate and trace review |
+| 7 | [Deploy the workflow](lessons/07-deploy.md) | Hosted agent, container app, or an API behind APIM | Controlled pilot deployment |
 
 Each lesson follows the same contract: **What you build · Choose your path · Implementation · Verify ·
 Troubleshooting · Decision record · Next module.** Modules build on the previous one — module N's
-checkpoint is module N+1's prerequisite.
+outcome is module N+1's prerequisite.
 
 ## Decision gates to carry into the customer conversation
 
@@ -55,15 +55,10 @@ canonical activities for shared mechanics rather than duplicating them:
 ```bash
 # 1. Provision the optional clean-subscription foundation (no inline secrets, keyless-first)
 ./accelerator/scripts/deploy.sh rg-content-understanding eastus2
-
-# 2. Work through the modules; each has an offline checkpoint you can run now
-python3 accelerator/scripts/verify_foundation.py --offline
-python3 accelerator/scripts/verify_document_source.py --offline
-# ... through verify_deploy.py
-
-# 3. Validate the whole scenario contract and synthetic pack, no network
-python3 validate.py
 ```
+
+Then work through the modules in order. Each lesson's **Verify** section lists the commands and the
+signals that tell you the module actually worked against your own resources.
 
 API facts (API versions, model ids, SDK packages) are cited inline in each lesson and in
 [`accelerator/solution.md`](accelerator/solution.md). Re-check current Microsoft Learn guidance

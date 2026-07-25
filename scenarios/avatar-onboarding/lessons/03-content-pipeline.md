@@ -124,24 +124,54 @@ Never let the avatar speak content newer or older than the snapshot you approved
 
 ## Verify
 
+Prove the governed corpus is reachable without keys and that the claim set is actually approvable.
+Check each against your own storage account and claim file.
+
+**1. The approved content is in blob storage and reachable with your Entra identity, not a key.**
+
 ```bash
-python3 scenarios/avatar-onboarding/accelerator/scripts/verify_content_pipeline.py
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+az storage blob list \
+  --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+  --container-name "$AZURE_STORAGE_CONTAINER_NAME" \
+  --auth-mode login --query "[].name" -o tsv
 ```
 
-Expected:
+You should see the files you uploaded (for example `claims.json`). Shared-key access is off on this
+account, so a `403` here means you lack **Storage Blob Data Reader** or **Contributor**; grant the
+role and re-run. Do not re-enable shared keys.
 
-```
-== Module 3 checkpoint: governed content pipeline ==
-PASS  pack declares a version
-PASS  pack declares an expiry/review date (review_by)
-...
-✅ Module 3 checkpoint PASS — the claim set is typed, owned, versioned, and traceable
+**2. Owner, version, and expiry are queryable without opening the file.** An audit must answer "who
+approved this and when does it expire" from metadata alone:
+
+```bash
+az storage blob metadata show \
+  --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+  --container-name "$AZURE_STORAGE_CONTAINER_NAME" \
+  --name claims.json --auth-mode login -o json
 ```
 
-Every claim must have an id, exact wording, source, owner, and required reviewers; the pack must
-declare a version and expiry. Add `--live` to also confirm the `approved-content` container is
-reachable keylessly and has uploaded blobs. A claim missing an owner or a source **fails** — an
-unowned claim can't be approved in module 6.
+You want `owner`, `version`, and `review_by` present. If they are empty, set them (module 3
+Implementation): a corpus with no owner or expiry cannot be governed or withdrawn.
+
+**3. Every claim is approvable, and nothing is already expired.** Read your own claim set and check
+the fields that module 6 signs and module 5 enforces:
+
+```bash
+jq -e '(.version != null) and (.review_by != null) and
+       (all(.claims[]; .claim_id and .approved_wording and .source_reference and .owner
+                       and (.required_reviewers | length > 0)))' \
+  scenarios/avatar-onboarding/accelerator/sample-data/claims.json
+
+jq -r --arg today "$(date -u +%F)" \
+  '.review_by as $d | if $d < $today then "EXPIRED: \($d)" else "in date: \($d)" end' \
+  scenarios/avatar-onboarding/accelerator/sample-data/claims.json
+```
+
+The first command must print `true`: a claim missing an owner or a source cannot be approved in
+module 6, and a pack with no `review_by` never expires. The second must not print `EXPIRED`. An
+expired claim spoken on a synthetic face as current policy is exactly the failure this pipeline
+exists to prevent.
 
 ## Troubleshooting
 
