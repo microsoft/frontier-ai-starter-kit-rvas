@@ -332,7 +332,6 @@
   /* ─────────────────────────── Init ─────────────────────────────── */
   document.addEventListener('DOMContentLoaded', () => {
     FP.initTheme();
-    FP.initNav();
     FP.applyKiosk();
     FP.initReveal();
   });

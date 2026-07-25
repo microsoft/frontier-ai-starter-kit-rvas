@@ -48,15 +48,9 @@
       ${stageBadge(currentModule?.stage || lesson.stage || scenario.stage)}
       ${currentModule && currentModule.checkpoint ? `<span class="badge badge-tag">Checkpoint: ${FP.esc(currentModule.checkpoint)}</span>` : ''}`;
     renderLessonHeaderActions(scenario, lesson, playbookUrl);
-    document.getElementById('currentModuleTitle').textContent = currentModule
-      ? `${currentModule.sequence}. ${currentModule.title}`
-      : `Lesson ${lesson.sequence}: ${lesson.title}`;
     document.getElementById('currentModuleSummary').textContent = currentModule
       ? currentModule.summary
       : 'Work this lesson, capture the decision, and use it to move through the scenario.';
-    document.getElementById('currentModuleCheckpoint').textContent = currentModule && currentModule.checkpoint
-      ? `Checkpoint: ${currentModule.checkpoint}`
-      : '';
     renderLessonResources(scenario, lesson);
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `
@@ -81,17 +75,18 @@
     return stage ? `<span class="badge badge-stage">${FP.esc(String(stage).replace(/[-_]+/g, ' '))}</span>` : '';
   }
 
-  function renderLessonResources(scenario, lesson) {
+  function renderLessonResources(scenario) {
     const target = document.getElementById('lessonResourceLinks');
     if (!target) return;
 
     const scenarioId = encodeURIComponent(scenario.id);
-    const lessonHash = `lesson-${lesson.id}`;
     target.innerHTML = [
-      ['Facilitator slides', `slides.html?id=${scenarioId}#${lessonHash}`],
-      ['Full scenario deck', `slides.html?id=${scenarioId}`],
-      ['Scenario playbook', `scenario.html?id=${scenarioId}`],
+      ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
     ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
+  }
+
+  function scenarioGuideUrl(scenarioId, guideId) {
+    return `guide.html?scenario=${encodeURIComponent(scenarioId)}&guide=${encodeURIComponent(guideId)}`;
   }
 
   function renderLessonPager(previous, next, playbookUrl) {

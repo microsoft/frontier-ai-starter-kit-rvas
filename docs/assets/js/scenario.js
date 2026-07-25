@@ -85,9 +85,6 @@
     if (!target) return;
 
     target.innerHTML = [
-      ['Customer slides', `slides.html?id=${encodeURIComponent(scenario.id)}`],
-      ['Minimal accelerator', scenarioGuideUrl(scenario.id, 'accelerator')],
-      ['Local demo', scenarioGuideUrl(scenario.id, 'demo')],
       ['Facilitator guide', scenarioGuideUrl(scenario.id, 'facilitator')],
       ['Local validator', scenarioGuideUrl(scenario.id, 'validator')],
     ].map(([label, href]) => `<a href="${FP.esc(href)}">${FP.esc(label)}</a>`).join('');
