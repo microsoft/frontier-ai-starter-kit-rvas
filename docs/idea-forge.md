@@ -10,7 +10,7 @@ description: Generate a researched customer AI application idea, then map it to 
   <p class="hero-tagline">Customer Activity-Forge turns a customer name and industry into researched, buildable ideas that map to a scenario playbook and its first customer decisions.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md">Open Activity-Forge</a>
-    <a class="btn btn-outline" href="{{ '/#outcomes' | relative_url }}">See the scenarios</a>
+    <a class="btn btn-outline" href="index.html#outcomes">See the scenarios</a>
   </div>
 </div>
 
