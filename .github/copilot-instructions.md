@@ -32,6 +32,8 @@ Azure / Foundry capability:
   redundant.
 - Assume more scenario tracks will be added. Keep language, folders, validators, and lesson patterns
   reusable across tracks instead of hard-coding one journey.
+- In content, do not add "Verified on <date>" or "Tested on <date>" statements. The content is
+  expected to be evergreen and continuously updated.
 
 ## Project conventions
 

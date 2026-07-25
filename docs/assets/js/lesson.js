@@ -37,7 +37,6 @@
         <strong>${module.sequence}. ${FP.esc(module.title)}</strong>
         <span>${FP.esc(module.summary)}</span>
         <small>Checkpoint: ${FP.esc(module.checkpoint)}</small>
-        ${module.activity_path ? `<a href="${FP.esc(module.activity_path)}">Open implementation activity</a>` : ''}
       </li>`).join('');
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `
