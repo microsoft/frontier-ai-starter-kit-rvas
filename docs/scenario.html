@@ -27,13 +27,20 @@
     </div>
   </header>
   <main>
-    <section class="scenario-hero">
+    <section class="ch-detail-hero detail-hero-scenario" aria-labelledby="title">
       <div class="wrap">
-        <a class="back-link" href="index.html#outcomes">← Back to scenarios</a>
+        <nav class="breadcrumbs" aria-label="Breadcrumb" id="scenarioBreadcrumbs">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="index.html#outcomes">Scenarios</a>
+          <span aria-hidden="true">/</span>
+          <span>Scenario playbook</span>
+        </nav>
         <span class="eyebrow" id="scenarioMaturity">Scenario playbook</span>
         <h1 id="title">Loading scenario…</h1>
         <p id="tagline"></p>
-        <div class="scenario-hero-actions">
+        <div class="ch-meta-row" id="scenarioMeta"></div>
+        <div class="detail-hero-actions">
           <a id="slidesLink" class="btn btn-primary" href="#">Open customer slides</a>
           <a id="acceleratorLink" class="btn btn-ghost" href="#">Open minimal accelerator</a>
           <a id="localDemoLink" class="btn btn-ghost" href="#">Run local demo</a>
@@ -46,22 +53,30 @@
           <article id="scenarioBody" class="guide-body"><p class="text-dim">Loading playbook…</p></article>
           <nav id="scenarioPager" class="journey-pager" aria-label="Scenario navigation"></nav>
         </div>
-        <aside class="scenario-sidebar journey-rail" aria-label="Scenario journey">
-          <section class="scenario-panel journey-panel-primary">
-            <span class="panel-label">Journey map</span>
-            <ol id="buildModuleList" class="journey-steps"></ol>
+        <aside class="scenario-sidebar facts-panel" aria-label="Scenario journey">
+          <section class="panel">
+            <div class="panel-head">Journey map</div>
+            <div class="panel-body">
+              <ol id="buildModuleList" class="journey-steps"></ol>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Outcome to prove</span>
-            <p id="customerOutcome"></p>
+          <section class="panel">
+            <div class="panel-head">Outcome to prove</div>
+            <div class="panel-body">
+              <p id="customerOutcome"></p>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Customer decisions</span>
-            <ul id="decisionPrompts"></ul>
+          <section class="panel">
+            <div class="panel-head">Customer decisions</div>
+            <div class="panel-body">
+              <ul id="decisionPrompts"></ul>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Delivery resources</span>
-            <div id="scenarioDeliveryLinks" class="rail-action-list"></div>
+          <section class="panel">
+            <div class="panel-head">Delivery resources</div>
+            <div class="panel-body">
+              <div id="scenarioDeliveryLinks" class="rail-action-list"></div>
+            </div>
           </section>
         </aside>
       </div>

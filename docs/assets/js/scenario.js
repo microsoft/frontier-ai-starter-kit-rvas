@@ -25,6 +25,16 @@
     document.getElementById('title').textContent = scenario.name;
     document.getElementById('tagline').textContent = scenario.tagline;
     document.getElementById('scenarioMaturity').textContent = `${scenario.maturity} scenario playbook`;
+    document.getElementById('scenarioBreadcrumbs').innerHTML = `
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="index.html#outcomes">Scenarios</a>
+      <span aria-hidden="true">/</span>
+      <span>${FP.esc(scenario.name)}</span>`;
+    document.getElementById('scenarioMeta').innerHTML = `
+      <span class="badge badge-tag">${FP.esc(scenario.maturity)} maturity</span>
+      <span class="badge badge-tag">Scenario playbook</span>
+      <span class="badge badge-tag">${(scenario.lessons || []).length} lessons</span>`;
     document.getElementById('customerOutcome').textContent = scenario.customer_outcome;
     document.getElementById('slidesLink').href = `slides.html?id=${encodeURIComponent(scenario.id)}`;
     document.getElementById('acceleratorLink').href = scenarioGuideUrl(scenario.id, 'accelerator');

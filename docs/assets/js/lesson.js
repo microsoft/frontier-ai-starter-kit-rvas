@@ -33,6 +33,19 @@
       'Make one customer decision, capture the evidence, and use the result to decide the next engagement move.';
     document.getElementById('lessonOutcome').textContent = scenario.customer_outcome;
     ['playbookBack', 'playbookNav'].forEach((id) => { document.getElementById(id).href = playbookUrl; });
+    document.getElementById('lessonBreadcrumbs').innerHTML = `
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="index.html#outcomes">Scenarios</a>
+      <span aria-hidden="true">/</span>
+      <a href="${FP.esc(playbookUrl)}">${FP.esc(scenario.name)}</a>
+      <span aria-hidden="true">/</span>
+      <span>Lesson ${FP.esc(lesson.sequence)}</span>`;
+    document.getElementById('lessonMeta').innerHTML = `
+      <span class="badge badge-tag">Lesson ${FP.esc(lesson.sequence)}</span>
+      <span class="badge badge-tag">${FP.esc(scenario.name)}</span>
+      ${currentModule && currentModule.checkpoint ? `<span class="badge badge-tag">Checkpoint: ${FP.esc(currentModule.checkpoint)}</span>` : ''}`;
+    renderLessonHeaderActions(scenario, lesson, playbookUrl);
     document.getElementById('currentModuleTitle').textContent = currentModule
       ? `${currentModule.sequence}. ${currentModule.title}`
       : `Lesson ${lesson.sequence}: ${lesson.title}`;
@@ -52,6 +65,14 @@
       </li>`).join('');
 
     renderLessonPager(previous, next, playbookUrl);
+  }
+
+  function renderLessonHeaderActions(scenario, lesson, playbookUrl) {
+    const scenarioId = encodeURIComponent(scenario.id);
+    const lessonHash = `lesson-${lesson.id}`;
+    document.getElementById('lessonSlidesLink').href = `slides.html?id=${scenarioId}#${lessonHash}`;
+    document.getElementById('lessonFullDeckLink').href = `slides.html?id=${scenarioId}`;
+    document.getElementById('lessonPlaybookLink').href = playbookUrl;
   }
 
   function renderLessonResources(scenario, lesson) {

@@ -35,12 +35,26 @@
     </div>
   </header>
   <main id="mainContent">
-    <section class="course-hero">
+    <section class="ch-detail-hero detail-hero-lesson" aria-labelledby="lessonTitle">
       <div class="wrap">
-        <a id="playbookBack" class="back-link" href="scenario.html">Back to scenario playbook</a>
+        <nav class="breadcrumbs" aria-label="Breadcrumb" id="lessonBreadcrumbs">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="index.html#outcomes">Scenarios</a>
+          <span aria-hidden="true">/</span>
+          <a id="playbookBack" href="scenario.html">Scenario playbook</a>
+          <span aria-hidden="true">/</span>
+          <span>Lesson</span>
+        </nav>
         <span id="lessonEyebrow" class="eyebrow">Customer lesson</span>
         <h1 id="lessonTitle">Loading lesson...</h1>
         <p id="lessonSummary" class="lede"></p>
+        <div class="ch-meta-row" id="lessonMeta"></div>
+        <div class="detail-hero-actions">
+          <a id="lessonSlidesLink" class="btn btn-primary" href="#">Open facilitator slides</a>
+          <a id="lessonFullDeckLink" class="btn btn-ghost" href="#">Open full deck</a>
+          <a id="lessonPlaybookLink" class="btn btn-ghost" href="#">Back to playbook</a>
+        </div>
       </div>
     </section>
     <section class="section-tight" aria-label="Lesson content">
@@ -51,24 +65,32 @@
           </article>
           <nav id="lessonBottomPager" class="journey-pager" aria-label="Lesson navigation"></nav>
         </div>
-        <aside class="lesson-sidebar journey-rail" aria-label="Lesson progress and resources">
-          <section class="scenario-panel journey-panel-primary">
-            <span class="panel-label">Current step</span>
-            <strong id="currentModuleTitle" class="rail-title"></strong>
-            <p id="currentModuleSummary"></p>
-            <small id="currentModuleCheckpoint" class="rail-checkpoint"></small>
+        <aside class="lesson-sidebar facts-panel" aria-label="Lesson progress and resources">
+          <section class="panel">
+            <div class="panel-head">Current step</div>
+            <div class="panel-body">
+              <strong id="currentModuleTitle" class="rail-title"></strong>
+              <p id="currentModuleSummary"></p>
+              <small id="currentModuleCheckpoint" class="rail-checkpoint"></small>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Scenario progress</span>
-            <ol id="lessonProgress" class="course-progress"></ol>
+          <section class="panel">
+            <div class="panel-head">Scenario progress</div>
+            <div class="panel-body">
+              <ol id="lessonProgress" class="course-progress"></ol>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Engagement outcome</span>
-            <p id="lessonOutcome"></p>
+          <section class="panel">
+            <div class="panel-head">Engagement outcome</div>
+            <div class="panel-body">
+              <p id="lessonOutcome"></p>
+            </div>
           </section>
-          <section class="scenario-panel">
-            <span class="panel-label">Facilitator resources</span>
-            <div id="lessonResourceLinks" class="rail-action-list"></div>
+          <section class="panel">
+            <div class="panel-head">Facilitator resources</div>
+            <div class="panel-body">
+              <div id="lessonResourceLinks" class="rail-action-list"></div>
+            </div>
           </section>
         </aside>
       </div>
