@@ -1225,44 +1225,6 @@ h4 { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .breadcrumbs a:hover { color: var(--c-gold); }
 .breadcrumbs span { color: var(--c-faint); }
 
-/* Guide view switch */
-.view-switch {
-  display: flex;
-  gap: 4px;
-  background: var(--c-700);
-  border-radius: var(--r-sm);
-  padding: 4px;
-  margin-bottom: 24px;
-  width: fit-content;
-}
-.view-switch button {
-  padding: 7px 16px;
-  border-radius: 6px;
-  border: none;
-  background: transparent;
-  color: var(--c-dim);
-  font-size: 0.82rem;
-  font-weight: 600;
-  transition: background 0.15s, color 0.15s;
-}
-.view-switch button[aria-pressed="true"] { background: var(--c-800); color: var(--c-fg); }
-.view-switch button:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 2px; }
-
-/* Facilitator flag banner */
-.facilitator-flag {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  background: rgba(248, 113, 113, 0.08);
-  border: 1px solid rgba(248, 113, 113, 0.25);
-  border-radius: var(--r-sm);
-  padding: 10px 14px;
-  font-size: 0.8rem;
-  color: var(--c-ghas);
-  margin-bottom: 20px;
-}
-[data-view="facilitator"] .facilitator-flag { display: flex; }
-
 /* Markdown guide area */
 .guide-body {
   background: var(--c-800);

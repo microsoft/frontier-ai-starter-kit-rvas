@@ -33,8 +33,7 @@
     renderHero(activity, mod);
     renderFacts(activity, mod, allActivities, data.outcomes || []);
     renderRelated(activity, allActivities);
-    initViewSwitch(activity, allActivities);
-    loadGuide('participant', activity, allActivities);
+    loadGuide(activity, allActivities);
   }
 
   function applyModuleColor(moduleId) {
@@ -116,6 +115,18 @@
         .join('') || '<li class="cap-item">See the activity guide.</li>';
     }
 
+    // Facilitator resource
+    const facilitatorPanel = document.getElementById('facilitatorResourcePanel');
+    const facilitatorLink = document.getElementById('facilitatorResourceLink');
+    if (facilitatorPanel && facilitatorLink) {
+      if (!c.has_facilitator_guide) {
+        facilitatorPanel.hidden = true;
+      } else {
+        facilitatorPanel.hidden = false;
+        facilitatorLink.innerHTML = `<a href="guide.html?activity=${encodeURIComponent(c.id)}&guide=facilitator">Open facilitator notes</a>`;
+      }
+    }
+
     // Fact rows
     const factRows = document.getElementById('factRows');
     if (factRows) {
@@ -186,23 +197,11 @@
     }).join('');
   }
 
-  function initViewSwitch(c, allActivities) {
-    const btns = document.querySelectorAll('.view-switch button');
-    btns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const view = btn.dataset.view;
-        btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
-        document.body.setAttribute('data-view', view);
-        loadGuide(view, c, allActivities);
-      });
-    });
-  }
-
-  async function loadGuide(view, c, allActivities) {
+  async function loadGuide(c, allActivities) {
     const body = document.getElementById('guideBody');
     if (!body) return;
 
-    const path = view === 'facilitator' ? c.facilitator_path : c.participant_path;
+    const path = c.participant_path;
     if (!path) {
       body.innerHTML = `<p class="text-dim" style="font-size:.875rem">Guide not available for this view.</p>`;
       return;

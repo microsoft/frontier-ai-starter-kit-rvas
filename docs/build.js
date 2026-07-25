@@ -583,6 +583,7 @@ function activityOutput(activity, pathIds, outcomeIds) {
     license: 'MIT',
     participant_path: `assets/data/activities/${activity.id}/README.md`,
     facilitator_path: `assets/data/activities/${activity.id}/FACILITATOR.md`,
+    has_facilitator_guide: Boolean(activity.facilitator),
   };
 }
 

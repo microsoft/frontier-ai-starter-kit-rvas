@@ -766,7 +766,8 @@
       "source_path": "docs/setup.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/setup/README.md",
-      "facilitator_path": "assets/data/activities/setup/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/setup/FACILITATOR.md",
+      "has_facilitator_guide": false
     },
     {
       "id": "cleanup",
@@ -798,7 +799,8 @@
       "source_path": "docs/activities/cleanup.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/cleanup/README.md",
-      "facilitator_path": "assets/data/activities/cleanup/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/cleanup/FACILITATOR.md",
+      "has_facilitator_guide": false
     },
     {
       "id": "idea-forge",
@@ -830,7 +832,8 @@
       "source_path": "docs/idea-forge.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/idea-forge/README.md",
-      "facilitator_path": "assets/data/activities/idea-forge/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/idea-forge/FACILITATOR.md",
+      "has_facilitator_guide": false
     },
     {
       "id": "customer-outcome",
@@ -863,7 +866,8 @@
       "source_path": "docs/customer-outcome.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/customer-outcome/README.md",
-      "facilitator_path": "assets/data/activities/customer-outcome/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/customer-outcome/FACILITATOR.md",
+      "has_facilitator_guide": false
     },
     {
       "id": "foundations",
@@ -896,7 +900,8 @@
       "source_path": "activities/foundations/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/foundations/README.md",
-      "facilitator_path": "assets/data/activities/foundations/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/foundations/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "advanced-action-tools",
@@ -931,7 +936,8 @@
       "source_path": "activities/advanced-action-tools/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/advanced-action-tools/README.md",
-      "facilitator_path": "assets/data/activities/advanced-action-tools/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/advanced-action-tools/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "advanced-evaluation-redteam",
@@ -966,7 +972,8 @@
       "source_path": "activities/advanced-evaluation-redteam/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/advanced-evaluation-redteam/README.md",
-      "facilitator_path": "assets/data/activities/advanced-evaluation-redteam/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/advanced-evaluation-redteam/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "advanced-tracing-observability",
@@ -1001,7 +1008,8 @@
       "source_path": "activities/advanced-tracing-observability/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/advanced-tracing-observability/README.md",
-      "facilitator_path": "assets/data/activities/advanced-tracing-observability/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/advanced-tracing-observability/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "advanced-deploy-hosted-agent",
@@ -1035,7 +1043,8 @@
       "source_path": "activities/advanced-deploy-hosted-agent/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/advanced-deploy-hosted-agent/README.md",
-      "facilitator_path": "assets/data/activities/advanced-deploy-hosted-agent/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/advanced-deploy-hosted-agent/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-build-ui",
@@ -1069,7 +1078,8 @@
       "source_path": "activities/extra-build-ui/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-build-ui/README.md",
-      "facilitator_path": "assets/data/activities/extra-build-ui/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-build-ui/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-voice-live",
@@ -1103,7 +1113,8 @@
       "source_path": "activities/extra-voice-live/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-voice-live/README.md",
-      "facilitator_path": "assets/data/activities/extra-voice-live/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-voice-live/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-fabric-iq",
@@ -1137,7 +1148,8 @@
       "source_path": "activities/extra-fabric-iq/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-fabric-iq/README.md",
-      "facilitator_path": "assets/data/activities/extra-fabric-iq/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-fabric-iq/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-document-workflow",
@@ -1172,7 +1184,8 @@
       "source_path": "activities/extra-document-workflow/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-document-workflow/README.md",
-      "facilitator_path": "assets/data/activities/extra-document-workflow/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-document-workflow/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-visual-multimodal",
@@ -1207,7 +1220,8 @@
       "source_path": "activities/extra-visual-multimodal/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-visual-multimodal/README.md",
-      "facilitator_path": "assets/data/activities/extra-visual-multimodal/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-visual-multimodal/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-governed-data-copilot",
@@ -1242,7 +1256,8 @@
       "source_path": "activities/extra-governed-data-copilot/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-governed-data-copilot/README.md",
-      "facilitator_path": "assets/data/activities/extra-governed-data-copilot/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-governed-data-copilot/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-copilot-assisted",
@@ -1274,7 +1289,8 @@
       "source_path": "activities/extra-copilot-assisted/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-copilot-assisted/README.md",
-      "facilitator_path": "assets/data/activities/extra-copilot-assisted/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-copilot-assisted/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-magentic-workflows",
@@ -1308,7 +1324,8 @@
       "source_path": "activities/extra-magentic-workflows/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-magentic-workflows/README.md",
-      "facilitator_path": "assets/data/activities/extra-magentic-workflows/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-magentic-workflows/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "extra-hosted-longrunning",
@@ -1342,7 +1359,8 @@
       "source_path": "activities/extra-hosted-longrunning/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-hosted-longrunning/README.md",
-      "facilitator_path": "assets/data/activities/extra-hosted-longrunning/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/extra-hosted-longrunning/FACILITATOR.md",
+      "has_facilitator_guide": true
     },
     {
       "id": "capstone-multi-agent",
@@ -1376,7 +1394,8 @@
       "source_path": "activities/capstone-multi-agent/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/capstone-multi-agent/README.md",
-      "facilitator_path": "assets/data/activities/capstone-multi-agent/FACILITATOR.md"
+      "facilitator_path": "assets/data/activities/capstone-multi-agent/FACILITATOR.md",
+      "has_facilitator_guide": true
     }
   ]
 }

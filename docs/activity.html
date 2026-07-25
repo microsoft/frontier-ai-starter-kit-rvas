@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light" data-view="participant">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,7 +24,7 @@
   <!-- marked.js — vendored, no CDN dependency at runtime -->
   <script src="assets/js/marked.min.js"></script>
 </head>
-<body data-view="participant">
+<body>
 
   <header class="nav" role="banner">
     <div class="nav-inner">
@@ -69,25 +69,7 @@
       <div class="wrap">
         <div class="detail-layout">
 
-          <!-- Main guide column -->
           <div>
-            <!-- Participant/facilitator toggle -->
-            <div class="view-switch" role="tablist" aria-label="Guide view">
-              <button data-view="participant" aria-pressed="true" role="tab" type="button">
-                Participant guide
-              </button>
-              <button data-view="facilitator" aria-pressed="false" role="tab" type="button">
-                Facilitator guide
-              </button>
-            </div>
-
-            <!-- Facilitator warning banner (shown only in facilitator view) -->
-            <div class="facilitator-flag" role="alert" aria-live="polite">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
-              Facilitator view — facilitation notes, rubric &amp; verification. Keep this out of the participant room.
-            </div>
-
-            <!-- Rendered Markdown guide -->
             <article class="guide-body" id="guideBody" aria-live="polite">
               <p class="mono" style="color:var(--c-faint)">Loading guide…</p>
             </article>
@@ -105,6 +87,13 @@
               <div class="panel-head">What you will prove (success criteria)</div>
               <div class="panel-body">
                 <ul class="criteria-list" id="criteriaList"></ul>
+              </div>
+            </div>
+
+            <div class="panel" id="facilitatorResourcePanel" hidden>
+              <div class="panel-head">Facilitator resource</div>
+              <div class="panel-body">
+                <div id="facilitatorResourceLink" class="rail-action-list"></div>
               </div>
             </div>
 
