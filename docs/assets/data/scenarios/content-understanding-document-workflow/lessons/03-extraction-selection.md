@@ -42,7 +42,9 @@ when you need them — so you can start here and specialize without changing sta
 - **E** — you need complete control of the model, prompt, and infrastructure, and you accept owning
   confidence and grounding yourself. This is the "build your own" path; pick it deliberately.
 - **F** — the value is in a chart, diagram, photo, or handwriting. Use a multimodal analyzer; do not
-  force a text-only pipeline over visual content.
+  force a text-only pipeline over visual content. If this is the shape of the problem, use the
+  [Visual Multimodal activity](../../../activities/extra-visual-multimodal/README.md) as the
+  implementation reference before you commit to a document-only pipeline.
 
 **Migration cost.** A ↔ C is cheap: both are Foundry Tools on the same account and return the same
 typed result contract (module 4), so you swap the analyzer/model id and re-verify. A/C → E is a
@@ -164,7 +166,9 @@ Do not push visual content through a text-only OCR path and hope.
 
 This module and module 4 are the canonical
 [Document Workflow activity](../../../activities/extra-document-workflow/README.md) — link to it
-rather than duplicating its walkthrough.
+rather than duplicating its walkthrough. If Option F is the selected path, pair it with the
+[Visual Multimodal activity](../../../activities/extra-visual-multimodal/README.md) so the team
+handles safe image input, bounded observations, and human review explicitly.
 
 ## Verify
 

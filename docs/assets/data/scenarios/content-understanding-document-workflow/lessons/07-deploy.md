@@ -20,6 +20,7 @@ and confirmed by observing that the endpoint rejects unauthenticated calls.
 | **A. Hosted agent (`azd ai agent`)** *(default)* | Foundry-hosted container | Managed identity, authenticated endpoint | Pin/swap revision | You built on the Foundry agent stack |
 | B. Container app / managed online endpoint | Your container | Managed identity + Entra auth | Revision or blue/green | You need custom runtime or scaling control |
 | C. API behind API Management | Your API | Entra-validated via APIM | Deployment slots | You are fronting an existing API estate |
+| D. Hosted long-running workflow | Background job handle + later retrieval | Managed identity, authenticated submit/poll | Pin/swap revision | Document processing outlives an interactive request |
 
 **Default: Option A.** The workflow is already a Foundry agent with an approved action-tool seam; a
 hosted agent keeps the managed identity, auth, and tracing wiring you built rather than re-creating
@@ -29,6 +30,12 @@ it. It is the shortest path from "passed the gate" to "running behind auth".
 doesn't give you. **Choose C** when this workflow must live behind an existing API Management estate
 and inherit its policies. All three keep the same rule: **no keys**, managed identity, authenticated
 endpoint, monitoring on, rollback ready.
+
+**Choose D** only when the document workload is naturally asynchronous: overnight intake, a backlog of
+files, or a review process the user submits and checks later. The
+[Hosted Long-Running Agents activity](../../../activities/extra-hosted-longrunning/README.md)
+covers the background-run contract, response handle, later retrieval, and trace review. If one
+document should return while the reviewer is waiting, do not add this complexity.
 
 **Migration cost.** A → B/C re-hosts the same container and identity model; the workflow, action-tool
 seam, and evaluation gate are unchanged. The manifest you record is identical across all
@@ -139,5 +146,5 @@ release record.
 ## Next module
 
 You have completed the seven-module path — a reviewable, evidence-backed document workflow. Start the
-next document decision at [Module 1](01-provision-foundation.md), or extend this workflow into a
-multi-agent system with the [Capstone activity](../../../activities/capstone-multi-agent/README.md).
+next document decision at [Module 1](01-provision-foundation.md), or extend this workflow with the
+deployment and operations patterns that match the next customer decision.

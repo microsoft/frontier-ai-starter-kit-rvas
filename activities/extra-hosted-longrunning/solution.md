@@ -2,7 +2,7 @@
 
 > **Facilitator-only.** The **most prereq-heavy** Extra: it needs **both** Deploy-as-a-Hosted-Agent **and**
 > Extra C (Magentic). Don't let a team start it cold — they'll be assembling deploy plumbing and MAF at
-> once. Best run as a capstone for a strong team.
+> once. Best run only after the team has completed the hosted-agent and Magentic workflow paths.
 
 ## What this activity is really teaching
 

@@ -85,13 +85,6 @@
       "tier": "extra"
     },
     {
-      "id": "extra-copilot-assisted",
-      "title": "Accelerate: Copilot-Assisted Build",
-      "module": "foundry",
-      "track": "extras",
-      "tier": "extra"
-    },
-    {
       "id": "extra-magentic-workflows",
       "title": "Orchestrate: Magentic Workflows",
       "module": "foundry",
@@ -103,13 +96,6 @@
       "title": "Deploy: Long-Running Agents",
       "module": "foundry",
       "track": "deploy",
-      "tier": "core"
-    },
-    {
-      "id": "capstone-multi-agent",
-      "title": "Orchestrate: Multi-Agent Capstone",
-      "module": "foundry",
-      "track": "orchestrate",
       "tier": "core"
     }
   ],
@@ -161,10 +147,6 @@
     {
       "from": "foundations",
       "to": "extra-hosted-longrunning"
-    },
-    {
-      "from": "foundations",
-      "to": "capstone-multi-agent"
     }
   ]
 }

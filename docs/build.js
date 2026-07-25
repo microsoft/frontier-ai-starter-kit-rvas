@@ -33,7 +33,7 @@ const MODULES = [
       { id: 'trust', name: 'Trust', description: 'Evaluate, red-team, trace, and debug agent behavior.' },
       { id: 'deploy', name: 'Deploy', description: 'Host the agent and expose a stakeholder-ready experience.' },
       { id: 'orchestrate', name: 'Orchestrate', description: 'Coordinate multiple agents with manager, planner, and router patterns.' },
-      { id: 'extras', name: 'Extras', description: 'Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.' },
+      { id: 'extras', name: 'Extras', description: 'Optional deepeners for UI, voice, Fabric IQ, and long-running agents.' },
     ],
   },
 ];
@@ -75,7 +75,6 @@ const OUTCOMES = [
       'extra-governed-data-copilot',
       'extra-magentic-workflows',
       'extra-hosted-longrunning',
-      'capstone-multi-agent',
     ],
     success_metrics: [
       'Teams can find the implementation mechanics that support a chosen scenario.',
@@ -216,16 +215,6 @@ const ACTIVITIES = [
     participant: 'activities/extra-governed-data-copilot/README.md',
   },
   {
-    id: 'extra-copilot-assisted',
-    title: 'Accelerate: Copilot-Assisted Build',
-    track: 'extras',
-    difficulty: 'intermediate',
-    duration_minutes: 45,
-    description: 'Use skills and MCP deliberately instead of guessing fast-moving Foundry APIs.',
-    outcomes: ['reference'],
-    participant: 'activities/extra-copilot-assisted/README.md',
-  },
-  {
     id: 'extra-magentic-workflows',
     title: 'Orchestrate: Magentic Workflows',
     track: 'orchestrate',
@@ -246,17 +235,6 @@ const ACTIVITIES = [
     prerequisites: ['foundations'],
     outcomes: ['reference'],
     participant: 'activities/extra-hosted-longrunning/README.md',
-  },
-  {
-    id: 'capstone-multi-agent',
-    title: 'Orchestrate: Multi-Agent Capstone',
-    track: 'orchestrate',
-    difficulty: 'advanced',
-    duration_minutes: 120,
-    description: 'Split the assistant into a router and specialist agents for a realistic customer journey.',
-    prerequisites: ['foundations'],
-    outcomes: ['reference'],
-    participant: 'activities/capstone-multi-agent/README.md',
   },
 ];
 

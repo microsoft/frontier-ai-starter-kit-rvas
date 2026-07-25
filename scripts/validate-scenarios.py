@@ -13,7 +13,6 @@ REQUIRED_MODULE_SIGNALS = (
     "choose your path",
     "implementation",
     "verify",
-    "troubleshooting",
     "decision record",
     "next module",
 )

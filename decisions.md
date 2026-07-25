@@ -101,8 +101,7 @@ on-ramp for teams that want to build something real but don't have an idea yet:
    industry trends & activities).
 3. It generates **~10 right-sized, buildable Microsoft Foundry AI application ideas**, each with an
    industry rationale and a suggested tier mapping.
-4. The team picks one idea and fills in the **Customer Outcome Canvas** (`docs/customer-outcome.md`)
-   using the output.
+4. The team picks one idea and maps it to the scenario starter kit using the output.
 
 Once the canvas is complete, the team proceeds as Customer Build Mode — same tiers, same checkpoints,
 real outcome.
@@ -119,7 +118,6 @@ for learners who need it — it is repositioned as a scaffold, not the destinati
 | File | Change summary |
 |------|---------------|
 | `docs/index.md` | Hero tagline outcome-first; mode table reordered; "Which path is right for you?" section added; Customer Activity-Forge callout added; CTA buttons reordered |
-| `docs/customer-outcome.md` | Intro repositioned as DEFAULT path; mode table reordered (Customer Build first); "Don't have a customer or idea yet?" section added with Activity-Forge → canvas mapping |
 | `README.md` | "What is AI Starter Kit?" defaults to participant's own application; Northfield as guided fallback; section heading updated; mode table reordered; Getting Started step 3 reordered with Activity-Forge pointer |
 
 ---
@@ -152,13 +150,12 @@ by Pages and therefore not present in `docs/_site/`.
 
 **Fix applied:** Changed all 5 to the absolute GitHub URL
 `https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md`
-matching the established repo pattern from `docs/activities/capstone-multi-agent.md`.
+matching the established repo-link pattern from activity documentation.
 
 Files changed:
 | File | Occurrences fixed |
 |------|------------------|
 | `docs/index.md` | 2 |
-| `docs/customer-outcome.md` | 1 |
 
 Note: `README.md` uses the same relative path (`.github/skills/customer-activity-forge/`) — this
 is **correct** in README context (rendered from the repo root on GitHub UI) and was **not** changed.
@@ -172,8 +169,8 @@ to "run options" to avoid naming collision with two *modes* (Customer Build / Up
 
 #### MESSAGING CONSISTENCY — PASS
 
-- Both mode tables (docs/index.md, docs/customer-outcome.md) label Customer Build Mode *(primary)*
-  and Upskill *(fallback)*. Facilitator Hub pre-event checklist uses a three-branch decision tree.
+- Both mode tables label Customer Build Mode *(primary)* and Upskill *(fallback)*. Facilitator Hub
+  pre-event checklist uses a three-branch decision tree.
 - No residual "co-equal modes" language found across any of the 4 edited files.
 - Hero tagline, "What is this?" prose, and Getting Started step 3 all lead with Customer Build.
 - Activity-Forge is referenced as the on-ramp for no-idea teams in all three required docs pages.

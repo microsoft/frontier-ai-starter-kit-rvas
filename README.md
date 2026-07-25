@@ -124,10 +124,8 @@ python scripts/validate-foundations.py   # ✅ asserts the Foundations end-state
 
 ## Activities
 
-The curriculum has three tiers. **Tier 1 Foundations** is one guided activity with four ordered
-steps. **Tier 2 Advanced** activities are modular and can be completed in **any order** after
-Foundations. **Tier 3 Capstone** is an open-ended design activity that combines the work into a
-multi-agent system.
+The curriculum has two activity layers. **Foundations** is one guided activity with four ordered
+steps. **Advanced** activities are modular and can be completed in **any order** after Foundations.
 
 For customer engagements, treat every tier as an outcome checkpoint:
 
@@ -146,7 +144,7 @@ For customer engagements, treat every tier as an outcome checkpoint:
            v
   TIER 2  ADVANCED (modular, pick any order)
     Action Tools | Evaluation+RedTeam | Tracing | Deploy
-    deepeners: Fabric IQ | Document Workflow | Visual Multimodal | Governed Data Copilot | Voice Live | Build a UI | Copilot-Assisted
+    deepeners: Fabric IQ | Document Workflow | Visual Multimodal | Governed Data Copilot | Voice Live | Build a UI
            |
            v
   TIER 3  CAPSTONE (open-ended design activity)
@@ -175,31 +173,14 @@ Each Advanced activity offers two paths: a **Guided** path (revised, honest time
 | [Tracing & Observability](activities/advanced-tracing-observability/README.md) | ~1 hr | ~1.5 hr | ⭐⭐⭐⭐ | OTel GenAI → App Insights → KQL |
 | [Deploy as a Hosted Agent](activities/advanced-deploy-hosted-agent/README.md) | ~60–90 min | ~1.5 hr | ⭐⭐⭐⭐⭐ | `azd ai agent`, hosted endpoint |
 
-**Extras** (optional, modular) — re-slotted by their role in the tree:
-- **Capstone-feeders**: Magentic Workflows, MAF + Hosted Long-Running Agents — the strongest content
-  feeds straight into the Tier 3 multi-agent build.
-- **Capstone companion**: Build a UI — a web front-end for your agent (or agent team).
-- **Deepeners**: Fabric IQ, Document Workflow, Visual Multimodal, Governed Data Copilot,
-  Give It a Voice (Voice Live), Copilot-Assisted Build — extend one concept.
+**Extras** (optional, modular) — pick only the ones that support the scenario you are building:
+Fabric IQ, Document Workflow, Visual Multimodal, Governed Data Copilot, Give It a Voice (Voice Live),
+Build a UI, Magentic Workflows, and Hosted Long-Running Agents.
 
 See the `activities/extra-*` folders.
 
-### Tier 3 — Capstone (`activities/capstone-multi-agent/`)
-
-Break the single Northfield IQ Assistant into a **multi-agent team** — a
-[triage/router that fans out to specialist agents and converges](activities/capstone-multi-agent/README.md#the-agent-org-chart-role-as-agent),
-orchestrated with the **Microsoft Agent Framework (MAF)**. You decide the org chart and wire the graph
-against the acceptance criteria.
-
-| Capstone | Time | Difficulty | Prereqs |
-|----------|------|------------|---------|
-| [Northfield IQ, the Team — Multi-Agent Orchestration](activities/capstone-multi-agent/README.md) | 2–2.5 hr core (+1 hr Magentic stretch, +1.5 hr hosted variant) | ⭐⭐⭐⭐⭐ | Foundations end-state **+** Action Tools |
-
-**Make it your own:** the capstone is the best place to reskin — swap Northfield for your domain
-(insurance, factory ops, retail) and demo *your* agent team.
-
-**Total guided path (Foundations + all four Advanced): ~7.25 hours** + **~2.5 hr Capstone** — a clean
-multi-day story. For a **1-day event**, run Foundations + 2–3 Advanced activities and save the Capstone
+**Total guided path (Foundations + all four Advanced): ~7.25 hours** — a clean
+multi-day story. For a **1-day event**, run Foundations + 2–3 Advanced activities and save optional extras
 for a second day or a follow-up sprint.
 
 ---
@@ -219,7 +200,6 @@ ai-starter-kit-rvas/
 │   ├── advanced-evaluation-redteam/
 │   ├── advanced-tracing-observability/
 │   ├── advanced-deploy-hosted-agent/
-│   ├── capstone-multi-agent/          # Tier 3 — open-ended MAF capstone
 │   └── extra-*/                       # Tier 2 — Extras (optional)
 ├── resources/sample-data/             # Northfield University FAQ corpus (knowledge base source)
 ├── docs/                              # Supporting documentation (Jekyll/GitHub Pages)

@@ -22,9 +22,10 @@ and the AI Grounding scenario lessons. The scenario reference contract lives in
 | 6 | [Evaluate and trace](lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | Scenario evaluation gate and trace review |
 | 7 | [Deploy the workflow](lesson.html?scenario=content-understanding-document-workflow&lesson=deploy) | Hosted agent, container app, or an API behind APIM | Controlled pilot deployment |
 
-Each lesson follows the same contract: **What you build · Choose your path · Implementation · Verify ·
-Troubleshooting · Decision record · Next module.** Modules build on the previous one — module N's
-outcome is module N+1's prerequisite.
+Each lesson follows the same core contract: **What you build · Choose your path · Implementation ·
+Verify · Decision record · Next module.** A standalone **Troubleshooting** section appears only when
+the module has concrete runtime failures worth keeping out of Verify. Modules build on the previous
+one — module N's outcome is module N+1's prerequisite.
 
 ## Decision gates to carry into the customer conversation
 

@@ -5,7 +5,7 @@
 
 ## Overview
 
-This Extra is the "make it real" capstone: students put a browser front-end on the **hosted agent**
+This Extra is the "make it real" activity: students put a browser front-end on the **hosted agent**
 they shipped in **Deploy as a Hosted Agent**. The graded substance is three UI affordances —
 **streaming chat**, a **citations panel**, and a **human action-approval card** — plus the one
 non-negotiable security property: **no credential ever reaches the browser**. Everything talks to the

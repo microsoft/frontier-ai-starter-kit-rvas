@@ -18,10 +18,6 @@ The curriculum has three tiers:
   (Action Tools, Evaluation & Red Teaming, Tracing & Observability, Deploy as a Hosted Agent, plus
   Extras). Every Advanced activity assumes the Foundations end-state — the grounded assistant
   you build here.
-- Tier 3 · Capstone *(optional end-of-day)* — splits the assistant into a router and specialist
-  agents. Requires the Foundations end-state plus at least one Advanced activity completed.
-  You do not need to reach it to succeed today — think of it as the stretch goal if time allows.
-
 Completing Step 4 = the Foundations end-state. It is the prerequisite for the entire Advanced
 tier. If you only do one thing today, finish all four steps below.
 
@@ -411,7 +407,7 @@ Foundations end-state you just built (or the bootstrap skip-path:
 | Evaluation & Red Teaming | Proof it's accurate and safe — groundedness metrics plus adversarial / jailbreak results on record |
 | Tracing & Observability | Every answer observable end-to-end in Application Insights (model, retrieval, and tool spans) |
 | Deploy as a Hosted Agent | Ship it as a containerized hosted agent with its own endpoint and identity |
-| Extras (Fabric IQ · Voice Live · Magentic Workflows · Hosted Long-Running · Build a UI · Copilot-Assisted) | Live data, a voice, multi-agent workflows, a polished UI, and more |
+| Extras (Fabric IQ · Voice Live · Magentic Workflows · Hosted Long-Running · Build a UI) | Live data, a voice, multi-agent workflows, a polished UI, and more |
 
 > See the `activities/advanced-*` folders for each modular activity. Facilitators: the facilitation
 > guide for these four steps lives in [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/foundations/solution.md).

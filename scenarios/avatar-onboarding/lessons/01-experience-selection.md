@@ -201,17 +201,6 @@ jq -e '.disclosure_statement | length > 0' \
 could reach real employees, which the disclosure guidance forbids:
 <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 
-## Troubleshooting
-
-| Symptom | Cause | Fix |
-| --- | --- | --- |
-| `401` from `avatar/batchsyntheses` with a token | Resource has no custom subdomain, so Entra auth is rejected | Deploy module 2's Bicep (sets `customSubDomainName`), or add one to an existing resource |
-| `403` from the Speech data plane | Assigned a generic *Cognitive Services Contributor*/*Owner* role, which grants no Speech access | Assign **Cognitive Services Speech User** (`f2dc8367-…`) |
-| Avatar pricing not shown in a region | Avatar/Voice Live are region-gated | Check the regions table (`?tabs=ttsavatar`), pick a supported region before module 2 |
-| Custom-avatar API returns not-authorized | Limited-access registration not approved | File <https://aka.ms/customneural>; until approved, ship with a **standard** avatar |
-| Real-time avatar never connects | WebRTC/TURN egress blocked | Allow `relay.communication.microsoft.com` UDP 3478 / TCP 443 |
-| Legal blocks the pilot late | Disclosure/consent decided after build | Decide disclosure + gating **here**, in the record, before provisioning |
-
 ## Decision record
 
 Keep the JSON record with the pilot. One paragraph of prose alongside it: the chosen capability and

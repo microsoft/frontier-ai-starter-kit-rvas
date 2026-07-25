@@ -27,6 +27,7 @@ writing down who owns what happens behind it.
 | C. Copilot Studio agent published to the same channel | Teams and the M365 Copilot app | Low | Module 2 chose the SharePoint/M365 path, so there is no Azure retrieval layer to front |
 | D. Foundry hosted agent | A dedicated authenticated endpoint | Medium | Per-agent identity, container control, or an endpoint other teams consume |
 | E. Custom web UI | A purpose-built app | Medium–high | Stakeholder demo, custom auth flow, or a required response contract |
+| F. Hosted long-running workflow | Background job handle + later retrieval | High | The work outlives an interactive request |
 
 **Default: option A.** Standing up a surface for a pilot with one consumer is work that teaches you
 nothing about whether the pilot is valuable. If a Python script and a stakeholder in a room answer
@@ -53,7 +54,8 @@ standardizes AI endpoints behind one gateway. It changes who enforces throttling
 not change where users meet the agent.
 
 **Migration cost is deliberately low.** A → B is a publish action, not a rewrite. A → D repackages
-the same agent behind a dedicated endpoint. In every case the agent, its grounding, and its
+the same agent behind a dedicated endpoint. D → F adds an asynchronous job contract when the same
+workflow needs to keep running after the user leaves. In every case the agent, its grounding, and its
 evaluation gate are unchanged, and the release contract below is the same manifest. The surface is a
 late, reversible decision — which is exactly why it belongs at module 8 and not module 1.
 
@@ -148,6 +150,14 @@ of the story, or when you need a response contract Teams cannot express. The
 authentication: a demo UI that calls the agent with a service identity has quietly deleted module 2's
 permission boundary, because every user now looks like the same identity. Pass the signed-in user
 through, or say out loud that the demo is not permission-accurate.
+
+### Option F — Hosted long-running workflow
+
+Use this only when the task is genuinely asynchronous: batch review, overnight queue processing,
+large corpus refresh, or a workflow a user should submit and check later. The
+[Hosted Long-Running Agents activity](../../../activities/extra-hosted-longrunning/README.md)
+shows the pattern: hosted workflow, background run, response handle, later retrieval, and trace
+review. Do not use it for normal chat latency problems; make the interaction faster instead.
 
 ### Re-prove the permission boundary here
 
@@ -246,5 +256,8 @@ reach, and eight decision records that explain every choice to whoever inherits 
 
 Extend the build with the [action tools](../../../activities/advanced-action-tools/README.md),
 [hosted deployment](../../../activities/advanced-deploy-hosted-agent/README.md), or
-[Fabric IQ](../../../activities/extra-fabric-iq/README.md) activities, or start
+[Fabric IQ](../../../activities/extra-fabric-iq/README.md) activities. If the workload is
+asynchronous, use the
+[Hosted Long-Running Agents activity](../../../activities/extra-hosted-longrunning/README.md).
+Otherwise start
 [module 1](01-provision-foundation.md) again with the customer's own corpus.

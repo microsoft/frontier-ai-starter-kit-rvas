@@ -37,7 +37,8 @@ extra sources are documents rather than systems — one knowledge base with good
 
 **Avoid D in a pilot.** Multi-agent orchestration multiplies latency, cost, and failure modes, and
 customers rarely evaluate it honestly against a single well-instructed agent. If it is genuinely
-needed, the `extra-magentic-workflows` activity covers it — but earn it first.
+needed, the [Magentic Workflows activity](../../../activities/extra-magentic-workflows/README.md)
+covers it — but earn it first.
 
 **The rule that keeps this correct:** index knowledge, route to systems. A policy document belongs in
 the knowledge base. Case status, inventory, and live metrics belong behind a tool that is called at
@@ -165,7 +166,12 @@ Two supported shapes:
    resources) or *Fabric Ontology* (entity- and relationship-based answers), both preview. Fabric
    enforces its own permissions: semantic model RLS and workspace RBAC. The
    [Fabric IQ activity](../../../activities/extra-fabric-iq/README.md) builds this end-to-end.
-2. **An MCP or OpenAPI tool on the agent** — for a line-of-business system with an API. The
+2. **Governed structured-data copilot** — use this when the live source is a semantic model or
+   approved structured-data endpoint and the boundary is query allowlists, RLS/masking, and
+   provenance. The
+   [Governed Data Copilot activity](../../../activities/extra-governed-data-copilot/README.md)
+   builds the deny-by-default control plane.
+3. **An MCP or OpenAPI tool on the agent** — for a line-of-business system with an API. The
    [action tools activity](../../../activities/advanced-action-tools/README.md) builds this,
    including the human-approval loop.
 
@@ -178,8 +184,9 @@ Retrieval being read-only is what made everything up to now recoverable. Actions
 
 ### Option D — Multi-agent workflow
 
-Covered by `extra-magentic-workflows`. Before you go there, write down the specific question that a
-single agent with two tools answers worse. If you cannot write it, you have your answer.
+Covered by the [Magentic Workflows activity](../../../activities/extra-magentic-workflows/README.md).
+Before you go there, write down the specific question that a single agent with two tools answers
+worse. If you cannot write it, you have your answer.
 
 ## Verify
 

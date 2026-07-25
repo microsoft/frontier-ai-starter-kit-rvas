@@ -17,7 +17,7 @@
 A team finishes when the sample IQ assistant runs as a **hosted, containerized agent** with its own
 endpoint, its own version, and a **per-agent managed identity**, and they can invoke it over the
 production Responses protocol with auth enforced and runs visible in App Insights. This is the "ship
-it" capstone — real container deployment, not the "next steps only" hand-wave the reference labs stop at.
+it" activity — real container deployment, not the "next steps only" hand-wave the reference labs stop at.
 
 Assumes the Foundations end-state (or bootstrap). If the agent isn't grounded locally, that's a
 Foundations problem first.

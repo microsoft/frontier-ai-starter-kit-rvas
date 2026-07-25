@@ -41,16 +41,16 @@
           "id": "orchestrate",
           "name": "Orchestrate",
           "description": "Coordinate multiple agents with manager, planner, and router patterns.",
-          "activity_count": 2
+          "activity_count": 1
         },
         {
           "id": "extras",
           "name": "Extras",
-          "description": "Optional deepeners for UI, voice, Fabric IQ, long-running agents, and Copilot-assisted work.",
-          "activity_count": 6
+          "description": "Optional deepeners for UI, voice, Fabric IQ, and long-running agents.",
+          "activity_count": 5
         }
       ],
-      "activity_count": 16
+      "activity_count": 14
     }
   ],
   "outcomes": [
@@ -114,15 +114,14 @@
         "extra-visual-multimodal",
         "extra-governed-data-copilot",
         "extra-magentic-workflows",
-        "extra-hosted-longrunning",
-        "capstone-multi-agent"
+        "extra-hosted-longrunning"
       ],
       "success_metrics": [
         "Teams can find the implementation mechanics that support a chosen scenario.",
         "Reference activities stay reusable and do not become a separate customer journey."
       ],
-      "activity_count": 14,
-      "duration_minutes": 1335
+      "activity_count": 13,
+      "duration_minutes": 1215
     }
   ],
   "scenarios": [
@@ -1049,31 +1048,6 @@
       "participant_path": "assets/data/activities/extra-governed-data-copilot/README.md"
     },
     {
-      "id": "extra-copilot-assisted",
-      "title": "Accelerate: Copilot-Assisted Build",
-      "module": "foundry",
-      "track": "extras",
-      "difficulty": "intermediate",
-      "duration_minutes": 45,
-      "description": "Use skills and MCP deliberately instead of guessing fast-moving Foundry APIs.",
-      "prerequisites": [],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "outcomes": [
-        "reference"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "extra",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "activities/extra-copilot-assisted/README.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/extra-copilot-assisted/README.md"
-    },
-    {
       "id": "extra-magentic-workflows",
       "title": "Orchestrate: Magentic Workflows",
       "module": "foundry",
@@ -1126,33 +1100,6 @@
       "source_path": "activities/extra-hosted-longrunning/README.md",
       "license": "MIT",
       "participant_path": "assets/data/activities/extra-hosted-longrunning/README.md"
-    },
-    {
-      "id": "capstone-multi-agent",
-      "title": "Orchestrate: Multi-Agent Capstone",
-      "module": "foundry",
-      "track": "orchestrate",
-      "difficulty": "advanced",
-      "duration_minutes": 120,
-      "description": "Split the assistant into a router and specialist agents for a realistic customer journey.",
-      "prerequisites": [
-        "foundations"
-      ],
-      "prerequisite_capabilities": [],
-      "success_criteria": [],
-      "outcomes": [
-        "reference"
-      ],
-      "personas": [],
-      "business_value": [],
-      "adoption_stage": "",
-      "app_dependency": "none",
-      "tier": "core",
-      "references": [],
-      "source_repo": "microsoft/frontier-ai-starter-kit-rvas",
-      "source_path": "activities/capstone-multi-agent/README.md",
-      "license": "MIT",
-      "participant_path": "assets/data/activities/capstone-multi-agent/README.md"
     }
   ]
 }
