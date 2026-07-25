@@ -26,6 +26,7 @@ scenarios/<folder-name>/
   "id": "kebab-case-id",
   "name": "Customer-facing scenario name",
   "tagline": "One outcome-focused sentence",
+  "order": 1,
   "customer_outcome": "What becomes faster, safer, cheaper, or more reliable",
   "maturity": "initial",
   "level": "guided",
@@ -55,6 +56,8 @@ start building:
 - `duration_minutes`: expected guided time for the scenario path.
 - `stage`: customer-facing stage/type such as `ideate`, `define`, `build`, `prove`, `pilot`, or
   `customer-build`.
+- `order`: integer that fixes the scenario's position in the menu, homepage, and every generated
+  listing. Scenarios without an `order` sort last, alphabetically by name.
 
 Build modules may also define optional `level`, `duration_minutes`, and `stage` values when a lesson
 needs more specific labels. If omitted, lesson pages fall back to the scenario-level labels and the

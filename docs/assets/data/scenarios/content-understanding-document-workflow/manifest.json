@@ -2,6 +2,7 @@
   "id": "content-understanding-document-workflow",
   "name": "Content Understanding and Document Workflow",
   "tagline": "Move from SME-tested document understanding to a governed business workflow.",
+  "order": 2,
   "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
   "maturity": "initial",
   "level": "guided",

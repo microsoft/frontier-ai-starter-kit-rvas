@@ -2,6 +2,7 @@
   "id": "avatar-scenario",
   "name": "Avatar Scenario",
   "tagline": "Build approved, accessible, avatar-led experiences with accountable human oversight on Azure.",
+  "order": 3,
   "customer_outcome": "Audiences receive a clear, inclusive avatar-led experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
   "maturity": "initial",
   "level": "guided",

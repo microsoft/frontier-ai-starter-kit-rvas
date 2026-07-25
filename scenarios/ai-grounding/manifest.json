@@ -2,6 +2,7 @@
   "id": "ai-grounding",
   "name": "AI Grounding / IQ",
   "tagline": "Choose trusted knowledge and operational context for one customer decision.",
+  "order": 1,
   "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
   "maturity": "initial",
   "level": "guided",

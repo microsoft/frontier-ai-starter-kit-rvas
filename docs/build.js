@@ -433,7 +433,12 @@ function loadScenarioRegistry() {
           throw new Error(`scenario ${entry.name} has invalid manifest.json: ${error.message}`);
         }
       })
-      .sort((left, right) => left.name.localeCompare(right.name));
+      .sort((left, right) => {
+        const leftOrder = Number.isFinite(left.order) ? left.order : Number.MAX_SAFE_INTEGER;
+        const rightOrder = Number.isFinite(right.order) ? right.order : Number.MAX_SAFE_INTEGER;
+        if (leftOrder !== rightOrder) return leftOrder - rightOrder;
+        return left.name.localeCompare(right.name);
+      });
 }
 
 function scenarioPathExists(scenario, relativePath) {
@@ -529,6 +534,7 @@ function scenarioOutput(scenario) {
       id: scenario.id,
       name: scenario.name,
       tagline: scenario.tagline,
+      order: Number.isFinite(scenario.order) ? scenario.order : null,
       customer_outcome: scenario.customer_outcome,
       maturity: scenario.maturity || 'initial',
       level: scenario.level || 'guided',
