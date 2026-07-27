@@ -8,6 +8,10 @@ on:
 permissions:
   issues: read
 
+network:
+  allowed:
+    - local
+
 sandbox:
   agent:
     sudo: false
@@ -21,7 +25,7 @@ safe-outputs:
   noop:
     report-as-issue: false
   add-labels:
-    allowed: [bug, feature, enhancement, documentation, question, help-wanted, good-first-issue]
+    allowed: [bug, feature, enhancement, documentation, question, help-wanted, good-first-issue, community]
   add-comment: {}
 imports:
   - shared/github-guard-policy.md
