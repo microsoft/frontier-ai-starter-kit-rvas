@@ -182,7 +182,6 @@
       }
     });
 
-    collapseInlineVerifyBlocks(container);
     openAccordionForHash(container);
   };
 
@@ -190,11 +189,7 @@
     const text = normalizeAccordionHeading(heading.textContent);
     if (!text) return false;
 
-    return (
-      /^rung\s*\([bc]\)\b/.test(text) ||
-      /\b(build-from-scratch|implementation options?|implementation notes?|verification|verify steps?|stretch goals?|optional|troubleshooting|troubleshoot|common issues?|gotchas?|tips|learning resources?|resources|cleanup)\b/.test(text) ||
-      /^what if\b/.test(text)
-    );
+    return /\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text);
   }
 
   function shouldOpenGuideSection(heading) {
@@ -214,58 +209,7 @@
   function accordionMeta(value) {
     const text = normalizeAccordionHeading(value);
     if (/\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text)) return 'Troubleshooting';
-    if (/\b(build-from-scratch|implementation options?|implementation notes?|stretch goals?|optional|rung\s*\([bc]\))\b/.test(text)) return 'Options';
-    if (/\b(verification|verify steps?)\b/.test(text)) return 'Checkpoint';
-    if (/\b(tips|learning resources?|resources|cleanup)\b/.test(text)) return 'Reference';
     return 'Details';
-  }
-
-  function collapseInlineVerifyBlocks(container) {
-    const paragraphs = Array.from(container.querySelectorAll('p'));
-    paragraphs.forEach((paragraph) => {
-      if (!paragraph.isConnected || paragraph.closest('details')) return;
-      if (!isVerifyParagraph(paragraph)) return;
-
-      const details = document.createElement('details');
-      details.className = 'guide-accordion guide-accordion--inline';
-
-      const summary = document.createElement('summary');
-      summary.className = 'guide-accordion__summary';
-      summary.innerHTML = `
-        <span class="guide-accordion__title">${verifySummaryText(paragraph)}</span>
-        <span class="guide-accordion__meta">Checkpoint</span>`;
-
-      const body = document.createElement('div');
-      body.className = 'guide-accordion__body';
-
-      paragraph.replaceWith(details);
-      details.appendChild(summary);
-      details.appendChild(body);
-      body.appendChild(paragraph);
-
-      let node = details.nextSibling;
-      while (node) {
-        const next = node.nextSibling;
-        if (isHeadingAtOrAbove(node, 6) || isVerifyParagraph(node)) break;
-        body.appendChild(node);
-        node = next;
-      }
-    });
-  }
-
-  function isVerifyParagraph(node) {
-    if (!node || node.nodeType !== Node.ELEMENT_NODE || node.tagName !== 'P') return false;
-    const strong = node.firstElementChild;
-    if (!strong || strong.tagName !== 'STRONG') return false;
-    return /^verify:?\s*$/i.test(strong.textContent || '');
-  }
-
-  function verifySummaryText(paragraph) {
-    const text = String(paragraph.textContent || '')
-      .replace(/^verify:?\s*/i, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    return FP.esc(text ? `Verify: ${text}` : 'Verify');
   }
 
   function normalizeAccordionHeading(value) {
