@@ -12,15 +12,15 @@ and the AI Grounding scenario lessons. The scenario reference contract lives in
 
 ## The seven modules
 
-| # | Module | You decide | Outcome |
-| --- | --- | --- | --- |
-| 1 | [Provision the foundation](lesson.html?scenario=content-understanding-document-workflow&lesson=foundation) | How to stand up a keyless Foundry account with Content Understanding, Document Intelligence, models, and document storage | Foundations Step 1 |
-| 2 | [Connect an approved source](lesson.html?scenario=content-understanding-document-workflow&lesson=document-source) | Azure Blob, ADLS Gen2, SharePoint, or OneLake — and the intake/quarantine controls | Approved intake and document-retention design |
-| 3 | [Select the extraction capability](lesson.html?scenario=content-understanding-document-workflow&lesson=extraction-selection) | CU prebuilt/custom analyzer, DI prebuilt/custom model, LLM structured outputs, or multimodal | Document capability and implementation decision |
-| 4 | [Typed extraction with evidence](lesson.html?scenario=content-understanding-document-workflow&lesson=typed-extraction) | How to normalize output into one validated contract with confidence + grounding | Structured extraction result and low-confidence failure path |
-| 5 | [Review, correction, and handoff](lesson.html?scenario=content-understanding-document-workflow&lesson=human-review) | Action-tool handoff, a review app, or a workflow handoff | Reviewer correction and approval trace |
-| 6 | [Evaluate and trace](lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | Scenario evaluation gate and trace review |
-| 7 | [Deploy the workflow](lesson.html?scenario=content-understanding-document-workflow&lesson=deploy) | Hosted agent, container app, or an API behind APIM | Controlled pilot deployment |
+| Module | You decide | Outcome |
+|---|---|---|
+| [1. Provision the foundation](lesson.html?scenario=content-understanding-document-workflow&lesson=foundation) | How to stand up a keyless Foundry account with Content Understanding, Document Intelligence, models, and document storage | Foundations Step 1 |
+| [2. Connect an approved source](lesson.html?scenario=content-understanding-document-workflow&lesson=document-source) | Azure Blob, ADLS Gen2, SharePoint, or OneLake — and the intake/quarantine controls | Approved intake and document-retention design |
+| [3. Select the extraction capability](lesson.html?scenario=content-understanding-document-workflow&lesson=extraction-selection) | CU prebuilt/custom analyzer, DI prebuilt/custom model, LLM structured outputs, or multimodal | Document capability and implementation decision |
+| [4. Typed extraction with evidence](lesson.html?scenario=content-understanding-document-workflow&lesson=typed-extraction) | How to normalize output into one validated contract with confidence + grounding | Structured extraction result and low-confidence failure path |
+| [5. Review, correction, and handoff](lesson.html?scenario=content-understanding-document-workflow&lesson=human-review) | Action-tool handoff, a review app, or a workflow handoff | Reviewer correction and approval trace |
+| [6. Evaluate and trace](lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | Scenario evaluation gate and trace review |
+| [7. Deploy the workflow](lesson.html?scenario=content-understanding-document-workflow&lesson=deploy) | Hosted agent, container app, or an API behind APIM | Controlled pilot deployment |
 
 Each lesson follows the same core contract: **What you build · Choose your path · Implementation ·
 Verify · Decision record · Next module.** A standalone **Troubleshooting** section appears only when
