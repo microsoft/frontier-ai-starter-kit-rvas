@@ -94,13 +94,6 @@
     document.documentElement.setAttribute('data-theme', 'light');
   };
 
-  function _sunIcon() {
-    return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M6.9 17.1L5.6 18.4"/></svg>';
-  }
-  function _moonIcon() {
-    return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
-  }
-
   /* ─────────────────────────── Reveal ───────────────────────────── */
   FP.initReveal = function () {
     if (!('IntersectionObserver' in window)) {

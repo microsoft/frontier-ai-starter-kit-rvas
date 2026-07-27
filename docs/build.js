@@ -17,8 +17,6 @@ const OUT_DATA_DIR = path.join(__dirname, 'assets', 'data');
 const OUT_GUIDES_DIR = path.join(OUT_DATA_DIR, 'activities');
 const OUT_RESOURCES_DIR = path.join(__dirname, 'resources');
 
-const LEGACY_ACTIVITY_ALIASES = {};
-
 const MODULES = [
   {
     id: 'foundry',
@@ -487,7 +485,7 @@ function activityOutput(activity, outcomeIds) {
   };
 }
 
-function detectMissingReferences(activities, outcomes, aliases, scenarios) {
+function detectMissingReferences(activities, outcomes, scenarios) {
   const ids = new Set(activities.map((c) => c.id));
   const missing = [];
   for (const activity of activities) {
@@ -500,16 +498,13 @@ function detectMissingReferences(activities, outcomes, aliases, scenarios) {
       if (!ids.has(id)) missing.push(`${outcome.id} outcome activity ${id}`);
     }
   }
-  for (const [legacyId, target] of Object.entries(aliases)) {
-    if (!ids.has(target.id)) missing.push(`${legacyId} alias target ${target.id}`);
-  }
   missing.push(...detectScenarioProblems(scenarios));
   return missing;
 }
 
 function main() {
   const scenarios = loadScenarioRegistry();
-  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, LEGACY_ACTIVITY_ALIASES, scenarios);
+  const missing = detectMissingReferences(ACTIVITIES, OUTCOMES, scenarios);
   if (missing.length) {
     console.error('Build failed: missing references');
     missing.forEach((m) => console.error(`  - ${m}`));
@@ -569,7 +564,6 @@ function main() {
       modules,
       outcomes,
       scenarios: scenarios.map(scenarioOutput),
-      aliases: LEGACY_ACTIVITY_ALIASES,
       activities: outputActivities,
     }, null, 2),
   );

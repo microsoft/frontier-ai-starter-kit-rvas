@@ -19,9 +19,7 @@
     try { data = await FP.loadData(); }
     catch (e) { showError(e.message); return; }
 
-    const alias = (data.aliases || {})[requestedId];
-    const activityId = alias ? alias.id : requestedId;
-    const activity = (data.activities || []).find((c) => c.id === activityId);
+    const activity = (data.activities || []).find((c) => c.id === requestedId);
     if (!activity) { showError('Activity "' + requestedId + '" not found.'); return; }
 
     const mod = (data.modules || []).find((m) => m.id === activity.module);
