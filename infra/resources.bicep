@@ -146,8 +146,8 @@ resource project 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-previ
   tags: tags
   identity: { type: 'SystemAssigned' }
   properties: {
-    displayName: 'Northfield IQ Assistant'
-    description: 'AI Starter Kit — Northfield University IQ Assistant project.'
+    displayName: 'RVAS AI Starter Kit'
+    description: 'RVAS AI Starter Kit Foundry project.'
   }
 }
 

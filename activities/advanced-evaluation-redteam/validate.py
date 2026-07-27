@@ -87,17 +87,17 @@ def check_step2(dataset: Path, track: str) -> bool:
 def check_step3(track: str) -> bool:
     sys.path.insert(0, str(HERE))
     try:
-        from evaluate import sample organizationDomainEvaluator
+        from evaluate import SampleOrganizationDomainEvaluator
     except Exception as exc:
         if track == "customer" and EVALUATE.exists():
             src = EVALUATE.read_text(encoding="utf-8")
             if re.search(r"class\s+\w*Evaluator\b", src) and "score" in src.lower():
                 print("✅ Step 3 PASS — custom evaluator structure present (customer scenario; manual discrimination proof required)")
                 return True
-        return _fail("3", f"cannot import sample organizationDomainEvaluator: {exc}")
+        return _fail("3", f"cannot import SampleOrganizationDomainEvaluator: {exc}")
     if track == "customer":
-        print("⚠  --track customer: default sample organizationDomainEvaluator is still present; adapt the evaluator rules to your domain before demo.")
-    ev = sample organizationDomainEvaluator()
+        print("⚠  --track customer: default SampleOrganizationDomainEvaluator is still present; adapt the evaluator rules to your domain before demo.")
+    ev = SampleOrganizationDomainEvaluator()
     good = ev(query="contact?", response="Email finaid@sample.edu.",
               ground_truth="Email finaid@sample.edu.", category="factual")
     bad = ev(query="parking fee?", response="The fee is $200.",

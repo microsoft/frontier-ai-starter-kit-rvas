@@ -60,7 +60,7 @@ ABSTAIN_PHRASES = (
 )
 
 
-class sample organizationDomainEvaluator:
+class SampleOrganizationDomainEvaluator:
     """Custom evaluator: rewards grounded contact info and correct abstention.
 
     Score is 1.0-5.0 so it sits on the same scale as the built-in evaluators.
@@ -255,7 +255,7 @@ def main() -> int:
           + (" (using dataset responses)" if args.use_dataset_responses else ""))
 
     # Custom evaluator (always runs — cheap, local).
-    custom = sample organizationDomainEvaluator()
+    custom = SampleOrganizationDomainEvaluator()
     custom_scores = []
     for row in rows:
         out = custom(**row)
