@@ -149,7 +149,7 @@
       const resolved = resolveRelative(lesson.path, path);
 
       if (lessonRoutes.has(resolved)) {
-        link.href = lessonRoutes.get(resolved);
+        link.href = lessonRoutes.get(resolved) + (hash ? `#${hash}` : '');
         return;
       }
 
@@ -161,7 +161,12 @@
         return;
       }
 
-      if (/\.md$/i.test(path)) link.classList.add('is-source-link');
+      if (/\.md$/i.test(path)) {
+        link.classList.add('is-source-link');
+        return;
+      }
+
+      link.href = `${scenario.asset_base || ''}${resolved}${hash ? `#${hash}` : ''}`;
     });
   }
 
