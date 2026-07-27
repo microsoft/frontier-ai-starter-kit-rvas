@@ -14,7 +14,7 @@
     })();
   </script>
   <title>Reference Library — AI Starter Kit</title>
-  <meta name="description" content="Reusable AI Starter Kit implementation building blocks." />
+  <meta name="description" content="Supporting implementation mechanics used after a scenario calls for them." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -46,15 +46,63 @@
   <main id="mainContent">
 
     <section class="catalog-hero" aria-labelledby="referenceHeading">
+      <div class="wrap reference-hero-grid">
+        <div class="reference-hero-copy">
+          <span class="eyebrow">Supporting mechanics</span>
+          <h1 id="referenceHeading">Reference Library</h1>
+          <p class="reference-lede">Keep this library close, but use it after a scenario names the capability to prove. The playbook sets the customer decision; these activities supply the implementation mechanics.</p>
+        </div>
+        <aside class="reference-role-card" aria-label="How to use the reference library">
+          <span class="reference-card-kicker">Use when the scenario says…</span>
+          <ul>
+            <li>Ground the answer in approved knowledge.</li>
+            <li>Add an action tool or approval step.</li>
+            <li>Evaluate, trace, deploy, or prepare a demo surface.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="reference-cues" aria-labelledby="scenarioCueHeading">
       <div class="wrap">
-        <span class="eyebrow">Reference Library</span>
-        <h1 id="referenceHeading" style="margin-top:14px">Reusable building blocks.</h1>
-        <p>Use these implementation activities when a scenario calls for a specific capability. Start with the scenario playbook, then open only the mechanics you need.</p>
+        <div class="reference-cue-head">
+          <div>
+            <span class="eyebrow">Scenario entry cues</span>
+            <h2 id="scenarioCueHeading">Start with the playbook. Come here for the part it calls out.</h2>
+          </div>
+          <a class="link" href="index.html#outcomes">View scenarios →</a>
+        </div>
+        <div class="reference-cue-grid">
+          <a class="reference-cue" href="scenario.html?id=ai-grounding">
+            <span>AI Grounding / IQ</span>
+            <strong>Look for knowledge bases, source permissions, evaluation, and operating evidence.</strong>
+          </a>
+          <a class="reference-cue" href="scenario.html?id=content-understanding-document-workflow">
+            <span>Content Understanding</span>
+            <strong>Look for document workflow, extraction, multimodal input, and validation mechanics.</strong>
+          </a>
+          <a class="reference-cue" href="scenario.html?id=avatar-scenario">
+            <span>Avatar Scenario</span>
+            <strong>Look for content approval, accessibility, review checkpoints, and demo-surface mechanics.</strong>
+          </a>
+        </div>
       </div>
     </section>
 
     <div class="filters" role="search" aria-label="Filter reference activities">
       <div class="wrap filters-inner">
+        <div class="reference-filter-intro">
+          <span class="filter-label">Find the mechanic</span>
+          <p>Search first, then narrow by capability or level.</p>
+        </div>
+        <div class="filter-group reference-search-group">
+          <label class="search-box" for="searchInput">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+            <input id="searchInput" type="search" placeholder="Search building blocks…" autocomplete="off" />
+          </label>
+          <button class="chip" id="clearBtn" type="button">Clear</button>
+          <span class="result-count" id="count" aria-live="polite" aria-atomic="true">—</span>
+        </div>
         <div class="filter-group filter-group-wide">
           <span class="filter-label" id="capabilityFilterLabel">Capability</span>
           <div id="capabilityChips" role="group" aria-labelledby="capabilityFilterLabel" style="display:contents"></div>
@@ -62,14 +110,6 @@
         <div class="filter-group">
           <span class="filter-label" id="diffFilterLabel">Level</span>
           <div id="diffChips" role="group" aria-labelledby="diffFilterLabel" style="display:contents"></div>
-        </div>
-        <div class="filter-group" style="margin-left:auto;flex-wrap:nowrap">
-          <label class="search-box" for="searchInput">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-            <input id="searchInput" type="search" placeholder="Search building blocks…" autocomplete="off" />
-          </label>
-          <button class="chip" id="clearBtn" type="button">Clear</button>
-          <span class="result-count" id="count" aria-live="polite" aria-atomic="true">—</span>
         </div>
       </div>
     </div>

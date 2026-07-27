@@ -1,0 +1,10 @@
+{
+  "detector": {
+    "ignoreFiles": [
+      "docs/_site/**",
+      "docs/vendor/**",
+      "docs/.bundle/**",
+      "vendor/bundle/**"
+    ]
+  }
+}

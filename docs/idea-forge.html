@@ -52,19 +52,148 @@
           <span aria-hidden="true">/</span>
           <span>Idea Forge</span>
         </nav>
-        <h1 id="ideaForgeTitle">Forge a buildable AI idea.</h1>
-        <p class="lede">Use this when the customer wants AI value but has not yet picked a clear, safe, demonstrable scenario.</p>
+        <h1 id="ideaForgeTitle">Forge a buildable AI idea, then stay on the scenario path.</h1>
+        <p class="lede">Use this guided intake when the customer has interest in AI, but the team has not yet chosen a safe, demonstrable customer scenario.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md">Open Activity Forge →</a>
-          <a class="btn btn-ghost" href="index.html#outcomes">Choose a scenario</a>
+          <a class="btn btn-primary" href="#when-to-use-idea-forge">Start the guided flow</a>
+          <a class="btn btn-ghost" href="index.html#outcomes">Skip to scenarios</a>
         </div>
       </div>
     </section>
 
-    <section class="section-tight" aria-label="Idea Forge content">
+    <section class="section-tight idea-forge-onboard" aria-label="Idea Forge content">
       <div class="wrap">
-        <article class="guide-body" id="ideaForgeBody" aria-live="polite">
-          <p class="mono" style="color:var(--c-faint)">Loading Idea Forge…</p>
+        <article class="guide-body idea-forge-guide">
+          <section class="idea-forge-lead" aria-labelledby="when-to-use-idea-forge">
+            <div>
+              <p class="eyebrow">Intake route</p>
+              <h2 id="when-to-use-idea-forge">When to use Idea Forge</h2>
+              <p>Use Idea Forge at the start of an engagement when you know the customer or industry, but not the first useful AI proof. It is an intake tool: it helps the team turn public research and customer signals into ranked, right-sized ideas before choosing a scenario playbook.</p>
+            </div>
+            <aside class="idea-forge-callout" aria-label="Idea Forge guardrail">
+              <strong>Not an architecture approval.</strong>
+              <span>The scenario conversation still validates source ownership, access, environment, operating model, and evidence for the next decision.</span>
+            </aside>
+          </section>
+
+          <section id="idea-forge-flow" aria-labelledby="flow-title">
+            <h2 id="flow-title">Five-minute idea funnel</h2>
+            <div class="idea-forge-steps">
+              <div class="idea-forge-step">
+                <span class="idea-forge-step-num">1</span>
+                <h3>Prepare the prompt</h3>
+                <p>Bring the customer or business-unit name, industry, and any known region, segment, or pain points you are allowed to use.</p>
+              </div>
+              <div class="idea-forge-step">
+                <span class="idea-forge-step-num">2</span>
+                <h3>Run the skill</h3>
+                <p>Customer Activity-Forge researches public sources only, marks gaps instead of guessing, and proposes approximately ten achievable ideas.</p>
+              </div>
+              <div class="idea-forge-step">
+                <span class="idea-forge-step-num">3</span>
+                <h3>Select one direction</h3>
+                <p>Prefer an idea with a narrow user, an owner, a safe representative sample, and a first evidence case the customer can review.</p>
+              </div>
+              <div class="idea-forge-step">
+                <span class="idea-forge-step-num">4</span>
+                <h3>Hand into a scenario</h3>
+                <p>Use the generated handoff to start the matching playbook: AI Grounding / IQ, Content Understanding and Document Workflow, or Avatar Scenario.</p>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="prepare-title">
+            <h2 id="prepare-title">What to prepare</h2>
+            <div class="idea-forge-grid">
+              <div class="idea-forge-card">
+                <h3>Required</h3>
+                <ul>
+                  <li>Customer name or business unit.</li>
+                  <li>Industry or sector.</li>
+                </ul>
+              </div>
+              <div class="idea-forge-card">
+                <h3>Helpful if known</h3>
+                <ul>
+                  <li>Region or customer segment.</li>
+                  <li>Allowed pain points or public signals to verify.</li>
+                  <li>Any data, content, or process boundary already discussed.</li>
+                </ul>
+              </div>
+              <div class="idea-forge-card">
+                <h3>Keep out</h3>
+                <ul>
+                  <li>Confidential account-plan or CRM details.</li>
+                  <li>Unapproved customer data.</li>
+                  <li>Claims the team cannot cite or validate.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="produces-title">
+            <h2 id="produces-title">What Idea Forge produces</h2>
+            <div class="idea-forge-output">
+              <div>
+                <h3>Research summary</h3>
+                <p>Three to five sentences with public-source citations and explicit coverage gaps.</p>
+              </div>
+              <div>
+                <h3>Ranked ideas</h3>
+                <p>Approximately ten ideas ranked by customer fit, achievable first proof, and differentiation.</p>
+              </div>
+              <div>
+                <h3>Scenario mapping</h3>
+                <p>Each idea names a primary scenario direction and the first customer decision to take forward.</p>
+              </div>
+              <div>
+                <h3>Scenario handoff</h3>
+                <p>The top idea gets a pre-filled handoff with assumptions clearly marked for customer confirmation.</p>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="sample-title">
+            <h2 id="sample-title">Sample handoff into a scenario</h2>
+            <p>This example shows the shape of the handoff. Replace the placeholders with the skill output and keep anything unconfirmed visible for the customer conversation.</p>
+            <dl class="idea-forge-handoff" aria-label="Sample scenario handoff">
+              <div>
+                <dt>Customer outcome</dt>
+                <dd>Reduce time spent finding trusted answers for a specific user group.</dd>
+              </div>
+              <div>
+                <dt>Target users and boundary</dt>
+                <dd>Named role and access boundary to confirm with the customer.</dd>
+              </div>
+              <div>
+                <dt>Context and source owner</dt>
+                <dd>Approved corpus, data product, or synthetic representative sample plus the accountable owner.</dd>
+              </div>
+              <div>
+                <dt>Recommended scenario</dt>
+                <dd>AI Grounding / IQ, Content Understanding and Document Workflow, or Avatar Scenario.</dd>
+              </div>
+              <div>
+                <dt>Evidence starter</dt>
+                <dd>Routine case, edge case, refusal/review case, or access case that proves the first outcome.</dd>
+              </div>
+              <div>
+                <dt>First customer decision</dt>
+                <dd>The next decision the scenario playbook should help the customer make.</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="idea-forge-next" aria-labelledby="next-title">
+            <div>
+              <h2 id="next-title">Choose the next in-site step</h2>
+              <p>Once the top idea has an owner, a safe sample, and a first evidence case, move it into the scenario page. Open the GitHub skill only when you are ready to run the research prompt.</p>
+            </div>
+            <div class="idea-forge-actions">
+              <a class="btn btn-primary" href="index.html#outcomes">Choose a scenario</a>
+              <a class="btn btn-ghost" href="https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/.github/skills/customer-activity-forge/SKILL.md" target="_blank" rel="noopener">Open GitHub skill</a>
+            </div>
+          </section>
         </article>
       </div>
     </section>
@@ -84,7 +213,6 @@
   </footer>
 
   <script src="assets/js/core.js"></script>
-  <script src="assets/js/idea-forge.js"></script>
   <script src="assets/js/shell.js"></script>
 </body>
 </html>

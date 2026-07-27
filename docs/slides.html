@@ -7,13 +7,20 @@
   <link rel="icon" href="assets/img/logo-mark.png" />
   <meta name="description" content="Printable customer conversation slides for an AI Starter Kit scenario." />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/shell.css" />
   <script src="assets/js/marked.min.js"></script>
 </head>
 <body class="slides-page">
-  <header class="slides-toolbar">
-    <a href="index.html#outcomes">AI Starter Kit</a>
-    <span id="deckTitle">Loading slides…</span>
-    <button type="button" id="printSlides">Print / save as PDF</button>
+  <header class="nav slides-toolbar" role="banner">
+    <div class="nav-inner slides-toolbar-inner">
+      <a class="brand" href="index.html" aria-label="Real Value Acceleration Program — Home">
+        <img src="assets/img/logo-full.png" alt="Real Value Acceleration Program" class="brand-logo" />
+      </a>
+      <span class="slides-toolbar-label">Customer deck</span>
+      <span id="deckTitle" class="slides-toolbar-title">Loading slides…</span>
+      <a class="btn btn-ghost btn-sm slides-home" href="index.html#outcomes">Scenarios</a>
+      <button type="button" class="btn btn-primary btn-sm" id="printSlides">Print / save as PDF</button>
+    </div>
   </header>
   <main id="slideDeck" aria-live="polite"><p>Loading slides…</p></main>
   <script src="assets/js/core.js"></script>
