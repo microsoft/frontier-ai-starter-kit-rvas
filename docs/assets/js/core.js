@@ -140,6 +140,97 @@
     }
   };
 
+  FP.applyGuideAccordions = function (container) {
+    if (!container) return;
+
+    const collapsibleHeadings = Array.from(container.querySelectorAll('h2, h3'))
+      .filter((heading) => shouldCollapseGuideSection(heading));
+
+    collapsibleHeadings.forEach((heading) => {
+      if (!heading.isConnected || heading.closest('details')) return;
+
+      const level = Number(heading.tagName.slice(1));
+      const details = document.createElement('details');
+      details.className = 'guide-accordion';
+      details.dataset.sectionLevel = String(level);
+      details.open = shouldOpenGuideSection(heading);
+
+      if (heading.id) {
+        details.id = heading.id;
+        heading.removeAttribute('id');
+      }
+
+      const summary = document.createElement('summary');
+      summary.className = 'guide-accordion__summary';
+      summary.innerHTML = `
+        <span class="guide-accordion__title">${heading.innerHTML}</span>
+        <span class="guide-accordion__meta">${accordionMeta(heading.textContent)}</span>`;
+
+      const body = document.createElement('div');
+      body.className = 'guide-accordion__body';
+
+      heading.replaceWith(details);
+      details.appendChild(summary);
+      details.appendChild(body);
+
+      let node = details.nextSibling;
+      while (node) {
+        const next = node.nextSibling;
+        if (isHeadingAtOrAbove(node, level)) break;
+        body.appendChild(node);
+        node = next;
+      }
+    });
+
+    openAccordionForHash(container);
+  };
+
+  function shouldCollapseGuideSection(heading) {
+    const text = normalizeAccordionHeading(heading.textContent);
+    if (!text) return false;
+
+    return (
+      /^rung\s*\([bc]\)\b/.test(text) ||
+      /\b(build-from-scratch|stretch goals?|optional|troubleshooting|troubleshoot|common issues?|gotchas?|tips|learning resources?|resources|cleanup)\b/.test(text) ||
+      /^what if\b/.test(text)
+    );
+  }
+
+  function shouldOpenGuideSection(heading) {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    return Boolean(hash && heading.id === hash);
+  }
+
+  function openAccordionForHash(container) {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (!hash) return;
+
+    const target = container.querySelector('#' + CSS.escape(hash));
+    const accordion = target && target.closest('details.guide-accordion');
+    if (accordion) accordion.open = true;
+  }
+
+  function accordionMeta(value) {
+    const text = normalizeAccordionHeading(value);
+    if (/\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text)) return 'Troubleshooting';
+    if (/\b(build-from-scratch|stretch goals?|optional|rung\s*\([bc]\))\b/.test(text)) return 'Options';
+    if (/\b(tips|learning resources?|resources|cleanup)\b/.test(text)) return 'Reference';
+    return 'Details';
+  }
+
+  function normalizeAccordionHeading(value) {
+    return String(value || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  function isHeadingAtOrAbove(node, level) {
+    if (!node || node.nodeType !== Node.ELEMENT_NODE) return false;
+    const match = node.tagName.match(/^H([1-6])$/);
+    return Boolean(match && Number(match[1]) <= level);
+  }
+
   /* ─────────────────────────── Diagram zoom ─────────────────────── */
   FP.initDiagramZoom = function (container) {
     if (!container) return;

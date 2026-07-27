@@ -40,6 +40,7 @@
       const content = await response.text();
       if (/\.md$/i.test(sourcePath)) {
         FP.renderMd(content, body);
+        FP.applyGuideAccordions(body);
         rewriteGuideLinks(body, scenario, sourcePath, data.activities || []);
         FP.initDiagramZoom(body);
       } else {

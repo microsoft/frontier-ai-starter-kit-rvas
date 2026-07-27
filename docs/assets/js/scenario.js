@@ -13,6 +13,7 @@
       if (!response.ok) throw new Error(`Could not load playbook (${response.status})`);
       const body = document.getElementById('scenarioBody');
       FP.renderMd(await response.text(), body);
+      FP.applyGuideAccordions(body);
       rewriteScenarioLinks(body, scenario, data.activities || []);
       FP.initDiagramZoom(body);
     } catch (error) {

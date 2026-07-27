@@ -230,6 +230,7 @@
       ensureGuideAnchors(body);
       removeDuplicateGuideTitle(body, c);
       body.querySelectorAll('.next-panel').forEach((el) => el.remove());
+      FP.applyGuideAccordions(body);
       renderActivityPager(body, c, allActivities);
       scrollToGuideAnchor(body);
       FP.initDiagramZoom(body);
