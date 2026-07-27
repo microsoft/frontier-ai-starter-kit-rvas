@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-27T08:46:40.032+02:00",
+  "title": "Design System: RVAS AI Starter Kit",
+  "extensions": {
+    "colorMeta": {
+      "rvap-blue": {
+        "role": "primary",
+        "displayName": "RVAP Blue",
+        "canonical": "#1A77E3",
+        "tonalRamp": ["oklch(22% 0.10 255)", "oklch(32% 0.14 255)", "oklch(43% 0.18 255)", "oklch(53% 0.20 255)", "oklch(63% 0.17 255)", "oklch(74% 0.12 255)", "oklch(86% 0.07 255)", "oklch(95% 0.03 255)"]
+      },
+      "deep-navy": {
+        "role": "primary",
+        "displayName": "Deep Navy",
+        "canonical": "#032254",
+        "tonalRamp": ["oklch(14% 0.08 260)", "oklch(20% 0.10 260)", "oklch(28% 0.11 260)", "oklch(38% 0.10 260)", "oklch(50% 0.08 260)", "oklch(66% 0.06 260)", "oklch(82% 0.04 260)", "oklch(94% 0.02 260)"]
+      },
+      "teal-accent": {
+        "role": "secondary",
+        "displayName": "Journey Teal",
+        "canonical": "#14868A",
+        "tonalRamp": ["oklch(18% 0.07 200)", "oklch(28% 0.09 200)", "oklch(39% 0.10 200)", "oklch(50% 0.10 200)", "oklch(61% 0.08 200)", "oklch(73% 0.06 200)", "oklch(86% 0.04 200)", "oklch(95% 0.02 200)"]
+      },
+      "purple-accent": {
+        "role": "tertiary",
+        "displayName": "Workshop Purple",
+        "canonical": "#504092",
+        "tonalRamp": ["oklch(18% 0.08 295)", "oklch(28% 0.10 295)", "oklch(39% 0.12 295)", "oklch(50% 0.12 295)", "oklch(62% 0.09 295)", "oklch(74% 0.06 295)", "oklch(87% 0.04 295)", "oklch(95% 0.02 295)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "RVAP Paper",
+        "canonical": "#F5F8FE",
+        "tonalRamp": ["oklch(18% 0.02 260)", "oklch(28% 0.02 260)", "oklch(42% 0.018 260)", "oklch(58% 0.015 260)", "oklch(72% 0.012 260)", "oklch(84% 0.010 260)", "oklch(92% 0.008 260)", "oklch(98% 0.006 260)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#111827",
+        "tonalRamp": ["#111827", "#1F2937", "#374151", "#4B5563", "#6B7280", "#9CA3AF", "#D1D5DB", "#F3F4F6"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headings and major page openers."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles and primary divisions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Readable customer-facing documentation and guide copy."
+      },
+      "label": {
+        "displayName": "Coordinate Label",
+        "purpose": "Eyebrows, badges, route metadata, and compact orientation labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient",
+        "value": "0 4px 20px -8px rgba(3, 34, 84, 0.12), 0 1px 3px rgba(3, 34, 84, 0.06)",
+        "purpose": "Higher-level shell surfaces."
+      },
+      {
+        "name": "card",
+        "value": "0 1px 3px rgba(3, 34, 84, 0.08), 0 4px 12px rgba(3, 34, 84, 0.06)",
+        "purpose": "Cards and hover lift."
+      },
+      {
+        "name": "hero-glass",
+        "value": "0 24px 60px rgba(3, 34, 84, 0.28)",
+        "purpose": "Translucent stats on deep hero surfaces."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Default easing for hover, reveal, and lift transitions."
+      },
+      {
+        "name": "compass-spin",
+        "value": "120s linear infinite",
+        "purpose": "Slow hero compass rotation, disabled when prefers-reduced-motion is set."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile-to-tablet",
+        "value": "768px"
+      },
+      {
+        "name": "hero-two-column",
+        "value": "900px"
+      },
+      {
+        "name": "stats-four-up",
+        "value": "620px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary RVAP Blue action for scenario starts and non-hero CTAs.",
+      "html": "<button class=\"ds-btn-primary\">See the scenarios</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border:0;border-radius:7px;background:#1A77E3;color:#fff;font:600 .9rem Aptos,Inter,Segoe UI,system-ui,sans-serif;line-height:1;box-shadow:0 4px 20px -6px rgba(26,119,227,.10);transition:opacity .18s,transform .18s cubic-bezier(.22,1,.36,1),box-shadow .18s}.ds-btn-primary:hover{opacity:.9}.ds-btn-primary:active{transform:scale(.97)}.ds-btn-primary:focus-visible{outline:2px solid #1A77E3;outline-offset:3px}"
+    },
+    {
+      "name": "Hero Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary-hero",
+      "description": "Inverted primary button for deep-navy hero surfaces.",
+      "html": "<button class=\"ds-btn-hero\">Open customer slides</button>",
+      "css": ".ds-btn-hero{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border:0;border-radius:7px;background:#fff;color:#032254;font:600 .9rem Aptos,Inter,Segoe UI,system-ui,sans-serif;line-height:1;transition:opacity .18s,transform .18s cubic-bezier(.22,1,.36,1)}.ds-btn-hero:hover{opacity:.9}.ds-btn-hero:active{transform:scale(.97)}.ds-btn-hero:focus-visible{outline:2px solid #fff;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Quiet secondary action with border-first affordance.",
+      "html": "<button class=\"ds-btn-ghost\">Need an idea?</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border:1px solid #E3E6ED;border-radius:7px;background:transparent;color:#111827;font:600 .9rem Aptos,Inter,Segoe UI,system-ui,sans-serif;line-height:1;transition:background .18s,border-color .18s,transform .18s cubic-bezier(.22,1,.36,1)}.ds-btn-ghost:hover{background:#EEF1FA;border-color:#47494E}.ds-btn-ghost:active{transform:scale(.97)}.ds-btn-ghost:focus-visible{outline:2px solid #1A77E3;outline-offset:3px}"
+    },
+    {
+      "name": "Scenario Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Customer-outcome card with route strip and compact metadata.",
+      "html": "<article class=\"ds-scenario-card\"><div class=\"ds-scenario-top\"><span class=\"ds-id\">initial</span><span class=\"ds-badge\">4 lessons</span></div><h3>AI Grounding / IQ</h3><p>Trusted answers from enterprise knowledge and operational context.</p></article>",
+      "css": ".ds-scenario-card{position:relative;overflow:hidden;display:flex;min-height:220px;flex-direction:column;gap:14px;padding:22px 24px;border:1px solid #E3E6ED;border-radius:18px;background:linear-gradient(180deg,#fff,#FAFBFD);color:#111827;box-shadow:0 1px 3px rgba(3,34,84,.08),0 4px 12px rgba(3,34,84,.06);transition:transform .22s cubic-bezier(.22,1,.36,1),border-color .22s,box-shadow .22s}.ds-scenario-card:before{content:\"\";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#0078D4,#14868A,#504092,#1A77E3)}.ds-scenario-card:hover{transform:translateY(-3px);border-color:#0078D4}.ds-scenario-card h3{margin:0;color:#032254;font:700 1.12rem/1.2 Aptos Display,Outfit,Segoe UI,system-ui,sans-serif}.ds-scenario-card p{margin:0;color:#47494E;font:400 .88rem/1.65 Aptos,Inter,Segoe UI,system-ui,sans-serif}.ds-scenario-top{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.ds-id{font:500 .64rem Cascadia Code,JetBrains Mono,monospace;color:#1A77E3;text-transform:uppercase;letter-spacing:.12em}.ds-badge{font:600 .63rem Cascadia Code,JetBrains Mono,monospace;padding:3px 7px;border:1px solid #E3E6ED;border-radius:4px;background:#F5F8FE;color:#47494E;text-transform:uppercase;letter-spacing:.04em}"
+    },
+    {
+      "name": "Active Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Compact filter chip for reference and route filtering.",
+      "html": "<button class=\"ds-chip ds-chip-active\">guided</button>",
+      "css": ".ds-chip{padding:5px 11px;border:1px solid #E3E6ED;border-radius:5px;background:transparent;color:#47494E;font:500 .72rem Cascadia Code,JetBrains Mono,monospace;letter-spacing:.04em;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}.ds-chip:hover{background:#EEF1FA;color:#111827}.ds-chip-active{border-color:transparent;background:#1A77E3;color:#fff;font-weight:700}.ds-chip:focus-visible{outline:2px solid #1A77E3;outline-offset:2px}"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Sticky RVAP glass navigation with compact route links.",
+      "html": "<nav class=\"ds-nav\"><strong class=\"ds-brand\">RVAS</strong><a class=\"ds-nav-link ds-active\" href=\"#\">Scenarios</a><a class=\"ds-nav-link\" href=\"#\">Idea Forge</a><a class=\"ds-nav-link\" href=\"#\">Reference Library</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:4px;height:58px;padding:0 24px;border-bottom:1px solid #E3E6ED;background:rgba(255,255,255,.92);backdrop-filter:blur(16px) saturate(160%);color:#111827}.ds-brand{margin-right:auto;color:#032254;font:700 .95rem Aptos Display,Outfit,Segoe UI,system-ui,sans-serif}.ds-nav-link{padding:6px 11px;border-radius:7px;color:#47494E;text-decoration:none;font:500 .875rem Aptos,Inter,Segoe UI,system-ui,sans-serif;transition:background .2s,color .2s}.ds-nav-link:hover,.ds-active{background:#EEF1FA;color:#111827}.ds-nav-link:focus-visible{outline:2px solid #1A77E3;outline-offset:2px}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Soft container search field used in filter surfaces.",
+      "html": "<label class=\"ds-search\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"m16 16 5 5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg><input placeholder=\"Search reference library\" /></label>",
+      "css": ".ds-search{display:flex;align-items:center;gap:7px;max-width:320px;min-width:220px;padding:0 12px;border:1px solid #E3E6ED;border-radius:7px;background:#F5F8FE;color:#6B7280;transition:border-color .2s}.ds-search:focus-within{border-color:#1A77E3}.ds-search svg{width:16px;height:16px;flex-shrink:0}.ds-search input{width:100%;padding:8px 0;border:0;outline:0;background:transparent;color:#111827;font:400 .875rem Aptos,Inter,Segoe UI,system-ui,sans-serif}.ds-search input::placeholder{color:#6B7280}"
+    },
+    {
+      "name": "Scenario Rail Panel",
+      "kind": "custom",
+      "refersTo": "scenario-rail",
+      "description": "Sidebar proof and decision panel for scenario playbooks.",
+      "html": "<aside class=\"ds-panel\"><div class=\"ds-panel-head\">Customer decisions</div><div class=\"ds-panel-body\"><ul><li>What data can be used?</li><li>What evidence proves value?</li></ul></div></aside>",
+      "css": ".ds-panel{overflow:hidden;border:1px solid #E3E6ED;border-radius:12px;background:#fff;box-shadow:0 1px 3px rgba(3,34,84,.08),0 4px 12px rgba(3,34,84,.06);color:#111827}.ds-panel-head{padding:10px 14px;border-bottom:1px solid #E3E6ED;background:#F5F8FE;color:#1A77E3;font:600 .72rem Cascadia Code,JetBrains Mono,monospace;text-transform:uppercase;letter-spacing:.08em}.ds-panel-body{padding:14px;color:#47494E;font:400 .86rem/1.6 Aptos,Inter,Segoe UI,system-ui,sans-serif}.ds-panel-body ul{margin:0;padding-left:20px}.ds-panel-body li+li{margin-top:7px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Guided Foundry Atlas",
+    "overview": "The system feels like a calm working atlas for customer AI decisions: clean RVAP paper surfaces, decisive Microsoft blue signals, and route-like components that help a facilitator move from idea to scenario to proof. It is not a generic product-marketing skin. It is a customer-delivery interface that makes the next decision visible and keeps implementation details subordinate to evidence.\n\nThe dominant visual language is light, crisp, and navigational, with a deep navy hero plane used as the opening orientation moment. Compass rings, dot grids, mono coordinate labels, numbered steps, and rail panels create the sense of a guided journey without making the site feel decorative or game-like.",
+    "keyCharacteristics": [
+      "RVAP clean light surfaces with Deep Navy signal moments.",
+      "Scenario-first information architecture expressed through cards, rails, badges, and journey maps.",
+      "Outfit/Aptos-style display typography paired with practical Inter/Aptos body copy and JetBrains/Cascadia mono labels.",
+      "Subtle motion and elevation that make interaction states clear without distracting from customer evidence.",
+      "Crisp, navigational, and facilitator-friendly components."
+    ],
+    "rules": [
+      {
+        "name": "The Blue Signal Rule",
+        "body": "RVAP Blue should identify decisions and next actions; do not scatter it as generic decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Navy Gateway Rule",
+        "body": "Deep Navy belongs to high-orientation surfaces such as heroes, slide-like openers, and major route frames. Most content should remain on light surfaces.",
+        "section": "colors"
+      },
+      {
+        "name": "The Coordinate Label Rule",
+        "body": "Mono uppercase labels should orient the reader, not shout at them. Keep them short, tracked, and paired with meaningful content.",
+        "section": "typography"
+      },
+      {
+        "name": "The Journey Before Catalog Rule",
+        "body": "Layout should first clarify the customer path, then expose the supporting reference library. Do not let dense implementation catalogs compete with scenario decision surfaces.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-Until-Useful Rule",
+        "body": "Surfaces stay quiet until interaction or hierarchy needs lift. Use border, fill, and route color before adding more shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the RVAP light canvas and Deep Navy hero contrast.",
+      "Do use mono labels for orientation metadata such as maturity, duration, stage, and route IDs.",
+      "Do use cards, rails, and steps to show where the customer is in the decision journey.",
+      "Do keep primary actions visibly blue or hero-inverted; secondary actions should stay quiet.",
+      "Do respect reduced-motion settings for compass rotation and reveal animation."
+    ],
+    "donts": [
+      "Don't turn the system into a dark terminal UI; dark navy is a gateway moment, not the default reading surface.",
+      "Don't use RVAP Blue as background ornament everywhere. It must remain a decision/action signal.",
+      "Don't add decorative diagrams, customers, proof, or claims that are not present in the product evidence.",
+      "Don't replace the RVAP logo or Foundry icon vocabulary with unrelated icon styles.",
+      "Don't make reference-library mechanics visually outrank the scenario playbooks."
+    ]
+  }
+}
