@@ -1,12 +1,11 @@
-# AI Grounding — a practical build course
+# AI Grounding: build answers people can trust
 
 Build a grounded, permission-aware assistant over approved content, and prove it before it ships.
 
-Eight modules, one lesson each. Every module ends with something you can see working against your
-own resources, and every module offers real options with an opinionated default and the migration
-cost of changing your mind. You can deploy real Azure resources for a clean demo, index a synthetic
-corpus, compare model behavior, and learn the evidence a risk owner would need before a customer
-pilot.
+The eight modules take you from an empty environment to a working pilot. Each one ends with evidence
+from your own resources, not a success message from a local script. You will deploy Azure resources,
+index a synthetic corpus, compare models, and test the failures that matter before anyone uses the
+assistant.
 
 ## Before you start
 
@@ -33,14 +32,13 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 | [7. Evaluate and trace](lessons/07-evaluate-and-trace.md) | Evaluation gate, red-team evidence, end-to-end traces | Evaluation gate passed with trace and red-team evidence |
 | [8. Deploy and surface it to users](lessons/08-deploy-and-surface.md) | The surface decision, a pinned version, a rollback, an owner, and a signed release | Surface release contract complete and the unauthenticated caller refused |
 
-Modules 5, 6, and 7 contain the decisions that most often go wrong: teams add an agent before
-retrieval works, index live data instead of routing to it, and ship without an evaluation gate.
-Module 8 catches the fourth: shipping to a surface that quietly loses the permission boundary
-everything else was built to protect.
+Most teams get into trouble in modules 5 through 7. They add an agent before retrieval works, copy
+live data into an index, or ship without a release gate. Module 8 checks one more easy-to-miss
+failure: the final app must preserve the same permission boundary as the retrieval layer.
 
 ## Decision gates to carry into the customer conversation
 
-Use these gates before opening reference-library mechanics:
+Answer these questions before opening the reference library:
 
 | Gate | Decide before building |
 |---|---|
@@ -57,14 +55,13 @@ az login
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
 ```
 
-The deployment writes `accelerator/.env` from the template outputs. That file is the environment
-contract every later module depends on — keep it local and uncommitted.
+The deployment writes `accelerator/.env` from the template outputs. Every later module reads that
+file, so keep it local and do not commit it.
 
 ## Run the scripts
 
-The accelerator ships four scripts that do real work against your own Azure resources. They need a
-subscription and the `.env` contract; there is no offline mode, because a script that passes without
-touching Azure tells you nothing about whether your grounding works.
+These four scripts call your Azure resources directly. They need a subscription and the `.env`
+file. There is no offline mode because an offline pass cannot tell you whether retrieval works.
 
 ```bash
 # Create the knowledge source and knowledge base
@@ -84,7 +81,7 @@ Each lesson's **Verify** section lists the specific commands and signals for tha
 
 ## Reused activities
 
-These lessons compose the kit's canonical activities rather than duplicating them:
+These lessons reuse the kit's implementation activities:
 
 - [Foundations](../../activities/foundations/README.md) — provisioning, model selection, and the
   Azure AI Search grounding baseline

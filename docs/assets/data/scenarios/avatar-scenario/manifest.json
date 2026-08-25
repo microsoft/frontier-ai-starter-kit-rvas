@@ -1,9 +1,9 @@
 {
   "id": "avatar-scenario",
   "name": "Avatar Scenario",
-  "tagline": "Build approved, accessible, avatar-led experiences with accountable human oversight on Azure.",
+  "tagline": "Build an accessible avatar experience that people approve before it goes live.",
   "order": 3,
-  "customer_outcome": "Audiences receive a clear, inclusive avatar-led experience while owners can trace each published claim to approved content, human approvals, responsible-AI disclosure, and operational evidence.",
+  "customer_outcome": "People get an accessible avatar-led experience, while owners can trace every published claim to its source and the person who approved it.",
   "maturity": "initial",
   "level": "guided",
   "duration_minutes": 420,
@@ -88,7 +88,7 @@
     {
       "id": "experience-selection",
       "title": "Verify and select the Azure experience capability",
-      "summary": "Before implementation, use current Microsoft docs to confirm a supported Speech avatar (batch or real-time), Voice Live, video-translation, or plain-audio capability, and record its API, region, identity, pricing, accessibility, content-safety, consent, and responsible-AI gating contract.",
+      "summary": "Before writing code, confirm which Speech or Voice capability fits the experience. Record its API, region, identity, cost, accessibility limits, consent rules, and release gates.",
       "outcome": "Dated, evidence-backed capability decision record covering service, API, region, identity, pricing, accessibility, disclosure, and limited-access gating"
     },
     {
@@ -105,7 +105,7 @@
     {
       "id": "content-pipeline",
       "title": "Build the governed content pipeline",
-      "summary": "Connect approved source content, preserve owner/version/expiry metadata and access controls, and produce the typed, traceable claim set that gates everything downstream.",
+      "summary": "Connect approved content and keep its owner, version, expiry date, and access rules. Use that record to control what the experience may say.",
       "implementation_paths": [
         "accelerator/sample-data"
       ],
@@ -114,14 +114,14 @@
     {
       "id": "grounded-assistant",
       "title": "Build the grounded assistant behind the experience",
-      "summary": "Build the model or Foundry agent path for cited drafting, refusal on unapproved claims, human escalation, and approved-content retrieval that feeds the script.",
+      "summary": "Build a model or Foundry agent that drafts from approved content, cites its sources, refuses unsupported claims, and hands uncertain cases to a person.",
       "activity_id": "foundations",
       "outcome": "Foundations Steps 3 and 4 — grounded, citing, refusing agent"
     },
     {
       "id": "experience-generation",
       "title": "Generate the accessible avatar experience",
-      "summary": "Integrate the verified Speech capability with synthetic-media disclosure, transcript/captions, locale handling, and a non-avatar fallback, rendered only from an approved script revision.",
+      "summary": "Generate the experience from an approved script revision. Include a synthetic-media notice, captions or a transcript, and a non-avatar fallback.",
       "implementation_paths": [
         "accelerator/content_pack.py"
       ],
@@ -139,7 +139,7 @@
     {
       "id": "prove-and-operate",
       "title": "Evaluate, red-team, trace, and operate",
-      "summary": "Measure grounding, disclosure, accessibility, handoff, and defect behaviour; red-team the experience; trace it; and deploy a controlled pilot with a scorecard and release decision.",
+      "summary": "Test whether the experience stays grounded, discloses synthetic media, remains accessible, and hands off correctly. Trace failures before deciding whether to release the pilot.",
       "activity_id": "advanced-evaluation-redteam",
       "implementation_paths": [
         "accelerator/sample-data/feedback-fixture.json"

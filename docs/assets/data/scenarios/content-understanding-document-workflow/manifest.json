@@ -1,9 +1,9 @@
 {
   "id": "content-understanding-document-workflow",
   "name": "Content Understanding and Document Workflow",
-  "tagline": "Move from SME-tested document understanding to a governed business workflow.",
+  "tagline": "Turn documents into structured results that a person can review.",
   "order": 2,
-  "customer_outcome": "An SME tests an analyzer/schema on safe document samples in Content Understanding Studio, hands engineering a reviewable JSON configuration contract, and enables a human-reviewed document workflow.",
+  "customer_outcome": "An expert tests safe document samples, gives engineering a clear JSON contract, and keeps a person in control of the final workflow decision.",
   "maturity": "initial",
   "level": "guided",
   "duration_minutes": 420,
@@ -109,7 +109,7 @@
     {
       "id": "extraction-selection",
       "title": "Select the extraction capability",
-      "summary": "Verify and choose the current Content Understanding analyzer, Document Intelligence model, LLM structured-output, or multimodal approach against schema, document quality, region, cost, and review needs.",
+      "summary": "Test the available extraction options against real sample quality and the fields reviewers need. Then check region and cost.",
       "activity_id": "extra-document-workflow",
       "outcome": "Document capability and implementation decision"
     },
@@ -123,14 +123,14 @@
     {
       "id": "human-review",
       "title": "Build review, correction, and handoff",
-      "summary": "Route exceptions to a named reviewer, retain corrections as evaluation evidence, and hand approved results to a governed downstream seam.",
+      "summary": "Send uncertain results to a named reviewer. Keep every correction, then pass only approved results to the next system.",
       "activity_id": "advanced-action-tools",
       "outcome": "Reviewer correction and approval trace"
     },
     {
       "id": "prove-and-observe",
       "title": "Evaluate and trace the workflow",
-      "summary": "Measure field accuracy, false approval, review rate, injection resistance, and workflow latency across representative document cases.",
+      "summary": "Measure field accuracy and false approvals across representative documents. Track how often people must review a result and how long the workflow takes.",
       "activity_id": "advanced-evaluation-redteam",
       "outcome": "Scenario evaluation gate and trace review"
     },

@@ -1,15 +1,14 @@
-# Avatar Scenario — technical build course
+# Avatar Scenario: build an experience people can check
 
-Build a governed, accessible, avatar-led experience on Azure and Microsoft Foundry. The sample
-challenge uses employee onboarding, but the pattern applies to approved learning, communications,
-and support experiences where every published statement traces to approved content, named human
-approvals, a synthetic-media disclosure, and operational evidence, and where any published revision
-can be withdrawn the moment its source changes.
+Build an accessible avatar-led experience on Azure and Microsoft Foundry. The sample uses employee
+onboarding, but the same pattern works for approved learning or support content. Every published
+statement must point back to an approved source and a named reviewer. Users are told when media is
+synthetic, and owners can withdraw a published version when its source changes.
 
-This is a **build** course, not a survey. Each module makes one high-stakes decision, compares the
-viable Microsoft options, fully implements the default path, and names the seam for swapping in a
-different approved platform. The reference implementation is in [`solution.md`](accelerator/solution.md);
-the deployable foundation is in [`accelerator/README.md`](accelerator/README.md).
+This course asks you to build the default path. Along the way, each module compares the Microsoft
+options and records the point where you could switch to another approved service. The reference
+implementation is in [`solution.md`](accelerator/solution.md), and deployment starts in
+[`accelerator/README.md`](accelerator/README.md).
 
 > **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository. **Keyless-first:**
@@ -27,12 +26,11 @@ the deployable foundation is in [`accelerator/README.md`](accelerator/README.md)
 | [6. Gate publication behind human approval](lessons/06-approval-gating.md) | A versioned four-role approval gate and a withdrawal path | Signed record enforced in code | This scenario's accelerator |
 | [7. Evaluate, red-team, trace, operate](lessons/07-prove-and-operate.md) | Evaluation + red-team + tracing + release scorecard | Foundry evaluations + AI Red Teaming Agent | [Evaluation](../../activities/advanced-evaluation-redteam/README.md) |
 
-Work the modules in order — Module 1 is the highest-stakes decision and every later module depends
-on it.
+Work through the modules in order. The first choice determines what every later module needs.
 
 ## Decision gates to carry into the customer conversation
 
-Use these gates before opening reference-library mechanics:
+Answer these questions before opening the reference library:
 
 | Gate | Decide before building |
 |---|---|
@@ -64,9 +62,9 @@ Use these gates before opening reference-library mechanics:
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 ```
 
-Then work through the modules in order. Each lesson's **Verify** section lists the commands and the
-signals that tell you the module actually worked. The full reference implementation, end-to-end, is
-in [`solution.md`](accelerator/solution.md).
+Then work through the modules in order. Each **Verify** section gives you a command to run and tells
+you what its output means. The complete reference implementation is in
+[`solution.md`](accelerator/solution.md).
 
 ## Responsible AI
 

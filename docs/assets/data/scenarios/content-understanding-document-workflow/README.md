@@ -1,10 +1,9 @@
-# Content Understanding — the reviewable document workflow
+# Content Understanding: turn documents into reviewable decisions
 
-Build a controlled document-to-decision path for invoices, RFQs, or specifications: a typed,
-evidence-backed, human-reviewed result — not an autonomous business decision and not a generic OCR
-demo. This is a practical, opinionated build course. Each module names the Microsoft options, picks a
-default, implements the default path or contract, and names the seam for swapping to another
-approved option.
+Build a controlled path from an invoice, RFQ, or specification to a typed result that a person can
+check. The workflow keeps the source evidence and stops before making a business decision on its own.
+Each module compares the available Microsoft options, recommends a default, and shows where another
+approved service can be swapped in.
 
 The quality bar and reference format are the [Foundations activity](activity.html?id=foundations)
 and the AI Grounding scenario lessons. The scenario reference contract lives in
@@ -22,14 +21,12 @@ and the AI Grounding scenario lessons. The scenario reference contract lives in
 | [6. Evaluate and trace](lesson.html?scenario=content-understanding-document-workflow&lesson=prove-and-observe) | Foundry evaluators, an offline harness, and an adversarial pass, against a gate | Scenario evaluation gate and trace review |
 | [7. Deploy the workflow](lesson.html?scenario=content-understanding-document-workflow&lesson=deploy) | Hosted agent, container app, or an API behind APIM | Controlled pilot deployment |
 
-Each lesson follows the same core contract: **What you build · Choose your path · Implementation ·
-Verify · Decision record · Next module.** A standalone **Troubleshooting** section appears only when
-the module has concrete runtime failures worth keeping out of Verify. Modules build on the previous
-one — module N's outcome is module N+1's prerequisite.
+Each lesson tells you what to build, which path to choose, how to implement it, and what evidence to
+inspect. Modules build on one another, so finish them in order.
 
 ## Decision gates to carry into the customer conversation
 
-Use these gates before opening reference-library mechanics:
+Answer these questions before opening the reference library:
 
 | Gate | Decide before building |
 |---|---|
@@ -41,8 +38,8 @@ Use these gates before opening reference-library mechanics:
 
 ## Canonical activities
 
-The scenario supplies document-specific decisions, contracts, and evidence gates, and **links** to the
-canonical activities for shared mechanics rather than duplicating them:
+This scenario covers the document-specific decisions. It links to shared implementation activities
+instead of repeating them:
 
 - [Foundations](activity.html?id=foundations) — provisioning and the `.env` contract.
 - [Document Workflow](activity.html?id=extra-document-workflow) — extraction implementation.
@@ -58,8 +55,8 @@ canonical activities for shared mechanics rather than duplicating them:
 ./accelerator/scripts/deploy.sh rg-content-understanding eastus2
 ```
 
-Then work through the modules in order. Each lesson's **Verify** section lists the commands and the
-signals that tell you the module actually worked against your own resources.
+Then work through the modules in order. Each **Verify** section gives you a command to run and tells
+you what its output means.
 
 API facts (API versions, model ids, SDK packages) are cited inline in each lesson and in
 [`accelerator/solution.md`](accelerator/solution.md). Re-check current Microsoft Learn guidance

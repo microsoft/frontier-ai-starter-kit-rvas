@@ -1,9 +1,9 @@
 {
   "id": "ai-grounding",
   "name": "AI Grounding / IQ",
-  "tagline": "Choose trusted knowledge and operational context for one customer decision.",
+  "tagline": "Give people useful answers from sources they are allowed to see.",
   "order": 1,
-  "customer_outcome": "A customer team selects a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.",
+  "customer_outcome": "A team can answer one useful set of questions from approved sources, enforce access rules, and show why the answers should be trusted.",
   "maturity": "initial",
   "level": "guided",
   "duration_minutes": 480,
@@ -112,7 +112,7 @@
     {
       "id": "source-selection",
       "title": "Select the source and permission architecture",
-      "summary": "Choose the approved source path: SharePoint/Copilot Studio, Azure AI Search, Foundry IQ, Fabric IQ, Work IQ, or Web IQ.",
+      "summary": "Choose where approved information lives and which identity is checked when someone asks a question.",
       "outcome": "Signed source, access, freshness, and system-of-record decision",
       "implementation_paths": [
         "accelerator/permission-probe.json",
@@ -132,7 +132,7 @@
     {
       "id": "model-selection",
       "title": "Compare chat and embedding choices",
-      "summary": "Compare supported deployments for quality, latency, cost, regional capacity, and the grounded-answer behavior the pilot needs.",
+      "summary": "Compare supported deployments on the answer quality the pilot needs, then check latency, cost, and regional capacity.",
       "activity_id": "foundations",
       "outcome": "Foundations Step 2",
       "implementation_paths": [
@@ -159,7 +159,7 @@
     {
       "id": "evaluate-and-trace",
       "title": "Evaluate and trace",
-      "summary": "Prove citation, access, injection, and stale-source behavior against a gate, and trace one request end to end so a bad answer can be explained.",
+      "summary": "Test citations, access rules, prompt injection, and stale sources. Trace one request from question to answer so you can explain a failure.",
       "activity_id": "advanced-evaluation-redteam",
       "outcome": "Evaluation gate passed with trace and red-team evidence",
       "implementation_paths": [
@@ -169,7 +169,7 @@
     {
       "id": "deploy-and-surface",
       "title": "Deploy and surface it to users",
-      "summary": "Choose where users meet the agent — your own app, Teams and Microsoft 365 Copilot, Copilot Studio, a hosted endpoint, or a custom UI — then pin the version, re-prove the permission boundary, and sign the release.",
+      "summary": "Choose where people will use the agent. Pin the version, test the permission boundary again, and record the release decision.",
       "activity_id": "advanced-deploy-hosted-agent",
       "outcome": "Surface release contract complete and the unauthenticated caller refused",
       "implementation_paths": [

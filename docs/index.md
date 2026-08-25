@@ -6,37 +6,35 @@ description: Shape a customer AI engagement, choose a scenario, and reuse the le
 
 <div class="hero-panel home-hero">
   <span class="hero-kicker">RVAS • AI Starter Kit</span>
-  <h1>Turn a customer conversation into a useful AI start.</h1>
-  <p class="hero-tagline">Use Idea Forge when the opportunity is unclear. Otherwise, choose one of three scenario playbooks to reach the next useful decision, slide, lesson, and demonstrator.</p>
+  <h1>Start with the customer’s problem. Build only what helps answer it.</h1>
+  <p class="hero-tagline">If the opportunity is still fuzzy, begin with Idea Forge. If it is clear, pick a scenario and work toward the next decision you need to prove.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/#outcomes' | relative_url }}">See the scenarios</a>
     <a class="btn btn-outline" href="{{ '/idea-forge' | relative_url }}">Need an idea?</a>
   </div>
 </div>
 
-## The customer-delivery journey
+## A simple way through the kit
 
 <ol class="journey-map">
-  <li><span>1</span><strong>Frame</strong><small>Forge or clarify the customer outcome</small></li>
-  <li><span>2</span><strong>Decide</strong><small>Surface data, ownership, environment, and platform assumptions</small></li>
-  <li><span>3</span><strong>Prove</strong><small>Use one scenario’s lessons, slides, and minimal accelerator</small></li>
-  <li><span>4</span><strong>Continue</strong><small>Capture evidence for the next engagement decision</small></li>
+  <li><span>1</span><strong>Frame</strong><small>Get specific about the outcome</small></li>
+  <li><span>2</span><strong>Decide</strong><small>Write down the assumptions that could change the design</small></li>
+  <li><span>3</span><strong>Prove</strong><small>Build the smallest useful test</small></li>
+  <li><span>4</span><strong>Continue</strong><small>Use the evidence to choose what comes next</small></li>
 </ol>
 
 ## Choose a scenario
 
 | Scenario | Use it when | Start |
 |---|---|---|
-| AI Grounding / IQ | People need trusted answers from the right combination of enterprise knowledge and operational context. | [Open AI Grounding / IQ]({{ '/scenario.html?id=ai-grounding' | relative_url }}) |
-| Content Understanding and Document Workflow | Business content must become AI-ready, be understood by an SME, and enter a reviewable process. | [Open Content Understanding]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}) |
-| Avatar Scenario | Approved learning, communications, onboarding, or support content needs a governed, accessible semi-automated avatar-led experience. | [Open Avatar Scenario]({{ '/scenario.html?id=avatar-scenario' | relative_url }}) |
+| AI Grounding / IQ | People need answers they can trust, based on content they are allowed to see. | [Open AI Grounding / IQ]({{ '/scenario.html?id=ai-grounding' | relative_url }}) |
+| Content Understanding and Document Workflow | A team needs to turn documents into structured data without removing human review. | [Open Content Understanding]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}) |
+| Avatar Scenario | A team wants an avatar-led experience whose script, approvals, and accessibility can be checked. | [Open Avatar Scenario]({{ '/scenario.html?id=avatar-scenario' | relative_url }}) |
 
-Each scenario is a playbook, not a fixed course. Select only the lessons that support the current
-customer decision. Every playbook includes customer-facing Markdown slides that can be printed or
-saved as a PDF, a minimal accelerator, and a bring-your-own-environment path.
+You do not have to complete every lesson. Pick the ones that help with the decision in front of you.
+Each scenario includes slides, a small accelerator, and a path for teams using their own environment.
 
 ## Reference Library
 
-Reusable implementation activities remain available as a technical reference. They are not the
-primary customer journey. Use the [Reference Library]({{ '/reference.html' | relative_url }}) only
-when a scenario lesson points to a specific implementation pattern.
+The [Reference Library]({{ '/reference.html' | relative_url }}) holds reusable implementation
+activities. Open it when a scenario points you to a specific pattern.
