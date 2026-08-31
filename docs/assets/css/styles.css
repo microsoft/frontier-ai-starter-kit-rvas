@@ -2124,8 +2124,9 @@ body.diagram-lightbox-open { overflow: hidden; }
 }
 #slideDeck {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 72rem);
   gap: clamp(1rem, 3vw, 2rem);
-  max-width: 72rem;
   margin: clamp(1rem, 3vw, 2rem) auto;
   padding: 0 clamp(0.75rem, 2vw, 1.5rem);
 }
@@ -2201,7 +2202,7 @@ body.diagram-lightbox-open { overflow: hidden; }
 .slide-content table { width: 100%; border-collapse: collapse; }
 .slide-content th, .slide-content td { padding: 0.55rem; border-bottom: 1px solid var(--c-line-soft); text-align: left; }
 .slide-content th { color: var(--c-heading); }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .slides-toolbar-inner {
     min-height: 58px;
     height: auto;
