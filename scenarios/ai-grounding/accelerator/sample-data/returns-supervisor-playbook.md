@@ -9,6 +9,8 @@ classification: confidential-internal
 
 # Northstar Outdoor Supply — Supervisor Exception Playbook
 
-This fictional training document is for returns supervisors only.
+Only returns supervisors may use this fictional training document.
 
-For a documented hardship request on day 31–45, the supervisor records the hardship evidence, records the decision rationale, and approves or declines the exception. Coordinators must route the case and must not disclose internal review notes or approval thresholds.
+For a documented hardship request on day 31–45, the supervisor records the hardship evidence and
+decision rationale, then approves or declines the exception. Coordinators must route the case. They
+must not disclose internal review notes or approval thresholds.

@@ -1,20 +1,20 @@
 # Solution notes · Extra — Governed Data Copilot
 
 This is a reference design, not a connector recipe. The data/Foundry connector surface may be preview
-or change independently of this curriculum. Search `microsoft-docs` and `foundry-mcp`, load the matching
-skill, and use the signature returned there before replacing the pseudocode below.
+or change independently of this curriculum. Search `microsoft-docs` and `foundry-mcp`, load the
+matching skill, and use the verified signature before replacing the pseudocode below.
 
 ## Stable design
 
-Keep the volatile connector behind a tiny adapter. The stable application boundary is:
+Put the changing connector behind a small adapter. The stable application boundary is:
 
 ```text
 intent → validate_request → execute_registered_query → normalize_result → review_gate → response
 ```
 
-The LLM may select from named intents, but it never emits a query language expression. The adapter
-only accepts a registered query ID and validated, typed parameters. Define the query templates in the
-semantic model/data service where possible; do not store a broad query template in the prompt.
+The LLM may select named intents, but it never emits a query-language expression. The adapter accepts
+only a registered query ID and validated, typed parameters. Define query templates in the semantic
+model/data service where possible; do not keep a broad query template in the prompt.
 
 ```python
 # governed_data_copilot.py — illustrative pseudocode; replace only the adapter
@@ -91,9 +91,9 @@ def execute_governed_query(query_id: str, parameters: dict) -> GovernedResult:
     )
 ```
 
-`current_connector_execute_registered_query` is intentionally undefined. It is the one integration
-point learners implement after verifying the live service API. The rest of the pattern is ordinary,
-testable Python and should stay stable across connector changes.
+`current_connector_execute_registered_query` is intentionally undefined. Learners implement this one
+integration point after verifying the live service API. The rest is ordinary, testable Python that
+should remain stable as connectors change.
 
 ## Keyless access pattern
 

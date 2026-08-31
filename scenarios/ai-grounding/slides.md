@@ -11,16 +11,19 @@ footer: "Customer Delivery · AI Grounding / IQ"
 # AI Grounding / IQ
 ## Choose trusted context for one customer decision
 
-This deck guides a customer conversation about where answers should come from, who is allowed to see them, how retrieval is proven, and what evidence is needed before a pilot ships.
+Use this deck to discuss answer sources, access, retrieval evidence, and the proof needed before a
+pilot ships.
 
-**Workshop outcome:** select a governed context pattern, access boundary, evaluation plan, and operating evidence for a bounded AI-assisted decision.
+**Workshop outcome:** select a governed context pattern, access boundary, evaluation plan, and
+operating evidence for a bounded AI-assisted decision.
 
 ---
 <!-- slide:id=scenario-intro -->
 
 # How to use this conversation
 
-We are not designing a complete enterprise platform today. We are choosing the smallest useful scenario that can be grounded, evaluated, and operated safely.
+Choose the smallest useful scenario that can be grounded, evaluated, and operated safely. This is not
+a complete enterprise-platform design session.
 
 Discuss each lesson through three lenses:
 
@@ -37,7 +40,7 @@ Keep implementation details in the lesson and activity pages.
 
 # Lesson 1 context: provision the grounding foundation
 
-Before content enters the pilot, agree the technical foundation that will hold it.
+Agree the technical foundation before content enters the pilot.
 
 Customer discussion prompts:
 
@@ -46,7 +49,7 @@ Customer discussion prompts:
 - Which region, identity model, logging boundary, and data handling expectations apply?
 - Which model and retrieval capabilities must be available in that environment?
 
-**Principle:** foundation choices should protect the source of truth before they optimize developer convenience.
+**Principle:** protect the source of truth before optimizing developer convenience.
 
 ---
 <!-- slide:id=lesson-foundation-choices -->
@@ -60,7 +63,7 @@ Customer discussion prompts:
 | Portal-led setup | Early orientation or stakeholder demo | Harder to reproduce without a written contract |
 | Bring-your-own resources | Customer already has Foundry, search, and monitoring | Must prove configuration matches the pilot needs |
 
-Discuss identity, network boundaries, observability, and regional capacity before discussing content ingestion.
+Discuss identity, network boundaries, observability, and regional capacity before content ingestion.
 
 ---
 <!-- slide:id=lesson-foundation-evidence -->
@@ -75,14 +78,14 @@ Move forward when the team can show:
 - Monitoring and trace destination identified before pilot traffic
 - Environment values documented as a reusable contract, without secrets
 
-**Decision:** the foundation is safe enough to connect approved pilot content.
+**Decision:** it is safe to connect approved pilot content.
 
 ---
 <!-- slide:id=lesson-source-selection-context -->
 
 # Lesson 2 context: select the source and permission architecture
 
-Grounding starts with source ownership, not with a search box.
+Start grounding with source ownership, not a search box.
 
 Ask the customer:
 
@@ -92,7 +95,7 @@ Ask the customer:
 - Is permission trimming needed at retrieval time, answer time, or both?
 - What happens when content is missing, conflicting, or restricted?
 
-**Non-negotiable:** no source enters the pilot without an owner and an access decision.
+**Non-negotiable:** every pilot source needs an owner and an access decision.
 
 ---
 <!-- slide:id=lesson-source-selection-choices -->
@@ -121,14 +124,14 @@ The source decision is ready when it records:
 - Citation, provenance, and audit expectations
 - Boundary between governed internal knowledge, live work data, analytics, and public information
 
-**Decision:** the pilot has a defensible source architecture before anything is indexed.
+**Decision:** the pilot has a defensible source architecture before indexing starts.
 
 ---
 <!-- slide:id=lesson-ingestion-context -->
 
 # Lesson 3 context: ingest and index approved content
 
-Ingestion is not just moving files. It preserves the evidence needed to trust an answer.
+Ingestion does more than move files. It preserves the evidence behind an answer.
 
 Discuss:
 
@@ -137,7 +140,7 @@ Discuss:
 - How will stale, duplicate, superseded, and conflicting documents be handled?
 - Which content should stay remote rather than copied?
 
-**Goal:** retrieve the right passage with the right provenance for the right user.
+**Goal:** retrieve the right passage and provenance for the user.
 
 ---
 <!-- slide:id=lesson-ingestion-choices -->
@@ -152,7 +155,7 @@ Discuss:
 | Content preprocessing | Documents need extraction, layout, or structure first | Adds another quality gate before retrieval |
 | Remote knowledge source | Content should remain in place | Availability and permissions depend on the remote system |
 
-Do not copy content just to make retrieval architecture look simpler.
+Do not copy content only to make the retrieval architecture look simpler.
 
 ---
 <!-- slide:id=lesson-ingestion-evidence -->
@@ -167,14 +170,14 @@ Before moving on, reviewers should see:
 - Golden questions returning plausible source passages
 - Known stale or conflicting content labeled and handled
 
-**Decision:** the knowledge layer can produce trustworthy retrieval evidence before answer generation is judged.
+**Decision:** the knowledge layer produces trustworthy retrieval evidence before you judge answers.
 
 ---
 <!-- slide:id=lesson-model-selection-context -->
 
 # Lesson 4 context: compare chat and embedding choices
 
-Model choice matters, but it should be judged through the grounding task.
+Model choice matters. Judge it through the grounding task.
 
 Discuss what the pilot needs from:
 
@@ -182,7 +185,7 @@ Discuss what the pilot needs from:
 - The embedding model: retrieval quality for the customer’s vocabulary, abbreviations, and document style
 - Capacity: expected users, peaks, and whether throughput should be reserved or consumption-based
 
-**Principle:** pick models by evidence on the golden dataset, not by reputation alone.
+**Principle:** pick models using golden-dataset evidence, not reputation.
 
 ---
 <!-- slide:id=lesson-model-selection-choices -->
@@ -198,7 +201,7 @@ Discuss what the pilot needs from:
 | Pay-as-you-go | Flexible for pilots, with variable throughput |
 | Provisioned throughput | Predictable capacity, with stronger planning commitment |
 
-Keep access control and citation requirements out of the trade space; they are baseline obligations.
+Access control and citations are baseline obligations, not trade-offs.
 
 ---
 <!-- slide:id=lesson-model-selection-evidence -->
@@ -213,14 +216,14 @@ A model choice is ready when the team has compared:
 - Region and quota feasibility
 - Failure behavior on ambiguous, stale, or restricted questions
 
-**Decision:** the selected model and embedding path are good enough for the pilot’s decision quality and operating constraints.
+**Decision:** the selected model and embedding path meet the pilot's quality and operating constraints.
 
 ---
 <!-- slide:id=lesson-grounded-app-context -->
 
 # Lesson 5 context: build retrieval before adding an agent
 
-A grounded experience should prove retrieval before orchestration becomes more complex.
+A grounded experience should prove retrieval before adding orchestration.
 
 Customer discussion prompts:
 
@@ -242,7 +245,8 @@ Customer discussion prompts:
 | Extractive retrieval plus custom prompt | Team needs stronger control over tone and policy | More prompt and evaluation ownership |
 | Direct hybrid query | App needs transparent retrieval and custom ranking | More engineering effort before user value |
 
-Discuss three required behaviors explicitly: cite when evidence exists, abstain when it does not, and separate “not found” from “not allowed.”
+State the required behaviors: cite available evidence, abstain when it is missing, and separate
+“not found” from “not allowed.”
 
 ---
 <!-- slide:id=lesson-grounded-app-evidence -->
@@ -257,14 +261,15 @@ The grounded app is ready for the next step when:
 - Stale-source cases trigger the agreed warning or refusal
 - Reviewers can explain why an answer was accepted or rejected
 
-**Decision:** add an agent only if orchestration would solve a real customer need that retrieval alone does not.
+**Decision:** add an agent only when orchestration solves a customer need that retrieval alone cannot.
 
 ---
 <!-- slide:id=lesson-agent-routing-context -->
 
 # Lesson 6 context: add agent and live-data routing only when justified
 
-Agents and tools are useful when the experience needs planning, source routing, or action boundaries. They are not a shortcut around unclear knowledge architecture.
+Use agents and tools when the experience needs planning, source routing, or action boundaries. They
+cannot compensate for unclear knowledge architecture.
 
 Discuss:
 
@@ -273,7 +278,7 @@ Discuss:
 - Which live-data calls are safe, necessary, and auditable?
 - What must the agent refuse or route away from?
 
-**Boundary:** live data complements the source of truth; it does not silently replace it.
+**Boundary:** live data complements the source of truth. It must not silently replace it.
 
 ---
 <!-- slide:id=lesson-agent-routing-choices -->
@@ -287,7 +292,7 @@ Discuss:
 | Live-data tool | A real-time status, inventory, case, or transaction check is required | Tool reliability, permissions, and audit become part of the pilot |
 | Multi-agent workflow | Distinct roles need separate responsibilities | More moving parts and harder evaluation |
 
-Prefer the simplest route that preserves source authority and user trust.
+Choose the simplest route that preserves source authority and user trust.
 
 ---
 <!-- slide:id=lesson-agent-routing-evidence -->
@@ -302,14 +307,14 @@ Routing is ready when the team can show:
 - No live-data call without a justified real-time need
 - Trace or log evidence that shows which source answered
 
-**Decision:** the agent can be evaluated as a controlled router, not a black box.
+**Decision:** evaluate the agent as a controlled router.
 
 ---
 <!-- slide:id=lesson-evaluate-and-trace-context -->
 
 # Lesson 7 context: evaluate and trace
 
-One question on the table: is the assistant good enough to put in front of real people?
+Decide whether the assistant is good enough for real people.
 
 Discuss:
 
@@ -318,7 +323,7 @@ Discuss:
 - What traces are needed to investigate a failure without exposing unnecessary sensitive content?
 - Who signs off that the evidence is enough?
 
-**Operating mindset:** an evaluation you look at is a report; one that blocks a release is a control.
+**Operating mindset:** an evaluation you read is a report. One that blocks release is a control.
 
 ---
 <!-- slide:id=lesson-evaluate-and-trace-choices -->
@@ -334,7 +339,7 @@ Discuss:
 | Manual review | Higher judgment quality, but limited scale |
 | Automated checks | Better repeatability, but must be calibrated against human review |
 
-Generic quality metrics miss the three things that matter here: correct refusal, current citation, and silence about restricted content.
+Generic quality metrics miss correct refusal, current citation, and silence about restricted content.
 
 ---
 <!-- slide:id=lesson-evaluate-and-trace-evidence -->
@@ -348,14 +353,14 @@ Evidence to produce:
 - One request traced end to end, so a wrong answer can be explained rather than guessed at
 - The permission probe re-run against the agent
 
-**Decision:** the evidence supports putting this in front of real people — or names what has to change first.
+**Decision:** the evidence supports release to real people, or identifies what must change first.
 
 ---
 <!-- slide:id=lesson-deploy-and-surface-context -->
 
 # Lesson 8 context: deploy and surface it to users
 
-Where do people meet the assistant, and who runs it once they do?
+Decide where people meet the assistant and who runs it.
 
 Discuss:
 
@@ -364,7 +369,7 @@ Discuss:
 - Who triages a wrong answer, and how does a user report one?
 - What ends the pilot?
 
-**Operating mindset:** the agent is already deployed. You are choosing a doorway, not building a system.
+**Operating mindset:** the agent is already deployed. Choose a doorway; do not build another system.
 
 ---
 <!-- slide:id=lesson-deploy-and-surface-choices -->
@@ -379,7 +384,8 @@ Discuss:
 | Foundry hosted agent | A dedicated endpoint | Other teams consume it, or you need runtime control |
 | Custom web UI | A purpose-built app | Demo, custom auth, or a required response contract |
 
-Five rules do not move: no keys, the permission boundary still applies, tracing carries into the runtime, pin the version, rollback is a repoint.
+Five rules stay fixed: no keys; preserve the permission boundary; carry tracing into the runtime; pin
+the version; rollback by repointing.
 
 ---
 <!-- slide:id=lesson-deploy-and-surface-evidence -->
@@ -394,7 +400,7 @@ The release contract records:
 - A named triage owner, a review cadence, and how users report a bad answer
 - A pilot exit criterion with a date, and a signed release decision
 
-**Decision:** ship, ship with conditions, or stop — and "stop" in writing is a valuable result.
+**Decision:** ship, ship with conditions, or stop. A written decision to stop has value.
 
 ---
 <!-- slide:id=scenario-next-session -->
@@ -411,4 +417,4 @@ Recommended agenda:
 4. Draft the golden dataset, including restricted and stale-source cases.
 5. Agree the evidence gate for retrieval, routing, evaluation, tracing, and release.
 
-**Exit outcome:** a pilot decision record that the delivery team can implement in the lesson activities.
+**Exit outcome:** a pilot decision record the delivery team can implement through the lesson activities.

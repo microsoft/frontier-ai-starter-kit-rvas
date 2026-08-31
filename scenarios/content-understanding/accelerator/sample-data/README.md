@@ -1,8 +1,11 @@
 # Synthetic local data pack
 
-This pack contains invented names, identifiers, amounts, and dates. It contains no customer, production, credential, or service data.
+This pack contains invented names, identifiers, amounts, and dates. It has no customer, production,
+credential, or service data.
 
-The `.md`, `.txt`, and `.html` files are **local teaching fixtures** that make the document facts inspectable in a workshop. They do not claim to be upload formats or API payloads for Content Understanding. Confirm currently supported formats and integration behavior before using any service.
+The `.md`, `.txt`, and `.html` files are **local teaching fixtures** for inspecting document facts in
+a workshop. They are not Content Understanding upload formats or API payloads. Confirm supported
+formats and integration behavior before you use a service.
 
 ## Pack contents
 
@@ -13,4 +16,5 @@ The `.md`, `.txt`, and `.html` files are **local teaching fixtures** that make t
 - `corrections/` — a separate reviewer correction record for `invoice-2002`; it deliberately preserves the original expected outcome.
 - `manifest.json` and `result-contract.json` — the scenario validator's input contract.
 
-Run the whole workflow over this pack and compare each extracted field against the source document. The comparison is the evidence.
+Run the workflow over this pack and compare every extracted field with its source document. That
+comparison is the evidence.

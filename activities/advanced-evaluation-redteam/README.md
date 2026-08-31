@@ -9,15 +9,12 @@
 > reference. Complete the required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
-Shipping an assistant that *sounds* good is not the same as shipping one that is accurate and
-safe. In this activity you prove both: you measure answer quality with NLP/LLM-judge metrics,
-build a scenario-specific evaluator, then red-team the agent with adversarial prompts —
-jailbreaks, harmful-content requests, and prompt-injection hidden inside retrieved documents — and
-finally wire a score gate so a bad build can fail CI.
+An assistant that sounds good can still be inaccurate or unsafe. Measure answer quality with
+NLP/LLM-judge metrics, build a scenario-specific evaluator, test adversarial prompts, and add a
+score gate that can fail CI.
 
-Why now: an assistant that sounds confident but invents facts — or quietly follows an instruction
-smuggled inside a retrieved document — can do real harm. This is where you stop trusting vibes and
-start proving accuracy and safety with numbers, so a regressed build fails before users see it.
+Confident invented facts and instructions hidden in retrieved documents can cause harm. Test accuracy
+and safety before a regressed build reaches users.
 
 What you'll produce
 - An evaluation run (portal and code) over a scenario or sample dataset with Groundedness,
@@ -34,15 +31,14 @@ Assets shipped with this activity
 - [`evaluate.py`](evaluate.py) — the code-driven harness (built-in + custom evaluators + CI gate).
 - [`validate.py`](validate.py) — the Verify checks below.
 
-This activity ships three rungs off the same backbone — the same `validate.py` grades all
-three. (a) Guided path (below) walks the 5 steps · (b) Build-from-scratch path hands you
-only the datasets + the contract · (c) Stretch goals go open-ended.
+The same `validate.py` grades all three paths. (a) Guided path covers five steps; (b)
+Build-from-scratch provides the datasets and contract; (c) Stretch goals are open-ended.
 
 ---
 
 ## Rung (a) — Guided path
 
-> The beginner on-ramp: five guided steps over the provided `evaluate.py` harness and datasets.
+> Use the provided `evaluate.py` harness and datasets for five guided steps.
 
 ## Step 1 — Run quality metrics in the portal
 
@@ -183,9 +179,8 @@ python activities/advanced-evaluation-redteam/validate.py --all
 
 ## Rung (b) — Build-from-scratch path
 
-> Stronger team? Write `evaluate.py` from scratch. We give you only the two datasets and the
-> CI-gate spec — the provided harness becomes reference (see `solution.md`). The same `validate.py`
-> grades this path.
+> Write `evaluate.py` from scratch using the two datasets and CI-gate specification. The provided
+> harness is reference material in `solution.md`. The same `validate.py` grades this path.
 
 Your contract:
 > Write `evaluate.py`: load the JSONL, call the agent per `query`, score
@@ -198,7 +193,7 @@ evaluators, your custom evaluator, and the gate yourself, then run `python activ
 
 ## Rung (c) — Stretch goals
 
-Open-ended: no single right answer.
+Open-ended. There is no single correct answer.
 
 1. Mandatory automated red-team run. Don't stop at pasting prompts by hand — invoke an actual
    `RedTeam(...).scan(...)` (or `IndirectAttackEvaluator`) with results on record. Manual prompting

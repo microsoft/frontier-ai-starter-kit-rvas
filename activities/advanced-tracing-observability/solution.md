@@ -2,15 +2,14 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-These notes capture the reusable tracing mechanics: instrumentation order, span emission, portal
-inspection, and KQL correlation.
+Use these notes for tracing: instrumentation order, span emission, portal inspection, and KQL
+correlation.
 
 ## What this activity proves
 
-By the end a team can take **one** user question and account for its full execution: model span,
-retrieval span, optional tool span, with tokens, latency, and an estimated cost — read **two ways**
-(portal Tracing tab + KQL). The pedagogy is deliberately FrontierWeekHack's "same data, two lenses"
-pattern: the portal teaches the *shape* of a trace, KQL teaches *querying* it.
+A team can trace **one** user question across model, retrieval, and optional tool spans, including
+tokens, latency, and estimated cost. Read the trace in the portal Tracing tab and with KQL: the portal
+shows its shape, while KQL lets you query it.
 
 The activity assumes the Foundations end-state (a deployed, grounded sample IQ assistant) **or**
 the bootstrap skip-path. If a team can't get a grounded answer at all, that's a Foundations problem —

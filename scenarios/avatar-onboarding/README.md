@@ -1,13 +1,13 @@
-# Avatar Scenario: build an experience people can check
+# Avatar Scenario: build an experience people can verify
 
-Build an accessible avatar-led experience on Azure and Microsoft Foundry. The sample uses employee
-onboarding, but the same pattern works for approved learning or support content. Every published
-statement must point back to an approved source and a named reviewer. Users are told when media is
-synthetic, and owners can withdraw a published version when its source changes.
+Build an accessible avatar-led experience on Azure and Microsoft Foundry. The sample focuses on
+employee onboarding. You can also use the pattern for approved learning or support content. Every
+published statement must trace to an approved source and named reviewer. Tell users when media is
+synthetic. When a source changes, owners must be able to withdraw the published version.
 
-This course asks you to build the default path. Along the way, each module compares the Microsoft
-options and records the point where you could switch to another approved service. The reference
-implementation is in [`solution.md`](accelerator/solution.md), and deployment starts in
+The course builds the default path. Each module compares Microsoft options and marks where you can
+switch to another approved service. See [`solution.md`](accelerator/solution.md) for the reference
+implementation. Start deployment in
 [`accelerator/README.md`](accelerator/README.md).
 
 > **Fictional data only.** The accelerator ships synthetic HR content. Never place real customer
@@ -26,11 +26,11 @@ implementation is in [`solution.md`](accelerator/solution.md), and deployment st
 | [6. Gate publication behind human approval](lessons/06-approval-gating.md) | A versioned four-role approval gate and a withdrawal path | Signed record enforced in code | This scenario's accelerator |
 | [7. Evaluate, red-team, trace, operate](lessons/07-prove-and-operate.md) | Evaluation + red-team + tracing + release scorecard | Foundry evaluations + AI Red Teaming Agent | [Evaluation](../../activities/advanced-evaluation-redteam/README.md) |
 
-Work through the modules in order. The first choice determines what every later module needs.
+Work through the modules in order. Your first choice shapes the later modules.
 
 ## Decision gates to carry into the customer conversation
 
-Answer these questions before opening the reference library:
+Answer these questions before you open the reference library:
 
 | Gate | Decide before building |
 |---|---|
@@ -42,18 +42,18 @@ Answer these questions before opening the reference library:
 
 ## Working contract
 
-- **Approved content is the publishing boundary.** A grounded assistant may cite permitted sources
-  for interactive help, but it may not silently add claims to a published script.
+- **Approved content is the publishing boundary.** A grounded assistant can cite permitted sources
+  for interactive help. It cannot silently add claims to a published script.
 - **Human approval is a release gate.** Factual/SME, legal/compliance, brand, and content-owner
-  decisions are required before anything publishes, and they bind to an exact script revision.
+  decisions must approve an exact script revision before anything publishes.
 - **Accessibility is a first-class output.** Every experience ships a transcript, captions (where the
   capability supports them), an equivalent non-avatar fallback, a human-help path, and a clear
   AI/avatar disclosure.
-- **Consent and privacy are non-negotiable.** Never clone a real voice or likeness without explicit
-  recorded authorization; custom avatar/voice is an Azure limited-access feature. Minimize pilot
-  telemetry to aggregate, identifier-free signals.
+- **Consent and privacy are non-negotiable.** Never clone a real voice or likeness without recorded
+  authorization. Custom avatar/voice is an Azure limited-access feature. Keep pilot telemetry
+  aggregate and identifier-free.
 - **Withdrawal is part of the build.** A source change, consent withdrawal, safety issue, or defect
-  must identify and pause the affected published revision.
+  must identify and pause the affected revision.
 
 ## Quick start
 
@@ -62,8 +62,8 @@ Answer these questions before opening the reference library:
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 ```
 
-Then work through the modules in order. Each **Verify** section gives you a command to run and tells
-you what its output means. The complete reference implementation is in
+Then work through the modules in order. Each **Verify** section gives you a command and explains
+its output. The complete reference implementation is in
 [`solution.md`](accelerator/solution.md).
 
 ## Responsible AI

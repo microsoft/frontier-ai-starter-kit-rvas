@@ -1,18 +1,17 @@
 # Module 8 — Deploy and surface it to users
 
-Module 7 proved the assistant is good enough. This module answers the question that decides whether
-anyone actually uses it: **where do people meet it, and who runs it once they do?**
+Module 7 proved the assistant is good enough. This module decides whether anyone uses it: **where do
+people meet it, and who runs it?**
 
-That is a smaller question than it looks. The agent is already deployed — it has lived behind a
-stable endpoint since module 6. You are not building a system here. You are choosing a doorway, and
-writing down who owns what happens behind it.
+The question is smaller than it looks. The agent has had a stable endpoint since module 6. You are
+choosing a doorway and documenting who owns it.
 
 ![Surface decision](../diagrams/08-surface-decision.png)
 
 ## What you build
 
 1. A chosen surface, with users able to ask a real question through it.
-2. A pinned agent version and a rollback that takes minutes, not a redeploy.
+2. A pinned agent version and a rollback that takes minutes instead of a redeploy.
 3. The module 2 permission probe re-run against the surface itself.
 4. [`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json) —
    the release contract you fill in.
@@ -29,39 +28,35 @@ writing down who owns what happens behind it.
 | E. Custom web UI | A purpose-built app | Medium–high | Stakeholder demo, custom auth flow, or a required response contract |
 | F. Hosted long-running workflow | Background job handle + later retrieval | High | The work outlives an interactive request |
 
-**Default: option A.** Standing up a surface for a pilot with one consumer is work that teaches you
-nothing about whether the pilot is valuable. If a Python script and a stakeholder in a room answer
-the question "is this useful?", start there.
+**Default: option A.** A new surface for a one-consumer pilot does not show whether the pilot is
+valuable. If a Python script and stakeholder in a room answer "is this useful?", start there.
 
-**Choose B when the answer is "they live in Teams".** This is the option most teams do not know
-exists — Foundry publishes your existing agent to Teams and Microsoft 365 Copilot directly, builds
-the Teams app package, and keeps serving traffic through the same stable endpoint. You do not rebuild
-the assistant, and modules 3 through 6 are not thrown away.
+**Choose B when users work in Teams.** Foundry can publish your existing agent directly to Teams and
+Microsoft 365 Copilot, build the Teams app package, and keep using the stable endpoint. You do not
+rebuild the assistant or discard modules 3 through 6.
 
-**Choose C only if module 2 chose Copilot Studio.** If your source decision was SharePoint and M365
+**Choose C only if module 2 chose Copilot Studio.** If the source decision was SharePoint and M365,
 rather than an Azure retrieval layer, the agent already lives in Copilot Studio and publishes to the
-same Teams and Microsoft 365 Copilot channel. Do not build a Copilot Studio agent on top of an Azure
-retrieval stack you already built — that is two grounding layers arguing with each other.
+same Teams and Microsoft 365 Copilot channel. Do not build a Copilot Studio agent over an existing
+Azure retrieval stack. You would have two grounding layers.
 
 **A declarative agent in Microsoft 365 Copilot is a different product decision, not a fifth doorway.**
-It grounds directly on SharePoint and Graph content, which means it re-does module 3 with different
-rules and discards your index, your chunking, and your citation metadata. It is a good answer to
-"we never needed an Azure retrieval layer". It is a bad answer to "we built one and now want it in
-Teams" — that is option B.
+It grounds directly on SharePoint and Graph content. It redoes module 3 with different rules and
+discards your index, chunking, and citation metadata. Use it when you never needed an Azure retrieval
+layer. If you built one and want it in Teams, use option B.
 
-**API Management is a wrapper, not a surface.** Front option A or D with it when your organization
-standardizes AI endpoints behind one gateway. It changes who enforces throttling and policy; it does
-not change where users meet the agent.
+**API Management is a wrapper, not a surface.** Put it in front of option A or D when your
+organization standardizes AI endpoints behind one gateway. It changes where throttling and policy are
+enforced, not where users meet the agent.
 
-**Migration cost is deliberately low.** A → B is a publish action, not a rewrite. A → D repackages
-the same agent behind a dedicated endpoint. D → F adds an asynchronous job contract when the same
-workflow needs to keep running after the user leaves. In every case the agent, its grounding, and its
-evaluation gate are unchanged, and the release contract below is the same manifest. The surface is a
-late, reversible decision — which is exactly why it belongs at module 8 and not module 1.
+**Migration cost is low.** A → B is a publish action. A → D repackages the agent behind a dedicated
+endpoint. D → F adds an asynchronous job contract when a workflow must continue after the user
+leaves. In every case, the agent, grounding, evaluation gate, and release-contract manifest stay the
+same. The surface is a late, reversible decision, which is why it belongs in module 8.
 
 ## Implementation
 
-Whichever doorway you choose, five rules do not move:
+Whichever doorway you choose, these five rules stay fixed:
 
 - **No keys.** Entra identity or managed identity, both in the surface and behind it.
 - **The permission boundary from module 2 still applies.** A surface is a new place for it to leak.
@@ -84,9 +79,9 @@ resp = openai.responses.create(
 )
 ```
 
-Pin the agent version in your application config, not just the name. Otherwise a version created
-during a debugging session silently becomes production. Your app authenticates its users; the agent
-authenticates your app. Both halves need an answer before this counts as a surface.
+Pin the agent version in application configuration, not just its name. Otherwise a debugging version
+can silently become production. Your app authenticates users and the agent authenticates your app.
+Define both before this counts as a surface.
 
 ### Option B — Publish the Foundry agent to Teams and Microsoft 365 Copilot
 
@@ -101,20 +96,19 @@ Two things to decide before you click publish:
 | Active version | A pinned version, or always-latest | Always-latest means your next debugging version reaches users. Pin it for a pilot |
 | Who can use it | Just you, or people in your organization | Just you is immediate and shareable by link. Organization-wide requires Microsoft 365 admin approval and appears under **Built by your org** |
 
-For a pilot, **pin the version and publish to "just you", then share the link** with the named pilot
-group. It needs no admin approval, and it keeps the audience the size you wrote down in the manifest.
+For a pilot, **pin the version, publish to "just you", then share the link** with the named pilot
+group. It needs no admin approval and keeps the audience to the size in the manifest.
 
-Publishing creates an Azure Bot Service resource, which needs permissions Foundry roles do not grant
-— the **Azure Bot Service Contributor** role on the resource group, plus the `Microsoft.BotService`
-provider registered on the subscription. Sort that out before the demo, not during it.
+Publishing creates an Azure Bot Service resource. It needs permissions Foundry roles do not grant:
+the **Azure Bot Service Contributor** role on the resource group and the `Microsoft.BotService`
+provider registered on the subscription. Set this up before the demo.
 
 Rolling out a new version later is a version-selector change in Foundry. The endpoint URL does not
 change and you do not republish. That is also your rollback.
 
-One flag worth raising with the customer explicitly: publishing means agent responses and metadata
-are processed and stored by Microsoft 365 and Teams, under those services' terms and data residency
-commitments. If the corpus was sensitive enough to need module 2's permission work, this belongs in
-the same review.
+Publishing means Microsoft 365 and Teams process and store agent responses and metadata under their
+terms and data-residency commitments. If the corpus needed module 2's permission work, include this
+in the same review.
 
 Full steps: [Publish agents to Microsoft 365 Copilot and Microsoft Teams](https://learn.microsoft.com/azure/foundry/agents/how-to/publish-copilot).
 If the project disables public network access, portal publishing is unavailable and you use the REST
@@ -144,8 +138,8 @@ export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 
 ### Option E — Custom web UI
 
-A purpose-built front end over option A. Worth it for a stakeholder demo where the interface is part
-of the story, or when you need a response contract Teams cannot express. The
+A purpose-built front end over option A. Use it for a stakeholder demo where the interface matters,
+or when you need a response contract Teams cannot express. The
 [Build a UI activity](../../../activities/extra-build-ui/README.md) is the reference. The trap is
 authentication: a demo UI that calls the agent with a service identity has quietly deleted module 2's
 permission boundary, because every user now looks like the same identity. Pass the signed-in user
@@ -161,17 +155,16 @@ review. Do not use it for normal chat latency problems; make the interaction fas
 
 ### Re-prove the permission boundary here
 
-Run the module 2 probe a third time, against the surface. Not against retrieval, not against the
-agent — against the doorway a real user walks through. This is where per-user identity gets lost, and
-it is cheap to check and expensive to discover later.
+Run the module 2 probe a third time against the surface. Test the doorway a real user uses. This is
+where per-user identity can get lost. It is cheap to check now and expensive to discover later.
 
 ### Write the release contract
 
 Record the decision in
 [`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json).
-You fill it in, and it is deliberately the same shape for all five options.
+Fill it in. It has the same shape for all five options.
 
-Before you call it a pilot, have answers to these, because someone will ask:
+Before calling it a pilot, answer these questions:
 
 | Question | Where the answer comes from |
 | --- | --- |
@@ -182,14 +175,13 @@ Before you call it a pilot, have answers to these, because someone will ask:
 | How does a user report a wrong answer, and who triages it? | This module — name a person |
 | What ends the pilot? | The exit criterion below |
 
-That last one deserves a real answer. A pilot without an exit criterion becomes permanent
-unsupported infrastructure that nobody admits to owning.
+A pilot without an exit criterion becomes permanent, unsupported infrastructure that nobody owns.
 
 ## Verify
 
-The mistake that surfaces on day one is a doorway that either lets anyone in or calls the agent with
-one service identity, so every user sees everyone's documents. Prove the surface refuses anonymous
-callers and still trims per user.
+This check catches a doorway that lets anyone in or calls the agent with one service identity, making
+every user's documents visible to everyone. Prove the surface refuses anonymous callers and still
+trims by user.
 
 **1. An unauthenticated call is refused.** Hit the deployed surface with no credential:
 
@@ -197,8 +189,8 @@ callers and still trims per user.
 curl -s -o /dev/null -w "%{http_code}\n" https://<your-endpoint>
 ```
 
-`401` or `403` is the result you want. A `200` means the doorway is open — require Entra auth on
-ingress before anyone else sees the URL.
+`401` or `403` is the expected result. A `200` means the doorway is open. Require Entra auth on
+ingress before sharing the URL.
 
 **2. Per-user trimming survives the surface.** The corpus and the agent were proven in earlier
 modules, but the surface is new, and it is where per-user identity gets dropped. Re-run the module 2
@@ -210,8 +202,8 @@ python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
   --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Every restricted case must still come back empty. If the surface calls the agent as one service
-identity instead of passing the signed-in user through, this is where the leak shows up.
+Every restricted case must still come back empty. If the surface calls the agent with one service
+identity instead of passing through the signed-in user, the leak appears here.
 
 **3. No key crept back in.** Confirm the deployed surface authenticates with a managed identity, not a
 key, and that its configuration carries no secrets:
@@ -223,10 +215,9 @@ az webapp config appsettings list --name <surface-app> --resource-group "$AZURE_
   --query "[?contains(name, 'KEY') || contains(name, 'CONNECTION_STRING')].name" -o tsv
 ```
 
-You want an identity `type` of `SystemAssigned` (or `UserAssigned`) and no output from the second
-command. A stored `*_KEY` or connection string means key-based auth crept back in — return to managed
-identity. Adjust the resource commands to the surface you actually deployed (Container Apps, Function
-App, or Bot Service).
+Look for an identity `type` of `SystemAssigned` (or `UserAssigned`) and no output from the second
+command. A stored `*_KEY` or connection string means key-based auth returned. Use managed identity.
+Adjust the commands for the surface you deployed (Container Apps, Function App, or Bot Service).
 
 ## Troubleshooting
 
@@ -244,15 +235,15 @@ App, or Bot Service).
 
 ## Decision record
 
-The surface you chose and why, in one sentence a non-engineer understands; who can use it and how
-that is granted and revoked; the pinned agent version and the rollback mechanism; where traces land;
-the named triage owner and review cadence; the pilot exit criterion with a review date; and the
-signed release decision with the risk owner's name.
+Record the chosen surface and why in one sentence a non-engineer understands; who can use it and how
+access is granted and revoked; pinned agent version and rollback; trace destination; named triage
+owner and review cadence; pilot exit criterion with review date; and signed release decision with the
+risk owner's name.
 
 ## Next module
 
-There isn't one. You have a grounded, permission-aware, evaluated, traced pilot that real users can
-reach, and eight decision records that explain every choice to whoever inherits it.
+There isn't one. You have a grounded, permission-aware pilot with evaluation and tracing that real
+users can reach. Eight decision records explain the choices to whoever inherits it.
 
 Extend the build with the [action tools](../../../activities/advanced-action-tools/README.md),
 [hosted deployment](../../../activities/advanced-deploy-hosted-agent/README.md), or

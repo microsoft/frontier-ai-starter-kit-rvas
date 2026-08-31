@@ -2,16 +2,13 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-These notes explain the reusable evaluation, custom-evaluator, red-team, and CI-gate mechanics behind
-the participant activity.
+Use these notes for evaluation, custom evaluators, red teaming, and CI gates.
 
-## What this activity is really teaching
+## Core idea
 
-Two mindset shifts: (1) *"it works in a demo"* → *"prove it across a dataset"*, and (2) accuracy and
-**safety** are co-equal release gates. The single biggest gap in both reference repos (FrontierWeekHack
-and Azure Trust Agents) is that neither ships a red-teaming or eval harness despite "trust" branding —
-this activity fills it. Push teams to connect a low score back to a *design choice* from Foundations
-(chunking, system prompt, retrieval config), not to treat metrics as isolated numbers.
+Move from *“it works in a demo”* to *“prove it across a dataset.”* Accuracy and **safety** are both
+release gates. Connect a low score to a Foundations design choice, such as chunking, the system
+prompt, or retrieval configuration; do not treat metrics as isolated numbers.
 
 ## Prereqs the team must already have
 

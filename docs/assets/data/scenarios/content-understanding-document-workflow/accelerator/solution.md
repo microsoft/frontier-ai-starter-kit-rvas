@@ -1,8 +1,8 @@
 # Content Understanding document workflow — reference implementation
 
-This is the complete, keyless reference for the seven modules. API versions, model ids, and packages
-are called out where they matter. The lessons under [`../lessons/`](../lessons/) walk through the
-decisions; this file is the code you land on.
+This is the keyless reference for the seven modules. It names API versions, model IDs, and packages
+where they matter. The lessons under [`../lessons/`](../lessons/) explain the decisions; this file
+shows the resulting code.
 
 > Keyless-first throughout: `DefaultAzureCredential` + managed identity + Entra RBAC. No keys
 > appear in code, `.env`, or Bicep. Run `az login` for local development.
@@ -32,7 +32,7 @@ AZURE_QUARANTINE_CONTAINER_NAME=documents-quarantine
 
 ## 1. Content Understanding — prebuilt analyzer (GA `2025-11-01`)
 
-Set resource default model deployments once, then analyze. Content Understanding is async:
+Set the resource's default model deployments, then analyze. Content Understanding is asynchronous:
 `POST …:analyze` returns `202` + `Operation-Location`; poll the result.
 
 ```python
@@ -72,7 +72,7 @@ Reference: <https://learn.microsoft.com/azure/ai-services/content-understanding/
 
 ## 2. Document Intelligence — prebuilt model (v4.0 GA `2024-11-30`)
 
-Deterministic extraction for stable templates. Keyless with `DocumentIntelligenceClient`.
+Use deterministic extraction for stable templates. `DocumentIntelligenceClient` supports keyless access.
 
 ```python
 import os
@@ -101,7 +101,7 @@ Reference: <https://learn.microsoft.com/azure/ai-services/document-intelligence/
 
 ## 3. LLM structured outputs (build-your-own fallback)
 
-Full control, but **no native confidence or grounding** — you own validation.
+This gives you full control, but **no native confidence or grounding**. You must validate the result.
 
 ```python
 from pydantic import BaseModel
@@ -128,29 +128,27 @@ Reference: <https://learn.microsoft.com/azure/foundry/openai/how-to/structured-o
 
 ## 4. Typed result contract with evidence
 
-Normalize every capability's output into one contract, then gate on confidence and evidence.
-See [`sample-data/workflow/typed-result.json`](sample-data/workflow/typed-result.json). The rule:
-**a value without grounding evidence is an inferred value and is rejected**; any field below the
-threshold forces human review.
+Normalize every capability's output into one contract, then gate on confidence and evidence. See
+[`sample-data/workflow/typed-result.json`](sample-data/workflow/typed-result.json). **A value without
+grounding evidence is inferred and rejected.** Any field below the threshold requires human review.
 
-Open the typed result next to the source document and check each field's span actually points at the
-text it claims. A field with a high confidence score and no usable span is the one that will burn
-you.
+Open the typed result beside the source document and check that each field span points to the claimed
+text. A high-confidence field with no usable span still needs review.
 
 ## 5. Human review, correction, and handoff
 
-The reviewer decision is captured as an [approval trace](sample-data/workflow/approval-trace.json):
-reviewer identity, timestamp, before/after values, and the approved downstream seam (an action
-tool). Corrections are retained as evaluation evidence — they never overwrite the original expected
-result. See [`../lessons/05-human-review.md`](../lessons/05-human-review.md) and the canonical
+The [approval trace](sample-data/workflow/approval-trace.json) records the reviewer identity,
+timestamp, before-and-after values, and approved downstream seam (an action tool). Corrections remain
+evaluation evidence and never overwrite the original expected result. See
+[`../lessons/05-human-review.md`](../lessons/05-human-review.md) and the canonical
 [Action Tools activity](../../../activities/advanced-action-tools/README.md).
 
-Submit one document you know is ambiguous and confirm it lands in the review queue rather than
-passing straight through. If nothing ever routes to a human, the threshold is wrong, not the corpus.
+Submit a document you know is ambiguous and confirm that it reaches the review queue. If nothing
+routes to a person, the threshold is wrong.
 
 ## 6. Evaluate and trace
 
-Grade a real evaluation run against the gate in
+Grade an evaluation run against the gate in
 [`sample-data/workflow/eval-report.json`](sample-data/workflow/eval-report.json): field accuracy,
 false-approval rate, review rate, and injection resistance. Enable GenAI tracing **before**
 importing the Foundry SDK:
@@ -160,14 +158,14 @@ export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
 export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 ```
 
-Then confirm traces are arriving in Application Insights before you rely on them.
+Confirm that Application Insights receives traces before you rely on them.
 
 Canonical activity: [Evaluation & Red Teaming](../../../activities/advanced-evaluation-redteam/README.md).
 
 ## 7. Deploy the reviewable workflow
 
-Ship behind an authenticated endpoint with managed identity, Application Insights, and a rollback
-path. Confirm the endpoint refuses an unauthenticated caller:
+Deploy behind an authenticated endpoint with managed identity, Application Insights, and a rollback
+path. Confirm that the endpoint rejects an unauthenticated caller:
 
 ```bash
 curl -s -o /dev/null -w '%{http_code}\n' "$WORKFLOW_ENDPOINT"
@@ -179,6 +177,6 @@ Canonical activity: [Deploy as a Hosted Agent](../../../activities/advanced-depl
 
 ## Offline validation pack
 
-Run the whole workflow over the synthetic fixtures and compare every extracted field against the
-source document. That comparison is the evidence — a workflow that runs without erroring is not the
-same as a workflow that extracts the right values.
+Run the workflow over the synthetic fixtures and compare every extracted field with the source
+document. That comparison is the evidence. A workflow can run without errors and still extract the
+wrong values.

@@ -9,7 +9,7 @@ classification: internal
 
 # Northstar Outdoor Supply — Returns Policy
 
-This fictional training policy is the authoritative standard-return source.
+This fictional training policy is the authoritative source for standard returns.
 
 ## Eligibility
 
@@ -17,7 +17,9 @@ Customers may return unused standard merchandise within 30 calendar days with pr
 
 ## Exclusions and exceptions
 
-Custom-fitted gear, gift cards, and final-sale clearance items are excluded. A supervisor may review documented shipping damage or an incorrect shipment; coordinators must not promise an exception before that review.
+Custom-fitted gear, gift cards, and final-sale clearance items are excluded. A supervisor may review
+documented shipping damage or an incorrect shipment. Coordinators must not promise an exception before
+that review.
 
 ## Case record
 

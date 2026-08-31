@@ -8,7 +8,9 @@ paginate: true
 # Avatar Scenario
 ## A governed, accessible avatar-led experience
 
-This workshop is about deciding how an avatar-led experience can help employees understand approved onboarding content while keeping human ownership, disclosure, accessibility, and operating evidence intact.
+This workshop helps you decide whether an avatar-led experience can help employees understand
+approved onboarding content while preserving human ownership, disclosure, accessibility, and
+operating evidence.
 
 **Customer question:** What would make this trustworthy enough to pilot?
 
@@ -18,9 +20,10 @@ This workshop is about deciding how an avatar-led experience can help employees 
 # Module 1 — Context
 ## Select the experience capability
 
-Not every onboarding moment needs the same experience. A short policy update, a multilingual welcome, a live support moment, and a replayable training segment each imply different choices.
+Onboarding moments need different experiences. A short policy update, multilingual welcome, live
+support moment, and replayable training segment imply different choices.
 
-We start by separating the **customer experience goal** from the technology option:
+Start with the **customer experience goal**, then choose the technology:
 
 - What should the employee be able to understand or do afterward?
 - Does the moment need video, avatar presence, live interaction, translated video, plain audio, or text?
@@ -41,7 +44,8 @@ Compare experience options against the actual pilot need:
 - **Video translation:** useful when source video already exists; requires careful approval of translated meaning.
 - **No avatar:** still valid when disclosure, accessibility, cost, or trust argues for a simpler format.
 
-The decision should include consent, likeness and voice rights, supported regions, identity model, pricing shape, accessibility coverage, content-safety controls, and exit path.
+The decision must cover consent, likeness and voice rights, supported regions, identity model,
+pricing shape, accessibility coverage, content-safety controls, and an exit path.
 
 ---
 <!-- slide:id=lesson-experience-selection-evidence -->
@@ -49,7 +53,7 @@ The decision should include consent, likeness and voice rights, supported region
 # Module 1 — What must be true
 ## A capability decision the sponsor can defend
 
-By the end of this module, the team should have a short decision record that explains:
+By the end of this module, the team should have a short decision record that states:
 
 - selected experience capability and why it fits the pilot
 - alternatives considered and why they were not selected
@@ -64,7 +68,7 @@ By the end of this module, the team should have a short decision record that exp
 # Module 2 — Context
 ## Provision the Foundry and Speech foundation
 
-The scenario needs a foundation that lets teams build without turning every prototype into a one-off integration.
+The scenario needs a foundation that avoids turning every prototype into a one-off integration.
 
 The foundation should support:
 
@@ -74,7 +78,7 @@ The foundation should support:
 - search or knowledge access for approved onboarding content
 - telemetry that helps owners understand behavior without over-collecting employee data
 
-This is the shared base for future policy, learning, and multilingual communication scenarios.
+This becomes the shared base for policy, learning, and multilingual communication scenarios.
 
 ---
 <!-- slide:id=lesson-foundation-choices -->
@@ -82,7 +86,7 @@ This is the shared base for future policy, learning, and multilingual communicat
 # Module 2 — Choices and trade-offs
 ## Reusable platform, not hard-coded demo
 
-Key design choices shape how easily the pilot can become a repeatable pattern:
+Key design choices decide whether the pilot can become a repeatable pattern:
 
 - **Identity:** managed identity and role-based access reduce secret handling, but require clear ownership.
 - **Region and capacity:** availability, latency, data residency, and cost may point to different deployment choices.
@@ -90,7 +94,7 @@ Key design choices shape how easily the pilot can become a repeatable pattern:
 - **Observability:** useful traces help diagnose issues, but message content capture must be intentional and governed.
 - **Seams:** keep rendering, assistant, content, and approval components replaceable.
 
-The goal is a foundation customers can adapt, not a locked architecture.
+Build a foundation customers can adapt. Avoid a locked architecture.
 
 ---
 <!-- slide:id=lesson-foundation-evidence -->
@@ -98,7 +102,7 @@ The goal is a foundation customers can adapt, not a locked architecture.
 # Module 2 — What must be true
 ## A foundation ready for governed work
 
-The bar is not “the services exist.” It is whether the foundation supports accountable operation:
+The test is whether the foundation supports accountable operation:
 
 - required resources are provisioned with the intended identity model
 - environment settings are documented without exposing secrets
@@ -114,7 +118,7 @@ The bar is not “the services exist.” It is whether the foundation supports a
 # Module 3 — Context
 ## Build the governed content pipeline
 
-The avatar must not become an unreviewed policy source. It should express approved content, not invent it.
+The avatar cannot become an unreviewed policy source. It must express approved content.
 
 For every claim used in the experience, the pipeline needs:
 
@@ -124,7 +128,8 @@ For every claim used in the experience, the pipeline needs:
 - expiry or withdrawal conditions
 - traceability from source to script segment
 
-This turns onboarding content into a controlled input for the assistant, storyboard, approvals, and final experience.
+This makes onboarding content a controlled input for the assistant, storyboard, approvals, and final
+experience.
 
 ---
 <!-- slide:id=lesson-content-pipeline-choices -->
@@ -132,7 +137,7 @@ This turns onboarding content into a controlled input for the assistant, storybo
 # Module 3 — Choices and trade-offs
 ## Govern claims without slowing every edit
 
-Teams need enough control to protect employees without making simple updates impossible.
+Teams need controls that protect employees without making simple updates impossible.
 
 Discussion choices:
 
@@ -142,7 +147,7 @@ Discussion choices:
 - How are locale-specific policy differences handled?
 - Who can retire, pause, or replace content when guidance changes?
 
-The trade-off is speed versus confidence. The practical answer is usually a small, well-owned pilot corpus.
+There is a trade-off between speed and confidence. Start with a small, well-owned pilot corpus.
 
 ---
 <!-- slide:id=lesson-content-pipeline-evidence -->
@@ -150,7 +155,7 @@ The trade-off is speed versus confidence. The practical answer is usually a smal
 # Module 3 — What must be true
 ## Versioned claims with named ownership
 
-What you should have is a traceable claim set that downstream steps can rely on:
+Build a traceable claim set that downstream steps can use:
 
 - each claim has an authoritative source and owner
 - versions and expiry rules are visible
@@ -166,7 +171,8 @@ What you should have is a traceable claim set that downstream steps can rely on:
 # Module 4 — Context
 ## Build the grounded assistant behind the experience
 
-The assistant helps draft scripts, answer reviewer questions, and propose employee-facing language. It must stay grounded in approved content.
+The assistant helps draft scripts, answer reviewer questions, and propose employee-facing language.
+It must stay grounded in approved content.
 
 Expected behavior:
 
@@ -176,7 +182,7 @@ Expected behavior:
 - support human review rather than replacing it
 - preserve a clear path from source to script to final experience
 
-The assistant is useful only if reviewers can see why it said what it said.
+Reviewers must be able to see why the assistant said what it said.
 
 ---
 <!-- slide:id=lesson-grounded-assistant-choices -->
@@ -184,7 +190,7 @@ The assistant is useful only if reviewers can see why it said what it said.
 # Module 4 — Choices and trade-offs
 ## Helpful drafting versus unsafe authority
 
-The assistant can speed preparation, but it should not become the decision-maker.
+The assistant can speed preparation. It cannot become the decision-maker.
 
 Design choices include:
 
@@ -194,7 +200,8 @@ Design choices include:
 - what tone and reading level it uses for onboarding audiences
 - how citations appear for reviewers versus employees
 
-The safer pattern is to make the assistant excellent at grounded drafting, refusal, and escalation before broad interaction.
+Make the assistant reliable at grounded drafting, refusal, and escalation before you broaden
+interaction.
 
 ---
 <!-- slide:id=lesson-grounded-assistant-evidence -->
@@ -253,7 +260,7 @@ The experience should never imply that a real person said something they did not
 # Module 5 — What must be true
 ## Approved revision rendered accessibly
 
-What you should have is an experience package that can be reviewed before release:
+Build an experience package that can be reviewed before release:
 
 - generated only from an approved script revision
 - includes disclosure, captions, transcript, and fallback
@@ -269,7 +276,7 @@ What you should have is an experience package that can be reviewed before releas
 # Module 6 — Context
 ## Gate publication behind human approval
 
-Human approval is the control that turns generated content into accountable communication.
+Human approval turns generated content into accountable communication.
 
 Before anything is published, named reviewers should confirm:
 
@@ -287,7 +294,7 @@ No approval record means no production release.
 # Module 6 — Choices and trade-offs
 ## Keep approval strong and workable
 
-Approval should protect the organization without making every typo a governance crisis.
+Approval should protect the organization without turning every typo into a governance crisis.
 
 Decisions to make:
 
@@ -297,7 +304,7 @@ Decisions to make:
 - How are reviewer disagreements resolved?
 - What evidence must be retained, and for how long?
 
-The approval gate should be simple enough to use and strong enough to stop unsafe publication.
+The approval gate must be easy to use and strong enough to stop unsafe publication.
 
 ---
 <!-- slide:id=lesson-approval-gating-evidence -->
@@ -321,7 +328,7 @@ What you should have is a release record that shows:
 # Module 7 — Context
 ## Evaluate, red-team, trace, and operate
 
-The pilot should generate evidence for a business decision, not just engagement numbers.
+The pilot should produce evidence for a business decision, not just engagement numbers.
 
 Useful operating evidence includes:
 
@@ -332,7 +339,7 @@ Useful operating evidence includes:
 - red-team findings around deception, bias, unsafe advice, and stale content
 - trace review for failures and improvement opportunities
 
-The goal is to decide whether to iterate, scale, pause, or withdraw.
+Use the evidence to decide whether to iterate, scale, pause, or withdraw.
 
 ---
 <!-- slide:id=lesson-prove-and-operate-choices -->
@@ -340,7 +347,7 @@ The goal is to decide whether to iterate, scale, pause, or withdraw.
 # Module 7 — Choices and trade-offs
 ## Measure enough to learn, not enough to surveil
 
-Operating the experience requires careful measurement design:
+Operating the experience requires careful measurement:
 
 - cohort-level insight is usually safer than individual-level monitoring
 - qualitative feedback explains confusion that metrics can hide
@@ -348,7 +355,7 @@ Operating the experience requires careful measurement design:
 - trace capture helps debugging but must respect privacy and data minimization
 - scorecards should define action thresholds before the pilot starts
 
-Evidence should help owners improve the experience without making employees feel observed.
+Use evidence to improve the experience without making employees feel observed.
 
 ---
 <!-- slide:id=lesson-prove-and-operate-evidence -->
@@ -372,7 +379,7 @@ The final artifact is a decision package:
 # Next working session
 ## Turn the discussion into a pilot plan
 
-For the next session, bring one real onboarding moment and the people who own it.
+Bring one real onboarding moment and the people who own it to the next session.
 
 We will align on:
 
@@ -383,4 +390,5 @@ We will align on:
 - approval gate and withdrawal path
 - first scorecard for operating evidence
 
-**Working outcome:** a narrow, governed pilot that can be built, reviewed, and measured without pretending the starter kit is the full production solution.
+**Working outcome:** a narrow, governed pilot that teams can build, review, and measure. The
+starter kit is not the full production solution.

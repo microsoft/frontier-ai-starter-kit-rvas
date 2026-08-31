@@ -1,9 +1,8 @@
 # Module 5 — Generate the accessible avatar experience
 
-Now you render the experience — but only from an **approved script revision**, and only with the
-accessibility and disclosure guarantees a synthetic presenter legally and ethically requires. A great
-avatar with no transcript, no caption, no disclosure, and no non-avatar path is a compliance
-incident, not a demo.
+Render the experience only from an **approved script revision**. It must include the accessibility
+and disclosure guarantees a synthetic presenter legally and ethically requires. An avatar without a
+transcript, captions, disclosure, or non-avatar path is a compliance incident.
 
 Current Speech guidance is cited inline where the implementation depends on service behavior.
 
@@ -11,21 +10,21 @@ Current Speech guidance is cited inline where the implementation depends on serv
 
 ## What you build
 
-1. The rendered experience (a talking-avatar video, a real-time stream, a Voice Live session, or
-   plain audio) produced from the approved artifact.
+1. The rendered experience, a talking-avatar video, real-time stream, Voice Live session, or plain
+   audio, produced from the approved artifact.
 2. **Disclosure** that the presenter is synthetic/AI-assisted, shown/spoken to the user.
 3. **Captions + a transcript** and a **non-avatar fallback** (an accessible HTML/audio path) that
    carry the same approved content.
 4. **Locale handling** so the right voice/language is used per cohort.
 
-The pack contract is [`accelerator/content_pack.py`](../accelerator/content_pack.py): a deterministic,
-offline module that validates the approved pack and builds a traceable artifact record **without
-calling a paid service or embedding any real likeness**. It is how you rehearse the pipeline safely;
-the real Speech call is the same shape.
+The pack contract, [`accelerator/content_pack.py`](../accelerator/content_pack.py), is a
+deterministic, offline module. It validates the approved pack and builds a traceable artifact record
+**without calling a paid service or embedding a real likeness**. Use it to rehearse the pipeline
+safely. The real Speech call has the same shape.
 
 ## Choose your path
 
-The capability you chose in module 1 decides how you render. All four carry the **same** disclosure +
+The module-1 capability determines how you render. All four have the **same** disclosure and
 accessibility obligations.
 
 | Option | How you generate | Output | Latency | Best when |
@@ -35,18 +34,18 @@ accessibility obligations.
 | C. Voice Live (avatar or audio) | Managed speech-to-speech WebSocket | Live spoken (optionally avatar) agent | Sub-second | A conversational onboarding assistant |
 | D. Plain audio | TTS narration | Audio + transcript | Either | Accessibility-first / lowest risk — **and the mandatory fallback for A–C** |
 
-**Default: Option A.** It produces a concrete artifact that flows through module 6's approval gate,
-uses a standard avatar/voice (no talent gating), and is the cheapest governed path. Every option must
-still ship the Option D fallback.
+**Default: Option A.** It produces an artifact that passes through module 6's approval gate, uses a
+standard avatar/voice (no talent gate), and is the lowest-cost governed path. Every option must ship
+the Option D fallback.
 
-**Migration cost.** A → B/C is the batch→streaming rebuild from module 1 (WebRTC/TURN or Voice Live
-client). Any → D is trivial. Do not skip D "for now" — it is the accessible path, not an extra.
+**Migration cost.** A → B/C is the module-1 batch-to-streaming rebuild (WebRTC/TURN or Voice Live
+client). Any → D is trivial. Do not skip D for now. It is the accessible path.
 
 ## Implementation
 
 ### Option A — Batch avatar synthesis (default)
 
-**Build the request from an approved pack, not free text.** The pack contract in
+**Build the request from an approved pack, never free text.** The pack contract in
 [`content_pack.py`](../accelerator/content_pack.py) rejects the pack unless every script segment's
 spoken text is an exact approved claim, all required approvals are present, and the disclosure
 appears in both the transcript and the HTML fallback. Use it to turn the approved artifact into the
@@ -60,8 +59,8 @@ pack = validate_pack(Path('scenarios/avatar-onboarding/accelerator/sample-data')
 print(build_artifact(pack))"
 ```
 
-A pack whose spoken text is not an exact approved claim raises `PackRejectedError`. That is the
-accessibility + grounding gate in code, before any Azure call.
+A pack whose spoken text is not an exact approved claim raises `PackRejectedError`. This is the
+accessibility and grounding gate in code, before any Azure call.
 
 **Submit the real batch job (verified API).** The approved artifact becomes an SSML batch request:
 
@@ -83,13 +82,13 @@ PUT https://{resource}.cognitiveservices.azure.com/avatar/batchsyntheses/{Synthe
 ```
 
 Poll `GET …/batchsyntheses/{id}` until `status` is `Succeeded`, then download `outputs.result`
-(the mp4). Keyless: send an Entra bearer token in the `Authorization` header; redact the token in
-logs and docs. This works only when module 2 set the custom subdomain. Limits: payload ≤ 500 KB,
-≤ 200 concurrent jobs, ≤ 20-minute output.
+(the mp4). For keyless access, send an Entra bearer token in the `Authorization` header and redact
+it in logs and docs. This works only when module 2 set the custom subdomain. Limits are payload ≤
+500 KB, ≤ 200 concurrent jobs, and ≤ 20-minute output.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
-`subtitleType: soft_embedded` gives you captions in the video; you still ship the standalone
-transcript and HTML fallback for the accessible path.
+`subtitleType: soft_embedded` adds captions to the video. Still ship the standalone transcript and
+HTML fallback.
 
 ### Option B — Real-time avatar
 
@@ -103,17 +102,17 @@ avatar speaks, render live captions, and keep the Option D fallback one click aw
 ### Option C — Voice Live (avatar or audio)
 
 Voice Live is the managed speech-to-speech path and can emit avatar visuals. Bind it to the module-4
-agent (agent mode, Entra auth) so spoken answers stay grounded. This is exactly the
-[Voice Live activity](../../../activities/extra-voice-live/README.md) — build it there. Disclose the
-synthetic voice at session start (spoken and on-screen) and offer the transcript/fallback.
+agent (agent mode, Entra auth) so spoken answers stay grounded. Build it in the
+[Voice Live activity](../../../activities/extra-voice-live/README.md). Disclose the synthetic voice
+at session start, both spoken and on-screen, and offer the transcript/fallback.
 <https://learn.microsoft.com/azure/ai-services/speech-service/voice-live>
 
 ### Option D — Plain audio (and the mandatory fallback)
 
 Synthesize the approved claims as narration with a standard neural voice, ship the transcript, and
-serve the `accessible-fallback.html` page (semantic HTML, `lang` set, `<main>` landmark) that carries
-the same content without an avatar. This is what a screen-reader user, a low-bandwidth user, or
-anyone who opts out of the avatar receives. The sample fallback is
+serve `accessible-fallback.html` (semantic HTML, `lang` set, `<main>` landmark) with the same
+content and no avatar. Screen-reader users, low-bandwidth users, and anyone who opts out of the
+avatar receive this path. The sample fallback is
 [`accessible-fallback.html`](../accelerator/sample-data/accessible-fallback.html).
 
 ### Disclosure & accessibility are non-negotiable (verified)
@@ -128,8 +127,8 @@ anyone who opts out of the avatar receives. The sample fallback is
 
 ## Verify
 
-Render one approved segment for real, then confirm the experience ships the disclosure and
-accessibility artifacts a synthetic presenter requires.
+Render one approved segment, then confirm the experience includes the disclosure and accessibility
+artifacts a synthetic presenter requires.
 
 **1. Submit a batch synthesis job with your Entra token and watch the result.** This proves keyless
 Speech and gives you an artifact to inspect. Submit one approved claim as SSML:
@@ -153,11 +152,11 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 ```
 
 `status` moves `NotStarted → Running → Succeeded`. Download `outputs.result` (a time-limited SAS
-URL) and play the mp4. What "good" looks like: the standard `lisa` avatar speaking the exact
-approved wording, with soft-embedded captions. A `401` means no custom subdomain (module 2); a `403`
-means you lack **Cognitive Services Speech User**, so grant the role rather than using a Speech key.
-If you see a real person's face, stop: that is a custom-avatar path that needs limited-access
-approval and talent consent (module 1).
+URL) and play the mp4. Expect the standard `lisa` avatar to speak the exact approved wording with
+soft-embedded captions. A `401` means no custom subdomain (module 2). A `403` means you lack
+**Cognitive Services Speech User**; grant the role rather than using a Speech key. If you see a real
+person's face, stop. That is a custom-avatar path requiring limited-access approval and talent
+consent (module 1).
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
 **2. The experience carries a disclosure, and the non-avatar fallback carries the same content.** A
@@ -173,9 +172,9 @@ grep -qi 'avatar-generated or AI-assisted' scenarios/avatar-onboarding/accelerat
   && echo "disclosure + fallback carry the approved content"
 ```
 
-Both must succeed. A missing disclosure means an undisclosed synthetic presenter reaches users; a
-fallback that omits the approved wording or a `lang` attribute excludes screen-reader and
-low-bandwidth users. Ship captions, a transcript, and the non-avatar page for every option.
+Both must succeed. A missing disclosure lets an undisclosed synthetic presenter reach users. A
+fallback without the approved wording or a `lang` attribute excludes screen-reader and low-bandwidth
+users. Ship captions, a transcript, and the non-avatar page for every option.
 <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 
 ## Troubleshooting
@@ -192,10 +191,10 @@ low-bandwidth users. Ship captions, a transcript, and the non-avatar page for ev
 
 ## Decision record
 
-Keep: chosen generation option and why; the avatar character/style and voice (confirm **standard**,
-not custom, unless the limited-access path is approved); the disclosure wording and where it appears
-(spoken + on-screen + transcript + fallback); the accessibility artifacts shipped; and the locales
-covered. Note the artifact id and its trace hash so module 6 can approve *this exact* revision.
+Keep the chosen generation option and why, avatar character/style and voice (confirm **standard**,
+unless the limited-access path is approved), disclosure wording and where it appears (spoken +
+on-screen + transcript + fallback), shipped accessibility artifacts, and covered locales. Note the
+artifact id and trace hash so module 6 can approve *this exact* revision.
 
 ## Next module
 

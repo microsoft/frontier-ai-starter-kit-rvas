@@ -1,18 +1,19 @@
 # Module 6 — Gate publication behind human approval
 
-A synthetic presenter multiplies the cost of a mistake: it's confident, on-brand, and replayed to
-every new hire. So nothing publishes without **named human sign-off**, and anything published can be
-**withdrawn** the moment its source changes. This module makes the approval gate real and tests that
-it actually blocks.
+A synthetic presenter makes a mistake more costly. It sounds confident, looks on-brand, and reaches
+every new hire. Nothing publishes without **named human sign-off**. When a source changes, you can
+**withdraw** the published content. This module implements the approval gate and proves that it
+blocks.
 
 ![Publication approval gate](../diagrams/06-publication-gate.png)
 
 ## What you build
 
-1. A versioned **approval record** tying named humans to the exact script id + version they signed.
-2. A **gate**: the experience cannot publish unless every required role has approved *this* revision.
-3. A **withdrawal path**: flipping the approval status (e.g. after a source change) blocks
-   publication even if all sign-offs exist.
+1. A versioned **approval record** that ties named people to the exact script id + version they
+   signed.
+2. A **gate** that blocks publishing until every required role approves *this* revision.
+3. A **withdrawal path** that blocks publishing when you change approval status (for example, after
+   a source change), even if all sign-offs exist.
 
 The approval record template is
 [`accelerator/sample-data/approvals.json`](../accelerator/sample-data/approvals.json), enforced by
@@ -29,14 +30,14 @@ Where does the approval gate live and who enforces it?
 | C. Power Automate / Logic Apps approval flow | Approvals in M365/Teams | Flow gates the publish action | Medium | Approvers live in Teams and want native approvals |
 | D. ITSM change request (ServiceNow etc.) | Change management system | Change ticket must be approved before publish | Higher | Regulated orgs requiring formal change control |
 
-**Default: Option A.** A signed, versioned record that the renderer enforces is the smallest gate
-that is also auditable and portable: the approval travels with the artifact, and the enforcement is
-in code you can test (this module's Verify literally proves the gate blocks). Graduate to **B/C/D**
-when the customer's existing release, collaboration, or change-control process must own the sign-off —
-but keep the same **four required roles** and the **withdrawal** semantics.
+**Default: Option A.** A signed, versioned record enforced by the renderer is the smallest
+auditable, portable gate. Approval travels with the artifact, and code enforces it. This module's
+Verify proves the gate blocks. Choose **B/C/D** when the customer's release, collaboration, or
+change-control process must own sign-off. Keep the same **four required roles** and **withdrawal**
+semantics.
 
-**Migration cost.** A → B/C/D wraps the same record in a heavier workflow; the record and roles
-survive. Do not drop the versioned record when you adopt a workflow tool — it is your audit trail.
+**Migration cost.** A → B/C/D wraps the same record in a heavier workflow. The record and roles
+survive. Do not drop the versioned record when you adopt a workflow tool. It is your audit trail.
 
 ## Implementation
 
@@ -62,14 +63,14 @@ survive. Do not drop the versioned record when you adopt a workflow tool — it 
 ```
 
 Why these four for a synthetic onboarding experience:
-- **SME** — the facts are correct.
-- **legal-compliance** — disclosure, consent, and regulated claims are satisfied.
-- **brand-communications** — the avatar, voice, and tone represent the org acceptably.
-- **content-owner** — accountable for the published wording and its expiry.
+- **SME** confirms the facts.
+- **legal-compliance** confirms disclosure, consent, and regulated claims.
+- **brand-communications** confirms the avatar, voice, and tone represent the organization
+  acceptably.
+- **content-owner** owns the published wording and its expiry.
 
 The record must match the **exact** `script_id` + `script_version`. Approving 0.1.0 does not approve
-0.2.0 — re-approval is required for every revision. That is the whole point: a small edit to a
-policy sentence forces a fresh human decision.
+0.2.0. Every revision needs re-approval. A small policy edit must trigger a fresh human decision.
 
 **Implement withdrawal.** When module 3 reports a source change (a claim invalidated, past
 `review_by`), flip the status and republish nothing:
@@ -86,27 +87,26 @@ p.write_text(json.dumps(record, indent=2))
 
 ### Option B — Pipeline environment approvals
 
-Model publish as a release to a protected environment with required reviewers. The pipeline reads the
-approval record, and the environment protection rule enforces the human gate before the publish step
-runs. Keep the versioned record as the artifact the reviewers approve.
+Model publishing as a release to a protected environment with required reviewers. The pipeline reads
+the approval record. An environment protection rule enforces the human gate before the publish step.
+Keep the versioned record as the artifact reviewers approve.
 
 ### Option C — Power Automate / Logic Apps
 
-Trigger an approval flow to the four roles in Teams; on full approval the flow calls the publish
-action (upload to `experience-output`, flip a "published" flag). On any rejection or a later source
-change, the flow triggers withdrawal. Approvers stay in their tools; the record stays the audit
-trail.
+Trigger an approval flow to the four roles in Teams. On full approval, it calls the publish action
+(upload to `experience-output`, flip a "published" flag). Any rejection or later source change
+triggers withdrawal. Approvers stay in their tools, while the record remains the audit trail.
 
 ### Option D — ITSM change control
 
-Bind publication to an approved change request. The avatar experience is a change; the CR references
-the approval record and the artifact hash. Withdrawal is a follow-up change. Use this when the
-customer's governance demands formal change management.
+Bind publishing to an approved change request. The avatar experience is a change, and its CR
+references the approval record and artifact hash. Withdrawal is a follow-up change. Use this when
+customer governance requires formal change management.
 
 ## Verify
 
-A gate that never blocks proves nothing. Verify this one by trying to break it, and by confirming
-the approval binds to the exact revision. Check both against your own records.
+A gate that never blocks proves nothing. Try to break this one, then confirm approval binds to the
+exact revision. Check both against your records.
 
 **1. Removing a required approval, or withdrawing the record, blocks publication.** Exercise the real
 enforcement code against a working copy so you never mutate the signed record:
@@ -145,9 +145,9 @@ shutil.rmtree(work, ignore_errors=True)
 PY
 ```
 
-Good output: the full pack publishes, then both the missing-role and withdrawn cases print
-`BLOCKED`. If either prints `PROBLEM`, an unapproved or withdrawn synthetic likeness can reach real
-new hires. That is the exact failure the gate exists to stop.
+Expected output: the full pack publishes, then the missing-role and withdrawn cases print
+`BLOCKED`. If either prints `PROBLEM`, an unapproved or withdrawn synthetic likeness can reach new
+hires. The gate must stop that.
 
 **2. The approval is bound to this script id and version.** Approving `0.1.0` must not approve a later
 edit:
@@ -160,8 +160,8 @@ jq -n \
 ```
 
 `true` means the sign-off matches the artifact being published. `false` means the record approves a
-different revision than the one you are about to render, so a policy edit could ship without a fresh
-human decision. Re-approve every revision.
+different revision, so a policy edit could ship without a fresh human decision. Re-approve every
+revision.
 
 ## Troubleshooting
 
@@ -176,10 +176,10 @@ human decision. Re-approve every revision.
 
 ## Decision record
 
-Keep: chosen gate option and why; the four required roles and who fills each; the rule that approval
-binds to an exact `script_id`+`script_version`; the withdrawal trigger ("source change / expiry ⇒
-withdraw ⇒ pause"); and one worked example of a blocked publication. This record plus the signed
-approval record are your audit trail.
+Keep the chosen gate option and why, the four required roles and who fills them, the exact
+`script_id`+`script_version` approval rule, the withdrawal trigger ("source change / expiry ⇒
+withdraw ⇒ pause"), and one blocked-publication example. This record and the signed approval record
+are your audit trail.
 
 ## Next module
 

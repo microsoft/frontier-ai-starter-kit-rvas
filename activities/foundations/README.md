@@ -9,8 +9,8 @@
 
 ## How to use this reference
 
-This module is not a parallel scenario track. Scenario lessons own the customer decision record and
-the order of work. Use the steps below only when a scenario points you to the reusable mechanics:
+This module is not a parallel scenario track. Scenario lessons define the customer decision record and
+work order. Use these steps only when a scenario points to the reusable mechanics:
 
 - **Step 1** — provision the keyless Foundry + AI Search foundation and export the `.env` contract.
 - **Step 2** — compare model deployments and reproduce the selected behavior in code.
@@ -23,8 +23,8 @@ module as the mechanics reference for commands, environment names, and verificat
 ### Replaceable sample path
 
 The examples use a fictional sample organization IQ assistant so the commands have concrete payloads.
-Replace the assistant name, instructions, questions, and corpus with the approved data from your
-scenario or customer build.
+Replace the assistant name, instructions, questions, and corpus with approved scenario or customer
+data.
 
 | Step | What the assistant can do afterward |
 |---|---|
@@ -108,7 +108,8 @@ python activities/foundations/validate.py --step 1
 
 ## Step 2 — Model Selection & the Playground
 
-**Goal:** Choose a model for the assistant by comparing two contrasting models in the Playground, tune the system instructions, then reproduce that behavior in code.
+**Goal:** Compare two contrasting models in the Playground, choose one for the assistant, tune the
+system instructions, then reproduce that behavior in code.
 
 **Tasks:**
 1. `azd up` deployed the model named by `.env`'s `AZURE_AI_MODEL_DEPLOYMENT_NAME`; this is the
@@ -282,9 +283,9 @@ index to the agent, and verify answers come back with source citations.
    #   - upload documents with a retrievable `content` field (for answers)
    #     and a `source` field = the file name (for citations)
    ```
-   Aim for moderate chunks with light overlap so policy details (deadlines, GPA thresholds,
-   office hours) are not split awkwardly. Keep a retrievable `content` field and a `source` field so
-   the agent can cite where each answer came from. The sample corpus uses filenames as citations.
+   Use moderate chunks with light overlap so policy details, such as deadlines, GPA thresholds, and
+   office hours, remain together. Keep retrievable `content` and `source` fields so the agent can
+   cite each answer. The sample corpus uses filenames as citations.
    For clickable URL citations, index a retrievable source-URL field that points to
    documents your users are authorized to access.
 3. Confirm keyless RBAC. For the agent's managed identity to read the index without keys, the
@@ -386,7 +387,7 @@ named versioned agent exists (Step 3), and the agent returns a cited answer from
 
 ---
 
-## What this unlocks
+## Related modules
 
 These reusable modules build on the same mechanics. Pick the ones your scenario earns:
 

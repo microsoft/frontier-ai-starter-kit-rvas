@@ -1,9 +1,8 @@
 # Module 1 — Provision the shared Foundry foundation
 
-Every later module writes into the footprint you create here. Content Understanding and Document
-Intelligence are **Foundry Tools on a Microsoft Foundry (AIServices) resource** — the same account
-that hosts your model deployments. Get the identity model and region right now and modules 2–7 are
-configuration; get it wrong and you redeploy.
+Every later module uses the foundation you create here. Content Understanding and Document Intelligence
+are **Foundry Tools on a Microsoft Foundry (AIServices) resource**, the account that also hosts model
+deployments. Choose the identity model and region now. A wrong choice means redeploying later.
 
 ![Shared document workflow foundation](../diagrams/01-shared-foundation.png)
 
@@ -21,7 +20,7 @@ A resource group containing:
 | Log Analytics + Application Insights | Workflow tracing and the evaluation gate in modules 6–7 |
 | Role assignments | Keyless access between the account identity, storage, and the engineer |
 
-Output: a `.env` contract with **no secrets in it**, consumed by every later module.
+This produces a `.env` contract with **no secrets**, used by every later module.
 
 ## Choose your path
 
@@ -32,17 +31,17 @@ Output: a `.env` contract with **no secrets in it**, consumed by every later mod
 | C. Foundry portal / Content Understanding Studio | No | Manual | A throwaway demo of an analyzer | Lowest |
 | D. Bring your own landing zone | Customer's IaC | Depends on what exists | The customer already has a governed Foundry resource | Already owned |
 
-**Default: Option A.** It is the only path that provisions *both* the embedding deployment and the
-inbound + quarantine containers modules 2–4 require, and it produces a diff a platform team can review.
+**Default: Option A.** It provisions the embedding deployment and inbound and quarantine containers
+that modules 2–4 need. It also produces a diff the platform team can review.
 
-**Migration cost.** A → D is cheap: modules 2+ only read the `.env` contract, so pointing at customer
-resources is a variable change. C → A is expensive: portal/Studio resources have generated names and
-no template, so you rebuild. Do not demo from C and then promise A.
+**Migration cost.** Moving from A to D is cheap: modules 2+ only read the `.env` contract, so you
+change variables. Moving from C to A costs more because portal/Studio resources have generated names
+and no template. Do not demo with C and promise A.
 
 ### Region and model availability come first
 
-Content Understanding and Document Intelligence are not in every region, and your models must deploy
-in the region you pick. Check both **before** deploying:
+Content Understanding and Document Intelligence are unavailable in some regions, and your models must
+deploy in the selected region. Check both **before** you deploy:
 
 ```bash
 az cognitiveservices account list-skus --location eastus2 --kind AIServices -o table
@@ -77,9 +76,9 @@ bicep build scenarios/content-understanding/accelerator/main.bicep --stdout > /d
 ./scenarios/content-understanding/accelerator/scripts/deploy.sh rg-content-understanding eastus2
 ```
 
-`deploy.sh` creates the resource group, validates the template, deploys, then writes
-`accelerator/.env` from the outputs. It passes your signed-in object ID as `principalId` so you get
-keyless data-plane access without anyone issuing a key.
+`deploy.sh` creates the resource group, validates and deploys the template, then writes
+`accelerator/.env` from the outputs. It passes your signed-in object ID as `principalId` to grant
+keyless data-plane access.
 
 What the template does that matters, and why:
 
@@ -141,17 +140,17 @@ This module maps to **Foundations Step 1** — see [the canonical activity](../.
 
 ### Option C — Foundry portal / Content Understanding Studio
 
-For a same-day analyzer demo. Create a Foundry resource in the portal, then open Content
+Use this for a same-day analyzer demo. Create a Foundry resource in the portal, then open Content
 Understanding Studio (<https://contentunderstanding.ai.azure.com>) and let it auto-deploy the
 required `gpt-4.1`, `gpt-4.1-mini`, and `text-embedding-3-large` models. Record the endpoint and
 deployment names into `accelerator/.env` by hand.
 
-Accept the trade: no template, generated names, nothing for a platform team to review. Treat anything
-built here as disposable. Do not build the pilot on it.
+This option has no template, uses generated names, and leaves no reviewable platform diff. Treat work
+here as disposable. Do not build the pilot on it.
 
 ### Option D — Bring your own landing zone
 
-No new resources. Verify what exists and fill the same contract.
+This option creates no resources. Verify what exists, then fill the same contract.
 
 ```bash
 az cognitiveservices account list \
@@ -176,8 +175,7 @@ so modules 2–7 are identical across all four options.
 
 ## Verify
 
-Four things should be true before you build on this foundation. Check each against your own
-resources, not against anything in this repo.
+Check these four items against your own resources before you build on this foundation.
 
 **1. Both model deployments exist.**
 
@@ -189,8 +187,8 @@ az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group 
 ```
 
 You should see the names in `AZURE_AI_MODEL_DEPLOYMENT_NAME` and `AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`.
-Content Understanding calls both during analysis; if either is missing the later modules fail with a
-deployment-not-found error that reads like a code bug but isn't.
+Content Understanding calls both during analysis. If either is missing, later modules fail with a
+deployment-not-found error.
 
 **2. Content Understanding answers your Entra identity, with no key.**
 
@@ -201,9 +199,9 @@ curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" \
   "$CU/contentunderstanding/analyzers?api-version=2025-11-01"
 ```
 
-A `200` means keyless data-plane access works. A `403` means your identity is missing **Cognitive
-Services User** on the account — grant the role rather than reaching for a key, or the key follows you
-to production. A `404` means the region does not expose Content Understanding; redeploy elsewhere.
+A `200` means keyless data-plane access works. A `403` means your identity lacks **Cognitive Services
+User** on the account. Grant that role instead of using a key. A `404` means the region does not
+expose Content Understanding; redeploy elsewhere.
 
 **3. The document containers are private and reachable without a key.**
 
@@ -213,9 +211,9 @@ az storage container show --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
   --query "properties.publicAccess" -o tsv
 ```
 
-The command succeeding at all proves Entra data-plane access; empty output for `publicAccess` means
-no anonymous access. A value of `blob` or `container` means the inbound corpus is world-readable —
-fix it before you upload a single document.
+If the command succeeds, Entra data-plane access works. Empty `publicAccess` means no anonymous
+access. A value of `blob` or `container` exposes the inbound corpus publicly. Fix it before uploading
+documents.
 
 **4. The environment contract holds no secrets.**
 
@@ -223,8 +221,7 @@ fix it before you upload a single document.
 grep -iE 'api_key|account_key|connection_string|sas_token' scenarios/content-understanding/accelerator/.env
 ```
 
-No output is the result you want. Any match means something upstream handed you a key, and the
-keyless chain is already broken.
+You want no output. Any match means an upstream step provided a key and broke the keyless chain.
 
 ## Troubleshooting
 
@@ -239,10 +236,9 @@ keyless chain is already broken.
 
 ## Decision record
 
-Record and keep: chosen option and why, region and the availability evidence behind it, chat and
-embedding model + version, the Content Understanding and Document Intelligence API versions you
-pinned, whether local auth is disabled, and who owns the resource group. One short paragraph plus the
-`.env` variable names — not the values.
+Record the selected option and why, region and its availability evidence, chat and embedding model and
+version, pinned Content Understanding and Document Intelligence API versions, local-auth status, and
+resource-group owner. Use one short paragraph plus `.env` variable names, never their values.
 
 ## Next module
 

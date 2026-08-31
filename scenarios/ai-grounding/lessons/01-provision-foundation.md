@@ -1,7 +1,7 @@
 # Module 1 — Provision the grounding foundation
 
-Every later module writes into the footprint you create here. Get the identity model right now and
-modules 2–7 are configuration; get it wrong and you will redeploy.
+Every later module uses the footprint you create here. Set the identity model correctly now, and
+modules 2–7 are configuration. Get it wrong and you will redeploy.
 
 ![Grounding foundation footprint](../diagrams/01-foundation-footprint.png)
 
@@ -19,7 +19,7 @@ A resource group containing:
 | Log Analytics + Application Insights | Traces and evaluation correlation from module 7 |
 | Role assignments | Keyless access between search, project, models, and storage |
 
-Output: a `.env` contract with **no secrets in it**, consumed by every later module.
+Output: a `.env` contract with **no secrets**, used by every later module.
 
 ## Choose your path
 
@@ -31,12 +31,12 @@ Output: a `.env` contract with **no secrets in it**, consumed by every later mod
 | D. Bring your own landing zone | Customer's IaC | Depends on what exists | The customer already has governed Foundry + Search | Already owned |
 
 **Default: Option A.** It is the only path that provisions *both* an embedding deployment and the
-approved-content container, which modules 3–5 require, and it produces a diff a customer's platform
+approved-content container required by modules 3–5. It also produces a diff the customer's platform
 team can review.
 
-**Migration cost.** A → D is cheap: modules 2+ only read the `.env` contract, so pointing at
-customer resources is a variable change. C → A is expensive: portal-created resources have
-generated names and no template, so you rebuild. Do not demo from C and then promise A.
+**Migration cost.** A → D is cheap because modules 2+ only read the `.env` contract. Pointing them
+at customer resources is a variable change. C → A is expensive: portal-created resources have
+generated names and no template, so you rebuild. Do not demo from C and promise A.
 
 ### Region and model availability come first
 
@@ -76,9 +76,9 @@ bicep build scenarios/ai-grounding/accelerator/main.bicep --stdout > /dev/null
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
 ```
 
-`deploy.sh` creates the resource group, runs `az deployment group validate` first, deploys, then
-writes `accelerator/.env` from the template outputs. It passes your signed-in object ID as
-`principalId` so you get keyless data-plane access without anyone issuing you a key.
+`deploy.sh` creates the resource group, validates and deploys the template, then writes
+`accelerator/.env` from its outputs. It passes your signed-in object ID as `principalId`, giving you
+keyless data-plane access without issuing a key.
 
 What the template does that matters, and why:
 
@@ -152,9 +152,8 @@ For a same-day demo or a zero-cost proof of concept.
    The portal offers a free Search tier for proof-of-concept work.
 5. Record the project endpoint and deployment names into `accelerator/.env` by hand.
 
-Accept the trade: no template, generated names, nothing for a platform team to review, and the
-free Search tier cannot use managed identity for model access. Treat anything built here as
-disposable.
+Accept the trade: no template, generated names, nothing for a platform team to review, and no
+managed identity for model access on the free Search tier. Treat anything built here as disposable.
 
 ### Option D — Bring your own landing zone
 
@@ -166,7 +165,7 @@ az cognitiveservices account list --query "[?kind=='AIServices'].{name:name,rg:r
 az search service list --query "[].{name:name,rg:resourceGroup,sku:sku.name,semantic:properties.semanticSearch}" -o table
 ```
 
-Then confirm the four things this scenario actually depends on:
+Then confirm the four things this scenario needs:
 
 1. The Foundry account has `allowProjectManagement: true` (otherwise it is not a Foundry account).
 2. Search is **Basic or higher** with semantic ranking enabled.
@@ -184,13 +183,12 @@ az role assignment create --assignee-object-id "$SEARCH_MI" --assignee-principal
   --scope $(az cognitiveservices account show -g <rg> -n <account> --query id -o tsv)
 ```
 
-Write the discovered values into `accelerator/.env` using the same variable names the template
-outputs, so modules 2–7 are identical across all four options.
+Write the discovered values to `accelerator/.env` with the variable names from the template outputs.
+Modules 2–7 then work the same across all four options.
 
 ## Verify
 
-Three things should be true before you build on this foundation. Check each against your own
-resources.
+Check these three things before building on this foundation.
 
 **1. Both model deployments exist.**
 
@@ -200,9 +198,9 @@ az cognitiveservices account deployment list \
   --query "[].name" -o tsv
 ```
 
-You should see the names you set for `AZURE_AI_MODEL_DEPLOYMENT_NAME` and
-`AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`. If either is missing, the later modules will fail with a
-deployment-not-found error that looks like a code bug but isn't.
+You should see the names set for `AZURE_AI_MODEL_DEPLOYMENT_NAME` and
+`AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`. If either is missing, later modules fail with a
+deployment-not-found error that looks like a code bug.
 
 **2. Search answers your Entra identity, with no key anywhere.**
 
@@ -212,9 +210,9 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   "$AZURE_SEARCH_ENDPOINT/indexes?api-version=2024-07-01" | head -c 200
 ```
 
-A `200` with a JSON body means role-based access is working. A `403` means your account is missing
-**Search Service Contributor** or **Search Index Data Contributor** — grant the role rather than
-falling back to an admin key, or you will carry that key all the way to production.
+A `200` with a JSON body means role-based access works. A `403` means your account lacks **Search
+Service Contributor** or **Search Index Data Contributor**. Grant the role instead of falling back
+to an admin key, or you will carry that key to production.
 
 **3. The environment contract holds no secrets.**
 
@@ -222,8 +220,8 @@ falling back to an admin key, or you will carry that key all the way to producti
 grep -iE 'api_key|account_key|connection_string|sas_token' scenarios/ai-grounding/accelerator/.env
 ```
 
-No output is the result you want. Any match means something upstream handed you a key, and the
-keyless chain is already broken.
+No output is the expected result. Any match means something upstream handed you a key and broke the
+keyless chain.
 
 ## Troubleshooting
 
@@ -238,9 +236,9 @@ keyless chain is already broken.
 
 ## Decision record
 
-Record and keep: chosen option and why, region and the availability evidence behind it, chat and
-embedding model + version, Search tier, whether local auth is disabled, and who owns the resource
-group. One short paragraph and the `.env` variable names — not the values.
+Record the chosen option and why, region and availability evidence, chat and embedding model +
+version, Search tier, whether local auth is disabled, and the resource-group owner. Use one short
+paragraph and the `.env` variable names, not their values.
 
 ## Next module
 

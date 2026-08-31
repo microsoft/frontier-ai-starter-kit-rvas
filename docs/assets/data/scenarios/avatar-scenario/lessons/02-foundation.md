@@ -1,9 +1,9 @@
 # Module 2 — Provision the Foundry + Speech foundation
 
-Module 1 decided *what* you're building. This module provisions the keyless footprint every later
-module writes into: Foundry + models, Azure AI Search, the Speech data plane (same AIServices
+Module 1 decided *what* you are building. This module provisions the keyless footprint used by
+later modules: Foundry + models, Azure AI Search, the Speech data plane (the same AIServices
 account), storage for approved content and rendered output, and observability. Get the identity
-model right now and modules 3–7 are configuration.
+model right now. Then modules 3–7 become configuration.
 
 This module follows the kit's working `infra/resources.bicep` and current Microsoft Learn guidance.
 
@@ -21,7 +21,7 @@ This module follows the kit's working `infra/resources.bicep` and current Micros
 | Log Analytics + Application Insights | Traces and evaluation correlation (module 7) |
 | Role assignments | Keyless access between search, project, models, storage, **and the Speech data plane** |
 
-Output: an `.env` contract with **no secrets**, consumed by every later module. This maps to
+The output is an `.env` contract with **no secrets** that every later module consumes. This maps to
 **Foundations Steps 1–2** — [Foundations activity](../../../activities/foundations/README.md).
 
 ## Choose your path
@@ -33,13 +33,13 @@ Output: an `.env` contract with **no secrets**, consumed by every later module. 
 | C. Foundry portal + Speech resource | No | Manual | A throwaway demo | Lowest; free Search tier possible |
 | D. Bring your own landing zone | Customer's IaC | Verify it | Customer already has governed Foundry + Speech | Already owned |
 
-**Default: Option A.** It is the only path that provisions *both* the embedding deployment and both
-storage containers this scenario needs, sets the Speech custom subdomain, and wires the Speech
-data-plane role — and it produces a diff a platform team can review.
+**Default: Option A.** It is the only path that provisions the embedding deployment and both
+storage containers this scenario needs, sets the Speech custom subdomain, and assigns the Speech
+data-plane role. It also produces a diff that a platform team can review.
 
-**Migration cost.** A → D is cheap: modules 3+ only read the `.env` contract, so pointing at customer
-resources is a variable change. C → A is expensive: portal resources have generated names and no
-template. Do not demo from C then promise A.
+**Migration cost.** A → D is cheap: modules 3+ only read the `.env` contract, so you only change
+variables to point at customer resources. C → A is expensive because portal resources have generated
+names and no template. Do not demo from C then promise A.
 
 ### Region and capability availability come first
 
@@ -56,8 +56,8 @@ az cognitiveservices account list-skus --location westus2 --kind AIServices -o t
 - Real-time avatar requires the **Standard S0** Speech tier.
 
 > **Speech is keyless only with a custom subdomain.** Module 2's Bicep sets
-> `customSubDomainName` on the AIServices account, which is exactly what makes the avatar batch API
-> accept an Entra token. Verified:
+> `customSubDomainName` on the AIServices account. That lets the avatar batch API accept an Entra
+> token. Verified:
 > <https://learn.microsoft.com/azure/ai-services/speech-service/role-based-access-control>
 
 ## Implementation
@@ -77,12 +77,12 @@ bicep build scenarios/avatar-onboarding/accelerator/main.bicep --stdout > /dev/n
 ./scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 ```
 
-`deploy.sh` creates the resource group, runs `az deployment group validate` first, deploys, then
+`deploy.sh` creates the resource group, first runs `az deployment group validate`, deploys, then
 writes `accelerator/.env` from the template outputs. It passes your signed-in object ID as
-`principalId` so you get keyless data-plane access — including the **Speech** data plane — without
-anyone issuing a key.
+`principalId`, giving you keyless data-plane access, including the **Speech** data plane, without
+issuing a key.
 
-What the template does that matters, and why:
+Key template settings:
 
 ```bicep
 // Keyless-first on storage: shared key access is OFF, so ingestion uses Entra ID.
@@ -145,23 +145,23 @@ subdomain (it does when created by the kit infra).
 
 ### Option C — Foundry portal + Speech
 
-For a same-day demo. Create a project (a Foundry account is created for you), deploy a chat and an
-embedding model, and connect a Search service. For avatar, open **Build → Models → Azure Speech —
-Text to Speech Avatar** and try it in the playground; the **Code** tab gives you the request. Record
-endpoints and names into `accelerator/.env` by hand. Accept the trade: generated names, no template,
-nothing to review, and the free Search tier can't use managed identity for model access.
+Use this for a same-day demo. Create a project (which creates a Foundry account), deploy a chat and
+an embedding model, and connect a Search service. For avatar, open **Build → Models → Azure Speech —
+Text to Speech Avatar** and try it in the playground. The **Code** tab gives you the request. Record
+endpoints and names in `accelerator/.env` by hand. This means generated names, no template, nothing
+to review, and no managed identity for model access on the free Search tier.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
 ### Option D — Bring your own landing zone
 
-No new resources. Verify what exists and fill the same contract.
+Do not create resources. Verify what exists and fill the same contract.
 
 ```bash
 az cognitiveservices account list --query "[?kind=='AIServices'].{name:name,rg:resourceGroup,loc:location,subdomain:properties.customSubDomainName}" -o table
 az search service list --query "[].{name:name,rg:resourceGroup,sku:sku.name,semantic:properties.semanticSearch}" -o table
 ```
 
-Confirm the five things this scenario depends on:
+Confirm these five scenario dependencies:
 
 1. Foundry account has `allowProjectManagement: true`.
 2. The account has a **custom subdomain** (required for keyless Speech).
@@ -179,8 +179,8 @@ az role assignment create --assignee "$(az ad signed-in-user show --query id -o 
 
 ## Verify
 
-Three things must be true before later modules write into this footprint. Check each against your
-own resources. Set `ACCOUNT` from the Speech endpoint and `RG` to the resource group you deployed to:
+Verify these three conditions before later modules use this footprint. Check each against your
+resources. Set `ACCOUNT` from the Speech endpoint and `RG` to the resource group you deployed to:
 
 ```bash
 set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
@@ -197,7 +197,7 @@ az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group 
 
 You should see the names in `AZURE_AI_MODEL_DEPLOYMENT_NAME` and
 `AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`. If either is missing, module 3 ingestion and module 4 drafting
-fail with a deployment-not-found error that looks like a code bug but is a provisioning gap.
+fail with a deployment-not-found error. The cause is provisioning, not code.
 
 **2. The Speech avatar data plane answers your Entra identity, with no key.** This is the keyless
 proof for this scenario: the batch-synthesis endpoint accepts an Entra token only when the account
@@ -210,10 +210,10 @@ curl -s -o /dev/null -w '%{http_code}\n' \
   "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses?api-version=2024-08-01"
 ```
 
-`200` means keyless Speech works end to end. `401` means the account has no custom subdomain, so
-Entra auth is rejected: redeploy Option A, which sets `customSubDomainName`. `403` means your
-identity is missing **Cognitive Services Speech User** (`f2dc8367-1007-4938-bd23-fe263f013447`);
-grant that role rather than falling back to a Speech key, or you carry the key to production.
+`200` means keyless Speech works end to end. `401` means the account has no custom subdomain and
+rejects Entra auth. Redeploy Option A, which sets `customSubDomainName`. `403` means your identity
+is missing **Cognitive Services Speech User** (`f2dc8367-1007-4938-bd23-fe263f013447`). Grant the
+role rather than falling back to a Speech key, or you carry the key to production.
 <https://learn.microsoft.com/azure/ai-services/speech-service/role-based-access-control>
 
 **3. The environment contract holds no secrets.**
@@ -223,8 +223,8 @@ grep -iE 'api_key|account_key|connection_string|sas_token|subscription_key' \
   scenarios/avatar-onboarding/accelerator/.env
 ```
 
-No output is the result you want. Any match means something handed you a key and the keyless chain
-is already broken.
+No output is the expected result. Any match means something supplied a key and the keyless chain is
+already broken.
 
 ## Troubleshooting
 
@@ -240,10 +240,10 @@ is already broken.
 
 ## Decision record
 
-Record and keep: chosen option and why; region and the avatar/Voice Live availability evidence
-(URL + date); chat + embedding model and version; Search tier; that the account has a custom
-subdomain (so Speech is keyless); the Speech role assigned; and who owns the resource group. One
-short paragraph and the `.env` variable **names** — not values.
+Record the chosen option and why, region and avatar/Voice Live availability evidence (URL + date),
+chat + embedding model and version, Search tier, custom subdomain (so Speech is keyless), assigned
+Speech role, and resource-group owner. Add one short paragraph and the `.env` variable **names**,
+not values.
 
 ## Next module
 

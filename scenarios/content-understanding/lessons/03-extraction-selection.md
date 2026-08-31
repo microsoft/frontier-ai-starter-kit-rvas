@@ -1,17 +1,16 @@
 # Module 3 — Select the extraction capability
 
-This is the module the customer actually came for. There are several valid Microsoft options and
-each wins in a different place. Choosing wrong is expensive: a deterministic model on free-form
-documents misses fields; an LLM on stable forms burns tokens and invents values. Decide on the
-record, with a fallback.
+This is the central customer decision. Several Microsoft options fit different work. A deterministic
+model can miss fields in free-form documents; an LLM can waste tokens and invent values on stable
+forms. Record the choice and its fallback.
 
 ![Extraction capability choice](../diagrams/03-extraction-capability-choice.png)
 
 ## What you build
 
-A recorded extraction decision: the capability, the concrete model or analyzer id, the API version, a
-confidence threshold, an explicit requirement for evidence, and a named fallback with its trigger.
-Captured in [`accelerator/sample-data/workflow/extraction-decision.json`](../accelerator/sample-data/workflow/extraction-decision.json).
+A recorded extraction decision: capability, model or analyzer ID, API version, confidence threshold,
+evidence requirement, fallback, and fallback trigger. Store it in
+[`accelerator/sample-data/workflow/extraction-decision.json`](../accelerator/sample-data/workflow/extraction-decision.json).
 
 ## Choose your path
 
@@ -27,35 +26,35 @@ Use the current Microsoft Learn guidance when choosing the capability:
 | E. LLM structured outputs (build your own) | Azure OpenAI JSON-schema extraction | **No native confidence/grounding** — you implement it | None | Niche workflows needing full control of model + prompt | You need built-in evidence or straight-through automation with audit |
 | F. Multimodal / vision extraction | CU image/vision analyzers or a vision LLM over page images | Yes (CU) / No (raw vision) | None | Charts, diagrams, photos, handwriting, mixed media | Pure text where OCR + fields is cheaper and more accurate |
 
-**Default: Option A.** Content Understanding prebuilt analyzers give schema-aligned fields *with
-confidence and grounding* and no labeling, and the same service reaches Document Intelligence models
-when you need them — so you can start here and specialize without changing stacks.
+**Default: Option A.** Content Understanding prebuilt analyzers return schema-aligned fields *with
+confidence and grounding* without labeling. The same service can reach Document Intelligence models,
+so you can specialize without changing stacks.
 
 **When each other option wins**
 
-- **B** — you need fields no prebuilt covers, on documents too variable for a template. Describe the
-  fields in plain language; iterate in minutes.
-- **C** — the documents are a standard structured form (invoice, receipt, ID, W-2, 1003). Deterministic
-  models are the accuracy and latency leader here and cost less than an LLM per page.
-- **D** — the form is org-specific and highly structured, and you can label samples. You trade labeling
-  effort for template-grade accuracy.
-- **E** — you need complete control of the model, prompt, and infrastructure, and you accept owning
-  confidence and grounding yourself. This is the "build your own" path; pick it deliberately.
-- **F** — the value is in a chart, diagram, photo, or handwriting. Use a multimodal analyzer; do not
-  force a text-only pipeline over visual content. If this is the shape of the problem, use the
+- **B** — you need fields no prebuilt analyzer covers on documents too variable for a template.
+  Describe fields in plain language and iterate in minutes.
+- **C** — documents are standard structured forms (invoice, receipt, ID, W-2, 1003). Deterministic
+  models lead on accuracy and latency here, and cost less than an LLM per page.
+- **D** — the form is organization-specific and highly structured, and you can label samples.
+  You trade labeling effort for template-grade accuracy.
+- **E** — you need control of the model, prompt, and infrastructure, and will implement confidence
+  and grounding yourself. Select this build-your-own path deliberately.
+- **F** — value lives in a chart, diagram, photo, or handwriting. Use a multimodal analyzer. Do not
+  force visual content through a text-only pipeline. If that is your problem shape, use the
   [Visual Multimodal activity](../../../activities/extra-visual-multimodal/README.md) as the
   implementation reference before you commit to a document-only pipeline.
 
-**Migration cost.** A ↔ C is cheap: both are Foundry Tools on the same account and return the same
-typed result contract (module 4), so you swap the analyzer/model id and re-verify. A/C → E is a
-rebuild of the extraction step *plus* new validation code, because you inherit no confidence or
-grounding. B and D add iteration/labeling loops but keep the result contract. Default toward the
-options that hand you evidence for free.
+**Migration cost.** Moving between A and C is cheap: both are Foundry Tools on the same account and
+return module 4's typed result contract. Swap the analyzer or model ID, then verify again. Moving
+from A or C to E rebuilds extraction and adds validation code because it provides no confidence or
+grounding. B and D add iteration or labeling but retain the contract. Prefer options that provide
+evidence.
 
 ## Implementation
 
-Each option below produces the typed result module 4 consumes. Set the confidence threshold once and
-enforce it everywhere.
+Each option below produces the typed result that module 4 consumes. Set the confidence threshold once,
+then enforce it everywhere.
 
 ### Option A — Content Understanding prebuilt analyzer
 
@@ -95,8 +94,8 @@ curl -s -X PUT \
       }'
 ```
 
-`estimateFieldSourceAndConfidence` is what makes confidence and grounding appear in the result — the
-switch people forget. Field methods are **extract** (as-written), **classify** (from a set), or
+`estimateFieldSourceAndConfidence` makes confidence and grounding appear in the result. Field methods
+are **extract** (as-written), **classify** (from a set), or
 **generate** (summaries/descriptions). Reference:
 <https://learn.microsoft.com/azure/ai-services/content-understanding/overview>
 
@@ -152,9 +151,9 @@ out = client.beta.chat.completions.parse(
     response_format=Invoice)
 ```
 
-Because there is no confidence score, your evidence strategy must be explicit — e.g. require the model
-to return the source span for each field and reject any field it cannot locate. Record that strategy
-in the decision. Reference:
+There is no confidence score, so define an evidence strategy. For example, require the model to return
+a source span for each field and reject any field it cannot locate. Record the strategy in the
+decision. Reference:
 <https://learn.microsoft.com/azure/foundry/openai/how-to/structured-outputs>
 
 ### Option F — Multimodal / vision extraction
@@ -172,8 +171,8 @@ handles safe image input, bounded observations, and human review explicitly.
 
 ## Verify
 
-Prove the capability you picked on a real document, then on a messy one. A decision file that names
-an analyzer is not evidence that the analyzer works on your documents.
+Test the selected capability on a real document, then on a messy one. A decision file that names an
+analyzer does not prove it works on your documents.
 
 **1. The chosen analyzer returns typed fields with confidence and grounding.**
 
@@ -193,21 +192,18 @@ curl -s -H "Authorization: ******" "$OP" \
   | jq '.result.contents[0].fields | to_entries[0].value | {value: (.valueString // .valueNumber // .valueDate), confidence, source}'
 ```
 
-A `confidence` between 0 and 1 and a non-null `source` (the `D(page,...)` grounding polygon) is the
-signal that this capability hands you evidence for free. If `source` is null, you chose a path that
-does not ground its values — for Option E that is expected and you owe the evidence strategy yourself.
-For Document Intelligence, read `field.confidence` and `field.boundingRegions` from the SDK result
-instead.
+A `confidence` between 0 and 1 and a non-null `source` (the `D(page,...)` grounding polygon) show
+that the capability provides evidence. A null `source` means the path does not ground values. That is
+expected for Option E, where you must implement the evidence strategy. For Document Intelligence,
+read `field.confidence` and `field.boundingRegions` from the SDK result.
 
 **2. It survives a document outside your happy path.**
 
 Run the same call against a document with a different layout, a scan, or a vendor you did not design
 for. Compare the returned fields to what you can see in the source document.
 
-If fields you can read with your own eyes come back empty, or confidence collapses across the board,
-you have found the failure that costs money: extraction that passed on the three clean samples and
-falls over on the real corpus. That is the trigger for the fallback you recorded, not a reason to
-lower the threshold until it looks fine.
+If obvious fields come back empty, or confidence collapses across the document, use the recorded
+fallback. Do not lower the threshold until results look acceptable.
 
 ## Troubleshooting
 
@@ -222,9 +218,9 @@ lower the threshold until it looks fine.
 
 ## Decision record
 
-Short: the selected capability, model/analyzer id, API version, confidence threshold, the evidence
-requirement, the two runners-up with why they lost, and the fallback plus its trigger. One paragraph,
-with a date.
+Record the selected capability, model or analyzer ID, API version, confidence threshold, evidence
+requirement, two rejected alternatives and why, plus the fallback and its trigger. Use one dated
+paragraph.
 
 ## Next module
 

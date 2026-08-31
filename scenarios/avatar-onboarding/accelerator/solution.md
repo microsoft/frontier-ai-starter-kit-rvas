@@ -1,9 +1,8 @@
 # Solution — Avatar Scenario reference implementation
 
-This is the complete reference build for the scenario. It is the "answer key": the exact files,
-commands, and artifacts that satisfy all seven modules. The lessons teach *how to choose and
-build*; this file is the shortest path a field engineer can follow to a green pilot. Every command
-here is runnable from the repository root.
+This is the scenario's complete reference build. It lists the files, commands, and artifacts that
+satisfy all seven modules. The lessons explain *how to choose and build*. This file gives a field
+engineer the shortest route to a green pilot. Run every command from the repository root.
 
 > Fictional data only. The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository.
@@ -36,10 +35,9 @@ Record a dated capability decision. The shipped fixture is the reference:
 cat scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
 ```
 
-The default decision — **standard batch avatar** — avoids the Azure limited-access registration
-required for *custom* avatar / *custom* neural voice, while still requiring synthetic-media
-disclosure. See `lessons/01-experience-selection.md` for the full option comparison and the
-responsible-AI gates.
+The default decision, **standard batch avatar**, avoids the Azure limited-access registration that
+*custom* avatar / *custom* neural voice requires. It still requires synthetic-media disclosure. See
+`lessons/01-experience-selection.md` for the option comparison and responsible-AI gates.
 
 ## 2. Provision the foundation (Module 2)
 
@@ -64,8 +62,8 @@ AZURE_STORAGE_ACCOUNT_NAME, AZURE_STORAGE_CONTAINER_NAME,
 AZURE_EXPERIENCE_OUTPUT_CONTAINER_NAME, APPLICATIONINSIGHTS_RESOURCE_ID
 ```
 
-RBAC is managed-identity only. The template assigns the signed-in principal the data-plane roles
-that generic Owner/Contributor do **not** grant — including **Cognitive Services Speech User**
+RBAC is managed-identity only. The template assigns the signed-in principal data-plane roles that
+generic Owner/Contributor do **not** grant, including **Cognitive Services Speech User**
 (`f2dc8367-1007-4938-bd23-fe263f013447`) for keyless Speech, plus Cognitive Services User, OpenAI
 User, Search index/service, and Storage Blob roles. Keyless Entra auth requires the custom subdomain
 the template sets via `customSubDomainName`.
@@ -83,23 +81,23 @@ az storage blob list --auth-mode login \
 ```
 
 Every claim carries `claim_id`, `source`, `owner`, `version`, and `review_by`. A claim past
-`review_by`, or whose source is invalidated, is dropped from the publishable set — this is the wire
-that later triggers withdrawal (Module 6).
+`review_by`, or with an invalidated source, leaves the publishable set. That later triggers
+withdrawal (Module 6).
 
 ## 4. Build the grounded assistant (Module 4)
 
 Follow [Foundations Steps 3–4](../../../activities/foundations/README.md) to build the grounded,
-citing agent. The onboarding contract: on-claim asks return the **exact approved wording** and the
+citing agent. The onboarding contract is simple: on-claim asks return the **exact approved wording** and the
 `claim_id`; off-claim asks return `NO_APPROVED_CLAIM` plus a human-help path. The assistant provides
 interactive help; it must **not** silently add claims to a published script.
 
 ## 5. Generate the accessible experience (Module 5)
 
-Render deterministically first (no service calls), then submit the live batch job:
+Render deterministically first (no service calls), then submit the live batch job.
 
-Watch the batch synthesis job to completion, then download and actually watch the result. A job that
-reports success can still produce an artifact with the wrong script, a missing disclosure, or audio
-that does not match the approved claims.
+Watch the batch synthesis job to completion, then download and watch the result. A successful job
+can still produce the wrong script, omit disclosure, or use audio that does not match approved
+claims.
 
 Batch synthesis endpoint:
 
@@ -117,7 +115,7 @@ Body carries `inputKind` (`PlainText`|`SSML`), `inputs[].content`, and
 
 ## 6. Gate publication behind human approval (Module 6)
 
-Four named approvals bound to the exact `script_id`+`script_version` — `SME`, `legal-compliance`,
+Four named approvals bind to the exact `script_id`+`script_version`: `SME`, `legal-compliance`,
 `brand-communications`, `content-owner` (the renderer's `REQUIRED_APPROVER_ROLES`). Withdrawal:
 
 ```python
@@ -135,10 +133,10 @@ export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true   # BEFORE import
 python  activities/advanced-evaluation-redteam/validate.py
 ```
 
-Evaluate grounding, refusal, disclosure, and accessibility on a golden set; run the AI Red Teaming
-Agent plus the synthetic-media probes (impersonation, "skip the disclosure", unapproved claims);
-review a trace for a failed case. Ship only when every gate in `release-decision.json` is green.
-Measure the pilot with **aggregate, identifier-free** telemetry only.
+Evaluate grounding, refusal, disclosure, and accessibility on a golden set. Run the AI Red Teaming
+Agent and the synthetic-media probes (impersonation, "skip the disclosure", unapproved claims).
+Review a trace for a failed case. Ship only when every `release-decision.json` gate is green. Measure
+the pilot with **aggregate, identifier-free** telemetry only.
 
 ## End-to-end verification
 
@@ -148,15 +146,14 @@ bicep build scenarios/avatar-onboarding/accelerator/main.bicep --outfile scenari
 bicep lint  scenarios/avatar-onboarding/accelerator/main.bicep
 ```
 
-Then watch the published artifact end to end as a new joiner would: the disclosure appears before the
-persona speaks, every spoken claim traces to an approved source, and the non-avatar alternative is
-reachable.
+Then watch the published artifact as a new joiner would. The disclosure appears before the persona
+speaks, every spoken claim traces to an approved source, and the non-avatar alternative is reachable.
 
 ## Responsible-AI gates before production
 
 - **Standard** avatar + **standard** neural voice: no registration, but synthetic-media **disclosure
   to users and a feedback channel are required**.
-- **Custom** avatar / **custom** or **personal** voice: **Limited Access** — registration only via
+- **Custom** avatar / **custom** or **personal** voice: **Limited Access**, registration only via
   <https://aka.ms/customneural>, Microsoft-managed customers only; custom video avatar needs ≥10 min
   actor video, **explicit written consent**, and the "Disclosure for voice and avatar talent" shared
   in advance.

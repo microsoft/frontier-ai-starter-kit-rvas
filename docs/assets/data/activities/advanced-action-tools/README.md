@@ -9,16 +9,11 @@
 > required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
-So far your assistant knows things — it retrieves from the knowledge base and answers. In this
-activity it learns to do things: open a ticket, place a hold, book a slot, start a workflow, or call
-another approved system. The difference matters. A knowledge tool reads; an action tool changes the
-world.
-Because actions have consequences, you'll also implement a human-approval loop so the agent *asks
-before it acts*.
+Your assistant can retrieve information and answer questions. This activity lets it open a ticket,
+place a hold, book a slot, start a workflow, or call another approved system. Knowledge tools read.
+Action tools change state.
 
-Why now: an assistant that only retrieves cannot complete a task. But the moment it can *act*, a
-wrong move has real consequences. This is where your agent earns the right to touch the real world,
-and where you build the approval guardrail that makes that safe.
+Actions have consequences. Build a human-approval loop so the agent *asks before it acts*.
 
 You will wire a provided backend — you do not build it. The Action Tools REST API ships in
 [`scripts/action-backend/`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/README.md) and exposes three action
@@ -50,16 +45,15 @@ Files in this activity
 - [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
 - [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/validate.py) — the Verify checks below.
 
-This activity ships three rungs off the same backbone — pick your depth. The same
-`validate.py` grades all three, so you can climb as far as you like: (a) Guided path (below)
-walks you through a starter file · (b) Build-from-scratch path hands you only the contract ·
-(c) Stretch goals go open-ended.
+Choose the depth that fits your team. The same `validate.py` grades all three paths: (a) Guided
+path uses a starter file; (b) Build-from-scratch gives you the contract; (c) Stretch goals are
+open-ended.
 
 ---
 
 ## Rung (a) — Guided path
 
-> The beginner on-ramp: a provided starter with `< PLACEHOLDER >` gaps. Fill them in, step by step.
+> Start with the provided file and fill in its `< PLACEHOLDER >` gaps.
 
 ## Step 0 — Start the provided backend
 
@@ -195,9 +189,8 @@ python activities/advanced-action-tools/validate.py --all
 
 ## Rung (b) — Build-from-scratch path
 
-> Stronger team? Delete the starter and write `agent_with_actions.py` from an empty file. We hand
-> you only the contract below — no skeleton, no placeholders. The same `python activities/advanced-action-tools/validate.py --all`
-> grades this path, so the acceptance criteria are identical.
+> Write `agent_with_actions.py` from an empty file. This path provides only the contract below.
+> `python activities/advanced-action-tools/validate.py --all` uses the same acceptance criteria.
 
 Your contract:
 > Define the three backend action functions (`create_it_ticket`, `place_course_hold`,
@@ -212,7 +205,7 @@ author the file, and run `python activities/advanced-action-tools/validate.py --
 
 ## Rung (c) — Stretch goals
 
-Open-ended: no single right answer.
+Open-ended. There is no single correct answer.
 
 1. Build the MCP server, don't just wire it. Add a *fourth* action (`waive_late_fee`) end to end:
    implement the REST handler in [`scripts/action-backend/app.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/app.py),
@@ -231,8 +224,8 @@ Open-ended: no single right answer.
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ## Tips
-- Approval is the whole point. A flashy auto-acting agent that books the wrong slot is worse than
-  one that asks first. Show the arguments to the human, every time.
+- Approval is the point. An auto-acting agent that books the wrong slot is worse than one that asks
+  first. Show the arguments to the human every time.
 - Treat any text the agent *retrieved* as data, not instructions — an action tool plus a gullible
   agent is exactly how prompt-injection turns into real damage (see the Evaluation & Red Teaming
   activity).

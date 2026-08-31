@@ -1,16 +1,14 @@
 # Implementation notes — Fabric IQ real-time grounding
 
-Use these notes when a scenario branch needs live Fabric/OneLake grounding through a Fabric IQ data
-agent. This is distinct from Governed Data Copilot: Fabric IQ is about live Fabric source routing;
-Governed Data Copilot is about allowlisted structured-data access and provenance.
+Use these notes when a scenario needs live Fabric/OneLake grounding through a Fabric IQ data agent.
+Fabric IQ handles live Fabric source routing. Governed Data Copilot handles allowlisted
+structured-data access and provenance.
 
-## What this activity is really teaching
+## Core idea
 
-The limit of document RAG. This Extra reframes grounding as **"connect the agent to the right source
-of truth"** — and for
-*right-now* questions that source is a live operational store (OneLake), not a re-indexed document. The
-keeper insight is **source routing**: the agent must choose FAQ-knowledge-base vs Fabric-tool per
-question. The demo lands when the seat count changes between two asks with **no re-index**.
+Document RAG has limits. For *right-now* questions, use a live operational store (OneLake), rather
+than a re-indexed document. The agent must route each question to the FAQ knowledge base or Fabric
+tool. Demonstrate that by changing a seat count between two questions with **no re-index**.
 
 ## Infra to pre-provision (do this BEFORE the session)
 
@@ -29,10 +27,9 @@ Fabric F-SKU bills while running. Pause the capacity when the session ends.
 
 ## Search-Before-Implement (mandatory here)
 
-Foundry's Fabric IQ integration is **preview** and can change frequently. Tell teams to query
-`foundry-mcp` and `microsoft-docs` (the `foundry-toolboxes` skill) for the **current** Fabric tool
-signature before coding. Do **not** hand them a hard-coded class name — it will likely be stale by event
-day. That's the doctrine the whole curriculum teaches; this Extra is where it bites hardest.
+Foundry's Fabric IQ integration is **preview** and can change frequently. Query `foundry-mcp` and
+`microsoft-docs` through the `foundry-toolboxes` skill for the **current** Fabric tool signature
+before coding. Do **not** use a hard-coded class name; it may be stale by event day.
 
 ## Implementation notes by step
 
@@ -48,9 +45,9 @@ day. That's the doctrine the whole curriculum teaches; this Extra is where it bi
   answers seat questions from stale FAQ text.
 
 ### Step 3 — the money shot
-- Drive the demo yourself: open Fabric, run
+- Run the demo yourself: open Fabric, run
   `UPDATE course_seats SET seats_open = 0 WHERE course_code='CS101'`, then have the team re-ask. The
-  answer flips to "no seats" with no re-index. That contrast *is* the learning outcome.
+  answer changes to "no seats" with no re-index.
 - Verify the policy question still cites the **FAQ corpus** — if it routes to Fabric, the instructions
   need tightening.
 

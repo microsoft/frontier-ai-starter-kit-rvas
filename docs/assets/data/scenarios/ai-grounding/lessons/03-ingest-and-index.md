@@ -1,10 +1,10 @@
 # Module 3 — Ingest and index approved content
 
-Module 2 chose *where* knowledge lives. This module makes it retrievable, with the source metadata
-that makes an answer auditable and the refresh behaviour that keeps it from going stale.
+Module 2 chose *where* knowledge lives. This module makes it retrievable, preserving the source
+metadata needed to audit answers and the refresh behavior needed to keep content current.
 
-The failure this module prevents is the expensive one: a confident, well-cited answer quoting a
-policy that was superseded three months ago.
+This module prevents a costly failure: a confident, well-cited answer that quotes a policy
+superseded three months ago.
 
 ![Ingestion lineage](../diagrams/03-ingestion-lineage.png)
 
@@ -26,36 +26,34 @@ policy that was superseded three months ago.
 | D. Content Understanding preprocessing, then B or C | You, plus a preprocessing pass | Total, over a much richer extraction | Two-stage | Highest |
 | E. Remote knowledge source — no ingestion at all | Nobody | N/A — nothing is chunked | Always fresh by construction | Lowest |
 
-**Default: Option A.** You did not choose Foundry IQ in module 2 to then hand-build an indexer. A
-blob knowledge source auto-generates the data source, skillset, indexer, and index, and carries
-permission metadata forward when you ask it to. That is weeks of pipeline work you do not do.
+**Default: Option A.** A blob knowledge source generates the data source, skillset, indexer, and
+index, and carries permission metadata forward when requested. You avoid weeks of pipeline work.
 
-**Choose B when** you need a specific field schema, a scoring profile, or a custom skill in the
-enrichment pipeline, but still want scheduled pull ingestion. It is the classic, well-documented
-path, and an index you build this way can later be wrapped as a *search index knowledge source*, so
-B → A stays cheap.
+**Choose B when** you need a specific field schema, scoring profile, or custom enrichment skill but
+still want scheduled pull ingestion. An index built this way can later be wrapped as a *search index
+knowledge source*, so B → A stays cheap.
 
-**Choose C when** your content is not sitting in a supported store — it comes out of an API, a
-database join, or a CMS — or when chunk boundaries are load-bearing. Contracts, legal clauses, and
-numbered policy documents often are. You pay for it by owning refresh forever.
+**Choose C when** content comes from an unsupported store, such as an API, database join, or CMS, or
+when chunk boundaries are load-bearing. Contracts, legal clauses, and numbered policy documents often
+need this. You then own refresh forever.
 
-**Choose D when** the source is not really text: scanned PDFs, forms, tables, screenshots. Extract
-structure first, index the structured output. Do not feed raw OCR sludge into an index and hope
-semantic ranking rescues it.
+**Choose D when** the source is not really text: scanned PDFs, forms, tables, or screenshots.
+Extract structure first, then index the structured output. Do not feed raw OCR output into an index
+and hope semantic ranking fixes it.
 
 **Choose E when** the content changes faster than any schedule can chase, or when the platform that
 owns it already answers questions well (SharePoint, a Fabric data agent, Work IQ). Remote sources
 are slower per query and always current. For live operational data this is the only correct answer.
 
-**Migration cost.** A → B is moderate: you rebuild the pipeline but keep the knowledge base and the
-agent. B → A is cheap. C → anything is expensive because your chunking assumptions are usually baked
-into your evaluation set too. Mixing is normal and supported — one knowledge base can hold an
-indexed blob source *and* a remote SharePoint source, and all sources flow through the same ranking
-pipeline.
+**Migration cost.** A → B is moderate: rebuild the pipeline but keep the knowledge base and agent.
+B → A is cheap. C → anything is expensive because chunking assumptions also shape the evaluation set.
+Mixing is normal and supported. One knowledge base can hold an indexed blob source *and* a remote
+SharePoint source, with every source flowing through the same ranking pipeline.
 
 ### The four things that must survive ingestion
 
-Whatever option you pick, every retrievable chunk needs these, or the answer is unauditable:
+Whatever option you choose, every retrievable chunk needs these fields. Without them, you cannot
+audit the answer:
 
 | Field | Why | Failure if missing |
 | --- | --- | --- |
@@ -68,9 +66,8 @@ Whatever option you pick, every retrievable chunk needs these, or the answer is 
 
 Use the current Microsoft Learn guidance for the active ingestion and indexing surface.
 
-Seed the approved container with the scenario's fictional corpus first. It is deliberately small and
-contains a superseded notice and a restricted document, so it exercises both freshness and
-permissions:
+Seed the approved container with the scenario's fictional corpus first. It is small and includes a
+superseded notice and restricted document, so it tests freshness and permissions:
 
 ```bash
 az storage blob upload-batch \
@@ -81,8 +78,8 @@ az storage blob upload-batch \
   --pattern "*.md"
 ```
 
-The account is provisioned with `allowSharedKeyAccess: false`, so `--auth-mode login` is required —
-there is no account key to fall back to. That is intentional.
+The account uses `allowSharedKeyAccess: false`, so `--auth-mode login` is required. There is no
+account key to fall back to.
 
 ### Option A — Foundry IQ managed ingestion (blob knowledge source)
 
@@ -171,13 +168,13 @@ python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
 5. *(Not enforced)* Nothing stops you shipping without `ingestion_permission_options`. Module 2's
    probe is what catches that.
 
-The generated objects are reported back under `azureBlobParameters.createdResources` —
-`datasource`, `indexer`, `skillset`, `index`. Record those names; they are what you inspect in the
-portal when ingestion misbehaves, and what you delete when you tear down.
+The generated objects appear under `azureBlobParameters.createdResources`: `datasource`, `indexer`,
+`skillset`, and `index`. Record those names. Inspect them in the portal when ingestion fails, and
+delete them during teardown.
 
-**Freshness.** Set `ingestion_schedule` on the ingestion parameters. Pick the interval from the
-staleness window the data owner signed in module 2, not from a default. If the answer to "how stale
-can this be" was "never more than an hour", a nightly indexer is a broken promise.
+**Freshness.** Set `ingestion_schedule` in the ingestion parameters. Base the interval on the
+staleness window the data owner approved in module 2, not a default. If content can be no more than
+an hour stale, a nightly indexer breaks that promise.
 
 ### Option B — Azure AI Search indexer (pull)
 
@@ -194,10 +191,9 @@ The shape that matters:
   skill pointing at your embedding deployment.
 - An indexer with a schedule and change detection.
 
-Chunking guidance that holds up in practice: moderate chunks with light overlap, and never split
-across a rule boundary. In this scenario's corpus the return window, the proof-of-purchase
-requirement, and the order-record check belong to one rule — a chunk boundary through the middle of
-them produces answers that are individually true and collectively wrong.
+Use moderate chunks with light overlap, and never split a rule boundary. In this corpus, the return
+window, proof-of-purchase requirement, and order-record check form one rule. Splitting them can
+produce answers that are individually true and collectively wrong.
 
 ### Option C — Push API with custom chunking
 
@@ -236,9 +232,8 @@ is the right answer, and indexing it instead is the most common serious mistake 
 
 ## Verify
 
-The expensive mistake here is querying before asynchronous ingestion has finished. An empty result
-then looks like a retrieval bug and sends you debugging the wrong layer. Confirm the indexer actually
-completed before you trust any query.
+Do not query before asynchronous ingestion finishes. Empty results then look like a retrieval bug,
+which sends you to the wrong layer. Confirm the indexer completed before trusting any query.
 
 **1. The knowledge source and base were created.** `build_knowledge_source.py` prints one line per
 object it creates or updates.
@@ -247,7 +242,7 @@ object it creates or updates.
 python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
 ```
 
-You want `knowledge source '...' created or updated` and `knowledge base '...' created or updated`.
+Look for `knowledge source '...' created or updated` and `knowledge base '...' created or updated`.
 A `403` on the source means the deployer principal is missing **Search Service Contributor** or
 **Search Index Data Contributor**; a `403` once the source touches a model means the search service
 managed identity lacks **Cognitive Services User** on the Foundry account.
@@ -269,10 +264,8 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   | python3 -c "import sys,json;r=json.load(sys.stdin)['lastResult'];print(r['status'], r['itemsProcessed'], 'processed', r['itemsFailed'], 'failed')"
 ```
 
-`success` with `itemsProcessed` equal to the number of approved documents and `0` failed is the
-signal to move on. `inProgress` means ingestion is still running — wait and re-read, do not query
-yet. This is the check that stops you from concluding "retrieval is broken" when ingestion simply had
-not finished.
+`success` with `itemsProcessed` equal to the approved document count and `0` failed means you can
+continue. `inProgress` means ingestion is still running. Wait and re-read; do not query yet.
 
 **3. The index actually holds documents.** A `success` status with zero documents means the indexer
 ran before the blobs were uploaded.
@@ -300,10 +293,9 @@ the indexer once content is in the container.
 
 ## Decision record
 
-The ingestion option and why; the chunking policy in one sentence, with the rule boundary it
-protects; which metadata fields carry into citations; the refresh schedule and the resulting
-worst-case staleness window, matched against what the data owner signed in module 2; the API version;
-and the golden-question result with a date.
+Record the ingestion option and why, a one-sentence chunking policy and the rule boundary it
+protects, citation metadata, refresh schedule and worst-case staleness window approved in module 2,
+API version, and dated golden-question result.
 
 ## Next module
 

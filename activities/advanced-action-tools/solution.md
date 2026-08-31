@@ -2,16 +2,13 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-These notes capture the reusable implementation mechanics behind the activity. Use them to adapt the
-approval-loop pattern to a scenario-specific action backend.
+Use these notes to adapt the approval-loop pattern to a scenario-specific action backend.
 
-## What this activity is really teaching
+## Core idea
 
-The leap from a **knowledge** agent (reads/answers) to an **action** agent (changes state) — and the
-governance that leap demands. Both reference repos stop at knowledge tools or auto-firing actions;
-this activity adds the **human-in-the-loop approval** that real deployments require. The pedagogical
-core is the application-owned `function_call → approve/deny → FunctionCallOutput` loop: the model
-requests an action, the human decides, and only then can application code execute it.
+A **knowledge** agent reads and answers. An **action** agent changes state, so it needs governance.
+The application owns the `function_call → approve/deny → FunctionCallOutput` loop: the model requests
+an action, a human decides, then the application may execute it.
 
 > **SDK note:** the current path is `azure-ai-projects` 2.x:
 > `agents.create_version(PromptAgentDefinition(...))`, Responses `function_call` items, and
@@ -26,9 +23,9 @@ requests an action, the human decides, and only then can application code execut
 | `ACTION_MCP_URL` | `http://localhost:8765/mcp` | MCP endpoint shipped by backend — **optional**, preview/stretch only; not required for the guided path |
 | `ACTION_API_KEY` | *(empty)* | optional `x-api-key`; leave empty for the workshop |
 
-We **ship the backend** so teams stay on the approval-loop objective instead of building a CRUD API.
-It lives in `scripts/action-backend/` (FastAPI `app.py` + FastMCP `mcp_server.py`) and exposes three
-REST endpoints (`/it-tickets`, `/course-holds`, `/advising-slots`) that the FunctionTool callables hit.
+The provided backend keeps the focus on the approval loop instead of a CRUD API. It lives in
+`scripts/action-backend/` (FastAPI `app.py` + FastMCP `mcp_server.py`) and exposes three REST endpoints:
+`/it-tickets`, `/course-holds`, and `/advising-slots`.
 
 ## Runtime setup
 
@@ -166,7 +163,7 @@ def build_action_tools():
 - **`python activities/advanced-action-tools/validate.py --step 2`** checks for `FunctionTool`, the three function names, and `ACTION_API_URL`.
   It FAIL/PLACEHOLDERs out if the stubs aren't filled.
 
-### Step 3 — the approval loop (the heart of it)
+### Step 3 — the approval loop
 Reference completion of `run_with_approval()`:
 ```python
 def run_with_approval(openai, agent_name, prompt):
@@ -213,10 +210,8 @@ def run_with_approval(openai, agent_name, prompt):
     finally:
         openai.conversations.delete(conversation_id=conversation.id)
 ```
-- **Implementation points:** (1) the application receives a requested function call and executes
-  nothing until the human decides; (2) showing the function name + arguments to the human is the
-  governance moment; (3) returning the denial JSON
-  cleanly tells the agent "you were blocked" so it can report back gracefully.
+- **Implementation points:** The application executes nothing until a human decides. Show the
+  function name and arguments, then return denial JSON so the agent can report that it was blocked.
 - **Pitfall:** omitting `conversation=conversation.id` on either call loses the tool-call turn context.
 - **Pitfall:** `item.arguments` is a **JSON string** — parse it with `json.loads` before
   unpacking as `**args`.
@@ -226,9 +221,8 @@ def run_with_approval(openai, agent_name, prompt):
   `run_with_approval()`, supplies a deterministic fake Responses function call, approves it, and
   verifies the real backend record. This catches broken dispatch and continuation wiring without
   consuming model quota.
-- The real proof is: natural-language prompt → approve → agent reports a `ticket_id` → `curl
-  /it-tickets` shows it. Then the **denial** path: deny → nothing created. Make every team run the
-  denial — it's where the governance lesson lands.
+- The real proof is a natural-language prompt, approval, a reported `ticket_id`, and that ticket in
+  `curl /it-tickets`. Then deny the same request and confirm that nothing is created.
 
 ## Common issues & fast unblocks
 - **`Step 1 FAIL — backend not reachable`** → backend not started / wrong `ACTION_API_URL`.

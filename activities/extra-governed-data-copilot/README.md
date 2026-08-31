@@ -12,11 +12,10 @@
 
 ## Why this activity
 
-This is **not Fabric IQ**. Fabric IQ teaches live operational grounding and source routing. This
-activity teaches a narrower production control plane for governed structured data: an agent may
-request only named, reviewed queries over named, approved fields. The data platform remains the
-authority for identity, row-level security (RLS), and masking; the model does not write SQL and
-does not decide what a caller may see.
+Fabric IQ handles live operational grounding and source routing. This activity covers a narrower
+control plane for governed structured data: an agent may request only named, reviewed queries over
+named, approved fields. The data platform controls identity, row-level security (RLS), and masking.
+The model does not write SQL or decide what a caller may see.
 
 ```text
 question → intent / query ID → allowlist + parameter validation → semantic model
@@ -44,8 +43,7 @@ The validator deliberately checks your governance boundary, not an SDK class nam
 
 ## Replaceable governance contract
 
-Use this contract for the demo, then replace it with an owner-approved contract for a customer
-scenario.
+Use this contract for the demo, then replace it with an owner-approved customer contract.
 
 | Item | Approved value |
 |---|---|
@@ -62,10 +60,9 @@ least-privilege read access. If the service cannot enforce the intended RLS/mask
 an application-side prompt instruction is not a substitute. A denied result remains denied—never
 retry with a more privileged identity.
 
-**Human-review rule:** label results `requires_human_review=True` when they are sensitive,
-ambiguous, stale, unusually sparse, or could drive high-impact decisions (for example, changing
-service availability, prioritizing a population, or publishing an operational escalation). A
-reviewer, not the copilot, approves the decision or external communication.
+**Human-review rule:** set `requires_human_review=True` for sensitive, ambiguous, stale, or unusually
+sparse results, and for results that could drive a high-impact decision. A reviewer, not the copilot,
+approves the decision or external communication.
 
 ---
 
@@ -181,6 +178,6 @@ unapproved data query.
 
 ## What you built
 
-A governed data copilot that treats the semantic model as a protected product: approved questions,
-approved fields, parameter validation, keyless access, platform-enforced RLS, evidence-rich results,
-and human accountability where an aggregate could influence people or operations.
+A governed data copilot that protects the semantic model through approved questions and fields,
+parameter validation, keyless access, platform-enforced RLS, evidence-rich results, and human review
+when an aggregate could affect people or operations.

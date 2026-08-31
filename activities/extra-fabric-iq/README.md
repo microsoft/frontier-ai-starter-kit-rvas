@@ -25,14 +25,13 @@
 
 ## Why this activity
 
-Your scenario assistant may be grounded in documents — for example, a FAQ corpus indexed in Azure AI
-Search. Documents are perfect for policy, deadlines, and how-to answers, but they go stale: an
-indexed PDF cannot tell a user that an operational value changed five minutes ago.
+Your scenario assistant may be grounded in documents, such as a FAQ corpus indexed in Azure AI
+Search. Documents work well for policies, deadlines, and procedures, but an indexed PDF cannot report
+an operational value that changed five minutes ago.
 
-Fabric IQ closes that gap. It exposes live operational data sitting in OneLake (course-seat
-availability, dining-hall capacity, shuttle ETAs) to your agent as a tool, right next to the static
-knowledge base. The agent learns to pick the right source: *policy question → FAQ knowledge base;
-right-now question → Fabric IQ*.
+Fabric IQ exposes live OneLake data, such as course-seat availability, dining-hall capacity, or
+shuttle ETAs, as an agent tool beside the static knowledge base. Route *policy questions* to the FAQ
+knowledge base and *right-now questions* to Fabric IQ.
 
 ```text
    user question
@@ -99,7 +98,7 @@ tool attached; a Playground test run invokes the Fabric tool for a "right now" q
 3. Mutate the data (for example, update `course_seats` in Fabric), then ask
    again — the agent's answer should change without re-indexing anything.
 4. Ask a policy question ("What's the add/drop deadline?") and confirm it still routes to the FAQ
-   knowledge base, not Fabric.
+   knowledge base.
 
 **Success Criteria:**
 - [ ] The seat answer matches live OneLake data on the first ask.
@@ -116,7 +115,6 @@ change showing the number moved; capture one policy answer still citing the FAQ 
 
 ## What you built
 
-A preview dual-grounded assistant: durable knowledge from AI Search plus live operational information
-from Fabric IQ, with the agent routing each question to the right source. Fabric IQ processes requests
-in the signed-in user's Fabric context and honors Fabric permissions and governance; it is not an
-unrestricted database connector.
+A preview assistant with two sources: durable knowledge from AI Search and live operational
+information from Fabric IQ. Fabric IQ runs in the signed-in user's Fabric context and honors Fabric
+permissions and governance; it is not an unrestricted database connector.

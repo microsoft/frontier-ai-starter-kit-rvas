@@ -11,21 +11,21 @@ version: 0.2.0
 
 **Customer discussion deck**
 
-Move from trusted document understanding to a governed business workflow.
+Turn document understanding into a governed business workflow.
 
-Use this deck to align on the decision, the evidence needed to trust automation, and the controls required before deployment.
+Use this deck to agree on the decision, evidence for automation, and controls required before deployment.
 
 ---
 <!-- slide:id=scenario-intro -->
 
 ## How to use this conversation
 
-This is not an implementation walkthrough. It is a working-session deck for sponsors, SMEs, security, data owners, and engineering.
+This is a working-session deck for sponsors, SMEs, security, data owners, and engineering. It is not an implementation walkthrough.
 
-For each lesson, discuss three questions:
+For each lesson, discuss:
 
-- **Context:** Why this step matters to the business outcome.
-- **Choices and trade-offs:** Which path fits the customer environment.
+- **Context:** Why the step matters to the business outcome.
+- **Choices and trade-offs:** Which path fits the environment.
 - **Evidence:** What must be true before moving forward.
 
 The practical steps live in the lesson and activity pages.
@@ -35,16 +35,16 @@ The practical steps live in the lesson and activity pages.
 
 ## Lesson 1: Provision the shared Foundry foundation
 
-A document workflow needs a stable foundation before customer content or extraction logic enters the picture.
+Build a stable foundation before adding customer content or extraction logic.
 
 Discuss:
 
 - Which business decision this workflow will improve.
 - Which teams own identity, networking, storage, monitoring, and model access.
-- Which environments are needed for experimentation, pilot, and production.
-- How keyless access, least privilege, and traceability should be handled from the start.
+- Which environments are needed for experimentation, pilots, and production.
+- How to apply keyless access, least privilege, and traceability from the start.
 
-The goal is a reusable base that later scenario tracks can share, not a one-off demo environment.
+Build a reusable base that later scenario tracks can share. Avoid a one-off demo environment.
 
 ---
 <!-- slide:id=lesson-foundation-choices -->
@@ -53,12 +53,12 @@ The goal is a reusable base that later scenario tracks can share, not a one-off 
 
 Key decisions:
 
-- **Shared vs. dedicated resources:** Shared foundations reduce setup friction; dedicated resources can simplify isolation and chargeback.
-- **Region and model availability:** Model choice, data residency, latency, and quota must be considered together.
+- **Shared vs. dedicated resources:** Shared foundations reduce setup work; dedicated resources can simplify isolation and chargeback.
+- **Region and model availability:** Consider model choice, data residency, latency, and quota together.
 - **Identity model:** Prefer managed identity and role-based access over keys where possible.
 - **Observability baseline:** Start tracing and monitoring early so later workflow issues are diagnosable.
 
-Trade-off to name explicitly: speed of setup should not hide production controls that will be required later.
+State the trade-off plainly: quick setup must not hide production controls needed later.
 
 ---
 <!-- slide:id=lesson-foundation-evidence -->
@@ -67,10 +67,10 @@ Trade-off to name explicitly: speed of setup should not hide production controls
 
 Before the team proceeds, confirm:
 
-- The Foundry foundation, storage, model deployments, and monitoring plan have clear owners.
+- The Foundry foundation, storage, model deployments, and monitoring plan have owners.
 - The access model is documented and keyless-first.
 - Environment boundaries are understood.
-- Required outputs can be handed to later lessons without copying secrets into notes or code.
+- Later lessons can use required outputs without copying secrets into notes or code.
 - The team knows what still needs security, networking, or operations review.
 
 Decision question: **Can engineering safely build on this foundation without re-deciding basic platform controls each lesson?**
@@ -80,16 +80,16 @@ Decision question: **Can engineering safely build on this foundation without re-
 
 ## Lesson 2: Connect an approved document source
 
-Content Understanding starts with the right documents, not just available documents.
+Content Understanding starts with approved documents, not merely available ones.
 
 Discuss:
 
-- Which source is authoritative for the workflow: Azure Blob, ADLS Gen2, SharePoint, OneLake, or another governed store.
+- Which workflow source is authoritative: Azure Blob, ADLS Gen2, SharePoint, OneLake, or another governed store.
 - Who is allowed to approve sample use.
 - How source identity, document version, permissions, and retention are preserved.
 - How unsafe, unsupported, or out-of-scope files are quarantined.
 
-A clean folder of copied files is useful for a lab, but it is not the same as an approved business source.
+A clean folder of copied files works for a lab. It is not an approved business source.
 
 ---
 <!-- slide:id=lesson-document-source-choices -->
@@ -98,12 +98,12 @@ A clean folder of copied files is useful for a lab, but it is not the same as an
 
 Key decisions:
 
-- **Business source vs. staging area:** Direct source integration preserves context; staging can simplify processing but increases governance burden.
-- **Representative samples:** Include normal, edge, low-quality, multilingual, and failure cases rather than only ideal examples.
+- **Business source vs. staging area:** Direct integration preserves context; staging can simplify processing but adds governance work.
+- **Representative samples:** Include normal, edge, low-quality, multilingual, and failure cases, not only ideal examples.
 - **Permissions:** Decide whether the workflow inherits source permissions or uses a separate processing identity.
 - **Retention:** Define how originals, extracted results, evidence, and corrections are retained.
 
-Trade-off to name explicitly: faster intake is not worth losing provenance or authorization.
+State the trade-off: faster intake does not justify losing provenance or authorization.
 
 ---
 <!-- slide:id=lesson-document-source-evidence -->
@@ -114,7 +114,7 @@ Before moving forward, confirm:
 
 - The document source is approved for this scenario.
 - Sample documents are representative and authorized for testing.
-- Each document can be tied back to source, version, owner, and retention policy.
+- Each document traces to its source, version, owner, and retention policy.
 - The team has a clear path for quarantine, deletion, and exception handling.
 - Access boundaries are enforceable, not just assumed.
 
@@ -125,7 +125,7 @@ Decision question: **Can every document used by the workflow be explained, trace
 
 ## Lesson 3: Select the extraction capability
 
-The right extraction method depends on document variability, schema needs, confidence requirements, and operating constraints.
+Choose extraction based on document variability, schema needs, confidence requirements, and operating constraints.
 
 Discuss:
 
@@ -134,7 +134,7 @@ Discuss:
 - Which fields require exact evidence versus broad summarization.
 - Which errors are tolerable, reviewable, or unacceptable.
 
-The customer should leave with a reasoned capability decision, not a default product choice.
+The customer should leave with a documented capability decision, not a default product choice.
 
 ---
 <!-- slide:id=lesson-extraction-selection-choices -->
@@ -143,12 +143,12 @@ The customer should leave with a reasoned capability decision, not a default pro
 
 Key decisions:
 
-- **Content Understanding:** Strong when SMEs need to shape classes and schemas against varied content.
+- **Content Understanding:** Fits SMEs who need to shape classes and schemas for varied content.
 - **Document Intelligence:** Useful for established document extraction patterns and form-like structure.
-- **LLM structured outputs:** Flexible for reasoning over text, but require strict validation and evidence controls.
+- **LLM structured outputs:** Flexible for reasoning over text but require strict validation and evidence controls.
 - **Multimodal processing:** Helpful when layout, images, or visual cues matter.
 
-Trade-off to name explicitly: more flexible extraction can increase validation, review, cost, and monitoring responsibilities.
+State the trade-off: more flexible extraction increases validation, review, cost, and monitoring work.
 
 ---
 <!-- slide:id=lesson-extraction-selection-evidence -->
@@ -161,7 +161,7 @@ Before implementation, confirm:
 - The target schema is specific enough to test.
 - Known failure cases are included in the decision.
 - The team has agreed when a field must be empty rather than inferred.
-- Human review rules are part of the extraction decision, not added later.
+- Human-review rules are part of the extraction decision.
 
 Decision question: **Can the team explain why this capability is the right fit for the first controlled workflow?**
 
@@ -170,7 +170,7 @@ Decision question: **Can the team explain why this capability is the right fit f
 
 ## Lesson 4: Implement typed extraction with evidence
 
-A useful extraction result is typed, validated, and backed by evidence.
+A useful extraction result is typed, validated, and supported by evidence.
 
 Discuss:
 
@@ -179,7 +179,7 @@ Discuss:
 - How missing, ambiguous, conflicting, or low-confidence values should be represented.
 - Where the workflow must avoid inferred values.
 
-The goal is not just a JSON shape. The goal is a decision record a reviewer and auditor can trust.
+Build more than a JSON shape. Build a decision record a reviewer and auditor can trust.
 
 ---
 <!-- slide:id=lesson-typed-extraction-choices -->
@@ -189,11 +189,11 @@ The goal is not just a JSON shape. The goal is a decision record a reviewer and 
 Key decisions:
 
 - **Strict schema vs. flexible notes:** Strict schemas help automation; flexible notes may help SMEs explain unusual cases.
-- **Confidence thresholds:** High thresholds reduce false approvals but increase review volume.
+- **Confidence thresholds:** High thresholds reduce false approvals and increase review volume.
 - **Evidence granularity:** More detailed evidence improves trust but can increase storage and UI complexity.
 - **Failure behavior:** Empty-with-reason is safer than filling a field without support.
 
-Trade-off to name explicitly: automation value depends on trustworthy uncertainty handling, not only high field coverage.
+State the trade-off: automation depends on handling uncertainty well, not only on high field coverage.
 
 ---
 <!-- slide:id=lesson-typed-extraction-evidence -->
@@ -206,7 +206,7 @@ Before the workflow can use extracted results, confirm:
 - Important fields include evidence and confidence where appropriate.
 - Missing and low-confidence fields follow a consistent policy.
 - Unsupported values are not invented to satisfy the schema.
-- Reviewers can see enough source context to challenge or confirm a value.
+- Reviewers can see enough source context to confirm or challenge a value.
 
 Decision question: **Would a business reviewer understand what was extracted, why it was trusted, and what still needs attention?**
 
@@ -215,7 +215,7 @@ Decision question: **Would a business reviewer understand what was extracted, wh
 
 ## Lesson 5: Build review, correction, and handoff
 
-Human review is part of the product design, not a fallback after automation fails.
+Human review belongs in the product design. It is not a fallback after automation fails.
 
 Discuss:
 
@@ -225,7 +225,6 @@ Discuss:
 - Which downstream system receives approved results.
 
 The review experience should make the right action easier than bypassing the process.
-
 ---
 <!-- slide:id=lesson-human-review-choices -->
 
@@ -234,11 +233,11 @@ The review experience should make the right action easier than bypassing the pro
 Key decisions:
 
 - **Reviewer queue vs. embedded workflow:** Queues centralize review; embedded workflows meet users where they already work.
-- **Correction model:** Corrections should update the case record and feed evaluation, not silently overwrite history.
+- **Correction model:** Corrections should update the case record and feed evaluation. Do not silently overwrite history.
 - **Approval boundary:** Decide which results can flow automatically and which require a named approver.
-- **Handoff seam:** Treat downstream integration as a governed contract, not a direct write from unreviewed extraction.
+- **Handoff seam:** Use a governed downstream contract. Do not write directly from unreviewed extraction.
 
-Trade-off to name explicitly: reducing reviewer effort must not erase accountability.
+State the trade-off: reducing reviewer effort must not erase accountability.
 
 ---
 <!-- slide:id=lesson-human-review-evidence -->
@@ -249,7 +248,7 @@ Before handoff is trusted, confirm:
 
 - Review rules are explicit and testable.
 - A reviewer can correct, approve, reject, and explain the decision.
-- Corrections are retained with document, evidence, reviewer, timestamp, and contract version.
+- Corrections retain the document, evidence, reviewer, timestamp, and contract version.
 - Approved results are handed off through a controlled interface.
 - Exceptions have an owner and a resolution path.
 
@@ -260,7 +259,7 @@ Decision question: **Can the customer prove who approved a result, what changed,
 
 ## Lesson 6: Evaluate and trace the workflow
 
-A document workflow is ready only when it performs consistently across representative cases and can be diagnosed when it fails.
+A document workflow is ready when it performs consistently on representative cases and you can diagnose failures.
 
 Discuss:
 
@@ -269,7 +268,7 @@ Discuss:
 - What traces must show across intake, extraction, review, and handoff.
 - How corrections become future evaluation evidence.
 
-Evaluation should reflect real workflow risk, not only model output quality.
+Evaluate real workflow risk, not only model output quality.
 
 ---
 <!-- slide:id=lesson-prove-and-observe-choices -->
@@ -280,10 +279,10 @@ Key decisions:
 
 - **Holdout data:** Keep evaluation examples separate from tuning examples.
 - **Quality gates:** Define thresholds for automation, review, and rejection.
-- **Trace detail:** Capture enough context to debug without overexposing sensitive content.
+- **Trace detail:** Capture enough context to debug without exposing unnecessary sensitive content.
 - **Regression testing:** Re-run important cases when schemas, analyzers, prompts, or review rules change.
 
-Trade-off to name explicitly: more automation without measurement increases hidden business risk.
+State the trade-off: more automation without measurement increases hidden business risk.
 
 ---
 <!-- slide:id=lesson-prove-and-observe-evidence -->
@@ -296,7 +295,7 @@ Before promotion, confirm:
 - Field accuracy, review volume, false approval risk, and latency are measured.
 - Traces connect document intake, extraction, policy, review, correction, and handoff.
 - Failures have named causes and owners.
-- The release decision includes rollback and monitoring expectations.
+- The release decision covers rollback and monitoring.
 
 Decision question: **Can the team defend the workflow with evidence rather than a successful demo?**
 
@@ -305,7 +304,7 @@ Decision question: **Can the team defend the workflow with evidence rather than 
 
 ## Lesson 7: Deploy the reviewable workflow
 
-Deployment is the point where experimentation becomes an accountable business service.
+Deployment turns an experiment into an accountable business service.
 
 Discuss:
 
@@ -314,7 +313,7 @@ Discuss:
 - How analyzer or schema versions are promoted.
 - How monitoring, support, rollback, and change management work.
 
-The first deployment should be controlled, observable, and reversible.
+Make the first deployment controlled, observable, and reversible.
 
 ---
 <!-- slide:id=lesson-deploy-choices -->
@@ -328,7 +327,7 @@ Key decisions:
 - **Versioning:** Track analyzer, schema, policy, review rules, and downstream contract together.
 - **Operations:** Decide alert ownership, support process, rollback criteria, and release cadence.
 
-Trade-off to name explicitly: broad rollout before operational readiness can create more manual work than it removes.
+State the trade-off: a broad rollout before operational readiness can create more manual work than it removes.
 
 ---
 <!-- slide:id=lesson-deploy-evidence -->
@@ -340,7 +339,7 @@ Before controlled rollout, confirm:
 - The workflow runs behind approved access controls.
 - Monitoring and tracing are enabled for the end-to-end path.
 - Version and rollback information is documented.
-- Review and correction data remain available after deployment.
+- Review and correction data stay available after deployment.
 - The pilot owner can decide whether to expand, pause, or revise the workflow.
 
 Decision question: **Is the workflow ready to serve a bounded real use case with accountable controls?**
@@ -350,7 +349,7 @@ Decision question: **Is the workflow ready to serve a bounded real use case with
 
 ## Next working session
 
-Bring the people and evidence needed to make the scenario real:
+Bring the people and evidence needed to start the scenario:
 
 - One high-value document decision and its business owner.
 - An approved source and 15–30 safe, representative samples.
@@ -358,4 +357,4 @@ Bring the people and evidence needed to make the scenario real:
 - SME, engineering, security, and workflow handoff owners.
 - Current constraints for identity, retention, monitoring, and deployment.
 
-Outcome: agree the first pilot slice and the evidence required before expansion.
+Agree on the first pilot slice and the evidence required before expansion.

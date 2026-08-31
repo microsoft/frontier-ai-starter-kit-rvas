@@ -1,10 +1,10 @@
 # Module 5 — Build retrieval before adding an agent
 
-Most grounding projects fail here and find out three modules later. An agent wrapped around weak
-retrieval does not fix weak retrieval; it makes the failure fluent and harder to spot.
+Most grounding projects fail here, then discover it three modules later. An agent cannot fix weak
+retrieval. It makes the failure fluent and harder to spot.
 
-So this module ships a working grounded answer path — citations, abstention, access-denied
-behaviour, freshness — with **no agent**. If it does not work here, an agent will not save it.
+This module ships a grounded answer path with citations, abstention, access-denied behavior, and
+freshness. It has **no agent**. If it fails here, an agent will not save it.
 
 ![Retrieval before agent orchestration](../diagrams/05-retrieval-before-agent.png)
 
@@ -13,7 +13,7 @@ behaviour, freshness — with **no agent**. If it does not work here, an agent w
 1. A retrieval call that returns passages with citations.
 2. An answer path that cites, abstains when the corpus is silent, and stays silent about documents
    the caller cannot see.
-3. A measured retrieval baseline — recall@k on the golden set — that later modules must not regress.
+3. A measured retrieval baseline, recall@k on the golden set, that later modules must not regress.
 
 ## Choose your path
 
@@ -24,30 +24,28 @@ behaviour, freshness — with **no agent**. If it does not work here, an agent w
 | C. Direct hybrid query against an AI Search index | Whatever you configure: vector + keyword + semantic reranker | Your code | Maximum control; a single well-understood index |
 | D. Keyword-only search | None | Your code | Exact-match lookups: ids, codes, SKUs |
 
-**Default: Option A.** You built the knowledge base in module 3; `output_mode="answerSynthesis"`
-returns a cited answer directly, and query planning decomposes a compound question into subqueries
-that run in parallel and get reranked together. That decomposition is exactly what a naive single
-vector query gets wrong.
+**Default: Option A.** The knowledge base from module 3 returns a cited answer with
+`output_mode="answerSynthesis"`. Query planning breaks compound questions into parallel subqueries,
+then reranks them together. A naive single-vector query gets this wrong.
 
-**Choose B when** you need to own the answer prompt — a required response format, a regulated
-disclaimer, a domain-specific abstention rule. You still get the managed retrieval and ranking.
+**Choose B when** you need to own the answer prompt, such as for a required response format,
+regulated disclaimer, or domain-specific abstention rule. You still get managed retrieval and ranking.
 
 **Choose C when** you are on the direct-Search path from module 2, or when you need a scoring
 profile or filter the knowledge base does not expose. Use **hybrid** (vector + keyword) with the
 semantic reranker on. Vector-only search silently fails on exact identifiers; keyword-only fails on
 paraphrase. Nearly every real corpus needs both.
 
-**D is not a whole solution**, but it is the right tool for one job: looking up a known identifier.
-`RET-POL-2026-01` should be found by matching, not by embedding similarity.
+**D is not a full solution.** It is the right tool for looking up a known identifier.
+`RET-POL-2026-01` should match directly, not by embedding similarity.
 
-**Reasoning effort is a real dial**: `minimal` skips query planning and issues
+**Reasoning effort is a real dial.** `minimal` skips query planning and issues
 queries directly, `low` is the default, `medium` plans harder. Start at `low`, and only move to
 `medium` if the golden set shows compound questions failing. `minimal` is for latency-critical paths
 where questions are simple and singular.
 
-**Migration cost.** A ↔ B is a parameter change. A/B → C is a rewrite of the retrieval layer but the
-evaluation set and the corpus survive. Any change here re-baselines your metrics, so lock this before
-module 7.
+**Migration cost.** A ↔ B is a parameter change. A/B → C rewrites the retrieval layer, though the
+evaluation set and corpus survive. Any change re-baselines metrics, so lock this before module 7.
 
 ## Implementation
 
@@ -81,7 +79,7 @@ result = client.retrieve(request)
 print(result.response[0].content[0].text)
 ```
 
-To enforce the module 2 permission boundary, pass the end user's token — never skip this in an app
+To enforce the module 2 permission boundary, pass the end user's token. Never skip this in an app
 that serves more than one person:
 
 ```python
@@ -91,8 +89,8 @@ result = client.retrieve(
 )
 ```
 
-Answer behaviour is steered by `answer_instructions` on the knowledge base (module 3), not by a
-prompt here. Make the abstention rule explicit there:
+`answer_instructions` on the knowledge base (module 3), rather than a prompt here, steers answer
+behavior. Make the abstention rule explicit there:
 
 ```
 Answer only from retrieved documents and cite the document id.
@@ -100,8 +98,8 @@ If the retrieved documents do not contain the answer, reply exactly:
 "I don't have approved information on that." Do not infer, and do not use general knowledge.
 ```
 
-"Do not infer" is doing real work in that instruction. Without it a model will happily bridge two
-adjacent policy rules into a third rule that does not exist.
+"Do not infer" matters. Without it, a model may bridge two adjacent policy rules into a third rule
+that does not exist.
 
 ### Option B — Extractive retrieval, your own answer prompt
 
@@ -149,7 +147,7 @@ results = search.search(
 )
 ```
 
-Three things people get wrong here, in order of frequency:
+People most often get these three things wrong:
 
 1. **Vector-only retrieval.** It cannot find `RET-POL-2026-01`. Always send `search_text` too.
 2. **`top` used as the retrieval depth.** Retrieve wide (`k_nearest_neighbors=50`), rerank, then
@@ -164,25 +162,23 @@ end-to-end against the university FAQ corpus, including attaching the index to a
 
 ### The three behaviours you must implement, not hope for
 
-**Citations.** Every claim carries a source id. Enforce it in the instruction and assert it in the
-test — a model told to cite will usually cite, and "usually" is not a control.
+**Citations.** Every claim needs a source ID. Enforce it in the instruction and assert it in the
+test. A model told to cite will usually cite, and "usually" is not a control.
 
 **Abstention.** The golden set has a question the corpus cannot answer. The correct response is a
-plain refusal. A grounded assistant that never says "I don't know" is not grounded, it is
-well-decorated.
+plain refusal. An assistant that never says "I don't know" is not grounded.
 
 **Access-denied silence.** When retrieval returns nothing because the caller lacks permission, the
-answer must be indistinguishable from "no information exists" — no title, no snippet, no "there is a
-supervisor document but you cannot see it". That last one is a leak with a polite tone.
+answer must be indistinguishable from "no information exists." Do not return a title, snippet, or
+"there is a supervisor document but you cannot see it." Each reveals information.
 
 **Freshness.** The corpus has a superseded Alpine District notice alongside the current one. The
-answer must cite the current one. If both come back ranked together, filter by effective date at
-query time rather than hoping the ranker prefers recency — it does not.
+answer must cite the current notice. If both rank together, filter by effective date at query time.
+The ranker does not reliably prefer recency.
 
 ## Verify
 
-The number you must not skip here is recall. If you never write it down, module 6's agent can quietly
-make retrieval worse and you will have no baseline to prove it.
+Do not skip recall. Without a recorded baseline, module 6's agent can quietly worsen retrieval.
 
 **1. Run the golden questions against the knowledge base and read every case.**
 
@@ -191,16 +187,14 @@ python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
   --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Each answerable question should print `PASS  ...: answer cites [...]`. The unanswerable questions
-should abstain rather than produce a plausible paragraph. The Alpine notice case should confirm the
-current notice is cited and the superseded `SVC-ALPINE-2026-01-28` is not. A `FAIL` on citations
-usually means a vector-only query missed an exact id — send `search_text` alongside the vector query.
-A `FAIL` on abstention means the answer prompt still permits inference.
+Each answerable question should print `PASS  ...: answer cites [...]`. Unanswerable questions should
+abstain, not produce a plausible paragraph. The Alpine notice case should cite the current notice,
+not `SVC-ALPINE-2026-01-28`. A citation `FAIL` often means a vector-only query missed an exact ID.
+Send `search_text` with the vector query. An abstention `FAIL` means the prompt still permits inference.
 
 **2. Record the recall line as your baseline.** The script prints, for example,
-`recall@5 = 1.00  (4/4)`. Write that number and the date into the decision record. Modules 6 and 7
-must not regress it. "We added an agent and retrieval got worse" is a real and otherwise invisible
-outcome, and this baseline is the only thing that makes it visible.
+`recall@5 = 1.00  (4/4)`. Record that number and date. Modules 6 and 7 must not regress it. This
+baseline exposes an otherwise invisible result: "We added an agent and retrieval got worse."
 
 ## Troubleshooting
 
@@ -218,10 +212,9 @@ outcome, and this baseline is the only thing that makes it visible.
 
 ## Decision record
 
-The retrieval option and reasoning effort; the abstention string and where it is enforced; the
-recency strategy; the measured `recall@5` baseline with a date; and — stated explicitly — whether the
-pilot needs an agent at all, because if this module already answers the customer's question, module 6
-is optional and shipping now is the better decision.
+Record the retrieval option and reasoning effort, abstention string and enforcement point, recency
+strategy, dated `recall@5` baseline, and whether the pilot needs an agent. If this module already
+answers the customer's question, module 6 is optional and shipping now is better.
 
 ## Next module
 

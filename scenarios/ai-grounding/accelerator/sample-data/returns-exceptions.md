@@ -9,7 +9,7 @@ classification: internal
 
 # Northstar Outdoor Supply — Returns Exceptions
 
-This fictional training guide applies only after checking the standard returns policy.
+Use this fictional training guide only after checking the standard returns policy.
 
 | Situation | Coordinator action | Supervisor action |
 |---|---|---|
@@ -17,4 +17,4 @@ This fictional training guide applies only after checking the standard returns p
 | Incorrect item shipped | collect order and item details | approve correction |
 | Request on day 31–45 without shipping evidence | explain standard policy | review only when documented hardship is supplied |
 
-Never expose payment details, private account notes, or another customer’s order history.
+Do not expose payment details, private account notes, or another customer’s order history.

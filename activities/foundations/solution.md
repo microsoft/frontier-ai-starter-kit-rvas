@@ -1,7 +1,7 @@
 # Implementation notes — Foundations mechanics
 
-Use these notes to adapt the Foundations mechanics to a scenario or customer build. They are not a
-second curriculum path; the scenario lesson remains the decision record.
+Use these notes to adapt Foundations mechanics to a scenario or customer build. They are not a second
+curriculum path; the scenario lesson remains the decision record.
 
 ## Step 1 — Provisioning
 
@@ -12,9 +12,9 @@ The reusable contract is:
 - `azd env get-values > .env` exports the local runtime contract.
 - Local code uses `DefaultAzureCredential`; do not introduce API-key paths.
 
-When adapting the mechanics, keep `.env.sample` as the source of truth for environment variable names.
-If provisioning differs by scenario, the scenario lesson should explain the decision and this module
-should keep the reusable command shape.
+Keep `.env.sample` as the source of truth for environment variable names. If provisioning differs by
+scenario, the scenario lesson should explain that decision while this module keeps the reusable command
+shape.
 
 ## Step 2 — Model comparison
 
@@ -24,8 +24,8 @@ Keep comparisons fair:
 - Use the same prompts and the same system instruction for every candidate.
 - Record the observed trade-off: quality, latency, cost, or availability.
 
-The scenario owns which model classes are acceptable. This module only shows how to compare deployed
-models and reproduce the selected behavior through the Responses API.
+The scenario defines acceptable model classes. This module shows how to compare deployed models and
+reproduce the selected behavior through the Responses API.
 
 ## Step 3 — First agent
 
@@ -54,7 +54,7 @@ reference uses Azure AI Search grounding directly.
 
 ## Verification contract
 
-The sample validation commands are useful only when the sample assets are present:
+The sample validation commands work only when the sample assets are present:
 
 Run these commands from the repository root.
 

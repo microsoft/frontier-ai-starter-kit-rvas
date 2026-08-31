@@ -2,7 +2,7 @@
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Reusable orchestration module. Use it only when a scenario earns dynamic multi-agent routing.
+> Reusable orchestration module. Use it only when a scenario needs runtime multi-agent routing.
 > Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
@@ -21,11 +21,10 @@
 
 ## Why this activity
 
-Your assistant is one agent doing everything: triage, retrieval, action, escalation. That works
-until the jobs conflict — a good retriever makes a clumsy escalation-writer. The Microsoft Agent
-Framework (MAF) lets you compose specialized agents and have a Magentic manager *plan*, at
-runtime, which one to call for each part of a request. This is dynamic orchestration — the manager
-decides the route per task, unlike a fixed sequential/fan-out pipeline.
+One agent can handle triage, retrieval, actions, and escalation until those jobs conflict. The
+Microsoft Agent Framework (MAF) lets you compose specialists and have a Magentic manager *plan* which
+agent to call for each part of a request at runtime. The manager chooses a route per task instead of
+following a fixed sequential or fan-out pipeline.
 
 You'll build four specialists and let the manager coordinate them:
 
@@ -112,5 +111,5 @@ Escalation route.
 
 ## What you built
 
-A multi-agent sample assistant where a Magentic manager plans the route at runtime across
-four specialists — dynamic orchestration you can *watch* in DevUI, not a brittle hand-coded pipeline.
+A multi-agent sample assistant where a Magentic manager plans routes across four specialists at
+runtime. You can watch the orchestration in DevUI.

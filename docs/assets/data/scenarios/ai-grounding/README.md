@@ -1,11 +1,10 @@
 # AI Grounding: build answers people can trust
 
-Build a grounded, permission-aware assistant over approved content, and prove it before it ships.
+Build a grounded, permission-aware assistant over approved content. Prove it before it ships.
 
-The eight modules take you from an empty environment to a working pilot. Each one ends with evidence
-from your own resources, not a success message from a local script. You will deploy Azure resources,
-index a synthetic corpus, compare models, and test the failures that matter before anyone uses the
-assistant.
+The eight modules take you from an empty environment to a working pilot. Each ends with evidence
+from your resources, not a local success message. You deploy Azure resources, index a synthetic
+corpus, compare models, and test the failures that matter before anyone uses the assistant.
 
 ## Before you start
 
@@ -16,8 +15,8 @@ code; do not infer a signature from this course or from memory.
 **Fictional data only.** The corpus in `accelerator/sample-data/` is a synthetic returns-policy set
 for a fictional retailer. Never copy customer content into this repository.
 
-**Keyless.** Every path here uses `DefaultAzureCredential`, managed identity, and RBAC. The storage
-account is provisioned with shared-key access disabled, so there is no key to fall back to.
+**Keyless.** Every path uses `DefaultAzureCredential`, managed identity, and RBAC. The storage
+account disables shared-key access, so there is no key to fall back to.
 
 ## The build path
 
@@ -32,9 +31,9 @@ account is provisioned with shared-key access disabled, so there is no key to fa
 | [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | Evaluation gate passed with trace and red-team evidence |
 | [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | The surface decision, a pinned version, a rollback, an owner, and a signed release | Surface release contract complete and the unauthenticated caller refused |
 
-Most teams get into trouble in modules 5 through 7. They add an agent before retrieval works, copy
-live data into an index, or ship without a release gate. Module 8 checks one more easy-to-miss
-failure: the final app must preserve the same permission boundary as the retrieval layer.
+Most teams run into trouble in modules 5 through 7. They add an agent before retrieval works, copy
+live data into an index, or ship without a release gate. Module 8 checks another common failure:
+the final app must preserve the retrieval layer's permission boundary.
 
 ## Decision gates to carry into the customer conversation
 
@@ -55,13 +54,13 @@ az login
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
 ```
 
-The deployment writes `accelerator/.env` from the template outputs. Every later module reads that
-file, so keep it local and do not commit it.
+The deployment writes `accelerator/.env` from the template outputs. Later modules read that file,
+so keep it local and do not commit it.
 
 ## Run the scripts
 
-These four scripts call your Azure resources directly. They need a subscription and the `.env`
-file. There is no offline mode because an offline pass cannot tell you whether retrieval works.
+These scripts call your Azure resources directly. They need a subscription and the `.env` file.
+There is no offline mode. An offline pass cannot tell you whether retrieval works.
 
 ```bash
 # Create the knowledge source and knowledge base
@@ -83,7 +82,7 @@ Each lesson's **Verify** section lists the specific commands and signals for tha
 
 These lessons reuse the kit's implementation activities:
 
-- [Foundations](activity.html?id=foundations) — provisioning, model selection, and the
+- [Foundations](activity.html?id=foundations) — provisioning, model selection, and
   Azure AI Search grounding baseline
 - [Evaluation & Red Teaming](activity.html?id=advanced-evaluation-redteam) — the harness,
   custom evaluators, and adversarial seed set used in module 7
@@ -97,10 +96,10 @@ These lessons reuse the kit's implementation activities:
 
 ## Non-negotiables
 
-- Treat retrieved text as untrusted data, never as instructions. Module 7 red-teams this directly.
-- Index knowledge; route to systems. Indexing live operational data produces confidently cited
-  stale answers, which is the most damaging failure mode in this scenario.
-- A refusal must be indistinguishable from "no information exists" — revealing that a restricted
-  document exists is a leak with a polite tone.
-- Retrieval must work before an agent is added. An agent over weak retrieval makes the failure
-  fluent, not correct.
+- Treat retrieved text as untrusted data, never as instructions. Module 7 tests this directly.
+- Index knowledge and route to systems. Indexing live operational data produces confidently cited,
+  stale answers. That is the worst failure mode in this scenario.
+- A refusal must be indistinguishable from "no information exists." Revealing that a restricted
+  document exists is still a leak.
+- Make retrieval work before adding an agent. An agent over weak retrieval makes failures fluent,
+  not correct.

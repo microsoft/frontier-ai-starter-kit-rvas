@@ -1,8 +1,8 @@
 # Solution notes · Extra — Document Workflow
 
-This is the canonical Python implementation shape, not a substitute for the required live
-`microsoft-docs` MCP search. It aligns with the required learner artifact, `document_workflow.py`, and
-its validator. Confirm the installed SDK signature again before implementation.
+This reference Python shape does not replace the required live `microsoft-docs` MCP search. It aligns
+with the required learner artifact, `document_workflow.py`, and its validator. Confirm the installed
+SDK signature before implementation.
 
 ## Keyless layout/OCR call
 
@@ -30,14 +30,14 @@ with open("./fictional-sample-application.pdf", "rb") as document:
 layout = poller.result()
 ```
 
-The important details are deliberate: `DocumentIntelligenceClient` with `DefaultAzureCredential`,
-the `prebuilt-layout` model, and waiting for the long-running operation with `poller.result()`.
-Use the current Docs signature if it differs; do not substitute an old key-credential sample.
+Use `DocumentIntelligenceClient` with `DefaultAzureCredential`, the `prebuilt-layout` model, and
+`poller.result()` to wait for the long-running operation. If the current Docs signature differs, use
+it rather than an old key-credential sample.
 
 ## Workflow logic
 
-Map layout lines/tables into only the fictional demo fields. Store per-field `confidence` and source
-page/region. Use a named threshold (such as `CONFIDENCE_THRESHOLD = 0.85`) plus deterministic
+Map layout lines and tables only to fictional demo fields. Store per-field `confidence` and source
+page/region. Use a named threshold, such as `CONFIDENCE_THRESHOLD = 0.85`, with deterministic
 required-field and format rules:
 
 - Confidence below threshold, missing consent, or invalid applicant ID → `needs_review`.
@@ -52,8 +52,7 @@ required-field and format rules:
 For every fictional run, emit a correlation/trace ID, model name, threshold version, timing, status,
 and review reason. Keep raw OCR/layout output out of traces. Evaluate a small labeled fictional set
 with known fields and report field accuracy, low-confidence review rate, reviewer overrides, and
-false approvals. A successful run with low accuracy or a false approval is a failure signal, not a
-reason to lower the threshold.
+false approvals. Low accuracy or a false approval means the run failed. Do not lower the threshold to hide it.
 
 Run the supplied static check after writing `document_workflow.py`:
 

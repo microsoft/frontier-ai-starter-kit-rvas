@@ -1,6 +1,9 @@
 # Fictional approved-content pack
 
-This complete, non-production fixture is deliberately synthetic. It has no employee data, customer policy, vendor integration, credentials, or real-person likeness. Replace every value only with customer-approved content and retain the traceability fields. A generated summary is never an authority for policy.
+This complete, non-production fixture is deliberately synthetic. It contains no employee data,
+customer policy, vendor integration, credentials, or real-person likeness. Replace values only with
+customer-approved content, and retain the traceability fields. A generated summary is never a policy
+authority.
 
 | File | Purpose |
 | --- | --- |
@@ -11,4 +14,6 @@ This complete, non-production fixture is deliberately synthetic. It has no emplo
 | `accessible-fallback.html` | Semantic, keyboard-friendly non-avatar alternative. |
 | `feedback-fixture.json` | Aggregated synthetic pilot evidence, without identifiers. |
 
-`../content_pack.py` accepts this pack only when every script segment exactly matches its linked approved claim and all required human approvals are present. It writes a deterministic traceable JSON artifact; it does not render media or call a service.
+`../content_pack.py` accepts this pack only when every script segment exactly matches its linked
+approved claim and all required human approvals are present. It writes a deterministic, traceable
+JSON artifact. It does not render media or call a service.

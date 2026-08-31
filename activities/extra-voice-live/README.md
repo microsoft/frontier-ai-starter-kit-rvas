@@ -20,11 +20,10 @@
 
 ## Why this activity
 
-Most activities so far have been typed. When the scenario earns a spoken interface, the user may
-want to *ask*. The Voice Live API turns your text assistant into a spoken one: it streams
-mic audio in, runs your agent, and streams synthesized speech back out, all over a single low-latency
-WebSocket. No stitching together separate speech-to-text, agent, and text-to-speech calls — Voice Live
-orchestrates the full duplex loop for you.
+Most activities so far use text. When the scenario needs a spoken interface, Voice Live API streams
+microphone audio in, runs the agent, and streams synthesized speech back through one low-latency
+WebSocket. It runs the full-duplex loop instead of requiring separate speech-to-text, agent, and
+text-to-speech calls.
 
 ```text
    mic ──▶ Voice Live (STT) ──▶ scenario assistant ──▶ Voice Live (TTS) ──▶ speaker
@@ -102,5 +101,4 @@ short screen+audio recording for the readout.
 
 ## What you built
 
-A hands-free, spoken scenario assistant. Same grounded brain, new interface — the agent now
-listens and talks back in real time, which is the demo people remember.
+A hands-free spoken scenario assistant. The same grounded agent now listens and responds in real time.

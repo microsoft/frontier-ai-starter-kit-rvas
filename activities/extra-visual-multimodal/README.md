@@ -6,14 +6,13 @@
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 Build a small, **human-reviewed** visual-observation assistant for a generic sample image. It can
-extract visible sign text and describe observable route cues; it must not
-identify people, infer disability or other sensitive traits, or decide whether a route is safe or
-accessible.
+extract visible sign text and describe route cues. It must not identify people, infer disability or
+other sensitive traits, or decide whether a route is safe or accessible.
 
 ## Before coding: search current APIs
 
-Vision and Foundry multimodal APIs move quickly. **Do not copy a remembered preview signature.**
-Use `microsoft-docs` MCP before writing SDK code:
+Vision and Foundry multimodal APIs move quickly. **Do not use a remembered preview signature.** Search
+`microsoft-docs` MCP before writing SDK code:
 
 1. Search for the current Python Image Analysis client, `ImageAnalysisClient`, its Entra ID
    authentication requirements, and its `analyze`/`analyze_from_url` signatures.
@@ -28,10 +27,10 @@ or image URLs containing SAS tokens in source control.
 
 ## Demo boundary and safe input
 
-Use only a generic, non-sensitive accessibility/wayfinding image: for example,
-an empty exterior path leading to a building entrance, with a visible directional sign and no
-recognizable people, vehicles, IDs, screens, or private work. A staged or openly licensed image is
-fine. Do not upload photos of people, classrooms, medical aids, access badges, or private spaces.
+Use a generic, non-sensitive accessibility/wayfinding image, such as an empty exterior path to a
+building entrance with a visible directional sign. It must contain no recognizable people, vehicles,
+IDs, screens, or private work. A staged or openly licensed image is fine. Do not upload photos of
+people, classrooms, medical aids, access badges, or private spaces.
 
 Your `visual_multimodal.py` must:
 
@@ -57,8 +56,8 @@ Choose the smallest capability that answers it:
 
 For Image Analysis, request **only** the features required for the demo (normally `READ` and
 optionally `CAPTION` or `TAGS`). Caption availability varies by region, so confirm the selected
-resource supports every requested feature before building the demo. More features increase processing,
-cost, and data exposure. Do not enable people/face analysis for this activity.
+resource supports every requested feature before building the demo. Extra features increase processing, cost, and data exposure. Do not enable people or face analysis
+for this activity.
 
 **Verify:** Explain why your selected model/task needs only those features.
 
@@ -132,10 +131,9 @@ python activities/extra-visual-multimodal/validate.py --all --dry-run
 
 ## What you built
 
-A keyless, bounded visual observation workflow for a safe wayfinding demo: safe image
-intake → minimum-capability analysis → structured confidence-aware output → human review and
-evaluation evidence. It is an assistive observation aid, not a replacement for accessibility
-inspection or human judgment.
+A keyless, bounded visual-observation workflow for a safe wayfinding demo: safe image intake,
+minimum-capability analysis, structured confidence-aware output, human review, and evaluation
+evidence. It supports observation; it does not replace accessibility inspection or human judgment.
 
 See [solution.md](solution.md) for the known Image Analysis pattern and the limits of the
 offline validator.

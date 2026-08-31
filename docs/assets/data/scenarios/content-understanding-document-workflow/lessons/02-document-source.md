@@ -1,18 +1,18 @@
 # Module 2 — Connect an approved document source
 
-This module decides which documents are allowed to enter the workflow and how their identity,
-version, and permissions travel with them. Extraction quality can be tuned later; letting an
-unapproved document in is discovered by the wrong person.
+This module defines which documents can enter the workflow and how their identity, version, and
+permissions stay with them. You can tune extraction later. An unapproved document is a governance
+failure.
 
 ![Document intake boundary](../diagrams/02-document-intake-boundary.png)
 
 ## What you build
 
 1. A source decision: which system is authoritative for the documents you extract.
-2. An intake contract: the metadata every document carries (source URI, version, owner, hash,
-   sensitivity), and the rules that send a document to quarantine instead of extraction.
-3. A **runnable intake check** that proves the plan is complete and the containers are keyless and
-   private.
+2. An intake contract: required metadata (source URI, version, owner, hash, sensitivity) and rules
+   that route documents to quarantine.
+3. A **runnable intake check** that confirms the plan is complete and containers are private and
+   keyless.
 
 ## Choose your path
 
@@ -23,23 +23,22 @@ unapproved document in is discovered by the wrong person.
 | C. SharePoint | Documents users already own | Inherited M365 / Entra permissions; indexer or Graph | Medium | Indexed = preview, Remote = preview |
 | D. OneLake (lakehouse) | Fabric lakehouse files | Fabric workspace RBAC | Medium | GA as a knowledge source |
 
-**Default: Option A.** Blob is the simplest approved-content boundary: one container the account's
-managed identity reads by URL, RBAC you control, and a second container for quarantine. Content
-Understanding and Document Intelligence both accept a blob URL directly, so no extra pipeline is
-needed to get a document to the analyzer.
+**Default: Option A.** Blob is the simplest approved-content boundary: one RBAC-controlled container
+the account's managed identity reads by URL, plus a quarantine container. Content Understanding and
+Document Intelligence both accept blob URLs directly, so the analyzer needs no extra pipeline.
 
-**Choose B when** the documents already live in a data lake and you need directory-level ACLs to
-travel with them. **Choose C when** the answer is "these are SharePoint documents and the owners
-should keep managing permissions there" — do not copy them into blob and fork the permission model.
-**Choose D when** the documents are curated in a Fabric lakehouse alongside analytical data.
+**Choose B when** documents already live in a data lake and require directory-level ACLs. **Choose C
+when** documents belong in SharePoint and their owners should manage permissions there. Do not copy
+them to Blob and create a second permission model. **Choose D when** documents are curated with
+analytical data in a Fabric lakehouse.
 
-**Migration cost.** A → B/C/D changes only the ingestion step and the `source_kind` in your intake
-plan; the extraction and review modules read the same typed result, so they are unaffected. C → A is
-a copy plus a new permission design — expensive, and usually the wrong direction.
+**Migration cost.** Moving from A to B, C, or D changes the ingestion step and `source_kind` in the
+intake plan. Extraction and review still read the same typed result. Moving from C to A also requires
+a copy and new permission design, so avoid it unless there is a clear reason.
 
 ### The intake decision, stated precisely
 
-Answer these before writing code:
+Answer these before you write code:
 
 1. **Which system is authoritative** for each document class, and who owns it?
 2. **What metadata must travel** with every document — source URI, version, ingested-by, SHA-256,
@@ -69,9 +68,9 @@ az storage blob upload \
              sensitivity_label="Confidential"
 ```
 
-Anything that fails a rule goes to `documents-quarantine`, never `documents-inbound`. Because the
-account's managed identity holds **Storage Blob Data Reader** (module 1), the analyzers read
-`https://<account>.blob.core.windows.net/documents-inbound/<name>` by URL with no key.
+Route anything that fails a rule to `documents-quarantine`, never `documents-inbound`. The account's
+managed identity has **Storage Blob Data Reader** from module 1, so analyzers read
+`https://<account>.blob.core.windows.net/documents-inbound/<name>` by URL without a key.
 
 ### Option B — ADLS Gen2
 
@@ -91,15 +90,14 @@ redesign to group-based permissions. Reference:
 
 ### Option C — SharePoint
 
-Do not copy the documents. Connect the SharePoint library and let M365 keep enforcing permissions,
-evaluated as the signed-in user. As a knowledge source, SharePoint is available **indexed** (ingested
-before query time) or **remote** (fetched at query time). For a
-document-extraction workflow you typically pull a specific file via Microsoft Graph and hand its
-bytes or a short-lived URL to the analyzer.
+Keep documents in SharePoint. Connect the library and let M365 enforce permissions for the signed-in
+user. As a knowledge source, SharePoint is available **indexed** (ingested before query time) or
+**remote** (fetched at query time). For document extraction, you typically use Microsoft Graph to
+retrieve a specific file, then give its bytes or short-lived URL to the analyzer.
 
-The governance work is the same regardless: confirm the library's permissions reflect intent
-(inherited permissions on a "public" site are the usual surprise) and test with a low-privilege
-account. Reference: <https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview>
+Confirm that library permissions reflect intent. Inherited permissions on a "public" site are a
+common surprise. Test with a low-privilege account. Reference:
+<https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview>
 
 ### Option D — OneLake (lakehouse)
 
@@ -120,9 +118,9 @@ for C in "$AZURE_DOCUMENTS_CONTAINER_NAME" "$AZURE_QUARANTINE_CONTAINER_NAME"; d
 done
 ```
 
-You want both names back with an empty `public` column. A value of `blob` or `container` means the
-document corpus is anonymously readable. The command working at all confirms Entra data-plane access;
-an `AuthorizationFailure` means you are still missing **Storage Blob Data Contributor** on the account.
+You want both names with an empty `public` column. A value of `blob` or `container` exposes the
+document corpus anonymously. If the command succeeds, Entra data-plane access works.
+`AuthorizationFailure` means your identity still lacks **Storage Blob Data Contributor**.
 
 **2. Intake metadata actually rode with the document.**
 
@@ -131,9 +129,8 @@ az storage blob metadata show --account-name "$AZURE_STORAGE_ACCOUNT_NAME" --aut
   --container-name "$AZURE_DOCUMENTS_CONTAINER_NAME" --name invoice-2002.pdf -o json
 ```
 
-You should see `source_uri`, `source_version`, `ingested_by`, and `sensitivity_label`. If they are
-missing, provenance was never captured — the document is in the pipeline with no way to trace where it
-came from or who let it in, which is exactly what the intake contract exists to prevent.
+You should see `source_uri`, `source_version`, `ingested_by`, and `sensitivity_label`. Missing values
+mean the pipeline cannot trace the document's origin or who admitted it.
 
 **3. The analyzer identity can read inbound documents by URL.**
 
@@ -147,9 +144,8 @@ az role assignment list --assignee "$MI" --scope "$STORAGE_ID" \
   --query "[].roleDefinitionName" -o tsv
 ```
 
-You need **Storage Blob Data Reader** in that list. If it is absent, module 3's analyze-by-URL call
-returns a permission error against the blob — a failure that surfaces only once you start extracting,
-after the source looks fine.
+You need **Storage Blob Data Reader** in that list. Without it, module 3's analyze-by-URL call fails
+against the blob.
 
 ## Troubleshooting
 
@@ -164,9 +160,8 @@ after the source looks fine.
 
 ## Decision record
 
-One page, kept with the pilot: the chosen source and the runners-up with why each lost; the metadata
-contract; the quarantine rules; the retention window and who signed it; and the intake check result
-with a date.
+Keep one page with the pilot: the selected source and why alternatives lost, metadata contract,
+quarantine rules, retention window and approver, plus dated intake-check results.
 
 ## Next module
 

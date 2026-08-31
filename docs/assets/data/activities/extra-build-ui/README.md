@@ -11,23 +11,19 @@
 > browser front-end on the live Responses endpoint you shipped there. For the action-approval
 > panel (Step 4), also complete Advanced · Action Tools (`ACTION_API_URL`).
 
-> Sample demo: a user types a grounded question into a real chat window and
-> watches the answer stream in with a citations panel beside it — then asks the agent to *open an
-> IT ticket* and has to click Approve before anything happens. The same grounded, governed agent,
-> now with a face.
+> Sample demo: a user types a grounded question into a chat window and watches the answer stream
+> beside a citations panel. Then they ask the agent to *open an IT ticket* and click Approve before
+> anything happens.
 
 ## Why this activity
 
-Everything so far has been driven from a notebook, a script, or `curl`. That's right for building —
-but no end user is going to `POST /responses` from a terminal. To make the scenario assistant feel
-real, it needs a web UI: a chat window that streams answers, a citations panel that shows which
-FAQ document each answer came from, and an action-approval prompt so a human stays in the loop
-before the agent does anything with consequences.
+So far you have used a notebook, script, or `curl`. End users need a web UI: a streaming chat window,
+a citations panel that names each FAQ source, and an approval prompt before a consequential action.
 
-You will not call the model from the browser. A bearer token in client-side JavaScript is a leaked
-credential. Instead you build a thin backend-for-frontend (BFF) that holds the credential, talks to
-the hosted agent over the Responses protocol, and exposes a small same-origin API to your page. Then
-you deploy the whole thing — static front-end + BFF — to Azure and wire CORS correctly.
+Never call the model from the browser. A bearer token in client-side JavaScript leaks a credential.
+Build a thin backend-for-frontend (BFF) to hold the credential, call the hosted agent through the
+Responses protocol, and expose a small same-origin API to the page. Deploy the static front end and
+BFF to Azure with correctly scoped CORS.
 
 ```text
    browser (chat UI)
@@ -49,8 +45,8 @@ you deploy the whole thing — static front-end + BFF — to Azure and wire CORS
   calls).
 - Node 18+ or Python 3.11+ for the BFF, and the Azure CLI (`az login`). `azd` if you deploy with it.
 
-> 💡 You can build the front-end in any stack — plain HTML/JS is enough. The graded parts are the
-> three UI affordances (chat, citations, approval) and a secret-free browser, not the framework.
+> 💡 Use any front-end stack. Plain HTML/JS is enough. The checks cover chat, citations, approval,
+> and a secret-free browser, not the framework.
 
 ---
 
@@ -202,12 +198,12 @@ BFF's identity is a managed identity and CORS is origin-scoped.
 
 ---
 
-## Done — what you shipped
+## What you shipped
 
 - A real web UI for the scenario assistant: streaming chat, a citations panel, and a
   human action-approval card.
-- A secret-free browser — the credential lives only in the BFF — deployed to Azure with a managed
-  identity and origin-scoped CORS.
+- A secret-free browser. The credential stays in the BFF, which runs in Azure with a managed identity
+  and origin-scoped CORS.
 
 ## Stretch goals
 

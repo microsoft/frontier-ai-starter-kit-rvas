@@ -1,15 +1,14 @@
 # Implementation notes — Magentic Workflows
 
-Use these notes when a scenario branch has earned dynamic multi-agent orchestration. No extra Azure
-infra is required beyond the project and any tools the specialists need. The Action specialist can
-reuse the Action Tools MCP wiring when the workflow performs writes.
+Use these notes when a scenario needs runtime multi-agent orchestration. No extra Azure infrastructure
+is required beyond the project and tools for the specialists. The Action specialist can reuse the
+Action Tools MCP wiring when the workflow performs writes.
 
-## What this activity is really teaching
+## Core idea
 
-**Dynamic** orchestration. The contrast that matters: a fixed sequential/fan-out pipeline routes the
-*same way every time*; a **Magentic manager** *plans the route per request*. Neither reference repo ships
-a Magentic pattern — this is the differentiator. The keeper insight is **single-responsibility agents +
-a planner**: small, sharp specialists beat one do-everything agent, and the manager composes them.
+A fixed sequential or fan-out pipeline routes every request the same way. A **Magentic manager** plans
+the route per request. Use **single-responsibility agents and a planner** so the manager can compose
+focused specialists.
 
 ## Runtime prerequisites
 
@@ -62,8 +61,8 @@ The point is the **shape** (4 specialists + planner), not these exact symbols.
 ### Step 3 — DevUI
 - Live plan and execution events make the planning visible. Capture a mid-run graph if you need a
   review artifact. Do not rely on fixed DevUI colors.
-- The out-of-scope prompt ("change my final grade") must route to **Escalation**, proving the manager
-  refuses+hands off rather than forcing an action. Great teaching moment on safe orchestration.
+- The out-of-scope prompt ("change my final grade") must route to **Escalation**. The manager should
+  refuse and hand off rather than force an action.
 
 ## Optional verification scope
 

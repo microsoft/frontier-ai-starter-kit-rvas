@@ -1,15 +1,13 @@
 # Implementation notes — Voice Live
 
-Use these notes when the scenario branch needs realtime spoken interaction. Voice Live is branch-only;
-it is not the default batch avatar/video path for the Avatar scenario.
+Use these notes when a scenario needs realtime spoken interaction. Voice Live is branch-only; it is
+not the default batch avatar/video path for the Avatar scenario.
 
-## What this activity is really teaching
+## Core idea
 
-The agent and the **interface** are separable. Voice Live shows the same grounded agent behind a
-real-time speech channel. The conceptual win is **full-duplex streaming**
-(incremental audio in *and* out) versus the naive STT → agent → TTS pipeline — that's where the
-sub-second latency and barge-in come from. Don't let teams build three separate calls; Voice Live is one
-session.
+The agent and its **interface** are separate. Voice Live puts the same grounded agent behind a
+real-time speech channel. **Full-duplex streaming** sends and receives audio incrementally, enabling
+sub-second latency and barge-in. Voice Live uses one session rather than three separate calls.
 
 ## Runtime prerequisites
 
@@ -46,8 +44,8 @@ The Python SDK is async-only; use an async event loop rather than trying to wrap
 - Mic permissions on macOS/Linux trip people up — confirm the OS granted the terminal/IDE mic access.
 
 ### Step 3 — natural conversation
-- VAD/turn-detection and barge-in are the "feels real" features. If a team is short on time, VAD is the
-  priority; barge-in is the flourish.
+- VAD/turn detection and barge-in make the conversation feel natural. If time is limited, prioritize
+  VAD.
 - On the **Step 4 grounded** agent, confirm the spoken answer is actually grounded (cite-worthy content),
   proving the voice path didn't bypass the knowledge base.
 

@@ -1,15 +1,14 @@
 # Implementation notes — Build a UI
 
-Use these notes to adapt the reusable browser surface pattern: credential-holding backend-for-frontend
-(BFF), streaming responses, citations, action approval UI, and deployment.
+Use these notes for a browser surface with a credential-holding backend-for-frontend (BFF), streaming
+responses, citations, action approval, and deployment.
 
 ## Overview
 
-This Extra is the "make it real" activity: put a browser front-end on a **hosted agent** or prompt
-agent endpoint. The reusable substance is three UI affordances —
-**streaming chat**, a **citations panel**, and a **human action-approval card** — plus the one
-non-negotiable security property: **no credential ever reaches the browser**. Everything talks to the
-agent through a thin **backend-for-frontend (BFF)** that holds `DefaultAzureCredential`.
+Put a browser front end on a **hosted agent** or prompt-agent endpoint. It needs **streaming chat**,
+a **citations panel**, and a **human action-approval card**. **No credential may reach the browser.**
+Route every agent call through a thin **backend-for-frontend (BFF)** that holds
+`DefaultAzureCredential`.
 
 It is deliberately framework-agnostic. Plain HTML + `fetch` is enough to prove the pattern. Steps
 1–4 are local; Step 5 is the
@@ -24,7 +23,7 @@ the Action Tools backend running (`ACTION_API_URL`) or a scenario-specific appro
 
 ## Step 1 — Scaffold the UI and a credential-holding BFF
 
-### What good looks like
+### Expected result
 A page with a chat box calls `POST /api/chat` on a local BFF; the BFF authenticates with
 `DefaultAzureCredential`, forwards to the hosted agent's Responses route, and returns the answer.
 Browser DevTools shows **zero** secrets in delivered JS/HTML.
@@ -78,7 +77,7 @@ Run: `uvicorn server.app:app --port 5000` and open `http://localhost:5000`.
 
 ## Step 2 — Stream the answer
 
-### What good looks like
+### Expected result
 The BFF requests `stream=True` and relays Server-Sent Events; the page appends deltas so the answer
 grows live. Send button disables mid-stream.
 
@@ -110,7 +109,7 @@ Browser side: use `fetch('/api/chat/stream', { method: 'POST', ... })` and read
 
 ## Step 3 — Citations panel
 
-### What good looks like
+### Expected result
 A grounded scenario answer populates the panel with source documents; an ungrounded/abstain answer
 shows "no sources" — never a fabricated citation.
 
@@ -131,7 +130,7 @@ with SDK versions — read it live, don't hard-code from memory.
 
 ## Step 4 — Action-approval card
 
-### What good looks like
+### Expected result
 Asking to open a WiFi ticket renders an approval card (tool name + arguments) **before** anything runs.
 Approve creates the record (check `curl http://localhost:8080/it-tickets`); Deny creates nothing. This
 is the Action Tools Responses function-call loop surfaced in the browser.
@@ -152,7 +151,7 @@ Action Tools `solution.md`; this Extra moves the human decision from the termina
 
 ## Step 5 — Deploy to Azure
 
-### What good looks like
+### Expected result
 Public URL answers, cites, and gates actions. The BFF runs under a **system-assigned managed identity**
 granted **`Foundry User` (formerly `Azure AI User`)** on the project (no creds in app settings). CORS allows **only** the front-end
 origin.

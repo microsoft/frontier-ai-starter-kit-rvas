@@ -1,24 +1,24 @@
 # Module 3 — Build the governed content pipeline
 
-An onboarding avatar that says something wrong is worse than no avatar: it's a confident,
-face-attached, replayable error. This module builds the pipeline that guarantees **only approved
-HR/onboarding content reaches the experience**, as a typed, versioned, owned, traceable claim set.
+An onboarding avatar that says something wrong becomes a confident, face-attached, replayable error.
+This module builds a pipeline that lets **only approved HR/onboarding content reach the experience**
+as a typed, versioned, owned, traceable claim set.
 
-Retrieval quality can be improved later; a wrong or expired claim published on a synthetic face is
-the failure that ends the pilot.
+You can improve retrieval quality later. A wrong or expired claim on a synthetic face ends the
+pilot.
 
 ![Governed content pipeline](../diagrams/03-governed-content-pipeline.png)
 
 ## What you build
 
-1. A **claim set**: every fact the experience may state, as an atomic claim with a stable id, the
-   exact approved wording, an authoritative source reference, a named owner, required reviewers, and
-   a help path. The template is [`accelerator/sample-data/claims.json`](../accelerator/sample-data/claims.json).
-2. A **governed store**: the approved source documents in the keyless `approved-content` container,
-   with owner/version/expiry metadata preserved.
-3. A **gate**: nothing downstream may cite content that is not in the claim set. The renderer in
-   module 5 enforces this — a script segment whose spoken text is not an exact approved claim is
-   rejected.
+1. A **claim set**. It records every fact the experience may state as an atomic claim with a stable
+   id, exact approved wording, authoritative source reference, named owner, required reviewers, and
+   help path. Use [`accelerator/sample-data/claims.json`](../accelerator/sample-data/claims.json) as
+   the template.
+2. A **governed store**. It holds approved source documents in the keyless `approved-content`
+   container and preserves owner/version/expiry metadata.
+3. A **gate**. Nothing downstream can cite content outside the claim set. Module 5's renderer
+   rejects a script segment whose spoken text is not an exact approved claim.
 
 ## Choose your path
 
@@ -31,28 +31,27 @@ Where should the approved corpus live and how is it governed on the way in?
 | C. SharePoint / M365 (Copilot-style) | Existing SharePoint libraries | Inherited M365 permissions | Lowest config | The authoritative content already lives in SharePoint and won't move |
 | D. Customer system of record via export | Their HRIS/LMS export | Whatever the export preserves | Medium | Content is owned by an HR system and must stay authoritative there |
 
-**Default: Option A.** A small, explicit, typed claim set backed by a keyless blob container is the
-right primitive for onboarding: the number of facts is small, they need named owners and expiry
-dates, and every one must be individually approvable in module 6. You get a corpus a customer can
-review, diff, and export — and the claim set is the contract the grounded assistant (module 4) and
-the renderer (module 5) both read.
+**Default: Option A.** A small, explicit, typed claim set in a keyless blob container fits
+onboarding. There are few facts, each needs a named owner and expiry date, and module 6 must approve
+each one. The result is a corpus a customer can review, diff, and export. The grounded assistant
+(module 4) and renderer (module 5) both use the claim set as their contract.
 
-**Choose B** when onboarding content is genuinely spread across systems and you need permission-aware
-retrieval; the module-4 knowledge base becomes your source of truth and this claim set becomes the
-*approved subset* the experience may speak. **Choose C** when the answer is "this is a Copilot, not
-an app". **Choose D** when HR insists their system stays authoritative — you export a versioned
-snapshot and never let the avatar outrun it.
+**Choose B** when onboarding content spans systems and needs permission-aware retrieval. The
+module-4 knowledge base becomes your source of truth, and this claim set becomes the *approved
+subset* the experience may speak. **Choose C** when this is a Copilot rather than an app. **Choose
+D** when HR requires its system to remain authoritative. Export a versioned snapshot and never let
+the avatar outrun it.
 
-**Migration cost.** A → B is cheap: the claim set survives; you add a knowledge base behind it. B → A
-is cheap too (wrap the index). C → A/B is a rebuild. This asymmetry is why A is the default.
+**Migration cost.** A → B is cheap: retain the claim set and add a knowledge base. B → A is also
+cheap because you wrap the index. C → A/B is a rebuild. That makes A the default.
 
 ### Four questions to answer before writing claims
 
-1. **Who owns each fact** — the named person who can approve wording and is accountable for it.
-2. **What is the authoritative source** — the document + version the wording is drawn from.
-3. **When does it expire** — a `review_by` date after which the claim must not be published.
-4. **What happens when the source changes** — the claim is invalidated and the experience is paused
-   (module 6's withdrawal path), not silently re-rendered.
+1. **Who owns each fact?** Name the person who can approve the wording and is accountable for it.
+2. **What is the authoritative source?** Record the document + version that supplied the wording.
+3. **When does it expire?** Set a `review_by` date after which the claim cannot publish.
+4. **What happens when the source changes?** Invalidate the claim and pause the experience through
+   module 6's withdrawal path. Do not silently re-render it.
 
 ## Implementation
 
@@ -73,9 +72,9 @@ never paraphrase a policy:
 }
 ```
 
-The pack carries `version`, `content_owner`, and `review_by` (expiry). Use synthetic/fictional data
-only — never real employee data or a real person's likeness. The sample pack is fully synthetic and
-is the shape to copy.
+The pack carries `version`, `content_owner`, and `review_by` (expiry). Use only synthetic/fictional
+data. Never use real employee data or a real person's likeness. The sample pack shows the expected
+shape.
 
 **Upload the approved sources keylessly.** Shared-key access is disabled on the storage account, so
 you ingest with Entra ID:
@@ -99,11 +98,11 @@ az storage blob metadata update --account-name "$STORAGE" --auth-mode login \
 
 ### Option B — Foundry IQ / Azure AI Search knowledge base
 
-When content spans systems, build a permission-aware knowledge base and treat this claim set as the
-approved subset the avatar may speak. The full pattern — knowledge sources, ACL carry-forward at
-ingestion, and query-time enforcement under the caller's Entra identity — is the AI Grounding
-scenario's Module 2/3 work; do not duplicate it here. The onboarding-specific rule stands: the
-avatar speaks only claims in **this** set, even if the knowledge base can retrieve more.
+When content spans systems, build a permission-aware knowledge base and use this claim set as the
+approved subset the avatar may speak. The AI Grounding scenario's Module 2/3 covers knowledge
+sources, ACL carry-forward at ingestion, and query-time enforcement under the caller's Entra
+identity. Do not duplicate it here. The avatar can speak only claims in **this** set, even if the
+knowledge base retrieves more.
 
 Verified knowledge-source and permission facts:
 <https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview> ·
@@ -111,10 +110,10 @@ Verified knowledge-source and permission facts:
 
 ### Option C — SharePoint / M365
 
-Configuration, not code: connect the approved SharePoint library, scope to the onboarding site, and
-let M365 permissions govern access. Still produce the claim set — it is what the approval gate signs
-off. Confirm the site's permissions reflect intent (inherited permissions on a "public" site are the
-usual surprise) and test with a low-privilege account.
+This is configuration, not code. Connect the approved SharePoint library, scope it to the onboarding
+site, and let M365 permissions govern access. Still produce the claim set because the approval gate
+signs it. Confirm that site permissions match intent; inherited permissions on a public site are a
+common surprise. Test with a low-privilege account.
 
 ### Option D — Export from a system of record
 
@@ -124,8 +123,8 @@ Never let the avatar speak content newer or older than the snapshot you approved
 
 ## Verify
 
-Prove the governed corpus is reachable without keys and that the claim set is actually approvable.
-Check each against your own storage account and claim file.
+Prove that the governed corpus is reachable without keys and that the claim set is approvable. Check
+each result against your storage account and claim file.
 
 **1. The approved content is in blob storage and reachable with your Entra identity, not a key.**
 
@@ -137,9 +136,9 @@ az storage blob list \
   --auth-mode login --query "[].name" -o tsv
 ```
 
-You should see the files you uploaded (for example `claims.json`). Shared-key access is off on this
-account, so a `403` here means you lack **Storage Blob Data Reader** or **Contributor**; grant the
-role and re-run. Do not re-enable shared keys.
+You should see the uploaded files, such as `claims.json`. Shared-key access is off on this account.
+A `403` means you lack **Storage Blob Data Reader** or **Contributor**. Grant the role and re-run.
+Do not re-enable shared keys.
 
 **2. Owner, version, and expiry are queryable without opening the file.** An audit must answer "who
 approved this and when does it expire" from metadata alone:
@@ -151,8 +150,8 @@ az storage blob metadata show \
   --name claims.json --auth-mode login -o json
 ```
 
-You want `owner`, `version`, and `review_by` present. If they are empty, set them (module 3
-Implementation): a corpus with no owner or expiry cannot be governed or withdrawn.
+Expect `owner`, `version`, and `review_by`. If they are empty, set them in module 3 Implementation.
+A corpus without an owner or expiry cannot be governed or withdrawn.
 
 **3. Every claim is approvable, and nothing is already expired.** Read your own claim set and check
 the fields that module 6 signs and module 5 enforces:
@@ -168,10 +167,9 @@ jq -r --arg today "$(date -u +%F)" \
   scenarios/avatar-onboarding/accelerator/sample-data/claims.json
 ```
 
-The first command must print `true`: a claim missing an owner or a source cannot be approved in
-module 6, and a pack with no `review_by` never expires. The second must not print `EXPIRED`. An
-expired claim spoken on a synthetic face as current policy is exactly the failure this pipeline
-exists to prevent.
+The first command must print `true`. Module 6 cannot approve a claim without an owner or source,
+and a pack without `review_by` never expires. The second must not print `EXPIRED`. An expired claim
+presented as current policy is the failure this pipeline prevents.
 
 ## Troubleshooting
 
@@ -186,10 +184,10 @@ exists to prevent.
 
 ## Decision record
 
-Keep: chosen source option and the runners-up with why each lost; the claim-set version and its
-`review_by`; where the approved corpus lives and how access is governed (Entra-only, no keys); the
-owner of each claim; and the invalidation rule ("source change ⇒ claim invalid ⇒ experience paused").
-One page, kept with the pilot.
+Keep the chosen source option and the runners-up with why each lost, the claim-set version and
+`review_by`, where the approved corpus lives and how access is governed (Entra-only, no keys), the
+owner of each claim, and the invalidation rule ("source change ⇒ claim invalid ⇒ experience paused").
+Keep it to one page with the pilot.
 
 ## Next module
 

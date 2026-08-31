@@ -20,14 +20,12 @@
 
 ## Why this activity
 
-Interactive workflows often run in your terminal — close it and the work dies. Real customer work
-is not always interactive: *batch-process a queue*, *reconcile many requests*, or *review a backlog*.
-Those are long-running jobs that should not block a caller.
+Interactive terminal workflows die when the terminal closes. Tasks such as *batch-processing a queue*,
+*reconciling requests*, and *reviewing a backlog* must continue without blocking the caller.
 
-In this Extra you deploy a worker as a hosted agent (its own endpoint + identity, like the Deploy
-activity), then submit a Responses request with `background=True`. The
-platform accepts the job, returns immediately with a response handle, and continues processing it.
-You retrieve that response later — and every step is traced in App Insights.
+Deploy a worker as a hosted agent with its own endpoint and identity, then submit a Responses request
+with `background=True`. The platform returns a response handle immediately, processes the job, and
+lets you retrieve the result later. App Insights traces every step.
 
 ```text
   submit job ──▶ hosted worker (Responses `background=True`)
@@ -105,6 +103,5 @@ the spans.
 
 ## What you built
 
-A hosted worker with a background Responses path that does async, long-running work and survives your
-session — fully traced. If the worker is multi-agent, the same pattern makes the orchestration
-observable after the caller disconnects.
+A hosted worker with a background Responses path runs async work after the caller disconnects. If the
+worker is multi-agent, the same pattern keeps its orchestration observable.

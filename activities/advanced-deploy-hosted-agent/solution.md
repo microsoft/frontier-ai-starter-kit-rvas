@@ -2,8 +2,8 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-These notes capture the reusable hosted-agent deployment mechanics: project shape, container build,
-authenticated invocation, managed identity, and run history.
+Use these notes for hosted-agent deployment: project shape, container build, authenticated
+invocation, managed identity, and run history.
 
 > ⚠️ **This activity was rewritten away from Prompt Flow.** The old version deployed a Prompt Flow to
 > a managed online endpoint and bolted on a Flask app. **All of that is gone.** If a team is following
@@ -15,9 +15,8 @@ authenticated invocation, managed identity, and run history.
 ## What this activity proves
 
 A team finishes when the sample IQ assistant runs as a **hosted, containerized agent** with its own
-endpoint, its own version, and a **per-agent managed identity**, and they can invoke it over the
-production Responses protocol with auth enforced and runs visible in App Insights. This is the "ship
-it" activity — real container deployment, not the "next steps only" hand-wave the reference labs stop at.
+endpoint, version, and **per-agent managed identity**. They must invoke it over the production
+Responses protocol with authentication enforced and inspect runs in App Insights.
 
 Assumes the Foundations end-state (or bootstrap). If the agent isn't grounded locally, that's a
 Foundations problem first.
@@ -40,8 +39,8 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 - **Reuse the Foundations persona.** The `instructions:` block should be the same grounded,
   cite-your-sources persona from Foundations Step 3 — don't let teams rewrite it here.
 - **The MAF server host** (`AzureAIAgentServerHost` or the equivalent in the current `agent-framework`
-  release) implements the Responses contract for them. Teams that try to hand-roll a Flask `/responses`
-  route can do it, but it's a time sink — steer them to the framework host. Reference:
+  release) implements the Responses contract. Use the framework host instead of hand-writing a Flask
+  `/responses` route. Reference:
   `foundry-samples/samples/python/hosted-agents/agent-framework/responses/`.
 - **Local smoke test** before deployment: run `azd ai agent run` from `hosted/` and use the opened
   agent inspector. If the generated project fails locally, fix it before `azd deploy`.

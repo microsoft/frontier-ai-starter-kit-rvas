@@ -11,20 +11,16 @@
 
 ## Why this activity
 
-Your assistant answers grounded questions today — but when a user gets a slow,
-wrong, or uncited answer, can you explain why? Right now the agent is a black box: a model call,
-a knowledge-base retrieval, and (if you did Action Tools) a tool call all happen inside one request,
-and you can see none of it.
+When an answer is slow, wrong, or uncited, you need to explain why. A model call, knowledge-base
+retrieval, and optional tool call can otherwise remain hidden inside one request.
 
-Foundry records agent-service traces after the project is connected to Application Insights. In this
-activity you also enable OpenTelemetry (OTel) in your client process, then read the telemetry two
-ways — the Foundry portal Tracing tab and a KQL query in App Insights. By the end you can take a single
-user question and reconstruct its entire journey: model → retrieval → tool, with token counts,
-latency per span, and the inputs/outputs at each hop.
+Foundry records agent-service traces after you connect the project to Application Insights. Enable
+OpenTelemetry (OTel) in the client process, then inspect telemetry in the Foundry portal Tracing tab
+and through KQL in App Insights. You can reconstruct one question's model, retrieval, and tool spans,
+including token counts and latency.
 
-This is the observability layer that the Evaluation and Deploy activities both build on: evals become
-trustworthy when you can trace the row that failed, and a hosted agent is only production-ready when
-you can watch it run.
+Evaluation and deployment both depend on this evidence. Use traces to investigate a failed row and
+monitor a hosted agent in production.
 
 ```text
   user question
@@ -59,13 +55,12 @@ you can watch it run.
 
 ---
 
-This activity ships three rungs off the same backbone — the same `validate.py` grades all
-three. (a) Guided path (below) gives you the code to assemble · (b) Build-from-scratch path
-gives you only the gotcha + the package list · (c) Stretch goals go open-ended.
+The same `validate.py` grades all three paths. (a) Guided path provides code to assemble;
+(b) Build-from-scratch provides the common issue and package list; (c) Stretch goals are open-ended.
 
 ## Rung (a) — Guided path
 
-> The beginner on-ramp: the code is here to assemble and run. The lesson is the *ordering gotcha*.
+> Assemble and run the provided code. The important detail is its ordering.
 
 ## Step 1 — Enable GenAI instrumentation
 
@@ -328,7 +323,7 @@ tokens, latency-per-span, which span retrieved, an estimated cost, and the slowe
 
 ---
 
-## Done — what you can now do
+## What you can now do
 
 - Every scenario answer is observable end to end, two ways: portal Tracing tab and KQL.
 - You can take one user question and account for its model, retrieval, and tool spans, with tokens,
@@ -339,7 +334,7 @@ Hosted Agent (the same tracing follows the agent to its live endpoint).
 
 ## Rung (c) — Stretch goals
 
-Open-ended: no single right answer.
+Open-ended. There is no single correct answer.
 
 1. 3-tier `TelemetryManager` + a custom business metric. Ship a small `TelemetryManager` and emit
    one custom metric (e.g. `sample.answers.uncited`) on every run, then chart it in a Workbook.

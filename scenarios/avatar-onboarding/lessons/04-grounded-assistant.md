@@ -1,23 +1,23 @@
 # Module 4 — Build the grounded assistant behind the experience
 
 The avatar is a mouth. This module builds the brain: a grounded assistant that drafts onboarding
-script text **only** from the approved claim set, **cites** every claim, **refuses** anything it
-can't ground, and **hands off** to a human help path. If the assistant can invent a benefit, the
-avatar will say it with a smile.
+script text **only** from the approved claim set, **cites** every claim, **refuses** requests it
+cannot ground, and **hands off** to a human help path. If the assistant invents a benefit, the avatar
+will repeat it.
 
-This module is the [Foundations activity](../../../activities/foundations/README.md) **Steps 3–4**
-applied to onboarding — build it there for the mechanics, and apply the onboarding-specific rules
-below. Prompt Flow is not part of this curriculum; use agents + tools + retrieval.
+This module applies [Foundations](../../../activities/foundations/README.md) **Steps 3–4** to
+onboarding. Build the mechanics there, then apply the onboarding rules below. Prompt Flow is outside
+this curriculum; use agents + tools + retrieval.
 
 ![Grounded assistant boundary](../diagrams/04-grounded-assistant-boundary.png)
 
 ## What you build
 
-1. A grounded generation path (model-with-retrieval **or** a Foundry agent) that produces script
+1. A grounded generation path, model-with-retrieval **or** a Foundry agent, that produces script
    text traceable to approved claims.
-2. Guardrails: citation on every claim, **abstention** when no approved claim covers the question,
-   and **escalation** to the claim's `help_path`.
-3. A retrieval boundary so the assistant sees only approved content (module 3's corpus / knowledge
+2. Guardrails: cite every claim, **abstain** when no approved claim covers the question, and
+   **escalate** to the claim's `help_path`.
+3. A retrieval boundary that limits the assistant to approved content (module 3's corpus / knowledge
    base).
 
 ## Choose your path
@@ -28,22 +28,21 @@ below. Prompt Flow is not part of this curriculum; use agents + tools + retrieva
 | B. Foundry agent + knowledge base | A named, versioned Foundry agent with a knowledge tool | Managed retrieval + citations from the knowledge base | Medium | You want a reusable, governed agent that other channels share |
 | C. Foundry agent + agentic retrieval (Foundry IQ) | Agent over a permission-aware knowledge base | Query planning + answer synthesis + ACL enforcement | Medium/High | Content spans systems and needs permission-aware retrieval |
 
-**Default: Option A** for the pilot: a chat deployment with retrieval over the small approved claim
-set and a system prompt that forbids ungrounded statements. It is the least machinery for the
-tightest control over the two behaviours that matter here — **cite** and **refuse**. Graduate to
-**B** when you want a named, versioned agent shared across channels (and it's the natural bridge to
-module 5 Option C, Voice Live), and to **C** when retrieval must be permission-aware across systems.
+**Default: Option A** for the pilot: a chat deployment retrieves from the small approved claim set,
+and its system prompt forbids ungrounded statements. It is the smallest setup with tight control
+over the two behaviours that matter here: **cite** and **refuse**. Choose **B** when you want a
+named, versioned agent shared across channels (including module 5 Option C, Voice Live). Choose
+**C** when retrieval must be permission-aware across systems.
 
-**Migration cost.** A → B/C keeps the claim set, the golden questions (module 7), and the refusal
-contract; you swap the drafting call for an agent invocation. B → A is trivial. The evaluation set
-you build in module 7 survives all three — build it once.
+**Migration cost.** A → B/C retains the claim set, module-7 golden questions, and refusal contract;
+only the drafting call becomes an agent invocation. B → A is trivial. Build the module-7 evaluation
+set once because all three options use it.
 
 ## Implementation
 
 ### Option A — Model + retrieval (default)
 
-**Ground on the claim set and forbid invention.** The system prompt is the guardrail; keep it
-explicit:
+**Ground on the claim set and forbid invention.** Make the system prompt explicit:
 
 ```python
 SYSTEM_PROMPT = """You draft onboarding script text for a synthetic avatar presenter.
@@ -87,38 +86,38 @@ def draft(question: str) -> str:
     return resp.choices[0].message.content
 ```
 
-> Search before you implement: confirm the current `AzureOpenAI` / Foundry chat signature and
-> `api_version` against Microsoft Learn — the SDK surface moves. The onboarding rule is fixed:
+> Search before you implement. Confirm the current `AzureOpenAI` / Foundry chat signature and
+> `api_version` against Microsoft Learn because the SDK surface changes. The onboarding rule is fixed:
 > **draft only from `claims.json`, cite `claim_id`, refuse with `NO_APPROVED_CLAIM`.**
 
-**Enforce refusal downstream.** Module 5's renderer already rejects any script segment whose spoken
-text is not an *exact* approved claim, so a paraphrase or an invented sentence cannot be rendered —
-the model is the first gate, the renderer is the backstop.
+**Enforce refusal downstream.** Module 5's renderer rejects script segments whose spoken text is
+not an *exact* approved claim. A paraphrase or invented sentence cannot render. The model is the
+first gate; the renderer is the backstop.
 
 ### Option B — Foundry agent + knowledge base
 
-Build the agent in [Foundations Step 4](../../../activities/foundations/README.md): a named,
-versioned agent with a knowledge tool over module 3's corpus, a persona ("onboarding script
-drafter"), and the same refusal instruction. Store the agent name in `.env`
-(`AZURE_FOUNDRY_AGENT_NAME`) so module 5 Option C (Voice Live agent mode) and module 7 (evaluation)
-reuse it. The agent returns citations from the knowledge base; assert they map to approved claim ids.
+Build the agent in [Foundations Step 4](../../../activities/foundations/README.md). Use a named,
+versioned agent with a knowledge tool over module 3's corpus, the "onboarding script drafter"
+persona, and the same refusal instruction. Store its name in `.env` (`AZURE_FOUNDRY_AGENT_NAME`) so
+module 5 Option C (Voice Live agent mode) and module 7 (evaluation) can reuse it. The agent returns
+knowledge-base citations; confirm that they map to approved claim ids.
 
 ### Option C — Foundry agent + agentic retrieval (Foundry IQ)
 
-When retrieval must be permission-aware, put the agent over a Foundry IQ knowledge base. Use the
+When retrieval must be permission-aware, use a Foundry IQ knowledge base behind the agent. Use the
 preview API version for query planning and answer synthesis, pass the end-user token in
 `x-ms-query-source-authorization`, and keep the "approved claims only" instruction. Verified facts
-(from the AI Grounding stack):
+from the AI Grounding stack:
 <https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base>
 
-Whichever option: the assistant may draft *candidate* script text, but a **human still approves** the
-final wording in module 6. The assistant speeds authoring; it does not grant publication.
+The assistant may draft *candidate* script text under any option. A **human still approves** the
+final wording in module 6. The assistant speeds authoring. It does not grant publication.
 
 ## Verify
 
-Test the two behaviours that decide whether this assistant is safe to put behind a face: it must
-**cite** on-claim answers and **refuse** off-claim ones. Run both against your own deployment, not a
-fixture. This grounded call uses your Entra identity, no key:
+Test the two behaviours that make this assistant safe to put behind a face: it must **cite**
+on-claim answers and **refuse** off-claim ones. Run both against your deployment, not a fixture.
+This grounded call uses your Entra identity, with no key:
 
 ```bash
 set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
@@ -145,8 +144,8 @@ ask "When do I select benefits?"
 ```
 
 Good output states the approved wording and names `ONB-001`. If it paraphrases the policy or drops
-the citation, tighten the system prompt and keep `temperature` at 0. A paraphrased policy on a
-synthetic face is an unapproved claim.
+the citation, tighten the system prompt and keep `temperature` at 0. A paraphrased policy becomes
+an unapproved claim.
 
 **2. An off-claim question is refused, not invented.**
 
@@ -154,10 +153,10 @@ synthetic face is an unapproved claim.
 ask "How much is the parking subsidy?"
 ```
 
-The only acceptable output is `NO_APPROVED_CLAIM` and the help path. A plausible dollar figure here
-is the failure that matters most: a confident, replayable, made-up number spoken by a face. If you
-get one, the assistant is not safe to render, and a `401`/`403` instead means you are missing the
-**Cognitive Services OpenAI User** role on the account (grant it; stay keyless).
+The only acceptable output is `NO_APPROVED_CLAIM` and the help path. A plausible dollar figure is a
+confident, replayable, made-up number spoken by a face. If you get one, do not render the assistant.
+A `401`/`403` means you are missing the **Cognitive Services OpenAI User** role on the account.
+Grant it and stay keyless.
 
 ## Troubleshooting
 
@@ -172,9 +171,9 @@ get one, the assistant is not safe to render, and a `401`/`403` instead means yo
 
 ## Decision record
 
-Keep: chosen path and why; the system prompt / agent instruction that enforces cite-and-refuse; the
-refusal token and help-path behaviour; the retrieval boundary (approved content only); and the golden
-on-claim/off-claim examples you'll grow in module 7. Note that the assistant drafts but **humans
+Keep the chosen path and why, the system prompt / agent instruction that enforces cite-and-refuse,
+the refusal token and help-path behavior, the retrieval boundary (approved content only), and the
+golden on-claim/off-claim examples that you will grow in module 7. The assistant drafts; **humans
 approve**.
 
 ## Next module

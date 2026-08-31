@@ -1,15 +1,14 @@
 # Implementation notes — Hosted long-running agents
 
-Use these notes when a scenario needs work that outlives a browser request. The pattern is general:
-submit a background job, keep a platform handle, retrieve the result later, and trace the run.
-Magentic Workflows are one useful example, not a required prerequisite.
+Use these notes when a scenario needs work that outlives a browser request: submit a background job,
+keep its platform handle, retrieve the result later, and trace the run. Magentic Workflows are one
+useful example, not a prerequisite.
 
-## What this activity is really teaching
+## Core idea
 
-**Async, durable** agent work. Everything so far has been request/response in a live process. This Extra
-introduces `background=True`: submit → get a handle → work continues → poll later. The keeper insight is
-that a long-running agent **decouples** the caller's session from the work, and observability
-(App Insights) is what makes async work *trustworthy* — you can prove what happened after the fact.
+This activity introduces **async, durable** agent work with `background=True`: submit, get a handle,
+continue processing, then poll later. A long-running agent separates the caller's session from its
+work. App Insights records what happened after the caller disconnects.
 
 ## Runtime prerequisites
 
@@ -36,8 +35,8 @@ Send teams to `microsoft-docs` / `foundry-mcp` for current signatures rather tha
 - **Pitfall:** tool URLs still pointing at localhost → hosted worker fails remotely. Fix the URL.
 
 ### Step 2 — background run
-- The teaching beat: the submit call must **return immediately**. If they're blocking on completion, they
-  haven't actually used the background path — they've just deployed a slow synchronous agent.
+- The submit call must **return immediately**. If it blocks on completion, it is a slow synchronous
+  agent, not the background path.
 - A good batch task loops over a small list of items so it visibly outlives a request but completes
   quickly enough to inspect.
 

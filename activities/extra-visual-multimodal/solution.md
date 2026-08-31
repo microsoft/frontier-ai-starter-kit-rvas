@@ -1,8 +1,8 @@
 # Solution · Extra · Visual Multimodal
 
-This is a reference pattern, not a substitute for the current API documentation. Before coding,
-use `microsoft-docs` MCP to verify the installed SDK's exact signatures and use `foundry-mcp` to
-verify model/region capability. Do not invent or rely on preview Foundry multimodal SDK calls.
+This reference pattern does not replace current API documentation. Before coding, use
+`microsoft-docs` MCP to verify the installed SDK's signatures and `foundry-mcp` to verify
+model/region capability. Do not invent or rely on preview Foundry multimodal SDK calls.
 
 ## Known Image Analysis Python pattern
 
@@ -30,9 +30,9 @@ result = client.analyze(
 ```
 
 Use the current Docs result model to extract visible text and captions. Request only the features
-needed for the chosen task: `READ` for a directional sign, `CAPTION` for a concise scene
-description, and `TAGS` only if tags materially help. Confirm regional availability first, especially
-for caption features. Do not request people/face-related features for the sample organization demo.
+needed for the task: `READ` for a directional sign, `CAPTION` for a concise scene description, and
+`TAGS` only when they materially help. Confirm regional availability, especially for caption features.
+Do not request people or face-related features for the sample organization demo.
 
 For multimodal reasoning beyond those features, select a currently supported Foundry multimodal
 deployment and follow the exact message/image and structured-output syntax returned by
@@ -49,8 +49,8 @@ deployment and follow the exact message/image and structured-output syntax retur
 3. **Analyze:** use `analyze(image_data=image_bytes)` for local bytes or
    `analyze_from_url(image_url=...)` for an approved URL. Catch invalid-image, auth, and service
    errors. Preserve an “analysis unavailable” outcome instead of fabricating an observation.
-4. **Normalize:** convert the service response into a deliberately small result object. Do not
-   expose raw response blobs by default.
+4. **Normalize:** convert the service response into a small result object. Do not expose raw response
+   blobs by default.
 5. **Review:** flag low-confidence/missing text and every accessibility-impacting interpretation
    for human review. A model can observe a ramp-like feature; it cannot certify accessibility or
    recommend a safe route.
@@ -71,9 +71,9 @@ class WayfindingObservation:
     request_id: str
 ```
 
-Set `review_required` when confidence is below your documented threshold, input quality is poor,
-text cannot be read, results conflict, or a user asks for an accessibility/safety decision. Make
-the limitation visible in the returned object, not merely in a log message.
+Set `review_required` when confidence is below your documented threshold, input quality is poor, text
+cannot be read, results conflict, or a user requests an accessibility or safety decision. Include the
+limitation in the returned object, not only in a log message.
 
 ## Evidence and evaluation
 

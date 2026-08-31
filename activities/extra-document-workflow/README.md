@@ -4,7 +4,7 @@
 > that can use its Document Intelligence or Content Understanding resource. Use only fictional,
 > synthetic, or approved documents; do not upload real applicant/customer records.
 
-Build a reviewable intake workflow, not an automatic admissions decision:
+Build a reviewable intake workflow. It must not make admissions decisions:
 
 ```text
 local document → layout/OCR → field confidence + rules → human review → structured JSON
@@ -14,10 +14,9 @@ local document → layout/OCR → field confidence + rules → human review → 
 ## Before you write SDK code
 
 Document Intelligence SDK and REST signatures change. **First search `microsoft-docs` MCP** for the
-current Python Document Intelligence layout-analysis example, authentication/RBAC guidance, and
-poller signature. Record the URLs or search titles you consulted in your build notes. Then load the
-project `azure-ai` skill reference and implement the current signature you found. Do not copy an
-old key-based sample.
+current Python layout-analysis example, authentication/RBAC guidance, and poller signature. Record
+the URLs or search titles in your build notes. Then load the project `azure-ai` skill reference and
+implement the signature you found. Do not copy an old key-based sample.
 
 Use keyless auth: `DefaultAzureCredential`, with `az login` locally and a managed identity when
 deployed. Microsoft Entra authentication requires a Document Intelligence **custom subdomain** endpoint,
@@ -34,7 +33,7 @@ name, program, and consent fields.
 
 1. Accept a local document and generate a non-sensitive correlation ID.
 2. Call the current Document Intelligence layout/OCR API signature discovered above.
-3. Preserve page, line/table, and bounding-region references needed for a reviewer; do not log raw
+3. Preserve the page, line/table, and bounding-region references a reviewer needs. Do not log raw
    document content.
 
 **Verify:** a fictional application produces extracted layout text/tables with source references.
@@ -53,7 +52,7 @@ name, program, and consent fields.
 
 Route held items to a named human-review/approval queue with the reason and source reference. A
 reviewer must be able to correct a field and explicitly approve or reject the intake record. The
-workflow may prepare a record; it must not approve an applicant automatically.
+workflow can prepare a record, but it cannot approve an applicant.
 
 **Verify:** demonstrate one low-confidence document routed to review and one reviewer-approved
 fictional record.
@@ -90,5 +89,5 @@ human approval, or safe handling of real records.
 
 ## What you built
 
-A keyless, auditable document-intake path for a safe document workflow: OCR/layout informs a structured
-record, uncertainty reaches a person, and traces/evaluations show whether the workflow deserves trust.
+A keyless, auditable document-intake path: OCR/layout informs a structured record, uncertainty
+reaches a person, and traces and evaluations show how the workflow performs.

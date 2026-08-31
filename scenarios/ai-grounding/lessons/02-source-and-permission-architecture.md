@@ -1,7 +1,7 @@
 # Module 2 — Select the source and permission architecture
 
-This is the module that decides whether your pilot is safe. Retrieval quality can be fixed later;
-a wrong permission boundary is discovered by the wrong person.
+This module decides whether your pilot is safe. You can fix retrieval quality later. A bad permission
+boundary is discovered by the wrong person.
 
 ![Source and permission decision](../diagrams/02-source-permission-decision.png)
 
@@ -34,18 +34,17 @@ over every field in the index. You are trading weeks of work for that control.
 **Choose C when** the answer is "this should be a Copilot, not an app". If all the knowledge lives in
 SharePoint and the user is already in Teams, building an Azure retrieval stack is waste. Say so.
 
-**D, E, F are rarely the whole answer** — they are usually *additional* knowledge sources on an
-Option A knowledge base. Fabric IQ answers "what are the numbers", Foundry IQ answers "what does the
-policy say". Do not index live operational data to make it searchable; route to it.
+**D, E, F are rarely the whole answer.** They are usually *additional* sources on an Option A
+knowledge base. Fabric IQ answers "what are the numbers"; Foundry IQ answers "what does the policy
+say." Do not index live operational data to make it searchable. Route to it.
 
-**Migration cost.** A → B is a rebuild of the retrieval layer but the agent and evaluations survive.
-B → A is usually cheap, because an existing index can be wrapped as a *search index knowledge
-source*. C → A/B is a full rebuild. This asymmetry is why A is the default: it is the cheapest thing
-to move away from.
+**Migration cost.** A → B rebuilds the retrieval layer, but the agent and evaluations survive. B → A
+is usually cheap because an existing index can be wrapped as a *search index knowledge source*. C →
+A/B is a full rebuild. That is why A is the default: it is the cheapest option to move away from.
 
 ### The permission decision, stated precisely
 
-Answer these four questions before writing any code. They determine everything downstream:
+Answer these four questions before writing code:
 
 1. **Whose identity is evaluated at query time** — the end user, or a service identity acting for
    everyone? If it is a service identity, every user gets the union of all permissions.
@@ -58,7 +57,7 @@ Answer these four questions before writing any code. They determine everything d
 
 ### Option A — Foundry IQ knowledge base
 
-Use the current Microsoft Learn guidance for the active knowledge-base surface.
+Use current Microsoft Learn guidance for the active knowledge-base surface.
 
 **Pick your knowledge source kinds.** A knowledge base references one or more sources; retrieval
 queries all of them in one request and merges results through a single ranking pipeline.
@@ -80,12 +79,12 @@ queries all of them in one request and merges results through a single ranking p
 
 Source: <https://learn.microsoft.com/azure/search/agentic-knowledge-source-overview>
 
-*Indexed* means content is ingested before query time. *Remote* means it is fetched at query time
-through the platform's own API and never stored in Search. Remote sources are always fresh and
-always slower; indexed sources are fast and can be stale.
+*Indexed* content is ingested before query time. *Remote* content is fetched through the platform's
+API at query time and never stored in Search. Remote sources are always fresh and slower; indexed
+sources are fast and can be stale.
 
-**Turn on ACL carry-forward at ingestion.** This is the switch people forget. On an indexed source,
-permission metadata is only available at query time if you asked for it at ingestion time:
+**Turn on ACL carry-forward at ingestion.** On an indexed source, permission metadata is available
+at query time only when you request it at ingestion:
 
 ```python
 ingestion_parameters = KnowledgeSourceIngestionParameters(
@@ -107,8 +106,8 @@ result = kb_client.retrieve(
 )
 ```
 
-Without the second header you are querying as the application, and every user sees everything the
-application can see.
+Without the second header, you query as the application. Every user then sees what the application
+can see.
 
 **API version decides what you get.** `2026-04-01` is GA but offers minimal, extractive retrieval
 only: no query planning, no answer synthesis, no configurable reasoning effort, and GA source kinds
@@ -158,8 +157,8 @@ Source: <https://learn.microsoft.com/azure/search/search-query-access-control-rb
 - ADLS Gen2 indexer: requires a resync to refresh ACLs.
 - Custom/push ingestion: you must reingest affected documents yourself.
 
-Write down the worst-case staleness window and get the data owner to accept it in writing. "A
-revoked user keeps access for up to N hours" is a decision, not an accident.
+Write down the worst-case staleness window and have the data owner accept it in writing. "A revoked
+user keeps access for up to N hours" must be a decision.
 
 ### Option C — Copilot Studio + SharePoint / M365
 
@@ -169,9 +168,8 @@ enforce, evaluated as the signed-in user.
 Implementation is configuration, not code: connect the SharePoint site as a knowledge source in
 Copilot Studio, scope it to the approved libraries, and publish to Teams.
 
-The work that still matters is the same governance work: confirm the site's permissions actually
-reflect intent (inherited permissions on a "public" site are the usual surprise), and test with a
-low-privilege account.
+The same governance work still matters. Confirm the site's permissions reflect intent (inherited
+permissions on a "public" site are a common surprise), then test with a low-privilege account.
 
 If you pick this, **stop building the Azure stack** and say why in the decision record. Choosing not
 to build is a legitimate, valuable outcome.
@@ -189,9 +187,9 @@ Two ways to reach it from this scenario:
 2. **As a separate tool on the agent** in module 6, when you want explicit routing rather than
    blended retrieval.
 
-Permissions are enforced by Fabric — semantic model RLS and workspace RBAC. Do not copy analytical
-values into a search index to make them retrievable: you will serve stale numbers with a confident
-citation. Reference: <https://learn.microsoft.com/fabric/iq/overview>
+Fabric enforces permissions through semantic model RLS and workspace RBAC. Do not copy analytical
+values into a search index. You will serve stale numbers with a confident citation. Reference:
+<https://learn.microsoft.com/fabric/iq/overview>
 
 ### Option E — Work IQ (Microsoft 365 collaboration context)
 
@@ -209,14 +207,14 @@ A remote source backed by Microsoft Bing, for public, citable authority. Note on
 knowledge base that includes a web knowledge source **requires** an LLM for query planning; it is
 optional for every other source kind.
 
-Public content needs no permission design, but it does need an authority decision: which domains are
-acceptable to cite to this customer's users.
+Public content needs no permission design, but it still needs an authority decision: which domains
+may be cited to this customer's users.
 
 ## Verify
 
-The failure this module hides is retrieval that looks perfect in the demo because you ran it as an
-administrator, then leaks the day a real user with fewer permissions asks. Prove the boundary with a
-second, genuinely lower-privileged identity, not with your own account.
+This module prevents a retrieval path that looks perfect in an administrator demo but leaks to a real
+user with fewer permissions. Prove the boundary with a genuinely lower-privileged identity, not your
+own account.
 
 **1. The probe identity is actually restricted.** `probe_permissions.py` runs each query twice: once
 as you (`DefaultAzureCredential`) and once as the identity in
@@ -228,9 +226,8 @@ az role assignment list --assignee "$PROBE_CLIENT_ID" \
   --all --query "[].roleDefinitionName" -o tsv
 ```
 
-You want to see either nothing or a role scoped away from the approved content. **Search Index Data
-Reader** or **Contributor** on the search service means this identity can see everything and the test
-is worthless.
+You should see nothing or a role scoped away from approved content. **Search Index Data Reader** or
+**Contributor** on the search service means this identity sees everything, so the test proves nothing.
 
 **2. The restricted identity comes back empty.** The plan is
 [`accelerator/permission-probe.json`](../accelerator/permission-probe.json); each case asserts
@@ -243,10 +240,9 @@ python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
   --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Read the per-case lines. `PASS  ...: restricted identity cannot see 'X'` is the result you want.
-Any `LEAK — restricted identity retrieved 'X'` means query-time trimming is off — usually the
-`x-ms-query-source-authorization` header is missing and you are querying as the application, so every
-caller sees everything the application can see.
+Read the per-case lines. `PASS  ...: restricted identity cannot see 'X'` is the expected result. Any
+`LEAK — restricted identity retrieved 'X'` means query-time trimming is off. Usually the
+`x-ms-query-source-authorization` header is missing, so every caller queries as the application.
 
 **3. A restricted document does not even reveal that it exists.** The plan includes a case that
 queries the supervisor playbook by title. Confirm the restricted identity gets no title, no snippet,
@@ -266,10 +262,9 @@ title or a hit count is itself a leak.
 
 ## Decision record
 
-One page, kept with the pilot: the chosen option and the two runners-up with the reason each lost;
-which identity is evaluated at query time; where permissions live; the accepted staleness window,
-signed by the data owner; the denial behaviour; the API version and whether it is preview; and the
-probe result with a date.
+Keep one page with the pilot: the chosen option and two runners-up, why each lost, the identity
+evaluated at query time, where permissions live, the data-owner-approved staleness window, denial
+behavior, API version and preview status, and the dated probe result.
 
 ## Next module
 

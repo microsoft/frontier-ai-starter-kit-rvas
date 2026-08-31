@@ -11,15 +11,12 @@
 
 ## Why this activity
 
-So far your assistant lives inside your project as a prompt agent — you invoke it from a notebook or
-script through the Responses API. That's perfect for building, but it is not a surface another team
-can depend on. They need a real endpoint: a URL with its
-own identity, its own scaling, and its own run history, independent of your dev environment.
+You can invoke a prompt agent from a notebook or script. Other teams need an endpoint with its own
+identity, scaling, and run history.
 
-In this activity you ship the artifact. You containerize the assistant, deploy it as a hosted
-Foundry agent with `azd ai agent`, give it a per-agent Entra (managed) identity, and invoke it
-over its production Responses endpoint. Then you tie its live runs back to the observability you
-built in the Tracing activity.
+Containerize the assistant, deploy it as a hosted Foundry agent with `azd ai agent`, give it a
+per-agent Entra managed identity, and call its production Responses endpoint. Then trace its live
+runs in the observability tools from the Tracing activity.
 
 This activity deploys the grounded assistant as a containerized service.
 
@@ -56,15 +53,14 @@ This activity deploys the grounded assistant as a containerized service.
 
 ---
 
-This activity ships three rungs off the same backbone — the same `validate.py` grades all
-three. (a) Guided path (below) prints the manifests to adapt · (b) Build-from-scratch path
-gives you only the deploy contract + the gotcha list · (c) Stretch goals go open-ended.
+The same `validate.py` grades all three paths. (a) Guided path provides manifests to adapt;
+(b) Build-from-scratch provides the deploy contract and common issues; (c) Stretch goals are
+open-ended.
 
 ## Rung (a) — Guided path
 
-> The beginner on-ramp starts from the current official Agent Framework Responses sample, then
-> adapts the generated `azure.yaml` and source. The real difficulty is the hosted runtime contract
-> and asynchronous deployment, not reconstructing a deprecated manifest.
+> Start with the current Agent Framework Responses sample, then adapt its generated `azure.yaml`
+> and source. Focus on the hosted runtime contract and asynchronous deployment.
 
 ## Step 1 — Scaffold the unified hosted-agent project
 
@@ -265,9 +261,8 @@ python activities/advanced-deploy-hosted-agent/validate.py --step 4
 
 ## Rung (b) — Build-from-scratch path
 
-> Stronger team? Skip the sample implementation details. Start from `azd ai agent init` around your
-> own code, then author the unified `azure.yaml`, Dockerfile, and entrypoint. The same `validate.py`
-> grades this path.
+> Start from `azd ai agent init` around your own code, then author the unified `azure.yaml`,
+> Dockerfile, and entry point. The same `validate.py` grades this path.
 
 Your contract:
 > Containerize the Foundations agent, serve the `responses` protocol on 8088, deploy with
@@ -282,7 +277,7 @@ The gotchas you get (everything else you design):
 
 ---
 
-## Done — what you shipped
+## What you shipped
 
 - The scenario assistant runs as a hosted Foundry agent with its own endpoint, version, and
   per-agent managed identity.
@@ -294,7 +289,7 @@ target this live endpoint.
 
 ## Rung (c) — Stretch goals
 
-Open-ended: no single right answer.
+Open-ended. There is no single correct answer.
 
 1. Blue/green a new version. Deploy a v2 with tweaked instructions, confirm both versions exist,
    then roll the active pointer — versioned hosted agents in practice. *(+30 min)*
