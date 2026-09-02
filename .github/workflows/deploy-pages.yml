@@ -15,23 +15,50 @@ on:
       - package.json
       - .github/workflows/deploy-pages.yml
 
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+    paths:
+      - README.md
+      - CONTRIBUTING.md
+      - docs/**
+      - activities/**
+      - resources/**
+      - scripts/action-backend/README.md
+      - scripts/audit-docs.js
+      - package.json
+      - .github/workflows/deploy-pages.yml
+
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
+  pull-requests: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
+        if: github.event_name != 'pull_request'
         uses: actions/checkout@v7
+
+      - name: Checkout pull request head
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
 
       - name: Set up Node
         uses: actions/setup-node@v5
@@ -47,23 +74,157 @@ jobs:
             docs/assets/data/activities docs/assets/data/platform.json \
             docs/assets/data/dependency-graph.json docs/resources)"
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v6
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
         with:
-          enablement: true
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
+          name: pages-site
           path: docs
+          retention-days: 1
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  deploy-production:
     needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: pages-site
+          path: built-site
+
+      - name: Publish production site
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch origin gh-pages
+            git worktree add pages-branch origin/gh-pages
+          else
+            git worktree add --detach pages-branch
+            git -C pages-branch checkout --orphan gh-pages
+            git -C pages-branch rm -rf .
+          fi
+
+          find pages-branch -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'pr-*' -exec rm -rf {} +
+          cp -a built-site/. pages-branch/
+          touch pages-branch/.nojekyll
+
+          git -C pages-branch add -A
+          if ! git -C pages-branch diff --cached --quiet; then
+            git -C pages-branch commit -m "Deploy production site from ${GITHUB_SHA}"
+            git -C pages-branch push origin HEAD:gh-pages
+          fi
+
+      - name: Set GitHub Pages source
+        run: |
+          set -euo pipefail
+          gh api --method PUT "repos/${GITHUB_REPOSITORY}/pages" \
+            -f build_type=legacy \
+            -f 'source[branch]=gh-pages' \
+            -f 'source[path]=/'
+
+  deploy-preview:
+    needs: build
+    if: github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PREVIEW_PREFIX: pr-${{ github.event.pull_request.number }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: pages-site
+          path: built-site
+
+      - name: Publish pull request preview
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch origin gh-pages
+            git worktree add pages-branch origin/gh-pages
+          else
+            git worktree add --detach pages-branch
+            git -C pages-branch checkout --orphan gh-pages
+            git -C pages-branch rm -rf .
+          fi
+
+          rm -rf "pages-branch/${PREVIEW_PREFIX}"
+          mkdir -p "pages-branch/${PREVIEW_PREFIX}"
+          cp -a built-site/. "pages-branch/${PREVIEW_PREFIX}/"
+          touch pages-branch/.nojekyll
+
+          git -C pages-branch add -A
+          if ! git -C pages-branch diff --cached --quiet; then
+            git -C pages-branch commit -m "Deploy preview ${PREVIEW_PREFIX} from ${GITHUB_SHA}"
+            git -C pages-branch push origin HEAD:gh-pages
+          fi
+
+      - name: Comment preview URL
+        run: |
+          set -euo pipefail
+          SITE_URL="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.html_url')"
+          PREVIEW_URL="${SITE_URL%/}/${PREVIEW_PREFIX}/"
+          MARKER="<!-- pages-preview-url -->"
+          cat > preview-comment.md <<EOF_COMMENT
+          ${MARKER}
+          Preview: ${PREVIEW_URL}
+
+          Updated for commit ${GITHUB_SHA}.
+          EOF_COMMENT
+
+          COMMENT_ID="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"${MARKER}\"))) | .id" | tail -n 1)"
+          if [ -n "${COMMENT_ID}" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}" -f body="$(cat preview-comment.md)"
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="$(cat preview-comment.md)"
+          fi
+
+  cleanup-preview:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      PREVIEW_PREFIX: pr-${{ github.event.pull_request.number }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Remove pull request preview
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            exit 0
+          fi
+
+          git fetch origin gh-pages
+          git worktree add pages-branch origin/gh-pages
+          rm -rf "pages-branch/${PREVIEW_PREFIX}"
+          git -C pages-branch add -A
+
+          if ! git -C pages-branch diff --cached --quiet; then
+            git -C pages-branch commit -m "Remove preview ${PREVIEW_PREFIX}"
+            git -C pages-branch push origin HEAD:gh-pages
+          fi
