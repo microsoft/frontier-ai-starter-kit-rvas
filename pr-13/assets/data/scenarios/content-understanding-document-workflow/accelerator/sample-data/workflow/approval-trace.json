@@ -1,0 +1,20 @@
+{
+  "data_classification": "synthetic",
+  "trace_id": "cu-approval-trace-v1",
+  "document_id": "invoice-2002",
+  "reviewer_id": "reviewer-a@contoso-demo.example",
+  "reviewed_at": "2026-07-24T18:20:00Z",
+  "review_outcome": "approved_with_correction",
+  "corrections": [
+    {
+      "field": "total_due_usd",
+      "original_value": "250.00",
+      "corrected_value": "220.00",
+      "reason": "subtotal_plus_tax_conflict"
+    }
+  ],
+  "handoff": {
+    "target_seam": "procurement_posting_action_tool",
+    "approved": true
+  }
+}

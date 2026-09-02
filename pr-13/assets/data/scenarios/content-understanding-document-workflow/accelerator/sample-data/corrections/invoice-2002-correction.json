@@ -1,0 +1,11 @@
+{
+  "fixture_id": "invoice-2002",
+  "expected_result": "expected/invoice-2002.json",
+  "correction": {
+    "field": "total_due_usd",
+    "corrected_value": "220.00",
+    "reason": "subtotal_plus_tax_conflict",
+    "review_outcome": "approved_with_correction"
+  },
+  "evidence_note": "Synthetic reviewer correction used to test the lifecycle discussion; it must not overwrite the original expected result."
+}

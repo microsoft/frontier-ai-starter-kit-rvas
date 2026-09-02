@@ -1,0 +1,38 @@
+{
+  "script_id": "ONB-WELCOME-001",
+  "script_version": "0.1.0",
+  "publication_id": "ONB-WELCOME-001@0.1.0",
+  "locale": "en",
+  "disclosure": "This onboarding presentation uses an avatar-generated or AI-assisted presenter.",
+  "channel_choice": "customer-selected-after-assessment",
+  "segments": [
+    {
+      "segment_id": "welcome-benefits",
+      "scene": "Welcome card with benefits icon",
+      "spoken_text": "Complete your benefits selection in the employee portal during your first week.",
+      "on_screen_text": "Benefits selection: employee portal, first week",
+      "visual_intent": "Use a generic illustrated employee portal; do not use a real employee likeness.",
+      "approved_claim_ids": ["ONB-001"],
+      "source_references": ["benefits-guide@demo-v1#enrolment"],
+      "accessibility": {
+        "captions": true,
+        "transcript_file": "transcript.txt",
+        "non_avatar_fallback": "accessible-fallback.html"
+      }
+    },
+    {
+      "segment_id": "welcome-safety",
+      "scene": "Safety orientation card with generic safety icon",
+      "spoken_text": "Review the safety orientation before performing site-based work.",
+      "on_screen_text": "Safety orientation before site-based work",
+      "visual_intent": "Use an abstract safety icon; do not depict a real employee.",
+      "approved_claim_ids": ["ONB-002"],
+      "source_references": ["safety-guide@demo-v1#orientation"],
+      "accessibility": {
+        "captions": true,
+        "transcript_file": "transcript.txt",
+        "non_avatar_fallback": "accessible-fallback.html"
+      }
+    }
+  ]
+}

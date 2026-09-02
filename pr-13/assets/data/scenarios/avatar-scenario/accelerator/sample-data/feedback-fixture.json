@@ -1,0 +1,23 @@
+{
+  "fixture_id": "DEMO-FEEDBACK-ONB-WELCOME-001-0.1.0",
+  "classification": "synthetic-aggregate-demo-data",
+  "publication_id": "ONB-WELCOME-001@0.1.0",
+  "cohort": "fictional-new-starters-en",
+  "observation_window": "2026-07-08_to_2026-07-15",
+  "privacy_note": "Counts are synthetic aggregates. No employee identifiers, free-text feedback, or individual event records are included.",
+  "measures": {
+    "invited": 12,
+    "started": 11,
+    "completed": 10,
+    "transcript_opened": 3,
+    "html_fallback_opened": 2,
+    "support_handoffs": 1,
+    "reported_accessibility_defects": 0,
+    "feedback_summary": {
+      "helpful": 8,
+      "neutral": 2,
+      "not_helpful": 0
+    }
+  },
+  "decision_prompt": "Review accessibility use and the support handoff with the content owner before expanding the fictional pilot."
+}

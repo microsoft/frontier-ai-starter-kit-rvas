@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "cu-synthetic-deployment-record-v1",
+  "deployment_kind": "hosted-agent-or-container-api",
+  "revision": "synthetic-revision-001",
+  "notes": "Fixture proving the manifest names retained deployment evidence; replace with azd, APIM, or hosted-agent deployment output."
+}

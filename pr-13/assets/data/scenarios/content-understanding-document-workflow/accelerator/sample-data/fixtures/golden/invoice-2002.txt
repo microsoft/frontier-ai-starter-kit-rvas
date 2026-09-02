@@ -1,0 +1,10 @@
+SYNTHETIC DEMONSTRATION DATA — Invoice
+
+Invoice number: INV-2002
+Supplier: Contoso Demo Parts
+Purchase order: PO-7002
+Subtotal: 200.00 USD
+Tax: 20.00 USD
+Total due: 250.00 USD
+
+The stated total conflicts with subtotal plus tax. Route to human review; do not post automatically.
