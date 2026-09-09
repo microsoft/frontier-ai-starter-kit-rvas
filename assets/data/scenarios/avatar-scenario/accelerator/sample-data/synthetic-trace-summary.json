@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "avatar-synthetic-trace-summary-v1",
+  "trace_count": 12,
+  "required_spans_present": ["claim_selection", "script_generation", "approval_gate", "render_request"],
+  "notes": "Fixture proving the release decision names retained trace evidence; replace with Application Insights trace references for a real pilot."
+}

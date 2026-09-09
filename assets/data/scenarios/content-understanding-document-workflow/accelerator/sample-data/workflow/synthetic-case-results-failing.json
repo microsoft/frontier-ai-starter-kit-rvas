@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "cu-synthetic-case-results-v1-failing",
+  "case_count": 24,
+  "failed_cases": ["false-approval-003", "injection-007"],
+  "notes": "Fail-path fixture for the offline validator."
+}

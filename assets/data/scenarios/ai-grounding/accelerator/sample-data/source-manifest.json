@@ -1,0 +1,43 @@
+{
+  "corpus_name": "Northstar Outdoor Supply fictional returns corpus",
+  "fictional": true,
+  "access_groups": {
+    "returns-coordinators": "May use approved policy, exception, and service-update sources.",
+    "returns-supervisors": "May use coordinator sources plus the confidential supervisor exception playbook."
+  },
+  "sources": [
+    {
+      "source_id": "RET-POL-2026-01",
+      "path": "returns-policy.md",
+      "owner": "Customer Operations",
+      "access_groups": ["returns-coordinators", "returns-supervisors"],
+      "citation_label": "Returns Policy (effective 2026-01-15)",
+      "authority": "standard policy"
+    },
+    {
+      "source_id": "RET-EXC-2026-01",
+      "path": "returns-exceptions.md",
+      "owner": "Customer Operations",
+      "access_groups": ["returns-coordinators", "returns-supervisors"],
+      "citation_label": "Returns Exceptions (effective 2026-01-15)",
+      "authority": "exception guidance"
+    },
+    {
+      "source_id": "SVC-ALPINE-2026-02-03",
+      "path": "service-update.md",
+      "owner": "Logistics",
+      "access_groups": ["returns-coordinators", "returns-supervisors"],
+      "citation_label": "Alpine District Service Update (published 2026-02-03)",
+      "authority": "current service notice",
+      "supersedes": "SVC-ALPINE-2026-01-28"
+    },
+    {
+      "source_id": "RET-SUP-2026-01",
+      "path": "returns-supervisor-playbook.md",
+      "owner": "Customer Operations",
+      "access_groups": ["returns-supervisors"],
+      "citation_label": "Supervisor Exception Playbook (effective 2026-01-15)",
+      "authority": "confidential supervisor procedure"
+    }
+  ]
+}

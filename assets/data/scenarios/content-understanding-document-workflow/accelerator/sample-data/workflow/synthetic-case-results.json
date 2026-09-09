@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "cu-synthetic-case-results-v1",
+  "case_count": 24,
+  "failed_cases": [],
+  "notes": "Fixture proving the offline report names retained per-case evidence; replace with the real evaluation result export."
+}

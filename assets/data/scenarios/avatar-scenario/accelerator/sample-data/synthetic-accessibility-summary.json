@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "avatar-synthetic-accessibility-summary-v1",
+  "defects": 0,
+  "checks": ["captions", "transcript", "html_fallback", "support_handoff"],
+  "notes": "Fixture proving the release decision names retained accessibility evidence; replace with customer accessibility review output."
+}
