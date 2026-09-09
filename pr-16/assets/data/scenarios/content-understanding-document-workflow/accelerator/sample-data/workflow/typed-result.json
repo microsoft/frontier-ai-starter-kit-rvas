@@ -1,0 +1,46 @@
+{
+  "data_classification": "synthetic",
+  "document_id": "invoice-2002",
+  "analyzer_id": "prebuilt-invoice",
+  "api_version": "2024-11-30",
+  "document_class": "invoice",
+  "confidence_threshold": 0.70,
+  "fields": {
+    "invoice_number": {
+      "value": "INV-2002",
+      "confidence": 0.98,
+      "evidence": { "page": 1, "spans": [{ "offset": 16, "length": 8 }] }
+    },
+    "purchase_order": {
+      "value": "PO-7002",
+      "confidence": 0.95,
+      "evidence": { "page": 1, "spans": [{ "offset": 70, "length": 7 }] }
+    },
+    "supplier": {
+      "value": "Contoso Demo Parts",
+      "confidence": 0.93,
+      "evidence": { "page": 1, "spans": [{ "offset": 40, "length": 18 }] }
+    },
+    "subtotal_usd": {
+      "value": "200.00",
+      "confidence": 0.91,
+      "evidence": { "page": 1, "spans": [{ "offset": 92, "length": 6 }] }
+    },
+    "tax_usd": {
+      "value": "20.00",
+      "confidence": 0.9,
+      "evidence": { "page": 1, "spans": [{ "offset": 110, "length": 5 }] }
+    },
+    "total_due_usd": {
+      "value": "250.00",
+      "confidence": 0.42,
+      "evidence": { "page": 1, "spans": [{ "offset": 128, "length": 6 }] }
+    }
+  },
+  "requires_human_review": true,
+  "review_reasons": [
+    "low_confidence:total_due_usd",
+    "conflicting_invoice_total"
+  ],
+  "routing_decision": "route_human_review"
+}

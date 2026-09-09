@@ -1,0 +1,27 @@
+{
+  "pack_id": "DEMO-ONB-2026-001",
+  "version": "0.1.0",
+  "classification": "fictional-demo-content",
+  "content_owner": "demo-onboarding-content-owner@example.invalid",
+  "review_by": "2026-10-01",
+  "claims": [
+    {
+      "claim_id": "ONB-001",
+      "approved_wording": "Complete your benefits selection in the employee portal during your first week.",
+      "source_reference": "benefits-guide@demo-v1#enrolment",
+      "owner": "demo-benefits-owner@example.invalid",
+      "required_reviewers": ["SME"],
+      "help_path": "Demo Benefits Support Desk",
+      "locale": "en"
+    },
+    {
+      "claim_id": "ONB-002",
+      "approved_wording": "Review the safety orientation before performing site-based work.",
+      "source_reference": "safety-guide@demo-v1#orientation",
+      "owner": "demo-safety-owner@example.invalid",
+      "required_reviewers": ["SME", "legal-compliance"],
+      "help_path": "Demo Local Safety Contact",
+      "locale": "en"
+    }
+  ]
+}

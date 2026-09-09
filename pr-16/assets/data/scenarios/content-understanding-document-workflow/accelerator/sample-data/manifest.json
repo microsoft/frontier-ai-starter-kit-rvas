@@ -1,0 +1,32 @@
+{
+  "pack_id": "content-understanding-synthetic-pack-v1",
+  "purpose": "Facilitated, local-only document decision exercise. These are text fixtures, not service-upload instructions.",
+  "data_classification": "synthetic",
+  "fixtures": [
+    {
+      "id": "rfq-1001",
+      "path": "fixtures/tuning/rfq-1001.md",
+      "split": "tuning",
+      "expected_result": "expected/rfq-1001.json"
+    },
+    {
+      "id": "invoice-2001",
+      "path": "fixtures/tuning/invoice-2001.txt",
+      "split": "tuning",
+      "expected_result": "expected/invoice-2001.json"
+    },
+    {
+      "id": "rfq-1002",
+      "path": "fixtures/golden/rfq-1002.html",
+      "split": "golden",
+      "expected_result": "expected/rfq-1002.json"
+    },
+    {
+      "id": "invoice-2002",
+      "path": "fixtures/golden/invoice-2002.txt",
+      "split": "golden",
+      "expected_result": "expected/invoice-2002.json",
+      "correction": "corrections/invoice-2002-correction.json"
+    }
+  ]
+}

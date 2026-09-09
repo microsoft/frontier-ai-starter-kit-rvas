@@ -1,0 +1,7 @@
+{
+  "data_classification": "synthetic",
+  "artifact_id": "avatar-synthetic-redteam-summary-v1",
+  "prompts_attempted": 12,
+  "high_severity_findings": 0,
+  "notes": "Fixture proving the release decision names retained red-team evidence; replace with Foundry evaluation or AI Red Teaming Agent output."
+}
