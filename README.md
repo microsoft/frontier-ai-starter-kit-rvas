@@ -185,6 +185,12 @@ for a second day or a follow-up sprint.
 
 ---
 
+## Publishing the documentation site
+
+Before the first deployment, a repository administrator must open **Settings > Pages** and select **Deploy from a branch**, the `gh-pages` branch, and the `/(root)` folder. If the site currently uses **GitHub Actions** as its Pages source, change it to this branch setup. The workflow publishes the site and pull request previews to `gh-pages`; it cannot change the repository Pages settings because the `GITHUB_TOKEN` does not have that administrative permission.
+
+---
+
 ## Repository Structure
 
 ```

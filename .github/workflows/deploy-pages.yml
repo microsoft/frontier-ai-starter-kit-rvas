@@ -36,7 +36,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
   pull-requests: write
 
 concurrency:
@@ -124,14 +123,6 @@ jobs:
             git -C pages-branch push origin HEAD:gh-pages
           fi
 
-      - name: Set GitHub Pages source
-        run: |
-          set -euo pipefail
-          gh api --method PUT "repos/${GITHUB_REPOSITORY}/pages" \
-            -f build_type=legacy \
-            -f 'source[branch]=gh-pages' \
-            -f 'source[path]=/'
-
   deploy-preview:
     needs: build
     if: github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
@@ -178,11 +169,36 @@ jobs:
             git -C pages-branch push origin HEAD:gh-pages
           fi
 
+      - name: Verify GitHub Pages source
+        run: |
+          set -euo pipefail
+          PAGES_SOURCE_BRANCH="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.source.branch // empty')"
+          PAGES_BUILD_TYPE="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type // empty')"
+
+          if [ "${PAGES_SOURCE_BRANCH}" != "gh-pages" ] || [ "${PAGES_BUILD_TYPE}" != "legacy" ]; then
+            echo "::error::GitHub Pages must deploy from the gh-pages branch and /(root). Update Settings > Pages before publishing pull request previews."
+            exit 1
+          fi
+
       - name: Comment preview URL
         run: |
           set -euo pipefail
           SITE_URL="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.html_url')"
           PREVIEW_URL="${SITE_URL%/}/${PREVIEW_PREFIX}/"
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --location --silent --show-error --output /dev/null "${PREVIEW_URL}"; then
+              break
+            fi
+
+            if [ "${attempt}" -eq 30 ]; then
+              echo "::error::GitHub Pages did not serve ${PREVIEW_URL} within five minutes."
+              exit 1
+            fi
+
+            sleep 10
+          done
+
           MARKER="<!-- pages-preview-url -->"
           cat > preview-comment.md <<EOF_COMMENT
           ${MARKER}
