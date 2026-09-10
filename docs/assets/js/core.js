@@ -133,20 +133,24 @@
     }
   };
 
-  FP.applyGuideAccordions = function (container) {
+  FP.applyGuideAccordions = function (container, options) {
     if (!container) return;
+    const settings = { collapseOptionChapters: false, ...(options || {}) };
 
     const collapsibleHeadings = Array.from(container.querySelectorAll('h2, h3'))
-      .filter((heading) => shouldCollapseGuideSection(heading));
+      .filter((heading) => shouldCollapseGuideSection(heading, settings));
 
     collapsibleHeadings.forEach((heading) => {
       if (!heading.isConnected || heading.closest('details')) return;
 
       const level = Number(heading.tagName.slice(1));
+      const optionChapter = isOptionChapter(heading);
       const details = document.createElement('details');
       details.className = 'guide-accordion';
+      if (optionChapter) details.classList.add('guide-choice');
       details.dataset.sectionLevel = String(level);
-      details.open = shouldOpenGuideSection(heading);
+      if (optionChapter) details.dataset.optionChapter = 'true';
+      details.open = shouldOpenGuideSection(heading, settings);
 
       if (heading.id) {
         details.id = heading.id;
@@ -157,7 +161,7 @@
       summary.className = 'guide-accordion__summary';
       summary.innerHTML = `
         <span class="guide-accordion__title">${heading.innerHTML}</span>
-        <span class="guide-accordion__meta">${accordionMeta(heading.textContent)}</span>`;
+        <span class="guide-accordion__meta">${accordionMeta(heading.textContent, settings)}</span>`;
 
       const body = document.createElement('div');
       body.className = 'guide-accordion__body';
@@ -178,16 +182,18 @@
     openAccordionForHash(container);
   };
 
-  function shouldCollapseGuideSection(heading) {
+  function shouldCollapseGuideSection(heading, settings) {
     const text = normalizeAccordionHeading(heading.textContent);
     if (!text) return false;
 
-    return /\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text);
+    return /\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text) ||
+      (settings.collapseOptionChapters && isOptionChapter(heading));
   }
 
-  function shouldOpenGuideSection(heading) {
+  function shouldOpenGuideSection(heading, settings) {
     const hash = decodeURIComponent(window.location.hash.slice(1));
-    return Boolean(hash && heading.id === hash);
+    if (hash && heading.id === hash) return true;
+    return Boolean(settings.collapseOptionChapters && isDefaultOptionChapter(heading));
   }
 
   function openAccordionForHash(container) {
@@ -199,10 +205,21 @@
     if (accordion) accordion.open = true;
   }
 
-  function accordionMeta(value) {
+  function accordionMeta(value, settings) {
     const text = normalizeAccordionHeading(value);
     if (/\b(troubleshooting|troubleshoot|common issues?|gotchas?)\b/.test(text)) return 'Troubleshooting';
+    if (settings.collapseOptionChapters && /^option\s+[a-z0-9]+\b/.test(text)) {
+      return /\bdefault\b/.test(text) ? 'Default' : 'Option';
+    }
     return 'Details';
+  }
+
+  function isOptionChapter(heading) {
+    return /^option\s+[a-z0-9]+\b/.test(normalizeAccordionHeading(heading.textContent));
+  }
+
+  function isDefaultOptionChapter(heading) {
+    return isOptionChapter(heading) && /\bdefault\b/.test(normalizeAccordionHeading(heading.textContent));
   }
 
   function normalizeAccordionHeading(value) {

@@ -121,7 +121,7 @@
     const response = await fetch(lesson.content_path, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`Could not load lesson (${response.status})`);
     FP.renderMd(await response.text(), target);
-    FP.applyGuideAccordions(target);
+    FP.applyGuideAccordions(target, { collapseOptionChapters: true });
     rewriteLessonLinks(target, scenario, lesson, activities);
     rewriteLessonImages(target, scenario, lesson);
     FP.initDiagramZoom(target);
