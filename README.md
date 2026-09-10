@@ -1,73 +1,103 @@
-# AI Starter Kit — Customer Delivery with Microsoft Foundry
+# AI Starter Kit — Co-build customer AI scenarios
 
 [![Deploy GitHub Pages](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/microsoft/frontier-ai-starter-kit-rvas/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
-*Turn a customer conversation into a useful AI start.*
+*Build with the customer, using reusable implementation patterns.*
 
 ---
 
-## Start with the customer decision
+## Start with the customer's scenario
 
-This repository is a reusable customer-delivery kit—not a fixed RAG curriculum. It helps a seller,
-partner, or customer choose the next useful AI decision, then provides the relevant playbook
-lessons, customer-facing slides, and a deliberately minimal accelerator.
+The AI Starter Kit helps customer teams and their technical advisers **co-build the customer's own
+AI scenario**. Each playbook breaks down the architectural decisions and guides implementation with
+reusable building blocks. Teams adapt the code and work through the relevant lessons in their
+approved environment. Customer-facing slides support the design discussions.
 
-1. Use [Customer Activity-Forge](.github/skills/customer-activity-forge/) when the customer
-   opportunity is unclear.
-2. Discuss outcome, data reality, existing environment, ownership, and evidence without pretending
-   a file count decides architecture.
-3. Choose one equal-priority scenario:
-   - [AI Grounding / IQ](docs/scenario.html?id=ai-grounding)
-   - [Content Understanding and Document Workflow](docs/scenario.html?id=content-understanding-document-workflow)
-   - [Avatar Scenario](docs/scenario.html?id=avatar-scenario)
-4. Select only the lessons required to prove the next decision. Each scenario includes
-   source-controlled slides that can be printed or saved as a PDF, a safe minimal demonstrator,
-   and a bring-your-own-environment path.
+**The initial tracks cover three reusable patterns:**
 
-The kit does not prescribe a landing zone or a platform before the conversation. Foundry, Copilot
-Studio, SharePoint, Fabric, and the IQ family are decision outcomes, evaluated against the
-customer’s access, ownership, licensing, and operating needs.
+| Track | What you build |
+|---|---|
+| [AI Grounding / IQ](docs/scenario.html?id=ai-grounding) | An assistant that answers from approved content and respects access boundaries. |
+| [Content Understanding and Document Workflow](docs/scenario.html?id=content-understanding-document-workflow) | A document workflow with evidence-backed extraction and human review. |
+| [Avatar Scenario](docs/scenario.html?id=avatar-scenario) | An avatar-led experience with approved content and publication controls. |
+
+These are starting points, not a complete catalog of AI use cases. **A customer's scenario may
+combine parts from several tracks.** New tracks can follow the same contribution contract.
+
+Begin with the customer's outcome and data constraints. If the opportunity is unclear, use
+[Customer Activity-Forge](.github/skills/customer-activity-forge/) to find a direction.
+
+## Break the use case into parts
+
+Before selecting sessions, decompose the customer's end-to-end use case into the parts it needs.
+Map each part to the relevant lessons or reference activities. Record what the material covers,
+what needs adapting, and what requires additional engineering. Keep uncovered work visible even
+when it falls outside the engagement.
+
+For example, a supplier-request process could draw on several parts of the kit:
+
+| Part of the customer use case | Reusable guidance | Customer-specific work |
+|---|---|---|
+| Extract fields from a submitted document | Content Understanding extraction lessons | Define the fields and evaluate representative documents. |
+| Answer a related policy question | AI Grounding lessons | Connect approved policy content and prove access boundaries. |
+| Create a record in the customer's business system | Action Tools reference for an approval-gated handoff | Build the system-specific integration; the generic action pattern does not supply it. |
+
+**Plan sessions around this mapping.** Combine the relevant lessons across tracks, keeping their
+prerequisites. Agree which parts the engagement will build and assign owners to the remaining work.
+
+The implementation reference focuses on Microsoft Foundry. The playbooks also discuss choices such
+as Copilot Studio, SharePoint, and Fabric. Choose the platform with the customer; naming an option
+does not mean the kit contains a complete implementation for it.
+
+## Agree the delivery scope
+
+The kit can support a scoped pilot or a longer co-build engagement. **Agree the customer-specific
+work and acceptance criteria before committing to delivery.** Production readiness depends on
+the customer's integrations, security requirements, and operational acceptance. Completing the
+lessons or deploying an accelerator does not establish it.
+
+Published durations estimate guided lesson time. They are not estimates for a full customer
+implementation.
+
+## What the accelerators provide
+
+Accelerators supply sample assets and reusable code for the lessons. Some include optional Bicep
+foundations for clean demo subscriptions; others include local exercises. Follow each guide's
+requirements: the grounding scripts, for example, call real Azure resources.
+
+For an existing customer environment, use the bring-your-own-environment path and approved
+resources. The demo foundations do not provision an enterprise landing zone or replace
+customer-specific engineering.
 
 ## Scenario contribution
 
 Scenarios live in [`scenarios/`](scenarios/). `npm run build` regenerates their static-site assets;
 run `npm run validate:scenarios` to validate scenario packs. Read the [scenario contribution
 contract](scenarios/README.md) before proposing a scenario or lesson.
-Accelerators are resource-free decision blueprints plus offline module checkpoints; they never create
-Azure resources or an enterprise platform baseline.
 
-## Legacy technical reference
+## Reusable technical reference
 
-The remaining Northfield activities are retained as a technical reference for existing deep links,
-safe samples, and implementation patterns. They are not the primary customer journey. Use the
-scenario playbook first, then draw on the reference only when a selected lesson requires it.
+The Northfield activities provide a fictional reference implementation and guided practice.
+Use the scenario playbook to choose the relevant implementation activities, then adapt them to
+the customer's requirements. You do not need to complete the whole reference curriculum.
 
 ---
 
 ## Who is this for?
 
-### Participants
+### Customer technical teams
 
-You're a great fit for this session if you:
+Bring a scenario to build, or use Idea Forge to help choose one. The code-based lessons assume
+basic Python and familiarity with REST APIs and JSON. Use synthetic data for initial exercises;
+agree a separate, approved path before working with customer data.
 
-- Have some Python experience (variables, functions, pip) and understand REST APIs and JSON
-- Are curious about how AI models work and want to build with them
-- Have a GitHub account and access to Azure (via Azure Pass, Azure for Students, or a trial subscription)
-- Are ready to learn by solving real activities, not watching tutorials
+### Delivery teams and facilitators
 
-No prior Azure or AI experience needed. Just bring curiosity and a willingness to debug.
-
-### Facilitators
-
-You're ready to facilitate if you:
-
-- Are familiar with Microsoft Foundry model and agent concepts, and prompt engineering
-- Enjoy helping teams think through problems (instead of giving direct answers)
-- Can spend 6–8 hours supporting 2–3 teams
-- Know where the learner-facing activities, scenario lessons, and solution materials live in this repo
-- Can help teams translate a business scenario into data, tools, evals, and a demoable outcome
+Use the playbooks to work through design choices with the customer and adapt the implementation
+material. Review the relevant solution guides before delivery. Plan engineering capacity around
+the agreed scope, including integration work and handoff to the customer's operating team.
 
 ---
 
@@ -75,8 +105,9 @@ You're ready to facilitate if you:
 
 Before you start, make sure you have:
 
-- **Azure subscription**: Provided via Azure Pass, Azure for Students, or a free trial
-- **GitHub account**: With Codespaces access (required for the dev environment)
+- **Approved environment**: An Azure subscription and required permissions for live Azure lessons;
+  local exercises list their own requirements
+- **Development environment**: GitHub Codespaces or a local Dev Container for the code-based lessons
 - **Basic Python**: Comfortable with variables, functions, pip, and virtual environments
 - **Basic API knowledge**: Understand REST APIs, HTTP requests, and JSON
 - **VS Code familiarity**: Helpful, but not required (the devcontainer includes everything)
@@ -85,7 +116,12 @@ Before you start, make sure you have:
 
 ## Getting Started
 
-### 1. Open in GitHub Codespaces or Dev Container
+### 1. Choose a scenario and scope
+
+Break the customer's use case into parts and map them to the relevant lessons. Agree what the
+engagement will build and how to judge the result. Check prerequisites before provisioning resources.
+
+### 2. Open in GitHub Codespaces or Dev Container
 
 Click the badge below to open a fully configured development environment:
 
@@ -93,24 +129,22 @@ Click the badge below to open a fully configured development environment:
 
 **Alternative**: Open locally with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) in VS Code.
 
-### 2. Authenticate with Azure
+### 3. Follow the selected environment path
 
-Once your environment is ready, authenticate to Azure:
+For live Azure lessons, authenticate to the approved subscription:
 
 ```bash
 az login
 ```
 
-Follow the prompts to sign in with your Azure account. This connects your workspace to your Azure subscription so you can provision Microsoft Foundry resources.
+Follow the selected scenario's accelerator guide for a clean demo subscription or an existing
+customer environment. Deploy demo resources only where approved.
 
-### 3. Start the customer-delivery journey
+### Optional: bootstrap the reference implementation
 
-Open the scenario playbook that matches the customer outcome. Use its lessons, printable customer
-slides, and either the minimal accelerator or the bring-your-own-environment path. The remaining
-activity material below is an archived implementation reference, not a prerequisite or a competing
-event mode.
-
-**Advanced skip:** Materialize the Foundations end-state with one bootstrap (~10–15 min), verify the single checkpoint, then jump straight to the Advanced tier:
+When you need the Northfield reference for an Advanced activity, the bootstrap creates the
+Foundations sample end-state. This deploys sample infrastructure; it does not implement the
+customer's scenario.
 
 Run these commands from the repository root:
 
@@ -124,8 +158,9 @@ python scripts/validate-foundations.py   # ✅ asserts the Foundations end-state
 
 ## Activities
 
-The curriculum has two activity layers. **Foundations** is one guided activity with four ordered
-steps. **Advanced** activities are modular and can be completed in **any order** after Foundations.
+The reference curriculum has two activity layers. **Foundations** is one guided activity with four
+ordered steps. **Advanced** activities are modular and can be completed in **any order** after
+Foundations. Use the parts required by your selected scenario.
 
 For customer engagements, treat every tier as an outcome checkpoint:
 
@@ -179,9 +214,9 @@ Build a UI, Magentic Workflows, and Hosted Long-Running Agents.
 
 See the `activities/extra-*` folders.
 
-**Total guided path (Foundations + all four Advanced): ~7.25 hours** — a clean
-multi-day story. For a **1-day event**, run Foundations + 2–3 Advanced activities and save optional extras
-for a second day or a follow-up sprint.
+**Reference workshop time (Foundations + all four Advanced): ~7.25 hours.** For a one-day workshop,
+choose Foundations and two or three Advanced activities. Customer-specific implementation work
+needs a separate estimate.
 
 ---
 
@@ -217,24 +252,26 @@ ai-starter-kit-rvas/
 
 Each activity folder contains:
 - `README.md`: the activity brief (what to build)
-- `solution.md`: the solution guide (facilitators only)
+- `solution.md`: the reference solution guide for delivery teams and facilitators
 - Sample data or starter code (if needed)
 
 ---
 
 ## Solution Guides
 
-Solution guides for each activity are included in this repo under `activities/*/solution.md`. These are **for facilitators only**; share judiciously to encourage discovery over answers.
+Solution guides under `activities/*/solution.md` support delivery preparation. Use them to understand
+and adapt the reference implementation. In a learning workshop, facilitators can use them to help
+participants work through a problem.
 
 Clone or access this repo locally and navigate to the activity solution you need.
 
 ### Quick-Start Facilitation Checklist
 
-1. Verify all participants have Azure subscriptions and Codespaces access
-2. Review the activity brief before your team starts
-3. Walk through Foundations Step 1 with them to confirm the environment works
-4. For each activity, guide them toward the solution without giving it away
-5. Use the solution guide to unblock them if they're truly stuck
+1. Agree the customer outcome, delivery scope, and acceptance criteria.
+2. Map the use-case parts to sessions, identify uncovered work, and confirm lesson prerequisites.
+3. Confirm the approved environment and source-access boundary.
+4. Build with the customer, using the solution guides where helpful.
+5. Review the evidence and record remaining work with a named owner.
 
 ---
 
@@ -246,4 +283,4 @@ Clone or access this repo locally and navigate to the activity solution you need
 
 ---
 
-**Ready to build?** Start with [Foundations](activities/foundations/README.md).
+**Ready to build?** Choose a [scenario playbook](docs/index.html#outcomes).

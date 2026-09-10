@@ -30,7 +30,7 @@
     document.getElementById('lessonTitle').textContent = lesson.title;
     document.getElementById('lessonEyebrow').textContent = `${scenario.name} · lesson ${lesson.sequence}`;
     document.getElementById('lessonSummary').textContent =
-      'Make one customer decision, capture the evidence, and use the result to decide the next engagement move.';
+      'Work through a design choice, adapt the implementation, and check the result with the customer.';
     document.getElementById('lessonOutcome').textContent = scenario.customer_outcome;
     ['playbookBack', 'playbookNav'].forEach((id) => { document.getElementById(id).href = playbookUrl; });
     document.getElementById('lessonBreadcrumbs').innerHTML = `
@@ -50,7 +50,7 @@
     renderLessonHeaderActions(scenario, lesson, playbookUrl);
     document.getElementById('currentModuleSummary').textContent = currentModule
       ? currentModule.summary
-      : 'Work this lesson, capture the decision, and use it to move through the scenario.';
+      : 'Follow the implementation steps and review the evidence against the agreed scope.';
     renderLessonResources(scenario, lesson);
 
     document.getElementById('lessonProgress').innerHTML = lessons.map((item) => `

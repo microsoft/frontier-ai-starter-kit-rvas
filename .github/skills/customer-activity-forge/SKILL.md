@@ -1,6 +1,6 @@
 ---
 name: customer-activity-forge
-description: "Research a customer and industry from public sources, then generate ranked AI-application ideas mapped to the three customer-delivery scenario playbooks."
+description: "Research a customer and industry from public sources, then generate ranked AI-application ideas mapped to relevant scenario playbooks, with implementation gaps made explicit."
 argument-hint: "Company name and industry are required. Optional: region/segment and known pain points."
 ---
 
@@ -10,9 +10,10 @@ Use this skill when a participant has a customer or industry but no bounded AI o
 bridges “we should do something with AI” and a useful customer conversation: research public facts,
 propose approximately ten achievable ideas, and map the best candidates to a scenario playbook.
 
-This is an intake tool, not an architecture approval. The next step after choosing an idea is a
-scenario playbook conversation that validates source ownership, access, environment, operating
-model, and the evidence needed for the next decision.
+This is an intake tool, not an architecture approval or delivery commitment. After choosing an idea,
+decompose the use case into parts and map those parts to relevant lessons or reference activities.
+Use that mapping to agree the first implementation scope with the customer, including acceptance
+criteria. Confirm data access and the approved environment before building.
 
 ## Input
 
@@ -52,14 +53,14 @@ Every idea must be tied to the research, safe enough for a first demonstration, 
 | **Description** | What improves, how the experience works, and the first tangible output |
 | **Target user** | The role benefiting from the result |
 | **Business outcome** | What becomes faster, safer, cheaper, or more reliable |
-| **Scenario direction** | One primary playbook plus any relevant secondary capability |
-| **First decision** | The question to take into the selected scenario playbook |
+| **Scenario direction** | Break the idea into parts and identify relevant lessons across tracks; record uncovered work |
+| **First decision** | The scope or design question to resolve before planning the relevant sessions |
 | **Effort** | `Starter`, `Core`, or `Stretch` |
 | **Research fit** | Why the idea fits this customer, with citation |
 | **Safe representative context** | Candidate documents, data product, approved content, or sample to use in a demonstration |
 | **Evidence** | The routine, edge, refusal, review, or access case that proves the first outcome |
 
-Use these exact primary scenario labels:
+Use these exact labels when a current track fits:
 
 | Scenario direction | Use when |
 |---|---|
@@ -69,6 +70,10 @@ Use these exact primary scenario labels:
 
 Visual input, structured data, actions, evaluation, tracing, and deployment are capabilities—not
 competing top-level scenarios. Mention them only when they are necessary to the proposed proof.
+
+These are the initial tracks, not a complete catalog of customer use cases. One idea may draw on
+several tracks. Map its parts separately; a match for one part does not imply coverage of the whole
+use case. Where a part has no matching guidance, write `New pattern needed` and describe the gap.
 
 ### 3. Calibrate scope
 
@@ -123,15 +128,29 @@ For the top idea, pre-fill this handoff. Clearly mark information the customer m
 | Context and source owner | … |
 | Existing environment | … |
 | Ownership model | … |
-| Recommended scenario | … |
+| Relevant tracks and lessons | … |
 | Golden-dataset / evidence starter | … |
 | First customer decision | … |
 
-End with the recommended scenario-playbook URL:
+Include a session-planning map for the top idea:
+
+| Part of the customer use case | Relevant lessons or reference activities | Adaptation or uncovered work |
+|---|---|---|
+| … | … | … |
+
+Read the scenario manifests and relevant lesson content before assigning coverage. Name existing
+lessons rather than assuming an entire track covers a part. Keep uncovered work in the map and
+mark any coverage you cannot verify as unconfirmed. The customer must confirm the mapping before
+it becomes an agreed session plan.
+
+End with the relevant scenario-playbook URLs when there are matches:
 
 - `docs/scenario.html?id=ai-grounding`
 - `docs/scenario.html?id=content-understanding-document-workflow`
 - `docs/scenario.html?id=avatar-scenario`
+
+If a new pattern is needed, state that gap instead of inventing a playbook URL. Effort tags describe
+the initial proof only; they do not estimate the full customer implementation.
 
 ## Anti-patterns
 

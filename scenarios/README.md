@@ -1,7 +1,19 @@
 # Scenario contribution contract
 
-A scenario is a customer-delivery playbook, not a technology tutorial. It contains a client
-conversation, reusable lessons, source-controlled slides, and a deliberately small accelerator.
+A scenario is a playbook for co-building a customer's AI use case. It breaks down architectural
+decisions and guides implementation with reusable building blocks. Lessons include observable
+checks, and source-controlled slides support customer discussions.
+
+The initial tracks cover grounding, document workflows, and avatar experiences. They are starting
+points for customer-specific work. Add new tracks when the existing patterns do not fit.
+
+**State what the playbook implements and what the customer team must add.** An accelerator supplies
+sample assets and code, with optional demo deployment templates. It is not a complete customer
+solution or production approval.
+
+Customers may combine parts from several tracks. Help delivery teams decompose the use case and
+map each part to relevant sessions. Identify reusable lessons and prerequisites, and make uncovered
+work explicit.
 
 ## Required files
 
@@ -50,7 +62,8 @@ The compact scenario and lesson headers use activity-style labels to orient cust
 start building:
 
 - `level`: customer-facing build level such as `guided`, `intermediate`, or `advanced`.
-- `duration_minutes`: expected guided time for the scenario path.
+- `duration_minutes`: expected guided time for the scenario path, excluding customer-specific
+  integration work and production acceptance.
 - `stage`: customer-facing stage/type such as `ideate`, `define`, `build`, `prove`, `pilot`, or
   `customer-build`.
 - `order`: integer that fixes the scenario's position in the menu, homepage, and every generated
@@ -65,6 +78,10 @@ module is done. It appears on the scenario and lesson pages.
 ## Acceptance checklist
 
 - The scenario starts from a customer outcome, not a product.
+- The playbook states its implementation scope and identifies customer-specific work. It does not
+  promise production readiness from lesson completion or a fixed engagement duration.
+- The playbook helps teams map parts of a customer use case to its lessons, including references to
+  other tracks where useful. A partial match must not imply coverage of the whole use case.
 - Every lesson names the decision, inputs, proof, and next decision.
 - Every scenario names the decision gates that determine which reference-library mechanics are
   needed. Do not revive legacy application paths; extract only the source, access, action, trust,
@@ -93,6 +110,8 @@ module is done. It appears on the scenario and lesson pages.
   `<!-- slide:id=lesson-<lesson-id>-choices -->`, and
   `<!-- slide:id=lesson-<lesson-id>-evidence -->`.
 - The accelerator has a minimal safe-demo path and a bring-your-own-environment path.
+- The accelerator guide distinguishes local exercises from live-service work and states whether
+  its templates create demo resources. Never describe a live-service path as offline or resource-free.
 - No accelerator provisions an enterprise landing zone.
 - Preview and fast-moving services instruct the reader to search current Microsoft documentation
   and MCP tools before writing SDK code.

@@ -1,13 +1,13 @@
 ---
 title: Start Here
 nav_order: 1
-description: Shape a customer AI engagement, choose a scenario, and reuse the lessons that prove the next decision.
+description: Co-build customer AI scenarios through architectural decisions and reusable implementation patterns.
 ---
 
 <div class="hero-panel home-hero">
   <span class="hero-kicker">RVAS • AI Starter Kit</span>
-  <h1>Start with the customer’s problem. Build only what helps answer it.</h1>
-  <p class="hero-tagline">If the opportunity is still fuzzy, begin with Idea Forge. If it is clear, pick a scenario and work toward the next decision you need to prove.</p>
+  <h1>Build your customer's AI scenario together.</h1>
+  <p class="hero-tagline">Work through the architectural decisions with the customer, then build using reusable code and guided lessons. Adapt the relevant patterns to the customer's requirements and approved environment.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="{{ '/#outcomes' | relative_url }}">See the scenarios</a>
     <a class="btn btn-outline" href="{{ '/idea-forge' | relative_url }}">Need an idea?</a>
@@ -17,13 +17,18 @@ description: Shape a customer AI engagement, choose a scenario, and reuse the le
 ## A simple way through the kit
 
 <ol class="journey-map">
-  <li><span>1</span><strong>Frame</strong><small>Get specific about the outcome</small></li>
-  <li><span>2</span><strong>Decide</strong><small>Write down the assumptions that could change the design</small></li>
-  <li><span>3</span><strong>Prove</strong><small>Build the smallest useful test</small></li>
-  <li><span>4</span><strong>Continue</strong><small>Use the evidence to choose what comes next</small></li>
+  <li><span>1</span><strong>Scope</strong><small>Agree the outcome and acceptance criteria</small></li>
+  <li><span>2</span><strong>Map</strong><small>Break the use case into parts and map them to sessions</small></li>
+  <li><span>3</span><strong>Build</strong><small>Adapt the reusable implementation patterns</small></li>
+  <li><span>4</span><strong>Check</strong><small>Review the result and assign remaining work</small></li>
 </ol>
 
 ## Choose a scenario
+
+**Decompose the customer's use case before selecting sessions.** Map each part to lessons or
+reference activities, recording what needs adapting and what the kit does not cover. One customer
+scenario can draw on several tracks. If the opportunity is unclear, start with
+[Idea Forge]({{ '/idea-forge' | relative_url }}).
 
 | Scenario | Use it when | Start |
 |---|---|---|
@@ -31,8 +36,18 @@ description: Shape a customer AI engagement, choose a scenario, and reuse the le
 | Content Understanding and Document Workflow | A team needs to turn documents into structured data without removing human review. | [Open Content Understanding]({{ '/scenario.html?id=content-understanding-document-workflow' | relative_url }}) |
 | Avatar Scenario | A team wants an avatar-led experience whose script, approvals, and accessibility can be checked. | [Open Avatar Scenario]({{ '/scenario.html?id=avatar-scenario' | relative_url }}) |
 
-You do not have to complete every lesson. Pick the ones that help with the decision in front of you.
-Each scenario includes slides, a small accelerator, and a path for teams using their own environment.
+These are the initial tracks. Plan sessions from the mapping and keep lesson prerequisites.
+Slides support the design discussions, while
+the lessons guide implementation. Accelerators supply sample assets and reusable code. Some also
+create demo resources; check the guide before running them. Teams using an existing environment
+follow the bring-your-own-environment path.
+
+## Agree the delivery scope
+
+The kit can support a pilot or a longer co-build. **Agree customer-specific work and acceptance
+criteria before committing to delivery.** Guided lesson times exclude customer-specific engineering.
+Production readiness requires acceptance in the customer's environment; deploying an accelerator
+alone does not establish it. Demo foundations do not provision an enterprise landing zone.
 
 ## Reference Library
 
