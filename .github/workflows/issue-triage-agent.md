@@ -13,10 +13,6 @@ network:
   allowed:
     - local
 
-sandbox:
-  agent:
-    sudo: false
-
 tools:
   cli-proxy: true
   github:
