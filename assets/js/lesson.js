@@ -41,12 +41,6 @@
       <a href="${FP.esc(playbookUrl)}">${FP.esc(scenario.name)}</a>
       <span aria-hidden="true">/</span>
       <span>Lesson ${FP.esc(lesson.sequence)}</span>`;
-    document.getElementById('lessonMeta').innerHTML = `
-      <span class="badge badge-tag">Lesson ${FP.esc(lesson.sequence)}</span>
-      ${FP.levelBadge(currentModule?.level || scenario.level || 'guided')}
-      ${FP.durBadge(currentModule?.duration_minutes || lesson.duration_minutes)}
-      ${stageBadge(currentModule?.stage || lesson.stage || scenario.stage)}
-      ${currentModule && currentModule.outcome ? `<span class="badge badge-tag">Outcome: ${FP.esc(currentModule.outcome)}</span>` : ''}`;
     renderLessonHeaderActions(scenario, lesson, playbookUrl);
     document.getElementById('currentModuleSummary').textContent = currentModule
       ? currentModule.summary
@@ -69,10 +63,6 @@
     document.getElementById('lessonSlidesLink').href = `slides.html?id=${scenarioId}#${lessonHash}`;
     document.getElementById('lessonFullDeckLink').href = `slides.html?id=${scenarioId}`;
     document.getElementById('lessonPlaybookLink').href = playbookUrl;
-  }
-
-  function stageBadge(stage) {
-    return stage ? `<span class="badge badge-stage">${FP.esc(String(stage).replace(/[-_]+/g, ' '))}</span>` : '';
   }
 
   function renderLessonResources(scenario) {

@@ -48,14 +48,13 @@
   function applyModuleColor(moduleId) {
     const color = FP.moduleColor(moduleId);
     document.documentElement.style.setProperty('--mod-color', color);
-    document.documentElement.style.setProperty('--activity-color', color);
     document.querySelectorAll('[data-mod-color]').forEach((el) => {
       el.style.color = color;
     });
   }
 
   function renderHero(c, mod) {
-    const color = FP.moduleColor(c.module);
+    const color = 'var(--activity-color)';
 
     // Breadcrumbs
     const crumbs = document.getElementById('breadcrumbs');
@@ -234,7 +233,7 @@
       const md = stripRedundantActivityMetadata(await res.text());
       FP.renderMd(md, body);
       ensureGuideAnchors(body);
-      removeDuplicateGuideTitle(body, c);
+      removeDuplicateGuideTitle(body);
       body.querySelectorAll('.next-panel').forEach((el) => el.remove());
       FP.applyGuideAccordions(body);
       renderActivityPager(body, c, allActivities);
@@ -295,24 +294,9 @@
     }
   }
 
-  function removeDuplicateGuideTitle(container, activity) {
+  function removeDuplicateGuideTitle(container) {
     const title = container.querySelector('h1');
-    if (!title || !activity || !activity.title) return;
-
-    const guideTitle = normalizeTitle(title.textContent);
-    const activityTitle = normalizeTitle(activity.title);
-
-    if (guideTitle === activityTitle || guideTitle.endsWith(' · ' + activityTitle)) {
-      title.remove();
-    }
-  }
-
-  function normalizeTitle(value) {
-    return String(value || '')
-      .replace(/[‘’]/g, "'")
-      .replace(/\s+/g, ' ')
-      .trim()
-      .toLowerCase();
+    if (title) title.remove();
   }
 
   function renderActivityPager(container, current, allActivities) {
