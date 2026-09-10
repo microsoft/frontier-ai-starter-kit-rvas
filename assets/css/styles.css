@@ -1836,19 +1836,6 @@ main { flex: 1 0 auto; }
   font-size: 0.76rem;
   font-weight: 500;
 }
-.activity-detail-page .detail-route-frame {
-  border-color: color-mix(in srgb, var(--activity-color, var(--c-accent)) 28%, var(--c-line));
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--activity-color, var(--c-accent)) 13%, transparent), transparent 45%),
-    var(--c-850);
-}
-.activity-detail-page .route-frame-kicker,
-.activity-detail-page .route-frame-grid li::before {
-  color: var(--activity-color, var(--c-accent));
-}
-.activity-detail-page .route-frame-grid li::before {
-  border-color: color-mix(in srgb, var(--activity-color, var(--c-accent)) 42%, var(--c-line));
-}
 @media (max-width: 640px) {
   .activity-detail-page .activity-detail-hero {
     padding: 42px 0 32px;
