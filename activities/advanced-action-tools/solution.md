@@ -2,7 +2,9 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-Use these notes to adapt the approval-loop pattern to a scenario-specific action backend.
+Use these notes to adapt the canonical approval, refusal, and provenance pattern to a
+scenario-specific action backend. Extra activities may change the UI or domain rules, but they reuse
+this loop.
 
 ## Core idea
 
@@ -212,6 +214,9 @@ def run_with_approval(openai, agent_name, prompt):
 ```
 - **Implementation points:** The application executes nothing until a human decides. Show the
   function name and arguments, then return denial JSON so the agent can report that it was blocked.
+- **Evidence:** retain the request/correlation ID, requested function and arguments, approval or
+  denial decision, backend result, and timestamp in the scenario's action record. Do not treat a
+  model transcript as the audit record.
 - **Pitfall:** omitting `conversation=conversation.id` on either call loses the tool-call turn context.
 - **Pitfall:** `item.arguments` is a **JSON string** — parse it with `json.loads` before
   unpacking as `**args`.

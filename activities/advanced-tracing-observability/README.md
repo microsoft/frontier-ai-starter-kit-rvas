@@ -4,7 +4,7 @@
 
 > ⏱ Guided ~1 hr · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Reusable mechanics module. Use it when a scenario needs GenAI traces, span correlation, and
+> **Canonical trace-correlation and operational-evidence module.** Use it when a scenario needs GenAI traces, span correlation, and
 > production-debug evidence. Prerequisite: a deployed scenario agent or the Foundations mechanics
 > reference. Complete the required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
@@ -19,8 +19,8 @@ OpenTelemetry (OTel) in the client process, then inspect telemetry in the Foundr
 and through KQL in App Insights. You can reconstruct one question's model, retrieval, and tool spans,
 including token counts and latency.
 
-Evaluation and deployment both depend on this evidence. Use traces to investigate a failed row and
-monitor a hosted agent in production.
+Evaluation uses this evidence to investigate a failed row, and hosted deployment uses it to monitor
+a production endpoint. Those activities link here for the correlation contract.
 
 ```text
   user question
@@ -55,12 +55,7 @@ monitor a hosted agent in production.
 
 ---
 
-The same `validate.py` grades all three paths. (a) Guided path provides code to assemble;
-(b) Build-from-scratch provides the common issue and package list; (c) Stretch goals are open-ended.
-
-## Rung (a) — Guided path
-
-> Assemble and run the provided code. The important detail is its ordering.
+Assemble and run the provided code. The important detail is its ordering.
 
 ## Step 1 — Enable GenAI instrumentation
 
@@ -300,7 +295,7 @@ python activities/advanced-tracing-observability/validate.py --step 4
 
 ---
 
-## Rung (b) — Build-from-scratch path
+## Build from scratch
 
 > Stronger team? Skip the pasted code. We hand you only the contract and the one gotcha that
 > actually bites. The same `validate.py` grades this path by querying the response id saved by
@@ -323,18 +318,16 @@ tokens, latency-per-span, which span retrieved, an estimated cost, and the slowe
 
 ---
 
-## What you can now do
+## Evidence contract
 
 - Every scenario answer is observable end to end, two ways: portal Tracing tab and KQL.
 - You can take one user question and account for its model, retrieval, and tool spans, with tokens,
   latency, and an estimated cost.
 
-This unlocks: Evaluation & Red Teaming (trace the exact row that failed an eval) and Deploy as a
-Hosted Agent (the same tracing follows the agent to its live endpoint).
+Keep one correlation record that joins the response/run ID, `operation_Id`, ordered spans, tokens,
+latency, and estimated cost. Use it to investigate evaluation failures and hosted-agent runs.
 
-## Rung (c) — Stretch goals
-
-Open-ended. There is no single correct answer.
+## Optional extensions
 
 1. 3-tier `TelemetryManager` + a custom business metric. Ship a small `TelemetryManager` and emit
    one custom metric (e.g. `sample.answers.uncited`) on every run, then chart it in a Workbook.

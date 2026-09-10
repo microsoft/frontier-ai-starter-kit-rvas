@@ -2,8 +2,8 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-Use these notes for tracing: instrumentation order, span emission, portal inspection, and KQL
-correlation.
+Use these notes for the portfolio's canonical trace-correlation and operational-evidence contract:
+instrumentation order, span emission, portal inspection, and KQL correlation.
 
 ## What this activity proves
 
@@ -105,5 +105,7 @@ Implementation notes:
 
 ## Verification
 
-A team is done when `python activities/advanced-tracing-observability/validate.py --step 4` passes, `correlate.kql` returns all spans for one run, and
-they can verbally walk the trace from question → model → retrieval → answer with tokens and latency.
+A team is done when `python activities/advanced-tracing-observability/validate.py --step 4` passes,
+`correlate.kql` returns all spans for one run, and the team can connect the response/run ID to its
+`operation_Id`, ordered spans, tokens, latency, and estimated cost. Evaluation and hosted
+deployment should link to this evidence rather than restate it.

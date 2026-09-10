@@ -1,107 +1,50 @@
-# Extra · MAF + Hosted Long-Running Agents
+# Extra · Hosted Long-Running Agents
 
 > **Command context:** Run the bootstrap command from the repository root.
 
-> Reusable long-running module. Use it when a scenario needs work that outlives an interactive
-> request. Prerequisite: a deployed scenario agent or hosted worker.
-> Complete Foundations, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
->
-> Specific prereq: the Advanced · Deploy as a Hosted Agent activity or equivalent hosted-agent
-> deployment path. Magentic Workflows are one possible worker shape, not a requirement.
+This is an **optional extension** for work that must continue after the caller disconnects. Complete
+[Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent) first. That activity is the
+canonical hosted deployment path and owns container setup, identity, endpoint configuration, and
+run history.
 
-> Infra prerequisite: ACR (Azure Container Registry) +
-> hosted-agent endpoints + Application Insights — all already stood up by `azd up` from
-> Foundations/Deploy. Confirm the deployed agent has platform-provided observability configuration
-> rather than baking a connection string into the image. See [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/extra-hosted-longrunning/solution.md).
->
-> 🎤 Demo wow-factor: submit a job, close the tab, come back later to a completed
-> long-running agent run with full trace history — async work that survives your session.
+Use this activity only when a proven runtime need requires durable async execution, such as a
+bounded batch job or reconciliation run. A slow interactive request is not enough reason to add it.
 
-## Why this activity
+## Prerequisites
 
-Interactive terminal workflows die when the terminal closes. Tasks such as *batch-processing a queue*,
-*reconciling requests*, and *reviewing a backlog* must continue without blocking the caller.
+- A deployed hosted agent from [Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent).
+- An authenticated remote endpoint for any worker tool. `localhost` does not resolve inside the
+  hosted container.
+- Project Application Insights. For trace correlation and evidence, use
+  [Tracing & Observability](activity.html?id=advanced-tracing-observability).
 
-Deploy a worker as a hosted agent with its own endpoint and identity, then submit a Responses request
-with `background=True`. The platform returns a response handle immediately, processes the job, and
-lets you retrieve the result later. App Insights traces every step.
+## Step 1 — Adapt the deployed worker
 
-```text
-  submit job ──▶ hosted worker (Responses `background=True`)
-                    │  returns response handle immediately
-   close tab ✷      │  …keeps working async…
-                    ▼
-  poll handle ──▶ completed result + full trace in App Insights
-```
+Use the existing hosted-agent project as the worker. Do not repeat scaffolding or deployment here.
+Choose one bounded job that can complete in a reasonable demo window and confirm its normal remote
+request works before adding background behavior.
 
----
+**Verify:** the deployed worker appears in the project and completes a representative remote request.
 
-## Step 1 — Containerize the worker as a hosted agent
+## Step 2 — Submit async work
 
-**Goal:** The long-running worker runs as a deployed hosted agent, not a local script.
+Add a Responses request with `background=True`. The submission must return a response handle before
+the work completes. Confirm the current submission and retrieval API through Microsoft Learn before
+writing code.
 
-**Tasks:**
-1. Reuse the Deploy as a Hosted Agent pattern: scaffold a unified `azure.yaml` + source project that
-   serves your worker over Responses or Invocations.
-2. Test with `azd ai agent run`, then deploy with `azd deploy`.
-   Search before you implement: confirm the current `azure.yaml` hosted-agent schema via the
-   `foundry-hosted-agents` skill (`foundry-mcp` / `microsoft-docs`).
-3. Invoke the deployed endpoint with a representative batch request and confirm it still does the
-   intended work.
+**Verify:** the request returns a response ID immediately and the run continues after the submitting
+client exits.
 
-**Success Criteria:**
-- [ ] The worker answers over a deployed endpoint (not localhost).
-- [ ] A representative request still runs correctly when invoked remotely.
+## Step 3 — Retrieve the result and its evidence
 
-**Verify:** *Portal state* — the hosted agent shows in the project with a run in its history; invoking
-the endpoint returns the expected worker result.
+From a fresh process, retrieve or poll using only the response handle. Then use the correlation
+method in [Tracing & Observability](activity.html?id=advanced-tracing-observability) to inspect the
+background run and its duration.
 
----
+**Verify:** a fresh client retrieves the completed result, and App Insights shows the same run.
 
-## Step 2 — Add a background (long-running) agent
+## Outcome
 
-**Goal:** A Responses request submitted with `background=True` returns immediately and finishes async.
-
-**Tasks:**
-1. Add a background Responses path (`background=True`) for a batch task, e.g.
-   *"process the overnight enrollment queue"* (loop the Action sub-agent over a list).
-2. Submit the job and confirm the call returns a response handle right away (non-blocking) instead of
-   waiting for completion.
-3. Search before you implement: confirm the current background-run API (submit + poll/retrieve) via
-   `microsoft-docs`.
-
-**Success Criteria:**
-- [ ] Submitting the job returns a response handle without blocking on completion.
-- [ ] The run continues after the submitting process/tab is gone.
-
-**Verify:** *Console/portal state* — the submit call returns a response id immediately; the run is shown
-`in_progress` in the portal while your client is idle/closed.
-
----
-
-## Step 3 — Poll for the result and read the trace
-
-**Goal:** Retrieve a completed background result and inspect its end-to-end trace.
-
-**Tasks:**
-1. In a fresh process (simulate "come back later"), retrieve/poll the response handle until it reports completed,
-   then read the result.
-2. Open Application Insights (configured by the hosted-agent deployment) and find
-   the background run's spans — manager planning, each specialist, each action.
-3. Write a one-line KQL to list the background run's spans by duration (reuse what you learned in the
-   Tracing activity).
-
-**Success Criteria:**
-- [ ] A fresh client retrieves the completed result using only the response handle.
-- [ ] The background run's spans are visible in App Insights and your KQL returns them.
-
-**Verify:** *Portal state* — the completed run + its span tree appear in App Insights; your KQL lists
-the spans.
-
----
-
-## What you built
-
-A hosted worker with a background Responses path runs async work after the caller disconnects. If the
-worker is multi-agent, the same pattern keeps its orchestration observable.
+You have an optional durable-execution path over the hosted agent. Hosted deployment remains in
+[Deploy as a Hosted Agent](activity.html?id=advanced-deploy-hosted-agent); trace evidence remains in
+[Tracing & Observability](activity.html?id=advanced-tracing-observability).

@@ -2,8 +2,9 @@
 
 > **Command context:** Unless a step explicitly changes directory, run commands from the repository root.
 
-Use these notes for hosted-agent deployment: project shape, container build, authenticated
-invocation, managed identity, and run history.
+Use these notes for the canonical hosted-agent deployment path: project shape, container build,
+authenticated invocation, managed identity, and run history. For async work after deployment, use
+[Hosted Long-Running Agents](../extra-hosted-longrunning/README.md).
 
 > ⚠️ **This activity was rewritten away from Prompt Flow.** The old version deployed a Prompt Flow to
 > a managed online endpoint and bolted on a Flask app. **All of that is gone.** If a team is following
@@ -72,11 +73,11 @@ exit code as "done" — the version provisions **asynchronously**, so Step 2's c
 
 ### Step 4 — Monitoring back to Tracing
 
-- Hosted agents inherit the **project's** App Insights, so the spans land in the **same** tables the
-  team queried in the Tracing activity. The only new dimension is `cloud_RoleName`, which carries the
-  agent/container name — that's how they scope KQL to hosted runs.
-- If a team skipped the Tracing activity, they can still pass Step 4 via the portal **Run history** +
-  **Tracing** tab; the `correlate.kql` reuse is the richer path but not required.
+- Hosted agents inherit the **project's** App Insights. Use the canonical
+  [Tracing & Observability](../advanced-tracing-observability/README.md) correlation record rather
+  than creating a second evidence method here.
+- Scope that activity's KQL to `cloud_RoleName`, which contains the agent/container name. Portal run
+  history remains the fast way to find the hosted invocation.
 
 ## Cleanup discipline
 

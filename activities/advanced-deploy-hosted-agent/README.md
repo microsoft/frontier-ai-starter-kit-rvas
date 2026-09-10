@@ -4,7 +4,7 @@
 
 > ⏱ Guided ~60–90 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Reusable mechanics module. Use it when a scenario needs a hosted, authenticated endpoint.
+> **Canonical hosted-agent deployment module.** Use it when a scenario needs a hosted, authenticated endpoint.
 > Prerequisite: a local scenario agent or the Foundations mechanics reference. Complete the required
 > foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
@@ -18,7 +18,9 @@ Containerize the assistant, deploy it as a hosted Foundry agent with `azd ai age
 per-agent Entra managed identity, and call its production Responses endpoint. Then trace its live
 runs in the observability tools from the Tracing activity.
 
-This activity deploys the grounded assistant as a containerized service.
+This activity deploys the grounded assistant as a containerized service. Hosted Long-Running Agents
+is an optional extension after this deployment; it does not repeat container setup, identity, or
+endpoint onboarding.
 
 ```text
    azure.yaml + src/<agent>/ + Dockerfile
@@ -53,11 +55,8 @@ This activity deploys the grounded assistant as a containerized service.
 
 ---
 
-The same `validate.py` grades all three paths. (a) Guided path provides manifests to adapt;
-(b) Build-from-scratch provides the deploy contract and common issues; (c) Stretch goals are
-open-ended.
-
-## Rung (a) — Guided path
+Use the guided path to adapt the current Agent Framework Responses sample and its generated
+`azure.yaml`.
 
 > Start with the current Agent Framework Responses sample, then adapt its generated `azure.yaml`
 > and source. Focus on the hosted runtime contract and asynchronous deployment.
@@ -230,26 +229,15 @@ the same OTel traces you learned to read in the Tracing activity.
 
 1. Open the agent in the portal → Runs / Run history. Confirm your Step 3 invocation appears with
    status, latency, and token usage.
-2. Open the Tracing tab and find the trace for the hosted run. Confirm it has the same span shape
-   you saw locally (model + retrieval spans). The hosted agent inherits the project's App Insights, so
-   the spans land in the same `dependencies`/`requests`/`traces` tables.
-3. Run your `correlate.kql` from the Tracing activity (or the starter query below) against a hosted
-   run's `operation_Id` to prove the production endpoint is fully traced:
-
-   ```kusto
-   dependencies
-   | where timestamp > ago(30m)
-   | where cloud_RoleName has "sample-iq-assistant"
-   | project timestamp, operation_Id, name, duration,
-             total_tokens = toint(customDimensions["gen_ai.usage.total_tokens"])
-   | order by timestamp desc
-   ```
+2. Use [Tracing & Observability](../advanced-tracing-observability/README.md) to find the hosted
+   run and correlate its response/run ID to `operation_Id`, ordered spans, tokens, latency, and
+   estimated cost. Scope the canonical query to the hosted agent with `cloud_RoleName`.
 
 **Success Criteria:**
 
 - [ ] The agent's run history shows your hosted invocation(s).
-- [ ] A hosted run appears as a trace in App Insights / the Tracing tab.
-- [ ] A KQL query scoped to the hosted agent returns its runs with token + latency.
+- [ ] A hosted run appears in the canonical trace correlation.
+- [ ] The canonical KQL query, scoped to the hosted agent, returns its evidence.
 
 **Verify:**
 
@@ -259,7 +247,7 @@ python activities/advanced-deploy-hosted-agent/validate.py --step 4
 
 ---
 
-## Rung (b) — Build-from-scratch path
+## Build from scratch
 
 > Start from `azd ai agent init` around your own code, then author the unified `azure.yaml`,
 > Dockerfile, and entry point. The same `validate.py` grades this path.
@@ -284,12 +272,11 @@ The gotchas you get (everything else you design):
 - It's invocable over the production Responses protocol, enforces auth, and every run is observable in
   run history and App Insights.
 
-This unlocks Extras: MAF + Hosted Long-Running Agents (Extra D) and Build a UI (Extra E) both
-target this live endpoint.
+Optional extensions can now target this live endpoint:
+[Hosted Long-Running Agents](../extra-hosted-longrunning/README.md) adds durable async execution,
+and [Build a UI](../extra-build-ui/README.md) uses it as the capstone surface.
 
-## Rung (c) — Stretch goals
-
-Open-ended. There is no single correct answer.
+## Optional extensions
 
 1. Blue/green a new version. Deploy a v2 with tweaked instructions, confirm both versions exist,
    then roll the active pointer — versioned hosted agents in practice. *(+30 min)*

@@ -4,7 +4,7 @@
 
 > ⏱ Guided ~45 min · 🛠 Build-from-scratch ~1.5 hr · ⭐⭐⭐ · Prereqs: Foundations end-state
 
-> Reusable mechanics module. Use it when a scenario needs a governed action seam. Prerequisite: a
+> **Canonical approval, refusal, and action-provenance module.** Use it when a scenario needs a governed action seam. Prerequisite: a
 > deployed Foundry agent from your scenario or the Foundations mechanics reference. Complete the
 > required foundation, or run the bootstrap skip-path:
 > `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
@@ -13,7 +13,9 @@ Your assistant can retrieve information and answer questions. This activity lets
 place a hold, book a slot, start a workflow, or call another approved system. Knowledge tools read.
 Action tools change state.
 
-Actions have consequences. Build a human-approval loop so the agent *asks before it acts*.
+Actions have consequences. Build a human-approval loop so the agent *asks before it acts*. Record
+the requested function, arguments, human decision, result, and request correlation with each action.
+Other activities reuse this pattern; they do not define a competing action policy.
 
 You will wire a provided backend — you do not build it. The Action Tools REST API ships in
 [`scripts/action-backend/`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/README.md) and exposes three action
@@ -26,8 +28,8 @@ endpoints your `FunctionTool` callables hit directly:
 | `book_advising_slot` | Books an appointment | `student_id, advisor, iso_datetime, topic` |
 
 > Note: The backend also ships an optional FastMCP server (`mcp_server.py`) on `:8765/mcp`. That
-> server is a preview/stretch asset — it is not part of this guided path. See Rung (c) stretch
-> goals if you want to explore the server-side of MCP.
+> server is an optional preview asset. It is outside the guided path; use the optional extension if
+> you want to explore the server-side of MCP.
 
 Env contract (authoritative — matches `.env.sample` and the backend):
 
@@ -45,15 +47,8 @@ Files in this activity
 - [`agent_with_actions.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/agent_with_actions.py) — starter with `< PLACEHOLDER >` gaps you fill in.
 - [`validate.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/advanced-action-tools/validate.py) — the Verify checks below.
 
-Choose the depth that fits your team. The same `validate.py` grades all three paths: (a) Guided
-path uses a starter file; (b) Build-from-scratch gives you the contract; (c) Stretch goals are
-open-ended.
-
----
-
-## Rung (a) — Guided path
-
-> Start with the provided file and fill in its `< PLACEHOLDER >` gaps.
+Use the guided steps with the starter file. The validator checks the same contract if a team chooses
+to build the file from scratch.
 
 ## Step 0 — Start the provided backend
 
@@ -64,8 +59,8 @@ open-ended.
 2. Start the REST API: `uvicorn app:app --host 0.0.0.0 --port 8080`.
 3. Confirm it's up: `curl http://localhost:8080/health`.
 
-> Optional (stretch / preview): The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`).
-> You do not need it for this guided path — start it only if you are doing Rung (c) stretch goal 1.
+> Optional preview: The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`). Start it only
+> for the MCP extension.
 
 **Success Criteria:**
 - [ ] `GET /health` returns 200.
@@ -161,7 +156,7 @@ python activities/advanced-action-tools/validate.py --step 3
 2. Confirm the agent reports the new `ticket_id`, then verify the record exists in the backend:
    `curl http://localhost:8080/it-tickets`.
 3. Try a denial: re-run, deny the approval, and confirm no ticket is created.
-4. (Stretch) Ask it to `book_advising_slot` with an ISO datetime and watch the same loop govern it.
+4. Optionally, ask it to `book_advising_slot` with an ISO datetime and watch the same loop govern it.
 
 **Success Criteria:**
 - [ ] An approved request creates a record you can see via the backend.
@@ -187,7 +182,7 @@ python activities/advanced-action-tools/validate.py --all
 
 ---
 
-## Rung (b) — Build-from-scratch path
+## Build from scratch
 
 > Write `agent_with_actions.py` from an empty file. This path provides only the contract below.
 > `python activities/advanced-action-tools/validate.py --all` uses the same acceptance criteria.
@@ -203,9 +198,7 @@ else. Discover the SDK surface from the [Agents SDK quickstart](https://learn.mi
 and the [FunctionTool reference](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/function-calling),
 author the file, and run `python activities/advanced-action-tools/validate.py --all`.
 
-## Rung (c) — Stretch goals
-
-Open-ended. There is no single correct answer.
+## Optional extensions
 
 1. Build the MCP server, don't just wire it. Add a *fourth* action (`waive_late_fee`) end to end:
    implement the REST handler in [`scripts/action-backend/app.py`](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/scripts/action-backend/app.py),
