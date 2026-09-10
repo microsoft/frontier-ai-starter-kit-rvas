@@ -222,7 +222,9 @@ needs a separate estimate.
 
 ## Publishing the documentation site
 
-Before the first deployment, a repository administrator must open **Settings > Pages** and select **Deploy from a branch**, the `gh-pages` branch, and the `/(root)` folder. If the site currently uses **GitHub Actions** as its Pages source, change it to this branch setup. The workflow publishes the site and pull request previews to `gh-pages`; it cannot change the repository Pages settings because the `GITHUB_TOKEN` does not have that administrative permission.
+Before the first deployment, a repository administrator must open **Settings > Pages** and select **GitHub Actions** as the source. The workflow builds `docs/` and deploys that artifact when changes reach `main`.
+
+Push a site change to another branch to publish a preview under `/previews/`. The workflow summary contains the exact URL. Pull requests from branches in this repository also publish a preview and add or update one comment with its URL. Forked pull requests run the build checks only.
 
 ---
 
