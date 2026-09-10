@@ -14,6 +14,7 @@
   async function init() {
     const requestedId = FP.qp('id');
     if (!requestedId) { showError('No activity ID specified.'); return; }
+    document.body.classList.add('activity-detail-page');
 
     let data;
     try { data = await FP.loadData(); }
@@ -47,6 +48,7 @@
   function applyModuleColor(moduleId) {
     const color = FP.moduleColor(moduleId);
     document.documentElement.style.setProperty('--mod-color', color);
+    document.documentElement.style.setProperty('--activity-color', color);
     document.querySelectorAll('[data-mod-color]').forEach((el) => {
       el.style.color = color;
     });
@@ -70,7 +72,13 @@
 
     _setText('activityTitle', c.title);
     _setText('activityId', c.id);
-    _setText('activityEyebrow', `Reference activity · ${c.track || c.module || 'Reusable capability'}`);
+    const context = document.getElementById('activityContext');
+    if (context) {
+      context.innerHTML = `
+        <span class="activity-context__type">Reference activity</span>
+        <span>${FP.esc(c.track || c.module || 'Reusable capability')}</span>
+        <span class="activity-context__id">${FP.esc(c.id)}</span>`;
+    }
     _setText(
       'activitySummary',
       c.description || 'Use this reusable build activity to prove a specific capability before adapting it to your scenario.'
