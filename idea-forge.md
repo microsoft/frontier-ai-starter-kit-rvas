@@ -7,7 +7,7 @@ description: Research a customer problem, choose a workable AI idea, and connect
 <div class="hero-panel track-hero track-hero--idea">
   <span class="hero-kicker">Intake • Need an idea</span>
   <h1>Start with a problem worth solving.</h1>
-  <p class="hero-tagline">Idea Forge uses public research to help you find a small, workable AI idea. Then it points you to the scenario that can test it.</p>
+  <p class="hero-tagline">Use public research to find an AI use case, then identify the playbook material you can build on. If you already have a scenario, start with the relevant lessons.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="idea-forge.html#idea-forge-flow">Start the guided flow</a>
     <a class="btn btn-outline" href="index.html#outcomes">Skip to scenarios</a>
@@ -29,8 +29,9 @@ source material, who can access it, and what evidence would make the test credib
    you can use that information.
 2. Run Customer Activity-Forge to research public sources and suggest about ten ideas.
 3. Pick an idea for one clear user. Make sure you have a safe sample and someone who can own the work.
-4. Match it to AI Grounding / IQ, Content Understanding and Document Workflow, or Avatar Scenario.
-5. Open only the lessons you need for the next decision.
+4. Break the idea into parts and map each part to lessons or reference activities. A use case can
+   draw on several tracks. Record what needs adapting and what the kit does not cover.
+5. Use that mapping to agree the implementation scope and plan the relevant sessions.
 
 By the end, you should have a direction worth discussing and a list of assumptions that still need
 checking. That is enough. Architecture comes later.
@@ -58,7 +59,7 @@ checking. That is enough. Architecture comes later.
 
 - **Research summary:** a few cited sentences about what the public sources say and what they do not.
 - **Ranked ideas:** about ten possible starting points, ordered by fit and how easily they can be tested.
-- **Scenario mapping:** the best scenario for each idea and the first decision to discuss.
+- **Session mapping:** the parts of the use case, relevant lessons across tracks, and uncovered work.
 - **Scenario handoff:** a draft for the top idea, with every unconfirmed assumption left visible.
 
 ## Sample handoff into a scenario
@@ -71,14 +72,15 @@ the customer still needs to confirm.
 | Customer outcome | Reduce time spent finding trusted answers for a specific user group. |
 | Target users and access boundary | Named role and access boundary to confirm with the customer. |
 | Context and source owner | Approved corpus, data product, or synthetic representative sample plus the accountable owner. |
-| Recommended scenario | AI Grounding / IQ, Content Understanding and Document Workflow, or Avatar Scenario. |
+| Use-case parts and session coverage | Relevant lessons for each part, with adaptation needs and uncovered work made explicit. |
 | Golden-dataset / evidence starter | Routine case, edge case, refusal/review case, or access case that proves the first outcome. |
 | First customer decision | The next decision the scenario playbook should help the customer make. |
 
 ## Next step
 
-Move to the scenario page once the idea has an owner, a safe sample, and one clear way to test it.
-Open the GitHub skill when you are ready to run the research prompt.
+Move to the relevant scenario page once the idea has an owner, a safe sample, and one clear way to
+test it. If none of the tracks fits, identify the missing pattern rather than forcing a match.
+An idea is a starting point for scoping the work, not a delivery commitment.
 
 <div class="cta-row">
   <a class="btn btn-primary" href="index.html#outcomes">Choose a scenario</a>

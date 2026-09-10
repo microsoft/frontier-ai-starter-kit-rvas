@@ -8,7 +8,7 @@
     document.documentElement.setAttribute('data-theme', 'light');
   </script>
   <title>RVAS — AI Starter Kit</title>
-  <meta name="description" content="A customer-delivery starter kit for shaping AI scenarios, decisions, slides, and minimal accelerators." />
+  <meta name="description" content="Co-build customer AI scenarios through architectural decisions and reusable implementation patterns." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -56,16 +56,16 @@
       <div class="wrap hero-grid">
         <div>
           <span class="eyebrow">RVAS — AI Starter Kit</span>
-          <h1 id="heroHeading">Turn a customer<br><span class="accent">conversation into a useful AI start.</span></h1>
+          <h1 id="heroHeading">Build your customer's<br><span class="accent">AI scenario together.</span></h1>
           <p class="lede">
-            Use Idea Forge only when the opportunity is still fuzzy. Once the customer need is clear, choose one of three scenario playbooks and carry its decisions, slides, and minimal accelerator into the next conversation.
+            Work through the architectural decisions with the customer, then build using reusable code and guided lessons. Adapt the relevant patterns to the customer's requirements and approved environment.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#outcomes">Choose a scenario →</a>
             <a class="btn btn-ghost" href="idea-forge.html">Start with Idea Forge</a>
           </div>
 
-          <div class="stats stats-4" aria-label="Session statistics">
+          <div class="stats stats-4" aria-label="Kit contents">
             <div class="stat">
               <span class="stat-num" id="stat-activities">—</span>
               <span class="stat-lbl">Reference activities</span>
@@ -97,13 +97,13 @@
               <img src="assets/img/icon-foundry.svg" class="mod-icon" alt="" aria-hidden="true" />
               <div class="route-kicker">Scenario 01</div>
               <div class="mod-name">AI Grounding / IQ</div>
-              <div class="mod-count">Trusted enterprise context for one decision.</div>
+              <div class="mod-count">Answers from approved content, with access boundaries.</div>
             </a>
             <a href="scenario.html?id=content-understanding-document-workflow" class="hero-mod-card hero-scenario-card" style="--mod-color:var(--c-agentic)">
               <img src="assets/img/icon-foundry.svg" class="mod-icon" alt="" aria-hidden="true" />
               <div class="route-kicker">Scenario 02</div>
               <div class="mod-name">Content Understanding and Document Workflow</div>
-              <div class="mod-count">SME-tested extraction with a governed review path.</div>
+              <div class="mod-count">Evidence-backed extraction with human review.</div>
             </a>
             <a href="scenario.html?id=avatar-scenario" class="hero-mod-card hero-scenario-card" style="--mod-color:var(--c-ghas)">
               <img src="assets/img/icon-foundry.svg" class="mod-icon" alt="" aria-hidden="true" />
@@ -120,9 +120,9 @@
       <div class="wrap">
         <div class="shead reveal">
           <div>
-            <span class="eyebrow">Outcome journeys</span>
-            <h2 id="outcomesHeading" style="margin-top:14px">Start with the result.</h2>
-            <p>Each playbook starts from a customer outcome and links only the lessons, slides, and accelerator seams that help move the engagement forward.</p>
+            <span class="eyebrow">Initial scenario tracks</span>
+            <h2 id="outcomesHeading" style="margin-top:14px">Map your use case to these tracks.</h2>
+            <p>Break the customer's end-to-end use case into parts, then identify which lessons cover each part. One customer scenario can draw on several tracks. Record the work the kit does not cover.</p>
           </div>
         </div>
         <div class="outcome-grid" id="outcomeGrid">
@@ -137,31 +137,33 @@
           <div>
             <span class="eyebrow">The experience</span>
             <h2 id="howHeading" style="margin-top:14px">How it works.</h2>
-            <p>Choose a scenario with the customer, then take its decisions, slides, and minimum demonstrator into the next conversation.</p>
+            <p>Use the playbooks to co-build the agreed part of the customer's solution. Slides support the design discussions; the lessons guide implementation.</p>
           </div>
         </div>
         <div class="steps-grid reveal">
           <div class="step-item">
             <div class="step-num">01</div>
-            <div class="step-title">Forge or frame the need</div>
-            <p class="step-desc">Use Idea Forge when the customer opportunity is unclear; otherwise begin with the customer’s desired outcome and constraints.</p>
+            <div class="step-title">Agree the scope</div>
+            <p class="step-desc">Define the customer outcome and acceptance criteria. Use Idea Forge if the opportunity is still unclear.</p>
           </div>
           <div class="step-item">
             <div class="step-num">02</div>
-            <div class="step-title">Pick the right scenario</div>
-            <p class="step-desc">Use the three scenario playbooks to surface the data, platform, environment, ownership, and evidence questions that shape the engagement.</p>
+            <div class="step-title">Map the parts to sessions</div>
+            <p class="step-desc">Decompose the use case and map each part to relevant lessons across tracks. Identify the adaptation needed and any additional engineering before planning sessions.</p>
           </div>
           <div class="step-item">
             <div class="step-num">03</div>
-            <div class="step-title">Run the scenario playbook</div>
-            <p class="step-desc">Choose AI Grounding / IQ, Content Understanding, or Avatar Scenario. Reuse lessons where they fit; do not follow a fixed course.</p>
+            <div class="step-title">Build together</div>
+            <p class="step-desc">Work through the design decisions and adapt the building blocks for the agreed parts. Keep lesson prerequisites and use the approved environment.</p>
           </div>
           <div class="step-item">
             <div class="step-num">04</div>
-            <div class="step-title">Leave an evidence trail</div>
-            <p class="step-desc">Capture the golden dataset, evaluation, operating assumptions, and ownership needed for the next customer decision.</p>
+            <div class="step-title">Check the result</div>
+            <p class="step-desc">Review the implementation against the agreed acceptance criteria. Assign an owner to any remaining work.</p>
           </div>
         </div>
+        <p><strong>Scope each engagement.</strong> The kit can support a pilot or a longer co-build. Guided lesson times exclude customer-specific engineering. Production readiness requires acceptance in the customer's environment; deploying an accelerator alone does not establish it.</p>
+        <p>Accelerators include sample assets and reusable code. Some also create demo resources. Check each guide before running it; demo foundations do not provision an enterprise landing zone.</p>
       </div>
     </section>
 
