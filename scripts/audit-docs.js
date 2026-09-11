@@ -332,7 +332,6 @@ const REQUIRED_LESSON_HEADINGS = [
   'choose your path',
   'implementation',
   'verify',
-  'decision record',
   'next module',
 ];
 

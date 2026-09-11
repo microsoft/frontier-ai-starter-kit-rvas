@@ -128,19 +128,18 @@ Reference: <https://learn.microsoft.com/azure/foundry/openai/how-to/structured-o
 
 ## 4. Typed result contract with evidence
 
-Normalize every capability's output into one contract, then gate on confidence and evidence. See
-[`sample-data/workflow/typed-result.json`](sample-data/workflow/typed-result.json). **A value without
-grounding evidence is inferred and rejected.** Any field below the threshold requires human review.
+Normalize every capability's output into one contract, then gate on confidence and evidence. **A
+value without grounding evidence is inferred and rejected.** Any field below the threshold requires
+human review.
 
 Open the typed result beside the source document and check that each field span points to the claimed
 text. A high-confidence field with no usable span still needs review.
 
 ## 5. Human review, correction, and handoff
 
-The [approval trace](sample-data/workflow/approval-trace.json) records the reviewer identity,
-timestamp, before-and-after values, and approved downstream seam (an action tool). Corrections remain
-evaluation evidence and never overwrite the original expected result. See
-[`../lessons/05-human-review.md`](../lessons/05-human-review.md) and the canonical
+The trace records the reviewer identity, timestamp, before-and-after values, and approved downstream
+seam (an action tool). Corrections remain evaluation evidence and never overwrite the original
+expected result. See [`../lessons/05-human-review.md`](../lessons/05-human-review.md) and the canonical
 [Action Tools activity](../../../activities/advanced-action-tools/README.md).
 
 Submit a document you know is ambiguous and confirm that it reaches the review queue. If nothing
@@ -148,10 +147,8 @@ routes to a person, the threshold is wrong.
 
 ## 6. Evaluate and trace
 
-Grade an evaluation run against the gate in
-[`sample-data/workflow/eval-report.json`](sample-data/workflow/eval-report.json): field accuracy,
-false-approval rate, review rate, and injection resistance. Enable GenAI tracing **before**
-importing the Foundry SDK:
+Grade an evaluation run against field accuracy, false-approval rate, review rate, and injection
+resistance. Enable GenAI tracing **before** importing the Foundry SDK:
 
 ```bash
 export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true

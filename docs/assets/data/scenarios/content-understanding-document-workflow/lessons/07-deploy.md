@@ -8,9 +8,8 @@ makes keyless auth, monitoring, and rollback operational rather than aspirationa
 ## What you build
 
 An authenticated endpoint that runs the reviewed workflow with a managed identity, Application
-Insights monitoring and GenAI tracing, plus a rollback path. Capture it in
-[`accelerator/sample-data/workflow/deploy-manifest.json`](../accelerator/sample-data/workflow/deploy-manifest.json)
-and confirmed by observing that the endpoint rejects unauthenticated calls.
+Insights monitoring and GenAI tracing, plus a rollback path. Confirm that the endpoint rejects
+unauthenticated calls.
 
 ## Choose your path
 
@@ -37,8 +36,8 @@ covers the background-run contract, response handle, later retrieval, and trace 
 this complexity when a reviewer expects one document to return while waiting.
 
 **Migration cost.** Moving from A to B or C rehosts the same container and identity model. The
-workflow, action-tool seam, and evaluation gate remain unchanged. The manifest is the same for each
-option except for its runtime line. You can make this decision late and reverse it.
+workflow, action-tool seam, and evaluation gate remain unchanged. You can make this decision late
+and reverse it.
 
 ## Implementation
 
@@ -54,9 +53,6 @@ same tracing env into the deployment:
 export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
 export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 ```
-
-Record auth mode, managed identity, monitoring, rollback strategy, and the passing module-6 gate in
-`deploy-manifest.json`.
 
 ### Option B — Container app / managed online endpoint
 
@@ -93,7 +89,7 @@ curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" https://<you
 **2. The runtime runs as a managed identity, with no keys.**
 
 ```bash
-grep -riE '(api[_-]?key|account[_-]?key|connection[_-]?string|sharedaccesskey)' deploy-manifest.json
+grep -riE '(api[_-]?key|account[_-]?key|connection[_-]?string|sharedaccesskey)' .
 ```
 
 You want no output. Then confirm that the deployment identity holds its required roles. Without them,
@@ -132,11 +128,6 @@ GenAI environment variables, so you cannot observe the workflow in production.
 | Rollback means a full redeploy | No revision/slot retained | Keep the previous revision pinned; make rollback a swap |
 | Manifest still lists module 6 as not passed | Shipping before module 6 passed | Do not deploy until the gate is green; it is a release prerequisite |
 | Secrets appear in the deployment config | Key-based auth crept back in | Return to managed identity; scan config for `*_KEY` / connection strings |
-
-## Decision record
-
-Record the selected runtime and why, endpoint auth model, monitoring and trace destination, rollback
-mechanism, and release approver. Use one dated paragraph as the pilot release record.
 
 ## Next module
 

@@ -12,8 +12,7 @@ overwrite extraction, and send corrections to module 6's evaluation.
    grounding evidence.
 2. A correction record that keeps the field, original value, corrected value, and reason.
 3. A governed handoff where approved results cross one seam to the downstream system as the workflow
-   identity, with an auditable trace. Reference:
-   [`accelerator/sample-data/workflow/approval-trace.json`](../accelerator/sample-data/workflow/approval-trace.json).
+   identity, with an auditable trace.
 
 ## Choose your path
 
@@ -126,11 +125,6 @@ app identity for every case prevents you from identifying the approver.
 | Reviewer approves without seeing evidence | Queue shows values but not grounding | Surface the grounding span/region beside each flagged field |
 | Corrections never reach evaluation | Records discarded after handoff | Persist correction records; module 6 reads them as evaluation evidence |
 | Anyone can trigger the handoff | Seam not access-controlled | Restrict the action tool to approver identities |
-
-## Decision record
-
-Record the reviewer surface, single handoff seam and permitted callers, correction-record location and
-retention, and denial and return path. Use one dated paragraph.
 
 ## Next module
 

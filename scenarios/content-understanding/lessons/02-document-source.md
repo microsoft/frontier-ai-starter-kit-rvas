@@ -32,9 +32,9 @@ when** documents belong in SharePoint and their owners should manage permissions
 them to Blob and create a second permission model. **Choose D when** documents are curated with
 analytical data in a Fabric lakehouse.
 
-**Migration cost.** Moving from A to B, C, or D changes the ingestion step and `source_kind` in the
-intake plan. Extraction and review still read the same typed result. Moving from C to A also requires
-a copy and new permission design, so avoid it unless there is a clear reason.
+**Migration cost.** Moving from A to B, C, or D changes the ingestion step and source type.
+Extraction and review still read the same typed result. Moving from C to A also requires a copy and
+new permission design, so avoid it unless there is a clear reason.
 
 ### The intake decision, stated precisely
 
@@ -46,8 +46,6 @@ Answer these before you write code:
 3. **What sends a document to quarantine** — unapproved class, unauthorized source, unsupported type
    or size, missing sensitivity label?
 4. **How long is a document retained**, and who signed off on that window?
-
-Capture the answers in [`accelerator/sample-data/workflow/intake-plan.json`](../accelerator/sample-data/workflow/intake-plan.json).
 
 ## Implementation
 
@@ -156,12 +154,7 @@ against the blob.
 | `AuthorizationFailure` with `--account-key` | Shared key access is disabled by design | Use `--auth-mode login`, never a key |
 | SharePoint returns nothing for some users | Inherited site permissions differ from intent | Fix permissions in SharePoint; retest with a low-privilege account |
 | Revoked user still reaches indexed content | ACL staleness after ingestion | Resync the indexer; parent-scope changes need a full resync |
-| Documents pile up unprocessed | No quarantine rule caught an unapproved class | Add the rule to the intake plan; route failures to `documents-quarantine` |
-
-## Decision record
-
-Keep one page with the pilot: the selected source and why alternatives lost, metadata contract,
-quarantine rules, retention window and approver, plus dated intake-check results.
+| Documents pile up unprocessed | No quarantine rule caught an unapproved class | Add the rule to the ingestion pipeline; route failures to `documents-quarantine` |
 
 ## Next module
 

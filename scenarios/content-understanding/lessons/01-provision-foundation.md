@@ -234,12 +234,6 @@ You want no output. Any match means an upstream step provided a key and broke th
 | Content Understanding calls 404 | Wrong endpoint host or unsupported region | Use `AZURE_CONTENT_UNDERSTANDING_ENDPOINT` from the outputs; confirm the region supports the service |
 | `.env` written but empty | Deployment succeeded with no outputs | Check `accelerator/.deployment-outputs.json`; re-run the deployment |
 
-## Decision record
-
-Record the selected option and why, region and its availability evidence, chat and embedding model and
-version, pinned Content Understanding and Document Intelligence API versions, local-auth status, and
-resource-group owner. Use one short paragraph plus `.env` variable names, never their values.
-
 ## Next module
 
 [Module 2 — Connect an approved document source](02-document-source.md) decides where trusted

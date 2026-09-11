@@ -11,7 +11,6 @@ diagnose failures.
 1. A labeled evaluation set from module-1 fixtures **and** module-5 corrections. Real mistakes make
    useful test cases.
 2. Gate metrics: field accuracy, false-approval rate, review rate, injection resistance, and latency.
-   See [`accelerator/sample-data/workflow/eval-report.json`](../accelerator/sample-data/workflow/eval-report.json).
 3. GenAI tracing to Application Insights that correlates extraction, review, and handoff.
 
 ## Choose your path
@@ -47,7 +46,7 @@ export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 Build the graded run and the evaluators in the canonical
 [Evaluation & Red Teaming activity](../../../activities/advanced-evaluation-redteam/README.md); wire
 the traces in [Tracing & Observability](../../../activities/advanced-tracing-observability/README.md).
-Emit the metrics into an `eval-report.json` shaped like the fixture so you can grade the gate.
+Write the measured metrics to `eval-report.json` and use them to grade the gate.
 
 ### Option B — Custom offline harness
 
@@ -123,11 +122,6 @@ tracing is not wired. Export the environment variables **before** the first Foun
 | No traces in Application Insights | Tracing env vars set after importing the SDK | Export them **before** the first Foundry import |
 | Metrics look great, pilot still fails | Evaluation set unrepresentative | Add the module-5 corrections and real edge cases to the dataset |
 | Latency gate breached | Synchronous polling or oversized documents | Batch, pre-segment, or move stable forms to a DI prebuilt model |
-
-## Decision record
-
-Record the dataset and its provenance, thresholds and why you chose them, included injection cases,
-and trace correlation. Use one dated paragraph.
 
 ## Next module
 

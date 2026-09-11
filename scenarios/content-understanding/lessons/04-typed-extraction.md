@@ -9,10 +9,7 @@ low-confidence fields route to review, and the model never invents a value.
 ## What you build
 
 A normalizer maps raw capability output into the typed result contract and enforces four invariants.
-A validation step rejects any result that violates one. The reference result is
-[`accelerator/sample-data/workflow/typed-result.json`](../accelerator/sample-data/workflow/typed-result.json);
-the deliberately broken one is
-[`typed-result-invalid.json`](../accelerator/sample-data/workflow/typed-result-invalid.json).
+A validation step rejects any result that violates one.
 
 The four invariants:
 
@@ -168,11 +165,6 @@ the threshold is too low. Calibrate it in module 6.
 | CU `source` is a polygon, not a page | Grounding is a region string `D(page, …)` | Parse the leading page index; keep the polygon as the span payload |
 | DI field has no `boundingRegions` | Field was inferred from key-value pairing, not located | Treat as `no_evidence` and route to review |
 | Missing field silently omitted | Normalizer skipped `None` values without flagging | Emit `missing_field:<name>` so the reviewer sees the gap |
-
-## Decision record
-
-Record the confidence threshold for each document class and how you set it, evidence representation
-(spans, polygons, or verified quote), and routing rule. Use one dated paragraph.
 
 ## Next module
 

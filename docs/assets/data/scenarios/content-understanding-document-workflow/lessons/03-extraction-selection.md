@@ -8,9 +8,8 @@ forms. Record the choice and its fallback.
 
 ## What you build
 
-A recorded extraction decision: capability, model or analyzer ID, API version, confidence threshold,
-evidence requirement, fallback, and fallback trigger. Store it in
-[`accelerator/sample-data/workflow/extraction-decision.json`](../accelerator/sample-data/workflow/extraction-decision.json).
+An extraction path with a model or analyzer ID, confidence threshold, evidence requirement, and
+fallback behavior.
 
 ## Choose your path
 
@@ -202,8 +201,8 @@ read `field.confidence` and `field.boundingRegions` from the SDK result.
 Run the same call against a document with a different layout, a scan, or a vendor you did not design
 for. Compare the returned fields to what you can see in the source document.
 
-If obvious fields come back empty, or confidence collapses across the document, use the recorded
-fallback. Do not lower the threshold until results look acceptable.
+If obvious fields come back empty, or confidence collapses across the document, use the fallback.
+Do not lower the threshold until results look acceptable.
 
 ## Troubleshooting
 
@@ -215,12 +214,6 @@ fallback. Do not lower the threshold until results look acceptable.
 | Costs spike per page | LLM path (E) on high-volume stable forms | Move to a DI prebuilt model (C) for those classes |
 | Values look plausible but are wrong | LLM inferred a value (E) with no grounding | Require a source span per field and reject unlocatable fields |
 | Handwriting/chart data dropped | Text-only pipeline over visual content | Use a multimodal analyzer (F) |
-
-## Decision record
-
-Record the selected capability, model or analyzer ID, API version, confidence threshold, evidence
-requirement, two rejected alternatives and why, plus the fallback and its trigger. Use one dated
-paragraph.
 
 ## Next module
 
