@@ -169,9 +169,13 @@
     {
       "id": "deploy-and-surface",
       "title": "Deploy and surface it to users",
-      "summary": "Choose where people will use the agent. Pin the version and test the permission boundary again.",
+      "summary": "Choose where people will use the agent, pin the version, and verify anonymous, authorized, and restricted calls through that deployed HTTP surface.",
       "activity_id": "advanced-deploy-hosted-agent",
-      "outcome": "Authenticated surface rejects unauthenticated callers"
+      "outcome": "Deployed surface passes anonymous, authorized, and restricted HTTP checks",
+      "implementation_paths": [
+        "accelerator/surface-probe.json",
+        "accelerator/scripts/probe_surface.py"
+      ]
     }
   ],
   "slides": "slides.md",

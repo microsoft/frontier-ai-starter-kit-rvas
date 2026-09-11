@@ -43,12 +43,19 @@ The command creates demo resources and emits the `.env` contract that later scri
 
 ## Scripts
 
-Four scripts work against your resources. `build_knowledge_source.py` creates the knowledge source
+Five scripts work against your resources. `build_knowledge_source.py` creates the knowledge source
 and knowledge base. `probe_permissions.py` checks the permission boundary with a second,
 lower-privileged identity. `compare_models.py` compares candidate deployments, and
 `grounded_answer.py` runs golden questions and reports citations, abstention, and recall. All need a
 subscription and the `.env` contract. Each lesson's **Verify** section says which to run and how to
 read its output.
+
+`probe_surface.py` verifies a deployed HTTP surface. It sends the same configured request as an
+anonymous caller, an authorized caller, and a restricted caller. The endpoint is required on the
+command line; `surface-probe.json` defines the method, headers, body, allowed statuses, and safe
+response markers for that surface. Set the two caller tokens in named environment variables, then
+pass only their variable names to the script. It never prints tokens, headers, request bodies, or
+response bodies.
 
 ## Sample-data swaps
 

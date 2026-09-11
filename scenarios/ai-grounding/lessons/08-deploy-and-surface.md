@@ -12,7 +12,7 @@ choosing a doorway and documenting who owns it.
 
 1. A chosen surface, with users able to ask a real question through it.
 2. A pinned agent version and a rollback that takes minutes instead of a redeploy.
-3. The module 2 permission probe re-run against the surface itself.
+3. A runnable HTTP check proving anonymous callers are rejected, authorized callers work, and restricted callers cannot see protected content.
 4. A named triage owner and a pilot exit criterion.
 
 ## Choose your path
@@ -153,8 +153,9 @@ review. Do not use it for normal chat latency problems; make the interaction fas
 
 ### Re-prove the permission boundary here
 
-Run the module 2 probe a third time against the surface. Test the doorway a real user uses. This is
-where per-user identity can get lost. It is cheap to check now and expensive to discover later.
+Run the surface probe against the doorway a real user uses. This is where per-user identity can get
+lost. The retrieval probe still proves the search boundary. This check proves the surface preserves
+it.
 
 ## Verify
 
@@ -162,29 +163,43 @@ This check catches a doorway that lets anyone in or calls the agent with one ser
 every user's documents visible to everyone. Prove the surface refuses anonymous callers and still
 trims by user.
 
-**1. An unauthenticated call is refused.** Hit the deployed surface with no credential:
+**1. Define the HTTP request and expected evidence.** Copy
+[`surface-probe.json`](../accelerator/surface-probe.json) and change its request method, headers,
+and JSON body to match the deployed surface. Put the full deployed URL, including its route, in
+`--endpoint`. The script does not assume a route or response schema.
+
+Set `expected_statuses` for all three callers. The authorized case must contain a marker from an
+approved response. The restricted case must reject the caller or return a payload without every
+restricted marker. Keep the markers specific enough to catch a title, answer text, or citation that
+would reveal protected content.
+
+**2. Get one authorized token and one restricted token for the surface's accepted Entra audience.**
+Store each token in a different environment variable. Do not put tokens in the plan, on the command
+line, or in a shell history. The script takes only the variable names and does not print credentials
+or response payloads.
+
+**3. Run the fail-closed check.**
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://<your-endpoint>
+python3 scenarios/ai-grounding/accelerator/scripts/probe_surface.py \
+  --endpoint "https://<your-surface>/<route>" \
+  --plan scenarios/ai-grounding/accelerator/surface-probe.json \
+  --authorized-token-env SURFACE_AUTHORIZED_TOKEN \
+  --restricted-token-env SURFACE_RESTRICTED_TOKEN \
+  --timeout-seconds 20
 ```
 
-`401` or `403` is the expected result. A `200` means the doorway is open. Require Entra auth on
-ingress before sharing the URL.
+The check sends the plan's request three times: without credentials, with the authorized token, and
+with the restricted token. Each call has its own timeout. It prints a `PASS` or `FAIL` line for the
+HTTP status and each payload marker, then exits nonzero for any missing caller input, invalid plan,
+request error, timeout, status mismatch, or content leak.
 
-**2. Per-user trimming survives the surface.** The corpus and the agent were proven in earlier
-modules, but the surface is new, and it is where per-user identity gets dropped. Re-run the module 2
-probe against the same knowledge base the surface serves:
+An anonymous `401` or `403`, an authorized `200` with the expected marker, and no restricted marker
+are the minimum evidence. If the surface uses another credential header or scheme, pass
+`--auth-header` or `--auth-scheme` to match it. A surface that cannot expose a callable HTTP route
+cannot use this verifier; test the protocol adapter that backs the user channel instead.
 
-```bash
-export PROBE_TENANT_ID=... PROBE_CLIENT_ID=... PROBE_CLIENT_SECRET=...
-python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
-  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
-```
-
-Every restricted case must still come back empty. If the surface calls the agent with one service
-identity instead of passing through the signed-in user, the leak appears here.
-
-**3. No key crept back in.** Confirm the deployed surface authenticates with a managed identity, not a
+**4. No key crept back in.** Confirm the deployed surface authenticates with a managed identity, not a
 key, and that its configuration carries no secrets:
 
 ```bash
@@ -206,10 +221,10 @@ Adjust the commands for the surface you deployed (Container Apps, Function App, 
 | Publishing fails with `403` on `Microsoft.BotService/botServices/write` | Foundry roles do not grant bot permissions | Assign **Azure Bot Service Contributor** on the resource group, then reopen the publish flow |
 | Publish dialog says the agent uses an older format | Agent predates the current agent model | Migrate the agent to the new format, then publish |
 | Agent published but nobody else can find it | Published to "just you" | Share the link, or republish to the organization and get admin approval |
-| Every user sees the same results regardless of permissions | The surface calls the agent with one service identity | Pass the signed-in user through; re-run the module 2 probe |
+| Every user sees the same results regardless of permissions | The surface calls the agent with one service identity | Pass the signed-in user through; re-run `probe_surface.py` with caller-specific tokens |
 | No traces after go-live | Tracing env not carried into the deployed runtime | Set both GenAI env vars in the deployment, before the SDK loads |
 | Rollback means a full redeploy | Previous version not retained | Keep the previous agent version; make rollback a version repoint |
-| Live probe returns `200` unauthenticated | The surface is open | Require Entra auth on ingress before anyone else sees the URL |
+| Surface probe returns `200` anonymously | The surface is open | Require Entra auth on ingress before anyone else sees the URL |
 | Secrets appear in the deployment config | Key-based auth crept back in | Return to managed identity; scan config for `*_KEY` and connection strings |
 
 ## Next module

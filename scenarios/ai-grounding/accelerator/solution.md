@@ -187,16 +187,23 @@ provider registered. Foundry roles do not grant these, which causes the demo-blo
 Pin the active version. "Always use latest" can send a debugging version to users. Rollback becomes a
 version repoint rather than a redeploy, and the endpoint URL stays the same.
 
-Re-run the module 2 permission probe **against the surface**, not the agent. A UI that calls the
-agent with one service identity deletes the boundary protected by modules 2 through 6.
+Verify the deployed surface, not only the agent. A UI that calls the agent with one service identity
+deletes the boundary protected by modules 2 through 6.
 
-Confirm the surface rejects an unauthenticated caller before you hand it to anyone:
+Configure `surface-probe.json` with the real request shape and markers for approved and restricted
+content. Then run all three callers through the same full endpoint and route:
 
 ```bash
-curl -s -o /dev/null -w '%{http_code}\n' "$SURFACE_ENDPOINT"
+python3 scenarios/ai-grounding/accelerator/scripts/probe_surface.py \
+  --endpoint "$SURFACE_ENDPOINT" \
+  --authorized-token-env SURFACE_AUTHORIZED_TOKEN \
+  --restricted-token-env SURFACE_RESTRICTED_TOKEN \
+  --timeout-seconds 20
 ```
 
-A `401` or `403` is the expected result. A `200` means the endpoint is open.
+The check fails on an anonymous success, an authorized response without the expected marker, a
+restricted-content marker, a request timeout, or a status mismatch. It never logs the tokens or
+response bodies.
 
 ## Teardown
 

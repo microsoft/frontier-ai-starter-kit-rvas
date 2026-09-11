@@ -29,7 +29,7 @@ account disables shared-key access, so there is no key to fall back to.
 | [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | Foundations Step 4 |
 | [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | Policy and live-data questions route to the correct source |
 | [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | Evaluation gate passed with trace and red-team evidence |
-| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | A pinned agent version and permission-aware surface | Authenticated surface rejects unauthenticated callers |
+| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | A pinned agent version and permission-aware surface | Deployed surface passes anonymous, authorized, and restricted HTTP checks |
 
 Most teams run into trouble in modules 5 through 7. They add an agent before retrieval works, copy
 live data into an index, or ship without a release gate. Module 8 checks another common failure:
@@ -74,6 +74,12 @@ python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py --deploymen
 
 # Run the golden questions and read citations, abstention, and recall@5
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py --knowledge-base grounding-kb
+
+# Verify the deployed surface with tokens held only in environment variables
+python3 scenarios/ai-grounding/accelerator/scripts/probe_surface.py \
+  --endpoint "https://<your-surface>/<route>" \
+  --authorized-token-env SURFACE_AUTHORIZED_TOKEN \
+  --restricted-token-env SURFACE_RESTRICTED_TOKEN
 ```
 
 Each lesson's **Verify** section lists the specific commands and signals for that module.
