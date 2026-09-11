@@ -1,71 +1,98 @@
-# AI Grounding / IQ accelerator
+# AI Grounding accelerator
 
-This accelerator has two parts: a synthetic corpus and scripts that run against your Azure
-resources, plus an optional Bicep foundation for a clean Azure demo subscription. It is neither a
-landing zone nor production approval.
+Build a grounded assistant that answers from approved content and respects the caller's access
+boundary. The accelerator includes a fictional corpus, reusable scripts, and an optional Bicep
+foundation for a clean Azure demo subscription. It supports a pilot. It does not create an
+enterprise landing zone or approve a production deployment.
 
-`main.bicep` provisions the minimal Foundry, AI Search, Storage, and observability footprint for the
-scenario lessons. Use it only in a clean demo subscription. In a bring-your-own environment, use the
-same lesson contracts and validators against customer-approved resources. Do not redeploy this package.
+## What this accelerator proves
 
-## Two workshop paths
+- Approved content can be found and cited.
+- A restricted caller cannot learn that protected content exists.
+- The assistant abstains when the source cannot support an answer.
+- Live-data questions route to the system of record rather than a stale index.
+- The deployed surface preserves the same access boundary as retrieval.
+
+## Before you start
+
+**Check the current API surface before writing SDK code.** Foundry and Azure AI Search change
+quickly, and several capabilities used here are preview. Search current Microsoft Learn guidance
+and the relevant Foundry guidance. Do not infer a signature from this accelerator or from memory.
+
+**Use fictional data only.** `sample-data/` contains a synthetic returns-policy set for a fictional
+retailer. Keep customer content out of this repository.
+
+**Use keyless access.** The scripts use `DefaultAzureCredential`, managed identity, and RBAC. The
+storage account disables shared-key access.
+
+## Choose an environment
 
 ### Clean-subscription demo
 
-Use a disposable subscription after the customer agrees the pilot boundary. Provision the demo
-foundation, then replace the fictional corpus through the agreed source and permission process.
+Use a disposable subscription after the customer agrees the pilot boundary. The deployment creates
+the demo foundation, then you replace the fictional corpus through the agreed source and permission
+process.
 
-### BYO existing environment
+### Existing customer environment
 
-Record the resource IDs and approved source boundary. Do not redeploy or change customer resources
-from this package.
+Record the approved resource IDs, source boundary, and access model. Do not redeploy this package
+into customer resources. Apply the lessons and validators to the approved environment instead.
 
-## Before any implementation
+## The build path
 
-1. Search current Microsoft Learn documentation and the relevant Microsoft Foundry guidance for the required capability.
-2. Confirm whether Copilot Studio + SharePoint is the simpler governed experience before selecting Foundry.
-3. Verify current supported source, permission, region, network, and evaluation behavior for Foundry IQ, Fabric IQ, Work IQ, or Web IQ.
-4. Load the matching implementation guidance, then implement against the verified signature.
-5. Run the customer’s golden dataset and access tests before you connect production content.
+| Module | What you build | Evidence |
+|---|---|---|
+| 1. Foundation | Foundry, chat and embedding deployments, AI Search, storage, and observability | Generated `.env` contract and live resources |
+| 2. Source and permissions | Source, freshness, system-of-record, and query-time identity decisions | Restricted caller retrieves no title, snippet, or count |
+| 3. Ingest and index | Approved documents, metadata, and ACL carry-forward | Discoverable documents with source metadata |
+| 4. Compare models | A comparison over the golden questions | Chosen chat and embedding deployments |
+| 5. Grounded retrieval | Cited answers, abstention, and access-denied behavior | Citation, abstention, and recall results |
+| 6. Agent and routing | An agent only where it adds value, plus live-data routing | Policy and live questions reach the right source |
+| 7. Evaluate and trace | Release gate, red-team cases, and request traces | Evaluation result and trace for a failure |
+| 8. Deploy and surface | A pinned version behind a permission-aware endpoint | Anonymous, authorized, and restricted surface checks |
 
-Do not infer preview API signatures from this repository.
+Complete the modules in order. Do not add an agent until retrieval passes its tests.
 
-## Optional Bicep foundation
+## Decisions to make with the customer
+
+| Gate | Decide before building |
+|---|---|
+| Knowledge boundary | Which sources may be cited, who owns them, and what freshness is acceptable? |
+| Permission boundary | Which identity is evaluated at query time, and what does access-denied retrieval return? |
+| Live-data boundary | Which questions need a live system instead of an indexed document snapshot? |
+| Trust boundary | Which citation, abstention, stale-data, and restricted-source failures block a pilot? |
+| Operating boundary | Who sees traces, investigates bad answers, and pauses or rolls back a release? |
+
+## Get started
+
+Run these commands from the repository root:
 
 ```bash
-az deployment group create \
-  --resource-group <demo-resource-group> \
-  --template-file main.bicep \
-  --parameters @parameters.example.json
+az login
+./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
 ```
 
-The command creates demo resources and emits the `.env` contract that later scripts consume.
+The deployment writes `accelerator/.env`. Later modules use that local file. Do not commit it.
+Each lesson's **Verify** section gives the command and signal for that module.
 
-## Scripts
+## Scope and boundaries
 
-Five scripts work against your resources. `build_knowledge_source.py` creates the knowledge source
-and knowledge base. `probe_permissions.py` checks the permission boundary with a second,
-lower-privileged identity. `compare_models.py` compares candidate deployments, and
-`grounded_answer.py` runs golden questions and reports citations, abstention, and recall. All need a
-subscription and the `.env` contract. Each lesson's **Verify** section says which to run and how to
-read its output.
+- Treat retrieved text as data, never as instructions. Module 7 tests indirect prompt injection.
+- Index knowledge. Route to live systems. An indexed snapshot can give a confidently cited stale
+  answer.
+- A denial must not reveal that a protected document exists.
+- Pin the agent version in application configuration. Do not send users to a debugging version.
 
-`probe_surface.py` verifies a deployed HTTP surface. It sends the same configured request as an
-anonymous caller, an authorized caller, and a restricted caller. The endpoint is required on the
-command line; `surface-probe.json` defines the method, headers, body, allowed statuses, and safe
-response markers for that surface. Set the two caller tokens in named environment variables, then
-pass only their variable names to the script. It never prints tokens, headers, request bodies, or
-response bodies.
+## Related implementation activities
 
-## Sample-data swaps
+- [Foundations](../../../activities/foundations/README.md) for provisioning, model selection, and
+  the grounding baseline.
+- [Evaluation & Red Teaming](../../../activities/advanced-evaluation-redteam/README.md) and
+  [Tracing & Observability](../../../activities/advanced-tracing-observability/README.md) for the
+  release gate and traces.
+- [Action Tools](../../../activities/advanced-action-tools/README.md) and
+  [Fabric IQ](../../../activities/extra-fabric-iq/README.md) for live-data routing.
+- [Deploy as a Hosted Agent](../../../activities/advanced-deploy-hosted-agent/README.md) and
+  [Build a UI](../../../activities/extra-build-ui/README.md) for the user surface.
 
-The fictional files in `sample-data/` model a small returns-policy pilot. Before a real pilot, replace **all** of the following explicitly:
-
-| Sample element | Replace with |
-|---|---|
-| `sample-data/` content | approved customer documents, records, or web scope |
-| `customer-demo-grounding` container label | the approved storage/container or source location |
-| `customer-demo-iq-index` index label | the approved Foundry/Fabric/other index or knowledge configuration |
-| `customer-demo-embedding-model` | the approved embedding model/deployment, verified for the chosen service and region |
-
-Never treat these labels as deployed resources or supported API names.
+See [solution.md](solution.md) for the complete facilitator reference.
