@@ -213,12 +213,6 @@ behaviour is unproven until you re-run this.
 | Red-team scan finds nothing | Only tested direct jailbreaks | Add indirect injection via a retrieved document — that is the scenario-specific risk |
 | Costs higher than the model comparison predicted | Retrieval round trips and embedding at query time were not counted | Recount from trace token totals, not from the chat model price alone |
 
-## Decision record
-
-Record dated evaluation results and gate threshold, red-team findings with mitigations and retest
-results, traced request ID, and the permission-probe result against the agent. Then answer in one
-sentence: is it good enough for real people, and if not, what must change first?
-
 ## Next module
 
 [Module 8 — deploy and surface it to users](08-deploy-and-surface.md). You have proof the assistant

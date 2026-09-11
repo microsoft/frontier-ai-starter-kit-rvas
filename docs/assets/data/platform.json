@@ -334,12 +334,9 @@
         {
           "id": "deploy-and-surface",
           "title": "Deploy and surface it to users",
-          "summary": "Choose where people will use the agent. Pin the version, test the permission boundary again, and record the release decision.",
+          "summary": "Choose where people will use the agent. Pin the version and test the permission boundary again.",
           "activity_id": "advanced-deploy-hosted-agent",
-          "outcome": "Surface release contract complete and the unauthenticated caller refused",
-          "implementation_paths": [
-            "accelerator/sample-data/surface-manifest.json"
-          ],
+          "outcome": "Authenticated surface rejects unauthenticated callers",
           "sequence": 8,
           "activity_path": "activity.html?id=advanced-deploy-hosted-agent"
         }

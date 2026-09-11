@@ -29,13 +29,7 @@ python3 -m pip install -r requirements.txt
 
 ## 1. Select the experience capability (Module 1)
 
-Record a dated capability decision. The shipped fixture is the reference:
-
-```bash
-cat scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
-```
-
-The default decision, **standard batch avatar**, avoids the Azure limited-access registration that
+The default, **standard batch avatar**, avoids the Azure limited-access registration that
 *custom* avatar / *custom* neural voice requires. It still requires synthetic-media disclosure. See
 `lessons/01-experience-selection.md` for the option comparison and responsible-AI gates.
 
@@ -135,7 +129,7 @@ python  activities/advanced-evaluation-redteam/validate.py
 
 Evaluate grounding, refusal, disclosure, and accessibility on a golden set. Run the AI Red Teaming
 Agent and the synthetic-media probes (impersonation, "skip the disclosure", unapproved claims).
-Review a trace for a failed case. Ship only when every `release-decision.json` gate is green. Measure
+Review a trace for a failed case. Ship only when every gate is green. Measure
 the pilot with **aggregate, identifier-free** telemetry only.
 
 ## End-to-end verification

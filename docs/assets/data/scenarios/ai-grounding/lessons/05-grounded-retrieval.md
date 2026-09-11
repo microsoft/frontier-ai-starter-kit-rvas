@@ -210,12 +210,6 @@ baseline exposes an otherwise invisible result: "We added an agent and retrieval
 | Latency far above expectation | `medium` reasoning effort, or a remote knowledge source in the base | Drop to `low`; remote sources are fetched live at query time and are inherently slower |
 | Everything passes but real users complain | Golden set reflects what you built, not what they ask | Collect 20 real questions and add the ones that fail |
 
-## Decision record
-
-Record the retrieval option and reasoning effort, abstention string and enforcement point, recency
-strategy, dated `recall@5` baseline, and whether the pilot needs an agent. If this module already
-answers the customer's question, module 6 is optional and shipping now is better.
-
 ## Next module
 
 [Module 6 — Add agent and live-data routing only when justified](06-agent-and-routing.md) adds an

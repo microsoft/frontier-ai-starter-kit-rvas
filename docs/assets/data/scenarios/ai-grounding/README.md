@@ -29,7 +29,7 @@ account disables shared-key access, so there is no key to fall back to.
 | [5. Build retrieval before adding an agent](lesson.html?scenario=ai-grounding&lesson=grounded-app) | Citations, abstention, access-denied silence, recency — with no agent | Foundations Step 4 |
 | [6. Add agent and routing only when justified](lesson.html?scenario=ai-grounding&lesson=agent-routing) | A justification, an agent with explicit routing rules, and a routing test | Policy and live-data questions route to the correct source |
 | [7. Evaluate and trace](lesson.html?scenario=ai-grounding&lesson=evaluate-and-trace) | Evaluation gate, red-team evidence, end-to-end traces | Evaluation gate passed with trace and red-team evidence |
-| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | The surface decision, a pinned version, a rollback, an owner, and a signed release | Surface release contract complete and the unauthenticated caller refused |
+| [8. Deploy and surface it to users](lesson.html?scenario=ai-grounding&lesson=deploy-and-surface) | A pinned agent version and permission-aware surface | Authenticated surface rejects unauthenticated callers |
 
 Most teams run into trouble in modules 5 through 7. They add an agent before retrieval works, copy
 live data into an index, or ship without a release gate. Module 8 checks another common failure:

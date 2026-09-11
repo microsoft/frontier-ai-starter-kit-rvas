@@ -169,13 +169,6 @@ Grant it and stay keyless.
 | Agent answers from outside the corpus | Knowledge tool scope too broad | Scope the knowledge tool to the approved corpus only |
 | Paraphrased policy reaches the script | Free-text drafting | The renderer requires exact-claim spoken text; author claims, not prose |
 
-## Decision record
-
-Keep the chosen path and why, the system prompt / agent instruction that enforces cite-and-refuse,
-the refusal token and help-path behavior, the retrieval boundary (approved content only), and the
-golden on-claim/off-claim examples that you will grow in module 7. The assistant drafts; **humans
-approve**.
-
 ## Next module
 
 [Module 5 — Generate the accessible avatar experience](05-experience-generation.md) turns an approved

@@ -243,12 +243,6 @@ hurts retrieval. Fix it here, rather than discovering it as an unexplained evalu
 | Citations vanish once the agent is added | Agent instructions did not restate the citation rule | Restate it; the tool's behaviour does not carry into the agent's output contract |
 | Agent reveals restricted document titles | Retrieval passed metadata the instructions did not suppress | Re-run module 2's permission probe against the *agent*, not just retrieval |
 
-## Decision record
-
-Record whether an agent was justified and the capability that justified it, or the decision not to
-build one; routing rules and test result; agent name and **version**; authoritative live-data system
-and owner; action-capable tools and human approval point; and re-measured `recall@5`.
-
 ## Next module
 
 [Module 7 — Evaluate and trace](07-evaluate-and-trace.md) proves the whole thing with

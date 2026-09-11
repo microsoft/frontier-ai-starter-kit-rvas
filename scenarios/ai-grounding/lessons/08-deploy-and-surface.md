@@ -13,9 +13,7 @@ choosing a doorway and documenting who owns it.
 1. A chosen surface, with users able to ask a real question through it.
 2. A pinned agent version and a rollback that takes minutes instead of a redeploy.
 3. The module 2 permission probe re-run against the surface itself.
-4. [`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json) —
-   the release contract you fill in.
-5. A named triage owner, a pilot exit criterion, and a signed release decision.
+4. A named triage owner and a pilot exit criterion.
 
 ## Choose your path
 
@@ -158,25 +156,6 @@ review. Do not use it for normal chat latency problems; make the interaction fas
 Run the module 2 probe a third time against the surface. Test the doorway a real user uses. This is
 where per-user identity can get lost. It is cheap to check now and expensive to discover later.
 
-### Write the release contract
-
-Record the decision in
-[`accelerator/sample-data/surface-manifest.json`](../accelerator/sample-data/surface-manifest.json).
-Fill it in. It has the same shape for all five options.
-
-Before calling it a pilot, answer these questions:
-
-| Question | Where the answer comes from |
-| --- | --- |
-| Who is in the pilot, and how is access granted and revoked? | Module 2, plus the publish scope you chose here |
-| What is the worst-case content staleness? | Module 3 |
-| What does it cost per 1,000 questions? | Module 4 numbers × expected volume |
-| What is the rollback if quality regresses? | The previous agent version, pinned |
-| How does a user report a wrong answer, and who triages it? | This module — name a person |
-| What ends the pilot? | The exit criterion below |
-
-A pilot without an exit criterion becomes permanent, unsupported infrastructure that nobody owns.
-
 ## Verify
 
 This check catches a doorway that lets anyone in or calls the agent with one service identity, making
@@ -233,17 +212,10 @@ Adjust the commands for the surface you deployed (Container Apps, Function App, 
 | Live probe returns `200` unauthenticated | The surface is open | Require Entra auth on ingress before anyone else sees the URL |
 | Secrets appear in the deployment config | Key-based auth crept back in | Return to managed identity; scan config for `*_KEY` and connection strings |
 
-## Decision record
-
-Record the chosen surface and why in one sentence a non-engineer understands; who can use it and how
-access is granted and revoked; pinned agent version and rollback; trace destination; named triage
-owner and review cadence; pilot exit criterion with review date; and signed release decision with the
-risk owner's name.
-
 ## Next module
 
 There isn't one. You have a grounded, permission-aware pilot with evaluation and tracing that real
-users can reach. Eight decision records explain the choices to whoever inherits it.
+users can reach.
 
 Extend the build with the [action tools](../../../activities/advanced-action-tools/README.md),
 [hosted deployment](../../../activities/advanced-deploy-hosted-agent/README.md), or

@@ -189,13 +189,6 @@ users. Ship captions, a transcript, and the non-avatar page for every option.
 | Job exceeds limits | > 20 min output or > 500 KB payload | Split into segments; keep each job within limits |
 | Captions present but no transcript | Relied on embedded subtitles only | Ship the standalone transcript + HTML fallback too |
 
-## Decision record
-
-Keep the chosen generation option and why, avatar character/style and voice (confirm **standard**,
-unless the limited-access path is approved), disclosure wording and where it appears (spoken +
-on-screen + transcript + fallback), shipped accessibility artifacts, and covered locales. Note the
-artifact id and trace hash so module 6 can approve *this exact* revision.
-
 ## Next module
 
 [Module 6 — Gate publication behind human approval](06-approval-gating.md) requires named human

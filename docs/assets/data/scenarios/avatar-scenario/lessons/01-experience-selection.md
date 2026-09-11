@@ -11,15 +11,8 @@ Learn guidance before you commit.
 
 ## What you build
 
-A dated, evidence-backed **capability decision record**. Use
-`accelerator/sample-data/capability-decision.json` as the template. For the pilot, it records:
-
-1. The Azure/Microsoft experience capability and its API + api-version.
-2. Region, identity model, and pricing basis.
-3. Accessibility alternatives (captions, transcript, non-avatar fallback).
-4. The disclosure statement and responsible-AI gates (limited access, consent).
-
-Do not provision anything until this record exists and its RAI gates are internally consistent.
+An avatar experience that uses a supported API, meets the responsible-AI gates, and has an
+accessible fallback.
 
 ## Choose your path
 
@@ -53,8 +46,7 @@ Verified overview:
 
 ## Implementation
 
-Create one JSON decision record. Each option below lists what to add and the verified facts for
-each field.
+Each option below lists the required configuration and verified facts.
 
 ### Option A — Speech TTS avatar, batch synthesis (default)
 
@@ -69,21 +61,6 @@ Submit text or SSML, poll `status` (`NotStarted → Running → Succeeded/Failed
 `outputs.result` (an `.mp4`). Limits are payload ≤ 500 KB, up to 200 concurrent jobs per resource,
 and output ≤ 20 minutes. Standard resolution defaults to 1920×1080 at 25 FPS.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
-
-Record these fields:
-
-```json
-{
-  "selected_capability": "speech-tts-avatar-batch",
-  "api": {
-    "name": "Text to speech avatar batch synthesis (REST)",
-    "operation": "PUT avatar/batchsyntheses/{SynthesisId}?api-version=2024-08-01",
-    "host": "https://{resource}.cognitiveservices.azure.com"
-  },
-  "identity": "managed-identity-entra-keyless",
-  "consent_and_gating": { "uses_custom_avatar": false, "uses_custom_or_personal_voice": false }
-}
-```
 
 **Identity (verified).** The Speech data plane accepts a Microsoft Entra token **only if the
 resource has a custom subdomain**. Module 2's Bicep sets `customSubDomainName`, so avatar synthesis
@@ -101,9 +78,7 @@ from the Speech REST API. You set `AvatarConfig("lisa", "casual-sitting")` and a
 `en-US-Ava:DragonHDLatestNeural`.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/real-time-synthesis-avatar>
 
-Record `"selected_capability": "speech-tts-avatar-realtime"`, a network/firewall note for the TURN
-egress rule, and a per-session latency budget. Choose it only for genuinely interactive onboarding.
-Otherwise, Option A is cheaper and reviewable.
+Choose it only for genuinely interactive onboarding. Otherwise, Option A is cheaper and reviewable.
 
 ### Option C — Voice Live API
 
@@ -124,15 +99,13 @@ original speaker's voice. Use it only when you already have signed-off video and
 cohort. Because it replicates a real person's voice, treat the source as consent-bearing.
 <https://learn.microsoft.com/azure/ai-services/speech-service/video-translation-overview>
 
-Record `"selected_capability": "video-translation"` and treat the original speaker's consent as a
-gate even though no *custom* model is trained.
+Treat the original speaker's consent as a gate even though no *custom* model is trained.
 
 ### Option E — Plain audio (accessibility-first)
 
 Standard-voice narration with no face. Lowest cost and lowest risk, and it is **also your mandatory
-non-avatar fallback** for every other option (module 5). Record `"selected_capability":
-"speech-tts-audio-only"`. Choosing E on purpose — because a face adds risk without value here — is a
-legitimate, defensible outcome. Say so in the decision record.
+non-avatar fallback** for every other option (module 5). Choose it when a face adds risk without
+value.
 
 ### The responsible-AI gate (applies to A–D, verified)
 
@@ -156,8 +129,7 @@ after the build.
 
 ## Verify
 
-You have not provisioned anything. Verify the decision record and the external fact it depends on.
-Check each against your record and Microsoft Learn.
+You have not provisioned anything. Verify the external facts before you choose a capability.
 
 **1. The region you named actually offers the capability you chose.** Avatar and Voice Live are
 region-gated. Open the Speech regions table and find your region in the column for your capability
@@ -171,19 +143,9 @@ At the time of writing, batch and real-time avatar are offered in `westus2`, `ea
 `southcentralus`, `southeastasia`, `centralindia`, `westeurope`, `swedencentral`, `northeurope`,
 `italynorth`, and `francecentral` (limited capacity). Re-read the table; the list changes.
 
-**2. The responsible-AI gating in your record is internally consistent.** Read your own record and
-compare the likeness fields with the gating fields:
-
-```bash
-jq '.consent_and_gating |
-    {uses_custom_avatar, uses_custom_or_personal_voice,
-     limited_access_registration_required, talent_consent_required, limited_access_form}' \
-  scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
-```
-
-If either `uses_custom_avatar` or `uses_custom_or_personal_voice` is `true`, the record must also
-show `limited_access_registration_required: true`, `talent_consent_required: true`, and the intake
-form `https://aka.ms/customneural`. A custom avatar or custom/personal voice without the
+**2. The responsible-AI gate is complete.** If you use a custom avatar or custom/personal voice,
+complete the limited-access registration and obtain talent consent through
+`https://aka.ms/customneural`. A custom avatar or custom/personal voice without the
 limited-access path fails legal review after the build. Standard prebuilt avatar and voice need no
 registration.
 <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/limited-access>
@@ -191,21 +153,9 @@ registration.
 **3. A disclosure statement is present even for a standard avatar.** Users must be told the presenter
 is synthetic whether or not a custom likeness is used:
 
-```bash
-jq -e '.disclosure_statement | length > 0' \
-  scenarios/avatar-onboarding/accelerator/sample-data/capability-decision.json
-```
-
-`true` is the expected result. An empty or missing disclosure lets an undisclosed synthetic persona
-reach employees, which the disclosure guidance forbids:
+An empty or missing disclosure lets an undisclosed synthetic persona reach employees, which the
+disclosure guidance forbids:
 <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
-
-## Decision record
-
-Keep the JSON record with the pilot. Add one paragraph covering the chosen capability, the two
-runners-up and why each lost, the region and availability evidence (URL + date), the identity model,
-and the disclosure statement. For custom likeness/voice, add the limited-access registration and
-talent-consent status. With the standard-avatar default, no real person's likeness is retained.
 
 ## Next module
 

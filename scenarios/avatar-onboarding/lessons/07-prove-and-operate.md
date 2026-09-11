@@ -16,8 +16,7 @@ applied to onboarding. Set the tracing switches **before importing** the Foundry
 2. A **red-team** pass that targets synthetic-presenter risks: off-source claims, undisclosed
    synthetic media, impersonation, and unsafe content.
 3. **Tracing** that makes a failure diagnosable end to end.
-4. A **scorecard + release decision** with explicit thresholds. Use
-   [`release-decision.json`](../accelerator/sample-data/release-decision.json) as the template.
+4. A **scorecard** with explicit thresholds.
 
 ## Choose your path
 
@@ -130,21 +129,8 @@ usually means you set the switches *after* SDK import. Export
 `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` and
 `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` before importing Foundry, then re-run.
 
-**2. `ship-pilot` is only recorded when every gate meets its threshold.** Read your own release
-record and check the scorecard against the thresholds:
-
-```bash
-jq -e '.decision != "ship-pilot" or (
-  .scorecard.grounding_pass_rate            >= .thresholds.min_grounding_pass_rate and
-  .scorecard.accessibility_defects          <= .thresholds.max_accessibility_defects and
-  .scorecard.redteam_high_severity_findings <= .thresholds.max_redteam_high_severity_findings and
-  .scorecard.unapproved_claim_leaks         <= .thresholds.max_unapproved_claim_leaks and
-  .trace_reviewed == true)' \
-  scenarios/avatar-onboarding/accelerator/sample-data/release-decision.json
-```
-
-`true` is the expected result. `false` means you recorded a ship decision with a red gate, such as
-an unapproved-claim leak or unresolved red-team finding reaching a real cohort on a synthetic face.
+**2. Ship only when every gate meets its threshold.** A red gate, such as an unapproved-claim leak
+or unresolved red-team finding, blocks the pilot.
 
 **3. The feedback you collect carries no identifiers.** Onboarding measurement must be aggregate.
 Scan your fixture for anything shaped like an email or per-person record:
@@ -167,13 +153,6 @@ onboarding tool. Keep counts only.
 | Accessibility defect slips to pilot | Fallback/transcript not evaluated | Gate on captions + transcript + fallback presence (module 5) |
 | Feedback contains PII | Collecting per-user events/free-text | Aggregate only; the check fails on identifiers/emails/free-text |
 | Ship decision recorded despite a red gate | Thresholds not enforced | The release check blocks `ship-pilot` unless every gate is green |
-
-## Decision record
-
-Keep the chosen evaluation/red-team option and why, the golden dataset and thresholds, red-team
-findings and their disposition, confirmation that you reviewed a trace for a failure, the
-measurement privacy stance (aggregate only), and the release decision with its scorecard. This
-record and the module-6 approval record go to the customer's risk owner.
 
 ## Next module
 

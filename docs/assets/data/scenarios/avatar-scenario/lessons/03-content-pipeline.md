@@ -182,13 +182,6 @@ presented as current policy is the failure this pipeline prevents.
 | Avatar paraphrases policy | Free-text drafting instead of exact claims | The renderer requires spoken text to equal an approved claim; author claims, not prose |
 | Source changed, experience stale | No invalidation path | Wire the module-6 withdrawal path: source change → claim invalid → pause |
 
-## Decision record
-
-Keep the chosen source option and the runners-up with why each lost, the claim-set version and
-`review_by`, where the approved corpus lives and how access is governed (Entra-only, no keys), the
-owner of each claim, and the invalidation rule ("source change ⇒ claim invalid ⇒ experience paused").
-Keep it to one page with the pilot.
-
 ## Next module
 
 [Module 4 — Build the grounded assistant behind the experience](04-grounded-assistant.md) turns this

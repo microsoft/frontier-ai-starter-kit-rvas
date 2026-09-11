@@ -234,12 +234,6 @@ keyless chain.
 | Search MI can't reach models later | Free tier, or missing **Cognitive Services User** | Move to Basic+, assign the role |
 | `.env` written but empty | Deployment succeeded with no outputs | Check `accelerator/.deployment-outputs.json`; re-run the deployment |
 
-## Decision record
-
-Record the chosen option and why, region and availability evidence, chat and embedding model +
-version, Search tier, whether local auth is disabled, and the resource-group owner. Use one short
-paragraph and the `.env` variable names, not their values.
-
 ## Next module
 
 [Module 2 — Select the source and permission architecture](02-source-and-permission-architecture.md)

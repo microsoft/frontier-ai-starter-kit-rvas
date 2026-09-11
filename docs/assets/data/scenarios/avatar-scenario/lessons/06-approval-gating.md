@@ -174,13 +174,6 @@ revision.
 | Source changed, nobody notified | Missing invalidation wiring | Wire module 3's expiry/source-change to auto-withdraw |
 | "Approved" but no audit trail | Approval outside the versioned record | Keep the versioned record even with a workflow tool (B/C/D) |
 
-## Decision record
-
-Keep the chosen gate option and why, the four required roles and who fills them, the exact
-`script_id`+`script_version` approval rule, the withdrawal trigger ("source change / expiry ⇒
-withdraw ⇒ pause"), and one blocked-publication example. This record and the signed approval record
-are your audit trail.
-
 ## Next module
 
 [Module 7 — Evaluate, red-team, trace, and operate](07-prove-and-operate.md) proves the experience is

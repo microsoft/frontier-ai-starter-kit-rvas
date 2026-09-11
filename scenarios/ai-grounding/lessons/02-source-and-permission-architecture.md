@@ -260,12 +260,6 @@ title or a hit count is itself a leak.
 | Permission filtering silently absent | Using the GA API version | Query-time ACL filtering requires the preview API/SDK |
 | Works for 30 docs, leaks at scale | ACL entry limits exceeded (32 ADLS Gen2, 1,000 SharePoint) | Redesign to group-based permissions rather than per-user entries |
 
-## Decision record
-
-Keep one page with the pilot: the chosen option and two runners-up, why each lost, the identity
-evaluated at query time, where permissions live, the data-owner-approved staleness window, denial
-behavior, API version and preview status, and the dated probe result.
-
 ## Next module
 
 [Module 3 — Ingest and index approved content](03-ingest-and-index.md) implements the source you

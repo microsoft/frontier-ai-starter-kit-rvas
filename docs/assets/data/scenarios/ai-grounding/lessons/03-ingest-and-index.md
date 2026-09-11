@@ -291,12 +291,6 @@ the indexer once content is in the container.
 | Chunks return fragments with no context | Chunking split mid-rule, or no section title carried into the chunk | Prepend the heading path to each chunk (Option C), or raise chunk size and overlap (Option B) |
 | Ingestion cost is higher than expected | Embeddings are billed at index time *and* query time | Reduce reingestion frequency; do not reingest unchanged documents |
 
-## Decision record
-
-Record the ingestion option and why, a one-sentence chunking policy and the rule boundary it
-protects, citation metadata, refresh schedule and worst-case staleness window approved in module 2,
-API version, and dated golden-question result.
-
 ## Next module
 
 [Module 4 — Compare chat and embedding choices](04-model-selection.md) picks the models, now that

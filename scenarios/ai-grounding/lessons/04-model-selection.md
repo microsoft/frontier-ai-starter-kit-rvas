@@ -176,12 +176,6 @@ what evidence would change it.
 | Candidate wins on quality but the harness is not reproducible | Temperature or prompt varied between runs | Fix the prompt, pin sampling parameters, re-run |
 | Every candidate scores identically | Golden set is too easy | Add the hard cases: ambiguity, superseded documents, questions the corpus cannot answer |
 
-## Decision record
-
-Record the chat deployment and runner-up with their measured numbers, embedding model and its
-full-reindex cost, region and quota headroom, PAYG/PTU decision and revisit volume, plus dated harness
-output.
-
 ## Next module
 
 [Module 5 — Build retrieval before adding an agent](05-grounded-retrieval.md) turns the corpus and

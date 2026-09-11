@@ -238,13 +238,6 @@ already broken.
 | `StorageAccountAlreadyTaken` | `resourceToken` collides globally | Pass a different `resourceToken` (5–12 lowercase chars) |
 | `.env` written but empty | Deployment produced no outputs | Check `accelerator/.deployment-outputs.json`; re-run |
 
-## Decision record
-
-Record the chosen option and why, region and avatar/Voice Live availability evidence (URL + date),
-chat + embedding model and version, Search tier, custom subdomain (so Speech is keyless), assigned
-Speech role, and resource-group owner. Add one short paragraph and the `.env` variable **names**,
-not values.
-
 ## Next module
 
 [Module 3 — Build the governed content pipeline](03-content-pipeline.md) turns approved HR/onboarding
