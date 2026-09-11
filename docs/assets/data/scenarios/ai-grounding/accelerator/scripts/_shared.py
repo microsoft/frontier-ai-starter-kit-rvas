@@ -22,8 +22,8 @@ def load_env(required: tuple[str, ...] = ()) -> dict[str, str]:
                 continue
             key, _, value = line.partition("=")
             values[key.strip()] = value.strip()
-    for key in required:
-        if os.environ.get(key):
+    for key in values.keys() | set(required):
+        if key in os.environ:
             values[key] = os.environ[key]
     return values
 

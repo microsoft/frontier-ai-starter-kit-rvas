@@ -1,9 +1,9 @@
 # AI Grounding: build answers people can trust
 
-Build a grounded, permission-aware assistant over approved content. Prove it before it ships.
+Build toward a grounded, permission-aware assistant over approved content. Prove it before it ships.
 
-The eight modules take you from an empty environment to a working pilot. Each ends with evidence
-from your resources, not a local success message. You deploy Azure resources, index a synthetic
+The eight modules guide a pilot build. Each asks for evidence
+from your resources. You deploy Azure resources, index a synthetic
 corpus, compare models, and test the failures that matter before anyone uses the assistant.
 
 ## Before you start
@@ -15,8 +15,17 @@ code; do not infer a signature from this course or from memory.
 **Fictional data only.** The corpus in `accelerator/sample-data/` is a synthetic returns-policy set
 for a fictional retailer. Never copy customer content into this repository.
 
-**Keyless.** Every path uses `DefaultAzureCredential`, managed identity, and RBAC. The storage
-account disables shared-key access, so there is no key to fall back to.
+**Setup.** Use Bash, Azure CLI, Bicep, and Python 3 in a virtual environment. Your Azure account
+needs permission to create the resources and role assignments. Install the Python packages listed
+in [the facilitator reference](accelerator/solution.md#prerequisites).
+
+**Access.** The main data paths use `DefaultAzureCredential`, managed identity, and RBAC.
+The permission probe uses a separate client secret, and the template configures an Application
+Insights connection string. The storage account disables shared-key access.
+
+**Known implementation gaps:** the shipped path does not yet prove per-document permissions,
+retrieval recall, or agent-level evaluation. Read the
+[accelerator limits](accelerator/README.md#known-implementation-gaps) before treating results as a release gate.
 
 ## The build path
 
@@ -49,6 +58,8 @@ Answer these questions before opening the reference library:
 
 ## Deploy the foundation
 
+Run commands from the repository root.
+
 ```bash
 az login
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
@@ -57,6 +68,15 @@ az login
 The deployment writes `accelerator/.env` from the template outputs. Later modules read that file,
 so keep it local and do not commit it.
 
+For shell commands in the lessons, load the generated values into your current shell:
+
+```bash
+set -a
+source scenarios/ai-grounding/accelerator/.env
+set +a
+export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
+```
+
 ## Run the scripts
 
 These scripts call your Azure resources directly. They need a subscription and the `.env` file.
@@ -64,6 +84,7 @@ There is no offline mode. An offline pass cannot tell you whether retrieval work
 
 ```bash
 # Create the knowledge source and knowledge base
+# First upload the approved corpus using module 3, then wait for ingestion to finish.
 python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
 
 # Check the permission boundary with a second, lower-privileged identity

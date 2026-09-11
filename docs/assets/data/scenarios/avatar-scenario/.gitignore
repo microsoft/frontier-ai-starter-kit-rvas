@@ -1,2 +1,4 @@
 accelerator/demo-artifacts/
 accelerator/.check-unapproved/
+accelerator/.deployment-outputs.json
+accelerator/.build/

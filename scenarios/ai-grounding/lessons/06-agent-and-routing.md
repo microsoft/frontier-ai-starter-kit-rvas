@@ -155,7 +155,7 @@ when every source is a document, because the model does not have to guess before
 
 ### Option C — Live data as a routed tool
 
-Two supported shapes:
+Implementation paths:
 
 1. **Fabric IQ as a remote knowledge source** — *Fabric Data Agent* (answers with embedded
    resources) or *Fabric Ontology* (entity- and relationship-based answers), both preview. Fabric
@@ -222,13 +222,16 @@ cite a document ID.
 **2. Confirm the agent did not lower recall.** Re-run the module 5 baseline against the same knowledge
 base:
 
+Run commands from the repository root.
+
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
   --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-The `recall@5` line must match the value from module 5. If it drops, the agent's query rewriting
-hurts retrieval. Fix it here, rather than discovering it as an unexplained evaluation regression.
+This command only rechecks raw retrieval. It does not invoke the agent or measure its query
+rewriting. To compare the agent with module 5, run the same cases through the agent and inspect its
+retrieval results; the accelerator does not provide that harness.
 
 ## Troubleshooting
 

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import statistics
 import sys
 import time
@@ -43,10 +44,12 @@ def build_context(case: dict[str, Any]) -> str:
     manifest_path = SAMPLE_DATA / "source-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     role_groups = set(case.get("role_groups", []))
+    if not role_groups:
+        raise ValueError(f"{case.get('id', 'case')}: role_groups must name at least one fixture role")
     parts: list[str] = []
     for source in manifest.get("sources", []):
         source_groups = set(source.get("access_groups", []))
-        if role_groups and not role_groups.intersection(source_groups):
+        if not role_groups.intersection(source_groups):
             continue
         path = SAMPLE_DATA / source["path"]
         parts.append(f"[{source['source_id']}]\n{path.read_text(encoding='utf-8')}")
@@ -55,9 +58,13 @@ def build_context(case: dict[str, Any]) -> str:
 
 def score_case(case: dict[str, Any], answer: str) -> dict[str, bool]:
     if case.get("expected_behavior") == "answer":
-        cited = all(citation in answer for citation in case.get("expected_citations", []))
-        return {"grounded": cited, "abstained": False, "recency": cited}
-    return {"grounded": True, "abstained": ABSTENTION.lower() in answer.lower(), "recency": True}
+        citations = case.get("expected_citations", [])
+        cited = bool(citations) and all(f"[{citation}]" in answer for citation in citations)
+        current = not any(
+            source_id in answer for source_id in case.get("forbidden_citations", [])
+        )
+        return {"grounded": cited and current, "abstained": False, "recency": current}
+    return {"grounded": True, "abstained": answer.strip() == ABSTENTION, "recency": True}
 
 
 def run_candidate(project: Any, deployment: str, cases: list[dict[str, Any]]) -> dict[str, Any]:
@@ -90,7 +97,7 @@ def run_candidate(project: Any, deployment: str, cases: list[dict[str, Any]]) ->
             abstained += 1
 
     ordered = sorted(latencies)
-    p95_index = max(0, int(len(ordered) * 0.95) - 1)
+    p95_index = max(0, math.ceil(len(ordered) * 0.95) - 1)
     return {
         "deployment": deployment,
         "grounded": f"{grounded}/{answerable}",
@@ -108,7 +115,7 @@ def main() -> int:
     args = parser.parse_args()
 
     failures: list[str] = []
-    env = load_env(REQUIRED_ENV)
+    env = load_env(REQUIRED_ENV + ("AZURE_AI_MODEL_DEPLOYMENT_NAME",))
     cases = load_golden_cases()
 
     if not cases:
@@ -150,7 +157,8 @@ def main() -> int:
     answerable = sum(1 for case in cases if case.get("expected_behavior") == "answer")
     print(
         f"\n{answerable} of {len(cases)} questions are answerable from the corpus. "
-        "A model that grounds fewer than that is guessing; one that abstains more is over-cautious."
+        "Citation matches are a smoke check, not a correctness score. "
+        "Review each answer against its acceptance criteria."
     )
     return 0
 

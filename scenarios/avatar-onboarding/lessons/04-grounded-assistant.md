@@ -49,7 +49,7 @@ SYSTEM_PROMPT = """You draft onboarding script text for a synthetic avatar prese
 Rules:
 1. State only facts present in the provided APPROVED CLAIMS. Never paraphrase policy.
 2. For each sentence, cite the claim_id you used.
-3. If no approved claim covers the request, reply exactly: "NO_APPROVED_CLAIM" and name the help_path.
+3. If no approved claim covers the request, start with "NO_APPROVED_CLAIM", then name the relevant help_path.
 4. Never invent benefits, dates, amounts, or obligations.
 """
 ```
@@ -129,7 +129,7 @@ ask () {
   jq -n --arg q "$1" --arg claims "$CLAIMS" '{
     temperature: 0,
     messages: [
-      {role:"system", content:"You draft onboarding script text. State only facts present in APPROVED CLAIMS and cite the claim_id you used. If no approved claim covers the request, reply exactly NO_APPROVED_CLAIM and name the help_path. Never invent benefits, dates, or amounts."},
+      {role:"system", content:"You draft onboarding script text. Use the exact wording of facts in APPROVED CLAIMS and cite the claim_id you used. If no approved claim covers the request, start with NO_APPROVED_CLAIM, then name the relevant help_path. Never invent benefits, dates, or amounts."},
       {role:"user", content:("APPROVED CLAIMS:\n" + $claims + "\n\nDraft: " + $q)}
     ]}' | curl -s -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d @- \
     "$AZURE_AI_FOUNDRY_ENDPOINT/openai/deployments/$AZURE_AI_MODEL_DEPLOYMENT_NAME/chat/completions?api-version=2024-10-21" \
@@ -164,7 +164,7 @@ Grant it and stay keyless.
 | --- | --- | --- |
 | Assistant invents a benefit/amount | Weak system prompt or content not constrained to claims | Enforce "approved claims only", `temperature=0`, and the exact refusal token |
 | Cites a claim id that doesn't exist | Model hallucinated a citation | Validate every returned `claim_id` against `claims.json`; drop unknown citations |
-| Refuses valid on-claim questions | Retrieval didn't surface the claim | Check embedding deployment + that content was uploaded (module 3, confirm the blob list) |
+| Refuses valid on-claim questions | Approved context omitted the claim | For A, inspect the loaded `claims.json`; for B/C, check retrieval and index contents |
 | `401`/`403` calling the model | Missing Cognitive Services OpenAI User role or wrong endpoint | Assign the role; use `AZURE_AI_FOUNDRY_ENDPOINT`; keyless via `DefaultAzureCredential` |
 | Agent answers from outside the corpus | Knowledge tool scope too broad | Scope the knowledge tool to the approved corpus only |
 | Paraphrased policy reaches the script | Free-text drafting | The renderer requires exact-claim spoken text; author claims, not prose |

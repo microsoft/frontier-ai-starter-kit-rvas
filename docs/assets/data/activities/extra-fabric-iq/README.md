@@ -5,7 +5,7 @@
 > Reusable live-data module. Use it when a scenario needs Fabric/OneLake grounding through a Fabric
 > IQ data agent. Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: Foundations Step 4 (the AI Search knowledge base) — this Extra adds a
 > *second*, live source alongside it.
@@ -13,7 +13,7 @@
 > Infra prerequisite: a Microsoft Fabric capacity
 > (F-SKU or Fabric trial) with a OneLake lakehouse holding a live operational table, plus a
 > Fabric IQ data agent that users can access. See
-> [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/extra-fabric-iq/solution.md) → *Runtime prerequisites* for the exact setup. Without Fabric capacity it
+> [solution.md](https://github.com/microsoft/frontier-ai-starter-kit-rvas/blob/main/activities/extra-fabric-iq/solution.md) → *Infra to pre-provision* for the exact setup. Without Fabric capacity it
 > cannot be completed.
 >
 > 🎤 Demo wow-factor: the assistant answers *"are there seats left in CS101 right now?"* with live

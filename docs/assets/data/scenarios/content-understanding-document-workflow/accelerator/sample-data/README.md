@@ -16,5 +16,10 @@ formats and integration behavior before you use a service.
 - `corrections/` — a separate reviewer correction record for `invoice-2002`; it deliberately preserves the original expected outcome.
 - `manifest.json` and `result-contract.json` — the scenario validator's input contract.
 
+**Expected values are not normalized service results.** The local records omit field confidence
+and grounding spans. Use them to check facts and routing; they cannot prove module 4's evidence
+contract. The fixtures also contain routing hints, so add separate attack cases without those hints
+before measuring injection resistance.
+
 Run the workflow over this pack and compare every extracted field with its source document. That
 comparison is the evidence.

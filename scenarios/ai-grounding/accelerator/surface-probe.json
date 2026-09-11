@@ -6,7 +6,7 @@
       "Content-Type": "application/json"
     },
     "body": {
-      "input": "What discretionary goodwill credit can a supervisor approve?"
+      "input": "For a documented hardship request on day 31 to 45, what does a supervisor record?"
     }
   },
   "callers": {
@@ -21,7 +21,7 @@
         200
       ],
       "response_must_contain": [
-        "goodwill credit ceiling"
+        "RET-SUP-2026-01"
       ]
     },
     "restricted": {
@@ -30,8 +30,10 @@
         403
       ],
       "response_must_not_contain": [
-        "goodwill credit ceiling",
-        "returns-supervisor-playbook"
+        "RET-SUP-2026-01",
+        "supervisor exception playbook",
+        "hardship evidence",
+        "decision rationale"
       ]
     }
   }

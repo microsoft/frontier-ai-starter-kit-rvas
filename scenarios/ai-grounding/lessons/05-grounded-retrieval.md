@@ -53,7 +53,7 @@ Use the current Microsoft Learn guidance for the active retrieval surface.
 
 ### Option A — Knowledge base retrieval with answer synthesis
 
-[`accelerator/scripts/grounded_answer.py`](../accelerator/scripts/grounded_answer.py):
+The script is `scenarios/ai-grounding/accelerator/scripts/grounded_answer.py`:
 
 ```python
 from azure.identity import DefaultAzureCredential
@@ -160,7 +160,7 @@ The [foundations activity](../../../activities/foundations/README.md) Step 4 bui
 end-to-end against the university FAQ corpus, including attaching the index to an agent with
 `AzureAISearchQueryType.SEMANTIC` and `top_k=5`. Use it as the working reference.
 
-### The three behaviours you must implement, not hope for
+### The four behaviours you must implement
 
 **Citations.** Every claim needs a source ID. Enforce it in the instruction and assert it in the
 test. A model told to cite will usually cite, and "usually" is not a control.
@@ -172,15 +172,21 @@ plain refusal. An assistant that never says "I don't know" is not grounded.
 answer must be indistinguishable from "no information exists." Do not return a title, snippet, or
 "there is a supervisor document but you cannot see it." Each reveals information.
 
-**Freshness.** The corpus has a superseded Alpine District notice alongside the current one. The
-answer must cite the current notice. If both rank together, filter by effective date at query time.
-The ranker does not reliably prefer recency.
+**Freshness.** The corpus's current Alpine District notice names the notice it supersedes, but the
+older document is absent. Add an approved superseded fixture before claiming to test ranking between
+conflicting versions. The answer must cite the current notice.
 
 ## Verify
+
+**Harness limit:** this script's `recall@5` label counts source IDs in answers, not relevant passages
+among five retrieved results. It also uses one caller identity for all cases, ignoring `role_groups`.
+Do not use that output as proof of retrieval recall or coordinator-versus-supervisor permissions.
 
 Do not skip recall. Without a recorded baseline, module 6's agent can quietly worsen retrieval.
 
 **1. Run the golden questions against the knowledge base and read every case.**
+
+Run commands from the repository root.
 
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
@@ -192,9 +198,9 @@ abstain, not produce a plausible paragraph. The Alpine notice case should cite t
 not `SVC-ALPINE-2026-01-28`. A citation `FAIL` often means a vector-only query missed an exact ID.
 Send `search_text` with the vector query. An abstention `FAIL` means the prompt still permits inference.
 
-**2. Record the recall line as your baseline.** The script prints, for example,
-`recall@5 = 1.00  (4/4)`. Set `--min-recall` to the threshold your pilot requires. This
-baseline exposes an otherwise invisible result: "We added an agent and retrieval got worse."
+**2. Record what the metric actually measures.** The script prints, for example,
+`recall@5 = 1.00  (4/4)`. Its `--min-recall` argument gates answer citation hit rate.
+Build a passage-level recall check before comparing retrieval quality with the agent.
 
 ## Troubleshooting
 

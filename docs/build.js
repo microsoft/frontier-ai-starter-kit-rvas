@@ -48,7 +48,7 @@ const OUTCOMES = [
     activity_ids: ['idea-forge'],
     success_metrics: [
       'A selected idea has an outcome, users, data sources, tier guidance, and risk notes.',
-      'The chosen idea transfers cleanly into the Customer Build scenario pack.',
+      'The chosen idea maps to relevant lessons, with uncovered work recorded.',
     ],
   },
   {
@@ -88,7 +88,7 @@ const ACTIVITIES = [
     track: 'define',
     difficulty: 'beginner',
     duration_minutes: 20,
-    description: 'Generate and select a buildable customer AI application idea before starting Customer Build.',
+    description: 'Choose a customer AI application idea and map it to relevant scenario lessons.',
     outcomes: ['idea-forge'],
     participant: 'docs/idea-forge.md',
   },
@@ -107,7 +107,7 @@ const ACTIVITIES = [
     title: 'Act: Action Tools',
     track: 'actions',
     difficulty: 'intermediate',
-    duration_minutes: 90,
+    duration_minutes: 45,
     description: 'Attach governed tools and approval-gated actions to your Foundry agent.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -118,7 +118,7 @@ const ACTIVITIES = [
     title: 'Prove: Evaluation & Red Teaming',
     track: 'trust',
     difficulty: 'intermediate',
-    duration_minutes: 90,
+    duration_minutes: 75,
     description: 'Build quality and safety evals, run adversarial prompts, and gate the agent with a scorecard.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -129,7 +129,7 @@ const ACTIVITIES = [
     title: 'Debug: Tracing & Observability',
     track: 'trust',
     difficulty: 'intermediate',
-    duration_minutes: 75,
+    duration_minutes: 60,
     description: 'Trace model calls, retrieval, tool use, and failures in Application Insights.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -151,9 +151,10 @@ const ACTIVITIES = [
     title: 'Demo UI: Build a UI',
     track: 'deploy',
     difficulty: 'intermediate',
-    duration_minutes: 75,
+    duration_minutes: 0,
     description: 'Create a stakeholder-facing chat or demo UI for the Foundry agent.',
-    prerequisites: ['foundations'],
+    prerequisites: ['advanced-deploy-hosted-agent'],
+    prerequisite_capabilities: ['Complete Action Tools if you build the approval panel.'],
     outcomes: ['reference'],
     participant: 'activities/extra-build-ui/README.md',
   },
@@ -162,7 +163,7 @@ const ACTIVITIES = [
     title: 'Interface: Voice Live',
     track: 'extras',
     difficulty: 'advanced',
-    duration_minutes: 75,
+    duration_minutes: 0,
     description: 'Add a spoken interaction path for contact-center, accessibility, or demo scenarios.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -173,7 +174,7 @@ const ACTIVITIES = [
     title: 'Deepen: Fabric IQ',
     track: 'extras',
     difficulty: 'advanced',
-    duration_minutes: 75,
+    duration_minutes: 0,
     description: 'Ground answers in operational or analytical data when static documents are not enough.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -184,7 +185,7 @@ const ACTIVITIES = [
     title: 'Build: Document Workflow',
     track: 'extras',
     difficulty: 'intermediate',
-    duration_minutes: 90,
+    duration_minutes: 0,
     description: 'Extract, validate, review, and route document data with a keyless, human-governed workflow.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -195,7 +196,7 @@ const ACTIVITIES = [
     title: 'Build: Visual Multimodal',
     track: 'extras',
     difficulty: 'intermediate',
-    duration_minutes: 90,
+    duration_minutes: 0,
     description: 'Analyze safe image inputs with structured results, uncertainty handling, and human review boundaries.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -206,7 +207,7 @@ const ACTIVITIES = [
     title: 'Build: Governed Data Copilot',
     track: 'extras',
     difficulty: 'advanced',
-    duration_minutes: 90,
+    duration_minutes: 0,
     description: 'Query approved structured data through explicit access, field, and result-provenance controls.',
     prerequisites: ['foundations'],
     outcomes: ['reference'],
@@ -217,9 +218,9 @@ const ACTIVITIES = [
     title: 'Orchestrate: Magentic Workflows',
     track: 'orchestrate',
     difficulty: 'advanced',
-    duration_minutes: 90,
+    duration_minutes: 0,
     description: 'Explore manager/planner orchestration with Microsoft Agent Framework patterns.',
-    prerequisites: ['foundations'],
+    prerequisites: ['foundations', 'advanced-action-tools'],
     outcomes: ['reference'],
     participant: 'activities/extra-magentic-workflows/README.md',
   },
@@ -228,9 +229,9 @@ const ACTIVITIES = [
     title: 'Deploy: Long-Running Agents',
     track: 'deploy',
     difficulty: 'advanced',
-    duration_minutes: 75,
+    duration_minutes: 0,
     description: 'Use background run patterns for workflows that outlive a browser session.',
-    prerequisites: ['foundations'],
+    prerequisites: ['advanced-deploy-hosted-agent'],
     outcomes: ['reference'],
     participant: 'activities/extra-hosted-longrunning/README.md',
   },
@@ -295,10 +296,11 @@ function writeGuide(activity) {
   fs.mkdirSync(guideDir, { recursive: true });
 
   const configured = activity.participant;
-  const fallback = `# ${activity.title}\n\nGuide content is not available yet.`;
-
   const raw = configured ? readIfExists(configured) : null;
-  fs.writeFileSync(path.join(guideDir, 'README.md'), transformMarkdown(raw || fallback, activity));
+  if (!raw || !raw.trim()) {
+    throw new Error(`activity ${activity.id} has a missing or empty guide: ${configured}`);
+  }
+  fs.writeFileSync(path.join(guideDir, 'README.md'), transformMarkdown(raw, activity));
 
   if (activity.participant && activity.participant.startsWith('activities/')) {
     const srcDir = path.join(ROOT, path.dirname(activity.participant));
@@ -397,6 +399,10 @@ function detectScenarioProblems(scenarios) {
         if (lessonIds.has(lesson.id)) problems.push(`${scenario.id} duplicate lesson id ${lesson.id}`);
         lessonIds.add(lesson.id);
       }
+      if (scenario.lessons.length !== (scenario.build_modules || []).length ||
+          scenario.lessons.some((lesson, index) => lesson.id !== scenario.build_modules[index]?.id)) {
+        problems.push(`${scenario.id} needs one build module per lesson, with matching IDs and order`);
+      }
     }
     return problems;
 }
@@ -489,6 +495,10 @@ function detectMissingReferences(activities, outcomes, scenarios) {
   const ids = new Set(activities.map((c) => c.id));
   const missing = [];
   for (const activity of activities) {
+    const guide = activity.participant ? readIfExists(activity.participant) : null;
+    if (!guide || !guide.trim()) {
+      missing.push(`${activity.id} has a missing or empty guide: ${activity.participant}`);
+    }
     for (const prereq of activity.prerequisites || []) {
       if (!ids.has(prereq)) missing.push(`${activity.id} prerequisite ${prereq}`);
     }
@@ -573,4 +583,6 @@ function main() {
   console.log(`✓ copied guides → ${path.relative(ROOT, OUT_GUIDES_DIR)}`);
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { detectMissingReferences, detectScenarioProblems, loadScenarioRegistry, transformMarkdown };

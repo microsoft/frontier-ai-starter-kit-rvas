@@ -30,9 +30,10 @@ Where does the approval gate live and who enforces it?
 | C. Power Automate / Logic Apps approval flow | Approvals in M365/Teams | Flow gates the publish action | Medium | Approvers live in Teams and want native approvals |
 | D. ITSM change request (ServiceNow etc.) | Change management system | Change ticket must be approved before publish | Higher | Regulated orgs requiring formal change control |
 
-**Default: Option A.** A signed, versioned record enforced by the renderer is the smallest
-auditable, portable gate. Approval travels with the artifact, and code enforces it. This module's
-Verify proves the gate blocks. Choose **B/C/D** when the customer's release, collaboration, or
+**Default: Option A.** The local validator checks a versioned demo record. It does not authenticate
+reviewers or verify signatures. A publishing integration must bind approvals to immutable content
+and remove withdrawn media from the serving channel. This module's Verify checks only local pack
+rejection. Choose **B/C/D** when the customer's release, collaboration, or
 change-control process must own sign-off. Keep the same **four required roles** and **withdrawal**
 semantics.
 
@@ -82,7 +83,7 @@ p = Path("scenarios/avatar-onboarding/accelerator/sample-data/approvals.json")
 record = json.loads(p.read_text())
 record["approval_status"] = "withdrawn"        # was: approved-for-demo-only
 p.write_text(json.dumps(record, indent=2))
-# The renderer now rejects the pack: the experience is paused until re-approval.
+# The validator rejects future builds. The channel adapter must withdraw any served media.
 ```
 
 ### Option B — Pipeline environment approvals
@@ -169,7 +170,7 @@ revision.
 | --- | --- | --- |
 | Pack publishes with a missing role | Gate checks presence, not completeness | Enforce all four `REQUIRED_APPROVER_ROLES`; the check fails if any is absent |
 | Old revision still publishes | Approval not bound to `script_version` | Match `script_id` + `script_version` exactly; re-approve every revision |
-| Withdrawn content still served | No withdrawal enforcement | Flip `approval_status`; renderer must reject non-approved statuses |
+| Withdrawn content still served | Only future builds are blocked | Withdraw the served version through the channel adapter as well as changing `approval_status` |
 | Approver name blank | Unattributed approval | Require a named `approver` and `decided_at` per row |
 | Source changed, nobody notified | Missing invalidation wiring | Wire module 3's expiry/source-change to auto-withdraw |
 | "Approved" but no audit trail | Approval outside the versioned record | Keep the versioned record even with a workflow tool (B/C/D) |

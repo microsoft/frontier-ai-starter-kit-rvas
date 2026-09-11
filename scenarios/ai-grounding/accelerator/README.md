@@ -5,13 +5,29 @@ boundary. The accelerator includes a fictional corpus, reusable scripts, and an 
 foundation for a clean Azure demo subscription. It supports a pilot. It does not create an
 enterprise landing zone or approve a production deployment.
 
-## What this accelerator proves
+## What the pilot must prove
 
 - Approved content can be found and cited.
 - A restricted caller cannot learn that protected content exists.
 - The assistant abstains when the source cannot support an answer.
 - Live-data questions route to the system of record rather than a stale index.
 - The deployed surface preserves the same access boundary as retrieval.
+
+## Known implementation gaps
+
+**Do not treat the shipped scripts as a complete release gate.** The blob path does not map the
+fictional role labels to per-document Azure permissions. `grounded_answer.py` uses one identity for
+all cases and labels answer citation matches as `recall@5`; it does not measure retrieved passages.
+The module 6 and 7 probe commands still call the knowledge base, not the agent. Module 7's shared
+evaluation harness expects JSONL rows, while this scenario supplies a JSON object of cases.
+
+These need implementation work before a permission-aware pilot can pass the stated gates.
+The model comparison only scopes local prompt context by fixture role. Neither probe can prove
+the absence of every possible leak from a finite list of text markers.
+
+**Surface probe transport:** `probe_surface.py` accepts HTTP and follows redirects with its
+authorization header. Do not send real tokens until HTTPS-only requests and safe redirect handling
+are enforced. A redirect can forward a token to another origin.
 
 ## Before you start
 
@@ -22,8 +38,9 @@ and the relevant Foundry guidance. Do not infer a signature from this accelerato
 **Use fictional data only.** `sample-data/` contains a synthetic returns-policy set for a fictional
 retailer. Keep customer content out of this repository.
 
-**Use keyless access.** The scripts use `DefaultAzureCredential`, managed identity, and RBAC. The
-storage account disables shared-key access.
+**Access.** The main data paths use `DefaultAzureCredential`, managed identity, and RBAC.
+The permission probe uses a separate client secret; the template also configures an Application
+Insights connection string. Storage shared-key access is disabled.
 
 ## Choose an environment
 
@@ -73,7 +90,20 @@ az login
 ```
 
 The deployment writes `accelerator/.env`. Later modules use that local file. Do not commit it.
+Load it into your shell before running lesson commands that use `$AZURE_*` variables:
+
+```bash
+set -a
+source scenarios/ai-grounding/accelerator/.env
+set +a
+export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
+```
+
 Each lesson's **Verify** section gives the command and signal for that module.
+
+For offline checks of the helpers and fixtures, run
+`python3 -B scenarios/ai-grounding/accelerator/scripts/test_offline.py`.
+These checks do not verify Azure retrieval or permissions.
 
 ## Scope and boundaries
 
@@ -95,4 +125,4 @@ Each lesson's **Verify** section gives the command and signal for that module.
 - [Deploy as a Hosted Agent](../../../activities/advanced-deploy-hosted-agent/README.md) and
   [Build a UI](../../../activities/extra-build-ui/README.md) for the user surface.
 
-See [solution.md](solution.md) for the complete facilitator reference.
+See [solution.md](solution.md) for the facilitator reference.

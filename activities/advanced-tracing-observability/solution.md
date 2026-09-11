@@ -63,8 +63,8 @@ Tell-tale signs and the fix:
   **retrieval** spans; a **tool** span appears only if they attached the Action Tools MCP tool.
 - Token attributes to point at: `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`,
   `gen_ai.usage.total_tokens`. Latency = the span `duration`.
-- This step's checkpoint is portal-state; `python activities/advanced-tracing-observability/validate.py --step 3` confirms via App Insights that a
-  multi-span trace exists for a recent run (it cannot read the portal UI directly).
+- `python activities/advanced-tracing-observability/validate.py --step 3` checks the capture flag in
+  source only. Inspect the portal yourself to confirm the span tree and message content.
 
 ### Step 4 — KQL correlation (the answers)
 

@@ -113,6 +113,7 @@ python activities/extra-governed-data-copilot/validate.py --step 1
 
 ```bash
 python activities/extra-governed-data-copilot/validate.py --step 2
+python activities/extra-governed-data-copilot/validate.py --step 3
 ```
 
 ---
@@ -138,7 +139,7 @@ python activities/extra-governed-data-copilot/validate.py --step 2
 **Verify**
 
 ```bash
-python activities/extra-governed-data-copilot/validate.py --step 3
+python activities/extra-governed-data-copilot/validate.py --step 4
 ```
 
 ---

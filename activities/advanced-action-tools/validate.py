@@ -31,6 +31,7 @@ except ImportError:  # python-dotenv optional; .env may already be exported in t
     pass
 import re
 import sys
+import uuid
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -153,7 +154,7 @@ def check_step4() -> bool:
     except ImportError:
         return _fail("4", "httpx not installed")
 
-    payload = {"student_id": "validate_py", "summary": "checkpoint smoke ticket",
+    payload = {"student_id": "validate_py", "summary": f"checkpoint smoke ticket {uuid.uuid4().hex}",
                "category": "other", "priority": "low"}
 
     class FakeResponses:

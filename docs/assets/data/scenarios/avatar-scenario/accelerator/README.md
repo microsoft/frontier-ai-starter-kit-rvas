@@ -5,7 +5,7 @@ vendor-neutral approved-content pack and integration seam, plus an optional Bice
 clean Azure demo subscription. The reference path uses Azure Speech batch avatar synthesis. It
 supports a pilot. It does not select a production channel or implement a production channel adapter.
 
-## What this accelerator proves
+## What the completed workflow must prove
 
 - Published claims trace to an approved source and an exact script revision.
 - Named reviewers approve a revision before it publishes.
@@ -14,6 +14,16 @@ supports a pilot. It does not select a production channel or implement a product
 - Pilot telemetry stays aggregate and free of personal identifiers.
 
 ## Before you start
+
+For deployment, install **Azure CLI, Python 3, Bash, and `sha1sum`**. The lessons also use
+`jq`, `curl`, and the standalone Bicep CLI. Sign in with an Azure user account in the intended
+subscription. You need permission to create resources and role assignments, plus model quota in
+the chosen region. The deployment script does not support service-principal sign-in.
+
+**The local pack is a rehearsal, not a publisher.** `content_pack.py` checks claim wording,
+demo approval rows, and required text files. It returns an artifact record; it does not render
+captions or media, authenticate reviewers, enforce expiry, or withdraw files already served.
+Build those controls in the channel adapter before using the workflow with employees.
 
 **Check the current API surface before writing SDK code.** The selected avatar service and channel
 determine the API, identity model, availability, privacy controls, accessibility behavior, and
@@ -73,7 +83,13 @@ az login
 ./scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
 ```
 
-The deployment writes `accelerator/.env`. Later modules use that local file. Do not commit it.
+The deployment writes `scenarios/avatar-onboarding/accelerator/.env`. Load it before later commands:
+
+```bash
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
+```
+
+Do not commit it or print bearer tokens in logs.
 Each lesson's **Verify** section gives the command and signal for that module.
 
 ## Scope and boundaries
@@ -93,4 +109,4 @@ Each lesson's **Verify** section gives the command and signal for that module.
   [Tracing & Observability](../../../activities/advanced-tracing-observability/README.md) for
   release evidence and traces.
 
-See [solution.md](solution.md) for the complete facilitator reference.
+See [solution.md](solution.md) for the facilitator reference and integration boundaries.

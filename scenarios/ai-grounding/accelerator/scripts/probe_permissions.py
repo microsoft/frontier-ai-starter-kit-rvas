@@ -206,7 +206,7 @@ def main() -> int:
         for failure in failures:
             print(f"  - {failure}")
         return 1
-    print("\nEvery restricted case came back empty — no content, no title, no existence signal.")
+    print("\nAll expected markers were present; no configured restricted marker was returned.")
     return 0
 
 

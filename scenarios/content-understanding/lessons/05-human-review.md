@@ -20,7 +20,7 @@ overwrite extraction, and send corrections to module 6's evaluation.
 | --- | --- | --- | --- | --- |
 | **A. Action tool handoff** *(default)* | Any queue/app that reads the result | Agent calls an approved action tool (API/MCP) to post the result | Low–medium | You are building on the Foundry agent stack |
 | B. Human-in-the-loop review app | Purpose-built correction UI over the result | App writes back the approved result | Medium–high | Reviewers need a rich correction experience |
-| C. Multi-agent workflow handoff | Upstream agent hands the case to a reviewer/approver agent | Workflow transition with state | Medium | You already run a multi-agent workflow |
+| C. Multi-agent workflow handoff | An agent routes the case to a named human reviewer | Workflow transition with state | Medium | You already run a multi-agent workflow |
 
 **Default: Option A.** The correction UI can be simple. The **handoff seam** must be correct: one
 approved action tool posts an approved result as the workflow identity and records a trace. Action
@@ -29,7 +29,7 @@ integration.
 
 **Choose B** when reviewers need a rich correction experience (side-by-side document and fields,
 bounding-box overlays). The handoff still uses the approved seam. **Choose C** when this workflow is
-already an agent in a multi-agent system and needs an explicit approver-agent handoff.
+already an agent in a multi-agent system and needs an explicit human-approval handoff.
 
 **Migration cost.** Moving from A to B adds a UI before the same seam. Moving from A or B to C changes
 orchestration but retains the result contract and correction record. Keep the handoff seam stable so
@@ -70,11 +70,11 @@ experience changes.
 
 ### Option C — Multi-agent workflow handoff
 
-If this workflow is one agent among several, use an explicit handoff. The extraction agent transfers
-the typed result and correction record to an approver agent, which owns correction and approval.
-Approval still ends in the action-tool seam. This is the pattern the
-[Deploy as a Hosted Agent activity](../../../activities/advanced-deploy-hosted-agent/README.md) builds
-on when the workflow ships.
+If this workflow is one agent among several, use an explicit handoff. An agent can prepare the
+typed result and correction record, but a **named human** must approve the result before the
+workflow calls the action tool. Use the
+[Deploy as a Hosted Agent activity](../../../activities/advanced-deploy-hosted-agent/README.md)
+when the workflow ships.
 
 ## Verify
 
@@ -97,23 +97,24 @@ also corrupts the evaluation set.
 
 **2. The handoff refuses a caller who is not an approver.**
 
-Call the approved action-tool seam as an identity that lacks the approver role:
+Call the approved action-tool seam as a signed-in identity that lacks the approver role.
+Set `ACTION_API_AUDIENCE` to the API's registered token audience; it may differ from its URL:
 
 ```bash
-TOKEN=$(az account get-access-token --resource "$ACTION_API_URL" --query accessToken -o tsv)
-curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" \
+TOKEN=$(az account get-access-token --resource "$ACTION_API_AUDIENCE" --query accessToken -o tsv)
+curl -sS -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
   -X POST "$ACTION_API_URL/post-approved-result" -d @trace.json -H "Content-Type: application/json"
 ```
 
-A non-approver identity must get `401` or `403`. A `200` means anyone who reaches the seam can post
-an approved result downstream. Grant the approver role only to reviewer identities. Do not widen the
-seam to pass a test.
+First confirm that a permitted approver can submit a synthetic result. Then repeat the same
+request with a valid token for a non-approver; expect `403`. A `401` alone tests authentication,
+not the approver-role boundary. Any successful non-approver response fails the check.
 
 **3. The post is attributed to the workflow identity.**
 
 In the downstream system (or Application Insights traces), confirm the approved result arrived once
-with the workflow identity and `document_id`, rather than the reviewer's personal account. A shared
-app identity for every case prevents you from identifying the approver.
+with the workflow identity and `document_id`, rather than the reviewer's personal account.
+Keep `reviewer_id` in the approval record so the service identity does not hide who approved it.
 
 ## Troubleshooting
 

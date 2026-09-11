@@ -117,8 +117,8 @@ def check_step4(adversarial: Path, track: str) -> bool:
     if len(rows) < 5:
         return _fail("4", f"only {len(rows)} adversarial prompts; need ≥ 5")
     cats = {r.get("category") for r in rows}
-    if not (cats & ADV_CATEGORIES):
-        return _fail("4", f"no recognized attack categories; expected some of {ADV_CATEGORIES}")
+    if len(cats & ADV_CATEGORIES) < 3:
+        return _fail("4", f"need at least 3 recognized attack categories from {sorted(ADV_CATEGORIES)}")
     if not any("injected_context" in r for r in rows):
         return _fail("4", "no prompt-injection-via-document case (injected_context) present")
     if not all("expected_behavior" in r for r in rows):

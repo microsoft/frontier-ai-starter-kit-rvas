@@ -5,7 +5,7 @@ accelerator includes safe local fixtures and an optional Bicep foundation for a 
 subscription. It supports a pilot. It does not choose a customer's document process or approve a
 production deployment.
 
-## What this accelerator proves
+## What the completed workflow must prove
 
 - Approved documents enter through a defined intake path.
 - Each extracted value carries source evidence and confidence.
@@ -14,6 +14,18 @@ production deployment.
 - The deployed workflow rejects an unauthenticated caller.
 
 ## Before you start
+
+Install **Azure CLI, the standalone Bicep CLI, Python 3, Bash, and `sha1sum`** for deployment.
+The lessons also use `jq` and `curl`. Sign in with an Azure user account in the intended
+subscription. You need permission to create resources and role assignments, plus model quota
+in the chosen region. The deployment script does not support service-principal sign-in.
+
+**This package contains infrastructure and teaching fixtures, not a runnable workflow.**
+The lessons leave the intake checks, normalizer, review queue, and deployment adapter for you
+to implement. The default Bicep deployment does not configure Content Understanding model
+mappings. Check the selected analyzer's supported models and
+[configure its deployment mappings](https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/models-deployments)
+before calling it.
 
 **Check the current API surface before writing SDK code.** Content Understanding, Document
 Intelligence, Foundry, and their SDKs change quickly. Search current Microsoft Learn guidance and
@@ -72,7 +84,13 @@ az login
 ./scenarios/content-understanding/accelerator/scripts/deploy.sh rg-content-understanding eastus2
 ```
 
-The deployment writes `accelerator/.env`. Later modules use that local file. Do not commit it.
+The deployment writes `scenarios/content-understanding/accelerator/.env`. Load it before later commands:
+
+```bash
+set -a; source scenarios/content-understanding/accelerator/.env; set +a
+```
+
+Do not commit it or print bearer tokens in logs.
 Each lesson's **Verify** section gives the command and signal for that module.
 
 ## Scope and boundaries
@@ -94,4 +112,4 @@ Each lesson's **Verify** section gives the command and signal for that module.
 - [Deploy as a Hosted Agent](../../../activities/advanced-deploy-hosted-agent/README.md) for the
   pilot endpoint.
 
-See [solution.md](solution.md) for the complete facilitator reference.
+See [solution.md](solution.md) for the facilitator reference and integration boundaries.

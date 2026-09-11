@@ -50,8 +50,8 @@ than repeating them:
 ## Get started
 
 ```bash
-# 1. Provision the optional clean-subscription foundation (no inline secrets, keyless-first)
-./accelerator/scripts/deploy.sh rg-content-understanding eastus2
+# Run from the repository root after checking accelerator/README.md prerequisites.
+./scenarios/content-understanding/accelerator/scripts/deploy.sh rg-content-understanding eastus2
 ```
 
 Then work through the modules in order. Each **Verify** section provides a command and explains its

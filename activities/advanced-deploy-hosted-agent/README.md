@@ -7,7 +7,7 @@
 > **Canonical hosted-agent deployment module.** Use it when a scenario needs a hosted, authenticated endpoint.
 > Prerequisite: a local scenario agent or the Foundations mechanics reference. Complete the required
 > foundation, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
@@ -166,14 +166,17 @@ its own Entra identity, not your user credentials.
 
 **Tasks:**
 
-1. Create a session, then invoke the deployed agent against its Responses endpoint. The route is
+1. Create `activities/advanced-deploy-hosted-agent/invoke_hosted.py` and invoke the deployed agent. The route is
    `{AZURE_AI_PROJECT_ENDPOINT}/agents/{agentName}/endpoint/protocols/openai/responses`:
 
    ```python
    # invoke_hosted.py
    import os
+   from dotenv import load_dotenv
    from openai import OpenAI
    from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+
+   load_dotenv()
 
    token_provider = get_bearer_token_provider(
        DefaultAzureCredential(), "https://ai.azure.com/.default"

@@ -59,7 +59,7 @@ def load_env() -> dict:
             if not line or line.startswith("#") or "=" not in line:
                 continue
             k, v = line.split("=", 1)
-            env.setdefault(k.strip(), v.strip())
+            env.setdefault(k.strip(), v.strip().strip('"').strip("'"))
     return env
 
 
@@ -93,7 +93,7 @@ def main() -> int:
         "AZURE_AI_PROJECT_ENDPOINT",
         "AZURE_AI_MODEL_DEPLOYMENT_NAME",
     ]
-    missing = [k for k in required if not env.get(k)]
+    missing = [k for k in required if not env.get(k, "").strip() or "<" in env[k]]
     if missing:
         bad(f"Missing required vars: {', '.join(missing)}")
         bad("Run 'azd up' (or ./scripts/deploy.sh), then 'azd env get-values > .env'.")

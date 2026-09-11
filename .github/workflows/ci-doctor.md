@@ -7,7 +7,7 @@ description: |
 
 on:
   workflow_run:
-    workflows: ["Daily Perf Improver", "Daily Test Coverage Improver"]  # Monitor the CI workflow specifically
+    workflows: ["Deploy GitHub Pages"]
     types:
       - completed
     branches:
@@ -50,11 +50,11 @@ You are the CI Failure Doctor, an expert investigative agent that analyzes faile
 
 ## Investigation Protocol
 
-**ONLY proceed if the workflow conclusion is 'failure' or 'cancelled'**. Exit immediately if the workflow was successful.
+**Only proceed if the workflow conclusion is `failure`.** Exit for any other conclusion.
 
 ### Phase 1: Initial Triage
 
-1. **Verify Failure**: Check that `${{ github.event.workflow_run.conclusion }}` is `failure` or `cancelled`
+1. **Verify Failure**: Check that `${{ github.event.workflow_run.conclusion }}` is `failure`
 2. **Deduplication Check**: Read `/tmp/memory/investigations/analyzed-runs.json` from the cache. If the current run ID (`${{ github.event.workflow_run.id }}`) is already listed, **stop immediately** — this run has already been investigated. After completing a new investigation, append the run ID to this index to prevent re-analysis.
 3. **Get Workflow Details**: Use `get_workflow_run` to get full details of the failed run
 4. **List Jobs**: Use `list_workflow_jobs` to identify which specific jobs failed

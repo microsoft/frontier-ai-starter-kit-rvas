@@ -20,7 +20,8 @@ Current Speech guidance is cited inline where the implementation depends on serv
 The pack contract, [`accelerator/content_pack.py`](../accelerator/content_pack.py), is a
 deterministic, offline module. It validates the approved pack and builds a traceable artifact record
 **without calling a paid service or embedding a real likeness**. Use it to rehearse the pipeline
-safely. The real Speech call has the same shape.
+safely. Its artifact record is **not** a Speech request body; a rendering adapter must map it
+to the service request.
 
 ## Choose your path
 
@@ -32,14 +33,14 @@ accessibility obligations.
 | **A. Batch avatar synthesis** *(default)* | REST job: submit SSML → poll → download mp4 | Reviewable video file | Async (seconds–minutes) | Pre-produced onboarding you approve once and replay |
 | B. Real-time avatar | Speech SDK + WebRTC stream | Live avatar in the browser | Sub-second | An interactive kiosk/agent showing a face |
 | C. Voice Live (avatar or audio) | Managed speech-to-speech WebSocket | Live spoken (optionally avatar) agent | Sub-second | A conversational onboarding assistant |
-| D. Plain audio | TTS narration | Audio + transcript | Either | Accessibility-first / lowest risk — **and the mandatory fallback for A–C** |
+| D. Plain audio | TTS narration | Audio + transcript | Either | An audio-first experience, alongside the required text fallback |
 
 **Default: Option A.** It produces an artifact that passes through module 6's approval gate, uses a
-standard avatar/voice (no talent gate), and is the lowest-cost governed path. Every option must ship
-the Option D fallback.
+standard avatar/voice (no talent gate), and can be reviewed before release. Every option must ship
+an equivalent accessible text fallback; audio narration is optional.
 
 **Migration cost.** A → B/C is the module-1 batch-to-streaming rebuild (WebRTC/TURN or Voice Live
-client). Any → D is trivial. Do not skip D for now. It is the accessible path.
+client). Keep the text fallback available regardless of the media option.
 
 ## Implementation
 
@@ -49,7 +50,8 @@ client). Any → D is trivial. Do not skip D for now. It is the accessible path.
 [`content_pack.py`](../accelerator/content_pack.py) rejects the pack unless every script segment's
 spoken text is an exact approved claim, all required approvals are present, and the disclosure
 appears in both the transcript and the HTML fallback. Use it to turn the approved artifact into the
-synthesis request body, with no Azure call and no likeness:
+artifact record, with no Azure call and no likeness. The sample approvals are fictional; complete
+module 6's review before generating media for a real pilot:
 
 ```bash
 python3 -c "import sys; from pathlib import Path; \
@@ -107,7 +109,7 @@ agent (agent mode, Entra auth) so spoken answers stay grounded. Build it in the
 at session start, both spoken and on-screen, and offer the transcript/fallback.
 <https://learn.microsoft.com/azure/ai-services/speech-service/voice-live>
 
-### Option D — Plain audio (and the mandatory fallback)
+### Option D — Plain audio and the text fallback
 
 Synthesize the approved claims as narration with a standard neural voice, ship the transcript, and
 serve `accessible-fallback.html` (semantic HTML, `lang` set, `<main>` landmark) with the same
@@ -122,8 +124,8 @@ avatar receive this path. The sample fallback is
   <https://learn.microsoft.com/azure/foundry/responsible-ai/speech-service/text-to-speech/concepts-disclosure-guidelines>
 - **Never** render a real person's face or voice in this repo or a demo. Custom likeness requires the
   limited-access + consent path from module 1.
-- Ship captions, a transcript, and a non-avatar fallback for every option — the renderer enforces
-  their presence.
+- Ship captions where applicable, a transcript, and a non-avatar fallback. The local validator
+  checks text files and a captions flag; it does not inspect generated captions or media.
 
 ## Verify
 
@@ -153,10 +155,10 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 `status` moves `NotStarted → Running → Succeeded`. Download `outputs.result` (a time-limited SAS
 URL) and play the mp4. Expect the standard `lisa` avatar to speak the exact approved wording with
-soft-embedded captions. A `401` means no custom subdomain (module 2). A `403` means you lack
-**Cognitive Services Speech User**; grant the role rather than using a Speech key. If you see a real
-person's face, stop. That is a custom-avatar path requiring limited-access approval and talent
-consent (module 1).
+soft-embedded captions. For `401`, check the token and custom-subdomain endpoint (module 2).
+For `403`, check **Cognitive Services Speech User** and RBAC propagation. Use only the selected
+standard avatar; a realistic-looking avatar alone does not mean you selected a custom likeness.
+Custom likenesses need module 1's approval and consent checks.
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/batch-synthesis-avatar>
 
 **2. The experience carries a disclosure, and the non-avatar fallback carries the same content.** A

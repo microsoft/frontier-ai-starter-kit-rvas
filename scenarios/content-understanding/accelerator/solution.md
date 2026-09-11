@@ -1,8 +1,9 @@
 # Content Understanding document workflow — reference implementation
 
-This is the keyless reference for the seven modules. It names API versions, model IDs, and packages
-where they matter. The lessons under [`../lessons/`](../lessons/) explain the decisions; this file
-shows the resulting code.
+This reference contains infrastructure and extraction snippets for the seven modules. It is not a
+runnable workflow. The normalizer, review queue, evaluation harness, and hosted adapter still need
+implementation. The lessons under [`../lessons/`](../lessons/) explain those decisions.
+Run shell commands from the repository root.
 
 > Keyless-first throughout: `DefaultAzureCredential` + managed identity + Entra RBAC. No keys
 > appear in code, `.env`, or Bicep. Run `az login` for local development.
@@ -10,11 +11,12 @@ shows the resulting code.
 ## 0. Provision and load the contract
 
 ```bash
-./scripts/deploy.sh rg-content-understanding eastus2
+./scenarios/content-understanding/accelerator/scripts/deploy.sh rg-content-understanding eastus2
+set -a; source scenarios/content-understanding/accelerator/.env; set +a
 # writes accelerator/.env, then confirm the endpoint answers your Entra identity:
 TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
 curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
-  "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT"
+  "${AZURE_CONTENT_UNDERSTANDING_ENDPOINT%/}/contentunderstanding/analyzers?api-version=2025-11-01"
 ```
 
 The `.env` contract (no secrets):
@@ -35,6 +37,10 @@ AZURE_QUARANTINE_CONTAINER_NAME=documents-quarantine
 Set the resource's default model deployments, then analyze. Content Understanding is asynchronous:
 `POST …:analyze` returns `202` + `Operation-Location`; poll the result.
 
+The deployment script does not set those defaults. First check the analyzer's supported models and
+[configure deployment mappings](https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/models-deployments).
+The input PDF below is a placeholder; the local pack does not include it.
+
 ```python
 import os, time, requests
 from azure.identity import DefaultAzureCredential
@@ -49,15 +55,23 @@ start = requests.post(
     f"{endpoint}/contentunderstanding/analyzers/prebuilt-invoice:analyze?{api}",
     headers=headers,
     json={"inputs": [{"url": "https://<account>.blob.core.windows.net/documents-inbound/invoice-2002.pdf"}]},
+    timeout=30,
 )
 start.raise_for_status()
 op = start.headers["Operation-Location"]
 
-while True:
-    result = requests.get(op, headers={"Authorization": f"Bearer {token}"}).json()
-    if result["status"] in ("Succeeded", "Failed"):
+deadline = time.monotonic() + 300
+while time.monotonic() < deadline:
+    response = requests.get(op, headers={"Authorization": f"Bearer {token}"}, timeout=30)
+    response.raise_for_status()
+    result = response.json()
+    if result["status"] == "Failed":
+        raise RuntimeError(f"Analysis failed: {result.get('error')}")
+    if result["status"] == "Succeeded":
         break
     time.sleep(2)
+else:
+    raise TimeoutError("Analysis did not complete within the five-minute polling window")
 
 fields = result["result"]["contents"][0]["fields"]
 total = fields["InvoiceTotal"]["valueObject"]["Amount"]

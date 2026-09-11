@@ -3,7 +3,7 @@
 > **Command context:** Run all commands from the repository root.
 
 > Reusable visual-analysis module. Start after your scenario foundation, or use the repository bootstrap path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 Build a small, **human-reviewed** visual-observation assistant for a generic sample image. It can
 extract visible sign text and describe route cues. It must not identify people, infer disability or

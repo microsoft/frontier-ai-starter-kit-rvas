@@ -361,5 +361,6 @@ output AZURE_SEARCH_CONNECTION_NAME string = searchConnection.name
 output AZURE_STORAGE_ACCOUNT_NAME string = storage.name
 output AZURE_STORAGE_CONTAINER_NAME string = approvedContentContainerName
 output APPLICATIONINSIGHTS_RESOURCE_ID string = appInsights.id
+output AZURE_SUBSCRIPTION_ID string = subscription().subscriptionId
 output AZURE_RESOURCE_GROUP string = resourceGroup().name
 output AZURE_LOCATION string = location

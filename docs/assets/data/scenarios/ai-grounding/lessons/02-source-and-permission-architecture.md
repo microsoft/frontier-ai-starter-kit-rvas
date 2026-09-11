@@ -106,8 +106,9 @@ result = kb_client.retrieve(
 )
 ```
 
-Without the second header, you query as the application. Every user then sees what the application
-can see.
+With current permission filtering on an ACL-enabled index, omitting the user token returns only
+public documents. The header does not create missing permission metadata or enable an unconfigured
+permission filter. See the [query-time enforcement guidance](https://learn.microsoft.com/azure/search/search-query-access-control-rbac-enforcement).
 
 **API version decides what you get.** `2026-04-01` is GA but offers minimal, extractive retrieval
 only: no query planning, no answer synthesis, no configurable reasoning effort, and GA source kinds
@@ -216,23 +217,29 @@ This module prevents a retrieval path that looks perfect in an administrator dem
 user with fewer permissions. Prove the boundary with a genuinely lower-privileged identity, not your
 own account.
 
+**Run the probe after module 3's ingestion finishes and real source permissions are configured.**
+The fictional role labels in the corpus do not create Azure permissions.
+
 **1. The probe identity is actually restricted.** `probe_permissions.py` runs each query twice: once
 as you (`DefaultAzureCredential`) and once as the identity in
 `PROBE_TENANT_ID`/`PROBE_CLIENT_ID`/`PROBE_CLIENT_SECRET`. Confirm that second identity holds no
-broad data-plane role, or nothing will ever leak and the probe proves nothing.
+broad access to the protected source. A credential that cannot query at all tests an authentication
+failure, not document-level filtering.
 
 ```bash
 az role assignment list --assignee "$PROBE_CLIENT_ID" \
   --all --query "[].roleDefinitionName" -o tsv
 ```
 
-You should see nothing or a role scoped away from approved content. **Search Index Data Reader** or
-**Contributor** on the search service means this identity sees everything, so the test proves nothing.
+Inspect source access as well as Search roles. A Search role permits the API call; it does not by
+itself bypass configured document permission filters.
 
 **2. The restricted identity comes back empty.** The plan is
 [`accelerator/permission-probe.json`](../accelerator/permission-probe.json); each case asserts
 `expect_visible` against your identity and `expect_hidden` against the restricted one. A case with an
 empty `expect_hidden` is rejected, because a probe that never expects a denial tests nothing.
+
+Run commands from the repository root.
 
 ```bash
 export PROBE_TENANT_ID=... PROBE_CLIENT_ID=... PROBE_CLIENT_SECRET=...
@@ -241,8 +248,8 @@ python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
 ```
 
 Read the per-case lines. `PASS  ...: restricted identity cannot see 'X'` is the expected result. Any
-`LEAK — restricted identity retrieved 'X'` means query-time trimming is off. Usually the
-`x-ms-query-source-authorization` header is missing, so every caller queries as the application.
+`LEAK — restricted identity retrieved 'X'` means a forbidden marker was returned. Check the source
+permissions, indexed permission metadata, and user-token propagation.
 
 **3. A restricted document does not even reveal that it exists.** The plan includes a case that
 queries the supervisor playbook by title. Confirm the restricted identity gets no title, no snippet,
@@ -253,7 +260,7 @@ title or a hit count is itself a leak.
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Restricted identity sees everything | `x-ms-query-source-authorization` not sent — you are querying as the app | Pass the end-user token; app RBAC alone is not a user boundary |
+| Restricted identity sees protected content | Missing or incorrect source permissions, permission fields, or user identity | Inspect all three; the header alone does not configure document permissions |
 | `5xx` on every filtered query | ACL evaluation failed (often Graph unavailable) | This is by design: it fails closed rather than returning partial results. Fix Graph access; do not "handle" it by dropping the filter |
 | Revoked user still gets results | ACL staleness | Resync the indexer; parent-scope changes in SharePoint need a full resync |
 | Group membership ignored | Group IDs not ingested, or not stored as Entra object IDs | Set `ingestion_permission_options` to include `group_ids`; store GUIDs, not display names |

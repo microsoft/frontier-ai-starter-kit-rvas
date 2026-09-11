@@ -180,6 +180,11 @@ or response payloads.
 
 **3. Run the fail-closed check.**
 
+**Transport gap:** the current probe accepts HTTP and follows redirects with the caller's
+authorization header. Enforce HTTPS and safe redirect handling before using real tokens.
+
+Run commands from the repository root.
+
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/probe_surface.py \
   --endpoint "https://<your-surface>/<route>" \
@@ -209,8 +214,10 @@ az webapp config appsettings list --name <surface-app> --resource-group "$AZURE_
   --query "[?contains(name, 'KEY') || contains(name, 'CONNECTION_STRING')].name" -o tsv
 ```
 
-Look for an identity `type` of `SystemAssigned` (or `UserAssigned`) and no output from the second
-command. A stored `*_KEY` or connection string means key-based auth returned. Use managed identity.
+Look for an identity `type` of `SystemAssigned` (or `UserAssigned`). Review any setting names returned
+by the second command; the name alone does not prove a credential is present. This scenario uses an
+Application Insights connection string for telemetry, including in its project connection.
+Use managed identity for resource access and review telemetry authentication separately.
 Adjust the commands for the surface you deployed (Container Apps, Function App, or Bot Service).
 
 ## Troubleshooting

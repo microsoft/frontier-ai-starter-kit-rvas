@@ -14,7 +14,7 @@
   }
 
   function renderStats(scenarios, activities) {
-    const totalActivities = activities.length;
+    const totalActivities = activities.filter((activity) => activity.id !== 'idea-forge').length;
     const totalPaths = scenarios.length;
     const totalLessons = scenarios.reduce((sum, scenario) => sum + (scenario.lessons || []).length, 0);
     const totalPrompts = scenarios.reduce((sum, scenario) => sum + (scenario.decision_prompts || []).length, 0);

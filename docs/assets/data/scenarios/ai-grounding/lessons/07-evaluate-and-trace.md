@@ -107,7 +107,7 @@ the wrong passage or the model ignored the right one. Those failures need differ
 ### Evaluate with a gate
 
 Use [`accelerator/golden-questions.json`](../accelerator/golden-questions.json) as the dataset and
-run the built-in metrics plus a domain evaluator that scores the three things that matter here:
+run the built-in metrics plus a domain evaluator for these requirements:
 
 | Custom metric | Passes when |
 | --- | --- |
@@ -117,6 +117,12 @@ run the built-in metrics plus a domain evaluator that scores the three things th
 | Permission silence | The restricted-identity run reveals no title, snippet, or existence signal |
 
 Run with a threshold that fails the build:
+
+**Integration required:** the shared harness expects JSONL rows with `query` and evaluation fields,
+not this scenario's JSON `cases` object. Adapt the dataset and domain evaluator before running the
+command below. Passing `golden-questions.json` directly fails during parsing.
+
+Run commands from the repository root.
 
 ```bash
 python3 activities/advanced-evaluation-redteam/evaluate.py \
@@ -183,9 +189,9 @@ python3 activities/advanced-evaluation-redteam/evaluate.py \
 echo "exit: $?"
 ```
 
-A non-zero exit on a below-threshold run means the control works. Read the per-metric means and keep
-module 5 `recall@5` next to groundedness. High groundedness with low recall means faithful answers
-were built on the wrong passage.
+A parsing failure is not a quality-gate result. Once the integration is complete, confirm that a
+below-threshold score causes a non-zero exit. Record passage-level retrieval recall beside
+groundedness; module 5's current citation counter does not provide that metric.
 
 **3. The indirect-injection case was actually tried, and the boundary still holds against the agent.**
 Confirm the adversarial run included a malicious instruction hidden in a retrieved document, that the
@@ -197,8 +203,9 @@ python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py \
   --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
 ```
 
-Every restricted case must still come back empty. The agent is new since module 2, so its permission
-behaviour is unproven until you re-run this.
+This command checks the knowledge base only; `probe_permissions.py` has no agent target.
+An agent-level probe still needs to be implemented. Re-running this command does not prove the
+agent preserves the permission boundary.
 
 ## Troubleshooting
 
@@ -208,7 +215,7 @@ behaviour is unproven until you re-run this.
 | Spans appear but no prompts or completions | `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` not set, or set too late | Same ordering fix |
 | Traces missing for 1–3 minutes | Normal export lag | Wait before concluding it is broken |
 | Evaluation `429` mid-run | Judge model shares capacity with the agent | Use a separate judge deployment, or lower concurrency |
-| Groundedness high, users still unhappy | Metrics measure faithfulness to retrieved text, not whether the right text was retrieved | Add retrieval metrics (recall@k from module 5) alongside |
+| Groundedness high, users still unhappy | Metrics measure faithfulness to retrieved text, not whether the right text was retrieved | Add passage-level recall; module 5 currently counts answer citations instead |
 | Custom evaluator always returns the top score | No negative cases in the dataset | Add the abstain, superseded, and restricted cases |
 | Red-team scan finds nothing | Only tested direct jailbreaks | Add indirect injection via a retrieved document — that is the scenario-specific risk |
 | Costs higher than the model comparison predicted | Retrieval round trips and embedding at query time were not counted | Recount from trace token totals, not from the chat model price alone |

@@ -60,7 +60,8 @@ then enforce it everywhere.
 GA API version **`2025-11-01`**. Async: `POST …:analyze` → `202` + `Operation-Location`, then poll.
 
 ```bash
-CU=$(grep AZURE_CONTENT_UNDERSTANDING_ENDPOINT accelerator/.env | cut -d= -f2 | sed 's:/*$::')
+set -a; source scenarios/content-understanding/accelerator/.env; set +a
+CU="${AZURE_CONTENT_UNDERSTANDING_ENDPOINT%/}"
 TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv)
 
 curl -s -D - -X POST \
@@ -182,19 +183,19 @@ CU=$(echo "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT" | sed 's:/*$::')
 TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv)
 OP=$(curl -s -D - -o /dev/null -X POST \
   "$CU/contentunderstanding/analyzers/prebuilt-invoice:analyze?api-version=2025-11-01" \
-  -H "Authorization: ******" -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
   -d "{\"inputs\":[{\"url\":\"https://$AZURE_STORAGE_ACCOUNT_NAME.blob.core.windows.net/$AZURE_DOCUMENTS_CONTAINER_NAME/invoice-2002.pdf\"}]}" \
-  | tr -d '\r' | awk '/^Operation-Location:/{print $2}')
+  | tr -d '\r' | awk 'tolower($1) == "operation-location:" {print $2}')
 
 # Poll until "status":"Succeeded", then inspect a field's confidence and source.
-curl -s -H "Authorization: ******" "$OP" \
+curl --fail-with-body -sS -H "Authorization: Bearer $TOKEN" "$OP" \
   | jq '.result.contents[0].fields | to_entries[0].value | {value: (.valueString // .valueNumber // .valueDate), confidence, source}'
 ```
 
 A `confidence` between 0 and 1 and a non-null `source` (the `D(page,...)` grounding polygon) show
 that the capability provides evidence. A null `source` means the path does not ground values. That is
 expected for Option E, where you must implement the evidence strategy. For Document Intelligence,
-read `field.confidence` and `field.boundingRegions` from the SDK result.
+read `field.confidence` and `field.bounding_regions` from the Python SDK result.
 
 **2. It survives a document outside your happy path.**
 

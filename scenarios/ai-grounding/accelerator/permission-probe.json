@@ -4,20 +4,20 @@
     {
       "id": "public-policy-is-visible",
       "query": "What is the standard returns window for an online order?",
-      "expect_visible": ["returns-policy"],
-      "expect_hidden": ["returns-supervisor-playbook"]
+      "expect_visible": ["RET-POL-2026-01"],
+      "expect_hidden": ["RET-SUP-2026-01", "supervisor exception playbook"]
     },
     {
       "id": "supervisor-playbook-is-restricted",
-      "query": "What discretionary goodwill credit can a supervisor approve?",
-      "expect_visible": ["returns-supervisor-playbook"],
-      "expect_hidden": ["goodwill credit ceiling"]
+      "query": "For a documented hardship request on day 31 to 45, what does a supervisor record?",
+      "expect_visible": ["RET-SUP-2026-01"],
+      "expect_hidden": ["RET-SUP-2026-01", "hardship evidence", "decision rationale"]
     },
     {
       "id": "no-existence-signal-for-restricted-titles",
       "query": "supervisor playbook",
-      "expect_visible": ["returns-supervisor-playbook"],
-      "expect_hidden": ["returns-supervisor-playbook"]
+      "expect_visible": ["RET-SUP-2026-01"],
+      "expect_hidden": ["RET-SUP-2026-01", "supervisor exception playbook"]
     }
   ]
 }

@@ -44,8 +44,11 @@ Content Understanding and Document Intelligence are unavailable in some regions,
 deploy in the selected region. Check both **before** you deploy:
 
 ```bash
-az cognitiveservices account list-skus --location eastus2 --kind AIServices -o table
+az cognitiveservices model list --location eastus2 -o table
 ```
+
+This lists regional model offerings, not available capacity. Check subscription quota and the
+model's deployment SKU separately.
 
 - Content Understanding region support:
   <https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support>
@@ -54,8 +57,10 @@ az cognitiveservices account list-skus --location eastus2 --kind AIServices -o t
 
 > **API versions to pin.** Content Understanding GA is **`2025-11-01`** (the
 > `2024-12-01-preview` / `2025-05-01-preview` previews retire 2026-07-15). Document Intelligence GA
-> is **v4.0 `2024-11-30`**. Content Understanding needs default model deployments — `gpt-4.1-mini`
-> works today, but the GPT-4.1 family retires October 2026, so plan to migrate to `gpt-5.2`.
+> is **v4.0 `2024-11-30`**. Content Understanding also needs model deployment mappings.
+> The template's `gpt-4.1-mini` deployment is not a verified default for every analyzer.
+> Check the selected analyzer's `supportedModels` and configure its mappings before analysis:
+> <https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/models-deployments>.
 > Sources: <https://learn.microsoft.com/azure/ai-services/content-understanding/choosing-right-ai-tool>,
 > <https://learn.microsoft.com/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0>
 
@@ -65,6 +70,8 @@ az cognitiveservices account list-skus --location eastus2 --kind AIServices -o t
 
 The template is [`accelerator/main.bicep`](../accelerator/main.bicep); defaults live in
 [`accelerator/parameters.example.json`](../accelerator/parameters.example.json).
+
+Run commands from the repository root.
 
 ```bash
 az login
@@ -126,10 +133,12 @@ az cognitiveservices account deployment create \
   --model-name text-embedding-3-large --model-version 1 --model-format OpenAI \
   --sku-name Standard --sku-capacity 30
 
-az storage account create --resource-group "$RG" --name "st${RANDOM}cudoc" \
+STORAGE="st${RANDOM}cudoc"
+az storage account create --resource-group "$RG" --name "$STORAGE" \
   --sku Standard_LRS --allow-shared-key-access false
-az storage container create --account-name "st${RANDOM}cudoc" --name documents-inbound --auth-mode login
-az storage container create --account-name "st${RANDOM}cudoc" --name documents-quarantine --auth-mode login
+# Grant your user Storage Blob Data Contributor on this account before creating containers.
+az storage container create --account-name "$STORAGE" --name documents-inbound --auth-mode login
+az storage container create --account-name "$STORAGE" --name documents-quarantine --auth-mode login
 ```
 
 Then append `AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`, `AZURE_STORAGE_ACCOUNT_NAME`,
@@ -180,6 +189,7 @@ Check these four items against your own resources before you build on this found
 **1. Both model deployments exist.**
 
 ```bash
+set -a; source scenarios/content-understanding/accelerator/.env; set +a
 ACCOUNT=$(echo "$AZURE_AI_FOUNDRY_ENDPOINT" | sed -E 's#https?://([^.]+)\..*#\1#')
 RG=$(az cognitiveservices account list --query "[?name=='$ACCOUNT'].resourceGroup | [0]" -o tsv)
 az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group "$RG" \
@@ -187,21 +197,21 @@ az cognitiveservices account deployment list --name "$ACCOUNT" --resource-group 
 ```
 
 You should see the names in `AZURE_AI_MODEL_DEPLOYMENT_NAME` and `AZURE_AI_EMBEDDING_DEPLOYMENT_NAME`.
-Content Understanding calls both during analysis. If either is missing, later modules fail with a
-deployment-not-found error.
+Their presence alone does not prove analyzer readiness. The deployment script does not configure
+Content Understanding defaults. Confirm model compatibility and deployment mappings before module 3.
 
 **2. Content Understanding answers your Entra identity, with no key.**
 
 ```bash
 CU=$(echo "$AZURE_CONTENT_UNDERSTANDING_ENDPOINT" | sed 's:/*$::')
 TOKEN=$(az account get-access-token --resource https://cognitiveservices.azure.com --query accessToken -o tsv)
-curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" \
+curl -sS -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
   "$CU/contentunderstanding/analyzers?api-version=2025-11-01"
 ```
 
 A `200` means keyless data-plane access works. A `403` means your identity lacks **Cognitive Services
-User** on the account. Grant that role instead of using a key. A `404` means the region does not
-expose Content Understanding; redeploy elsewhere.
+User** on the account, or the assignment has not propagated. Check it instead of using a key.
+For `404`, check the endpoint, API version, and region support before considering redeployment.
 
 **3. The document containers are private and reachable without a key.**
 
@@ -228,7 +238,7 @@ You want no output. Any match means an upstream step provided a key and broke th
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `401` / `403` from the account | Missing data-plane roles; RBAC takes minutes to propagate | Assign **Cognitive Services User** + **Cognitive Services OpenAI User**, wait ~5 min, re-run |
-| Deployment fails on the model | Model or capacity unavailable in the region | `az cognitiveservices account list-skus --location <region> --kind AIServices -o table`, then change region or lower `chatModelCapacity` |
+| Deployment fails on the model | Model or capacity unavailable in the region | Check `az cognitiveservices model list --location <region>` and subscription quota, then change region or capacity |
 | Both deployments fail together | Deployments on one account serialize | The template sets `dependsOn` on the embedding deployment; do not remove it |
 | `StorageAccountAlreadyTaken` | `resourceToken` collides globally | Pass a different `resourceToken` (5–12 lowercase chars) |
 | Content Understanding calls 404 | Wrong endpoint host or unsupported region | Use `AZURE_CONTENT_UNDERSTANDING_ENDPOINT` from the outputs; confirm the region supports the service |

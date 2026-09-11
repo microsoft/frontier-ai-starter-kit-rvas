@@ -83,16 +83,19 @@ documents through it and read extracted results. Then confirm that an authentica
 
 ```bash
 TOKEN=$(az account get-access-token --resource https://ai.azure.com --query accessToken -o tsv)
-curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: ******" https://<your-endpoint>/<route>
+curl -sS -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" https://<your-endpoint>/<route>
 ```
 
 **2. The runtime runs as a managed identity, with no keys.**
 
 ```bash
-grep -riE '(api[_-]?key|account[_-]?key|connection[_-]?string|sharedaccesskey)' .
+grep -inE '(api[_-]?key|account[_-]?key|connection[_-]?string|sharedaccesskey)' \
+  scenarios/content-understanding/accelerator/.env
 ```
 
-You want no output. Then confirm that the deployment identity holds its required roles. Without them,
+Inspect the deployed runtime settings too. This scan flags names for review; it does not prove
+that a value is a secret. An Application Insights connection string identifies a telemetry
+destination and is not a model API key. Confirm that the deployment identity holds its required roles. Without them,
 the endpoint authenticates callers but cannot access models or storage:
 
 ```bash

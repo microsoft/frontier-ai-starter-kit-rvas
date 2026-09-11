@@ -69,14 +69,15 @@ data.
    ```bash
    azd up
    ```
-   > If `azd up` is blocked by quota or region limits, use the Bash fallback `./scripts/deploy.sh`
-   > and pick a supported region when prompted.
+   > If `azd up` is blocked by quota or region limits, use the Bash fallback
+   > `./scripts/deploy.sh --location <supported-region>`. It does not prompt for a region.
 4. Export the `azd` environment to `.env`, then confirm it holds your resource contract (do not commit it).
 
    > What is the `.env` contract? `azd up` writes outputs to the selected `azd` environment.
    > Export them with `azd env get-values > .env`; that file contains your resource
-   > endpoints, deployment names, and connection strings. Every script in this repo loads it
-   > automatically via `python-dotenv` (`load_dotenv()`). It is git-ignored — never commit it.
+   > endpoints, deployment names, and connection strings. Python examples must load it with
+   > `load_dotenv()` or receive exported shell variables. It is git-ignored — never commit it.
+   > If you used `./scripts/deploy.sh`, it already wrote `.env`; skip the `azd` export.
 
    At minimum it contains the project endpoint, the model deployment name, and the search endpoint:
    ```bash
@@ -131,7 +132,8 @@ system instructions, then reproduce that behavior in code.
 3. Switch the Playground to your second model and run the same prompts. Compare on four axes:
    answer detail, latency, tone, and suitability for the scenario assistant. Change only the
    model between runs so the comparison is fair.
-4. Iterate on the system instruction until the smaller model behaves well: define audience, tone,
+4. Set `AZURE_AI_MODEL_DEPLOYMENT_NAME` in `.env` to the deployment you chose.
+   Iterate on the system instruction until the selected model behaves well: define audience, tone,
    how to handle missing information, and what is out of scope. Save your best version to
    `activities/foundations/assets/system-instructions.txt`.
 5. Reproduce the Playground behavior in code. Create `activities/foundations/app/step2_chat.py`

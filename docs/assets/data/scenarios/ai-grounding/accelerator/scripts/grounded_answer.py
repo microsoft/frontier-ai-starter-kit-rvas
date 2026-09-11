@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Run your golden questions against the knowledge base — a grounded answer path with no agent.
 
-Reports the four behaviours that decide whether grounding is trustworthy:
+Checks the following output markers:
   * citations on every answerable question
   * abstention on questions the corpus cannot answer
   * the current service notice, not the superseded one
-  * recall@k, which is the number to write down before you add an agent
+  * answer citation hit rate (currently mislabeled recall@5)
+
+This does not measure retrieved passages. All cases use one caller token; role_groups
+does not select a different identity. See the accelerator README before using this as a gate.
 
 Point it at your own golden set in golden-questions.json.
 
@@ -46,8 +49,7 @@ def answer(client: Any, question: str, user_token: str | None) -> str:
             )
         ]
     )
-    # Query-time ACL enforcement needs the end user's token in addition to the app's own
-    # credential. Without it every caller sees everything the application can see.
+    # On an ACL-enabled index, omitting the user token limits results to public documents.
     headers = {"x-ms-query-source-authorization": user_token} if user_token else None
     result = client.retrieve(request, headers=headers) if headers else client.retrieve(request)
     if not result.response:
@@ -103,7 +105,7 @@ def verify_live(
                 )
         else:
             check(
-                ABSTENTION.lower() in text.lower() or not text.strip(),
+                text.strip() == ABSTENTION,
                 f"{case['id']}: abstained instead of answering",
                 failures,
             )

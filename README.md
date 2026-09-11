@@ -19,9 +19,9 @@ approved environment. Customer-facing slides support the design discussions.
 
 | Track | What you build |
 |---|---|
-| [AI Grounding / IQ](docs/scenario.html?id=ai-grounding) | An assistant that answers from approved content and respects access boundaries. |
-| [Content Understanding and Document Workflow](docs/scenario.html?id=content-understanding-document-workflow) | A document workflow with evidence-backed extraction and human review. |
-| [Avatar Scenario](docs/scenario.html?id=avatar-scenario) | An avatar-led experience with approved content and publication controls. |
+| [AI Grounding / IQ](https://microsoft.github.io/frontier-ai-starter-kit-rvas/scenario.html?id=ai-grounding) | An assistant that answers from approved content and respects access boundaries. |
+| [Content Understanding and Document Workflow](https://microsoft.github.io/frontier-ai-starter-kit-rvas/scenario.html?id=content-understanding-document-workflow) | A document workflow with evidence-backed extraction and human review. |
+| [Avatar Scenario](https://microsoft.github.io/frontier-ai-starter-kit-rvas/scenario.html?id=avatar-scenario) | An avatar-led experience with approved content and publication controls. |
 
 These are starting points, not a complete catalog of AI use cases. **A customer's scenario may
 combine parts from several tracks.** New tracks can follow the same contribution contract.
@@ -110,7 +110,7 @@ Before you start, make sure you have:
 - **Development environment**: GitHub Codespaces or a local Dev Container for the code-based lessons
 - **Basic Python**: Comfortable with variables, functions, pip, and virtual environments
 - **Basic API knowledge**: Understand REST APIs, HTTP requests, and JSON
-- **VS Code familiarity**: Helpful, but not required (the devcontainer includes everything)
+- **VS Code familiarity**: Helpful, but not required
 
 ---
 
@@ -123,7 +123,8 @@ engagement will build and how to judge the result. Check prerequisites before pr
 
 ### 2. Open in GitHub Codespaces or Dev Container
 
-Click the badge below to open a fully configured development environment:
+Click the badge below to open the development environment. Follow the selected lesson's setup
+steps for credentials and any additional tools:
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/frontier-ai-starter-kit-rvas)
 
@@ -198,8 +199,8 @@ For customer engagements, treat every tier as an outcome checkpoint:
 
 ### Tier 2 — Advanced (modular · any order)
 
-Each Advanced activity offers two paths: a **Guided** path (revised, honest time) and a longer
-**Build-from-scratch** path with fewer placeholders. Both are graded by the same `validate.py`.
+Each Advanced activity offers a **Guided** path and a longer **Build-from-scratch** path.
+Both use the same `validate.py` checkpoint.
 
 | Activity | Guided | Build-from-scratch | Difficulty | Key Skills |
 |-----------|--------|--------------------|------------|------------|
@@ -214,7 +215,7 @@ Build a UI, Magentic Workflows, and Hosted Long-Running Agents.
 
 See the `activities/extra-*` folders.
 
-**Reference workshop time (Foundations + all four Advanced): ~7.25 hours.** For a one-day workshop,
+**Reference workshop time (Foundations + all four Advanced): ~7.5–8 hours.** For a one-day workshop,
 choose Foundations and two or three Advanced activities. Customer-specific implementation work
 needs a separate estimate.
 
@@ -222,7 +223,12 @@ needs a separate estimate.
 
 ## Publishing the documentation site
 
-Before the first deployment, a repository administrator must open **Settings > Pages** and select **GitHub Actions** as the source. The workflow builds `docs/` and deploys that artifact when changes reach `main`.
+Before the first deployment, a repository administrator must:
+
+1. Create a `gh-pages` branch if it does not exist. It can start from `main`; the workflow uses it to store branch previews.
+2. Open **Settings > Pages** and select **GitHub Actions** as the source.
+
+The workflow builds `docs/` and deploys that artifact when changes reach `main`.
 
 Push a site change to another branch to publish a preview under `/previews/`. The workflow summary contains the exact URL. Pull requests from branches in this repository also publish a preview and add or update one comment with its URL. Forked pull requests run the build checks only.
 
@@ -245,7 +251,7 @@ ai-starter-kit-rvas/
 │   ├── advanced-deploy-hosted-agent/
 │   └── extra-*/                       # Tier 2 — Extras (optional)
 ├── resources/sample-data/             # Northfield University FAQ corpus (knowledge base source)
-├── docs/                              # Supporting documentation (Jekyll/GitHub Pages)
+├── docs/                              # Static documentation site (Node.js build / GitHub Pages)
 ├── .devcontainer/                     # Dev environment config (Python, Azure CLI, azd)
 ├── .github/                           # Copilot enablement (skills, copilot-instructions) + workflows
 ├── .vscode/mcp.json                   # MCP servers: azure, foundry-mcp, microsoft-docs
@@ -285,4 +291,4 @@ Clone or access this repo locally and navigate to the activity solution you need
 
 ---
 
-**Ready to build?** Choose a [scenario playbook](docs/index.html#outcomes).
+Choose a [scenario playbook](https://microsoft.github.io/frontier-ai-starter-kit-rvas/index.html#outcomes).

@@ -5,7 +5,7 @@
 > Reusable orchestration module. Use it only when a scenario needs runtime multi-agent routing.
 > Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: the Advanced · Action Tools activity — your Action sub-agent reuses the MCP
 > action tool (`ACTION_MCP_URL`) you wired there.

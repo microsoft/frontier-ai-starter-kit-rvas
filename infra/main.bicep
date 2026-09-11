@@ -94,6 +94,7 @@ output AZURE_AI_PROJECT_NAME string = resources.outputs.AZURE_AI_PROJECT_NAME
 output AZURE_OPENAI_ENDPOINT string = resources.outputs.AZURE_AI_FOUNDRY_ENDPOINT
 output AZURE_AI_MODEL_DEPLOYMENT_NAME string = resources.outputs.AZURE_AI_MODEL_DEPLOYMENT_NAME
 output AZURE_AI_MODEL_NAME string = resources.outputs.AZURE_AI_MODEL_NAME
+output AZURE_FOUNDRY_AGENT_NAME string = 'sample-iq-assistant'
 
 output AZURE_SEARCH_ENDPOINT string = resources.outputs.AZURE_SEARCH_ENDPOINT
 output AZURE_SEARCH_INDEX_NAME string = resources.outputs.AZURE_SEARCH_INDEX_NAME

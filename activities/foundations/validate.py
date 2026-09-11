@@ -149,13 +149,10 @@ def check_step2(env: dict, dry_run: bool) -> bool:
 # Step 3 — The named, versioned agent exists                                  #
 # --------------------------------------------------------------------------- #
 def _find_agent(project, agent_name: str):
-    """Return the agent object whose name matches, or None (preview-surface tolerant)."""
-    try:
-        for a in project.agents.list():
-            if getattr(a, "name", None) == agent_name:
-                return a
-    except Exception:  # noqa: BLE001
-        pass
+    """Return the matching agent, or None; let the caller report service errors."""
+    for a in project.agents.list():
+        if getattr(a, "name", None) == agent_name:
+            return a
     return None
 
 
@@ -235,12 +232,13 @@ def check_step4(env: dict, dry_run: bool, question: str, track: str = "reference
                 extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
             )
             text = getattr(response, "output_text", "") or ""
-            if _has_citation(text, response):
+            if text and _has_citation(text, response):
                 ok(f"✅ Step 4 PASS — agent '{agent_name}' returned a grounded answer WITH a citation")
                 return True
             if text:
                 return _fail("4", f"agent '{agent_name}' answered without a structured citation")
             return _fail("4", f"agent '{agent_name}' returned no answer")
+        return _fail("4", f"agent '{agent_name}' not found — complete Step 3 first")
     except Exception as exc:  # noqa: BLE001
         return _fail("4", f"grounded agent invocation failed ({exc}); verify the agent, index, and RBAC")
 
@@ -277,8 +275,8 @@ def main() -> int:
         for n in (1, 2, 3, 4):
             results.append(checks[n]())
         if all(results):
-            ok("\n✅ Foundations end-state PASS — grounded sample IQ assistant is live"
-               + (" (dry-run)" if args.dry_run else ""))
+            ok("\n✅ Foundations structural checks PASS (dry-run; live state not checked)"
+               if args.dry_run else "\n✅ Foundations end-state PASS — grounded assistant is live")
             return 0
         print(f"{RED}\n❌ Foundations end-state NOT READY — see the failing step(s) above{RESET}")
         return 1

@@ -7,7 +7,7 @@
 > **Canonical trace-correlation and operational-evidence module.** Use it when a scenario needs GenAI traces, span correlation, and
 > production-debug evidence. Prerequisite: a deployed scenario agent or the Foundations mechanics
 > reference. Complete the required foundation, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 ## Why this activity
 
@@ -74,6 +74,9 @@ Assemble and run the provided code. The important detail is its ordering.
 ```python
 # trace_setup.py
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ── 1. Set tracing flags BEFORE calling .instrument(). ──────────────────────────
 #    The instrumentor reads these settings when instrumentation starts.

@@ -55,7 +55,9 @@ The template already created `documents-inbound` and `documents-quarantine` with
 off. Upload approved documents keylessly and stamp intake metadata as blob metadata:
 
 ```bash
-ACCOUNT=$(grep AZURE_STORAGE_ACCOUNT_NAME accelerator/.env | cut -d= -f2)
+# Run from the repository root. Supply an approved synthetic PDF; the pack contains no PDF.
+set -a; source scenarios/content-understanding/accelerator/.env; set +a
+ACCOUNT="$AZURE_STORAGE_ACCOUNT_NAME"
 
 az storage blob upload \
   --account-name "$ACCOUNT" --auth-mode login \

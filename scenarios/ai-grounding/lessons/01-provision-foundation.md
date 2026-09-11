@@ -1,7 +1,7 @@
 # Module 1 — Provision the grounding foundation
 
-Every later module uses the footprint you create here. Set the identity model correctly now, and
-modules 2–7 are configuration. Get it wrong and you will redeploy.
+Later modules use this footprint. Check resource access before adding content; per-user permissions
+and the application still need implementation.
 
 ![Grounding foundation footprint](../diagrams/01-foundation-footprint.png)
 
@@ -40,14 +40,10 @@ generated names and no template, so you rebuild. Do not demo from C and promise 
 
 ### Region and model availability come first
 
-Agentic retrieval is not available in every region, and your chat/embedding models must be
-deployable in the region you pick. Check both **before** deploying:
-
-```bash
-# Regions that support agentic retrieval: see the region-support doc below.
-# Confirm your chosen models are available in the target region:
-az cognitiveservices account list-skus --location eastus2 --kind AIServices -o table
-```
+Agentic retrieval and model availability vary by region. Check both **before** deploying.
+`az cognitiveservices account list-skus` lists account SKUs, not model availability.
+Use the [model deployment guidance](https://learn.microsoft.com/azure/ai-foundry/how-to/create-manage-deployments)
+and region-support reference below.
 
 - Agentic retrieval region support: <https://learn.microsoft.com/azure/search/search-region-support>
 - Query-planning models supported by a knowledge base: `gpt-4o`, `gpt-4o-mini`,
@@ -66,6 +62,8 @@ az cognitiveservices account list-skus --location eastus2 --kind AIServices -o t
 The template is [`accelerator/main.bicep`](../accelerator/main.bicep); defaults live in
 [`accelerator/parameters.example.json`](../accelerator/parameters.example.json).
 
+Run commands from the repository root.
+
 ```bash
 az login
 az account set --subscription "<subscription-id>"
@@ -79,6 +77,15 @@ bicep build scenarios/ai-grounding/accelerator/main.bicep --stdout > /dev/null
 `deploy.sh` creates the resource group, validates and deploys the template, then writes
 `accelerator/.env` from its outputs. It passes your signed-in object ID as `principalId`, giving you
 keyless data-plane access without issuing a key.
+
+Load the generated contract before running shell commands in this or later modules:
+
+```bash
+set -a
+source scenarios/ai-grounding/accelerator/.env
+set +a
+export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
+```
 
 What the template does that matters, and why:
 
@@ -228,7 +235,7 @@ keyless chain.
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `401` / `403` from Search | Your identity lacks data-plane roles; RBAC takes a few minutes to propagate | Assign **Search Service Contributor** + **Search Index Data Contributor**, wait ~5 min, re-run |
-| Deployment fails on the model | Model or capacity unavailable in the region | `az cognitiveservices account list-skus --location <region> --kind AIServices -o table`, then change region or lower `chatModelCapacity` |
+| Deployment fails on the model | Model or capacity unavailable in the region | Check model availability and quota for the selected region and deployment SKU before changing capacity |
 | Both deployments fail together | Deployments on one account serialize | The template already sets `dependsOn` on the embedding deployment; do not remove it |
 | `StorageAccountAlreadyTaken` | `resourceToken` collides globally | Pass a different `resourceToken` (5–12 lowercase chars) |
 | Search MI can't reach models later | Free tier, or missing **Cognitive Services User** | Move to Basic+, assign the role |

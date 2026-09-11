@@ -27,7 +27,10 @@ if [[ -z "${RESOURCE_TOKEN}" ]]; then
 fi
 
 # Grant the signed-in engineer keyless data-plane access.
-PRINCIPAL_ID="$(az ad signed-in-user show --query id -o tsv 2>/dev/null || echo '')"
+if ! PRINCIPAL_ID="$(az ad signed-in-user show --query id -o tsv)" || [[ -z "${PRINCIPAL_ID}" ]]; then
+  echo "Cannot resolve the signed-in user. Run az login with a user account before deploying." >&2
+  exit 1
+fi
 
 echo "==> Resource group: ${RESOURCE_GROUP} (${LOCATION})"
 az group create --name "${RESOURCE_GROUP}" --location "${LOCATION}" --output none

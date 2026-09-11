@@ -5,7 +5,7 @@
 > Reusable surface module. Use it when a scenario needs a browser UI over a hosted or prompt agent.
 > Prerequisite: a deployed scenario agent or the Foundations mechanics reference. Complete the
 > required foundation, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: the Advanced · Deploy as a Hosted Agent activity — this Extra puts a
 > browser front-end on the live Responses endpoint you shipped there. For the action-approval

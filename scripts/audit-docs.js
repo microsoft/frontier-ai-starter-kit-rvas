@@ -7,7 +7,7 @@ const { TextDecoder } = require('util');
 
 const ROOT = path.resolve(__dirname, '..');
 const SCRIPT_EXTENSIONS = '(?:py|sh|js|mjs|cjs|ps1)';
-const ROOT_SCRIPT_PREFIXES = ['activities/', 'docs/', 'resources/', 'scripts/', '.devcontainer/'];
+const ROOT_SCRIPT_PREFIXES = ['activities/', 'scenarios/', 'docs/', 'resources/', 'scripts/', '.devcontainer/'];
 const GENERATED_PREFIXES = ['docs/assets/data/activities/', 'docs/resources/'];
 const SKIP_PREFIXES = ['docs/assets/data/', 'docs/resources/', 'docs/vendor/'];
 const SITE_CHROME_DENY = /[▸◆▣›↗]/gu;
@@ -34,7 +34,7 @@ function isSkipped(rel) {
 
 function sourceDocs() {
   const files = [];
-  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+  for (const name of ['README.md', 'CONTRIBUTING.md', 'PRODUCT.md']) {
     const file = path.join(ROOT, name);
     if (fs.existsSync(file)) files.push(file);
   }
@@ -48,6 +48,9 @@ function sourceDocs() {
     const name = path.basename(file);
     return name === 'README.md' || name === 'solution.md';
   }, files);
+  for (const dir of ['scenarios', 'resources']) {
+    walk(path.join(ROOT, dir), (file) => file.endsWith('.md'), files);
+  }
 
   const backendReadme = path.join(ROOT, 'scripts/action-backend/README.md');
   if (fs.existsSync(backendReadme)) files.push(backendReadme);
@@ -124,7 +127,7 @@ function resolveScript(doc, token, isMarkdownLink) {
   if (isMarkdownLink || cleaned.startsWith('../')) {
     candidates.push(path.resolve(path.dirname(doc), cleaned));
   }
-  if (cleaned.startsWith('./scripts/')) {
+  if (cleaned.startsWith('./') && ROOT_SCRIPT_PREFIXES.some((prefix) => cleaned.slice(2).startsWith(prefix))) {
     candidates.push(path.resolve(ROOT, cleaned.slice(2)));
   } else if (cleaned.startsWith('./')) {
     candidates.push(path.resolve(path.dirname(doc), cleaned));
@@ -481,6 +484,7 @@ function main() {
     const docs = generatedDocs();
     if (!docs.length) failures.push('No generated activity/resource Markdown found; run npm run build.');
     auditCharacters(docs, failures);
+    auditCharacters(walk(path.join(ROOT, 'docs/assets/data/scenarios'), (file) => file.endsWith('.md')), failures);
     referenceCount += auditScriptReferences(docs, failures);
     referenceCount += auditGeneratedLinks(docs, failures);
     auditScenarioCourseRoutes(failures);
@@ -496,4 +500,6 @@ function main() {
   console.log(`Documentation audit passed (${referenceCount} documentation reference checks).`);
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { sourceDocs, resolveScript, auditScriptReferences };

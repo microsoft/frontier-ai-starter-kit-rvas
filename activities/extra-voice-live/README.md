@@ -5,14 +5,14 @@
 > Reusable interface module for realtime spoken interaction. Use it only when a scenario chooses a
 > live voice branch. Prerequisite: a deployed scenario agent or the Foundations mechanics reference.
 > Complete Foundations, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 >
 > Specific prereq: Foundations Step 3 (a working agent). It works on the Step 3 agent; it's
 > *better* on the Step 4 grounded agent (spoken answers gain citations).
 
 > Infra prerequisite: Voice Live API access (Azure AI
 > Speech / Foundry voice) in a supported region, and a microphone-capable client machine (laptop
-> mic + speakers, or headset). See [solution.md](solution.md) → *Infra to pre-provision*. Confirm
+> mic + speakers, or headset). See [solution.md](solution.md) → *Runtime prerequisites*. Confirm
 > regional availability before the session.
 >
 > Sample demo: speak a question, hear it answer in a

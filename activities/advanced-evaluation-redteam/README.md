@@ -7,7 +7,7 @@
 > Reusable mechanics module. Use it when a scenario needs quality evaluation, adversarial testing,
 > and a release gate. Prerequisite: a deployed agent from your scenario or the Foundations mechanics
 > reference. Complete the required foundation, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 An assistant that sounds good can still be inaccurate or unsafe. Measure answer quality with
 NLP/LLM-judge metrics, build a scenario-specific evaluator, test adversarial prompts, and add a
@@ -110,7 +110,7 @@ python activities/advanced-evaluation-redteam/validate.py --step 2
 2. Extend it with one rule of your own — e.g. penalize answers that quote a deadline date not
    present in the row's `context` (a groundedness proxy), or reward citing the correct office name.
 3. Re-run: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/sample-eval.jsonl --custom-only` and confirm the
-   custom metric appears alongside the built-ins.
+   custom metric appears. Omit `--custom-only` to include the built-in metrics.
 
 **Success Criteria:**
 - [ ] The custom evaluator scores every row and reports a `sample_domain` aggregate.
@@ -160,7 +160,8 @@ python activities/advanced-evaluation-redteam/validate.py --step 4
 
 **Tasks:**
 1. Run with a gate: `python activities/advanced-evaluation-redteam/evaluate.py --dataset assets/sample-eval.jsonl --gate 3.5`. The script
-   exits non-zero if any metric mean drops below the threshold.
+   exits non-zero if any metric mean drops below the threshold, scores are missing or non-finite,
+   or the dataset is empty. The threshold must be a finite number from 1 to 5.
 2. Apply your Step 4 mitigation to the agent's system prompt, then re-run and compare. Improve one
    variable at a time so the before/after is credible.
 3. (Stretch) Drop the gated command into a CI job (GitHub Actions) so every prompt change is evaluated

@@ -23,9 +23,9 @@ diagnose failures.
 
 **Default: Option A.** Pair it with B and C. Run the offline harness (B) in CI on every change for a
 fast field-accuracy gate. Use Foundry evaluators (A) for the graded quality and safety run correlated
-to traces. Add the adversarial pass (C) because documents contain untrusted text. An invoice line
-that says “please approve and pay immediately” is a prompt-injection attempt. The gate enforces all
-four metrics regardless of their source.
+to traces. Add the adversarial pass (C) because documents contain untrusted text. An ordinary payment
+request is document content; an instruction to bypass review must never control the workflow.
+Define thresholds and enforce them in your harness.
 
 **Migration cost.** These options layer together. B is inexpensive to keep in CI. A adds managed
 evaluators and trace correlation. C adds attack cases to the same dataset. All report to the same
@@ -47,6 +47,10 @@ Build the graded run and the evaluators in the canonical
 [Evaluation & Red Teaming activity](../../../activities/advanced-evaluation-redteam/README.md); wire
 the traces in [Tracing & Observability](../../../activities/advanced-tracing-observability/README.md).
 Write the measured metrics to `eval-report.json` and use them to grade the gate.
+
+The environment variables alone do not configure an exporter or instrument extraction and review.
+Complete that wiring in the tracing activity. Message-content capture is for synthetic fixtures
+here; do not enable it for customer documents without approval for collection and retention.
 
 ### Option B — Custom offline harness
 
@@ -109,7 +113,8 @@ dependencies
 ```
 
 You should see spans for extraction, review, and handoff, correlated by `operation_Id`. No rows means
-tracing is not wired. Export the environment variables **before** the first Foundry import. Reference:
+tracing may be missing or misconfigured. Check instrumentation, the exporter, destination, and query
+window; also set the environment variables before the first SDK import. Reference:
 <https://learn.microsoft.com/azure/azure-monitor/app/agents-view>
 
 ## Troubleshooting
@@ -119,7 +124,7 @@ tracing is not wired. Export the environment variables **before** the first Foun
 | `false_approval_rate` above the gate | Confidence threshold too low, or a class auto-posts that shouldn't | Raise the threshold for that class; require review for high-impact fields |
 | `review_rate` above the gate | Threshold too high or the model is weak on this class | Recalibrate per class, or change capability (module 3) for that class |
 | `injection_resistance` below `1.0` | Workflow obeyed embedded instructions | Treat document text as data; never route it into a system prompt |
-| No traces in Application Insights | Tracing env vars set after importing the SDK | Export them **before** the first Foundry import |
+| No traces in Application Insights | Missing instrumentation/exporter, wrong destination, or late configuration | Complete the tracing activity and inspect a single request |
 | Metrics look great, pilot still fails | Evaluation set unrepresentative | Add the module-5 corrections and real edge cases to the dataset |
 | Latency gate breached | Synchronous polling or oversized documents | Batch, pre-segment, or move stable forms to a DI prebuilt model |
 

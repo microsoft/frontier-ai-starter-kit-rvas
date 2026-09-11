@@ -100,6 +100,8 @@ response = openai.responses.create(
 The context, instructions, and questions stay the same. Only the deployment changes. If prompts vary
 between candidates, you measured the prompt, not the model.
 
+Run commands from the repository root.
+
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/compare_models.py \
   --deployments "$AZURE_AI_MODEL_DEPLOYMENT_NAME" chat-candidate
@@ -109,10 +111,10 @@ What it reports per deployment:
 
 | Axis | How it is measured | Why it decides |
 | --- | --- | --- |
-| Grounded accuracy | Golden-question expected behaviour and citation match | The only axis that matters if it fails |
+| Citation match (`grounded`) | Expected bracketed source IDs occur in the answer | A smoke check; manually review factual correctness |
 | Abstention | Does it decline the unanswerable case | A model that never abstains will confabulate in production |
 | Superseded-document handling | Does it cite the current notice | Catches recency reasoning, not just retrieval |
-| p50 / p95 latency | Wall clock per call | p95 is what users experience; p50 flatters everything |
+| p50 / p95 latency | Wall clock per call; p95 uses nearest rank | Seven calls are a smoke sample, not a load-test baseline |
 | Tokens in / out | From the response usage | Multiply by volume for the real monthly number |
 
 Judge the abstention and superseded cases first. Any competent model answers easy questions. The
@@ -158,11 +160,15 @@ chat                     4/4        3/3      820     1310     4912      611
 chat-candidate           4/4        3/3     1640     2900     4912      844
 ```
 
-`grounded` counts answerable questions cited correctly; `abstained` counts unanswerable questions the
-model refused correctly. Four of seven golden questions are answerable. A model that grounds fewer is
-guessing. One that abstains less than 3/3 answers questions the corpus cannot support. If candidates
+`grounded` counts expected citation matches; it does not check that the answer states the policy
+correctly. `abstained` counts exact matches to the refusal string. Four of seven golden questions
+are answerable. Review answers against their acceptance criteria as well as reading these counts. If candidates
 tie on quality but differ by 2× latency and 40% more output tokens, decide. Record the choice and
 what evidence would change it.
+
+The harness uses role-scoped local context, not live retrieval. It does not compare embeddings or
+enforce Azure permissions. The corpus has no separate superseded-notice document, so it does not
+test choosing between competing notices.
 
 ## Troubleshooting
 

@@ -24,13 +24,13 @@ different needs.
 | **A. Speech TTS avatar — batch synthesis** *(default)* | Async REST job renders a talking-avatar **video file** from text/SSML | Pre-produced, reviewable onboarding videos you approve once and replay | No (async job) | Standard avatar+voice = none; custom = limited access | GA (`api-version=2024-08-01`) |
 | B. Speech TTS avatar — real-time synthesis | Speech SDK streams avatar video over **WebRTC** live | A live, interactive kiosk/agent that shows a face | Yes | Same as A | GA |
 | C. Voice Live API | Fully-managed **speech-to-speech** voice agent; can also emit **avatar visuals** | A conversational onboarding assistant you speak to | Yes | Same as A when avatar is on | See docs (maps to `extra-voice-live`) |
-| D. Video translation | Localises an **existing** onboarding video into other languages, preserving the speaker's voice | You already have approved video and need many locales | No (batch) | Voice replication of a real speaker — treat as consent-bearing | GA-ish; verify |
+| D. Video translation | Localises an **existing** onboarding video into other languages, preserving the speaker's voice | You already have approved video and need many locales | No (batch) | Voice replication of a real speaker — treat as consent-bearing | Check current documentation |
 | E. Plain audio (TTS / Voice Live audio-only) | Natural-voice narration, **no face** | Accessibility-first, lowest cost/risk, no likeness | Either | Standard voice = none | GA |
 
 **Default: Option A (batch avatar synthesis).** Onboarding content is authored, reviewed, and
 replayed. It is not a live conversation. Batch synthesis produces a reviewable video that fits the
 module-6 human-approval gate. It uses a **standard** avatar and voice, so there is *no* talent
-likeness to license or limited-access form to file. It is the lowest-cost path to a governed pilot.
+likeness to license or limited-access form to file. Compare its cost with audio or text before choosing it.
 Verified overview:
 <https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech-avatar/what-is-text-to-speech-avatar>
 
@@ -103,9 +103,9 @@ Treat the original speaker's consent as a gate even though no *custom* model is 
 
 ### Option E — Plain audio (accessibility-first)
 
-Standard-voice narration with no face. Lowest cost and lowest risk, and it is **also your mandatory
-non-avatar fallback** for every other option (module 5). Choose it when a face adds risk without
-value.
+Standard-voice narration with no face. Choose it when a face adds risk without value.
+Every option still needs an **accessible text fallback** (module 5); audio alone does not serve
+users who cannot hear it.
 
 ### The responsible-AI gate (applies to A–D, verified)
 

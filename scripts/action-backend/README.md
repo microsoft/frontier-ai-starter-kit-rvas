@@ -83,7 +83,7 @@ The supported guided path is:
    `/advising-slots`).
 3. Wrap those functions in `FunctionTool`.
 4. Govern each Responses `function_call` with explicit human approval, then return a
-   `FunctionCallOutput` and continue with `previous_response_id`.
+   `FunctionCallOutput` and continue in the same Foundry conversation, as shown in the activity.
 
 The FastMCP server is a stretch asset for teams that want to explore the server side of MCP. Before
 attaching it directly to an agent, verify the current MCP tool and approval APIs in Microsoft Learn;

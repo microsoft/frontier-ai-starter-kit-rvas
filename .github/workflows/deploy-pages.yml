@@ -10,8 +10,12 @@ on:
       - docs/**
       - activities/**
       - resources/**
+      - scenarios/**
       - scripts/action-backend/README.md
       - scripts/audit-docs.js
+      - scripts/validate-scenarios.py
+      - scripts/audit-diagrams.py
+      - scripts/test-docs.js
       - package.json
       - .github/workflows/deploy-pages.yml
 
@@ -26,8 +30,12 @@ on:
       - docs/**
       - activities/**
       - resources/**
+      - scenarios/**
       - scripts/action-backend/README.md
       - scripts/audit-docs.js
+      - scripts/validate-scenarios.py
+      - scripts/audit-diagrams.py
+      - scripts/test-docs.js
       - package.json
       - .github/workflows/deploy-pages.yml
 
@@ -56,10 +64,13 @@ jobs:
       - name: Build static site data
         run: npm run build
 
+      - name: Validate scenarios and build regressions
+        run: npm run validate:scenarios && npm test
+
       - name: Verify generated guides are committed
         run: |
           test -z "$(git status --porcelain --untracked-files=all -- \
-            docs/assets/data/activities docs/assets/data/platform.json \
+            docs/assets/data/activities docs/assets/data/scenarios docs/assets/data/platform.json \
             docs/assets/data/dependency-graph.json docs/resources)"
 
   build-production:
@@ -77,10 +88,13 @@ jobs:
       - name: Build static site data
         run: npm run build
 
+      - name: Validate scenarios and build regressions
+        run: npm run validate:scenarios && npm test
+
       - name: Verify generated guides are committed
         run: |
           test -z "$(git status --porcelain --untracked-files=all -- \
-            docs/assets/data/activities docs/assets/data/platform.json \
+            docs/assets/data/activities docs/assets/data/scenarios docs/assets/data/platform.json \
             docs/assets/data/dependency-graph.json docs/resources)"
 
       - name: Checkout preview state
@@ -159,6 +173,16 @@ jobs:
       - name: Build branch preview
         run: npm run build
         working-directory: preview
+
+      - name: Validate preview scenarios and build regressions
+        run: npm run validate:scenarios && npm test
+        working-directory: preview
+
+      - name: Verify generated preview assets are committed
+        working-directory: preview
+        run: |
+          test -z "$(git status --porcelain --untracked-files=all -- \
+            docs/assets/data docs/resources)"
 
       - name: Set preview path
         id: preview_path

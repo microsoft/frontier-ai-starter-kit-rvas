@@ -34,9 +34,9 @@ The provided backend keeps the focus on the approval loop instead of a CRUD API.
 ```bash
 # provided backend (REST — required)
 cd scripts/action-backend && pip install -r requirements.txt
-uvicorn app:app --host 0.0.0.0 --port 8080      # terminal 1
+uvicorn app:app --host 127.0.0.1 --port 8080    # terminal 1
 # optional: python mcp_server.py               # only for stretch goal 1 (MCP server exploration)
-# agent side
+# agent side: use a second terminal at the repository root
 az login                                        # keyless DefaultAzureCredential
 # .env: AZURE_AI_PROJECT_ENDPOINT, AZURE_AI_MODEL_DEPLOYMENT_NAME, ACTION_API_URL
 ```
@@ -231,7 +231,7 @@ def run_with_approval(openai, agent_name, prompt):
 
 ## Common issues & fast unblocks
 - **`Step 1 FAIL — backend not reachable`** → backend not started / wrong `ACTION_API_URL`.
-- **Model never calls the tool** → function docstrings missing `:param` lines, or `FunctionTool` not passed to `tools=`.
+- **Model never calls the tool** → check the explicit function schemas and that `FunctionTool` definitions are passed to `tools=`.
 - **Agent loses context after approval** → pass the same `conversation=conversation.id` on both calls.
 - **`Unauthorized` to backend** → `ACTION_API_KEY` set on one process but not the other; either set it
   in both terminals or unset it everywhere for the workshop.

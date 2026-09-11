@@ -47,9 +47,12 @@ Avatar and Voice Live are **region-gated**, and your models must be deployable i
 Check both **before** deploying:
 
 ```bash
-# Confirm your chosen chat/embedding models are available in the target region:
-az cognitiveservices account list-skus --location westus2 --kind AIServices -o table
+# List models offered in the target region; check quota separately.
+az cognitiveservices model list --location westus2 -o table
 ```
+
+This lists regional model offerings, not available deployment capacity. Confirm quota and
+the model's deployment SKU before deploying.
 
 - Avatar/Voice Live region support:
   <https://learn.microsoft.com/azure/ai-services/speech-service/regions?tabs=ttsavatar>
@@ -66,6 +69,8 @@ az cognitiveservices account list-skus --location westus2 --kind AIServices -o t
 
 The template is [`accelerator/main.bicep`](../accelerator/main.bicep); defaults live in
 [`accelerator/parameters.example.json`](../accelerator/parameters.example.json).
+
+Run commands from the repository root.
 
 ```bash
 az login
@@ -210,10 +215,10 @@ curl -s -o /dev/null -w '%{http_code}\n' \
   "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses?api-version=2024-08-01"
 ```
 
-`200` means keyless Speech works end to end. `401` means the account has no custom subdomain and
-rejects Entra auth. Redeploy Option A, which sets `customSubDomainName`. `403` means your identity
-is missing **Cognitive Services Speech User** (`f2dc8367-1007-4938-bd23-fe263f013447`). Grant the
-role rather than falling back to a Speech key, or you carry the key to production.
+`200` confirms this keyless list request succeeded. For `401`, check the token's expiry,
+audience, and custom-subdomain endpoint. For `403`, check **Cognitive Services Speech User**
+(`f2dc8367-1007-4938-bd23-fe263f013447`) and allow time for RBAC propagation. Do not fall back
+to a Speech key.
 <https://learn.microsoft.com/azure/ai-services/speech-service/role-based-access-control>
 
 **3. The environment contract holds no secrets.**
@@ -231,9 +236,9 @@ already broken.
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `401`/`403` from Search | Missing data-plane roles; RBAC propagation lag | Assign Search Service Contributor + Search Index Data Contributor, wait ~5 min |
-| `401` from `avatar/batchsyntheses` with a token | No custom subdomain on the account | Redeploy Option A (sets it), or add `customSubDomainName` |
+| `401` from `avatar/batchsyntheses` with a token | Invalid/expired token or wrong endpoint | Refresh the token; check its audience and the custom-subdomain endpoint |
 | `403` from Speech though you're Owner | Generic Owner/Contributor grants no Speech data access | Assign **Cognitive Services Speech User** (`f2dc8367-…`) |
-| Model deployment fails | Model/capacity unavailable in region | `az cognitiveservices account list-skus …`, change region or lower capacity |
+| Model deployment fails | Model/capacity unavailable in region | Check `az cognitiveservices model list --location <region>` and subscription quota; change region or capacity |
 | Avatar features missing in region | Region not on the avatar list | Redeploy in a region from the `?tabs=ttsavatar` table |
 | `StorageAccountAlreadyTaken` | `resourceToken` collides globally | Pass a different `resourceToken` (5–12 lowercase chars) |
 | `.env` written but empty | Deployment produced no outputs | Check `accelerator/.deployment-outputs.json`; re-run |

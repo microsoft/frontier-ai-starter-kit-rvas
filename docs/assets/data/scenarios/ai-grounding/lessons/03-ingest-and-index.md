@@ -66,8 +66,11 @@ audit the answer:
 
 Use the current Microsoft Learn guidance for the active ingestion and indexing surface.
 
-Seed the approved container with the scenario's fictional corpus first. It is small and includes a
-superseded notice and restricted document, so it tests freshness and permissions:
+Seed the approved container with the four fictional source documents. Exclude the sample README.
+The current notice names a superseded notice, but the older document is not included.
+The supervisor document is labelled restricted; configure real source permissions before testing access.
+
+Run commands from the repository root.
 
 ```bash
 az storage blob upload-batch \
@@ -75,7 +78,14 @@ az storage blob upload-batch \
   --auth-mode login \
   --destination "$AZURE_STORAGE_CONTAINER_NAME" \
   --source scenarios/ai-grounding/accelerator/sample-data \
-  --pattern "*.md"
+  --pattern "returns-*.md"
+
+az storage blob upload-batch \
+  --account-name "$AZURE_STORAGE_ACCOUNT_NAME" \
+  --auth-mode login \
+  --destination "$AZURE_STORAGE_CONTAINER_NAME" \
+  --source scenarios/ai-grounding/accelerator/sample-data \
+  --pattern "service-update.md"
 ```
 
 The account uses `allowSharedKeyAccess: false`, so `--auth-mode login` is required. There is no
@@ -85,6 +95,11 @@ account key to fall back to.
 
 The knowledge source generates the whole pipeline. You supply the container, the two models, and the
 ingestion parameters.
+
+**Implementation gap:** the example below uses flat Blob Storage but requests user/group ACL
+ingestion. Flat blobs use container RBAC scopes; the fictional per-document role labels are not
+translated into source permissions. Choose and implement that access model before using protected
+content. See [Blob permission ingestion](https://learn.microsoft.com/azure/search/search-blob-indexer-role-based-access).
 
 ```bash
 pip install --pre azure-search-documents azure-identity python-dotenv
@@ -275,8 +290,9 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   "$AZURE_SEARCH_ENDPOINT/indexes('<generated-index-name>')/docs/\$count?api-version=2026-04-01"
 ```
 
-A non-zero count that matches your corpus is what you want. Zero after a successful run means re-run
-the indexer once content is in the container.
+A non-zero chunk count confirms indexed content exists; it need not equal the source document count.
+Check source coverage separately. Zero after a successful run means re-run the indexer once content
+is in the container.
 
 ## Troubleshooting
 

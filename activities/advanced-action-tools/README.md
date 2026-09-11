@@ -7,7 +7,7 @@
 > **Canonical approval, refusal, and action-provenance module.** Use it when a scenario needs a governed action seam. Prerequisite: a
 > deployed Foundry agent from your scenario or the Foundations mechanics reference. Complete the
 > required foundation, or run the bootstrap skip-path:
-> `azd up && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
+> `azd up && azd env get-values > .env && ./scripts/setup-foundations.sh && python scripts/validate-foundations.py`.
 
 Your assistant can retrieve information and answer questions. This activity lets it open a ticket,
 place a hold, book a slot, start a workflow, or call another approved system. Knowledge tools read.
@@ -56,8 +56,9 @@ to build the file from scratch.
 
 **Tasks:**
 1. In a terminal: `cd scripts/action-backend && pip install -r requirements.txt`.
-2. Start the REST API: `uvicorn app:app --host 0.0.0.0 --port 8080`.
-3. Confirm it's up: `curl http://localhost:8080/health`.
+2. Start the REST API: `uvicorn app:app --host 127.0.0.1 --port 8080`.
+3. Leave it running. In a second terminal at the repository root, confirm it's up:
+   `curl http://localhost:8080/health`. Run the remaining activity commands there.
 
 > Optional preview: The backend also ships `mcp_server.py` (FastMCP on `:8765/mcp`). Start it only
 > for the MCP extension.
@@ -223,4 +224,5 @@ author the file, and run `python activities/advanced-action-tools/validate.py --
   agent is exactly how prompt-injection turns into real damage (see the Evaluation & Red Teaming
   activity).
 - The backend is in-memory and resets on restart — fine for a workshop, but say so in your demo.
-- If the agent never calls the tool, check that `FunctionTool` was passed to `tools=` and that the function docstrings include `:param` lines.
+- If the agent never calls the tool, check its `FunctionTool` name, description, and parameter schema,
+  and confirm the definitions were passed to `tools=`.

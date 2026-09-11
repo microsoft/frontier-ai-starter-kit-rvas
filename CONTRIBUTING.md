@@ -19,9 +19,20 @@ Before submitting documentation or activity changes, run:
 
 ```bash
 npm run build
+npm run validate:scenarios
+npm test
 ```
 
 The build audits first-party documentation for broken script references, invalid invocation flags,
 ambiguous checklist glyphs, invalid UTF-8, likely mojibake, and fragile text icons in the site chrome.
-It then regenerates and audits the participant guides under `docs/assets/data/`.
-Generated guides must be committed with their source changes.
+It then regenerates the guides and scenario assets under `docs/assets/data/` and checks their routes.
+The scenario checks cover lesson structure and diagram geometry. `npm test` covers build and audit
+regressions. These local checks do not prove that a live Azure deployment works.
+
+**Commit generated assets with their source changes**, including the copied resources under
+`docs/resources/`.
+
+For activity code changes, also run `npm run test:activities` from the repository root after
+installing the shared Python requirements. These regression tests run locally with mocked services.
+For grounding or avatar accelerator changes, run `npm run test:scenarios` for the offline regression
+tests.

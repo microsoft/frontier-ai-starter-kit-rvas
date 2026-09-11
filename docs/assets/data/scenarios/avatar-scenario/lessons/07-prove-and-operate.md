@@ -68,8 +68,9 @@ change before Azure. Wire it into CI for fast feedback.
 
 ### Tracing (verified switches)
 
-Set these **before importing** the Foundry SDK so it captures GenAI spans and message content. Then
-review the trace for a failed case end to end:
+For the synthetic exercise, set these **before importing** the SDK. They do not configure an
+exporter or instrument every call by themselves. Follow the linked tracing activity to configure
+Azure Monitor and instrument the client, then review a failed case end to end:
 
 ```bash
 export AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
@@ -79,6 +80,9 @@ export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
 `deploy.sh` already wrote both into `.env`. Traces correlate to the Application Insights resource
 provisioned in module 2 (`APPLICATIONINSIGHTS_RESOURCE_ID`). Mechanics:
 [Tracing & Observability activity](../../../activities/advanced-tracing-observability/README.md).
+
+Message-content capture can include user prompts and employee data. Disable it outside the
+synthetic exercise unless the data owner approves collection and retention.
 
 ### The release decision
 
@@ -112,9 +116,8 @@ Keep the module-6 withdrawal path one action away.
 Prove the release gate rests on visible evidence, not a good demo. Check each result against your
 resources and records.
 
-**1. Traces actually reached Application Insights.** You set the GenAI tracing switches before
-importing the SDK, so a drafting or synthesis run should have emitted spans. Query the resource
-module 2 provisioned:
+**1. Traces actually reached Application Insights.** After configuring the exporter and
+instrumentation, run the assistant and query the resource module 2 provisioned:
 
 ```bash
 set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
@@ -124,10 +127,9 @@ az monitor app-insights query --ids "$APPLICATIONINSIGHTS_RESOURCE_ID" \
   -o table
 ```
 
-A non-zero count means you can diagnose a failure end to end. Zero rows after you run the assistant
-usually means you set the switches *after* SDK import. Export
-`AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` and
-`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` before importing Foundry, then re-run.
+A non-zero count shows matching spans arrived. Inspect one request's correlated spans to confirm
+end-to-end coverage. For zero rows, check the exporter, instrumentation, destination, and query
+window as well as when the environment variables were set.
 
 **2. Ship only when every gate meets its threshold.** A red gate, such as an unapproved-claim leak
 or unresolved red-team finding, blocks the pilot.
@@ -147,7 +149,7 @@ onboarding tool. Keep counts only.
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Traces empty | Switches set after importing the SDK | Export both env vars **before** importing Foundry; restart the process |
+| Traces empty | Exporter/instrumentation missing, wrong destination, or late configuration | Follow the tracing activity; inspect one request after restarting |
 | Groundedness passes but avatar still wrong | Golden set too small / not onboarding-specific | Add the off-claim, impersonation, and disclosure probes above |
 | Red-team finds impersonation | Prompt allows role-play as real people | Forbid impersonation; keep disclosure mandatory in the system prompt |
 | Accessibility defect slips to pilot | Fallback/transcript not evaluated | Gate on captions + transcript + fallback presence (module 5) |

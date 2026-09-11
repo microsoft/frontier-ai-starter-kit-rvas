@@ -53,13 +53,21 @@ scenarios/<folder-name>/
       "reused_with": ["other-scenario-id"]
     }
   ],
+  "build_modules": [
+    {
+      "id": "lesson-id",
+      "title": "Customer decision",
+      "summary": "What the team implements in this lesson",
+      "outcome": "The result the team can check",
+      "implementation_paths": ["accelerator/main.bicep"]
+    }
+  ],
   "slides": "slides.md",
   "accelerator": "accelerator/README.md"
 }
 ```
 
-The compact scenario and lesson headers use activity-style labels to orient customers before they
-start building:
+The scenario header displays these labels:
 
 - `level`: customer-facing build level such as `guided`, `intermediate`, or `advanced`.
 - `duration_minutes`: expected guided time for the scenario path, excluding customer-specific
@@ -69,11 +77,12 @@ start building:
 - `order`: integer that fixes the scenario's position in the menu, homepage, and every generated
   listing. Scenarios without an `order` sort last, alphabetically by name.
 
-Build modules may also define optional `level`, `duration_minutes`, and `stage` values when a lesson
-needs more specific labels. If omitted, lesson pages fall back to the scenario-level labels.
+Build modules may also store optional `level`, `duration_minutes`, and `stage` values for individual
+lessons. The current lesson page does not display these labels.
 
-Each build module declares an `outcome`: one short line naming what the reader should have once the
-module is done. It appears on the scenario and lesson pages.
+**Include one build module per lesson, in the same order and with the same ID.** Each module declares
+an `outcome`: one short line naming what the reader should have when the module is done. The scenario
+roadmap displays it alongside the module summary.
 
 ## Acceptance checklist
 
@@ -118,4 +127,4 @@ module is done. It appears on the scenario and lesson pages.
 - Data ownership, access, evaluation, and operating evidence are explicit from the first lesson.
 - Synthetic sample data and expected outputs are present for every scenario; each is clearly
   replaceable by approved customer data.
-- A named owner and maturity label are present; update the scenario changelog when material changes.
+- A named owner and maturity label are present; describe material changes in the pull request.

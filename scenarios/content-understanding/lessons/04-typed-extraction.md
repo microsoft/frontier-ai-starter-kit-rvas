@@ -40,6 +40,11 @@ extraction.
 
 ## Implementation
 
+**The snippets below are incomplete sketches, not a validated normalizer.** They do not yet
+handle all required fields, nested values, missing confidence, or the full fixture contract.
+Option A also needs a `_page` parser. Implement and test those pieces before allowing any
+downstream handoff.
+
 ### Option A — Map a Content Understanding result
 
 ```python
@@ -146,8 +151,9 @@ document. Fix that before an auditor or an incorrect payment exposes it.
 **3. The review gate actually trips.**
 
 ```bash
-jq '[.fields | to_entries[]
-     | select(.value.confidence != null and .value.confidence < .confidence_threshold) | .key] as $low
+jq '.confidence_threshold as $threshold
+    | [.fields | to_entries[]
+       | select(.value.confidence != null and .value.confidence < $threshold) | .key] as $low
     | {low_confidence_fields: $low, routing_decision: .routing_decision}' result.json
 ```
 

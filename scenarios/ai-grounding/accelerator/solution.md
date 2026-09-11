@@ -1,12 +1,15 @@
 # AI Grounding — reference implementation
 
-This is the complete end-to-end build for facilitators and anyone who gets stuck. Every command is
-used by the lessons. Nothing here bypasses a decision.
+This facilitator reference follows the lesson path. Check the
+[known implementation gaps](README.md#known-implementation-gaps) before running its release gates.
 
 > Re-check current Microsoft Learn guidance before you build. Several capabilities used here are
 > preview and move quickly.
 
 ## Prerequisites
+
+Use Bash, Azure CLI, Bicep, and Python 3. The signed-in user must be able to create the resources
+and role assignments. Run from the repository root, using a Python virtual environment.
 
 ```bash
 az login
@@ -22,6 +25,11 @@ answer synthesis. The GA API version (`2026-04-01`) offers minimal extractive re
 
 ```bash
 ./scenarios/ai-grounding/accelerator/scripts/deploy.sh rg-ai-grounding eastus2
+
+set -a
+source scenarios/ai-grounding/accelerator/.env
+set +a
+export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
 
 # Confirm both deployments landed
 az cognitiveservices account deployment list \
@@ -42,19 +50,14 @@ az cognitiveservices account deployment list \
 | Project connections | Search (`CognitiveSearch`, `authType: 'AAD'`) and App Insights |
 | 9 role assignments | Search ↔ Foundry ↔ Storage ↔ deployer, all keyless |
 
-**Common facilitator issue:** the deployer principal id is resolved with
-`az ad signed-in-user show`. In a service-principal context that returns nothing and the data-plane
-role assignments are skipped, so later modules fail with `403`. Pass the object id explicitly.
+**Deployment identity:** `deploy.sh` requires a signed-in user and stops if it cannot resolve that
+user's object ID. For automation, deploy the Bicep directly and configure the workload's roles
+separately; the template's optional `principalId` assignments are for a human user.
 
 ## Module 2 — Source and permission architecture
 
-Decision first, then proof.
-
-```bash
-python3 scenarios/ai-grounding/accelerator/scripts/probe_permissions.py --knowledge-base grounding-kb
-```
-
-Live, with two identities:
+Decide the permission model here. Run the probe after module 3 has ingested the corpus and real
+source permissions are configured, using two identities:
 
 ```bash
 export PROBE_TENANT_ID=... PROBE_CLIENT_ID=... PROBE_CLIENT_SECRET=...
@@ -65,8 +68,9 @@ The probe plan is `permission-probe.json`. Query the restricted supervisor playb
 confirm the restricted identity gets no title, snippet, or count.
 
 Query-time ACL enforcement needs **both** headers: the app's `Authorization` and the end user's
-token in `x-ms-query-source-authorization`. Without the second, every caller queries as the
-application. This is the most common security defect in this scenario.
+token in `x-ms-query-source-authorization`. On an ACL-enabled index, current permission filtering
+returns only public documents when the user token is omitted. The header does not create missing
+source permissions or permission fields.
 
 ## Module 3 — Ingest and index
 
@@ -74,16 +78,23 @@ application. This is the most common security defect in this scenario.
 az storage blob upload-batch \
   --account-name "$AZURE_STORAGE_ACCOUNT_NAME" --auth-mode login \
   --destination "$AZURE_STORAGE_CONTAINER_NAME" \
-  --source scenarios/ai-grounding/accelerator/sample-data --pattern "*.md"
+  --source scenarios/ai-grounding/accelerator/sample-data --pattern "returns-*.md"
+
+az storage blob upload-batch \
+  --account-name "$AZURE_STORAGE_ACCOUNT_NAME" --auth-mode login \
+  --destination "$AZURE_STORAGE_CONTAINER_NAME" \
+  --source scenarios/ai-grounding/accelerator/sample-data --pattern "service-update.md"
 
 export AZURE_KNOWLEDGE_BASE_NAME=grounding-kb
 python3 scenarios/ai-grounding/accelerator/scripts/build_knowledge_source.py
-python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py --knowledge-base grounding-kb
 ```
 
-`build_knowledge_source.py` creates the blob knowledge source with
-`ingestion_permission_options=["user_ids", "group_ids"]`, the ACL carry-forward switch module 2
-needs. It then creates the knowledge base with `output_mode="answerSynthesis"`.
+Wait for the indexer to finish before querying; follow module 3's **Verify** steps.
+
+`build_knowledge_source.py` configures a flat blob source but requests user/group ACL ingestion.
+That does not implement the fixture's per-document access model. Flat Blob Storage uses RBAC scopes;
+see [the source permission guidance](https://learn.microsoft.com/azure/search/search-blob-indexer-role-based-access).
+Resolve this gap before using the knowledge base with protected content.
 
 Service-enforced ordering: create the knowledge source before the knowledge base; both must live on
 the same search service; delete or update the base before deleting a source.
@@ -113,12 +124,12 @@ changing the embedding model invalidates every vector and forces a full reingest
 
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
-  --knowledge-base grounding-kb --all
+  --knowledge-base grounding-kb --min-recall 0.95
 ```
 
-The script asserts citations on four answerable cases, abstention on three refusal cases, no citation
-to the superseded 2026-01-28 Alpine notice, and no restricted-playbook leak. It records `recall@5`,
-which modules 6 and 7 must not regress.
+The script checks citation strings on four answerable cases and exact abstention on three refusal
+cases. Its `recall@5` label is an answer citation hit rate, not retrieval recall. All cases use one
+identity, so the mixed-role dataset also needs identity-aware execution before it can test permissions.
 
 If a group insists on adding an agent before this passes, show why: an agent over weak retrieval
 produces an articulate wrong answer instead of an obvious one.
@@ -140,7 +151,7 @@ agent = project.agents.create_version(
 ```
 
 Ask the agent one policy question, one live-data question, one mixed question, and one out-of-scope
-question. Read the trace for each: the policy question must not call the tool, the live-data question
+question. Read the trace for each: the policy question must not call the live-data tool, the live-data question
 must not answer from the index, and the out-of-scope question must abstain rather than reach for a
 tool.
 
@@ -222,9 +233,9 @@ refuses to delete a source still referenced by a base.
    the role assignments with an explicit object id.
 2. **`ImportError` on knowledge-base models.** GA and preview put them in different modules. Preview:
    `azure.search.documents.indexes.models`. GA: `azure.search.documents.knowledgebases.models`.
-3. **The permission probe passes trivially.** They did not send `x-ms-query-source-authorization`, so
-   both identities queried as the application and both saw everything. If the probe never denies
-   anything, it proves nothing.
+3. **The permission probe gives misleading evidence.** Check that the authorized identity sees the
+   expected source, the restricted identity has different source permissions, and the markers occur
+   in the actual response. Missing markers cannot detect a leak.
 4. **"Should we use Foundry IQ or AI Search?"** Foundry IQ unless they need retrieval behaviour it
    does not expose. B → A is cheap; C → anything is expensive.
 5. **They want to index the live case system.** Do not let them. Route to it.

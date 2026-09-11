@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 
 try:
@@ -107,7 +108,7 @@ class SampleOrganizationDomainEvaluator:
 
         foreign_emails = [
             e for e in re.findall(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", response)
-            if "sample.edu" not in e.lower()
+            if e.rstrip(".").rsplit("@", 1)[-1].lower() != "sample.edu"
         ]
         if foreign_emails:
             score -= 2.0
@@ -207,6 +208,8 @@ def main() -> int:
         help="Score each row's existing response field without calling the agent.",
     )
     args = parser.parse_args()
+    if args.gate is not None and (not math.isfinite(args.gate) or not 1 <= args.gate <= 5):
+        parser.error("--gate must be a finite number between 1 and 5")
 
     if not args.dataset.exists() and not args.dataset.is_absolute():
         activity_relative = HERE / args.dataset
@@ -250,6 +253,9 @@ def main() -> int:
     except (ValueError, json.JSONDecodeError) as exc:
         print(f"❌ invalid evaluation dataset: {exc}")
         return 2
+    if not rows:
+        print("❌ evaluation dataset is empty; provide at least one row.")
+        return 2
     print(f"Loaded {len(rows)} rows from {args.dataset}"
           + (" (dry-run: response=ground_truth)" if args.dry_run else "")
           + (" (using dataset responses)" if args.use_dataset_responses else ""))
@@ -279,11 +285,11 @@ def main() -> int:
         incomplete = {
             name: len(vals)
             for name, vals in all_scores.items()
-            if len(vals) != len(rows)
+            if len(vals) != len(rows) or any(not math.isfinite(value) for value in vals)
         }
         if incomplete:
             print(
-                "\n❌ GATE FAILED — incomplete evaluator coverage: "
+                "\n❌ GATE FAILED — missing or non-finite evaluator scores: "
                 + ", ".join(f"{name}={count}/{len(rows)}" for name, count in incomplete.items())
             )
             return 1

@@ -32,7 +32,7 @@ prompt, or retrieval configuration; do not treat metrics as isolated numbers.
 - `--dry-run --custom-only` runs with **zero** Azure calls (response = ground_truth). Use it when
   auth/quota is unavailable but you still need to prove the harness shape. The
   `python activities/advanced-evaluation-redteam/validate.py --step 2` check uses this path.
-- The real run calls the agent per row via `create_and_process`. With 36 rows × 4 judges this consumes
+- The real run calls the agent per row via `responses.create`. With 36 rows × 4 judges this consumes
   quota — if the room is quota-constrained, have teams subset the dataset (`head -n 12`).
 - **Pitfall:** `AIProjectClient` 2.x requires `endpoint=` (not a connection string). Already correct in
   the shipped script; flag it if a team rewrites it.

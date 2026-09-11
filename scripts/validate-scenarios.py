@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 
@@ -13,7 +14,6 @@ REQUIRED_MODULE_SIGNALS = (
     "choose your path",
     "implementation",
     "verify",
-    "decision record",
     "next module",
 )
 RETIRED_WORKSHOP_SIGNALS = (
@@ -37,7 +37,9 @@ def check(condition: bool, message: str, failures: list[str]) -> None:
 
 def main() -> int:
     failures: list[str] = []
-    for manifest_path in sorted(SCENARIOS.glob("*/manifest.json")):
+    manifests = sorted(SCENARIOS.glob("*/manifest.json"))
+    check(bool(manifests), "scenario manifests exist", failures)
+    for manifest_path in manifests:
         scenario_root = manifest_path.parent
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         scenario_id = manifest["id"]
@@ -45,13 +47,14 @@ def main() -> int:
         blueprint = scenario_root / "accelerator" / "main.bicep"
         source = blueprint.read_text(encoding="utf-8") if blueprint.is_file() else ""
         check(blueprint.is_file(), "Bicep blueprint exists", failures)
-        # Scenario Bicep is now deployable. The guardrail is no longer "declares no resources";
-        # it is "parameterised, no inline secrets, and compiles".
-        lowered_bicep = source.lower()
-        secret_markers = ("password =", "apikey =", "accountkey=", "sharedaccesskey")
+        # This text check does not replace Bicep compilation or a deployment review.
+        secret_assignment = re.compile(
+            r"\b(?:password|apiKey|accountKey|sharedAccessKey)\s*[:=]\s*['\"][^'\"]+['\"]",
+            re.IGNORECASE,
+        )
         check(
-            not any(marker in lowered_bicep.replace(" ", " ") for marker in secret_markers),
-            "Bicep blueprint declares no inline secrets",
+            not secret_assignment.search(source),
+            "Bicep blueprint has no obvious literal secret assignments",
             failures,
         )
         if source:
@@ -66,7 +69,8 @@ def main() -> int:
             text = lesson_path.read_text(encoding="utf-8").lower() if lesson_path.is_file() else ""
             check(lesson_path.is_file(), f"lesson {lesson['id']} exists", failures)
             missing = [signal for signal in REQUIRED_MODULE_SIGNALS if signal not in text]
-            check(not missing, f"lesson {lesson['id']} has the build-module contract", failures)
+            detail = f" (missing: {', '.join(missing)})" if missing else ""
+            check(not missing, f"lesson {lesson['id']} has the build-module contract{detail}", failures)
             retired = [signal for signal in RETIRED_WORKSHOP_SIGNALS if signal in text]
             check(not retired, f"lesson {lesson['id']} drops the retired workshop template", failures)
 
@@ -88,8 +92,8 @@ def main() -> int:
 
         lesson_ids = [lesson["id"] for lesson in manifest.get("lessons", [])]
         check(
-            len(lesson_ids) == len(modules),
-            f"one lesson per build module ({len(lesson_ids)} lessons, {len(modules)} modules)",
+            lesson_ids == [module.get("id") for module in modules],
+            f"one build module per lesson, with matching IDs and order ({len(lesson_ids)} lessons, {len(modules)} modules)",
             failures,
         )
 

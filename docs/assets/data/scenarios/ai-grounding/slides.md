@@ -245,8 +245,8 @@ Customer discussion prompts:
 | Extractive retrieval plus custom prompt | Team needs stronger control over tone and policy | More prompt and evaluation ownership |
 | Direct hybrid query | App needs transparent retrieval and custom ranking | More engineering effort before user value |
 
-State the required behaviors: cite available evidence, abstain when it is missing, and separate
-“not found” from “not allowed.”
+State the required behaviors: cite available evidence and abstain when it is missing. Do not reveal
+whether missing evidence is absent or restricted.
 
 ---
 <!-- slide:id=lesson-grounded-app-evidence -->

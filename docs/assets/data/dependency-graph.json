@@ -117,7 +117,7 @@
       "to": "advanced-deploy-hosted-agent"
     },
     {
-      "from": "foundations",
+      "from": "advanced-deploy-hosted-agent",
       "to": "extra-build-ui"
     },
     {
@@ -145,7 +145,11 @@
       "to": "extra-magentic-workflows"
     },
     {
-      "from": "foundations",
+      "from": "advanced-action-tools",
+      "to": "extra-magentic-workflows"
+    },
+    {
+      "from": "advanced-deploy-hosted-agent",
       "to": "extra-hosted-longrunning"
     }
   ]

@@ -1,8 +1,8 @@
 # Solution — Avatar Scenario reference implementation
 
-This is the scenario's complete reference build. It lists the files, commands, and artifacts that
-satisfy all seven modules. The lessons explain *how to choose and build*. This file gives a field
-engineer the shortest route to a green pilot. Run every command from the repository root.
+This reference collects the scenario's infrastructure, local pack checks, and integration snippets.
+It is not an end-to-end application. You still need a rendering/channel adapter, authenticated
+approvals, expiry and withdrawal controls, and an evaluation harness. Run commands from the repository root.
 
 > Fictional data only. The accelerator ships synthetic HR content. Never place real customer
 > content, or a real person's voice or likeness, in this repository.
@@ -14,7 +14,7 @@ engineer the shortest route to a green pilot. Run every command from the reposit
 | Experience capability | **Speech text-to-speech avatar — batch synthesis**, standard avatar + standard neural voice (no limited-access gate) | 1 |
 | Foundation | Azure AI Foundry (AIServices, `kind: AIServices`, custom subdomain) + project, chat + embedding deployments, AI Search, Storage, Log Analytics + App Insights | 2 |
 | Content pipeline | Versioned claims in `sample-data/claims.json`, approved-content blob container, owner/version/expiry metadata | 3 |
-| Grounded assistant | Foundry agent grounded on approved content; refuses with `NO_APPROVED_CLAIM` | 4 |
+| Grounded assistant | Model + approved claim set; optional Foundry agent; refuses with `NO_APPROVED_CLAIM` | 4 |
 | Experience generation | Batch avatar synthesis from an approved script revision + disclosure, captions, transcript, non-avatar fallback | 5 |
 | Approval gate | Versioned approval record enforced by `content_pack.py`; withdrawal on source change | 6 |
 | Prove & operate | Foundry evaluations + AI Red Teaming Agent, GenAI tracing, aggregate-only telemetry, release scorecard | 7 |
@@ -37,11 +37,12 @@ The default, **standard batch avatar**, avoids the Azure limited-access registra
 
 ```bash
 scenarios/avatar-onboarding/accelerator/scripts/deploy.sh rg-avatar-onboarding westus2
+set -a; source scenarios/avatar-onboarding/accelerator/.env; set +a
 
 # Confirm the Speech endpoint answers your Entra identity
 TOKEN=$(az account get-access-token --scope https://cognitiveservices.azure.com/.default --query accessToken -o tsv)
 curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $TOKEN" \
-  "$AZURE_SPEECH_ENDPOINT"
+  "$AZURE_SPEECH_ENDPOINT/avatar/batchsyntheses?api-version=2024-08-01"
 ```
 
 `deploy.sh` deploys `accelerator/main.bicep` and writes a **keyless** `.env` contract from the
@@ -56,8 +57,8 @@ AZURE_STORAGE_ACCOUNT_NAME, AZURE_STORAGE_CONTAINER_NAME,
 AZURE_EXPERIENCE_OUTPUT_CONTAINER_NAME, APPLICATIONINSIGHTS_RESOURCE_ID
 ```
 
-RBAC is managed-identity only. The template assigns the signed-in principal data-plane roles that
-generic Owner/Contributor do **not** grant, including **Cognitive Services Speech User**
+Services use managed identities; local commands use the signed-in user. The template assigns that
+user data-plane roles that generic Owner/Contributor do **not** grant, including **Cognitive Services Speech User**
 (`f2dc8367-1007-4938-bd23-fe263f013447`) for keyless Speech, plus Cognitive Services User, OpenAI
 User, Search index/service, and Storage Blob roles. Keyless Entra auth requires the custom subdomain
 the template sets via `customSubDomainName`.
@@ -74,9 +75,9 @@ az storage blob list --auth-mode login \
   --query "[].name" -o tsv
 ```
 
-Every claim carries `claim_id`, `source`, `owner`, `version`, and `review_by`. A claim past
-`review_by`, or with an invalidated source, leaves the publishable set. That later triggers
-withdrawal (Module 6).
+Each claim carries `claim_id`, `source_reference`, and `owner`. The pack carries `version` and
+`review_by`. The publishing adapter must reject expired or invalidated content and withdraw
+affected publications. The local validator does not implement those controls.
 
 ## 4. Build the grounded assistant (Module 4)
 

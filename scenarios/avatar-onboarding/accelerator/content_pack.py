@@ -89,6 +89,7 @@ def validate_pack(data_dir: Path) -> dict[str, Any]:
         }
 
     approvals = _read_json(paths["approvals.json"])
+    _required_text(approvals.get("approval_record_id"), "approval_record_id")
     if approvals.get("approval_status") != "approved-for-demo-only":
         _reject("approval_status must be approved-for-demo-only")
     approval_rows = approvals.get("approvals")
@@ -111,6 +112,8 @@ def validate_pack(data_dir: Path) -> dict[str, Any]:
         )
 
     storyboard = _read_json(paths["storyboard-script.json"])
+    _required_text(storyboard.get("publication_id"), "publication_id")
+    _required_text(storyboard.get("locale"), "locale")
     script_id = _required_text(storyboard.get("script_id"), "script_id")
     script_version = _required_text(storyboard.get("script_version"), "script_version")
     if approvals.get("script_id") != script_id or approvals.get("script_version") != script_version:

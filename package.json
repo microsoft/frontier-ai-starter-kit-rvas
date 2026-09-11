@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Microsoft Foundry session static site builder",
   "scripts": {
+    "test": "node --test scripts/test-docs.js",
+    "test:activities": "python3 -m unittest discover -s activities -p test_activity_regressions.py",
+    "test:scenarios": "python3 -m unittest discover -s scenarios/ai-grounding/accelerator/scripts -p test_offline.py && python3 -m unittest discover -s scenarios/avatar-onboarding/accelerator -p test_content_pack.py",
     "audit:docs": "node scripts/audit-docs.js",
     "audit:docs:source": "node scripts/audit-docs.js --source",
     "audit:docs:generated": "node scripts/audit-docs.js --generated",
