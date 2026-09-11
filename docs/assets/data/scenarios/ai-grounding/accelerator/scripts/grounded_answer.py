@@ -60,6 +60,7 @@ def verify_live(
     knowledge_base: str,
     cases: list[dict[str, Any]],
     user_token: str | None,
+    minimum_recall: float,
     failures: list[str],
 ) -> None:
     try:
@@ -115,7 +116,11 @@ def verify_live(
     if answerable:
         recall = hits / answerable
         print(f"\nrecall@{RECALL_K} = {recall:.2f}  ({hits}/{answerable})")
-        check(recall == 1.0, f"recall@{RECALL_K} baseline is 1.00", failures)
+        check(
+            recall >= minimum_recall,
+            f"recall@{RECALL_K} {recall:.2f} meets minimum {minimum_recall:.2f}",
+            failures,
+        )
 
 
 def main() -> int:
@@ -124,7 +129,15 @@ def main() -> int:
         "--knowledge-base",
         default=os.environ.get("AZURE_KNOWLEDGE_BASE_NAME", "grounding-kb"),
     )
+    parser.add_argument(
+        "--min-recall",
+        type=float,
+        default=1.0,
+        help="Minimum recall@5 required for success (0.0 to 1.0; default: 1.0).",
+    )
     args = parser.parse_args()
+    if not 0.0 <= args.min_recall <= 1.0:
+        parser.error("--min-recall must be between 0.0 and 1.0")
 
     failures: list[str] = []
     env = load_env(REQUIRED_ENV)
@@ -141,7 +154,14 @@ def main() -> int:
         print("\nSet the environment contract before running this against Azure.")
         return 1
 
-    verify_live(env, args.knowledge_base, cases, os.environ.get("PROBE_USER_TOKEN"), failures)
+    verify_live(
+        env,
+        args.knowledge_base,
+        cases,
+        os.environ.get("PROBE_USER_TOKEN"),
+        args.min_recall,
+        failures,
+    )
 
     if failures:
         print(f"\n{len(failures)} question(s) did not behave as expected:")

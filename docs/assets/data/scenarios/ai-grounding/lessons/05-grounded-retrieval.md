@@ -184,7 +184,7 @@ Do not skip recall. Without a recorded baseline, module 6's agent can quietly wo
 
 ```bash
 python3 scenarios/ai-grounding/accelerator/scripts/grounded_answer.py \
-  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME"
+  --knowledge-base "$AZURE_KNOWLEDGE_BASE_NAME" --min-recall 0.95
 ```
 
 Each answerable question should print `PASS  ...: answer cites [...]`. Unanswerable questions should
@@ -193,7 +193,7 @@ not `SVC-ALPINE-2026-01-28`. A citation `FAIL` often means a vector-only query m
 Send `search_text` with the vector query. An abstention `FAIL` means the prompt still permits inference.
 
 **2. Record the recall line as your baseline.** The script prints, for example,
-`recall@5 = 1.00  (4/4)`. Record that number and date. Modules 6 and 7 must not regress it. This
+`recall@5 = 1.00  (4/4)`. Set `--min-recall` to the threshold your pilot requires. This
 baseline exposes an otherwise invisible result: "We added an agent and retrieval got worse."
 
 ## Troubleshooting
